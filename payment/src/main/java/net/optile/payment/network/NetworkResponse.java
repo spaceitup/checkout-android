@@ -15,15 +15,10 @@ import java.util.HashMap;
 import net.optile.payment.network.NetworkError.ErrorType;
 
 /**
- * Class containing response data from the network, the class 
- * contains either a NetworkError or valid data
+ * Class containing response data from the Payment API, the class 
+ * contains either a NetworkError or data
  */
 public final class NetworkResponse {
-
-    /**
-     * The data keys to obtain values from this response object
-     */
-    public final static String KEY_USERNAME = "username";
 
     /**
      * The network error
@@ -68,6 +63,18 @@ public final class NetworkResponse {
         return error != null && error.isError(ErrorType.CONN_ERROR);
     }
 
+    /**
+     * Create a new invalid value network response
+     *
+     * @param message The error message
+     * @return The newly created invalid value network response
+     */
+    public final static NetworkResponse createInvalidValueResponse(String message) {
+
+        NetworkError error = new NetworkError(ErrorType.INVALID_VALUE, message);
+        return new NetworkResponse(error);
+    }
+    
     /**
      * {@inheritDoc}
      */

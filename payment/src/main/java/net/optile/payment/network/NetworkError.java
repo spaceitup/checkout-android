@@ -23,7 +23,7 @@ public final class NetworkError {
         API_ERROR("API_ERROR"),
         CONN_ERROR("CONN_ERROR"),
         INTERNAL_ERROR("INTERNAL_ERROR"),
-        INVALID_ARGUMENT("INVALID_ARGUMENT"),
+        INVALID_VALUE("INVALID_VALUE"),
         PROTOCOL_ERROR("PROTOCOL_ERROR");
         
         private String value;
@@ -75,7 +75,7 @@ public final class NetworkError {
     /**
      * Construct a new NetworkError
      *
-     * @param code
+     * @param errorType
      * @param message
      */
     public NetworkError(ErrorType errorType, String message) {
@@ -85,7 +85,7 @@ public final class NetworkError {
     /**
      * Construct a new NetworkError
      *
-     * @param error
+     * @param errorType
      * @param cause
      */
     public NetworkError(ErrorType errorType, Exception cause) {
@@ -95,7 +95,7 @@ public final class NetworkError {
     /** 
      * Check if this error is of the given type
      * 
-     * @param error 
+     * @param errorType
      * 
      * @return true when it is the same error, false otherwise
      */

@@ -30,21 +30,30 @@ import java.net.MalformedURLException;
 import java.net.URL;
 
 import javax.net.ssl.HttpsURLConnection;
-
 import net.optile.payment.network.NetworkError.ErrorType;
 
-import static net.optile.payment.network.NetworkConstants.HEADER_USER_AGENT;
-import static net.optile.payment.network.NetworkConstants.HEADER_ACCEPT;
-import static net.optile.payment.network.NetworkConstants.HEADER_CONTENT_TYPE;
-import static net.optile.payment.network.NetworkConstants.APP_VND_JSON;
-import static net.optile.payment.network.NetworkConstants.HTTP_GET;
-import static net.optile.payment.network.NetworkConstants.HTTP_POST;
-
 /**
- * The base connection for all API Connection implementations
+ * The base class for all Payment API implementations
  */
 public abstract class BaseConnection {
 
+    final static int TIMEOUT_CONNECT        = 5000;
+    final static int TIMEOUT_READ           = 30000;
+    
+    final static String HEADER_ACCEPT       = "Accept";
+    final static String HEADER_CONTENT_TYPE = "Content-Type";
+    final static String HEADER_USER_AGENT   = "User-Agent";
+
+    final static String UTF8                = "UTF-8";
+    final static String HTTP_GET            = "GET";
+    final static String HTTP_POST           = "POST";
+
+    final static String URI_PATH_API        = "api";
+    final static String URI_PATH_LISTS      = "lists";
+    final static String URI_PARAM_VIEW      = "view";
+
+    final static String VALUE_VIEW          = "jsonForms,-htmlForms";
+    final static String VALUE_VND_JSON      = "application/vnd.optile.payment.enterprise-v1-extensible+json";    
     /** 
      * The cached user agent value
      */
@@ -155,30 +164,29 @@ public abstract class BaseConnection {
      * @param readTimeout
      * @param connectTimeout
      */
-    private void setConnectionProperties(HttpURLConnection conn, int readTimeout, int connectTimeout) {
+    private void setConnProperties(HttpURLConnection conn) {
 
-        conn.setConnectTimeout(connectTimeout);
-        conn.setReadTimeout(readTimeout);
+        conn.setConnectTimeout(TIMEOUT_CONNECT);
+        conn.setReadTimeout(TIMEOUT_READ);
         conn.setRequestProperty(HEADER_USER_AGENT, getUserAgent());
     }
 
     /**
      * Creates a new HTTP GET connection
      *
-     * @param url            The full API Url
-     * @param readTimeout    The connection read timeout
-     * @param connectTimeout The connection connect timeout
+     * @param url   The Url to connect to
      *
      * @return HttpURLConnection     A HttpURLConnection object
      * @throws MalformedURLException URL creation failed
      * @throws IOException           IOException
      */
-    public HttpURLConnection createGetConnection(String url, int readTimeout, int connectTimeout) throws MalformedURLException, IOException {
+    public HttpURLConnection createGetConnection(String url) throws MalformedURLException,
+                                                                    IOException {
 
         URL u = new URL(url);
         HttpURLConnection conn = u.openConnection();
 
-        setConnectionProperties(conn, readTimeout, connectTimeout);
+        setConnProperties(conn);
 
         conn.setRequestMethod(HTTP_GET);
         conn.setDoInput(true);
@@ -190,28 +198,24 @@ public abstract class BaseConnection {
     /**
      * Creates a HTTP POST connection
      *
-     * @param url            The url for the connection
-     * @param readTimeout    The connection read timeout
-     * @param connectTimeout The connection connect timeout
+     * @param url   The url for the connection
      *
      * @return HttpURLConnection     The created HttpURLConnection
      * @throws MalformedURLException URL creation failed
      * @throws IOException           I/O related exception.
      */
-    public HttpURLConnection createPostConnection(String url, int readTimeout, int connectTimeout) throws MalformedURLException, IOException {
+    public HttpURLConnection createPostConnection(String url) throws MalformedURLException,
+                                                                     IOException {
 
         URL u = new URL(url);
         HttpURLConnection conn = u.openConnection();
 
-        setConnectionProperties(conn, readTimeout, connectTimeout);
+        setConnectionProperties(conn);
 
         conn.setRequestMethod(HTTP_POST);
         conn.setDoInput(true);
         conn.setDoOutput(true);
             
-        conn.setRequestProperty(HEADER_CONTENT_TYPE, APP_VND_JSON);
-        conn.setRequestProperty(HEADER_ACCEPT, APP_VND_JSON);
-
         return conn;
     }
 
@@ -284,7 +288,7 @@ public abstract class BaseConnection {
     }
 
     /**
-     * Handle the backend status error.
+     * Handle the error response from the Payment API
      *
      * @param type
      * @param statusCode
@@ -293,20 +297,22 @@ public abstract class BaseConnection {
      */
     public NetworkResponse handleErrorResponse(String type, int statusCode, HttpURLConnection conn) throws IOException {
 
-        this.in = conn.getErrorStream();
-        String errorData = readInputStream(this.in);
-        NetworkError error = null;
+        try (InputStream in = conn.getErrorStream()) {
 
-        switch (statusCode) {
-        case HttpURLConnection.HTTP_BAD_REQUEST:
-        case HttpURLConnection.HTTP_INTERNAL_ERROR:
-            error = new NetworkError(ErrorType.API_ERROR, statusCode, type + " - " + errorData);
-            break;
-        default:
-            String msg = type + " - Unexpected status code: " + statusCode + ", errorData: " + errorData;
-            error = new NetworkError(ErrorType.PROTOCOL_ERROR, statusCode, msg);
+            String errorData = readInputStream(in);
+            NetworkError error = null;
+
+            switch (statusCode) {
+            case HttpURLConnection.HTTP_BAD_REQUEST:
+            case HttpURLConnection.HTTP_INTERNAL_ERROR:
+                error = new NetworkError(ErrorType.API_ERROR, statusCode, type + " - " + errorData);
+                break;
+            default:
+                String msg = type + " - Unexpected status code: " + statusCode + ", errorData: " + errorData;
+                error = new NetworkError(ErrorType.PROTOCOL_ERROR, statusCode, msg);
+            }
+            return new NetworkResponse(error);
         }
-        return new NetworkResponse(error);
     }
 
     /**
