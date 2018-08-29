@@ -47,7 +47,7 @@ public final class ListConnection extends BaseConnection {
     public NetworkResponse createListRequest(String authentication) {
 
         if (TextUtils.isEmpty(authentication)) {
-            return NetworkResponse.createInvalidValueResponse("authentication cannot be null or empty"); 
+            return NetworkResponse.newInvalidValueResponse("authentication cannot be null or empty"); 
         }
 
         NetworkResponse resp   = null;

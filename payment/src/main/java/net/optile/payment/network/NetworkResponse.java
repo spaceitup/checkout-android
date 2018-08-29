@@ -69,7 +69,7 @@ public final class NetworkResponse {
      * @param message The error message
      * @return The newly created invalid value network response
      */
-    public final static NetworkResponse createInvalidValueResponse(String message) {
+    public final static NetworkResponse newInvalidValueResponse(String message) {
 
         NetworkError error = new NetworkError(ErrorType.INVALID_VALUE, message);
         return new NetworkResponse(error);

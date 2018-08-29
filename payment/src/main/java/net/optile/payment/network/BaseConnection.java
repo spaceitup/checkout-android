@@ -9,7 +9,7 @@
  * has been received in full.
  */
 
-package net.optile.sdk.network;
+package net.optile.payment.network;
 
 import android.os.Build;
 import android.text.TextUtils;
