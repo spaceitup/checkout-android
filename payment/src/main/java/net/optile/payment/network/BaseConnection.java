@@ -29,28 +29,19 @@ import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 
-import java.security.InvalidKeyException;
-import java.security.NoSuchAlgorithmException;
-
 import javax.net.ssl.HttpsURLConnection;
 
-import static net.optile.sdk.server.ServerConstants.HEADER_CONTENT_TYPE;
-import static net.optile.sdk.server.ServerConstants.HTTP_DELETE;
-import static net.optile.sdk.server.ServerConstants.HTTP_GET;
-import static net.optile.sdk.server.ServerConstants.HTTP_PATCH;
-import static net.optile.sdk.server.ServerConstants.HTTP_POST;
-import static net.optile.sdk.server.ServerConstants.HTTP_PUT;
+import static net.optile.payment.network.NetworkConstants.HEADER_USER_AGENT;
+import static net.optile.payment.network.NetworkConstants.HTTP_DELETE;
+import static net.optile.payment.network.NetworkConstants.HTTP_GET;
+import static net.optile.payment.network.NetworkConstants.HTTP_PATCH;
+import static net.optile.payment.network.NetworkConstants.HTTP_POST;
+import static net.optile.payment.network.NetworkConstants.HTTP_PUT;
 
 /**
- * This is the base connection for all 
- * connection implementations
+ * This is the base connection for all API Connection implementations
  */
 public abstract class BaseConnection {
-
-    public final static String UTF8 = "UTF-8";
-    public final static String HEADER_ACCESS_TOKEN   = "optile-access-token";
-    public final static String HEADER_APP_ID         = "optile-app-id";
-    public final static String HEADER_FIREBASE_TOKEN = "Firebase-token";
 
     /**
      * The base host url
@@ -62,41 +53,29 @@ public abstract class BaseConnection {
      */
     String tag;
 
-    /**
-     * The internal json parser
+    /** 
+     * The user agent value
      */
-    JsonParser parser;
+    String userAgent;
 
+    
     /**
-     * Construct a new ServerConnection given the url
+     * Construct a new BaseConnection
      *
-     * @param url       The url used to setup the connection
-     * @param userAgent the optional user agent, if null than the default will be used
-     * @param tag       The tag for logging
+     * @param url       The base url pointing to the API
      */
-    public ServerConnection(String url, String userAgent, String tag) {
+    public BaseConnection(String url) {
 
-        // set the tag for log entries
-        this.tag = tag;
-        this.userAgent = userAgent;
-        this.serverUrl = url;
-
-        // construct the gson helper classes
-        this.gson = new GsonBuilder().excludeFieldsWithoutExposeAnnotation().create();
-        this.parser = new JsonParser();
-
-        // initialize the user agent
-        if (userAgent == null) {
-            initDefaultUserAgent();
-        }
+        this.url = url;
 
         // This is needed for older versions of Android
         disableConnectionReuseIfNecessary();
 
-        // Set the default Cookiehandler if not set yet
         if (CookieHandler.getDefault() == null) {
             CookieHandler.setDefault(new CookieManager());
         }
+
+        initDefaultUserAgent();
     }
 
     /**
@@ -129,11 +108,15 @@ public abstract class BaseConnection {
     }
 
     /**
-     * Close the connections, this will try to close both the inputstream and
-     * the outputstream.
+     * This method will try to close both the inputstream,
+     * outputstream and connection
+     * 
+     * @param conn  
+     * @param in 
+     * @param out 
      */
-    public void close() {
-        OutputStream o = out;
+    public void close(HttpURLConnection conn, InputStream in, OutputStream out) {
+
         if (out != null) {
             try {
                 out.close();
@@ -141,6 +124,7 @@ public abstract class BaseConnection {
             }
             out = null;
         }
+
         if (in != null) {
             try {
                 in.close();
@@ -149,7 +133,6 @@ public abstract class BaseConnection {
             in = null;
         }
 
-        // disconnect the connection
         if (conn != null) {
             conn.disconnect();
         }
@@ -159,30 +142,15 @@ public abstract class BaseConnection {
      * Set connection properties
      *
      * @param conn
-     * @param accessToken
      * @param readTimeout
      * @param connectTimeout
      */
-    private void setConnectionProperties(HttpURLConnection conn, AuthTokens tokens, int readTimeout, int connectTimeout) {
+    private void setConnectionProperties(HttpURLConnection conn, int readTimeout, int connectTimeout) {
 
         conn.setConnectTimeout(connectTimeout);
         conn.setReadTimeout(readTimeout);
-        conn.setRequestProperty("User-Agent", userAgent);
+        conn.setRequestProperty("User-Agent", this.userAgent);
 
-        // add the unique app id
-        if (!TextUtils.isEmpty(tokens.appId)) {
-            conn.setRequestProperty(HEADER_APP_ID, tokens.appId);
-        }
-
-        // add the unique access token
-        if (!TextUtils.isEmpty(tokens.accessToken)) {
-            conn.setRequestProperty(HEADER_ACCESS_TOKEN, tokens.accessToken);
-        }
-
-        // add the unique authentication token
-        if (!TextUtils.isEmpty(tokens.authToken)) {
-            conn.setRequestProperty(HEADER_FIREBASE_TOKEN, tokens.authToken);
-        }
     }
 
     /**
@@ -468,104 +436,21 @@ public abstract class BaseConnection {
     }
 
     /**
-     * Handle an unexpected Exception while executing one of the HTTP requests.
+     * Handle an unexpected Exception while executing one of the HTTP requests
      *
      * @param e the exception to handle
-     * @return The ServerResponse object
+     * @return The NetworkResponse with a NetworkError explaining the error
      */
-    public ServerResponse handleException(Exception e) {
+    public NetworkResponse handleException(Exception e) {
 
-        // log the exception that was thrown
         //Log.w(tag, e);
 
-        int r = ServiceError.PROTOCOL_ERROR;
-        if (e instanceof SecurityException) {
-            r = ServiceError.INTERNAL_ERROR;
-        } else if (e instanceof UnsupportedEncodingException) {
-            r = ServiceError.INTERNAL_ERROR;
-        } else if (e instanceof InvalidKeyException) {
-            r = ServiceError.INTERNAL_ERROR;
-        } else if (e instanceof NoSuchAlgorithmException) {
-            r = ServiceError.INTERNAL_ERROR;
-        } else if (e instanceof IOException) {
-            r = ServiceError.CONN_ERROR;
-        } else if (e instanceof JsonParseException) {
-            r = ServiceError.PROTOCOL_ERROR;
-        } else if (e instanceof IllegalStateException) {
-            r = ServiceError.PROTOCOL_ERROR;
-        } else if (e instanceof ClassCastException) {
-            r = ServiceError.PROTOCOL_ERROR;
+        int r = NetworkError.PROTOCOL_ERROR;
+
+        if (e instanceof IOException) {
+            r = NetworkError.CONN_ERROR;
         }
 
-        return new ServerResponse(new ServiceError(r, e));
-    }
-
-    /**
-     * Creates a file name based on mime type.
-     *
-     * @param fileName The file name
-     * @param mimeType The mimeType
-     * @return The name of the file
-     */
-    public String createFileName(String fileName, String mimeType) {
-
-        if (mimeType == null) {
-            return fileName;
-        }
-        MimeTypeMap map = MimeTypeMap.getSingleton();
-        String ext = map.getExtensionFromMimeType(mimeType);
-
-        return fileName + (ext != null ? "." + ext : "");
-    }
-
-    /**
-     * Writes the received response and duration to the LogCat
-     *
-     * @param statusCode the http status code
-     * @param beforeTs   the timestamp sampled before request was placed, not printed if <= 0
-     * @param recvData   the received data, empty data is not printed
-     */
-    protected void logHttpRequest(int statusCode, long beforeTs, String recvData) {
-        //Log.d(tag, buildHttpRequestLogLine(statusCode, beforeTs, recvData));
-    }
-
-    /**
-     * Builds a log line from the received response and duration
-     *
-     * @param statusCode the http status code
-     * @param beforeTs   the timestamp sampled before request was placed, not printed if <= 0
-     * @param recvData   the received data, empty data is not printed
-     */
-    private String buildHttpRequestLogLine(int statusCode, long beforeTs, String recvData) {
-        StringBuilder sb = new StringBuilder("Response ");
-
-        // status code
-        sb.append(statusCode);
-
-        // response time
-        if (beforeTs > 0) {
-            sb.append(" in ");
-            long duration = System.currentTimeMillis() - beforeTs;
-            sb.append(duration);
-            sb.append(" ms");
-        }
-
-        if (conn != null) {
-            // method
-            sb.append(" to ");
-            sb.append(conn.getRequestMethod());
-
-            // url
-            sb.append(" from url ");
-            sb.append(conn.getURL());
-        }
-
-        // received data
-        if (!TextUtils.isEmpty(recvData)) {
-            sb.append(", ");
-            sb.append(recvData);
-        }
-
-        return sb.toString();
+        return new NetworkResponse(new NetworkError(r, e));
     }
 }

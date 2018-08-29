@@ -12,10 +12,11 @@
 package net.optile.payment.network;
 
 import java.util.HashMap;
+import net.optile.payment.network.NetworkError.ErrorType;
 
 /**
  * Class containing response data from the network, the class 
- * contains a NetworkError object if the request failed
+ * contains either a NetworkError or valid data
  */
 public final class NetworkResponse {
 
@@ -23,8 +24,6 @@ public final class NetworkResponse {
      * The data keys to obtain values from this response object
      */
     public final static String KEY_USERNAME = "username";
-    public final static String KEY_USER = "user";
-    public final static String KEY_ACCESS_TOKEN = "accesstoken";
 
     /**
      * The network error
@@ -39,27 +38,17 @@ public final class NetworkResponse {
     /**
      * Constructs a new ServerResponse with the RESP_OK status
      */
-    public ServerResponse() {
+    public NetworkResponse() {
     }
 
     /**
-     * Constructs a server response with the service error
+     * Constructs a network response with an error
      *
-     * @param error The error
+     * @param error The network error
      */
-    public ServerResponse(ServiceError error) {
+    public NetworkResponse(NetworkError error) {
         this.error = error;
     }
-
-    /**
-     * Check if this response is a success
-     *
-     * @return true when successful false otherwise
-     */
-    public boolean isSuccess() {
-        return error == null;
-    }
-
 
     /**
      * Check if this response contains an error
@@ -76,7 +65,7 @@ public final class NetworkResponse {
      * @return true when it has a connection error, false otherwise
      */
     public boolean hasConnectionError() {
-        return error != null && error.isError(ServiceError.CONN_ERROR);
+        return error != null && error.isError(NetworkError.CONN_ERROR);
     }
 
     /**
@@ -107,16 +96,17 @@ public final class NetworkResponse {
     }
 
     /**
-     * Returns a string representation of this AppRequest.
-     *
-     * @return The newly created String.
+     * {@inheritDoc}
      */
+    @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
-        sb.append("ServerResponse[");
+        sb.append("NetworkResponse[");
+
         if (error == null) {
             sb.append("OK");
-        } else {
+        }
+        else {
             sb.append("ERROR: ");
             sb.append(error);
         }

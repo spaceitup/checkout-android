@@ -14,27 +14,20 @@ package net.optile.payment.network;
 import android.net.Uri;
 import android.text.TextUtils;
 
-import com.google.gson.JsonParseException;
-import com.google.gson.reflect.TypeToken;
-import net.optile.sdk.content.AuthTokens;
-import net.optile.sdk.model.Book;
-
-import org.json.JSONException;
-
 import java.lang.reflect.Type;
 import java.net.HttpURLConnection;
 import java.util.ArrayList;
 import java.util.List;
 
-import static net.optile.sdk.server.ServerConstants.REQ_LIMIT;
-import static net.optile.sdk.server.ServerConstants.REQ_OFFSET;
-import static net.optile.sdk.server.ServerConstants.REQ_SINCE;
-import static net.optile.sdk.server.ServerConstants.TIMEOUT_CONNECT;
-import static net.optile.sdk.server.ServerConstants.TIMEOUT_READ;
+import static net.optile.payment.network.NetworkConstants.REQ_LIMIT;
+import static net.optile.payment.network.NetworkConstants.REQ_OFFSET;
+import static net.optile.payment.network.NetworkConstants.REQ_SINCE;
+import static net.optile.payment.network.NetworkConstants.TIMEOUT_CONNECT;
+import static net.optile.payment.network.NetworkConstants.TIMEOUT_READ;
 
 
 /**
- * Class for communicating with the optile backend.
+ * Class for communicating with the payment API
  * <p>
  * All requests in this class are blocking calls and should be
  * executed in a separate thread to avoid blocking the main application thread.
@@ -44,7 +37,7 @@ import static net.optile.sdk.server.ServerConstants.TIMEOUT_READ;
 public final class BookConnection extends ServerConnection {
 
     /**
-     * Construct a new Book connection
+     * Construct a new ListConection
      *
      * @param url       The url used to setup the connection
      * @param userAgent The user agent
