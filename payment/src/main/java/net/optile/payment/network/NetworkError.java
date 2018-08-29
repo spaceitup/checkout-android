@@ -38,9 +38,9 @@ public final class NetworkError {
     }
     
     /**
-     * The mandatory error 
+     * The mandatory error type 
      */
-    public ErrorType error;
+    public ErrorType errorType;
 
     /**
      * The optional network status code like 400 or 500
@@ -60,13 +60,13 @@ public final class NetworkError {
     /**
      * Construct a new NetworkError
      *
-     * @param error
+     * @param errorType
      * @param statusCode
      * @param message
      * @param cause
      */
-    public NetworkError(ErrorType error, int statusCode, String message, Exception cause) {
-        this.error = error;
+    public NetworkError(ErrorType errorType, int statusCode, String message, Exception cause) {
+        this.errorType = errorType;
         this.statusCode = statusCode;
         this.message = message;
         this.cause = cause;
@@ -78,8 +78,8 @@ public final class NetworkError {
      * @param code
      * @param message
      */
-    public NetworkError(ErrorType error, String message) {
-        this(error, 0, message, null);
+    public NetworkError(ErrorType errorType, String message) {
+        this(errorType, 0, message, null);
     }
 
     /**
@@ -88,12 +88,19 @@ public final class NetworkError {
      * @param error
      * @param cause
      */
-    public NetworkError(ErrorType error, Exception cause) {
-        this(error, 0, null, cause);
+    public NetworkError(ErrorType errorType, Exception cause) {
+        this(errorType, 0, null, cause);
     }
 
-    public boolean isError(ErrorType error) {
-        return error = this.error;
+    /** 
+     * Check if this error is of the given type
+     * 
+     * @param error 
+     * 
+     * @return true when it is the same error, false otherwise
+     */
+    public boolean isError(ErrorType errorType) {
+        return this.errorType == errorType;
     }
     
     /**
@@ -104,8 +111,8 @@ public final class NetworkError {
 
         StringBuilder sb = new StringBuilder();
         sb.append("NetworkError[");
-        sb.append("error: ");
-        sb.append(this.error);
+        sb.append("errorType: ");
+        sb.append(this.errorType);
 
         if (this.statusCode != 0) {
             sb.append(", statusCode: ");

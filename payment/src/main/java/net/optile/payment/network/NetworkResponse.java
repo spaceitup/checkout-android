@@ -36,13 +36,13 @@ public final class NetworkResponse {
     public HashMap<String, Object> data = new HashMap<String, Object>();
 
     /**
-     * Constructs a new ServerResponse with the RESP_OK status
+     * Constructs a new empty NetworkResponse
      */
     public NetworkResponse() {
     }
 
     /**
-     * Constructs a network response with an error
+     * Constructs a NetworkResponse with an error
      *
      * @param error The network error
      */
@@ -65,34 +65,7 @@ public final class NetworkResponse {
      * @return true when it has a connection error, false otherwise
      */
     public boolean hasConnectionError() {
-        return error != null && error.isError(NetworkError.CONN_ERROR);
-    }
-
-    /**
-     * Does this server response contain a not found error
-     *
-     * @return true when it has a not found, false otherwise
-     */
-    public boolean hasNotFoundError() {
-        return error != null && error.isError(ServiceError.NOT_FOUND);
-    }
-
-    /**
-     * Does this server response contain a forbidden error
-     *
-     * @return true when it has a forbidden error, false otherwise
-     */
-    public boolean hasForbiddenError() {
-        return error != null && error.isError(ServiceError.FORBIDDEN);
-    }
-
-    /**
-     * Does this server response contain an authentication error
-     *
-     * @return true when it has an authentication error, false otherwise
-     */
-    public boolean hasAuthenticationError() {
-        return error != null && error.isError(ServiceError.AUTH_ERROR);
+        return error != null && error.isError(ErrorType.CONN_ERROR);
     }
 
     /**
@@ -115,13 +88,14 @@ public final class NetworkResponse {
     }
 
     /**
-     * Gets the integer value from this ServerResponse object.
+     * Gets the integer value from this NetworkResponse object.
      *
      * @param key The key for this value.
      * @return The integer value or 0 when the value could not be found or -1
      * if the value Object was not an Integer.
      */
     public int getInt(String key) {
+
         Object v = data.get(key);
         if (v == null) {
             return 0;
@@ -133,10 +107,11 @@ public final class NetworkResponse {
      * Gets the String value given the key.
      *
      * @param key The key for this value.
-     * @return null if the value was not stored in this ServerResponse
+     * @return null if the value was not stored in this NetworkResponse
      * or the String value for the given key.
      */
     public String getString(String key) {
+
         Object v = data.get(key);
         if (v == null) {
             return null;
@@ -153,6 +128,7 @@ public final class NetworkResponse {
      * mapped by this key.
      */
     public String getString(String key, String defValue) {
+
         Object v = data.get(key);
         if (v == null) {
             return defValue;
@@ -165,9 +141,10 @@ public final class NetworkResponse {
      *
      * @param key The key for this value.
      * @return false if they key was not found or the boolean value
-     * stored in this ServerResponse object otherwise.
+     * stored in this NetworkResponse object otherwise.
      */
     public boolean getBoolean(String key) {
+
         Object v = data.get(key);
         return v != null && (v instanceof Boolean) && ((Boolean) v).booleanValue();
     }
@@ -184,7 +161,7 @@ public final class NetworkResponse {
     }
 
     /**
-     * Puts a value into this ServerResponse object given the key.
+     * Puts a value into this NetworkResponse object given the key.
      *
      * @param key   The key for which the value should be mapped.
      * @param value The actual value mapped to the key.

@@ -19,41 +19,37 @@ import java.net.HttpURLConnection;
 import java.util.ArrayList;
 import java.util.List;
 
-import static net.optile.payment.network.NetworkConstants.REQ_LIMIT;
-import static net.optile.payment.network.NetworkConstants.REQ_OFFSET;
-import static net.optile.payment.network.NetworkConstants.REQ_SINCE;
 import static net.optile.payment.network.NetworkConstants.TIMEOUT_CONNECT;
 import static net.optile.payment.network.NetworkConstants.TIMEOUT_READ;
 
 
 /**
- * Class for communicating with the payment API
+ * Class implementing the communication with the List payment API
  * <p>
  * All requests in this class are blocking calls and should be
  * executed in a separate thread to avoid blocking the main application thread.
  * These methods are not thread safe and must not be called by different threads
  * at the same time.
  */
-public final class BookConnection extends ServerConnection {
+public final class ListConnection extends BaseConnection {
 
     /**
-     * Construct a new ListConection
+     * Construct a new ListConnection
      *
-     * @param url       The url used to setup the connection
-     * @param userAgent The user agent
+     * @param url The url to be used
      */
-    public BookConnection(String url, String userAgent) {
-        super(url, userAgent, "siu_BookConnection");
+    public ListConnection(String url) {
+        super(url, "payment_ListConnection");
     }
 
     /**
-     * Create a book on the backend
+     * Make a list request to the backend
      *
      * @param tokens
      * @param book
      * @return The NetworkResponse
      */
-    public NetworkResponse createBook(AuthTokens tokens, Book book) {
+    public NetworkResponse postListRequest() {
 
         if (tokens == null || !tokens.containsAccessToken()) {
             return createAuthErrorResponse("createBook - Authentication data is missing");

@@ -16,18 +16,20 @@ package net.optile.payment.network;
  */
 public interface NetworkConstants {
 
+    String HEADER_ACCEPT        = "Accept";
     String HEADER_CONTENT_TYPE  = "Content-Type";
-    String HEADER_USER_AGENT = "User-Agent";
-    
-    String UTF8 = "UTF-8";
+    String HEADER_USER_AGENT    = "User-Agent";
 
-    int TIMEOUT_CONNECT = 5000;
-    int TIMEOUT_READ = 30000;
+    String APP_VND_JSON         = "application/vnd.optile.payment.enterprise-v1-extensible+json";
+    String UTF8                 = "UTF-8";
 
-    String HTTP_GET = "GET";
-    String HTTP_POST = "POST";
-    String HTTP_PUT = "PUT";
-    String HTTP_PATCH = "PATCH";
-    String HTTP_DELETE = "DELETE";
+    int TIMEOUT_CONNECT         = 5000;
+    int TIMEOUT_READ            = 30000;
+
+    String HTTP_GET             = "GET";
+    String HTTP_POST            = "POST";
+    String HTTP_PUT             = "PUT";
+    String HTTP_PATCH           = "PATCH";
+    String HTTP_DELETE          = "DELETE";
 
 }
