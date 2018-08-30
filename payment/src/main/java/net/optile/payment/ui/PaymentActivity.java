@@ -9,23 +9,20 @@
  * has been received in full.
  */
 
-package net.optile.example;
+package net.optile.payment.ui;
 
 import android.util.Log;
 import android.os.Bundle;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
+import android.view.Menu;
+import android.view.MenuItem;
+import net.optile.payment.R;
 
-/**
- *
- *
- *
- */
-public class MainActivity extends AppCompatActivity {
+public class PaymentActivity extends AppCompatActivity {
 
-    public final static String TAG  = "payment_MainActivity";
+    public final static String TAG  = "payment_PaymentActivity";
     
     /**
      * {@inheritDoc}
@@ -33,11 +30,9 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_payment);
 
-        setContentView(R.layout.activity_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-
-        Log.i(TAG, "test string: " + getString(R.string.payment_authorization));
     }
 }

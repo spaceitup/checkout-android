@@ -1,2 +1,11 @@
-<manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="net.optile.payment" />
+<manifest
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    package="net.optile.payment" >
+
+    <application>
+    <activity
+        android:name="net.optile.payment.ui.PaymentActivity"
+        android:theme="@style/AppTheme.NoActionBar">
+    </activity>
+    </application>
+</manifest>
