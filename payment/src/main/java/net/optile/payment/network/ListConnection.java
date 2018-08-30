@@ -14,12 +14,9 @@ package net.optile.payment.network;
 import android.net.Uri;
 import android.text.TextUtils;
 
-import java.lang.reflect.Type;
-import java.net.HttpURLConnection;
-import java.util.ArrayList;
-import java.util.List;
-import java.net.MalformedURLException;
 import java.io.IOException;
+import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
 
 /**
  * Class implementing the communication with the List payment API

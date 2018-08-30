@@ -13,24 +13,19 @@ package net.optile.payment.network;
 
 import android.os.Build;
 import android.text.TextUtils;
-import android.util.Log;
-import android.webkit.MimeTypeMap;
+
+import net.optile.payment.network.NetworkError.ErrorType;
 
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
-import java.io.UnsupportedEncodingException;
-
 import java.net.CookieHandler;
 import java.net.CookieManager;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
-
-import javax.net.ssl.HttpsURLConnection;
-import net.optile.payment.network.NetworkError.ErrorType;
 
 /**
  * The base class for all Payment API implementations
@@ -137,8 +132,6 @@ public abstract class BaseConnection {
      * Set connection properties
      *
      * @param conn
-     * @param readTimeout
-     * @param connectTimeout
      */
     private void setConnProperties(HttpURLConnection conn) {
 

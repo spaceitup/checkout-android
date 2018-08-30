@@ -11,8 +11,9 @@
 
 package net.optile.payment.network;
 
-import java.util.HashMap;
 import net.optile.payment.network.NetworkError.ErrorType;
+
+import java.util.HashMap;
 
 /**
  * Class containing response data from the Payment API, the class 
@@ -68,7 +69,6 @@ public final class NetworkResponse {
      * Create a new invalid value network response
      *
      * @param message   The error message
-     * @param cause     The optional exception that caused the error
      * @return The newly created network error response
      */
     public final static NetworkResponse newInvalidValueResponse(String message) {
