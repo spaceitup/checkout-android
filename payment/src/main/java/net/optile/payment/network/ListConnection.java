@@ -11,6 +11,7 @@
 
 package net.optile.payment.network;
 
+import android.util.Log;
 import android.net.Uri;
 import android.text.TextUtils;
 
@@ -40,15 +41,20 @@ public final class ListConnection extends BaseConnection {
     /**
      * Make a new list request to the Payment API
      *
-     * @param authorization The authorization header data
-     * @return The NetworkResponse
+     * @param  authorization the authorization header data
+     * @param  data          the data containing the request body for the list request
+     * @return               the NetworkResponse containing either an error or the ListResult
      */
-    public NetworkResponse createListRequest(String authorization) {
+    public NetworkResponse createListRequest(String authorization, String data) {
 
         if (TextUtils.isEmpty(authorization)) {
             return NetworkResponse.newInvalidValueResponse("authorization cannot be null or empty"); 
         }
 
+        if (TextUtils.isEmpty(data)) {
+            return NetworkResponse.newInvalidValueResponse("data cannot be null or empty"); 
+        }
+        
         String source = "ListConnection[createListRequest]";
         HttpURLConnection conn = null;
         NetworkResponse resp = null;
@@ -58,7 +64,6 @@ public final class ListConnection extends BaseConnection {
             Uri.Builder builder = Uri.parse(url).buildUpon().appendPath(URI_PATH_API).appendPath(URI_PATH_LISTS);
             builder.appendQueryParameter(URI_PARAM_VIEW, VALUE_VIEW);
 
-            String data = "{}";
             conn = createPostConnection(builder.build().toString());
             conn.setRequestProperty(HEADER_AUTHORIZATION, authorization);
             conn.setRequestProperty(HEADER_CONTENT_TYPE, VALUE_VND_JSON);
@@ -91,10 +96,11 @@ public final class ListConnection extends BaseConnection {
     /**
      * Handle the create list request OK state
      *
-     * @param data
-     * @return The network response
+     * @param  data the response data received from the API
+     * @return      the network response containing the ListResult
      */
     private NetworkResponse handleCreateListRequestOk(String data) {
+        Log.i("payment_ListConnection", "data: " + data);
         return new NetworkResponse();
     }
 }

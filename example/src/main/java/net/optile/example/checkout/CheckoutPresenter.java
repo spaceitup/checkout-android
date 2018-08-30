@@ -21,6 +21,9 @@ import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 import java.util.concurrent.Callable;
 
+import net.optile.payment.network.ListConnection;
+import net.optile.payment.network.NetworkResponse;
+
 /**
  * CheckoutPresenter responsible for communicating with the 
  * Payment SDK
@@ -32,7 +35,7 @@ class CheckoutPresenter {
     private CheckoutView view;
 
     private Subscription subscription;
-    
+
     /**
      * Construct a new CheckoutPresenter
      */
@@ -67,9 +70,11 @@ class CheckoutPresenter {
      * Instead the merchant backend sends this request to 
      * the Payment API.
      *
+     * @param url               The url to the Payment API end-point
      * @param authorization     The authorization header for the list request
+     * @param data              The data to be send in the list request
      */
-    void newListRequest(final String authorization) {
+    void newListRequest(final String url, final String authorization, final String data) {
 
         if (isListRequestActive()) {
             return;
@@ -79,7 +84,7 @@ class CheckoutPresenter {
 
                 @Override
                 public Void call() throws CheckoutException {
-                    handleNewListRequest(authorization);
+                    handleNewListRequest(url, authorization, data);
                     return null;
                 }
             });
@@ -100,7 +105,10 @@ class CheckoutPresenter {
                 });
     }
 
-    private void handleNewListRequest(String authorization) throws CheckoutException {
-        
+    private void handleNewListRequest(String url, String authorization, String data) throws CheckoutException {
+
+        ListConnection conn = new ListConnection(url);
+        NetworkResponse resp = conn.createListRequest(authorization, data);
+        Log.i(TAG, "response: " + resp.toString());
     }
 }

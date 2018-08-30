@@ -2,6 +2,8 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     package="net.optile.payment" >
 
+    <uses-permission android:name="android.permission.INTERNET" />
+    
     <application>
     <activity
         android:name="net.optile.payment.ui.PaymentActivity"
