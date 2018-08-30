@@ -40,7 +40,7 @@ public abstract class BaseConnection {
     final static int TIMEOUT_CONNECT         = 5000;
     final static int TIMEOUT_READ            = 30000;
     
-    final static String HEADER_AUTHORIZATION = "Accept";
+    final static String HEADER_AUTHORIZATION = "Authorization";
     final static String HEADER_ACCEPT        = "Accept";
     final static String HEADER_CONTENT_TYPE  = "Content-Type";
     final static String HEADER_USER_AGENT    = "User-Agent";
