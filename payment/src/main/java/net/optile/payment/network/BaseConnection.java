@@ -37,23 +37,24 @@ import net.optile.payment.network.NetworkError.ErrorType;
  */
 public abstract class BaseConnection {
 
-    final static int TIMEOUT_CONNECT        = 5000;
-    final static int TIMEOUT_READ           = 30000;
+    final static int TIMEOUT_CONNECT         = 5000;
+    final static int TIMEOUT_READ            = 30000;
     
-    final static String HEADER_ACCEPT       = "Accept";
-    final static String HEADER_CONTENT_TYPE = "Content-Type";
-    final static String HEADER_USER_AGENT   = "User-Agent";
+    final static String HEADER_AUTHORIZATION = "Accept";
+    final static String HEADER_ACCEPT        = "Accept";
+    final static String HEADER_CONTENT_TYPE  = "Content-Type";
+    final static String HEADER_USER_AGENT    = "User-Agent";
 
-    final static String UTF8                = "UTF-8";
-    final static String HTTP_GET            = "GET";
-    final static String HTTP_POST           = "POST";
+    final static String UTF8                 = "UTF-8";
+    final static String HTTP_GET             = "GET";
+    final static String HTTP_POST            = "POST";
 
-    final static String URI_PATH_API        = "api";
-    final static String URI_PATH_LISTS      = "lists";
-    final static String URI_PARAM_VIEW      = "view";
+    final static String URI_PATH_API         = "api";
+    final static String URI_PATH_LISTS       = "lists";
+    final static String URI_PARAM_VIEW       = "view";
 
-    final static String VALUE_VIEW          = "jsonForms,-htmlForms";
-    final static String VALUE_VND_JSON      = "application/vnd.optile.payment.enterprise-v1-extensible+json";    
+    final static String VALUE_VIEW           = "jsonForms,-htmlForms";
+    final static String VALUE_VND_JSON       = "application/vnd.optile.payment.enterprise-v1-extensible+json";    
     /** 
      * The cached user agent value
      */
@@ -65,17 +66,11 @@ public abstract class BaseConnection {
     String url;
 
     /**
-     * The log tag
-     */
-    String tag;
-
-    
-    /**
      * Construct a new BaseConnection
      *
      * @param url       The base url pointing to the API
      */
-    public BaseConnection(String url, String tag) {
+    public BaseConnection(String url) {
 
         this.url = url;
 
@@ -127,30 +122,11 @@ public abstract class BaseConnection {
     }
 
     /**
-     * This method will try to close both the inputstream,
-     * outputstream and connection.
+     * This method will try to close the HttpURLConnection if it exists
      * 
-     * @param conn
-     * @param in
-     * @param out 
+     * @param conn The connection to close
      */
-    public void close(HttpURLConnection conn, InputStream in, OutputStream out) {
-
-        if (out != null) {
-            try {
-                out.close();
-            } catch (IOException e) {
-            }
-            out = null;
-        }
-
-        if (in != null) {
-            try {
-                in.close();
-            } catch (IOException e) {
-            }
-            in = null;
-        }
+    public void close(HttpURLConnection conn) {
 
         if (conn != null) {
             conn.disconnect();
@@ -184,7 +160,7 @@ public abstract class BaseConnection {
                                                                     IOException {
 
         URL u = new URL(url);
-        HttpURLConnection conn = u.openConnection();
+        HttpURLConnection conn = (HttpURLConnection)u.openConnection();
 
         setConnProperties(conn);
 
@@ -208,9 +184,9 @@ public abstract class BaseConnection {
                                                                      IOException {
 
         URL u = new URL(url);
-        HttpURLConnection conn = u.openConnection();
+        HttpURLConnection conn = (HttpURLConnection)u.openConnection();
 
-        setConnectionProperties(conn);
+        setConnProperties(conn);
 
         conn.setRequestMethod(HTTP_POST);
         conn.setDoInput(true);
@@ -220,63 +196,70 @@ public abstract class BaseConnection {
     }
 
     /**
-     * Crafts an invalid argument error response
-     *
-     * @param msg The error message
-     * @return The ServerResponse object
-     */
-    public NetworkResponse createInvalidArgumentErrorResponse(String msg) {
-        NetworkError error = new NetworkError(ErrorType.INVALID_ARGUMENT, msg);
-        return new ServerResponse(error);
-    }
-
-    /**
-     * Create a new Internal error response
-     *
-     * @param exception The exception that caused the internal error
-     * @return The ServerResponse object
-     */
-    public NetworkResponse createInternalErrorResponse(Exception exception) {
-        NetworkError error = new NetworkError(ErrorType.INTERNAL_ERROR, exception);
-        return new ServerResponse(error);
-    }
-
-    /**
-     * @param conn
-     * @param length
-     */
-    public void setFixedLengthMode(HttpURLConnection conn, long length) {
-
-        // do not set fixed length if length is <= 0
-        if (length <= 0) {
-            return;
-        }
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
-            conn.setFixedLengthStreamingMode(length);
-        } else {
-            conn.setFixedLengthStreamingMode((int) length);
-        }
-    }
-
-    /**
      * Reads a String from the given Inputstream.
      *
-     * @param is The inputstream to read from
+     * @param conn The HttpURLConnection to read from
      * @return The string representation read from the inputstream
      * @throws IOException when an error occured
      */
-    public String readInputStream(InputStream is) throws IOException {
+    public String readFromInputStream(HttpURLConnection conn) throws IOException {
 
+        try (InputStream in = conn.getInputStream();
+             InputStreamReader ir = new InputStreamReader(in);
+             BufferedReader rd = new BufferedReader(ir)) {
+
+            return readFromBufferedReader(rd);
+        }
+    }
+
+
+    /**
+     * Reads a String from the error stream
+     *
+     * @param conn The HttpURLConnection to read from
+     * @return The string representation read from the inputstream
+     * @throws IOException when an error occured
+     */
+    public String readFromErrorStream(HttpURLConnection conn) throws IOException {
+
+        try (InputStream in = conn.getErrorStream();
+             InputStreamReader ir = new InputStreamReader(in);
+             BufferedReader rd = new BufferedReader(ir)) {
+
+            return readFromBufferedReader(rd);
+        }
+    }
+
+    /** 
+     * Write the data to the OutputStream of the 
+     * HttpURLConnection with UTF8 encoding
+     * 
+     * @param conn
+     * @param data 
+     */    
+    public void writeToOutputStream(HttpURLConnection conn, String data) throws IOException {
+
+        try (OutputStream out = conn.getOutputStream()) {
+            out.write(data.getBytes(UTF8));
+        }
+    }
+    
+    /** 
+     * Read all content as a String from the buffered reader
+     * 
+     * @return The content from the buffered reader
+     */
+    private String readFromBufferedReader(BufferedReader in) throws IOException {
+        
         String line = null;
         StringBuilder buf = new StringBuilder();
-        BufferedReader rd = new BufferedReader(new InputStreamReader(is));
 
-        while ((line = rd.readLine()) != null) {
+        while ((line = in.readLine()) != null) {
             buf.append(line);
         }
         return buf.toString();
     }
-
+    
     /**
      * HTTP connection reuse which was buggy pre-froyo release
      * so we disable the keep alive function
@@ -290,45 +273,20 @@ public abstract class BaseConnection {
     /**
      * Handle the error response from the Payment API
      *
-     * @param type
+     * @param source
      * @param statusCode
      * @param conn
      * @return NetworkResponse
      */
-    public NetworkResponse handleErrorResponse(String type, int statusCode, HttpURLConnection conn) throws IOException {
+    public NetworkResponse handleAPIErrorResponse(String source, int statusCode, HttpURLConnection conn) throws IOException {
 
-        try (InputStream in = conn.getErrorStream()) {
+        String msg = source + " - errorData: " + readFromErrorStream(conn);
+        ErrorType errorType = ErrorType.API_ERROR;
 
-            String errorData = readInputStream(in);
-            NetworkError error = null;
-
-            switch (statusCode) {
-            case HttpURLConnection.HTTP_BAD_REQUEST:
-            case HttpURLConnection.HTTP_INTERNAL_ERROR:
-                error = new NetworkError(ErrorType.API_ERROR, statusCode, type + " - " + errorData);
-                break;
-            default:
-                String msg = type + " - Unexpected status code: " + statusCode + ", errorData: " + errorData;
-                error = new NetworkError(ErrorType.PROTOCOL_ERROR, statusCode, msg);
-            }
-            return new NetworkResponse(error);
+        switch (statusCode) {
+        case HttpURLConnection.HTTP_NOT_FOUND:
+            errorType = ErrorType.NOT_FOUND;
         }
-    }
-
-    /**
-     * Handle an unexpected Exception while executing one of the HTTP requests
-     *
-     * @param cause the exception cause to handle
-     * @return The NetworkResponse with a NetworkError explaining the error
-     */
-    public NetworkResponse handleException(Exception cause) {
-
-        //Log.w(tag, e);
-        ErrorType errorType = ErrorType.PROTOCOL_ERROR;
-
-        if (e instanceof IOException) {
-            errorType = ErrorType.CONN_ERROR;
-        }
-        return new NetworkResponse(new NetworkError(errorType, cause));
+        return new NetworkResponse(new NetworkError(errorType, msg, statusCode, null));
     }
 }

@@ -23,7 +23,9 @@ public final class NetworkError {
         API_ERROR("API_ERROR"),
         CONN_ERROR("CONN_ERROR"),
         INTERNAL_ERROR("INTERNAL_ERROR"),
+        SECURITY_ERROR("SECURITY_ERROR"),
         INVALID_VALUE("INVALID_VALUE"),
+        NOT_FOUND("NOT_FOUND"),
         PROTOCOL_ERROR("PROTOCOL_ERROR");
         
         private String value;
@@ -65,31 +67,11 @@ public final class NetworkError {
      * @param message
      * @param cause
      */
-    public NetworkError(ErrorType errorType, int statusCode, String message, Exception cause) {
+    public NetworkError(ErrorType errorType, String message, int statusCode, Exception cause) {
         this.errorType = errorType;
-        this.statusCode = statusCode;
         this.message = message;
+        this.statusCode = statusCode;
         this.cause = cause;
-    }
-
-    /**
-     * Construct a new NetworkError
-     *
-     * @param errorType
-     * @param message
-     */
-    public NetworkError(ErrorType errorType, String message) {
-        this(errorType, 0, message, null);
-    }
-
-    /**
-     * Construct a new NetworkError
-     *
-     * @param errorType
-     * @param cause
-     */
-    public NetworkError(ErrorType errorType, Exception cause) {
-        this(errorType, 0, null, cause);
     }
 
     /** 
@@ -129,5 +111,6 @@ public final class NetworkError {
             sb.append(this.cause);
         }
         sb.append("]");
+        return sb.toString();
     }
 }

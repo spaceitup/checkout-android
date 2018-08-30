@@ -18,6 +18,8 @@ import java.lang.reflect.Type;
 import java.net.HttpURLConnection;
 import java.util.ArrayList;
 import java.util.List;
+import java.net.MalformedURLException;
+import java.io.IOException;
 
 /**
  * Class implementing the communication with the List payment API
@@ -35,55 +37,56 @@ public final class ListConnection extends BaseConnection {
      * @param url The url to be used
      */
     public ListConnection(String url) {
-        super(url, "payment_ListConnection");
+        super(url);
     }
 
     /**
      * Make a new list request to the Payment API
      *
-     * @param authentication The authentication header data
+     * @param authorization The authorization header data
      * @return The NetworkResponse
      */
-    public NetworkResponse createListRequest(String authentication) {
+    public NetworkResponse createListRequest(String authorization) {
 
-        if (TextUtils.isEmpty(authentication)) {
-            return NetworkResponse.newInvalidValueResponse("authentication cannot be null or empty"); 
+        if (TextUtils.isEmpty(authorization)) {
+            return NetworkResponse.newInvalidValueResponse("authorization cannot be null or empty"); 
         }
 
-        NetworkResponse resp   = null;
+        String source = "ListConnection[createListRequest]";
         HttpURLConnection conn = null;
-        InputStream in         = null;
-        OutputStream out       = null;
+        NetworkResponse resp = null;
 
         try {
 
             Uri.Builder builder = Uri.parse(url).buildUpon().appendPath(URI_PATH_API).appendPath(URI_PATH_LISTS);
             builder.appendQueryParameter(URI_PARAM_VIEW, VALUE_VIEW);
 
-            String jsonParams = "{}";
-            conn = createPostConnection(uri.build().toString());
-            conn.setRequestProperty(HEADER_AUTHORIZATION, authentication);
+            String data = "{}";
+            conn = createPostConnection(builder.build().toString());
+            conn.setRequestProperty(HEADER_AUTHORIZATION, authorization);
             conn.setRequestProperty(HEADER_CONTENT_TYPE, VALUE_VND_JSON);
             conn.setRequestProperty(HEADER_ACCEPT, VALUE_VND_JSON);
-            
-            out = conn.getOutputStream();
-            out.write(jsonParams.getBytes(UTF8));
+
+            writeToOutputStream(conn, data);
 
             conn.connect();
             int rc = conn.getResponseCode();
 
             switch (rc) {
             case HttpURLConnection.HTTP_OK:
-                in = conn.getInputStream();
-                resp = handleCreateListRequestOk(readInputStream(in));
+                resp = handleCreateListRequestOk(readFromInputStream(conn));
                 break;
             default:
-                resp = handleErrorResponse("createListRequest", rc, conn);
+                resp = handleAPIErrorResponse(source, rc, conn);
             }
-        } catch (Exception e) {
-            resp = handleException(e);
+        } catch (MalformedURLException e) {
+            resp = NetworkResponse.newInternalErrorResponse(source, e);
+        } catch (IOException e) {
+            resp = NetworkResponse.newConnErrorResponse(source, e);
+        } catch (SecurityException e) {
+            resp = NetworkResponse.newSecurityErrorResponse(source, e);            
         } finally {
-            close(conn, in, out);
+            close(conn);
         }
         return resp;
     }

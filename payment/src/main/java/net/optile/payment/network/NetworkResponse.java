@@ -28,12 +28,13 @@ public final class NetworkResponse {
     /**
      * The data holder
      */
-    public HashMap<String, Object> data = new HashMap<String, Object>();
+    public HashMap<String, Object> data;
 
     /**
      * Constructs a new empty NetworkResponse
      */
     public NetworkResponse() {
+        data = new HashMap<String, Object>();
     }
 
     /**
@@ -66,12 +67,91 @@ public final class NetworkResponse {
     /**
      * Create a new invalid value network response
      *
-     * @param message The error message
-     * @return The newly created invalid value network response
+     * @param message   The error message
+     * @param cause     The optional exception that caused the error
+     * @return The newly created network error response
      */
     public final static NetworkResponse newInvalidValueResponse(String message) {
 
-        NetworkError error = new NetworkError(ErrorType.INVALID_VALUE, message);
+        NetworkError error = new NetworkError(ErrorType.INVALID_VALUE, message, 0, null);
+        return new NetworkResponse(error);
+    }
+
+    /**
+     * Create a new API Error network response
+     *
+     * @param message       The error message
+     * @param statusCode    The network status code
+     * @return The newly created network error response
+     */
+    public final static NetworkResponse newApiErrorResponse(String message, int statusCode) {
+
+        NetworkError error = new NetworkError(ErrorType.API_ERROR, message, statusCode, null);
+        return new NetworkResponse(error);
+    }
+
+    /**
+     * Create a new connection error response
+     *
+     * @param message   The error message
+     * @param cause     The optional exception that caused the error
+     * @return The newly created network error response
+     */
+    public final static NetworkResponse newConnErrorResponse(String message, Exception cause) {
+
+        NetworkError error = new NetworkError(ErrorType.CONN_ERROR, message, 0, cause);
+        return new NetworkResponse(error);
+    }
+
+    /**
+     * Create a new security error response
+     *
+     * @param message   The error message
+     * @param cause     the optional exception that caused the error
+     * @return The newly created network error response
+     */
+    public final static NetworkResponse newSecurityErrorResponse(String message, Exception cause) {
+
+        NetworkError error = new NetworkError(ErrorType.SECURITY_ERROR, message, 0, cause);
+        return new NetworkResponse(error);
+    }
+    
+    /**
+     * Create a new internal error response
+     *
+     * @param message   The error message
+     * @param cause     the optional exception that caused the error
+     * @return The newly created network error response
+     */
+    public final static NetworkResponse newInternalErrorResponse(String message, Exception cause) {
+
+        NetworkError error = new NetworkError(ErrorType.INTERNAL_ERROR, message, 0, cause);
+        return new NetworkResponse(error);
+    }
+
+    /**
+     * Create a new protocol error response
+     *
+     * @param message   The error message
+     * @param cause     the optional exception that caused the error
+     * @return The newly created network error response
+     */
+    public final static NetworkResponse newProtocolErrorResponse(String message, Exception cause) {
+
+        NetworkError error = new NetworkError(ErrorType.PROTOCOL_ERROR, message, 0, cause);
+        return new NetworkResponse(error);
+    }
+
+    /**
+     * Create a new not found response
+     *
+     * @param message       The error message
+     * @param statusCode    The statusCode containing the NOT_FOUND value
+     * @return The newly created network error response
+     */
+    public final static NetworkResponse newNotFoundResponse(String message, int statusCode) {
+
+        NetworkError error = new NetworkError(ErrorType.NOT_FOUND, message, statusCode, null);
         return new NetworkResponse(error);
     }
     
