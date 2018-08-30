@@ -17,6 +17,10 @@ import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
+import android.widget.Button;
+import android.content.Intent;
+
+import net.optile.example.checkout.CheckoutActivity;
 
 /**
  *
@@ -39,5 +43,18 @@ public class MainActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
 
         Log.i(TAG, "test string: " + getString(R.string.payment_authorization));
+
+
+        Button button = findViewById(R.id.button_id);
+        button.setOnClickListener(new View.OnClickListener() {
+                public void onClick(View v) {
+                    onButtonClicked();
+                }
+            });
+    }
+
+    private void onButtonClicked() {
+        Intent intent = CheckoutActivity.createStartIntent(this);
+        startActivity(intent);
     }
 }

@@ -57,6 +57,9 @@ public class CheckoutActivity extends AppCompatActivity implements CheckoutView 
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.activity_checkout);
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+
         this.presenter = new CheckoutPresenter(this);
     }
 
@@ -77,6 +80,9 @@ public class CheckoutActivity extends AppCompatActivity implements CheckoutView 
     public void onResume() {
         super.onResume();
         this.active = true;
+
+        // make a new list request to the Payment API
+        this.presenter.newListRequest(getString(R.string.payment_authorization));
     }
 
     /**
