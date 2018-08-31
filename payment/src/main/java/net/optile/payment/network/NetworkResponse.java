@@ -13,6 +13,8 @@ package net.optile.payment.network;
 
 import net.optile.payment.network.NetworkError.ErrorType;
 
+import com.btelligent.optile.pds.api.rest.model.payment.pci.ListResult;
+
 import java.util.HashMap;
 
 /**
@@ -21,6 +23,8 @@ import java.util.HashMap;
  */
 public final class NetworkResponse {
 
+    private static String KEY_LISTRESULT    = "listresult";
+    
     /**
      * The network error
      */
@@ -68,8 +72,8 @@ public final class NetworkResponse {
     /**
      * Create a new invalid value network response
      *
-     * @param message   The error message
-     * @return The newly created network error response
+     * @param message the error message
+     * @return        the newly created network error response
      */
     public final static NetworkResponse newInvalidValueResponse(String message) {
 
@@ -80,9 +84,9 @@ public final class NetworkResponse {
     /**
      * Create a new API Error network response
      *
-     * @param message       The error message
-     * @param statusCode    The network status code
-     * @return The newly created network error response
+     * @param message    the error message
+     * @param statusCode the network status code
+     * @return           the newly created network error response
      */
     public final static NetworkResponse newApiErrorResponse(String message, int statusCode) {
 
@@ -93,9 +97,9 @@ public final class NetworkResponse {
     /**
      * Create a new connection error response
      *
-     * @param message   The error message
-     * @param cause     The optional exception that caused the error
-     * @return The newly created network error response
+     * @param message the error message
+     * @param cause   the optional exception that caused the error
+     * @return        the newly created network error response
      */
     public final static NetworkResponse newConnErrorResponse(String message, Exception cause) {
 
@@ -106,9 +110,9 @@ public final class NetworkResponse {
     /**
      * Create a new security error response
      *
-     * @param message   The error message
-     * @param cause     the optional exception that caused the error
-     * @return The newly created network error response
+     * @param message the error message
+     * @param cause   the optional exception that caused the error
+     * @return        the newly created network error response
      */
     public final static NetworkResponse newSecurityErrorResponse(String message, Exception cause) {
 
@@ -119,9 +123,9 @@ public final class NetworkResponse {
     /**
      * Create a new internal error response
      *
-     * @param message   The error message
-     * @param cause     the optional exception that caused the error
-     * @return The newly created network error response
+     * @param message the error message
+     * @param cause   the optional exception that caused the error
+     * @return        the newly created network error response
      */
     public final static NetworkResponse newInternalErrorResponse(String message, Exception cause) {
 
@@ -132,9 +136,9 @@ public final class NetworkResponse {
     /**
      * Create a new protocol error response
      *
-     * @param message   The error message
-     * @param cause     the optional exception that caused the error
-     * @return The newly created network error response
+     * @param message the error message
+     * @param cause   the optional exception that caused the error
+     * @return        the newly created network error response
      */
     public final static NetworkResponse newProtocolErrorResponse(String message, Exception cause) {
 
@@ -145,9 +149,9 @@ public final class NetworkResponse {
     /**
      * Create a new not found response
      *
-     * @param message       The error message
-     * @param statusCode    The statusCode containing the NOT_FOUND value
-     * @return The newly created network error response
+     * @param message    the error message
+     * @param statusCode the statusCode containing the NOT_FOUND value
+     * @return           the newly created network error response
      */
     public final static NetworkResponse newNotFoundResponse(String message, int statusCode) {
 
@@ -175,88 +179,21 @@ public final class NetworkResponse {
     }
 
     /**
-     * Gets the integer value from this NetworkResponse object.
+     * Gets the ListResult from this network response
      *
-     * @param key The key for this value.
-     * @return The integer value or 0 when the value could not be found or -1
-     * if the value Object was not an Integer.
+     * @return the ListResult or null if it does not 
+     *         exist in this response
      */
-    public int getInt(String key) {
-
-        Object v = data.get(key);
-        if (v == null) {
-            return 0;
-        }
-        return (v instanceof Integer) ? (Integer) v : -1;
+    public ListResult getListResult() {
+        return (ListResult)data.get(KEY_LISTRESULT);
     }
 
     /**
-     * Gets the String value given the key.
+     * Puts a ListResult into this NetworkResponse
      *
-     * @param key The key for this value.
-     * @return null if the value was not stored in this NetworkResponse
-     * or the String value for the given key.
+     * @param listResult The ListResult object to be stored in this NetworkResponse
      */
-    public String getString(String key) {
-
-        Object v = data.get(key);
-        if (v == null) {
-            return null;
-        }
-        return (v instanceof String) ? (String) v : v.toString();
-    }
-
-    /**
-     * Gets the String value given the key.
-     *
-     * @param key      The key for this value.
-     * @param defValue The default value returned if the key was not found.
-     * @return The default value, or the String value
-     * mapped by this key.
-     */
-    public String getString(String key, String defValue) {
-
-        Object v = data.get(key);
-        if (v == null) {
-            return defValue;
-        }
-        return (v instanceof String) ? (String) v : v.toString();
-    }
-
-    /**
-     * Gets the boolean value given the key.
-     *
-     * @param key The key for this value.
-     * @return false if they key was not found or the boolean value
-     * stored in this NetworkResponse object otherwise.
-     */
-    public boolean getBoolean(String key) {
-
-        Object v = data.get(key);
-        return v != null && (v instanceof Boolean) && ((Boolean) v).booleanValue();
-    }
-
-    /**
-     * Gets the Object mapped to the key.
-     *
-     * @param key The key for this value.
-     * @return null if the key is not found, otherwise
-     * the value of the Object this key is mapped to.
-     */
-    public Object getObject(String key) {
-        return data.get(key);
-    }
-
-    /**
-     * Puts a value into this NetworkResponse object given the key.
-     *
-     * @param key   The key for which the value should be mapped.
-     * @param value The actual value mapped to the key.
-     */
-    @SuppressWarnings("unchecked")
-    public void put(String key, Object value) {
-        if (key != null && value != null) {
-            data.put(key, value);
-        }
+    public void putListResult(ListResult listResult) {
+        data.put(KEY_LISTRESULT, listResult);
     }
 }

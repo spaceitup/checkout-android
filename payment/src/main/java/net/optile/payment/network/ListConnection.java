@@ -19,6 +19,15 @@ import java.io.IOException;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 
+import org.json.JSONObject;
+import org.json.JSONException;
+
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.google.gson.JsonParseException;
+
+import com.btelligent.optile.pds.api.rest.model.payment.pci.ListResult;
+
 /**
  * Class implementing the communication with the List payment API
  * <p>
@@ -29,6 +38,13 @@ import java.net.MalformedURLException;
  */
 public final class ListConnection extends BaseConnection {
 
+    /** 
+     * For now we will use Gson to parse json content
+     * This will be changed at a later stage as no external 
+     * libraries should be used
+     */
+    private Gson gson;
+
     /**
      * Construct a new ListConnection
      *
@@ -36,6 +52,7 @@ public final class ListConnection extends BaseConnection {
      */
     public ListConnection(String url) {
         super(url);
+        this.gson = new GsonBuilder().create();
     }
 
     /**
@@ -81,6 +98,8 @@ public final class ListConnection extends BaseConnection {
             default:
                 resp = handleAPIErrorResponse(source, rc, conn);
             }
+        } catch (JsonParseException e) {
+            resp = NetworkResponse.newProtocolErrorResponse(source, e);            
         } catch (MalformedURLException e) {
             resp = NetworkResponse.newInternalErrorResponse(source, e);
         } catch (IOException e) {
@@ -99,8 +118,11 @@ public final class ListConnection extends BaseConnection {
      * @param  data the response data received from the API
      * @return      the network response containing the ListResult
      */
-    private NetworkResponse handleCreateListRequestOk(String data) {
-        Log.i("payment_ListConnection", "data: " + data);
-        return new NetworkResponse();
+    private NetworkResponse handleCreateListRequestOk(String data) throws JsonParseException {
+
+        ListResult result = gson.fromJson(data, ListResult.class);
+        NetworkResponse resp = new NetworkResponse();
+        resp.putListResult(result);
+        return resp;
     }
 }

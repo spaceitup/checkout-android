@@ -77,9 +77,8 @@ public final class NetworkError {
     /** 
      * Check if this error is of the given type
      * 
-     * @param errorType
-     * 
-     * @return true when it is the same error, false otherwise
+     * @param  errorType the type identifying this error
+     * @return           true when it is the same error, false otherwise
      */
     public boolean isError(ErrorType errorType) {
         return this.errorType == errorType;

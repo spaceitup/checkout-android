@@ -63,7 +63,7 @@ public abstract class BaseConnection {
     /**
      * Construct a new BaseConnection
      *
-     * @param url       The base url pointing to the API
+     * @param url the base url pointing to the API
      */
     public BaseConnection(String url) {
 
@@ -80,7 +80,7 @@ public abstract class BaseConnection {
     /**
      * Get the user agent to be send with each request
      *
-     * @return The user agent value to be send 
+     * @return the user agent value to be send 
      */
     public static String getUserAgent() {
 
@@ -117,9 +117,10 @@ public abstract class BaseConnection {
     }
 
     /**
-     * This method will try to close the HttpURLConnection if it exists
+     * This method will try to close the 
+     * HttpURLConnection if it exists
      * 
-     * @param conn The connection to close
+     * @param conn the connection to close
      */
     public void close(HttpURLConnection conn) {
 
@@ -143,11 +144,10 @@ public abstract class BaseConnection {
     /**
      * Creates a new HTTP GET connection
      *
-     * @param url   The Url to connect to
-     *
-     * @return HttpURLConnection     A HttpURLConnection object
-     * @throws MalformedURLException URL creation failed
-     * @throws IOException           IOException
+     * @param url                    the Url pointing to the Payment API
+     * @return HttpURLConnection     a HttpURLConnection object
+     * @throws MalformedURLException URL format is malformed
+     * @throws IOException           when i.e. a network error occured
      */
     public HttpURLConnection createGetConnection(String url) throws MalformedURLException,
                                                                     IOException {
@@ -191,8 +191,8 @@ public abstract class BaseConnection {
     /**
      * Reads a String from the given Inputstream.
      *
-     * @param conn The HttpURLConnection to read from
-     * @return The string representation read from the inputstream
+     * @param conn         the HttpURLConnection to read from
+     * @return             the string representation read from the inputstream
      * @throws IOException when an error occured
      */
     public String readFromInputStream(HttpURLConnection conn) throws IOException {
@@ -209,8 +209,8 @@ public abstract class BaseConnection {
     /**
      * Reads a String from the error stream
      *
-     * @param conn The HttpURLConnection to read from
-     * @return The string representation read from the inputstream
+     * @param conn         the HttpURLConnection to read from
+     * @return             the string representation read from the inputstream
      * @throws IOException when an error occured
      */
     public String readFromErrorStream(HttpURLConnection conn) throws IOException {
