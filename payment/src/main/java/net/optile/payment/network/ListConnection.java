@@ -80,10 +80,13 @@ public final class ListConnection extends BaseConnection {
 
         try {
 
-            Uri.Builder builder = Uri.parse(url).buildUpon().appendPath(URI_PATH_API).appendPath(URI_PATH_LISTS);
-            builder.appendQueryParameter(URI_PARAM_VIEW, VALUE_VIEW);
-            
-            conn = createPostConnection(builder.build().toString());
+            String requestUrl = Uri.parse(url).buildUpon()
+                .appendPath(URI_PATH_API)
+                .appendPath(URI_PATH_LISTS)
+                .appendQueryParameter(URI_PARAM_VIEW, VALUE_VIEW)
+                .build().toString();
+
+            conn = createPostConnection(requestUrl);
             conn.setRequestProperty(HEADER_AUTHORIZATION, authorization);
             conn.setRequestProperty(HEADER_CONTENT_TYPE, VALUE_VND_JSON);
             conn.setRequestProperty(HEADER_ACCEPT, VALUE_VND_JSON);
@@ -134,10 +137,11 @@ public final class ListConnection extends BaseConnection {
 
         try {
 
-            Uri.Builder builder = Uri.parse(url.toString()).buildUpon();
-            builder.appendQueryParameter(URI_PARAM_VIEW, VALUE_VIEW);
+            String requestUrl = Uri.parse(url.toString()).buildUpon()
+                .appendQueryParameter(URI_PARAM_VIEW, VALUE_VIEW)
+                .build().toString();
 
-            conn = createGetConnection(builder.build().toString());
+            conn = createGetConnection(requestUrl);
             conn.setRequestProperty(HEADER_CONTENT_TYPE, VALUE_VND_JSON);
             conn.setRequestProperty(HEADER_ACCEPT, VALUE_VND_JSON);
 
