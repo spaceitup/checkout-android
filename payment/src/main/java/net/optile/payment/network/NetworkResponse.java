@@ -160,25 +160,6 @@ public final class NetworkResponse {
     }
     
     /**
-     * {@inheritDoc}
-     */
-    @Override
-    public String toString() {
-        StringBuilder sb = new StringBuilder();
-        sb.append("NetworkResponse[");
-
-        if (error == null) {
-            sb.append("OK");
-        }
-        else {
-            sb.append("ERROR: ");
-            sb.append(error);
-        }
-        sb.append("]");
-        return sb.toString();
-    }
-
-    /**
      * Gets the ListResult from this network response
      *
      * @return the ListResult or null if it does not 
@@ -195,5 +176,24 @@ public final class NetworkResponse {
      */
     public void putListResult(ListResult listResult) {
         data.put(KEY_LISTRESULT, listResult);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public String toString() {
+        StringBuilder sb = new StringBuilder();
+        sb.append("NetworkResponse[");
+
+        if (error == null) {
+            sb.append("OK");
+        }
+        else {
+            sb.append("ERROR: ");
+            sb.append(error);
+        }
+        sb.append("]");
+        return sb.toString();
     }
 }

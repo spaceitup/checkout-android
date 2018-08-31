@@ -16,6 +16,8 @@ import android.net.Uri;
 import android.text.TextUtils;
 
 import java.io.IOException;
+import java.net.URL;
+
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 
@@ -113,6 +115,56 @@ public final class ListConnection extends BaseConnection {
     }
 
     /**
+     * Make a get request to the Payment API in order to 
+     * obtain the details of an active list
+     *
+     * @param  url  the url pointing to the list
+     * @return      the NetworkResponse containing either an error or the ListResult
+     */
+    public NetworkResponse getListResult(URL url) {
+
+        if (url == null) {
+            return NetworkResponse.newInvalidValueResponse("url cannot be null or empty"); 
+        }
+        
+        String source = "ListConnection[getListResult]";
+        HttpURLConnection conn = null;
+        NetworkResponse resp = null;
+
+        try {
+
+            Uri.Builder builder = Uri.parse(url.toString()).buildUpon();
+            builder.appendQueryParameter(URI_PARAM_VIEW, VALUE_VIEW);
+
+            conn = createGetConnection(builder.build().toString());
+            conn.setRequestProperty(HEADER_CONTENT_TYPE, VALUE_VND_JSON);
+            conn.setRequestProperty(HEADER_ACCEPT, VALUE_VND_JSON);
+
+            conn.connect();
+            int rc = conn.getResponseCode();
+
+            switch (rc) {
+            case HttpURLConnection.HTTP_OK:
+                resp = handleGetListResultOk(readFromInputStream(conn));
+                break;
+            default:
+                resp = handleAPIErrorResponse(source, rc, conn);
+            }
+        } catch (JsonParseException e) {
+            resp = NetworkResponse.newProtocolErrorResponse(source, e);            
+        } catch (MalformedURLException e) {
+            resp = NetworkResponse.newInternalErrorResponse(source, e);
+        } catch (IOException e) {
+            resp = NetworkResponse.newConnErrorResponse(source, e);
+        } catch (SecurityException e) {
+            resp = NetworkResponse.newSecurityErrorResponse(source, e);            
+        } finally {
+            close(conn);
+        }
+        return resp;
+    }
+    
+    /**
      * Handle the create list request OK state
      *
      * @param  data the response data received from the API
@@ -125,4 +177,19 @@ public final class ListConnection extends BaseConnection {
         resp.putListResult(result);
         return resp;
     }
+
+    /**
+     * Handle get list result OK state
+     *
+     * @param  data the response data received from the Payment API
+     * @return      the network response containing the ListResult
+     */
+    private NetworkResponse handleGetListResultOk(String data) throws JsonParseException {
+
+        ListResult result = gson.fromJson(data, ListResult.class);
+        NetworkResponse resp = new NetworkResponse();
+        resp.putListResult(result);
+        return resp;
+    }
+
 }

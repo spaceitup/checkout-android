@@ -112,20 +112,23 @@ class CheckoutPresenter {
     }
 
     private void onListRequestCreated(NetworkResponse response) {
-
-        ListResult result = response.getListResult();
-
-        Map<String, URL> links = result.getLinks();
-        URL url = links.get("self");
-
-        if (url != null) {
-            Log.i(TAG, "url: " + url);
-        }
+        Log.i(TAG, "onListRequestCreated: " + response);
     }
     
     private NetworkResponse handleNewListRequest(String url, String authorization, String data) throws CheckoutException {
 
         ListConnection conn = new ListConnection(url);
-        return conn.createListRequest(authorization, data);
+        NetworkResponse response = conn.createListRequest(authorization, data);
+
+        ListResult result = response.getListResult();
+        Map<String, URL> links = result.getLinks();
+        URL selfURL = links.get("self");
+
+        if (selfURL != null) {
+            Log.i(TAG, "getListResult: " + selfURL);
+            return conn.getListResult(selfURL);            
+        } else {
+            return response;
+        }
     }
 }
