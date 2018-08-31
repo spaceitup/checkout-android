@@ -24,8 +24,8 @@ import java.util.HashMap;
  */
 public final class NetworkResponse {
 
-    private static String KEY_LIST    = "list";
-    private static String KEY_CHARGE  = "charge";
+    private static String KEY_LISTSESSION   = "listsession";
+    private static String KEY_CHARGE        = "charge";
     
     /**
      * The network error
@@ -162,22 +162,22 @@ public final class NetworkResponse {
     }
     
     /**
-     * Gets the List from this network response
+     * Gets the list session from this network response
      *
-     * @return the List or null if it does not 
+     * @return the list session or null if it does not 
      *         exist in this response
      */
     public List getListSession() {
-        return (List)data.get(KEY_LIST);
+        return (List)data.get(KEY_LISTSESSION);
     }
 
     /**
-     * Puts a List into this NetworkResponse
+     * Puts a list session into this NetworkResponse
      *
-     * @param list The List object to be stored in this NetworkResponse
+     * @param list The list session to be stored in this NetworkResponse
      */
     public void putListSession(List list) {
-        data.put(KEY_LIST, list);
+        data.put(KEY_LISTSESSION, list);
     }
 
     /**

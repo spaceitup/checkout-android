@@ -87,7 +87,7 @@ public class CheckoutActivity extends AppCompatActivity implements CheckoutView 
         String auth = getString(R.string.payment_authorization);
         String data = AppUtils.readRawResource(getResources(), R.raw.list);
 
-        this.presenter.newListRequest(url, auth, data);
+        this.presenter.createListSession(url, auth, data);
     }
 
     /**

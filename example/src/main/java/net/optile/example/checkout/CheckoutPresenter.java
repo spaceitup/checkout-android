@@ -66,13 +66,13 @@ class CheckoutPresenter {
      *
      * @return true when active, false otherwise
      */
-    boolean isListRequestActive() {
+    boolean isCreateListSessionActive() {
         return subscription != null && !subscription.isUnsubscribed();
     }
     
     /** 
-     * Make a list request, normally mobile apps using the 
-     * Android Payment SDK do not make list requests. 
+     * Create a new list session, normally mobile apps using the 
+     * Android Payment SDK do not create new list sessions. 
      * Instead the merchant backend sends this request to 
      * the Payment API.
      *
@@ -80,9 +80,9 @@ class CheckoutPresenter {
      * @param authorization The authorization header for the list request
      * @param data          The data to be send in the list request
      */
-    void newListRequest(final String url, final String authorization, final String data) {
+    void createListSession(final String url, final String authorization, final String data) {
 
-        if (isListRequestActive()) {
+        if (isCreateListSessionActive()) {
             return;
         }
 
@@ -90,7 +90,7 @@ class CheckoutPresenter {
 
                 @Override
                 public NetworkResponse call() throws CheckoutException {
-                    return handleNewListRequest(url, authorization, data);
+                    return handleCreateListSession(url, authorization, data);
                 }
             });
         
@@ -100,7 +100,7 @@ class CheckoutPresenter {
 
                     @Override
                     public void onSuccess(NetworkResponse response) {
-                        onListRequestSuccess(response);
+                        onCreateListSessionSuccess(response);
                     }
 
                     @Override
@@ -110,11 +110,11 @@ class CheckoutPresenter {
                 });
     }
 
-    private void onListRequestSuccess(NetworkResponse response) {
-        Log.i(TAG, "onListRequestSuccess: " + response);
+    private void onCreateListSessionSuccess(NetworkResponse response) {
+        Log.i(TAG, "onCreateListSessionSuccess: " + response);
     }
     
-    private NetworkResponse handleNewListRequest(String url, String authorization, String data) throws CheckoutException {
+    private NetworkResponse handleCreateListSession(String url, String authorization, String data) throws CheckoutException {
 
         ListConnection conn = new ListConnection(url);
         NetworkResponse response = conn.createListSession(authorization, data);
