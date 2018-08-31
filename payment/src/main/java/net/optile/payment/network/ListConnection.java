@@ -28,7 +28,7 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonParseException;
 
-import com.btelligent.optile.pds.api.rest.model.payment.pci.ListResult;
+import com.btelligent.optile.pds.api.rest.model.payment.enterprise.extensible.List;
 
 /**
  * Class implementing the communication with the List payment API
@@ -58,23 +58,23 @@ public final class ListConnection extends BaseConnection {
     }
 
     /**
-     * Make a new list request to the Payment API
+     * Create a new list session through the Payment API
      *
      * @param  authorization the authorization header data
      * @param  data          the data containing the request body for the list request
-     * @return               the NetworkResponse containing either an error or the ListResult
+     * @return               the NetworkResponse containing either an error or the List
      */
-    public NetworkResponse createListRequest(String authorization, String data) {
+    public NetworkResponse createListSession(String authorization, String data) {
 
+        String source = "ListConnection[createListSession]";
+        
         if (TextUtils.isEmpty(authorization)) {
-            return NetworkResponse.newInvalidValueResponse("authorization cannot be null or empty"); 
+            return NetworkResponse.newInvalidValueResponse(source + " - authorization cannot be null or empty"); 
         }
-
         if (TextUtils.isEmpty(data)) {
-            return NetworkResponse.newInvalidValueResponse("data cannot be null or empty"); 
+            return NetworkResponse.newInvalidValueResponse(source + " - data cannot be null or empty"); 
         }
         
-        String source = "ListConnection[createListRequest]";
         HttpURLConnection conn = null;
         NetworkResponse resp = null;
 
@@ -82,7 +82,7 @@ public final class ListConnection extends BaseConnection {
 
             Uri.Builder builder = Uri.parse(url).buildUpon().appendPath(URI_PATH_API).appendPath(URI_PATH_LISTS);
             builder.appendQueryParameter(URI_PARAM_VIEW, VALUE_VIEW);
-
+            
             conn = createPostConnection(builder.build().toString());
             conn.setRequestProperty(HEADER_AUTHORIZATION, authorization);
             conn.setRequestProperty(HEADER_CONTENT_TYPE, VALUE_VND_JSON);
@@ -95,7 +95,7 @@ public final class ListConnection extends BaseConnection {
 
             switch (rc) {
             case HttpURLConnection.HTTP_OK:
-                resp = handleCreateListRequestOk(readFromInputStream(conn));
+                resp = handleCreateListSessionOk(readFromInputStream(conn));
                 break;
             default:
                 resp = handleAPIErrorResponse(source, rc, conn);
@@ -116,18 +116,19 @@ public final class ListConnection extends BaseConnection {
 
     /**
      * Make a get request to the Payment API in order to 
-     * obtain the details of an active list
+     * obtain the details of an active list session
      *
      * @param  url  the url pointing to the list
      * @return      the NetworkResponse containing either an error or the ListResult
      */
-    public NetworkResponse getListResult(URL url) {
+    public NetworkResponse getListSession(URL url) {
+
+        String source = "ListConnection[getListSession]";        
 
         if (url == null) {
-            return NetworkResponse.newInvalidValueResponse("url cannot be null or empty"); 
+            return NetworkResponse.newInvalidValueResponse(source + " - url cannot be null or empty"); 
         }
-        
-        String source = "ListConnection[getListResult]";
+
         HttpURLConnection conn = null;
         NetworkResponse resp = null;
 
@@ -145,7 +146,7 @@ public final class ListConnection extends BaseConnection {
 
             switch (rc) {
             case HttpURLConnection.HTTP_OK:
-                resp = handleGetListResultOk(readFromInputStream(conn));
+                resp = handleGetListSessionOk(readFromInputStream(conn));
                 break;
             default:
                 resp = handleAPIErrorResponse(source, rc, conn);
@@ -165,30 +166,30 @@ public final class ListConnection extends BaseConnection {
     }
     
     /**
-     * Handle the create list request OK state
+     * Handle the create new list session OK state
      *
      * @param  data the response data received from the API
      * @return      the network response containing the ListResult
      */
-    private NetworkResponse handleCreateListRequestOk(String data) throws JsonParseException {
+    private NetworkResponse handleCreateListSessionOk(String data) throws JsonParseException {
 
-        ListResult result = gson.fromJson(data, ListResult.class);
+        List list = gson.fromJson(data, List.class);
         NetworkResponse resp = new NetworkResponse();
-        resp.putListResult(result);
+        resp.putListSession(list);
         return resp;
     }
 
     /**
-     * Handle get list result OK state
+     * Handle get list session OK state
      *
      * @param  data the response data received from the Payment API
      * @return      the network response containing the ListResult
      */
-    private NetworkResponse handleGetListResultOk(String data) throws JsonParseException {
+    private NetworkResponse handleGetListSessionOk(String data) throws JsonParseException {
 
-        ListResult result = gson.fromJson(data, ListResult.class);
+        List list = gson.fromJson(data, List.class);
         NetworkResponse resp = new NetworkResponse();
-        resp.putListResult(result);
+        resp.putListSession(list);
         return resp;
     }
 

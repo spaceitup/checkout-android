@@ -13,7 +13,8 @@ package net.optile.payment.network;
 
 import net.optile.payment.network.NetworkError.ErrorType;
 
-import com.btelligent.optile.pds.api.rest.model.payment.pci.ListResult;
+import com.btelligent.optile.pds.api.rest.model.payment.enterprise.extensible.List;
+import com.btelligent.optile.pds.api.rest.model.payment.enterprise.extensible.Charge;
 
 import java.util.HashMap;
 
@@ -23,7 +24,8 @@ import java.util.HashMap;
  */
 public final class NetworkResponse {
 
-    private static String KEY_LISTRESULT    = "listresult";
+    private static String KEY_LIST    = "list";
+    private static String KEY_CHARGE  = "charge";
     
     /**
      * The network error
@@ -160,24 +162,43 @@ public final class NetworkResponse {
     }
     
     /**
-     * Gets the ListResult from this network response
+     * Gets the List from this network response
      *
-     * @return the ListResult or null if it does not 
+     * @return the List or null if it does not 
      *         exist in this response
      */
-    public ListResult getListResult() {
-        return (ListResult)data.get(KEY_LISTRESULT);
+    public List getListSession() {
+        return (List)data.get(KEY_LIST);
     }
 
     /**
-     * Puts a ListResult into this NetworkResponse
+     * Puts a List into this NetworkResponse
      *
-     * @param listResult The ListResult object to be stored in this NetworkResponse
+     * @param list The List object to be stored in this NetworkResponse
      */
-    public void putListResult(ListResult listResult) {
-        data.put(KEY_LISTRESULT, listResult);
+    public void putListSession(List list) {
+        data.put(KEY_LIST, list);
     }
 
+    /**
+     * Gets the Charge from this network response
+     *
+     * @return the charge or null if it does not 
+     *         exist in this response
+     */
+    public Charge getCharge() {
+        return (Charge)data.get(KEY_CHARGE);
+    }
+
+    /**
+     * Puts a Charge into this NetworkResponse
+     *
+     * @param charge The Charge object to be stored in this NetworkResponse
+     */
+    public void putCharge(Charge charge) {
+        data.put(KEY_CHARGE, charge);
+    }
+    
     /**
      * {@inheritDoc}
      */

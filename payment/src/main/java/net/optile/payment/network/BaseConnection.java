@@ -142,18 +142,27 @@ public abstract class BaseConnection {
     }
 
     /**
+     * Creates a new HTTP GET connection given the String url
+     *
+     * @param url                    the url pointing to the Payment API
+     * @return HttpURLConnection     a HttpURLConnection object
+     * @throws MalformedURLException throws when the url is in an incorrect format
+     * @throws IOException           when i.e. a network error occured
+     */
+    public HttpURLConnection createGetConnection(String url) throws MalformedURLException, IOException {
+        return createGetConnection(new URL(url));
+    }
+    
+    /**
      * Creates a new HTTP GET connection
      *
      * @param url                    the Url pointing to the Payment API
      * @return HttpURLConnection     a HttpURLConnection object
-     * @throws MalformedURLException URL format is malformed
      * @throws IOException           when i.e. a network error occured
      */
-    public HttpURLConnection createGetConnection(String url) throws MalformedURLException,
-                                                                    IOException {
+    public HttpURLConnection createGetConnection(URL url) throws IOException {
 
-        URL u = new URL(url);
-        HttpURLConnection conn = (HttpURLConnection)u.openConnection();
+        HttpURLConnection conn = (HttpURLConnection)url.openConnection();
 
         setConnProperties(conn);
 
@@ -165,19 +174,27 @@ public abstract class BaseConnection {
     }
 
     /**
-     * Creates a HTTP POST connection
+     * Creates an HTTP POST connection with the given String url
      *
-     * @param url   The url for the connection
-     *
-     * @return HttpURLConnection     The created HttpURLConnection
-     * @throws MalformedURLException URL creation failed
+     * @param url                    the url for the connection
+     * @return HttpURLConnection     the created HttpURLConnection
+     * @throws MalformedURLException throws when the url is in an incorrect format
      * @throws IOException           I/O related exception.
      */
-    public HttpURLConnection createPostConnection(String url) throws MalformedURLException,
-                                                                     IOException {
+    public HttpURLConnection createPostConnection(String url) throws MalformedURLException, IOException {
+        return createPostConnection(new URL(url));
+    }
+    
+    /**
+     * Creates a HTTP POST connection
+     *
+     * @param url                the url for the connection
+     * @return HttpURLConnection the created HttpURLConnection
+     * @throws IOException       I/O related exception.
+     */
+    public HttpURLConnection createPostConnection(URL url) throws IOException {
 
-        URL u = new URL(url);
-        HttpURLConnection conn = (HttpURLConnection)u.openConnection();
+        HttpURLConnection conn = (HttpURLConnection)url.openConnection();
 
         setConnProperties(conn);
 

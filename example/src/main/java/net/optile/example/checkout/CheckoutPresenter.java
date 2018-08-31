@@ -13,11 +13,10 @@ package net.optile.example.checkout;
 
 import android.util.Log;
 
-import com.btelligent.optile.pds.api.rest.model.payment.pci.ListResult;
+import com.btelligent.optile.pds.api.rest.model.payment.enterprise.extensible.List;
 
 import java.net.URL;
 
-import java.util.List;
 import java.util.Map;
 import java.util.concurrent.Callable;
 
@@ -101,7 +100,7 @@ class CheckoutPresenter {
 
                     @Override
                     public void onSuccess(NetworkResponse response) {
-                        onListRequestCreated(response);
+                        onListRequestSuccess(response);
                     }
 
                     @Override
@@ -111,22 +110,22 @@ class CheckoutPresenter {
                 });
     }
 
-    private void onListRequestCreated(NetworkResponse response) {
-        Log.i(TAG, "onListRequestCreated: " + response);
+    private void onListRequestSuccess(NetworkResponse response) {
+        Log.i(TAG, "onListRequestSuccess: " + response);
     }
     
     private NetworkResponse handleNewListRequest(String url, String authorization, String data) throws CheckoutException {
 
         ListConnection conn = new ListConnection(url);
-        NetworkResponse response = conn.createListRequest(authorization, data);
+        NetworkResponse response = conn.createListSession(authorization, data);
 
-        ListResult result = response.getListResult();
-        Map<String, URL> links = result.getLinks();
+        List list = response.getListSession();
+        Map<String, URL> links = list.getLinks();
         URL selfURL = links.get("self");
 
         if (selfURL != null) {
-            Log.i(TAG, "getListResult: " + selfURL);
-            return conn.getListResult(selfURL);            
+            Log.i(TAG, "getListSession: " + selfURL);
+            return conn.getListSession(selfURL);            
         } else {
             return response;
         }
