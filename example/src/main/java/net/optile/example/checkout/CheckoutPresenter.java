@@ -12,17 +12,24 @@
 package net.optile.example.checkout;
 
 import android.util.Log;
+
+import com.btelligent.optile.pds.api.rest.model.payment.pci.ListResult;
+
+import java.net.URL;
+
 import java.util.List;
+import java.util.Map;
+import java.util.concurrent.Callable;
+
+import net.optile.payment.network.ListConnection;
+import net.optile.payment.network.NetworkResponse;
 
 import rx.Single;
 import rx.SingleSubscriber;
 import rx.Subscription;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
-import java.util.concurrent.Callable;
 
-import net.optile.payment.network.ListConnection;
-import net.optile.payment.network.NetworkResponse;
 
 /**
  * CheckoutPresenter responsible for communicating with the 
@@ -70,9 +77,9 @@ class CheckoutPresenter {
      * Instead the merchant backend sends this request to 
      * the Payment API.
      *
-     * @param url               The url to the Payment API end-point
-     * @param authorization     The authorization header for the list request
-     * @param data              The data to be send in the list request
+     * @param url           The url to the Payment API end-point
+     * @param authorization The authorization header for the list request
+     * @param data          The data to be send in the list request
      */
     void newListRequest(final String url, final String authorization, final String data) {
 
@@ -80,22 +87,21 @@ class CheckoutPresenter {
             return;
         }
 
-        Single<Void> single = Single.fromCallable(new Callable<Void>() {
+        Single<NetworkResponse> single = Single.fromCallable(new Callable<NetworkResponse>() {
 
                 @Override
-                public Void call() throws CheckoutException {
-                    handleNewListRequest(url, authorization, data);
-                    return null;
+                public NetworkResponse call() throws CheckoutException {
+                    return handleNewListRequest(url, authorization, data);
                 }
             });
         
         this.subscription = single.subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
-            .subscribe(new SingleSubscriber<Void>() {
+            .subscribe(new SingleSubscriber<NetworkResponse>() {
 
                     @Override
-                    public void onSuccess(Void param) {
-                        Log.i(TAG, "onSuccess");
+                    public void onSuccess(NetworkResponse response) {
+                        onListRequestCreated(response);
                     }
 
                     @Override
@@ -105,10 +111,21 @@ class CheckoutPresenter {
                 });
     }
 
-    private void handleNewListRequest(String url, String authorization, String data) throws CheckoutException {
+    private void onListRequestCreated(NetworkResponse response) {
+
+        ListResult result = response.getListResult();
+
+        Map<String, URL> links = result.getLinks();
+        URL url = links.get("self");
+
+        if (url != null) {
+            Log.i(TAG, "url: " + url);
+        }
+    }
+    
+    private NetworkResponse handleNewListRequest(String url, String authorization, String data) throws CheckoutException {
 
         ListConnection conn = new ListConnection(url);
-        NetworkResponse resp = conn.createListRequest(authorization, data);
-        Log.i(TAG, "response: " + resp.toString());
+        return conn.createListRequest(authorization, data);
     }
 }
