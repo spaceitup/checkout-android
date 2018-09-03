@@ -11,6 +11,9 @@
 
 package net.optile.payment.network;
 
+import java.net.URL;
+import java.net.MalformedURLException;
+
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -34,13 +37,13 @@ import static org.junit.Assert.*;
 
 @RunWith(PowerMockRunner.class)
 @PrepareForTest({TextUtils.class})
-public class ListConnectionTest {
+public class ChargeConnectionTest {
 
-    private ListConnection conn;
+    private ChargeConnection conn;
     
     @Before
     public void setUp() throws Exception {
-        conn = new ListConnection("http://optile.net");
+        conn = new ChargeConnection();
 
         PowerMockito.mockStatic(TextUtils.class);
         PowerMockito.when(TextUtils.isEmpty(any(CharSequence.class))).thenAnswer(new Answer<Boolean>() {
@@ -59,23 +62,25 @@ public class ListConnectionTest {
     }
 
     @Test
-    public void createPaymentSession_invalidAuthorization_invalidValueError() {
+    public void createCharge_invalidURL_invalidValueError() {
 
-        NetworkResponse resp = conn.createPaymentSession(null, "{}");
+        NetworkResponse resp = conn.createCharge(null, "{}");
+        assertTrue(resp.hasError());
         assertTrue(resp.isError(ErrorType.INVALID_VALUE));
     }
 
     @Test
-    public void createPaymentSession_invalidListData_invalidValueError() {
+    public void createCharge_invalidChargeData_invalidValueError() {
 
-        NetworkResponse resp = conn.createPaymentSession("abc123", "");
-        assertTrue(resp.isError(ErrorType.INVALID_VALUE));
-    }
+        URL url = null;
+        try {
+            url = new URL("http://optile.net");
+        } catch (MalformedURLException e) {
+        }
 
-    @Test
-    public void getListResult_invalidURL_invalidValueError() {
+        assertNotNull(url);
 
-        NetworkResponse resp = conn.getListResult(null);
+        NetworkResponse resp = conn.createCharge(url, "");
         assertTrue(resp.isError(ErrorType.INVALID_VALUE));
     }
 }

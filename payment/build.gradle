@@ -1,6 +1,12 @@
 apply plugin: 'com.android.library'
 
 android {
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+
     compileSdkVersion 27
 
     defaultConfig {
@@ -26,7 +32,11 @@ dependencies {
     implementation 'com.android.support:appcompat-v7:27.1.1'
     implementation 'com.google.code.gson:gson:2.8.5'
     testImplementation 'junit:junit:4.12'
+    testImplementation "org.powermock:powermock-module-junit4:1.6.2"
+    testImplementation "org.powermock:powermock-module-junit4-rule:1.6.2"
+    testImplementation "org.powermock:powermock-api-mockito:1.6.2"
+    testImplementation "org.powermock:powermock-classloading-xstream:1.6.2"
     androidTestImplementation 'com.android.support.test:runner:1.0.2'
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
-    
+
 }

@@ -65,6 +65,15 @@ public final class NetworkResponse {
     }
 
     /**
+     * Check if this response contains the given error
+     *
+     * @return true if it matches the given error type, false otherwise
+     */
+    public boolean isError(NetworkError.ErrorType type) {
+        return error != null && error.isError(type);
+    }
+    
+    /**
      * Get the error stored in this NetworkResponse. 
      *
      * @return the error or null if this NetworkResponse does not contain an error
