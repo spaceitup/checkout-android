@@ -56,7 +56,9 @@ public final class ListConnection extends BaseConnection {
     }
 
     /**
-     * Create a new payment session through the Payment API
+     * Create a new payment session through the Payment API. Remind this is not
+     * a request mobile apps should be making as this call is normally executed 
+     * Merchant Server-side.
      *
      * @param  authorization the authorization header data
      * @param  listData      the data containing the request body for the list request
