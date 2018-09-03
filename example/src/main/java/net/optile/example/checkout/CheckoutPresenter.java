@@ -11,28 +11,27 @@
 
 package net.optile.example.checkout;
 
-import android.util.Log;
 import android.content.Context;
+import android.util.Log;
 
-import com.btelligent.optile.pds.api.rest.model.payment.enterprise.extensible.*;
+import com.btelligent.optile.pds.api.rest.model.payment.enterprise.extensible.ApplicableNetwork;
+import com.btelligent.optile.pds.api.rest.model.payment.enterprise.extensible.List;
+
+import net.optile.example.R;
+import net.optile.example.util.AppUtils;
+import net.optile.payment.network.ChargeConnection;
+import net.optile.payment.network.ListConnection;
+import net.optile.payment.network.NetworkResponse;
 
 import java.net.URL;
-
 import java.util.Map;
 import java.util.concurrent.Callable;
-
-import net.optile.payment.network.ListConnection;
-import net.optile.payment.network.ChargeConnection;
-import net.optile.payment.network.NetworkResponse;
-import net.optile.example.util.AppUtils;
 
 import rx.Single;
 import rx.SingleSubscriber;
 import rx.Subscription;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
-
-import net.optile.example.R;
 
 /**
  * CheckoutPresenter responsible for communicating with the 
