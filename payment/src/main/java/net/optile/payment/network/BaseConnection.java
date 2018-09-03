@@ -27,6 +27,9 @@ import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+
 /**
  * The base class for all Payment API implementations
  */
@@ -50,24 +53,23 @@ public abstract class BaseConnection {
 
     final static String VALUE_VIEW           = "jsonForms,-htmlForms";
     final static String VALUE_VND_JSON       = "application/vnd.optile.payment.enterprise-v1-extensible+json";    
+
     /** 
      * The cached user agent value
      */
     private static String userAgent;
+
+    /** 
+     * For now we will use Gson to parse json content
+     * This will be changed at a later stage as no external 
+     * libraries should be used
+     */
+    protected Gson gson;
     
     /**
-     * The base host url
-     */
-    String url;
-
-    /**
      * Construct a new BaseConnection
-     *
-     * @param url the base url pointing to the API
      */
-    public BaseConnection(String url) {
-
-        this.url = url;
+    public BaseConnection() {
 
         // This is needed for older versions of Android
         disableConnectionReuseIfNecessary();
@@ -75,8 +77,10 @@ public abstract class BaseConnection {
         if (CookieHandler.getDefault() == null) {
             CookieHandler.setDefault(new CookieManager());
         }
-    }
 
+        this.gson = new GsonBuilder().create();
+    }
+    
     /**
      * Get the user agent to be send with each request
      *

@@ -82,12 +82,7 @@ public class CheckoutActivity extends AppCompatActivity implements CheckoutView 
         super.onResume();
         this.active = true;
 
-        // make a new test list request to the Payment API
-        String url  = getString(R.string.url);
-        String auth = getString(R.string.payment_authorization);
-        String data = AppUtils.readRawResource(getResources(), R.raw.list);
-
-        this.presenter.createListSession(url, auth, data);
+        this.presenter.checkout(this);
     }
 
     /**

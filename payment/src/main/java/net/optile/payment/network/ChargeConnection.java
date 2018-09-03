@@ -24,8 +24,6 @@ import java.net.MalformedURLException;
 import org.json.JSONObject;
 import org.json.JSONException;
 
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
 import com.google.gson.JsonParseException;
 
 import com.btelligent.optile.pds.api.rest.model.payment.enterprise.extensible.Charge;
@@ -39,23 +37,6 @@ import com.btelligent.optile.pds.api.rest.model.payment.enterprise.extensible.Ch
  * at the same time.
  */
 public final class ChargeConnection extends BaseConnection {
-
-    /** 
-     * For now we will use Gson to parse json content
-     * This will be changed at a later stage as no external 
-     * libraries should be used
-     */
-    private Gson gson;
-
-    /**
-     * Construct a new ChargeConnection
-     *
-     * @param url The url to be used
-     */
-    public ChargeConnection(String url) {
-        super(url);
-        this.gson = new GsonBuilder().create();
-    }
 
     /**
      * Create a new charge through the Payment API

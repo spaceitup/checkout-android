@@ -16,7 +16,9 @@ import net.optile.payment.network.NetworkError.ErrorType;
 import com.btelligent.optile.pds.api.rest.model.payment.enterprise.extensible.List;
 import com.btelligent.optile.pds.api.rest.model.payment.enterprise.extensible.Charge;
 
+import java.util.Map;
 import java.util.HashMap;
+import java.net.URL;
 
 /**
  * Class containing response data from the Payment API, the class 
@@ -35,7 +37,7 @@ public final class NetworkResponse {
     /**
      * The data holder
      */
-    public HashMap<String, Object> data;
+    public Map<String, Object> data;
 
     /**
      * Constructs a new empty NetworkResponse
@@ -208,10 +210,11 @@ public final class NetworkResponse {
         sb.append("NetworkResponse[");
 
         if (error == null) {
-            sb.append("OK");
+            sb.append("OK - datakeys");
+            sb.append(data.keySet());
         }
         else {
-            sb.append("ERROR: ");
+            sb.append("ERROR - ");
             sb.append(error);
         }
         sb.append("]");

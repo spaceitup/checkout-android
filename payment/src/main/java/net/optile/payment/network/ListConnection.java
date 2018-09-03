@@ -41,20 +41,18 @@ import com.btelligent.optile.pds.api.rest.model.payment.enterprise.extensible.Li
 public final class ListConnection extends BaseConnection {
 
     /** 
-     * For now we will use Gson to parse json content
-     * This will be changed at a later stage as no external 
-     * libraries should be used
+     * The base url i.e. used for creating 
+     * a new payment session  
      */
-    private Gson gson;
-
+    private String baseUrl;
+    
     /**
      * Construct a new ListConnection
      *
      * @param url The url to be used
      */
-    public ListConnection(String url) {
-        super(url);
-        this.gson = new GsonBuilder().create();
+    public ListConnection(String baseUrl) {
+        this.baseUrl = baseUrl;
     }
 
     /**
@@ -80,7 +78,7 @@ public final class ListConnection extends BaseConnection {
 
         try {
 
-            String requestUrl = Uri.parse(url).buildUpon()
+            String requestUrl = Uri.parse(baseUrl).buildUpon()
                 .appendPath(URI_PATH_API)
                 .appendPath(URI_PATH_LISTS)
                 .appendQueryParameter(URI_PARAM_VIEW, VALUE_VIEW)

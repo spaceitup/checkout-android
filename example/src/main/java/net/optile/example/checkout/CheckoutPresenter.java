@@ -12,8 +12,9 @@
 package net.optile.example.checkout;
 
 import android.util.Log;
+import android.content.Context;
 
-import com.btelligent.optile.pds.api.rest.model.payment.enterprise.extensible.List;
+import com.btelligent.optile.pds.api.rest.model.payment.enterprise.extensible.*;
 
 import java.net.URL;
 
@@ -21,7 +22,9 @@ import java.util.Map;
 import java.util.concurrent.Callable;
 
 import net.optile.payment.network.ListConnection;
+import net.optile.payment.network.ChargeConnection;
 import net.optile.payment.network.NetworkResponse;
+import net.optile.example.util.AppUtils;
 
 import rx.Single;
 import rx.SingleSubscriber;
@@ -29,6 +32,7 @@ import rx.Subscription;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 
+import net.optile.example.R;
 
 /**
  * CheckoutPresenter responsible for communicating with the 
@@ -71,36 +75,38 @@ class CheckoutPresenter {
     }
     
     /** 
-     * Create a new list session, normally mobile apps using the 
-     * Android Payment SDK do not create new list sessions. 
-     * Instead the merchant backend sends this request to 
-     * the Payment API.
+     * Initiate a checkout request in the mobile app.
      *
-     * @param url           The url to the Payment API end-point
-     * @param authorization The authorization header for the list request
-     * @param data          The data to be send in the list request
+     * @param context The context needed to obtain system resources
      */
-    void createListSession(final String url, final String authorization, final String data) {
+    void checkout(final Context context) {
 
         if (isCreateListSessionActive()) {
             return;
         }
 
-        Single<NetworkResponse> single = Single.fromCallable(new Callable<NetworkResponse>() {
+        final String url  = context.getString(R.string.url);
+        final String auth = context.getString(R.string.payment_authorization);
+
+        final String listData   = AppUtils.readRawResource(context.getResources(), R.raw.list);
+        final String chargeData = AppUtils.readRawResource(context.getResources(), R.raw.charge);
+        
+        Single<Void> single = Single.fromCallable(new Callable<Void>() {
 
                 @Override
-                public NetworkResponse call() throws CheckoutException {
-                    return handleCreateListSession(url, authorization, data);
+                public Void call() throws CheckoutException {
+                    test(url, auth, listData, chargeData);
+                    return null;
                 }
             });
         
         this.subscription = single.subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
-            .subscribe(new SingleSubscriber<NetworkResponse>() {
+            .subscribe(new SingleSubscriber<Void>() {
 
                     @Override
-                    public void onSuccess(NetworkResponse response) {
-                        onCreateListSessionSuccess(response);
+                    public void onSuccess(Void parma) {
+                        Log.i(TAG, "onSuccess");
                     }
 
                     @Override
@@ -110,24 +116,46 @@ class CheckoutPresenter {
                 });
     }
 
-    private void onCreateListSessionSuccess(NetworkResponse response) {
-        Log.i(TAG, "onCreateListSessionSuccess: " + response);
-    }
-    
-    private NetworkResponse handleCreateListSession(String url, String authorization, String data) throws CheckoutException {
+    private void test(String url, String authorization, String listData, String chargeData) throws CheckoutException {
 
         ListConnection conn = new ListConnection(url);
-        NetworkResponse response = conn.createListSession(authorization, data);
-
+        
+        NetworkResponse response = conn.createListSession(authorization, listData);
+        Log.i(TAG, "test createListSession: " + response);
+        
         List list = response.getListSession();
         Map<String, URL> links = list.getLinks();
         URL selfURL = links.get("self");
 
+        // Test the self URL and load list session
         if (selfURL != null) {
-            Log.i(TAG, "getListSession: " + selfURL);
-            return conn.getListSession(selfURL);            
-        } else {
-            return response;
+            response = conn.getListSession(selfURL);            
+            Log.i(TAG, "test getListSession: " + response);
         }
+
+        // Test a charge request
+        java.util.List<ApplicableNetwork> networks = list.getNetworks().getApplicable();
+        String code = null;
+
+        for (ApplicableNetwork network : networks) {
+            
+            if (network.getCode().equals("CARTEBLEUE")) {
+                testChargeRequest(network, chargeData);
+            }
+        }
+    }
+
+    
+    private void testChargeRequest(ApplicableNetwork network, String chargeData) {
+
+        Log.i(TAG, "testChargeRequest Network[" + network.getCode() + ", " + network.getLabel() + "]");
+        
+        Map<String, URL> links = network.getLinks();
+        URL url = links.get("operation");
+
+        ChargeConnection conn = new ChargeConnection();
+        NetworkResponse resp = conn.createCharge(url, chargeData);
+
+        Log.i(TAG, "Charge response: " + resp);
     }
 }
