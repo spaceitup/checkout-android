@@ -52,7 +52,7 @@ public abstract class BaseConnection {
     final static String URI_PARAM_VIEW       = "view";
 
     final static String VALUE_VIEW           = "jsonForms,-htmlForms";
-    final static String VALUE_VND_JSON       = "application/vnd.optile.payment.enterprise-v1-extensible+json";    
+    final static String VALUE_APP_JSON       = "application/json;charset=UTF-8";    
 
     /** 
      * The cached user agent value

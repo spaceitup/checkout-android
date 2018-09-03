@@ -26,7 +26,7 @@ import org.json.JSONException;
 
 import com.google.gson.JsonParseException;
 
-import com.btelligent.optile.pds.api.rest.model.payment.enterprise.extensible.Charge;
+import net.optile.payment.model.OperationResult;
 
 /**
  * Class implementing the communication with the Charge payment API
@@ -62,8 +62,8 @@ public final class ChargeConnection extends BaseConnection {
         try {
 
             conn = createPostConnection(url);
-            conn.setRequestProperty(HEADER_CONTENT_TYPE, VALUE_VND_JSON);
-            conn.setRequestProperty(HEADER_ACCEPT, VALUE_VND_JSON);
+            conn.setRequestProperty(HEADER_CONTENT_TYPE, VALUE_APP_JSON);
+            conn.setRequestProperty(HEADER_ACCEPT, VALUE_APP_JSON);
 
             writeToOutputStream(conn, data);
 
@@ -99,9 +99,10 @@ public final class ChargeConnection extends BaseConnection {
      */
     private NetworkResponse handleCreateChargeOk(String data) throws JsonParseException {
 
-        Charge charge = gson.fromJson(data, Charge.class);
+        Log.i("payment_handleCreateChargeOk", data);
+        OperationResult result = gson.fromJson(data, OperationResult.class);
         NetworkResponse resp = new NetworkResponse();
-        resp.putCharge(charge);
+        resp.putOperationResult(result);
         return resp;
     }
 }

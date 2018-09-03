@@ -42,7 +42,7 @@ public final class NetworkError {
     /**
      * The mandatory error type 
      */
-    public ErrorType errorType;
+    public ErrorType type;
 
     /**
      * The optional network status code like 400 or 500
@@ -62,13 +62,13 @@ public final class NetworkError {
     /**
      * Construct a new NetworkError
      *
-     * @param errorType
+     * @param type
      * @param statusCode
      * @param message
      * @param cause
      */
-    public NetworkError(ErrorType errorType, String message, int statusCode, Exception cause) {
-        this.errorType = errorType;
+    public NetworkError(ErrorType type, String message, int statusCode, Exception cause) {
+        this.type = type;
         this.message = message;
         this.statusCode = statusCode;
         this.cause = cause;
@@ -77,11 +77,11 @@ public final class NetworkError {
     /** 
      * Check if this error is of the given type
      * 
-     * @param  errorType the type identifying this error
-     * @return           true when it is the same error, false otherwise
+     * @param  type the type identifying this error
+     * @return      true when it is the same error, false otherwise
      */
-    public boolean isError(ErrorType errorType) {
-        return this.errorType == errorType;
+    public boolean isError(ErrorType type) {
+        return this.type == type;
     }
 
     /** 
@@ -89,8 +89,8 @@ public final class NetworkError {
      * 
      * @return the errorType stored in this NetworkError 
      */
-    public ErrorType getErrorType() {
-        return errorType;
+    public ErrorType getType() {
+        return type;
     }
     
     /**
@@ -101,8 +101,8 @@ public final class NetworkError {
 
         StringBuilder sb = new StringBuilder();
         sb.append("NetworkError[");
-        sb.append("errorType: ");
-        sb.append(this.errorType);
+        sb.append("type: ");
+        sb.append(this.type);
 
         if (this.statusCode != 0) {
             sb.append(", statusCode: ");

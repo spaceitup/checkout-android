@@ -13,8 +13,8 @@ package net.optile.payment.network;
 
 import net.optile.payment.network.NetworkError.ErrorType;
 
-import com.btelligent.optile.pds.api.rest.model.payment.enterprise.extensible.List;
-import com.btelligent.optile.pds.api.rest.model.payment.enterprise.extensible.Charge;
+import net.optile.payment.model.ListResult;
+import net.optile.payment.model.OperationResult;
 
 import java.util.Map;
 import java.util.HashMap;
@@ -26,8 +26,8 @@ import java.net.URL;
  */
 public final class NetworkResponse {
 
-    private static String KEY_LISTSESSION   = "listsession";
-    private static String KEY_CHARGE        = "charge";
+    private static String KEY_LISTRESULT      = "listresult";
+    private static String KEY_OPERATIONRESULT = "operationresult";
     
     /**
      * The network error
@@ -64,6 +64,15 @@ public final class NetworkResponse {
         return error != null;
     }
 
+    /**
+     * Get the error stored in this NetworkResponse. 
+     *
+     * @return the error or null if this NetworkResponse does not contain an error
+     */
+    public NetworkError getError() {
+        return error;
+    }
+    
     /**
      * Does this server response contain a network connection error
      *
@@ -164,41 +173,41 @@ public final class NetworkResponse {
     }
     
     /**
-     * Gets the list session from this network response
+     * Gets the list result from this network response
      *
-     * @return the list session or null if it does not 
+     * @return the list result or null if it does not 
      *         exist in this response
      */
-    public List getListSession() {
-        return (List)data.get(KEY_LISTSESSION);
+    public ListResult getListResult() {
+        return (ListResult)data.get(KEY_LISTRESULT);
     }
 
     /**
-     * Puts a list session into this NetworkResponse
+     * Puts a list result into this NetworkResponse
      *
-     * @param list The list session to be stored in this NetworkResponse
+     * @param list The list result to be stored in this NetworkResponse
      */
-    public void putListSession(List list) {
-        data.put(KEY_LISTSESSION, list);
+    public void putListResult(ListResult list) {
+        data.put(KEY_LISTRESULT, list);
     }
 
     /**
-     * Gets the Charge from this network response
+     * Gets the OperationResult from this network response
      *
-     * @return the charge or null if it does not 
+     * @return the operation result or null if it does not 
      *         exist in this response
      */
-    public Charge getCharge() {
-        return (Charge)data.get(KEY_CHARGE);
+    public OperationResult getOperationResult() {
+        return (OperationResult)data.get(KEY_OPERATIONRESULT);
     }
 
     /**
-     * Puts a Charge into this NetworkResponse
+     * Puts an OperationResult into this NetworkResponse
      *
-     * @param charge The Charge object to be stored in this NetworkResponse
+     * @param operationResult the OperationResult object to be stored in this NetworkResponse
      */
-    public void putCharge(Charge charge) {
-        data.put(KEY_CHARGE, charge);
+    public void putOperationResult(OperationResult operationResult) {
+        data.put(KEY_OPERATIONRESULT, operationResult);
     }
     
     /**

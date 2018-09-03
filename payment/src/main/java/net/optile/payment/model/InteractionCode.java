@@ -1,0 +1,19 @@
+/**
+ * Copyright(c) 2012-2018 optile GmbH. All Rights Reserved.
+ * https://www.optile.net
+ *
+ * This software is the property of optile GmbH. Distribution  of  this
+ * software without agreement in writing is strictly prohibited.
+ *
+ * This software may not be copied, used or distributed unless agreement
+ * has been received in full.
+ */
+
+package net.optile.payment.model;
+
+/**
+ * This enumeration describes the interaction code of a result.
+ */
+public enum InteractionCode {
+	PROCEED, ABORT, TRY_OTHER_NETWORK, TRY_OTHER_ACCOUNT, RETRY, RELOAD;
+}

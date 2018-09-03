@@ -28,7 +28,7 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonParseException;
 
-import com.btelligent.optile.pds.api.rest.model.payment.enterprise.extensible.List;
+import net.optile.payment.model.ListResult;
 
 /**
  * Class implementing the communication with the List payment API
@@ -56,15 +56,15 @@ public final class ListConnection extends BaseConnection {
     }
 
     /**
-     * Create a new list session through the Payment API
+     * Create a new payment session through the Payment API
      *
      * @param  authorization the authorization header data
      * @param  listData      the data containing the request body for the list request
      * @return               the NetworkResponse containing either an error or the List
      */
-    public NetworkResponse createListSession(String authorization, String listData) {
+    public NetworkResponse createPaymentSession(String authorization, String listData) {
 
-        String source = "ListConnection[createListSession]";
+        String source = "ListConnection[createPaymentSession]";
         
         if (TextUtils.isEmpty(authorization)) {
             return NetworkResponse.newInvalidValueResponse(source + " - authorization cannot be null or empty"); 
@@ -86,8 +86,8 @@ public final class ListConnection extends BaseConnection {
 
             conn = createPostConnection(requestUrl);
             conn.setRequestProperty(HEADER_AUTHORIZATION, authorization);
-            conn.setRequestProperty(HEADER_CONTENT_TYPE, VALUE_VND_JSON);
-            conn.setRequestProperty(HEADER_ACCEPT, VALUE_VND_JSON);
+            conn.setRequestProperty(HEADER_CONTENT_TYPE, VALUE_APP_JSON);
+            conn.setRequestProperty(HEADER_ACCEPT, VALUE_APP_JSON);
 
             writeToOutputStream(conn, listData);
 
@@ -96,7 +96,7 @@ public final class ListConnection extends BaseConnection {
 
             switch (rc) {
             case HttpURLConnection.HTTP_OK:
-                resp = handleCreateListSessionOk(readFromInputStream(conn));
+                resp = handleCreatePaymentSessionOk(readFromInputStream(conn));
                 break;
             default:
                 resp = handleAPIErrorResponse(source, rc, conn);
@@ -122,9 +122,9 @@ public final class ListConnection extends BaseConnection {
      * @param  url  the url pointing to the list
      * @return      the NetworkResponse containing either an error or the ListResult
      */
-    public NetworkResponse getListSession(URL url) {
+    public NetworkResponse getListResult(URL url) {
 
-        String source = "ListConnection[getListSession]";        
+        String source = "ListConnection[getListResult]";        
 
         if (url == null) {
             return NetworkResponse.newInvalidValueResponse(source + " - url cannot be null or empty"); 
@@ -140,15 +140,15 @@ public final class ListConnection extends BaseConnection {
                 .build().toString();
 
             conn = createGetConnection(requestUrl);
-            conn.setRequestProperty(HEADER_CONTENT_TYPE, VALUE_VND_JSON);
-            conn.setRequestProperty(HEADER_ACCEPT, VALUE_VND_JSON);
+            conn.setRequestProperty(HEADER_CONTENT_TYPE, VALUE_APP_JSON);
+            conn.setRequestProperty(HEADER_ACCEPT, VALUE_APP_JSON);
 
             conn.connect();
             int rc = conn.getResponseCode();
 
             switch (rc) {
             case HttpURLConnection.HTTP_OK:
-                resp = handleGetListSessionOk(readFromInputStream(conn));
+                resp = handleGetListResultOk(readFromInputStream(conn));
                 break;
             default:
                 resp = handleAPIErrorResponse(source, rc, conn);
@@ -168,30 +168,30 @@ public final class ListConnection extends BaseConnection {
     }
     
     /**
-     * Handle the create new list session OK state
+     * Handle the create new payment session OK state
      *
      * @param  data the response data received from the API
      * @return      the network response containing the ListResult
      */
-    private NetworkResponse handleCreateListSessionOk(String data) throws JsonParseException {
+    private NetworkResponse handleCreatePaymentSessionOk(String data) throws JsonParseException {
 
-        List list = gson.fromJson(data, List.class);
+        ListResult result = gson.fromJson(data, ListResult.class);
         NetworkResponse resp = new NetworkResponse();
-        resp.putListSession(list);
+        resp.putListResult(result);
         return resp;
     }
 
     /**
-     * Handle get list session OK state
+     * Handle get list result OK state
      *
      * @param  data the response data received from the Payment API
      * @return      the network response containing the ListResult
      */
-    private NetworkResponse handleGetListSessionOk(String data) throws JsonParseException {
+    private NetworkResponse handleGetListResultOk(String data) throws JsonParseException {
 
-        List list = gson.fromJson(data, List.class);
+        ListResult result = gson.fromJson(data, ListResult.class);
         NetworkResponse resp = new NetworkResponse();
-        resp.putListSession(list);
+        resp.putListResult(result);
         return resp;
     }
 

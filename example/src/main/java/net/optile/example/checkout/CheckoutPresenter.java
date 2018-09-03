@@ -14,8 +14,9 @@ package net.optile.example.checkout;
 import android.content.Context;
 import android.util.Log;
 
-import com.btelligent.optile.pds.api.rest.model.payment.enterprise.extensible.ApplicableNetwork;
-import com.btelligent.optile.pds.api.rest.model.payment.enterprise.extensible.List;
+import net.optile.payment.model.ApplicableNetwork;
+import net.optile.payment.model.ListResult;
+import net.optile.payment.model.OperationResult;
 
 import net.optile.example.R;
 import net.optile.example.util.AppUtils;
@@ -24,6 +25,7 @@ import net.optile.payment.network.ListConnection;
 import net.optile.payment.network.NetworkResponse;
 
 import java.net.URL;
+import java.util.List;
 import java.util.Map;
 import java.util.concurrent.Callable;
 
@@ -119,21 +121,21 @@ class CheckoutPresenter {
 
         ListConnection conn = new ListConnection(url);
         
-        NetworkResponse response = conn.createListSession(authorization, listData);
-        Log.i(TAG, "test createListSession: " + response);
+        NetworkResponse response = conn.createPaymentSession(authorization, listData);
+        Log.i(TAG, "test createPaymentSession: " + response);
         
-        List list = response.getListSession();
-        Map<String, URL> links = list.getLinks();
+        ListResult result = response.getListResult();
+        Map<String, URL> links = result.getLinks();
         URL selfURL = links.get("self");
 
         // Test the self URL and load list session
         if (selfURL != null) {
-            response = conn.getListSession(selfURL);            
-            Log.i(TAG, "test getListSession: " + response);
+            response = conn.getListResult(selfURL);            
+            Log.i(TAG, "test getListResult: " + response);
         }
 
         // Test a charge request
-        java.util.List<ApplicableNetwork> networks = list.getNetworks().getApplicable();
+        List<ApplicableNetwork> networks = result.getNetworks().getApplicable();
         String code = null;
 
         for (ApplicableNetwork network : networks) {
@@ -148,7 +150,7 @@ class CheckoutPresenter {
     private void testChargeRequest(ApplicableNetwork network, String chargeData) {
 
         Log.i(TAG, "testChargeRequest Network[" + network.getCode() + ", " + network.getLabel() + "]");
-        
+            
         Map<String, URL> links = network.getLinks();
         URL url = links.get("operation");
 

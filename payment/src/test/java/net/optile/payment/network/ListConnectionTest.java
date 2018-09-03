@@ -17,7 +17,6 @@ import org.junit.Test;
 
 import net.optile.payment.network.NetworkResponse;
 import net.optile.payment.network.NetworkError;
-import net.optile.payment.network.NetworkError;
 
 import static org.junit.Assert.*;
 
@@ -37,24 +36,5 @@ public class ListConnectionTest {
 
     @Test
     public void createListSession_missingAuthorization_invalidValueError() {
-
-        NetworkResponse resp = conn.createListSession(null, "{}");
-        assertTrue(resp.isError());
-        assertEquals(resp.getError().getErrorType(), 
-    }
-
-    @Test
-    public void createListSession_invalidData_returnNetworkError() {
-        assertEquals(4, 2 + 2);
-    }
-
-    @Test
-    public void createListSession_invalidData_returnNetworkError() {
-        assertEquals(4, 2 + 2);
-    }
-    
-    @Test
-    public void getListSession() {
-        assertEquals(4, 2 + 2);
     }
 }
