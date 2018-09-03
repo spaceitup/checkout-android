@@ -83,6 +83,15 @@ public final class NetworkError {
     public boolean isError(ErrorType errorType) {
         return this.errorType == errorType;
     }
+
+    /** 
+     * Get the ErrorType from this NetworkError
+     * 
+     * @return the errorType stored in this NetworkError 
+     */
+    public ErrorType getErrorType() {
+        return errorType;
+    }
     
     /**
      * {@inheritDoc}
