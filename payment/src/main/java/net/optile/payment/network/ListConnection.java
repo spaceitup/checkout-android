@@ -49,7 +49,7 @@ public final class ListConnection extends BaseConnection {
     /**
      * Construct a new ListConnection
      *
-     * @param url The url to be used
+     * @param baseUrl The url to be used
      */
     public ListConnection(String baseUrl) {
         this.baseUrl = baseUrl;
@@ -59,17 +59,17 @@ public final class ListConnection extends BaseConnection {
      * Create a new list session through the Payment API
      *
      * @param  authorization the authorization header data
-     * @param  data          the data containing the request body for the list request
+     * @param  listData      the data containing the request body for the list request
      * @return               the NetworkResponse containing either an error or the List
      */
-    public NetworkResponse createListSession(String authorization, String data) {
+    public NetworkResponse createListSession(String authorization, String listData) {
 
         String source = "ListConnection[createListSession]";
         
         if (TextUtils.isEmpty(authorization)) {
             return NetworkResponse.newInvalidValueResponse(source + " - authorization cannot be null or empty"); 
         }
-        if (TextUtils.isEmpty(data)) {
+        if (TextUtils.isEmpty(listData)) {
             return NetworkResponse.newInvalidValueResponse(source + " - data cannot be null or empty"); 
         }
         
@@ -89,7 +89,7 @@ public final class ListConnection extends BaseConnection {
             conn.setRequestProperty(HEADER_CONTENT_TYPE, VALUE_VND_JSON);
             conn.setRequestProperty(HEADER_ACCEPT, VALUE_VND_JSON);
 
-            writeToOutputStream(conn, data);
+            writeToOutputStream(conn, listData);
 
             conn.connect();
             int rc = conn.getResponseCode();
