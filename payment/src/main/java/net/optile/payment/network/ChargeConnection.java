@@ -99,7 +99,6 @@ public final class ChargeConnection extends BaseConnection {
      */
     private NetworkResponse handleCreateChargeOk(String data) throws JsonParseException {
 
-        Log.i("payment_handleCreateChargeOk", data);
         OperationResult result = gson.fromJson(data, OperationResult.class);
         NetworkResponse resp = new NetworkResponse();
         resp.putOperationResult(result);
