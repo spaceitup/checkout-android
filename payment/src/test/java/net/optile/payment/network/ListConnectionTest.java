@@ -11,26 +11,22 @@
 
 package net.optile.payment.network;
 
+import android.text.TextUtils;
+
+import net.optile.payment.network.NetworkError.ErrorType;
+
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-
-import net.optile.payment.network.NetworkResponse;
-import net.optile.payment.network.NetworkError;
-import net.optile.payment.network.NetworkError.ErrorType;
-
+import org.mockito.invocation.InvocationOnMock;
+import org.mockito.stubbing.Answer;
 import org.powermock.api.mockito.PowerMockito;
 import org.powermock.core.classloader.annotations.PrepareForTest;
 import org.powermock.modules.junit4.PowerMockRunner;
 
-import org.mockito.invocation.InvocationOnMock;
-import org.mockito.stubbing.Answer;
-
-import android.text.TextUtils;
-
+import static org.junit.Assert.assertTrue;
 import static org.mockito.Matchers.any;
-import static org.junit.Assert.*;
 
 @RunWith(PowerMockRunner.class)
 @PrepareForTest({TextUtils.class})
