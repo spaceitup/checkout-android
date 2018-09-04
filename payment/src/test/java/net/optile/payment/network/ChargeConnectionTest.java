@@ -28,14 +28,5 @@ import org.mockito.runners.MockitoJUnitRunner;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 
-@RunWith(MockitoJUnitRunner.class)
 public class ChargeConnectionTest {
-
-    @Test
-    public void createCharge_invalidURL_invalidValueError() {
-    }
-
-    @Test
-    public void createCharge_invalidData_invalidValueError() {
-    }
 }

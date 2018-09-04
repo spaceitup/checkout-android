@@ -236,6 +236,13 @@ public abstract class BaseConnection {
      */
     public String readFromErrorStream(final HttpURLConnection conn) throws IOException {
 
+        // make sure there is an error stream as this may return null
+        // getErrorStream does not throw an IOException so the input stream will
+        // always be closed in the following try statement
+        if (conn.getErrorStream() == null) {
+            return null;
+        }
+        
         try (InputStream in = conn.getErrorStream();
              InputStreamReader ir = new InputStreamReader(in);
              BufferedReader rd = new BufferedReader(ir)) {

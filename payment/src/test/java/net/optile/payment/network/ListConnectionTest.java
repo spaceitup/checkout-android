@@ -28,18 +28,6 @@ import org.mockito.runners.MockitoJUnitRunner;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 
-@RunWith(MockitoJUnitRunner.class)
 public class ListConnectionTest {
 
-    @Test
-    public void createPaymentSession_invalidAuthorization_invalidValueError() {
-    }
-
-    @Test
-    public void createPaymentSession_invalidListData_invalidValueError() {
-    }
-
-    @Test
-    public void getListResult_invalidURL_invalidValueError() {
-    }
 }
