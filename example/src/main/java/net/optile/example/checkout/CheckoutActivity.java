@@ -22,9 +22,9 @@ import net.optile.example.R;
 /**
  * Activity for performing a checkout payment
  */
-public class CheckoutActivity extends AppCompatActivity implements CheckoutView {
+public final class CheckoutActivity extends AppCompatActivity implements CheckoutView {
 
-    private final static String TAG = "payment_CheckoutActivity";
+    private static String TAG = "payment_CheckoutActivity";
 
     private CheckoutPresenter presenter;
 
@@ -36,7 +36,7 @@ public class CheckoutActivity extends AppCompatActivity implements CheckoutView 
      * @param context
      * @return the newly created intent
      */
-    public final static Intent createStartIntent(Context context) {
+    public static Intent createStartIntent(final Context context) {
         return new Intent(context, CheckoutActivity.class);
     }
 
@@ -44,11 +44,12 @@ public class CheckoutActivity extends AppCompatActivity implements CheckoutView 
      * {@inheritDoc}
      */
     @Override
-    public void onCreate(Bundle savedInstanceState) {
+    public void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.activity_checkout);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+
+        final Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
         this.presenter = new CheckoutPresenter(this);

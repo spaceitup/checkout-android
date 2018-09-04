@@ -51,7 +51,7 @@ public final class ListConnection extends BaseConnection {
      *
      * @param baseUrl The url to be used
      */
-    public ListConnection(String baseUrl) {
+    public ListConnection(final String baseUrl) {
         this.baseUrl = baseUrl;
     }
 
@@ -64,9 +64,9 @@ public final class ListConnection extends BaseConnection {
      * @param  listData      the data containing the request body for the list request
      * @return               the NetworkResponse containing either an error or the List
      */
-    public NetworkResponse createPaymentSession(String authorization, String listData) {
+    public NetworkResponse createPaymentSession(final String authorization, final String listData) {
 
-        String source = "ListConnection[createPaymentSession]";
+        final String source = "ListConnection[createPaymentSession]";
         
         if (TextUtils.isEmpty(authorization)) {
             return NetworkResponse.newInvalidValueResponse(source + " - authorization cannot be null or empty"); 
@@ -80,7 +80,7 @@ public final class ListConnection extends BaseConnection {
 
         try {
 
-            String requestUrl = Uri.parse(baseUrl).buildUpon()
+            final String requestUrl = Uri.parse(baseUrl).buildUpon()
                 .appendPath(URI_PATH_API)
                 .appendPath(URI_PATH_LISTS)
                 .appendQueryParameter(URI_PARAM_VIEW, VALUE_VIEW)
@@ -92,9 +92,9 @@ public final class ListConnection extends BaseConnection {
             conn.setRequestProperty(HEADER_ACCEPT, VALUE_APP_JSON);
 
             writeToOutputStream(conn, listData);
-
             conn.connect();
-            int rc = conn.getResponseCode();
+
+            final int rc = conn.getResponseCode();
 
             switch (rc) {
             case HttpURLConnection.HTTP_OK:
@@ -124,9 +124,9 @@ public final class ListConnection extends BaseConnection {
      * @param  url  the url pointing to the list
      * @return      the NetworkResponse containing either an error or the ListResult
      */
-    public NetworkResponse getListResult(URL url) {
+    public NetworkResponse getListResult(final URL url) {
 
-        String source = "ListConnection[getListResult]";        
+        final String source = "ListConnection[getListResult]";        
 
         if (url == null) {
             return NetworkResponse.newInvalidValueResponse(source + " - url cannot be null or empty"); 
@@ -137,7 +137,7 @@ public final class ListConnection extends BaseConnection {
 
         try {
 
-            String requestUrl = Uri.parse(url.toString()).buildUpon()
+            final String requestUrl = Uri.parse(url.toString()).buildUpon()
                 .appendQueryParameter(URI_PARAM_VIEW, VALUE_VIEW)
                 .build().toString();
 
@@ -146,7 +146,7 @@ public final class ListConnection extends BaseConnection {
             conn.setRequestProperty(HEADER_ACCEPT, VALUE_APP_JSON);
 
             conn.connect();
-            int rc = conn.getResponseCode();
+            final int rc = conn.getResponseCode();
 
             switch (rc) {
             case HttpURLConnection.HTTP_OK:
@@ -175,10 +175,11 @@ public final class ListConnection extends BaseConnection {
      * @param  data the response data received from the API
      * @return      the network response containing the ListResult
      */
-    private NetworkResponse handleCreatePaymentSessionOk(String data) throws JsonParseException {
+    private NetworkResponse handleCreatePaymentSessionOk(final String data) throws JsonParseException {
 
-        ListResult result = gson.fromJson(data, ListResult.class);
-        NetworkResponse resp = new NetworkResponse();
+        final ListResult result = gson.fromJson(data, ListResult.class);
+        final NetworkResponse resp = new NetworkResponse();
+
         resp.putListResult(result);
         return resp;
     }
@@ -189,10 +190,11 @@ public final class ListConnection extends BaseConnection {
      * @param  data the response data received from the Payment API
      * @return      the network response containing the ListResult
      */
-    private NetworkResponse handleGetListResultOk(String data) throws JsonParseException {
+    private NetworkResponse handleGetListResultOk(final String data) throws JsonParseException {
 
-        ListResult result = gson.fromJson(data, ListResult.class);
-        NetworkResponse resp = new NetworkResponse();
+        final ListResult result = gson.fromJson(data, ListResult.class);
+        final NetworkResponse resp = new NetworkResponse();
+
         resp.putListResult(result);
         return resp;
     }

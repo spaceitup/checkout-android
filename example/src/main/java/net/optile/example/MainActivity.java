@@ -26,25 +26,22 @@ import net.optile.example.checkout.CheckoutActivity;
  *
  *
  */
-public class MainActivity extends AppCompatActivity {
+public final class MainActivity extends AppCompatActivity {
 
-    public final static String TAG  = "payment_MainActivity";
+    private static String TAG  = "payment_MainActivity";
     
     /**
      * {@inheritDoc}
      */
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.activity_main);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        final Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        Log.i(TAG, "test string: " + getString(R.string.payment_authorization));
-
-
-        Button button = findViewById(R.id.button_id);
+        final Button button = findViewById(R.id.button_id);
         button.setOnClickListener(new View.OnClickListener() {
                 public void onClick(View v) {
                     onButtonClicked();
@@ -53,7 +50,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void onButtonClicked() {
-        Intent intent = CheckoutActivity.createStartIntent(this);
+        final Intent intent = CheckoutActivity.createStartIntent(this);
         startActivity(intent);
     }
 }

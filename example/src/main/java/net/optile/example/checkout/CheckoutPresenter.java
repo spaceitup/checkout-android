@@ -39,9 +39,9 @@ import rx.schedulers.Schedulers;
  * CheckoutPresenter responsible for communicating with the 
  * Payment SDK
  */
-class CheckoutPresenter {
+final class CheckoutPresenter {
 
-    public final static String TAG = "payment_CheckoutPresenter";
+    private static String TAG = "payment_CheckoutPresenter";
 
     private CheckoutView view;
 
@@ -50,7 +50,7 @@ class CheckoutPresenter {
     /**
      * Construct a new CheckoutPresenter
      */
-    CheckoutPresenter(CheckoutView view) {
+    CheckoutPresenter(final CheckoutView view) {
         this.view = view;
     }
 
@@ -86,13 +86,13 @@ class CheckoutPresenter {
             return;
         }
 
-        final String url  = context.getString(R.string.url);
+        final String url = context.getString(R.string.url);
         final String auth = context.getString(R.string.payment_authorization);
 
-        final String listData   = AppUtils.readRawResource(context.getResources(), R.raw.list);
+        final String listData = AppUtils.readRawResource(context.getResources(), R.raw.list);
         final String chargeData = AppUtils.readRawResource(context.getResources(), R.raw.charge);
         
-        Single<Void> single = Single.fromCallable(new Callable<Void>() {
+        final Single<Void> single = Single.fromCallable(new Callable<Void>() {
 
                 @Override
                 public Void call() throws CheckoutException {

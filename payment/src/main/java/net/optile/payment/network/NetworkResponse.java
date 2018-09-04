@@ -51,7 +51,7 @@ public final class NetworkResponse {
      *
      * @param error The network error
      */
-    public NetworkResponse(NetworkError error) {
+    public NetworkResponse(final NetworkError error) {
         this.error = error;
     }
 
@@ -69,7 +69,7 @@ public final class NetworkResponse {
      *
      * @return true if it matches the given error type, false otherwise
      */
-    public boolean isError(NetworkError.ErrorType type) {
+    public boolean isError(final NetworkError.ErrorType type) {
         return error != null && error.isError(type);
     }
     
@@ -97,9 +97,9 @@ public final class NetworkResponse {
      * @param message the error message
      * @return        the newly created network error response
      */
-    public final static NetworkResponse newInvalidValueResponse(String message) {
+    public static NetworkResponse newInvalidValueResponse(final String message) {
 
-        NetworkError error = new NetworkError(ErrorType.INVALID_VALUE, message, 0, null);
+        final NetworkError error = new NetworkError(ErrorType.INVALID_VALUE, message, 0, null);
         return new NetworkResponse(error);
     }
 
@@ -110,9 +110,9 @@ public final class NetworkResponse {
      * @param statusCode the network status code
      * @return           the newly created network error response
      */
-    public final static NetworkResponse newApiErrorResponse(String message, int statusCode) {
+    public static NetworkResponse newApiErrorResponse(final String message, final int statusCode) {
 
-        NetworkError error = new NetworkError(ErrorType.API_ERROR, message, statusCode, null);
+        final NetworkError error = new NetworkError(ErrorType.API_ERROR, message, statusCode, null);
         return new NetworkResponse(error);
     }
 
@@ -123,9 +123,9 @@ public final class NetworkResponse {
      * @param cause   the optional exception that caused the error
      * @return        the newly created network error response
      */
-    public final static NetworkResponse newConnErrorResponse(String message, Exception cause) {
+    public static NetworkResponse newConnErrorResponse(final String message, final Exception cause) {
 
-        NetworkError error = new NetworkError(ErrorType.CONN_ERROR, message, 0, cause);
+        final NetworkError error = new NetworkError(ErrorType.CONN_ERROR, message, 0, cause);
         return new NetworkResponse(error);
     }
 
@@ -136,9 +136,9 @@ public final class NetworkResponse {
      * @param cause   the optional exception that caused the error
      * @return        the newly created network error response
      */
-    public final static NetworkResponse newSecurityErrorResponse(String message, Exception cause) {
+    public static NetworkResponse newSecurityErrorResponse(final String message, final Exception cause) {
 
-        NetworkError error = new NetworkError(ErrorType.SECURITY_ERROR, message, 0, cause);
+        final NetworkError error = new NetworkError(ErrorType.SECURITY_ERROR, message, 0, cause);
         return new NetworkResponse(error);
     }
     
@@ -149,9 +149,9 @@ public final class NetworkResponse {
      * @param cause   the optional exception that caused the error
      * @return        the newly created network error response
      */
-    public final static NetworkResponse newInternalErrorResponse(String message, Exception cause) {
+    public static NetworkResponse newInternalErrorResponse(final String message, final Exception cause) {
 
-        NetworkError error = new NetworkError(ErrorType.INTERNAL_ERROR, message, 0, cause);
+        final NetworkError error = new NetworkError(ErrorType.INTERNAL_ERROR, message, 0, cause);
         return new NetworkResponse(error);
     }
 
@@ -162,9 +162,9 @@ public final class NetworkResponse {
      * @param cause   the optional exception that caused the error
      * @return        the newly created network error response
      */
-    public final static NetworkResponse newProtocolErrorResponse(String message, Exception cause) {
+    public static NetworkResponse newProtocolErrorResponse(final String message, final Exception cause) {
 
-        NetworkError error = new NetworkError(ErrorType.PROTOCOL_ERROR, message, 0, cause);
+        final NetworkError error = new NetworkError(ErrorType.PROTOCOL_ERROR, message, 0, cause);
         return new NetworkResponse(error);
     }
 
@@ -175,9 +175,9 @@ public final class NetworkResponse {
      * @param statusCode the statusCode containing the NOT_FOUND value
      * @return           the newly created network error response
      */
-    public final static NetworkResponse newNotFoundResponse(String message, int statusCode) {
+    public static NetworkResponse newNotFoundResponse(final String message, final int statusCode) {
 
-        NetworkError error = new NetworkError(ErrorType.NOT_FOUND, message, statusCode, null);
+        final NetworkError error = new NetworkError(ErrorType.NOT_FOUND, message, statusCode, null);
         return new NetworkResponse(error);
     }
     
@@ -196,7 +196,7 @@ public final class NetworkResponse {
      *
      * @param list The list result to be stored in this NetworkResponse
      */
-    public void putListResult(ListResult list) {
+    public void putListResult(final ListResult list) {
         data.put(KEY_LISTRESULT, list);
     }
 
@@ -215,7 +215,7 @@ public final class NetworkResponse {
      *
      * @param operationResult the OperationResult object to be stored in this NetworkResponse
      */
-    public void putOperationResult(OperationResult operationResult) {
+    public void putOperationResult(final OperationResult operationResult) {
         data.put(KEY_OPERATIONRESULT, operationResult);
     }
     
@@ -224,7 +224,8 @@ public final class NetworkResponse {
      */
     @Override
     public String toString() {
-        StringBuilder sb = new StringBuilder();
+
+        final StringBuilder sb = new StringBuilder();
         sb.append("NetworkResponse[");
 
         if (error == null) {

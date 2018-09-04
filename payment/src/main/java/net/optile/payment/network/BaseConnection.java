@@ -126,7 +126,7 @@ public abstract class BaseConnection {
      * 
      * @param conn the connection to close
      */
-    public void close(HttpURLConnection conn) {
+    public void close(final HttpURLConnection conn) {
 
         if (conn != null) {
             conn.disconnect();
@@ -138,7 +138,7 @@ public abstract class BaseConnection {
      *
      * @param conn
      */
-    private void setConnProperties(HttpURLConnection conn) {
+    private void setConnProperties(final HttpURLConnection conn) {
 
         conn.setConnectTimeout(TIMEOUT_CONNECT);
         conn.setReadTimeout(TIMEOUT_READ);
@@ -153,7 +153,7 @@ public abstract class BaseConnection {
      * @throws MalformedURLException throws when the url is in an incorrect format
      * @throws IOException           when i.e. a network error occured
      */
-    public HttpURLConnection createGetConnection(String url) throws MalformedURLException, IOException {
+    public HttpURLConnection createGetConnection(final String url) throws MalformedURLException, IOException {
         return createGetConnection(new URL(url));
     }
     
@@ -164,9 +164,9 @@ public abstract class BaseConnection {
      * @return HttpURLConnection     a HttpURLConnection object
      * @throws IOException           when i.e. a network error occured
      */
-    public HttpURLConnection createGetConnection(URL url) throws IOException {
+    public HttpURLConnection createGetConnection(final URL url) throws IOException {
 
-        HttpURLConnection conn = (HttpURLConnection)url.openConnection();
+        final HttpURLConnection conn = (HttpURLConnection)url.openConnection();
 
         setConnProperties(conn);
 
@@ -185,7 +185,7 @@ public abstract class BaseConnection {
      * @throws MalformedURLException throws when the url is in an incorrect format
      * @throws IOException           I/O related exception.
      */
-    public HttpURLConnection createPostConnection(String url) throws MalformedURLException, IOException {
+    public HttpURLConnection createPostConnection(final String url) throws MalformedURLException, IOException {
         return createPostConnection(new URL(url));
     }
     
@@ -196,9 +196,9 @@ public abstract class BaseConnection {
      * @return HttpURLConnection the created HttpURLConnection
      * @throws IOException       I/O related exception.
      */
-    public HttpURLConnection createPostConnection(URL url) throws IOException {
+    public HttpURLConnection createPostConnection(final URL url) throws IOException {
 
-        HttpURLConnection conn = (HttpURLConnection)url.openConnection();
+        final HttpURLConnection conn = (HttpURLConnection)url.openConnection();
 
         setConnProperties(conn);
 
@@ -216,7 +216,7 @@ public abstract class BaseConnection {
      * @return             the string representation read from the inputstream
      * @throws IOException when an error occured
      */
-    public String readFromInputStream(HttpURLConnection conn) throws IOException {
+    public String readFromInputStream(final HttpURLConnection conn) throws IOException {
 
         try (InputStream in = conn.getInputStream();
              InputStreamReader ir = new InputStreamReader(in);
@@ -234,7 +234,7 @@ public abstract class BaseConnection {
      * @return             the string representation read from the inputstream
      * @throws IOException when an error occured
      */
-    public String readFromErrorStream(HttpURLConnection conn) throws IOException {
+    public String readFromErrorStream(final HttpURLConnection conn) throws IOException {
 
         try (InputStream in = conn.getErrorStream();
              InputStreamReader ir = new InputStreamReader(in);
@@ -251,7 +251,7 @@ public abstract class BaseConnection {
      * @param conn
      * @param data 
      */    
-    public void writeToOutputStream(HttpURLConnection conn, String data) throws IOException {
+    public void writeToOutputStream(final HttpURLConnection conn, String data) throws IOException {
 
         try (OutputStream out = conn.getOutputStream()) {
             out.write(data.getBytes(UTF8));
@@ -263,10 +263,10 @@ public abstract class BaseConnection {
      * 
      * @return The content from the buffered reader
      */
-    private String readFromBufferedReader(BufferedReader in) throws IOException {
-        
+    private String readFromBufferedReader(final BufferedReader in) throws IOException {
+
+        final StringBuilder buf = new StringBuilder();
         String line = null;
-        StringBuilder buf = new StringBuilder();
 
         while ((line = in.readLine()) != null) {
             buf.append(line);
@@ -292,9 +292,9 @@ public abstract class BaseConnection {
      * @param conn
      * @return NetworkResponse
      */
-    public NetworkResponse handleAPIErrorResponse(String source, int statusCode, HttpURLConnection conn) throws IOException {
+    public NetworkResponse handleAPIErrorResponse(final String source, final int statusCode, final HttpURLConnection conn) throws IOException {
 
-        String msg = source + " - errorData: " + readFromErrorStream(conn);
+        final String msg = source + " - errorData: " + readFromErrorStream(conn);
         ErrorType errorType = ErrorType.API_ERROR;
 
         switch (statusCode) {

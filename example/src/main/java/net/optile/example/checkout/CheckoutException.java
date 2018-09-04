@@ -25,14 +25,14 @@ public class CheckoutException extends Exception {
     /**
      * {@inheritDoc}
      */
-    public CheckoutException(String detailMessage) {
+    public CheckoutException(final String detailMessage) {
         super(detailMessage);
     }
 
     /**
      * {@inheritDoc}
      */
-    public CheckoutException(String detailMessage, Throwable cause) {
+    public CheckoutException(final String detailMessage, final Throwable cause) {
         super(detailMessage, cause);
     }
 }

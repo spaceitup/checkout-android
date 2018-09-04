@@ -67,7 +67,7 @@ public final class NetworkError {
      * @param message
      * @param cause
      */
-    public NetworkError(ErrorType type, String message, int statusCode, Exception cause) {
+    public NetworkError(final ErrorType type, final String message, final int statusCode, final Exception cause) {
         this.type = type;
         this.message = message;
         this.statusCode = statusCode;
@@ -80,7 +80,7 @@ public final class NetworkError {
      * @param  type the type identifying this error
      * @return      true when it is the same error, false otherwise
      */
-    public boolean isError(ErrorType type) {
+    public boolean isError(final ErrorType type) {
         return this.type == type;
     }
 
@@ -99,7 +99,7 @@ public final class NetworkError {
     @Override
     public String toString() {
 
-        StringBuilder sb = new StringBuilder();
+        final StringBuilder sb = new StringBuilder();
         sb.append("NetworkError[");
         sb.append("type: ");
         sb.append(this.type);

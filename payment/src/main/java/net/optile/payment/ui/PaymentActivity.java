@@ -20,19 +20,19 @@ import android.view.Menu;
 import android.view.MenuItem;
 import net.optile.payment.R;
 
-public class PaymentActivity extends AppCompatActivity {
+public final class PaymentActivity extends AppCompatActivity {
 
-    public final static String TAG  = "payment_PaymentActivity";
+    private static String TAG  = "payment_PaymentActivity";
     
     /**
      * {@inheritDoc}
      */
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_payment);
 
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        final Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
     }
 }

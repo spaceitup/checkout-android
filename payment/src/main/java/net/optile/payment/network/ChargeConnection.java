@@ -45,9 +45,9 @@ public final class ChargeConnection extends BaseConnection {
      * @param data the data containing the request body for the charge request
      * @return     the NetworkResponse containing either an error or the List
      */
-    public NetworkResponse createCharge(URL url, String data) {
+    public NetworkResponse createCharge(final URL url, final String data) {
 
-        String source = "ChargeConnection[createCharge]";
+        final String source = "ChargeConnection[createCharge]";
         
         if (url == null) {
             return NetworkResponse.newInvalidValueResponse(source + " - url cannot be null"); 
@@ -68,7 +68,7 @@ public final class ChargeConnection extends BaseConnection {
             writeToOutputStream(conn, data);
 
             conn.connect();
-            int rc = conn.getResponseCode();
+            final int rc = conn.getResponseCode();
 
             switch (rc) {
             case HttpURLConnection.HTTP_OK:
@@ -97,10 +97,11 @@ public final class ChargeConnection extends BaseConnection {
      * @param  data the response data received from the API
      * @return      the network response containing the ListResult
      */
-    private NetworkResponse handleCreateChargeOk(String data) throws JsonParseException {
+    private NetworkResponse handleCreateChargeOk(final String data) throws JsonParseException {
 
-        OperationResult result = gson.fromJson(data, OperationResult.class);
-        NetworkResponse resp = new NetworkResponse();
+        final OperationResult result = gson.fromJson(data, OperationResult.class);
+        final NetworkResponse resp = new NetworkResponse();
+
         resp.putOperationResult(result);
         return resp;
     }
