@@ -18,10 +18,25 @@ allprojects {
     repositories {
 	google()
         jcenter()
-        mavenLocal()
     }
 }
 
 task clean(type: Delete) {
     delete rootProject.buildDir
 }
+
+ext {
+    minSdkVersion = 19
+    compileSdkVersion = 27
+    targetSdkVersion = 27
+    buildToolsVersion = "27.0.3"
+    gsonVersion = "2.8.5"
+    supportLibVersion = "27.1.1"
+    junitVersion = "4.12"
+    mockitoCoreVersion = "2.21.0"
+    robolectricVersion = "3.8"
+    runnerVersion = "1.0.2"
+    espressoCoreVersion = "3.0.2"
+    javaAnnotationVersion = "1.0"
+}
+
