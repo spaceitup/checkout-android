@@ -22,9 +22,7 @@ import android.widget.Button;
 import net.optile.example.checkout.CheckoutActivity;
 
 /**
- *
- *
- *
+ * The MainActivity which will be launched when the app is started
  */
 public final class MainActivity extends AppCompatActivity {
 

@@ -106,7 +106,7 @@ final class CheckoutPresenter {
             .subscribe(new SingleSubscriber<Void>() {
 
                     @Override
-                    public void onSuccess(Void parma) {
+                    public void onSuccess(Void param) {
                         Log.i(TAG, "onSuccess");
                     }
 
@@ -117,6 +117,15 @@ final class CheckoutPresenter {
                 });
     }
 
+    /** 
+     * REMIND, this code must be removed later. It is only used for testing the 
+     * SDK during development.
+     * 
+     * @param url 
+     * @param authorization 
+     * @param listData 
+     * @param chargeData 
+     */
     private void test(String url, String authorization, String listData, String chargeData) throws CheckoutException {
 
         ListConnection conn = new ListConnection(url);
@@ -146,7 +155,13 @@ final class CheckoutPresenter {
         }
     }
 
-    
+    /** 
+     * REMIND, this code must be removed later. It is only used for testing the 
+     * SDK during development.
+     * 
+     * @param network 
+     * @param chargeData 
+     */    
     private void testChargeRequest(ApplicableNetwork network, String chargeData) {
 
         Log.i(TAG, "testChargeRequest Network[" + network.getCode() + ", " + network.getLabel() + "]");
