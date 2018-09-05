@@ -8,7 +8,6 @@ buildscript {
     }
     dependencies {
         classpath 'com.android.tools.build:gradle:3.1.4'
-        
 
         // NOTE: Do not place your application dependencies here; they belong
         // in the individual module build.gradle files
@@ -17,7 +16,7 @@ buildscript {
 
 allprojects {
     repositories {
-        google()
+	google()
         jcenter()
     }
 }
@@ -25,3 +24,22 @@ allprojects {
 task clean(type: Delete) {
     delete rootProject.buildDir
 }
+
+ext {
+    minSdkVersion = 19
+    compileSdkVersion = 27
+    targetSdkVersion = 27
+    buildToolsVersion = "27.0.3"
+    gsonVersion = "2.8.5"
+    supportLibVersion = "27.1.1"
+    junitVersion = "4.12"
+    mockitoCoreVersion = "2.21.0"
+    robolectricVersion = "3.8"
+    runnerVersion = "1.0.2"
+    espressoCoreVersion = "3.0.2"
+    javaCompatVersion = JavaVersion.VERSION_1_8
+
+    versionCode = 1
+    versionName = "0.0.1"
+}
+
