@@ -56,7 +56,7 @@ public final class NetworkResponse {
     }
 
     /**
-     * Check if this response contains an error
+     * Check if this response contains any error
      *
      * @return true when an error is present, false otherwise
      */
@@ -69,7 +69,7 @@ public final class NetworkResponse {
      *
      * @return true if it matches the given error type, false otherwise
      */
-    public boolean isError(final NetworkError.ErrorType type) {
+    public boolean hasError(final NetworkError.ErrorType type) {
         return error != null && error.isError(type);
     }
     

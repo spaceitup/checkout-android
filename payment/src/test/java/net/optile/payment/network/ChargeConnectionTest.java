@@ -29,13 +29,13 @@ public class ChargeConnectionTest {
 
     @Test
     public void createCharge() throws Exception {
+
         ChargeConnection conn = new ChargeConnection();
         NetworkResponse resp = conn.createCharge(null, "{}");
-
-        assertTrue(resp.hasError());
-        assertTrue(resp.isError(NetworkError.ErrorType.INVALID_VALUE));
+        assertTrue(resp.hasError(NetworkError.ErrorType.INVALID_VALUE));
     }
 
+    @Test
     public void createCharge_invalidData_invalidValueError() {
 
         ChargeConnection conn = new ChargeConnection();
@@ -45,8 +45,9 @@ public class ChargeConnectionTest {
             url = new URL("http://localhost");
         } catch (MalformedURLException e) {
         }
+        assertNotNull(url);
+
         NetworkResponse resp = conn.createCharge(url, "");
-        assertTrue(resp.hasError());
-        assertTrue(resp.isError(NetworkError.ErrorType.INVALID_VALUE));
+        assertTrue(resp.hasError(NetworkError.ErrorType.INVALID_VALUE));
     }
 }

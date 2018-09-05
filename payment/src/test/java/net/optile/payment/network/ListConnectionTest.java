@@ -29,22 +29,25 @@ public class ListConnectionTest {
 
     @Test
     public void createPaymentSession_invalidAuthorization_invalidValueError() {
+
         ListConnection conn = new ListConnection("http://localhost");
         NetworkResponse resp = conn.createPaymentSession(null, "{}");
-        assertTrue(resp.isError(NetworkError.ErrorType.INVALID_VALUE));
+        assertTrue(resp.hasError(NetworkError.ErrorType.INVALID_VALUE));
     }
 
+    @Test
     public void createPaymentSession_invalidListData_invalidValueError() {
 
         ListConnection conn = new ListConnection("http://localhost");
         NetworkResponse resp = conn.createPaymentSession("abc123", "");
-        assertTrue(resp.isError(NetworkError.ErrorType.INVALID_VALUE));
+        assertTrue(resp.hasError(NetworkError.ErrorType.INVALID_VALUE));
     }
 
+    @Test    
     public void getListResult_invalidURL_invalidValueError() {
 
         ListConnection conn = new ListConnection("http://localhost");
         NetworkResponse resp = conn.getListResult(null);
-        assertTrue(resp.isError(NetworkError.ErrorType.INVALID_VALUE));
+        assertTrue(resp.hasError(NetworkError.ErrorType.INVALID_VALUE));
     }
 }
