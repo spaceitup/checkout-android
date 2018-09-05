@@ -17,6 +17,7 @@ import android.util.Log;
 import net.optile.payment.model.ApplicableNetwork;
 import net.optile.payment.model.ListResult;
 import net.optile.payment.model.OperationResult;
+import net.optile.payment.model.Redirect;
 
 import net.optile.example.R;
 import net.optile.example.util.AppUtils;
@@ -172,6 +173,9 @@ final class CheckoutPresenter {
         ChargeConnection conn = new ChargeConnection();
         NetworkResponse resp = conn.createCharge(url, chargeData);
 
-        Log.i(TAG, "Charge response: " + resp);
+        OperationResult result = resp.getOperationResult();
+        Redirect redirect = result.getRedirect();
+        
+        Log.i(TAG, "Charge response: " + redirect.getMethodChecked());
     }
 }

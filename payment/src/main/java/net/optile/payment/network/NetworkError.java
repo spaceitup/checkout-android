@@ -11,53 +11,56 @@
 
 package net.optile.payment.network;
 
-import android.text.TextUtils;
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
 
+import android.support.annotation.StringDef;
+import android.text.TextUtils;
+    
 /**
  * A class representing the network error
  */
 public final class NetworkError {
 
-    public enum ErrorType {
+    @Retention(RetentionPolicy.SOURCE)
+    @StringDef({
+            API_ERROR,
+            CONN_ERROR,
+            INTERNAL_ERROR,
+            SECURITY_ERROR,
+            INVALID_VALUE,
+            NOT_FOUND,
+            PROTOCOL_ERROR
+            })
+    public @interface ErrorType {}
 
-        API_ERROR("API_ERROR"),
-        CONN_ERROR("CONN_ERROR"),
-        INTERNAL_ERROR("INTERNAL_ERROR"),
-        SECURITY_ERROR("SECURITY_ERROR"),
-        INVALID_VALUE("INVALID_VALUE"),
-        NOT_FOUND("NOT_FOUND"),
-        PROTOCOL_ERROR("PROTOCOL_ERROR");
-        
-        private String value;
+    public final static String API_ERROR        = "API_ERROR";
+    public final static String CONN_ERROR       = "CONN_ERROR";
+    public final static String INTERNAL_ERROR   = "INTERNAL_ERROR";
+    public final static String SECURITY_ERROR   = "SECURITY_ERROR";
+    public final static String INVALID_VALUE    = "INVALID_VALUE";
+    public final static String NOT_FOUND        = "NOT_FOUND";
+    public final static String PROTOCOL_ERROR   = "PROTOCOL_ERROR";
 
-        ErrorType(String v) {
-            value = v;
-        }
-
-        public String getValue() {
-            return value;
-        }
-    }
-    
     /**
      * The mandatory error type 
      */
-    public ErrorType type;
+    private String type;
 
     /**
      * The optional network status code like 400 or 500
      */
-    public int statusCode;
+    private int statusCode;
 
     /**
      * The optional error message
      */
-    public String message;
+    private String message;
 
     /**
      * The optional exception that caused the error
      */
-    public Exception cause;
+    private Exception cause;
 
     /**
      * Construct a new NetworkError
@@ -67,7 +70,7 @@ public final class NetworkError {
      * @param message
      * @param cause
      */
-    public NetworkError(final ErrorType type, final String message, final int statusCode, final Exception cause) {
+    public NetworkError(@ErrorType final String type, final String message, final int statusCode, final Exception cause) {
         this.type = type;
         this.message = message;
         this.statusCode = statusCode;
@@ -80,7 +83,7 @@ public final class NetworkError {
      * @param  type the type identifying this error
      * @return      true when it is the same error, false otherwise
      */
-    public boolean isError(final ErrorType type) {
+    public boolean isError(@ErrorType final String type) {
         return this.type == type;
     }
 
@@ -89,8 +92,39 @@ public final class NetworkError {
      * 
      * @return the errorType stored in this NetworkError 
      */
-    public ErrorType getType() {
+    @ErrorType
+    public String getType() {
         return type;
+    }
+
+    /** 
+     * Get the status Code from this network error
+     * 
+     * 
+     * @return the optional status code 
+     */
+    public int getStatusCode() {
+        return statusCode;
+    }
+
+    /** 
+     * Get the message from this network error
+     * 
+     * 
+     * @return the optional message 
+     */
+    public String getMessage() {
+        return message;
+    }
+
+    /** 
+     * Get the cause from this network error
+     * 
+     * 
+     * @return the optional cause  
+     */
+    public Exception getCause() {
+        return cause;
     }
     
     /**

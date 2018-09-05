@@ -11,7 +11,7 @@
 
 package net.optile.payment.network;
 
-import net.optile.payment.network.NetworkError.ErrorType;
+import net.optile.payment.network.NetworkError;
 
 import net.optile.payment.model.ListResult;
 import net.optile.payment.model.OperationResult;
@@ -20,24 +20,32 @@ import java.util.Map;
 import java.util.HashMap;
 import java.net.URL;
 
+import static net.optile.payment.network.NetworkError.API_ERROR;
+import static net.optile.payment.network.NetworkError.CONN_ERROR;
+import static net.optile.payment.network.NetworkError.INTERNAL_ERROR;
+import static net.optile.payment.network.NetworkError.SECURITY_ERROR;
+import static net.optile.payment.network.NetworkError.INVALID_VALUE;
+import static net.optile.payment.network.NetworkError.NOT_FOUND;
+import static net.optile.payment.network.NetworkError.PROTOCOL_ERROR;
+
 /**
  * Class containing response data from the Payment API, the class 
  * contains either a NetworkError or data
  */
 public final class NetworkResponse {
 
-    private static String KEY_LISTRESULT      = "listresult";
-    private static String KEY_OPERATIONRESULT = "operationresult";
+    private final static String KEY_LISTRESULT      = "listresult";
+    private final static String KEY_OPERATIONRESULT = "operationresult";
     
     /**
      * The network error
      */
-    public NetworkError error;
+    private NetworkError error;
 
     /**
      * The data holder
      */
-    public Map<String, Object> data;
+    private Map<String, Object> data;
 
     /**
      * Constructs a new empty NetworkResponse
@@ -69,7 +77,7 @@ public final class NetworkResponse {
      *
      * @return true if it matches the given error type, false otherwise
      */
-    public boolean hasError(final NetworkError.ErrorType type) {
+    public boolean hasError(final String type) {
         return error != null && error.isError(type);
     }
     
@@ -88,7 +96,7 @@ public final class NetworkResponse {
      * @return true when it has a connection error, false otherwise
      */
     public boolean hasConnectionError() {
-        return error != null && error.isError(ErrorType.CONN_ERROR);
+        return error != null && error.isError(CONN_ERROR);
     }
 
     /**
@@ -99,7 +107,7 @@ public final class NetworkResponse {
      */
     public static NetworkResponse newInvalidValueResponse(final String message) {
 
-        final NetworkError error = new NetworkError(ErrorType.INVALID_VALUE, message, 0, null);
+        final NetworkError error = new NetworkError(INVALID_VALUE, message, 0, null);
         return new NetworkResponse(error);
     }
 
@@ -112,7 +120,7 @@ public final class NetworkResponse {
      */
     public static NetworkResponse newApiErrorResponse(final String message, final int statusCode) {
 
-        final NetworkError error = new NetworkError(ErrorType.API_ERROR, message, statusCode, null);
+        final NetworkError error = new NetworkError(API_ERROR, message, statusCode, null);
         return new NetworkResponse(error);
     }
 
@@ -125,7 +133,7 @@ public final class NetworkResponse {
      */
     public static NetworkResponse newConnErrorResponse(final String message, final Exception cause) {
 
-        final NetworkError error = new NetworkError(ErrorType.CONN_ERROR, message, 0, cause);
+        final NetworkError error = new NetworkError(CONN_ERROR, message, 0, cause);
         return new NetworkResponse(error);
     }
 
@@ -138,7 +146,7 @@ public final class NetworkResponse {
      */
     public static NetworkResponse newSecurityErrorResponse(final String message, final Exception cause) {
 
-        final NetworkError error = new NetworkError(ErrorType.SECURITY_ERROR, message, 0, cause);
+        final NetworkError error = new NetworkError(SECURITY_ERROR, message, 0, cause);
         return new NetworkResponse(error);
     }
     
@@ -151,7 +159,7 @@ public final class NetworkResponse {
      */
     public static NetworkResponse newInternalErrorResponse(final String message, final Exception cause) {
 
-        final NetworkError error = new NetworkError(ErrorType.INTERNAL_ERROR, message, 0, cause);
+        final NetworkError error = new NetworkError(INTERNAL_ERROR, message, 0, cause);
         return new NetworkResponse(error);
     }
 
@@ -164,7 +172,7 @@ public final class NetworkResponse {
      */
     public static NetworkResponse newProtocolErrorResponse(final String message, final Exception cause) {
 
-        final NetworkError error = new NetworkError(ErrorType.PROTOCOL_ERROR, message, 0, cause);
+        final NetworkError error = new NetworkError(PROTOCOL_ERROR, message, 0, cause);
         return new NetworkResponse(error);
     }
 
@@ -177,7 +185,7 @@ public final class NetworkResponse {
      */
     public static NetworkResponse newNotFoundResponse(final String message, final int statusCode) {
 
-        final NetworkError error = new NetworkError(ErrorType.NOT_FOUND, message, statusCode, null);
+        final NetworkError error = new NetworkError(NOT_FOUND, message, statusCode, null);
         return new NetworkResponse(error);
     }
     

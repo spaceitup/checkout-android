@@ -13,14 +13,60 @@ package net.optile.payment.model;
 
 import java.util.List;
 
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
+
+import android.support.annotation.StringDef;
+
 /**
  * Form input element description.
  */
 public class InputElement {
-	/** name */
+
+    @Retention(RetentionPolicy.SOURCE)
+    @StringDef({
+        TYPE_STRING,
+        TYPE_NUMERIC,
+        TYPE_INTEGER,
+        TYPE_SELECT,
+        TYPE_CHECKBOX,
+        TYPE_UNKNOWN })
+    public @interface InputElementType {}
+
+    /** 
+     * One line of text without special restrictions (example: holder name) 
+     */
+	public final static String TYPE_STRING = "string";
+
+	/** 
+     * Numbers 0-9 and the delimiters space and dash ('-') are allowed (example: card numbers) 
+     */
+    public final static String TYPE_NUMERIC = "numeric";
+
+	/** 
+     * Numbers 0-9 only (example: CVC) 
+     */
+    public final static String TYPE_INTEGER = "integer";
+
+	/** 
+     * A list of possible values is given in an additional options attribute 
+     */
+    public final static String TYPE_SELECT = "select";
+
+	/** 
+     * Checkbox type, what allows 'true' for set and 'null' or 'false' for non-set values 
+     */
+    public final static String TYPE_CHECKBOX = "checkbox";
+
+    /** 
+     * The unknown type 
+     */
+    public final static String TYPE_UNKNOWN = "Unknown";
+
+    /** name */
 	private String name;
 	/** type */
-	private InputElementType type;
+	private String type;
 	/** localized label */
 	private String label;
 	/** options */
@@ -49,16 +95,40 @@ public class InputElement {
 	 *
 	 * @return A type value.
 	 */
-	public InputElementType getType() {
+    @InputElementType
+	public String getType() {
 		return type;
 	}
 
+    /**
+	 * Gets type as a checked value.
+	 * If the value does not match any predefined modes then return 
+     * TYPE_UNKNOWN.
+     *
+	 * @return the checked type
+	 */
+    @InputElementType
+    public String getTypeChecked() {
+
+        if (this.type != null) {
+            switch (this.type) {
+            case TYPE_STRING:
+            case TYPE_NUMERIC:
+            case TYPE_INTEGER:
+            case TYPE_SELECT:
+            case TYPE_CHECKBOX:
+                return this.type;
+            }
+        }
+        return TYPE_UNKNOWN;
+    }
+    
 	/**
 	 * Sets type.
 	 *
 	 * @param type A type value.
 	 */
-	public void setType(final InputElementType type) {
+	public void setType(@InputElementType String type) {
 		this.type = type;
 	}
 

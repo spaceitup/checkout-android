@@ -19,7 +19,12 @@ import java.util.Map;
  * This class is designed to hold information about applicable payment network.
  */
 public class ApplicableNetwork {
-	/** Simple API, always present */
+
+    
+
+
+
+    /** Simple API, always present */
 	private String code;
 	/** Simple API, always present */
 	private String label;

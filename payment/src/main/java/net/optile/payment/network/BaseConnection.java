@@ -14,7 +14,7 @@ package net.optile.payment.network;
 import android.os.Build;
 import android.text.TextUtils;
 
-import net.optile.payment.network.NetworkError.ErrorType;
+import net.optile.payment.network.NetworkError;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -71,13 +71,9 @@ public abstract class BaseConnection {
      */
     public BaseConnection() {
 
-        // This is needed for older versions of Android
-        disableConnectionReuseIfNecessary();
-
         if (CookieHandler.getDefault() == null) {
             CookieHandler.setDefault(new CookieManager());
         }
-
         this.gson = new GsonBuilder().create();
     }
     
@@ -281,15 +277,6 @@ public abstract class BaseConnection {
         return buf.toString();
     }
     
-    /**
-     * HTTP connection reuse which was buggy pre-froyo release
-     * so we disable the keep alive function
-     */
-    private void disableConnectionReuseIfNecessary() {
-        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.FROYO) {
-            System.setProperty("http.keepAlive", "false");
-        }
-    }
 
     /**
      * Handle the error response from the Payment API
@@ -302,11 +289,11 @@ public abstract class BaseConnection {
     public NetworkResponse handleAPIErrorResponse(final String source, final int statusCode, final HttpURLConnection conn) throws IOException {
 
         final String msg = source + " - errorData: " + readFromErrorStream(conn);
-        ErrorType errorType = ErrorType.API_ERROR;
+        String errorType = NetworkError.API_ERROR;
 
         switch (statusCode) {
         case HttpURLConnection.HTTP_NOT_FOUND:
-            errorType = ErrorType.NOT_FOUND;
+            errorType = NetworkError.NOT_FOUND;
         }
         return new NetworkResponse(new NetworkError(errorType, msg, statusCode, null));
     }
