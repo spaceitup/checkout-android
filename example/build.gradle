@@ -14,8 +14,8 @@ android {
         applicationId "net.optile.example"
         minSdkVersion rootProject.minSdkVersion
         targetSdkVersion rootProject.targetSdkVersion
-        versionCode 1
-        versionName "1.0"
+        versionCode rootProject.versionCode
+        versionName rootProject.versionName
 
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
 	resValue "string", "payment_authorization", "$System.env.PAYMENT_AUTHORIZATION"
