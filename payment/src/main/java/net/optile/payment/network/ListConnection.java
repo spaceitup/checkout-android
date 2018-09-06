@@ -141,8 +141,6 @@ public final class ListConnection extends BaseConnection {
 
             conn.connect();
             final int rc = conn.getResponseCode();
-            String contentType = conn.getContentType();
-            Log.i(TAG, "ContentType: " + contentType);
             switch (rc) {
                 case HttpURLConnection.HTTP_OK:
                     return handleGetListResultOk(readFromInputStream(conn));
