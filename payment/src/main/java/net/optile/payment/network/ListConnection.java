@@ -1,34 +1,27 @@
 /**
  * Copyright(c) 2012-2018 optile GmbH. All Rights Reserved.
  * https://www.optile.net
- *
+ * <p>
  * This software is the property of optile GmbH. Distribution  of  this
  * software without agreement in writing is strictly prohibited.
- *
+ * <p>
  * This software may not be copied, used or distributed unless agreement
  * has been received in full.
  */
 
 package net.optile.payment.network;
 
-import android.util.Log;
 import android.net.Uri;
 import android.text.TextUtils;
 
-import java.io.IOException;
-import java.net.URL;
-
-import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
-
-import org.json.JSONObject;
-import org.json.JSONException;
-
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
 import com.google.gson.JsonParseException;
 
 import net.optile.payment.model.ListResult;
+
+import java.io.IOException;
+import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.URL;
 
 /**
  * Class implementing the communication with the List payment API
@@ -40,12 +33,12 @@ import net.optile.payment.model.ListResult;
  */
 public final class ListConnection extends BaseConnection {
 
-    /** 
+    /**
      * The base url i.e. used for creating 
      * a new payment session  
      */
     private String baseUrl;
-    
+
     /**
      * Construct a new ListConnection
      *
@@ -62,29 +55,28 @@ public final class ListConnection extends BaseConnection {
      *
      * @param  authorization the authorization header data
      * @param  listData      the data containing the request body for the list request
-     * @return               the NetworkResponse containing either an error or the List
+     * @return the NetworkResponse containing either an error or the List
      */
     public NetworkResponse createPaymentSession(final String authorization, final String listData) {
 
         final String source = "ListConnection[createPaymentSession]";
-        
+
         if (TextUtils.isEmpty(authorization)) {
-            return NetworkResponse.newInvalidValueResponse(source + " - authorization cannot be null or empty"); 
+            return NetworkResponse.newInvalidValueResponse(source + " - authorization cannot be null or empty");
         }
         if (TextUtils.isEmpty(listData)) {
-            return NetworkResponse.newInvalidValueResponse(source + " - data cannot be null or empty"); 
+            return NetworkResponse.newInvalidValueResponse(source + " - data cannot be null or empty");
         }
-        
+
         HttpURLConnection conn = null;
         NetworkResponse resp = null;
 
         try {
-
             final String requestUrl = Uri.parse(baseUrl).buildUpon()
-                .appendPath(URI_PATH_API)
-                .appendPath(URI_PATH_LISTS)
-                .appendQueryParameter(URI_PARAM_VIEW, VALUE_VIEW)
-                .build().toString();
+                    .appendPath(URI_PATH_API)
+                    .appendPath(URI_PATH_LISTS)
+                    .appendQueryParameter(URI_PARAM_VIEW, VALUE_VIEW)
+                    .build().toString();
 
             conn = createPostConnection(requestUrl);
             conn.setRequestProperty(HEADER_AUTHORIZATION, authorization);
@@ -93,24 +85,23 @@ public final class ListConnection extends BaseConnection {
 
             writeToOutputStream(conn, listData);
             conn.connect();
-
             final int rc = conn.getResponseCode();
 
             switch (rc) {
-            case HttpURLConnection.HTTP_OK:
-                resp = handleCreatePaymentSessionOk(readFromInputStream(conn));
-                break;
-            default:
-                resp = handleAPIErrorResponse(source, rc, conn);
+                case HttpURLConnection.HTTP_OK:
+                    resp = handleCreatePaymentSessionOk(readFromInputStream(conn));
+                    break;
+                default:
+                    resp = handleAPIErrorResponse(source, rc, conn);
             }
         } catch (JsonParseException e) {
-            resp = NetworkResponse.newProtocolErrorResponse(source, e);            
+            resp = NetworkResponse.newProtocolErrorResponse(source, e);
         } catch (MalformedURLException e) {
             resp = NetworkResponse.newInternalErrorResponse(source, e);
         } catch (IOException e) {
             resp = NetworkResponse.newConnErrorResponse(source, e);
         } catch (SecurityException e) {
-            resp = NetworkResponse.newSecurityErrorResponse(source, e);            
+            resp = NetworkResponse.newSecurityErrorResponse(source, e);
         } finally {
             close(conn);
         }
@@ -122,24 +113,22 @@ public final class ListConnection extends BaseConnection {
      * obtain the details of an active list session
      *
      * @param  url  the url pointing to the list
-     * @return      the NetworkResponse containing either an error or the ListResult
+     * @return the NetworkResponse containing either an error or the ListResult
      */
     public NetworkResponse getListResult(final URL url) {
 
-        final String source = "ListConnection[getListResult]";        
-
+        final String source = "ListConnection[getListResult]";
         if (url == null) {
-            return NetworkResponse.newInvalidValueResponse(source + " - url cannot be null or empty"); 
+            return NetworkResponse.newInvalidValueResponse(source + " - url cannot be null or empty");
         }
 
         HttpURLConnection conn = null;
         NetworkResponse resp = null;
 
         try {
-
             final String requestUrl = Uri.parse(url.toString()).buildUpon()
-                .appendQueryParameter(URI_PARAM_VIEW, VALUE_VIEW)
-                .build().toString();
+                    .appendQueryParameter(URI_PARAM_VIEW, VALUE_VIEW)
+                    .build().toString();
 
             conn = createGetConnection(requestUrl);
             conn.setRequestProperty(HEADER_CONTENT_TYPE, VALUE_APP_JSON);
@@ -149,31 +138,31 @@ public final class ListConnection extends BaseConnection {
             final int rc = conn.getResponseCode();
 
             switch (rc) {
-            case HttpURLConnection.HTTP_OK:
-                resp = handleGetListResultOk(readFromInputStream(conn));
-                break;
-            default:
-                resp = handleAPIErrorResponse(source, rc, conn);
+                case HttpURLConnection.HTTP_OK:
+                    resp = handleGetListResultOk(readFromInputStream(conn));
+                    break;
+                default:
+                    resp = handleAPIErrorResponse(source, rc, conn);
             }
         } catch (JsonParseException e) {
-            resp = NetworkResponse.newProtocolErrorResponse(source, e);            
+            resp = NetworkResponse.newProtocolErrorResponse(source, e);
         } catch (MalformedURLException e) {
             resp = NetworkResponse.newInternalErrorResponse(source, e);
         } catch (IOException e) {
             resp = NetworkResponse.newConnErrorResponse(source, e);
         } catch (SecurityException e) {
-            resp = NetworkResponse.newSecurityErrorResponse(source, e);            
+            resp = NetworkResponse.newSecurityErrorResponse(source, e);
         } finally {
             close(conn);
         }
         return resp;
     }
-    
+
     /**
      * Handle the create new payment session OK state
      *
      * @param  data the response data received from the API
-     * @return      the network response containing the ListResult
+     * @return the network response containing the ListResult
      */
     private NetworkResponse handleCreatePaymentSessionOk(final String data) throws JsonParseException {
 
@@ -188,7 +177,7 @@ public final class ListConnection extends BaseConnection {
      * Handle get list result OK state
      *
      * @param  data the response data received from the Payment API
-     * @return      the network response containing the ListResult
+     * @return the network response containing the ListResult
      */
     private NetworkResponse handleGetListResultOk(final String data) throws JsonParseException {
 
