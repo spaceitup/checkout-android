@@ -76,26 +76,6 @@ public class Redirect {
     }
 
     /**
-     * Gets method as a checked value.
-     * If the value does not match any predefined modes then return
-     * METHOD_UNKNOWN.
-     *
-     * @return the method.
-     */
-    @HttpMethod
-    public String getMethodChecked() {
-
-        if (this.method != null) {
-            switch (this.method) {
-            case METHOD_GET:
-            case METHOD_POST:
-                return this.method;
-            }
-        }
-        return METHOD_UNKNOWN;
-    }
-
-    /**
      * Sets value of method.
      *
      * @param method the method to set.
@@ -138,5 +118,25 @@ public class Redirect {
      */
     public void setSuppressIFrame(Boolean suppressIFrame) {
         this.suppressIFrame = suppressIFrame;
+    }
+
+    /**
+     * Gets method as a checked value.
+     * If the value does not match any predefined modes then return
+     * METHOD_UNKNOWN.
+     *
+     * @return the method.
+     */
+    @HttpMethod
+    public String getCheckedMethod() {
+
+        if (this.method != null) {
+            switch (this.method) {
+            case METHOD_GET:
+            case METHOD_POST:
+                return this.method;
+            }
+        }
+        return METHOD_UNKNOWN;
     }
 }

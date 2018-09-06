@@ -100,29 +100,6 @@ public class InputElement {
 		return type;
 	}
 
-    /**
-	 * Gets type as a checked value.
-	 * If the value does not match any predefined modes then return 
-     * TYPE_UNKNOWN.
-     *
-	 * @return the checked type
-	 */
-    @InputElementType
-    public String getTypeChecked() {
-
-        if (this.type != null) {
-            switch (this.type) {
-            case TYPE_STRING:
-            case TYPE_NUMERIC:
-            case TYPE_INTEGER:
-            case TYPE_SELECT:
-            case TYPE_CHECKBOX:
-                return this.type;
-            }
-        }
-        return TYPE_UNKNOWN;
-    }
-    
 	/**
 	 * Sets type.
 	 *
@@ -167,4 +144,27 @@ public class InputElement {
 	public void setOptions(final List<SelectOption> options) {
 		this.options = options;
 	}
+
+    /**
+	 * Gets type as a checked value.
+	 * If the value does not match any predefined modes then return 
+     * TYPE_UNKNOWN.
+     *
+	 * @return the checked type
+	 */
+    @InputElementType
+    public String getCheckedType() {
+
+        if (this.type != null) {
+            switch (this.type) {
+            case TYPE_STRING:
+            case TYPE_NUMERIC:
+            case TYPE_INTEGER:
+            case TYPE_SELECT:
+            case TYPE_CHECKBOX:
+                return this.type;
+            }
+        }
+        return TYPE_UNKNOWN;
+    }
 }

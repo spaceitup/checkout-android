@@ -176,6 +176,6 @@ final class CheckoutPresenter {
         OperationResult result = resp.getOperationResult();
         Redirect redirect = result.getRedirect();
         
-        Log.i(TAG, "Charge response: " + redirect.getMethodChecked());
+        Log.i(TAG, "Charge response: " + redirect.getCheckedMethod());
     }
 }

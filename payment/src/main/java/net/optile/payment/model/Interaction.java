@@ -118,30 +118,6 @@ public class Interaction {
     }
 
     /**
-     * Gets code as a checked value.
-     * If the value does not match any predefined modes then return
-     * CODE_UNKNOWN.
-     *
-     * @return the code
-     */
-    @InteractionCode
-    public String getCodeChecked() {
-
-        if (this.code != null) {
-            switch (this.code) {
-            case CODE_PROCEED:
-            case CODE_ABORT:
-            case CODE_TRY_OTHER_NETWORK:
-            case CODE_TRY_OTHER_ACCOUNT:
-            case CODE_RETRY:
-            case CODE_RELOAD:
-                return this.code;
-            }
-        }
-        return CODE_UNKNOWN;
-    }
-
-    /**
      * Sets value of code.
      *
      * @param code the code to set.
@@ -161,6 +137,39 @@ public class Interaction {
     }
 
     /**
+     * Sets value of reason.
+     *
+     * @param reason the reason to set.
+     */
+    public void setReason(@InteractionReason String reason) {
+        this.reason = reason;
+    }
+
+    /**
+     * Gets code as a checked value.
+     * If the value does not match any predefined modes then return
+     * CODE_UNKNOWN.
+     *
+     * @return the code
+     */
+    @InteractionCode
+    public String getCheckedCode() {
+
+        if (this.code != null) {
+            switch (this.code) {
+            case CODE_PROCEED:
+            case CODE_ABORT:
+            case CODE_TRY_OTHER_NETWORK:
+            case CODE_TRY_OTHER_ACCOUNT:
+            case CODE_RETRY:
+            case CODE_RELOAD:
+                return this.code;
+            }
+        }
+        return CODE_UNKNOWN;
+    }
+    
+    /**
      * Gets reason as a checked value.
      * If the value does not match any predefined modes then return
      * REASON_UNKNOWN.
@@ -168,7 +177,7 @@ public class Interaction {
      * @return the reason
      */
     @InteractionReason
-    public String getReasonChecked() {
+    public String getCheckedReason() {
 
         if (this.reason != null) {
             switch (this.reason) {
@@ -204,14 +213,5 @@ public class Interaction {
             }
         }
         return REASON_UNKNOWN;
-    }
-
-    /**
-     * Sets value of reason.
-     *
-     * @param reason the reason to set.
-     */
-    public void setReason(@InteractionReason String reason) {
-        this.reason = reason;
     }
 }

@@ -81,29 +81,6 @@ public class Checkbox {
 		return mode;
 	}
 
-    /**
-	 * Gets mode of displayed checkbox as a checked value.
-	 * If the value does not match any predefined modes then return 
-     * MODE_UNKNOWN.
-     *
-	 * @return the mode.
-	 */
-    @CheckboxMode
-    public String getModeChecked() {
-
-        if (this.mode != null) {
-            switch (this.mode) {
-            case MODE_OPTIONAL:
-            case MODE_OPTIONAL_PRESELECTED:
-            case MODE_REQUIRED:
-            case MODE_REQUIRED_PRESELECTED:
-            case MODE_FORCED:
-            case MODE_FORCED_DISPLAYED:
-                return this.mode;
-            }
-        }
-        return MODE_UNKNOWN;
-    }
     
 	/**
 	 * Sets mode of displayed checkbox.
@@ -149,4 +126,28 @@ public class Checkbox {
 	public void setRequireMsg(String requireMsg) {
 		this.requireMsg = requireMsg;
 	}
+
+    /**
+	 * Gets mode of displayed checkbox as a checked value.
+	 * If the value does not match any predefined modes then return 
+     * MODE_UNKNOWN.
+     *
+	 * @return the mode.
+	 */
+    @CheckboxMode
+    public String getCheckedMode() {
+
+        if (this.mode != null) {
+            switch (this.mode) {
+            case MODE_OPTIONAL:
+            case MODE_OPTIONAL_PRESELECTED:
+            case MODE_REQUIRED:
+            case MODE_REQUIRED_PRESELECTED:
+            case MODE_FORCED:
+            case MODE_FORCED_DISPLAYED:
+                return this.mode;
+            }
+        }
+        return MODE_UNKNOWN;
+    }
 }

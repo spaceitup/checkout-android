@@ -15,27 +15,85 @@ import java.net.URL;
 import java.util.List;
 import java.util.Map;
 
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
+
+import android.support.annotation.StringDef;
+
 /**
  * This class is designed to hold information about applicable payment network.
  */
 public class ApplicableNetwork {
 
+    @Retention(RetentionPolicy.SOURCE)
+    @StringDef({
+    METHOD_BANK_TRANSFER,
+	METHOD_BILLING_PROVIDER,
+	METHOD_CASH_ON_DELIVERY,
+	METHOD_CHECK_PAYMENT,
+	METHOD_CREDIT_CARD,
+	METHOD_DEBIT_CARD,
+	METHOD_DIRECT_DEBIT,
+	METHOD_ELECTRONIC_INVOICE,
+	METHOD_GIFT_CARD,
+	METHOD_MOBILE_PAYMENT,
+	METHOD_ONLINE_BANK_TRANSFER,
+	METHOD_OPEN_INVOICE,
+	METHOD_PREPAID_CARD,
+	METHOD_TERMINAL,
+    METHOD_WALLET,
+    METHOD_UNKNOWN })
+    public @interface PaymentMethod {}
+
+    public final static String METHOD_BANK_TRANSFER         = "BANK_TRANSFER";
+	public final static String METHOD_BILLING_PROVIDER      = "BILLING_PROVIDER";
+	public final static String METHOD_CASH_ON_DELIVERY      = "CASH_ON_DELIVERY";
+	public final static String METHOD_CHECK_PAYMENT         = "CHECK_PAYMENT";
+	public final static String METHOD_CREDIT_CARD           = "CREDIT_CARD";
+	public final static String METHOD_DEBIT_CARD            = "DEBIT_CARD";
+	public final static String METHOD_DIRECT_DEBIT          = "DIRECT_DEBIT";
+	public final static String METHOD_ELECTRONIC_INVOICE    = "ELECTRONIC_INVOICE";
+	public final static String METHOD_GIFT_CARD             = "GIFT_CARD";
+	public final static String METHOD_MOBILE_PAYMENT        = "MOBILE_PAYMENT";
+	public final static String METHOD_ONLINE_BANK_TRANSFER  = "ONLINE_BANK_TRANSFER";
+	public final static String METHOD_OPEN_INVOICE          = "OPEN_INVOICE";
+	public final static String METHOD_PREPAID_CARD          = "PREPAID_CARD";
+	public final static String METHOD_TERMINAL              = "TERMINAL";
+	public final static String METHOD_WALLET                = "WALLET";
+    public final static String METHOD_UNKNOWN               = "UnknownMethod";
     
+    @Retention(RetentionPolicy.SOURCE)
+    @StringDef({
+        REGTYPE_NONE,
+        REGTYPE_OPTIONAL,
+        REGTYPE_FORCED,
+        REGTYPE_OPTIONAL_PRESELECTED,
+        REGTYPE_FORCED_DISPLAYED,
+        REGTYPE_UNKNOWN })
+    public @interface RegistrationType {}
 
-
+    public final static String REGTYPE_NONE                 = "NONE";
+    public final static String REGTYPE_OPTIONAL             = "OPTIONAL";
+    public final static String REGTYPE_FORCED               = "FORCED";
+    public final static String REGTYPE_OPTIONAL_PRESELECTED = "OPTIONAL_PRESELECTED";
+    public final static String REGTYPE_FORCED_DISPLAYED     = "FORCED_DISPLAYED";
+    public final static String REGTYPE_UNKNOWN              = "REGTYPE_UNKNOWN";
 
     /** Simple API, always present */
 	private String code;
 	/** Simple API, always present */
 	private String label;
 	/** Simple API, always present */
-	private PaymentMethod method;
+    @PaymentMethod
+	private String method;
 	/** Simple API, always present */
 	private String grouping;
 	/** Simple API, always present */
-	private RegistrationType registration;
+    @RegistrationType
+	private String registration;
 	/** Simple API, always present */
-	private RegistrationType recurrence;
+    @RegistrationType
+	private String recurrence;
 	/** Simple API, always present */
 	private Boolean redirect;
 	/** Simple API, always present */
@@ -54,8 +112,6 @@ public class ApplicableNetwork {
 	private List<InputElement> localizedInputElements;
 	/** contract data of first possible route. */
 	private Map<String, String> contractData;
-
-	/* TODO: disruption, amountAdjustment */
 
 	/**
 	 * Gets value of code.
@@ -98,7 +154,8 @@ public class ApplicableNetwork {
 	 *
 	 * @return the method.
 	 */
-	public PaymentMethod getMethod() {
+    @PaymentMethod
+	public String getMethod() {
 		return method;
 	}
 
@@ -107,7 +164,7 @@ public class ApplicableNetwork {
 	 *
 	 * @param method the method to set.
 	 */
-	public void setMethod(final PaymentMethod method) {
+	public void setMethod(@PaymentMethod final String method) {
 		this.method = method;
 	}
 
@@ -134,7 +191,8 @@ public class ApplicableNetwork {
 	 *
 	 * @return the registration.
 	 */
-	public RegistrationType getRegistration() {
+    @RegistrationType
+	public String getRegistration() {
 		return registration;
 	}
 
@@ -143,7 +201,7 @@ public class ApplicableNetwork {
 	 *
 	 * @param registration the registration to set.
 	 */
-	public void setRegistration(final RegistrationType registration) {
+	public void setRegistration(@RegistrationType final String registration) {
 		this.registration = registration;
 	}
 
@@ -152,7 +210,8 @@ public class ApplicableNetwork {
 	 *
 	 * @return the recurrence.
 	 */
-	public RegistrationType getRecurrence() {
+    @RegistrationType
+	public String getRecurrence() {
 		return recurrence;
 	}
 
@@ -161,7 +220,7 @@ public class ApplicableNetwork {
 	 *
 	 * @param recurrence the recurrence to set.
 	 */
-	public void setRecurrence(final RegistrationType recurrence) {
+	public void setRecurrence(@RegistrationType final String recurrence) {
 		this.recurrence = recurrence;
 	}
 
@@ -329,4 +388,83 @@ public class ApplicableNetwork {
 	public void setContractData(final Map<String, String> contractData) {
 		this.contractData = contractData;
 	}
+
+    /**
+	 * Gets method as a checked value.
+	 * If the value does not match any predefined modes then return 
+     * METHOD_UNKNOWN.
+     *
+	 * @return the method.
+	 */
+    @PaymentMethod
+    public String getCheckedMethod() {
+
+        if (this.method != null) {
+            switch (this.method) {
+            case METHOD_BANK_TRANSFER:
+            case METHOD_BILLING_PROVIDER:
+            case METHOD_CASH_ON_DELIVERY:
+            case METHOD_CHECK_PAYMENT:
+            case METHOD_CREDIT_CARD:
+            case METHOD_DEBIT_CARD:
+            case METHOD_DIRECT_DEBIT:
+            case METHOD_ELECTRONIC_INVOICE:
+            case METHOD_GIFT_CARD:
+            case METHOD_MOBILE_PAYMENT:
+            case METHOD_ONLINE_BANK_TRANSFER:
+            case METHOD_OPEN_INVOICE:
+            case METHOD_PREPAID_CARD:
+            case METHOD_TERMINAL:
+            case METHOD_WALLET:
+                return this.method;
+            }
+        }
+        return METHOD_UNKNOWN;
+    }
+
+    /**
+	 * Gets registration as a checked value.
+	 * If the value does not match any predefined modes then return 
+     * REGTYPE_UNKNOWN.
+     *
+	 * @return the registration.
+	 */
+    @RegistrationType
+    public String getCheckedRegistration() {
+
+        if (this.registration != null) {
+            switch (this.registration) {
+            case REGTYPE_NONE:
+            case REGTYPE_OPTIONAL:
+            case REGTYPE_FORCED:
+            case REGTYPE_OPTIONAL_PRESELECTED:
+            case REGTYPE_FORCED_DISPLAYED:
+                return this.registration;
+            }
+        }
+        return REGTYPE_UNKNOWN;
+    }
+
+    /**
+	 * Gets recurrence as a checked value.
+	 * If the value does not match any predefined modes then return 
+     * REGTYPE_UNKNOWN.
+     *
+	 * @return the recurrence.
+	 */
+    @RegistrationType
+    public String getCheckedRecurrence() {
+
+        if (this.recurrence != null) {
+            switch (this.recurrence) {
+            case REGTYPE_NONE:
+            case REGTYPE_OPTIONAL:
+            case REGTYPE_FORCED:
+            case REGTYPE_OPTIONAL_PRESELECTED:
+            case REGTYPE_FORCED_DISPLAYED:
+                return this.recurrence;
+            }
+        }
+        return REGTYPE_UNKNOWN;
+    }
 }
