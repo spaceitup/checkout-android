@@ -32,7 +32,7 @@ public class ListConnectionTest {
 
         ListConnection conn = new ListConnection("http://localhost");
         NetworkResponse resp = conn.createPaymentSession(null, "{}");
-        assertTrue(resp.hasError(NetworkError.ErrorType.INVALID_VALUE));
+        assertTrue(resp.hasError(NetworkError.INVALID_VALUE));
     }
 
     @Test
@@ -40,7 +40,7 @@ public class ListConnectionTest {
 
         ListConnection conn = new ListConnection("http://localhost");
         NetworkResponse resp = conn.createPaymentSession("abc123", "");
-        assertTrue(resp.hasError(NetworkError.ErrorType.INVALID_VALUE));
+        assertTrue(resp.hasError(NetworkError.INVALID_VALUE));
     }
 
     @Test    
@@ -48,6 +48,6 @@ public class ListConnectionTest {
 
         ListConnection conn = new ListConnection("http://localhost");
         NetworkResponse resp = conn.getListResult(null);
-        assertTrue(resp.hasError(NetworkError.ErrorType.INVALID_VALUE));
+        assertTrue(resp.hasError(NetworkError.INVALID_VALUE));
     }
 }

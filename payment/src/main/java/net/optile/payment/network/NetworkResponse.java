@@ -11,7 +11,22 @@
 
 package net.optile.payment.network;
 
-import net.optile.payment.network.NetworkError.ErrorType;
+import net.optile.payment.network.NetworkError;
+
+import net.optile.payment.model.ListResult;
+import net.optile.payment.model.OperationResult;
+
+import java.util.Map;
+import java.util.HashMap;
+import java.net.URL;
+
+import static net.optile.payment.network.NetworkError.API_ERROR;
+import static net.optile.payment.network.NetworkError.CONN_ERROR;
+import static net.optile.payment.network.NetworkError.INTERNAL_ERROR;
+import static net.optile.payment.network.NetworkError.SECURITY_ERROR;
+import static net.optile.payment.network.NetworkError.INVALID_VALUE;
+import static net.optile.payment.network.NetworkError.NOT_FOUND;
+import static net.optile.payment.network.NetworkError.PROTOCOL_ERROR;
 
 /**
  * Class containing response data from the Payment API, the class 
@@ -30,9 +45,12 @@ public final class NetworkResponse<T> {
     private NetworkError error;
 
     /**
-     * Constructs a new empty NetworkResponse
+     * Constructs a new empty NetworkResponse with
+     * the data object
+     *
+     * @param data the data to be stored in this network response
      */
-    public NetworkResponse(T data) {
+    public NetworkResponse(final T data) {
         this.data = data;
     }
 
@@ -46,108 +64,18 @@ public final class NetworkResponse<T> {
     }
 
     /**
-     * Create a new invalid value network response
+     * Get the data stored in this NetworkResponse. 
      *
-     * @param message the error message
-     * @return the newly created network error response
-     */
-    public static NetworkResponse<T> newInvalidValueResponse(final String message) {
-
-        final NetworkError error = new NetworkError(ErrorType.INVALID_VALUE, message, 0, null);
-        return new NetworkResponse(error);
-    }
-
-    /**
-     * Create a new API Error network response
-     *
-     * @param message    the error message
-     * @param statusCode the network status code
-     * @return the newly created network error response
-     */
-    public static NetworkResponse<T> newApiErrorResponse(final String message, final int statusCode) {
-
-        final NetworkError error = new NetworkError(ErrorType.API_ERROR, message, statusCode, null);
-        return new NetworkResponse(error);
-    }
-
-    /**
-     * Create a new connection error response
-     *
-     * @param message the error message
-     * @param cause   the optional exception that caused the error
-     * @return the newly created network error response
-     */
-    public static NetworkResponse<T> newConnErrorResponse(final String message, final Exception cause) {
-
-        final NetworkError error = new NetworkError(ErrorType.CONN_ERROR, message, 0, cause);
-        return new NetworkResponse(error);
-    }
-
-    /**
-     * Create a new security error response
-     *
-     * @param message the error message
-     * @param cause   the optional exception that caused the error
-     * @return the newly created network error response
-     */
-    public static NetworkResponse<T> newSecurityErrorResponse(final String message, final Exception cause) {
-
-        final NetworkError error = new NetworkError(ErrorType.SECURITY_ERROR, message, 0, cause);
-        return new NetworkResponse(error);
-    }
-
-    /**
-     * Create a new internal error response
-     *
-     * @param message the error message
-     * @param cause   the optional exception that caused the error
-     * @return the newly created network error response
-     */
-    public static NetworkResponse<T> newInternalErrorResponse(final String message, final Exception cause) {
-
-        final NetworkError error = new NetworkError(ErrorType.INTERNAL_ERROR, message, 0, cause);
-        return new NetworkResponse(error);
-    }
-
-    /**
-     * Create a new protocol error response
-     *
-     * @param message the error message
-     * @param cause   the optional exception that caused the error
-     * @return the newly created network error response
-     */
-    public static NetworkResponse<T> newProtocolErrorResponse(final String message, final Exception cause) {
-
-        final NetworkError error = new NetworkError(ErrorType.PROTOCOL_ERROR, message, 0, cause);
-        return new NetworkResponse(error);
-    }
-
-    /**
-     * Create a new not found response
-     *
-     * @param message    the error message
-     * @param statusCode the statusCode containing the NOT_FOUND value
-     * @return the newly created network error response
-     */
-    public static NetworkResponse<T> newNotFoundResponse(final String message, final int statusCode) {
-
-        final NetworkError error = new NetworkError(ErrorType.NOT_FOUND, message, statusCode, null);
-        return new NetworkResponse<T>(error);
-    }
-
-    /**
-     * get the optional data object
-     *
-     * @return the data
+     * @return the data or null 
      */
     public T getData() {
         return data;
     }
-
+    
     /**
-     * get the optional error
+     * Get the error stored in this NetworkResponse. 
      *
-     * @return the error
+     * @return the error or null if this NetworkResponse does not contain an error
      */
     public NetworkError getError() {
         return error;
@@ -163,12 +91,111 @@ public final class NetworkResponse<T> {
     }
 
     /**
-     * Check if this response contains the given error
+     * Check if this response contains an error with type
      *
      * @return true if it matches the given error type, false otherwise
      */
-    public boolean hasError(final NetworkError.ErrorType type) {
+    public boolean hasError(final String type) {
         return error != null && error.isError(type);
+    }
+
+    /**
+     * Does this server response contain a network connection error
+     *
+     * @return true when it has a connection error, false otherwise
+     */
+    public boolean hasConnectionError() {
+        return error != null && error.isError(CONN_ERROR);
+    }
+
+    /**
+     * Create a new invalid value network response
+     *
+     * @param message the error message
+     * @return the newly created network error response
+     */
+    public static NetworkResponse<T> newInvalidValueResponse(final String message) {
+
+        final NetworkError error = new NetworkError(INVALID_VALUE, message, 0, null);
+        return new NetworkResponse<T>(error);
+    }
+
+    /**
+     * Create a new API Error network response
+     *
+     * @param message    the error message
+     * @param statusCode the network status code
+     * @return the newly created network error response
+     */
+    public static NetworkResponse<T> newApiErrorResponse(final String message, final int statusCode) {
+
+        final NetworkError error = new NetworkError(API_ERROR, message, statusCode, null);
+        return new NetworkResponse<T>(error);
+    }
+
+    /**
+     * Create a new connection error response
+     *
+     * @param message the error message
+     * @param cause   the optional exception that caused the error
+     * @return the newly created network error response
+     */
+    public static NetworkResponse<T> newConnErrorResponse(final String message, final Exception cause) {
+
+        final NetworkError error = new NetworkError(CONN_ERROR, message, 0, cause);
+        return new NetworkResponse<T>(error);
+    }
+
+    /**
+     * Create a new security error response
+     *
+     * @param message the error message
+     * @param cause   the optional exception that caused the error
+     * @return the newly created network error response
+     */
+    public static NetworkResponse<T> newSecurityErrorResponse(final String message, final Exception cause) {
+
+        final NetworkError error = new NetworkError(SECURITY_ERROR, message, 0, cause);
+        return new NetworkResponse<T>(error);
+    }
+
+    /**
+     * Create a new internal error response
+     *
+     * @param message the error message
+     * @param cause   the optional exception that caused the error
+     * @return the newly created network error response
+     */
+    public static NetworkResponse<T> newInternalErrorResponse(final String message, final Exception cause) {
+
+        final NetworkError error = new NetworkError(INTERNAL_ERROR, message, 0, cause);
+        return new NetworkResponse<T>(error);
+    }
+
+    /**
+     * Create a new protocol error response
+     *
+     * @param message the error message
+     * @param cause   the optional exception that caused the error
+     * @return the newly created network error response
+     */
+    public static NetworkResponse<T> newProtocolErrorResponse(final String message, final Exception cause) {
+
+        final NetworkError error = new NetworkError(PROTOCOL_ERROR, message, 0, cause);
+        return new NetworkResponse<T>(error);
+    }
+
+    /**
+     * Create a new not found response
+     *
+     * @param message    the error message
+     * @param statusCode the statusCode containing the NOT_FOUND value
+     * @return the newly created network error response
+     */
+    public static NetworkResponse<T> newNotFoundResponse(final String message, final int statusCode) {
+
+        final NetworkError error = new NetworkError(ErrorType.NOT_FOUND, message, statusCode, null);
+        return new NetworkResponse<T>(error);
     }
 
     /**

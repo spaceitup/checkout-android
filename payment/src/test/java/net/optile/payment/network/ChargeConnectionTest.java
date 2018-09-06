@@ -32,7 +32,7 @@ public class ChargeConnectionTest {
 
         ChargeConnection conn = new ChargeConnection();
         NetworkResponse resp = conn.createCharge(null, "{}");
-        assertTrue(resp.hasError(NetworkError.ErrorType.INVALID_VALUE));
+        assertTrue(resp.hasError(NetworkError.INVALID_VALUE));
     }
 
     @Test
@@ -48,6 +48,6 @@ public class ChargeConnectionTest {
         assertNotNull(url);
 
         NetworkResponse resp = conn.createCharge(url, "");
-        assertTrue(resp.hasError(NetworkError.ErrorType.INVALID_VALUE));
+        assertTrue(resp.hasError(NetworkError.INVALID_VALUE));
     }
 }
