@@ -23,7 +23,7 @@ import net.optile.example.R;
 import net.optile.example.util.AppUtils;
 import net.optile.payment.network.ChargeConnection;
 import net.optile.payment.network.ListConnection;
-import net.optile.payment.network.NetworkResponse;
+import net.optile.payment.network.NetworkException;
 
 import java.net.URL;
 import java.util.List;
@@ -128,34 +128,34 @@ final class CheckoutPresenter {
      * @param chargeData 
      */
     private void test(String url, String authorization, String listData, String chargeData) throws CheckoutException {
-
         ListConnection conn = new ListConnection(url);
-        
-        NetworkResponse response = conn.createPaymentSession(authorization, listData);
-        Log.i(TAG, "test createPaymentSession: " + response);
-        
-        ListResult result = response.getListResult();
-        Map<String, URL> links = result.getLinks();
-        URL selfURL = links.get("self");
 
-        // Test the self URL and load list session
-        if (selfURL != null) {
-            response = conn.getListResult(selfURL);            
-            Log.i(TAG, "test getListResult: " + response);
-        }
+        try {
+            ListResult result = conn.createPaymentSession(authorization, listData);
+            Map<String, URL> links = result.getLinks();
+            URL selfURL = links.get("self");
 
-        // Test a charge request
-        List<ApplicableNetwork> networks = result.getNetworks().getApplicable();
-        String code = null;
-
-        for (ApplicableNetwork network : networks) {
-            
-            if (network.getCode().equals("CARTEBLEUE")) {
-                testChargeRequest(network, chargeData);
+            // Test the self URL and load list session
+            if (selfURL != null) {
+                result = conn.getListResult(selfURL);            
             }
+
+            // Test a charge request
+            List<ApplicableNetwork> networks = result.getNetworks().getApplicable();
+            String code = null;
+
+            for (ApplicableNetwork network : networks) {
+            
+                if (network.getCode().equals("CARTEBLEUE")) {
+                    testChargeRequest(network, chargeData);
+                }
+            }
+        } catch (NetworkException e) {
+            Log.i(TAG, "NetworkException: " + e.details);
+            e.printStackTrace();
         }
     }
-
+        
     /** 
      * REMIND, this code must be removed later. It is only used for testing the 
      * SDK during development.
@@ -163,7 +163,7 @@ final class CheckoutPresenter {
      * @param network 
      * @param chargeData 
      */    
-    private void testChargeRequest(ApplicableNetwork network, String chargeData) {
+    private void testChargeRequest(ApplicableNetwork network, String chargeData) throws NetworkException {
 
         Log.i(TAG, "testChargeRequest Network[" + network.getCode() + ", " + network.getLabel() + "]");
             
@@ -171,9 +171,7 @@ final class CheckoutPresenter {
         URL url = links.get("operation");
 
         ChargeConnection conn = new ChargeConnection();
-        NetworkResponse resp = conn.createCharge(url, chargeData);
-
-        OperationResult result = resp.getOperationResult();
+        OperationResult result = conn.createCharge(url, chargeData);
         Redirect redirect = result.getRedirect();
         
         Log.i(TAG, "Charge response: " + redirect.getCheckedMethod());

@@ -22,6 +22,12 @@ import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 
+import static net.optile.payment.network.ErrorDetails.PROTOCOL_ERROR;
+import static net.optile.payment.network.ErrorDetails.INTERNAL_ERROR;
+import static net.optile.payment.network.ErrorDetails.CONN_ERROR;
+import static net.optile.payment.network.ErrorDetails.SECURITY_ERROR;
+import static net.optile.payment.network.ErrorDetails.API_ERROR;
+
 /**
  * Class implementing the communication with the Charge payment API
  * <p>
@@ -37,21 +43,19 @@ public final class ChargeConnection extends BaseConnection {
      *
      * @param url  the url of the charge 
      * @param data the data containing the request body for the charge request
-     * @return the NetworkResponse containing either an error or the List
+     * @return the OperationResult object received from the Payment API
      */
-    public NetworkResponse createCharge(final URL url, final String data) {
+    public OperationResult createCharge(final URL url, final String data) throws NetworkException {
         final String source = "ChargeConnection[createCharge]";
 
         if (url == null) {
-            return NetworkResponse.newInvalidValueResponse(source + " - url cannot be null");
+            throw new IllegalArgumentException(source + " - url cannot be null");
         }
-
         if (TextUtils.isEmpty(data)) {
-            return NetworkResponse.newInvalidValueResponse(source + " - data cannot be null or empty");
+            throw new IllegalArgumentException(source + " - data cannot be null or empty");
         }
 
         HttpURLConnection conn = null;
-        NetworkResponse resp = null;
 
         try {
             conn = createPostConnection(url);
@@ -59,29 +63,26 @@ public final class ChargeConnection extends BaseConnection {
             conn.setRequestProperty(HEADER_ACCEPT, VALUE_APP_JSON);
 
             writeToOutputStream(conn, data);
-
             conn.connect();
             final int rc = conn.getResponseCode();
 
             switch (rc) {
                 case HttpURLConnection.HTTP_OK:
-                    resp = handleCreateChargeOk(readFromInputStream(conn));
-                    break;
+                    return handleCreateChargeOk(readFromInputStream(conn));
                 default:
-                    resp = handleAPIErrorResponse(source, rc, conn);
+                    throw createNetworkException(source, API_ERROR, rc, conn);
             }
         } catch (JsonParseException e) {
-            resp = NetworkResponse.newProtocolErrorResponse(source, e);
+            throw createNetworkException(source, PROTOCOL_ERROR, e);
         } catch (MalformedURLException e) {
-            resp = NetworkResponse.newInternalErrorResponse(source, e);
+            throw createNetworkException(source, INTERNAL_ERROR, e);
         } catch (IOException e) {
-            resp = NetworkResponse.newConnErrorResponse(source, e);
+            throw createNetworkException(source, CONN_ERROR, e);
         } catch (SecurityException e) {
-            resp = NetworkResponse.newSecurityErrorResponse(source, e);
+            throw createNetworkException(source, SECURITY_ERROR, e);
         } finally {
             close(conn);
         }
-        return resp;
     }
 
     /**
@@ -90,10 +91,7 @@ public final class ChargeConnection extends BaseConnection {
      * @param  data the response data received from the API
      * @return the network response containing the ListResult
      */
-    private NetworkResponse handleCreateChargeOk(final String data) throws JsonParseException {
-        final OperationResult result = gson.fromJson(data, OperationResult.class);
-        final NetworkResponse resp = new NetworkResponse();
-        resp.putOperationResult(result);
-        return resp;
+    private OperationResult handleCreateChargeOk(final String data) throws JsonParseException {
+        return gson.fromJson(data, OperationResult.class);
     }
 }

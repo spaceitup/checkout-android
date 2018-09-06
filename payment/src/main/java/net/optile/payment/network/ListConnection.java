@@ -11,6 +11,7 @@
 
 package net.optile.payment.network;
 
+import android.util.Log;
 import android.net.Uri;
 import android.text.TextUtils;
 
@@ -23,6 +24,12 @@ import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 
+import static net.optile.payment.network.ErrorDetails.PROTOCOL_ERROR;
+import static net.optile.payment.network.ErrorDetails.INTERNAL_ERROR;
+import static net.optile.payment.network.ErrorDetails.CONN_ERROR;
+import static net.optile.payment.network.ErrorDetails.SECURITY_ERROR;
+import static net.optile.payment.network.ErrorDetails.API_ERROR;
+
 /**
  * Class implementing the communication with the List payment API
  * <p>
@@ -33,6 +40,8 @@ import java.net.URL;
  */
 public final class ListConnection extends BaseConnection {
 
+    private final static String TAG = "payment_ListConnection";
+    
     /**
      * The base url i.e. used for creating 
      * a new payment session  
@@ -51,26 +60,25 @@ public final class ListConnection extends BaseConnection {
     /**
      * Create a new payment session through the Payment API. Remind this is not
      * a request mobile apps should be making as this call is normally executed 
-     * Merchant Server-side.
+     * Merchant Server-side. This request will be removed later.
      *
      * @param  authorization the authorization header data
      * @param  listData      the data containing the request body for the list request
-     * @return the NetworkResponse containing either an error or the List
+     * @return               the ListResult
+     * @throws NetworkException when an error occured while making the request
      */
-    public NetworkResponse createPaymentSession(final String authorization, final String listData) {
-
+    public ListResult createPaymentSession(final String authorization, final String listData) throws NetworkException {
         final String source = "ListConnection[createPaymentSession]";
 
         if (TextUtils.isEmpty(authorization)) {
-            return NetworkResponse.newInvalidValueResponse(source + " - authorization cannot be null or empty");
+            throw new IllegalArgumentException(source + " - authorization cannot be null or empty");
         }
+
         if (TextUtils.isEmpty(listData)) {
-            return NetworkResponse.newInvalidValueResponse(source + " - data cannot be null or empty");
+            throw new IllegalArgumentException(source + " - data cannot be null or empty");
         }
 
         HttpURLConnection conn = null;
-        NetworkResponse resp = null;
-
         try {
             final String requestUrl = Uri.parse(baseUrl).buildUpon()
                     .appendPath(URI_PATH_API)
@@ -89,42 +97,39 @@ public final class ListConnection extends BaseConnection {
 
             switch (rc) {
                 case HttpURLConnection.HTTP_OK:
-                    resp = handleCreatePaymentSessionOk(readFromInputStream(conn));
-                    break;
+                    return handleCreatePaymentSessionOk(readFromInputStream(conn));
                 default:
-                    resp = handleAPIErrorResponse(source, rc, conn);
+                    throw createNetworkException(source, API_ERROR, rc, conn);
             }
         } catch (JsonParseException e) {
-            resp = NetworkResponse.newProtocolErrorResponse(source, e);
+            throw createNetworkException(source, PROTOCOL_ERROR, e);
         } catch (MalformedURLException e) {
-            resp = NetworkResponse.newInternalErrorResponse(source, e);
+            throw createNetworkException(source, INTERNAL_ERROR, e);
         } catch (IOException e) {
-            resp = NetworkResponse.newConnErrorResponse(source, e);
+            throw createNetworkException(source, CONN_ERROR, e);
         } catch (SecurityException e) {
-            resp = NetworkResponse.newSecurityErrorResponse(source, e);
+            throw createNetworkException(source, SECURITY_ERROR, e);
         } finally {
             close(conn);
         }
-        return resp;
     }
 
     /**
      * Make a get request to the Payment API in order to 
      * obtain the details of an active list session
      *
-     * @param  url  the url pointing to the list
-     * @return the NetworkResponse containing either an error or the ListResult
+     * @param  url the url pointing to the list
+     * @return     the NetworkResponse containing either an error or the ListResult
+     * @throws NetworkException 
      */
-    public NetworkResponse getListResult(final URL url) {
-
+    public ListResult getListResult(final URL url) throws NetworkException {
         final String source = "ListConnection[getListResult]";
+
         if (url == null) {
-            return NetworkResponse.newInvalidValueResponse(source + " - url cannot be null or empty");
+            throw new IllegalArgumentException(source + " - url cannot be null or empty");
         }
 
         HttpURLConnection conn = null;
-        NetworkResponse resp = null;
-
         try {
             final String requestUrl = Uri.parse(url.toString()).buildUpon()
                     .appendQueryParameter(URI_PARAM_VIEW, VALUE_VIEW)
@@ -136,56 +141,46 @@ public final class ListConnection extends BaseConnection {
 
             conn.connect();
             final int rc = conn.getResponseCode();
-
+            String contentType = conn.getContentType();
+            Log.i(TAG, "ContentType: " + contentType);
             switch (rc) {
                 case HttpURLConnection.HTTP_OK:
-                    resp = handleGetListResultOk(readFromInputStream(conn));
-                    break;
+                    return handleGetListResultOk(readFromInputStream(conn));
                 default:
-                    resp = handleAPIErrorResponse(source, rc, conn);
+                    throw createNetworkException(source, API_ERROR, rc, conn);
             }
         } catch (JsonParseException e) {
-            resp = NetworkResponse.newProtocolErrorResponse(source, e);
+            throw createNetworkException(source, PROTOCOL_ERROR, e);
         } catch (MalformedURLException e) {
-            resp = NetworkResponse.newInternalErrorResponse(source, e);
+            throw createNetworkException(source, INTERNAL_ERROR, e);
         } catch (IOException e) {
-            resp = NetworkResponse.newConnErrorResponse(source, e);
+            throw createNetworkException(source, CONN_ERROR, e);
         } catch (SecurityException e) {
-            resp = NetworkResponse.newSecurityErrorResponse(source, e);
+            throw createNetworkException(source, SECURITY_ERROR, e);
         } finally {
             close(conn);
         }
-        return resp;
     }
 
     /**
      * Handle the create new payment session OK state
      *
      * @param  data the response data received from the API
-     * @return the network response containing the ListResult
+     * @return      the ListResult
+     * @throws JsonParseException when an error occured during parsing
      */
-    private NetworkResponse handleCreatePaymentSessionOk(final String data) throws JsonParseException {
-
-        final ListResult result = gson.fromJson(data, ListResult.class);
-        final NetworkResponse resp = new NetworkResponse();
-
-        resp.putListResult(result);
-        return resp;
+    private ListResult handleCreatePaymentSessionOk(final String data) throws JsonParseException {
+        return gson.fromJson(data, ListResult.class);
     }
 
     /**
      * Handle get list result OK state
      *
      * @param  data the response data received from the Payment API
-     * @return the network response containing the ListResult
+     * @return      the ListResult
+     * @throws JsonParseException when an error occured during parsing 
      */
-    private NetworkResponse handleGetListResultOk(final String data) throws JsonParseException {
-
-        final ListResult result = gson.fromJson(data, ListResult.class);
-        final NetworkResponse resp = new NetworkResponse();
-
-        resp.putListResult(result);
-        return resp;
+    private ListResult handleGetListResultOk(final String data) throws JsonParseException {
+        return gson.fromJson(data, ListResult.class);
     }
-
 }

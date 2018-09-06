@@ -16,8 +16,7 @@ import android.text.TextUtils;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-
-import net.optile.payment.network.NetworkError;
+import com.google.gson.JsonParseException;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -29,6 +28,8 @@ import java.net.CookieManager;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
+
+import net.optile.payment.model.ErrorInfo;
 
 /**
  * The base class for all Payment API implementations
@@ -53,6 +54,8 @@ abstract class BaseConnection {
 
     final static String VALUE_VIEW = "jsonForms,-htmlForms";
     final static String VALUE_APP_JSON = "application/json;charset=UTF-8";
+
+    final static String CONTENTYPE_JSON = "application/json";
 
     /**
      * The cached user agent value
@@ -215,7 +218,7 @@ abstract class BaseConnection {
              InputStreamReader ir = new InputStreamReader(in);
              BufferedReader rd = new BufferedReader(ir)) {
             return readFromBufferedReader(rd);
-        }
+        } 
     }
 
     /**
@@ -236,21 +239,42 @@ abstract class BaseConnection {
      * Handle the error response from the Payment API
      *
      * @param source
+     * @param errorType
+     * @param statusCode
+     * @param conn
+     * @return NetworkException
+     */
+    NetworkException createNetworkException(final String source, final String errorType, final int statusCode, final HttpURLConnection conn) {
+        String data = null;
+        ErrorInfo info = null;
+
+        try {
+            data = readFromErrorStream(conn);
+            String contentType = conn.getContentType();
+            
+            if (!TextUtils.isEmpty(data) && !TextUtils.isEmpty(contentType) && contentType.contains(CONTENTYPE_JSON)) {
+                info = gson.fromJson(data, ErrorInfo.class);
+            }
+        } catch (IOException e) {
+        } catch (JsonParseException e) {
+        }
+        final ErrorDetails details = new ErrorDetails(source, errorType, statusCode, data, info);
+        return new NetworkException(details, source, null);
+    }
+
+    /**
+     * Handle the error response from the Payment API
+     *
+     * @param source
      * @param statusCode
      * @param conn
      * @return NetworkResponse
      */
-    NetworkResponse handleAPIErrorResponse(final String source, final int statusCode, final HttpURLConnection conn) throws IOException {
-        final String msg = source + " - errorData: " + readFromErrorStream(conn);
-        String errorType = NetworkError.API_ERROR;
-
-        switch (statusCode) {
-        case HttpURLConnection.HTTP_NOT_FOUND:
-            errorType = ErrorType.NOT_FOUND;
-        }
-        return new NetworkResponse(new NetworkError(errorType, msg, statusCode, null));
+    NetworkException createNetworkException(final String source, String errorType, Exception cause) {
+        final ErrorDetails details = new ErrorDetails(source, errorType, 0, null);
+        return new NetworkException(details, source, cause);
     }
-
+    
     /**
      * Set connection properties
      *
