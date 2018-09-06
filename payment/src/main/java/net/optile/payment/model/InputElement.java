@@ -24,134 +24,133 @@ import android.support.annotation.StringDef;
 public class InputElement {
 
     @Retention(RetentionPolicy.SOURCE)
-    @StringDef({
-        TYPE_STRING,
-        TYPE_NUMERIC,
-        TYPE_INTEGER,
-        TYPE_SELECT,
-        TYPE_CHECKBOX,
-        TYPE_UNKNOWN })
-    public @interface InputElementType {}
+    @StringDef({ TYPE_STRING,
+            TYPE_NUMERIC,
+            TYPE_INTEGER,
+            TYPE_SELECT,
+            TYPE_CHECKBOX,
+            TYPE_UNKNOWN })
+            public @interface InputElementType {}
 
-    /** 
-     * One line of text without special restrictions (example: holder name) 
+    /**
+     * One line of text without special restrictions (example: holder name)
      */
-	public final static String TYPE_STRING = "string";
+    public final static String TYPE_STRING = "string";
 
-	/** 
-     * Numbers 0-9 and the delimiters space and dash ('-') are allowed (example: card numbers) 
+    /**
+     * Numbers 0-9 and the delimiters space and dash ('-') are allowed (example: card numbers)
      */
     public final static String TYPE_NUMERIC = "numeric";
 
-	/** 
-     * Numbers 0-9 only (example: CVC) 
+    /**
+     * Numbers 0-9 only (example: CVC)
      */
     public final static String TYPE_INTEGER = "integer";
 
-	/** 
-     * A list of possible values is given in an additional options attribute 
+    /**
+     * A list of possible values is given in an additional options attribute
      */
     public final static String TYPE_SELECT = "select";
 
-	/** 
-     * Checkbox type, what allows 'true' for set and 'null' or 'false' for non-set values 
+    /**
+     * Checkbox type, what allows 'true' for set and 'null' or 'false' for non-set values
      */
     public final static String TYPE_CHECKBOX = "checkbox";
 
-    /** 
-     * The unknown type 
+    /**
+     * The unknown type
      */
     public final static String TYPE_UNKNOWN = "Unknown";
 
     /** name */
-	private String name;
-	/** type */
-	private String type;
-	/** localized label */
-	private String label;
-	/** options */
-	private List<SelectOption> options;
-
-	/**
-	 * Gets name.
-	 *
-	 * @return A name.
-	 */
-	public String getName() {
-		return name;
-	}
-
-	/**
-	 * Sets name.
-	 *
-	 * @param name A name.
-	 */
-	public void setName(final String name) {
-		this.name = name;
-	}
-
-	/**
-	 * Gets type.
-	 *
-	 * @return A type value.
-	 */
-    @InputElementType
-	public String getType() {
-		return type;
-	}
-
-	/**
-	 * Sets type.
-	 *
-	 * @param type A type value.
-	 */
-	public void setType(@InputElementType String type) {
-		this.type = type;
-	}
-
-	/**
-	 * Gets localized label.
-	 *
-	 * @return A localized label.
-	 */
-	public String getLabel() {
-		return label;
-	}
-
-	/**
-	 * Sets localized label.
-	 *
-	 * @param label A localized label.
-	 */
-	public void setLabel(final String label) {
-		this.label = label;
-	}
-
-	/**
-	 * Gets options.
-	 *
-	 * @return Non-empty list of options.
-	 */
-	public List<SelectOption> getOptions() {
-		return options;
-	}
-
-	/**
-	 * Sets options.
-	 *
-	 * @param options Non-empty list of options.
-	 */
-	public void setOptions(final List<SelectOption> options) {
-		this.options = options;
-	}
+    private String name;
+    /** type */
+    private String type;
+    /** localized label */
+    private String label;
+    /** options */
+    private List<SelectOption> options;
 
     /**
-	 * Gets type as a checked value.
-	 * If the value does not match any predefined modes then return 
+     * Gets name.
+     *
+     * @return A name.
+     */
+    public String getName() {
+        return name;
+    }
+
+    /**
+     * Sets name.
+     *
+     * @param name A name.
+     */
+    public void setName(final String name) {
+        this.name = name;
+    }
+
+    /**
+     * Gets type.
+     *
+     * @return A type value.
+     */
+    @InputElementType
+    public String getType() {
+        return type;
+    }
+
+    /**
+     * Sets type.
+     *
+     * @param type A type value.
+     */
+    public void setType(@InputElementType String type) {
+        this.type = type;
+    }
+
+    /**
+     * Gets localized label.
+     *
+     * @return A localized label.
+     */
+    public String getLabel() {
+        return label;
+    }
+
+    /**
+     * Sets localized label.
+     *
+     * @param label A localized label.
+     */
+    public void setLabel(final String label) {
+        this.label = label;
+    }
+
+    /**
+     * Gets options.
+     *
+     * @return Non-empty list of options.
+     */
+    public List<SelectOption> getOptions() {
+        return options;
+    }
+
+    /**
+     * Sets options.
+     *
+     * @param options Non-empty list of options.
+     */
+    public void setOptions(final List<SelectOption> options) {
+        this.options = options;
+    }
+
+    /**
+     * Gets type as a checked value.
+     * If the value does not match any predefined modes then return
      * TYPE_UNKNOWN.
      *
-	 * @return the checked type
-	 */
+     * @return the checked type
+     */
     @InputElementType
     public String getCheckedType() {
 

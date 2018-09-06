@@ -22,118 +22,117 @@ import android.support.annotation.StringDef;
 public class Checkbox {
 
     @Retention(RetentionPolicy.SOURCE)
-    @StringDef({
-        MODE_OPTIONAL,
-        MODE_OPTIONAL_PRESELECTED,
-        MODE_REQUIRED,
-        MODE_REQUIRED_PRESELECTED,
-        MODE_FORCED,
-        MODE_FORCED_DISPLAYED,
-        MODE_UNKNOWN })
-    public @interface CheckboxMode {}
+    @StringDef({ MODE_OPTIONAL,
+            MODE_OPTIONAL_PRESELECTED,
+            MODE_REQUIRED,
+            MODE_REQUIRED_PRESELECTED,
+            MODE_FORCED,
+            MODE_FORCED_DISPLAYED,
+            MODE_UNKNOWN })
+            public @interface CheckboxMode {}
 
-	public final static String MODE_OPTIONAL             = "OPTIONAL";
+    public final static String MODE_OPTIONAL             = "OPTIONAL";
     public final static String MODE_OPTIONAL_PRESELECTED = "OPTIONAL_PRESELECTED";
     public final static String MODE_REQUIRED             = "REQUIRED";
     public final static String MODE_REQUIRED_PRESELECTED = "REQUIRED_PRESELECTED";
     public final static String MODE_FORCED               = "FORCED";
     public final static String MODE_FORCED_DISPLAYED     = "FORCED_DISPLAYED";
-    public final static String MODE_UNKNOWN              = "UnknownMode";    
-    
-	/** Advanced API, required */
-	private String name;
+    public final static String MODE_UNKNOWN              = "UnknownMode";
 
-	/** Advanced API, required */
+    /** Advanced API, required */
+    private String name;
+
+    /** Advanced API, required */
     @CheckboxMode
-	private String mode;
+    private String mode;
 
-	/** Advanced API, optional */
-	private String label;
+    /** Advanced API, optional */
+    private String label;
 
-	/** Advanced API, optional */
-	private String requireMsg;
-
-	/**
-	 * Gets name of displayed checkbox.
-	 * 
-	 * @return the name.
-	 */
-	public String getName() {
-		return name;
-	}
-
-	/**
-	 * Sets name of displayed checkbox.
-	 * 
-	 * @param name the name to set.
-	 */
-	public void setName(String name) {
-		this.name = name;
-	}
-
-	/**
-	 * Gets mode of displayed checkbox.
-	 * 
-	 * @return the mode.
-	 */
-    @CheckboxMode
-	public String getMode() {
-		return mode;
-	}
-
-    
-	/**
-	 * Sets mode of displayed checkbox.
-	 * 
-	 * @param mode the mode to set.
-	 */
-	public void setMode(@CheckboxMode String mode) {
-		this.mode = mode;
-	}
-
-	/**
-	 * Gets label of displayed checkbox.
-	 * 
-	 * @return the label.
-	 */
-	public String getLabel() {
-		return label;
-	}
-
-	/**
-	 * Sets label of displayed checkbox.
-	 * 
-	 * @param label the label to set.
-	 */
-	public void setLabel(String label) {
-		this.label = label;
-	}
-
-	/**
-	 * Gets message that should be displayed if required checkbox is not selected.
-	 * 
-	 * @return the require message.
-	 */
-	public String getRequireMsg() {
-		return requireMsg;
-	}
-
-	/**
-	 * Sets message that should be displayed if required checkbox is not selected.
-	 * 
-	 * @param requireMsg the require message to set.
-	 */
-	public void setRequireMsg(String requireMsg) {
-		this.requireMsg = requireMsg;
-	}
+    /** Advanced API, optional */
+    private String requireMsg;
 
     /**
-	 * Gets mode of displayed checkbox as a checked value.
-	 * If the value does not match any predefined modes then return 
+     * Gets name of displayed checkbox.
+     *
+     * @return the name.
+     */
+    public String getName() {
+        return name;
+    }
+
+    /**
+     * Sets name of displayed checkbox.
+     *
+     * @param name the name to set.
+     */
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    /**
+     * Gets mode of displayed checkbox.
+     *
+     * @return the mode.
+     */
+    @CheckboxMode
+    public String getMode() {
+        return mode;
+    }
+
+
+    /**
+     * Sets mode of displayed checkbox.
+     *
+     * @param mode the mode to set.
+     */
+    public void setMode(@CheckboxMode String mode) {
+        this.mode = mode;
+    }
+
+    /**
+     * Gets label of displayed checkbox.
+     *
+     * @return the label.
+     */
+    public String getLabel() {
+        return label;
+    }
+
+    /**
+     * Sets label of displayed checkbox.
+     *
+     * @param label the label to set.
+     */
+    public void setLabel(String label) {
+        this.label = label;
+    }
+
+    /**
+     * Gets message that should be displayed if required checkbox is not selected.
+     *
+     * @return the require message.
+     */
+    public String getRequireMsg() {
+        return requireMsg;
+    }
+
+    /**
+     * Sets message that should be displayed if required checkbox is not selected.
+     *
+     * @param requireMsg the require message to set.
+     */
+    public void setRequireMsg(String requireMsg) {
+        this.requireMsg = requireMsg;
+    }
+
+    /**
+     * Gets mode of displayed checkbox as a checked value.
+     * If the value does not match any predefined modes then return
      * MODE_UNKNOWN.
      *
-	 * @return the mode.
-	 */
+     * @return the mode.
+     */
     @CheckboxMode
     public String getCheckedMode() {
 

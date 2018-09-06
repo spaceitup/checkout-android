@@ -168,7 +168,7 @@ public class Interaction {
         }
         return CODE_UNKNOWN;
     }
-    
+
     /**
      * Gets reason as a checked value.
      * If the value does not match any predefined modes then return
