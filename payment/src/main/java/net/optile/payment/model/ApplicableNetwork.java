@@ -1,82 +1,117 @@
 /**
  * Copyright(c) 2012-2018 optile GmbH. All Rights Reserved.
  * https://www.optile.net
- *
+ * <p>
  * This software is the property of optile GmbH. Distribution  of  this
  * software without agreement in writing is strictly prohibited.
- *
+ * <p>
  * This software may not be copied, used or distributed unless agreement
  * has been received in full.
  */
 
 package net.optile.payment.model;
 
-import java.net.URL;
-import java.util.List;
-import java.util.Map;
+import android.support.annotation.StringDef;
 
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
-
-import android.support.annotation.StringDef;
+import java.net.URL;
+import java.util.List;
+import java.util.Map;
 
 /**
  * This class is designed to hold information about applicable payment network.
  */
 public class ApplicableNetwork {
 
-    @Retention(RetentionPolicy.SOURCE)
-    @StringDef({ METHOD_BANK_TRANSFER,
-            METHOD_BILLING_PROVIDER,
-            METHOD_CASH_ON_DELIVERY,
-            METHOD_CHECK_PAYMENT,
-            METHOD_CREDIT_CARD,
-            METHOD_DEBIT_CARD,
-            METHOD_DIRECT_DEBIT,
-            METHOD_ELECTRONIC_INVOICE,
-            METHOD_GIFT_CARD,
-            METHOD_MOBILE_PAYMENT,
-            METHOD_ONLINE_BANK_TRANSFER,
-            METHOD_OPEN_INVOICE,
-            METHOD_PREPAID_CARD,
-            METHOD_TERMINAL,
-            METHOD_WALLET,
-            METHOD_UNKNOWN })
-            public @interface PaymentMethod {}
-
-    public final static String METHOD_BANK_TRANSFER         = "BANK_TRANSFER";
-    public final static String METHOD_BILLING_PROVIDER      = "BILLING_PROVIDER";
-    public final static String METHOD_CASH_ON_DELIVERY      = "CASH_ON_DELIVERY";
-    public final static String METHOD_CHECK_PAYMENT         = "CHECK_PAYMENT";
-    public final static String METHOD_CREDIT_CARD           = "CREDIT_CARD";
-    public final static String METHOD_DEBIT_CARD            = "DEBIT_CARD";
-    public final static String METHOD_DIRECT_DEBIT          = "DIRECT_DEBIT";
-    public final static String METHOD_ELECTRONIC_INVOICE    = "ELECTRONIC_INVOICE";
-    public final static String METHOD_GIFT_CARD             = "GIFT_CARD";
-    public final static String METHOD_MOBILE_PAYMENT        = "MOBILE_PAYMENT";
-    public final static String METHOD_ONLINE_BANK_TRANSFER  = "ONLINE_BANK_TRANSFER";
-    public final static String METHOD_OPEN_INVOICE          = "OPEN_INVOICE";
-    public final static String METHOD_PREPAID_CARD          = "PREPAID_CARD";
-    public final static String METHOD_TERMINAL              = "TERMINAL";
-    public final static String METHOD_WALLET                = "WALLET";
-    public final static String METHOD_UNKNOWN               = "UnknownMethod";
-
-    @Retention(RetentionPolicy.SOURCE)
-    @StringDef({ REGTYPE_NONE,
-            REGTYPE_OPTIONAL,
-            REGTYPE_FORCED,
-            REGTYPE_OPTIONAL_PRESELECTED,
-            REGTYPE_FORCED_DISPLAYED,
-            REGTYPE_UNKNOWN })
-            public @interface RegistrationType {}
-
-    public final static String REGTYPE_NONE                 = "NONE";
-    public final static String REGTYPE_OPTIONAL             = "OPTIONAL";
-    public final static String REGTYPE_FORCED               = "FORCED";
+    /**
+     * The constant METHOD_BANK_TRANSFER.
+     */
+    public final static String METHOD_BANK_TRANSFER = "BANK_TRANSFER";
+    /**
+     * The constant METHOD_BILLING_PROVIDER.
+     */
+    public final static String METHOD_BILLING_PROVIDER = "BILLING_PROVIDER";
+    /**
+     * The constant METHOD_CASH_ON_DELIVERY.
+     */
+    public final static String METHOD_CASH_ON_DELIVERY = "CASH_ON_DELIVERY";
+    /**
+     * The constant METHOD_CHECK_PAYMENT.
+     */
+    public final static String METHOD_CHECK_PAYMENT = "CHECK_PAYMENT";
+    /**
+     * The constant METHOD_CREDIT_CARD.
+     */
+    public final static String METHOD_CREDIT_CARD = "CREDIT_CARD";
+    /**
+     * The constant METHOD_DEBIT_CARD.
+     */
+    public final static String METHOD_DEBIT_CARD = "DEBIT_CARD";
+    /**
+     * The constant METHOD_DIRECT_DEBIT.
+     */
+    public final static String METHOD_DIRECT_DEBIT = "DIRECT_DEBIT";
+    /**
+     * The constant METHOD_ELECTRONIC_INVOICE.
+     */
+    public final static String METHOD_ELECTRONIC_INVOICE = "ELECTRONIC_INVOICE";
+    /**
+     * The constant METHOD_GIFT_CARD.
+     */
+    public final static String METHOD_GIFT_CARD = "GIFT_CARD";
+    /**
+     * The constant METHOD_MOBILE_PAYMENT.
+     */
+    public final static String METHOD_MOBILE_PAYMENT = "MOBILE_PAYMENT";
+    /**
+     * The constant METHOD_ONLINE_BANK_TRANSFER.
+     */
+    public final static String METHOD_ONLINE_BANK_TRANSFER = "ONLINE_BANK_TRANSFER";
+    /**
+     * The constant METHOD_OPEN_INVOICE.
+     */
+    public final static String METHOD_OPEN_INVOICE = "OPEN_INVOICE";
+    /**
+     * The constant METHOD_PREPAID_CARD.
+     */
+    public final static String METHOD_PREPAID_CARD = "PREPAID_CARD";
+    /**
+     * The constant METHOD_TERMINAL.
+     */
+    public final static String METHOD_TERMINAL = "TERMINAL";
+    /**
+     * The constant METHOD_WALLET.
+     */
+    public final static String METHOD_WALLET = "WALLET";
+    /**
+     * The constant METHOD_UNKNOWN.
+     */
+    public final static String METHOD_UNKNOWN = "UnknownMethod";
+    /**
+     * The constant REGTYPE_NONE.
+     */
+    public final static String REGTYPE_NONE = "NONE";
+    /**
+     * The constant REGTYPE_OPTIONAL.
+     */
+    public final static String REGTYPE_OPTIONAL = "OPTIONAL";
+    /**
+     * The constant REGTYPE_FORCED.
+     */
+    public final static String REGTYPE_FORCED = "FORCED";
+    /**
+     * The constant REGTYPE_OPTIONAL_PRESELECTED.
+     */
     public final static String REGTYPE_OPTIONAL_PRESELECTED = "OPTIONAL_PRESELECTED";
-    public final static String REGTYPE_FORCED_DISPLAYED     = "FORCED_DISPLAYED";
-    public final static String REGTYPE_UNKNOWN              = "REGTYPE_UNKNOWN";
-
+    /**
+     * The constant REGTYPE_FORCED_DISPLAYED.
+     */
+    public final static String REGTYPE_FORCED_DISPLAYED = "FORCED_DISPLAYED";
+    /**
+     * The constant REGTYPE_UNKNOWN.
+     */
+    public final static String REGTYPE_UNKNOWN = "REGTYPE_UNKNOWN";
     /** Simple API, always present */
     private String code;
     /** Simple API, always present */
@@ -259,6 +294,15 @@ public class ApplicableNetwork {
     }
 
     /**
+     * Gets code of button's label what should be used if this network is selected.
+     *
+     * @return Code of button'S label.
+     */
+    public String getButton() {
+        return button;
+    }
+
+    /**
      * Sets code of button's label what should be used if this network is selected.
      *
      * @param button Code of button'S label.
@@ -268,12 +312,15 @@ public class ApplicableNetwork {
     }
 
     /**
-     * Gets code of button's label what should be used if this network is selected.
+     * Gets a flag that this network should be pre-selected.
+     * <p>
+     * Note: only one applicable network or account registration can be selected within a LIST.
      *
-     * @return Code of button'S label.
+     * @return <code>true</code> network should be initially selected.
+     * @see AccountRegistration#getSelected() AccountRegistration#getSelected()
      */
-    public String getButton() {
-        return button;
+    public Boolean getSelected() {
+        return selected;
     }
 
     /**
@@ -286,15 +333,12 @@ public class ApplicableNetwork {
     }
 
     /**
-     * Gets a flag that this network should be pre-selected.
-     * <p>
-     * Note: only one applicable network or account registration can be selected within a LIST.
+     * Gets form data.
      *
-     * @return <code>true</code> network should be initially selected.
-     * @see AccountRegistration#getSelected()
+     * @return Form data.
      */
-    public Boolean getSelected() {
-        return selected;
+    public FormData getFormData() {
+        return formData;
     }
 
     /**
@@ -307,12 +351,12 @@ public class ApplicableNetwork {
     }
 
     /**
-     * Gets form data.
+     * Gets IFrame height for selective native integration, only supplied if "iFrame" link is present.
      *
-     * @return Form data.
+     * @return the IFrame height in pixels.
      */
-    public FormData getFormData() {
-        return formData;
+    public Integer getiFrameHeight() {
+        return iFrameHeight;
     }
 
     /**
@@ -325,12 +369,12 @@ public class ApplicableNetwork {
     }
 
     /**
-     * Gets IFrame height for selective native integration, only supplied if "iFrame" link is present.
+     * Gets an indicator that this network operates with an empty form.
      *
-     * @return the IFrame height in pixels.
+     * @return <code>true</code> for empty form, otherwise network form contains some elements.
      */
-    public Integer getiFrameHeight() {
-        return iFrameHeight;
+    public Boolean getEmptyForm() {
+        return emptyForm;
     }
 
     /**
@@ -340,15 +384,6 @@ public class ApplicableNetwork {
      */
     public void setEmptyForm(final Boolean emptyForm) {
         this.emptyForm = emptyForm;
-    }
-
-    /**
-     * Gets an indicator that this network operates with an empty form.
-     *
-     * @return <code>true</code> for empty form, otherwise network form contains some elements.
-     */
-    public Boolean getEmptyForm() {
-        return emptyForm;
     }
 
     /**
@@ -372,7 +407,7 @@ public class ApplicableNetwork {
     /**
      * Gets contract's public data of the first possible route which will be taken for the payment attempt.
      *
-     * @return Contract's public data of the first possible route.
+     * @return Contract 's public data of the first possible route.
      */
     public Map<String, String> getContractData() {
         return contractData;
@@ -399,22 +434,22 @@ public class ApplicableNetwork {
 
         if (this.method != null) {
             switch (this.method) {
-            case METHOD_BANK_TRANSFER:
-            case METHOD_BILLING_PROVIDER:
-            case METHOD_CASH_ON_DELIVERY:
-            case METHOD_CHECK_PAYMENT:
-            case METHOD_CREDIT_CARD:
-            case METHOD_DEBIT_CARD:
-            case METHOD_DIRECT_DEBIT:
-            case METHOD_ELECTRONIC_INVOICE:
-            case METHOD_GIFT_CARD:
-            case METHOD_MOBILE_PAYMENT:
-            case METHOD_ONLINE_BANK_TRANSFER:
-            case METHOD_OPEN_INVOICE:
-            case METHOD_PREPAID_CARD:
-            case METHOD_TERMINAL:
-            case METHOD_WALLET:
-                return this.method;
+                case METHOD_BANK_TRANSFER:
+                case METHOD_BILLING_PROVIDER:
+                case METHOD_CASH_ON_DELIVERY:
+                case METHOD_CHECK_PAYMENT:
+                case METHOD_CREDIT_CARD:
+                case METHOD_DEBIT_CARD:
+                case METHOD_DIRECT_DEBIT:
+                case METHOD_ELECTRONIC_INVOICE:
+                case METHOD_GIFT_CARD:
+                case METHOD_MOBILE_PAYMENT:
+                case METHOD_ONLINE_BANK_TRANSFER:
+                case METHOD_OPEN_INVOICE:
+                case METHOD_PREPAID_CARD:
+                case METHOD_TERMINAL:
+                case METHOD_WALLET:
+                    return this.method;
             }
         }
         return METHOD_UNKNOWN;
@@ -432,12 +467,12 @@ public class ApplicableNetwork {
 
         if (this.registration != null) {
             switch (this.registration) {
-            case REGTYPE_NONE:
-            case REGTYPE_OPTIONAL:
-            case REGTYPE_FORCED:
-            case REGTYPE_OPTIONAL_PRESELECTED:
-            case REGTYPE_FORCED_DISPLAYED:
-                return this.registration;
+                case REGTYPE_NONE:
+                case REGTYPE_OPTIONAL:
+                case REGTYPE_FORCED:
+                case REGTYPE_OPTIONAL_PRESELECTED:
+                case REGTYPE_FORCED_DISPLAYED:
+                    return this.registration;
             }
         }
         return REGTYPE_UNKNOWN;
@@ -455,14 +490,50 @@ public class ApplicableNetwork {
 
         if (this.recurrence != null) {
             switch (this.recurrence) {
-            case REGTYPE_NONE:
-            case REGTYPE_OPTIONAL:
-            case REGTYPE_FORCED:
-            case REGTYPE_OPTIONAL_PRESELECTED:
-            case REGTYPE_FORCED_DISPLAYED:
-                return this.recurrence;
+                case REGTYPE_NONE:
+                case REGTYPE_OPTIONAL:
+                case REGTYPE_FORCED:
+                case REGTYPE_OPTIONAL_PRESELECTED:
+                case REGTYPE_FORCED_DISPLAYED:
+                    return this.recurrence;
             }
         }
         return REGTYPE_UNKNOWN;
+    }
+
+    /**
+     * The interface Payment method.
+     */
+    @Retention(RetentionPolicy.SOURCE)
+    @StringDef({METHOD_BANK_TRANSFER,
+            METHOD_BILLING_PROVIDER,
+            METHOD_CASH_ON_DELIVERY,
+            METHOD_CHECK_PAYMENT,
+            METHOD_CREDIT_CARD,
+            METHOD_DEBIT_CARD,
+            METHOD_DIRECT_DEBIT,
+            METHOD_ELECTRONIC_INVOICE,
+            METHOD_GIFT_CARD,
+            METHOD_MOBILE_PAYMENT,
+            METHOD_ONLINE_BANK_TRANSFER,
+            METHOD_OPEN_INVOICE,
+            METHOD_PREPAID_CARD,
+            METHOD_TERMINAL,
+            METHOD_WALLET,
+            METHOD_UNKNOWN})
+    public @interface PaymentMethod {
+    }
+
+    /**
+     * The interface Registration type.
+     */
+    @Retention(RetentionPolicy.SOURCE)
+    @StringDef({REGTYPE_NONE,
+            REGTYPE_OPTIONAL,
+            REGTYPE_FORCED,
+            REGTYPE_OPTIONAL_PRESELECTED,
+            REGTYPE_FORCED_DISPLAYED,
+            REGTYPE_UNKNOWN})
+    public @interface RegistrationType {
     }
 }

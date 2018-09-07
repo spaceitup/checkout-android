@@ -18,6 +18,8 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonParseException;
 
+import net.optile.payment.model.ErrorInfo;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
@@ -29,32 +31,75 @@ import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 
-import net.optile.payment.model.ErrorInfo;
-
 /**
  * The base class for all Payment API implementations
  */
 abstract class BaseConnection {
 
+    /**
+     * The constant TIMEOUT_CONNECT.
+     */
     final static int TIMEOUT_CONNECT = 5000;
+    /**
+     * The constant TIMEOUT_READ.
+     */
     final static int TIMEOUT_READ = 30000;
 
+    /**
+     * The constant HEADER_AUTHORIZATION.
+     */
     final static String HEADER_AUTHORIZATION = "Authorization";
+    /**
+     * The constant HEADER_ACCEPT.
+     */
     final static String HEADER_ACCEPT = "Accept";
+    /**
+     * The constant HEADER_CONTENT_TYPE.
+     */
     final static String HEADER_CONTENT_TYPE = "Content-Type";
+    /**
+     * The constant HEADER_USER_AGENT.
+     */
     final static String HEADER_USER_AGENT = "User-Agent";
 
+    /**
+     * The constant UTF8.
+     */
     final static String UTF8 = "UTF-8";
+    /**
+     * The constant HTTP_GET.
+     */
     final static String HTTP_GET = "GET";
+    /**
+     * The constant HTTP_POST.
+     */
     final static String HTTP_POST = "POST";
 
+    /**
+     * The constant URI_PATH_API.
+     */
     final static String URI_PATH_API = "api";
+    /**
+     * The constant URI_PATH_LISTS.
+     */
     final static String URI_PATH_LISTS = "lists";
+    /**
+     * The constant URI_PARAM_VIEW.
+     */
     final static String URI_PARAM_VIEW = "view";
 
+    /**
+     * The constant VALUE_VIEW.
+     */
     final static String VALUE_VIEW = "jsonForms,-htmlForms";
+    /**
+     * The constant VALUE_APP_JSON.
+     */
     final static String VALUE_APP_JSON = "application/json;charset=UTF-8";
 
+    /**
+     * The constant CONTENTYPE_JSON.
+     */
     final static String CONTENTYPE_JSON = "application/json";
 
     /**
@@ -134,7 +179,7 @@ abstract class BaseConnection {
      * Creates a new HTTP GET connection given the String url
      *
      * @param url the url pointing to the Payment API
-     * @return HttpURLConnection     a HttpURLConnection object
+     * @return HttpURLConnection a HttpURLConnection object
      * @throws MalformedURLException throws when the url is in an incorrect format
      * @throws IOException           when i.e. a network error occured
      */
@@ -146,7 +191,7 @@ abstract class BaseConnection {
      * Creates a new HTTP GET connection
      *
      * @param url the Url pointing to the Payment API
-     * @return HttpURLConnection     a HttpURLConnection object
+     * @return HttpURLConnection a HttpURLConnection object
      * @throws IOException when i.e. a network error occured
      */
     HttpURLConnection createGetConnection(final URL url) throws IOException {
@@ -162,7 +207,7 @@ abstract class BaseConnection {
      * Creates an HTTP POST connection with the given String url
      *
      * @param url the url for the connection
-     * @return HttpURLConnection     the created HttpURLConnection
+     * @return HttpURLConnection the created HttpURLConnection
      * @throws MalformedURLException throws when the url is in an incorrect format
      * @throws IOException           I/O related exception.
      */
@@ -218,15 +263,16 @@ abstract class BaseConnection {
              InputStreamReader ir = new InputStreamReader(in);
              BufferedReader rd = new BufferedReader(ir)) {
             return readFromBufferedReader(rd);
-        } 
+        }
     }
 
     /**
      * Write the data to the OutputStream of the
      * HttpURLConnection with UTF8 encoding
      *
-     * @param conn
-     * @param data
+     * @param conn the conn
+     * @param data the data
+     * @throws IOException the io exception
      */
     void writeToOutputStream(final HttpURLConnection conn, String data) throws IOException {
 
@@ -238,11 +284,11 @@ abstract class BaseConnection {
     /**
      * Handle the error response from the Payment API
      *
-     * @param source
-     * @param errorType
-     * @param statusCode
-     * @param conn
-     * @return NetworkException
+     * @param source     the source
+     * @param errorType  the error type
+     * @param statusCode the status code
+     * @param conn       the conn
+     * @return NetworkException network exception
      */
     NetworkException createNetworkException(final String source, final String errorType, final int statusCode, final HttpURLConnection conn) {
         String data = null;
@@ -251,7 +297,7 @@ abstract class BaseConnection {
         try {
             data = readFromErrorStream(conn);
             String contentType = conn.getContentType();
-            
+
             if (!TextUtils.isEmpty(data) && !TextUtils.isEmpty(contentType) && contentType.contains(CONTENTYPE_JSON)) {
                 info = gson.fromJson(data, ErrorInfo.class);
             }
@@ -265,16 +311,16 @@ abstract class BaseConnection {
     /**
      * Handle the error response from the Payment API
      *
-     * @param source
-     * @param statusCode
-     * @param conn
-     * @return NetworkResponse
+     * @param source    the source
+     * @param errorType the error type
+     * @param cause     the cause
+     * @return NetworkResponse network exception
      */
     NetworkException createNetworkException(final String source, String errorType, Exception cause) {
         final ErrorDetails details = new ErrorDetails(source, errorType, 0, null);
         return new NetworkException(details, source, cause);
     }
-    
+
     /**
      * Set connection properties
      *

@@ -22,11 +22,11 @@ import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 
-import static net.optile.payment.network.ErrorDetails.PROTOCOL_ERROR;
-import static net.optile.payment.network.ErrorDetails.INTERNAL_ERROR;
-import static net.optile.payment.network.ErrorDetails.CONN_ERROR;
-import static net.optile.payment.network.ErrorDetails.SECURITY_ERROR;
 import static net.optile.payment.network.ErrorDetails.API_ERROR;
+import static net.optile.payment.network.ErrorDetails.CONN_ERROR;
+import static net.optile.payment.network.ErrorDetails.INTERNAL_ERROR;
+import static net.optile.payment.network.ErrorDetails.PROTOCOL_ERROR;
+import static net.optile.payment.network.ErrorDetails.SECURITY_ERROR;
 
 /**
  * Class implementing the communication with the Charge payment API
@@ -41,9 +41,10 @@ public final class ChargeConnection extends BaseConnection {
     /**
      * Create a new charge through the Payment API
      *
-     * @param url  the url of the charge 
+     * @param url  the url of the charge
      * @param data the data containing the request body for the charge request
      * @return the OperationResult object received from the Payment API
+     * @throws NetworkException the network exception
      */
     public OperationResult createCharge(final URL url, final String data) throws NetworkException {
         final String source = "ChargeConnection[createCharge]";
@@ -88,7 +89,7 @@ public final class ChargeConnection extends BaseConnection {
     /**
      * Handle the create charge OK state
      *
-     * @param  data the response data received from the API
+     * @param data the response data received from the API
      * @return the network response containing the ListResult
      */
     private OperationResult handleCreateChargeOk(final String data) throws JsonParseException {

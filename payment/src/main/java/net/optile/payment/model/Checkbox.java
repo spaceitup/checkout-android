@@ -1,55 +1,70 @@
 /**
  * Copyright(c) 2012-2018 optile GmbH. All Rights Reserved.
  * https://www.optile.net
- *
+ * <p>
  * This software is the property of optile GmbH. Distribution  of  this
  * software without agreement in writing is strictly prohibited.
- *
+ * <p>
  * This software may not be copied, used or distributed unless agreement
  * has been received in full.
  */
 
 package net.optile.payment.model;
 
+import android.support.annotation.StringDef;
+
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
-
-import android.support.annotation.StringDef;
 
 /**
  * This class is designed to hold information checkbox element that is displayed on payment page.
  */
 public class Checkbox {
 
-    @Retention(RetentionPolicy.SOURCE)
-    @StringDef({ MODE_OPTIONAL,
-            MODE_OPTIONAL_PRESELECTED,
-            MODE_REQUIRED,
-            MODE_REQUIRED_PRESELECTED,
-            MODE_FORCED,
-            MODE_FORCED_DISPLAYED,
-            MODE_UNKNOWN })
-            public @interface CheckboxMode {}
-
-    public final static String MODE_OPTIONAL             = "OPTIONAL";
+    /**
+     * The constant MODE_OPTIONAL.
+     */
+    public final static String MODE_OPTIONAL = "OPTIONAL";
+    /**
+     * The constant MODE_OPTIONAL_PRESELECTED.
+     */
     public final static String MODE_OPTIONAL_PRESELECTED = "OPTIONAL_PRESELECTED";
-    public final static String MODE_REQUIRED             = "REQUIRED";
+    /**
+     * The constant MODE_REQUIRED.
+     */
+    public final static String MODE_REQUIRED = "REQUIRED";
+    /**
+     * The constant MODE_REQUIRED_PRESELECTED.
+     */
     public final static String MODE_REQUIRED_PRESELECTED = "REQUIRED_PRESELECTED";
-    public final static String MODE_FORCED               = "FORCED";
-    public final static String MODE_FORCED_DISPLAYED     = "FORCED_DISPLAYED";
-    public final static String MODE_UNKNOWN              = "UnknownMode";
-
-    /** Advanced API, required */
+    /**
+     * The constant MODE_FORCED.
+     */
+    public final static String MODE_FORCED = "FORCED";
+    /**
+     * The constant MODE_FORCED_DISPLAYED.
+     */
+    public final static String MODE_FORCED_DISPLAYED = "FORCED_DISPLAYED";
+    /**
+     * The constant MODE_UNKNOWN.
+     */
+    public final static String MODE_UNKNOWN = "UnknownMode";
+    /**
+     * Advanced API, required
+     */
     private String name;
-
-    /** Advanced API, required */
+    /**
+     * Advanced API, required
+     */
     @CheckboxMode
     private String mode;
-
-    /** Advanced API, optional */
+    /**
+     * Advanced API, optional
+     */
     private String label;
-
-    /** Advanced API, optional */
+    /**
+     * Advanced API, optional
+     */
     private String requireMsg;
 
     /**
@@ -79,7 +94,6 @@ public class Checkbox {
     public String getMode() {
         return mode;
     }
-
 
     /**
      * Sets mode of displayed checkbox.
@@ -138,15 +152,29 @@ public class Checkbox {
 
         if (this.mode != null) {
             switch (this.mode) {
-            case MODE_OPTIONAL:
-            case MODE_OPTIONAL_PRESELECTED:
-            case MODE_REQUIRED:
-            case MODE_REQUIRED_PRESELECTED:
-            case MODE_FORCED:
-            case MODE_FORCED_DISPLAYED:
-                return this.mode;
+                case MODE_OPTIONAL:
+                case MODE_OPTIONAL_PRESELECTED:
+                case MODE_REQUIRED:
+                case MODE_REQUIRED_PRESELECTED:
+                case MODE_FORCED:
+                case MODE_FORCED_DISPLAYED:
+                    return this.mode;
             }
         }
         return MODE_UNKNOWN;
+    }
+
+    /**
+     * The interface Checkbox mode.
+     */
+    @Retention(RetentionPolicy.SOURCE)
+    @StringDef({MODE_OPTIONAL,
+            MODE_OPTIONAL_PRESELECTED,
+            MODE_REQUIRED,
+            MODE_REQUIRED_PRESELECTED,
+            MODE_FORCED,
+            MODE_FORCED_DISPLAYED,
+            MODE_UNKNOWN})
+    public @interface CheckboxMode {
     }
 }

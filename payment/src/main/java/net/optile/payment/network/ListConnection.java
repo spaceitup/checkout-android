@@ -11,7 +11,6 @@
 
 package net.optile.payment.network;
 
-import android.util.Log;
 import android.net.Uri;
 import android.text.TextUtils;
 
@@ -24,11 +23,11 @@ import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 
-import static net.optile.payment.network.ErrorDetails.PROTOCOL_ERROR;
-import static net.optile.payment.network.ErrorDetails.INTERNAL_ERROR;
-import static net.optile.payment.network.ErrorDetails.CONN_ERROR;
-import static net.optile.payment.network.ErrorDetails.SECURITY_ERROR;
 import static net.optile.payment.network.ErrorDetails.API_ERROR;
+import static net.optile.payment.network.ErrorDetails.CONN_ERROR;
+import static net.optile.payment.network.ErrorDetails.INTERNAL_ERROR;
+import static net.optile.payment.network.ErrorDetails.PROTOCOL_ERROR;
+import static net.optile.payment.network.ErrorDetails.SECURITY_ERROR;
 
 /**
  * Class implementing the communication with the List payment API
@@ -41,10 +40,10 @@ import static net.optile.payment.network.ErrorDetails.API_ERROR;
 public final class ListConnection extends BaseConnection {
 
     private final static String TAG = "payment_ListConnection";
-    
+
     /**
-     * The base url i.e. used for creating 
-     * a new payment session  
+     * The base url i.e. used for creating
+     * a new payment session
      */
     private String baseUrl;
 
@@ -59,12 +58,12 @@ public final class ListConnection extends BaseConnection {
 
     /**
      * Create a new payment session through the Payment API. Remind this is not
-     * a request mobile apps should be making as this call is normally executed 
+     * a request mobile apps should be making as this call is normally executed
      * Merchant Server-side. This request will be removed later.
      *
-     * @param  authorization the authorization header data
-     * @param  listData      the data containing the request body for the list request
-     * @return               the ListResult
+     * @param authorization the authorization header data
+     * @param listData      the data containing the request body for the list request
+     * @return the ListResult
      * @throws NetworkException when an error occured while making the request
      */
     public ListResult createPaymentSession(final String authorization, final String listData) throws NetworkException {
@@ -115,12 +114,12 @@ public final class ListConnection extends BaseConnection {
     }
 
     /**
-     * Make a get request to the Payment API in order to 
+     * Make a get request to the Payment API in order to
      * obtain the details of an active list session
      *
-     * @param  url the url pointing to the list
-     * @return     the NetworkResponse containing either an error or the ListResult
-     * @throws NetworkException 
+     * @param url the url pointing to the list
+     * @return the NetworkResponse containing either an error or the ListResult
+     * @throws NetworkException the network exception
      */
     public ListResult getListResult(final URL url) throws NetworkException {
         final String source = "ListConnection[getListResult]";
@@ -163,8 +162,8 @@ public final class ListConnection extends BaseConnection {
     /**
      * Handle the create new payment session OK state
      *
-     * @param  data the response data received from the API
-     * @return      the ListResult
+     * @param data the response data received from the API
+     * @return the ListResult
      * @throws JsonParseException when an error occured during parsing
      */
     private ListResult handleCreatePaymentSessionOk(final String data) throws JsonParseException {
@@ -174,9 +173,9 @@ public final class ListConnection extends BaseConnection {
     /**
      * Handle get list result OK state
      *
-     * @param  data the response data received from the Payment API
-     * @return      the ListResult
-     * @throws JsonParseException when an error occured during parsing 
+     * @param data the response data received from the Payment API
+     * @return the ListResult
+     * @throws JsonParseException when an error occured during parsing
      */
     private ListResult handleGetListResultOk(final String data) throws JsonParseException {
         return gson.fromJson(data, ListResult.class);

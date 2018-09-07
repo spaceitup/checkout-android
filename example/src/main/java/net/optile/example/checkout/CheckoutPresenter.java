@@ -37,7 +37,7 @@ import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 
 /**
- * CheckoutPresenter responsible for communicating with the 
+ * CheckoutPresenter responsible for communicating with the
  * Payment SDK
  */
 final class CheckoutPresenter {
@@ -50,12 +50,14 @@ final class CheckoutPresenter {
 
     /**
      * Construct a new CheckoutPresenter
+     *
+     * @param view the view
      */
     CheckoutPresenter(final CheckoutView view) {
         this.view = view;
     }
 
-    /** 
+    /**
      * Notify the presenter that it should be stopped.
      * Check if there are any pending subscriptions and unsubscribe if needed
      */
@@ -75,8 +77,8 @@ final class CheckoutPresenter {
     boolean isCreateListSessionActive() {
         return subscription != null && !subscription.isUnsubscribed();
     }
-    
-    /** 
+
+    /**
      * Initiate a checkout request in the mobile app.
      *
      * @param context The context needed to obtain system resources

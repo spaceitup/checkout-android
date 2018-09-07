@@ -24,6 +24,8 @@ public class CheckoutException extends Exception {
 
     /**
      * {@inheritDoc}
+     *
+     * @param detailMessage the detail message
      */
     public CheckoutException(final String detailMessage) {
         super(detailMessage);
@@ -31,6 +33,9 @@ public class CheckoutException extends Exception {
 
     /**
      * {@inheritDoc}
+     *
+     * @param detailMessage the detail message
+     * @param cause         the cause
      */
     public CheckoutException(final String detailMessage, final Throwable cause) {
         super(detailMessage, cause);

@@ -29,11 +29,11 @@ public final class CheckoutActivity extends AppCompatActivity implements Checkou
     private CheckoutPresenter presenter;
 
     private boolean active;
-    
+
     /**
      * Create an Intent to launch this activity
      *
-     * @param context
+     * @param context the context
      * @return the newly created intent
      */
     public static Intent createStartIntent(final Context context) {

@@ -12,8 +12,7 @@
 package net.optile.example.checkout;
 
 /**
- *
- *
+ * The interface Checkout view.
  */
 public interface CheckoutView {
 

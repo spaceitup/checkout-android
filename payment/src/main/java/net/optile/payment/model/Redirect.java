@@ -1,49 +1,47 @@
 /**
  * Copyright(c) 2012-2018 optile GmbH. All Rights Reserved.
  * https://www.optile.net
- *
+ * <p>
  * This software is the property of optile GmbH. Distribution  of  this
  * software without agreement in writing is strictly prohibited.
- *
+ * <p>
  * This software may not be copied, used or distributed unless agreement
  * has been received in full.
  */
 
 package net.optile.payment.model;
 
-import java.net.URL;
-import java.util.List;
+import android.support.annotation.StringDef;
 
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
-
-import android.support.annotation.StringDef;
+import java.net.URL;
+import java.util.List;
 
 /**
  * This class is designed to hold information to redirect customers browser as a result of operation execution.
  */
 public class Redirect {
 
-    @Retention(RetentionPolicy.SOURCE)
-    @StringDef({ METHOD_GET,
-            METHOD_POST,
-            METHOD_UNKNOWN })
-            public @interface HttpMethod {}
-
-    public final static String METHOD_GET     = "GET";
-    public final static String METHOD_POST    = "POST";
+    /**
+     * The constant METHOD_GET.
+     */
+    public final static String METHOD_GET = "GET";
+    /**
+     * The constant METHOD_POST.
+     */
+    public final static String METHOD_POST = "POST";
+    /**
+     * The constant METHOD_UNKNOWN.
+     */
     public final static String METHOD_UNKNOWN = "UnknownMethod";
-
     /** Simple API, always present */
     private URL url;
-
     /** Simple API, always present */
     @HttpMethod
     private String method;
-
     /** Simple API, optional */
     private List<Parameter> parameters;
-
     /** Simple API, optional */
     private Boolean suppressIFrame;
 
@@ -132,11 +130,21 @@ public class Redirect {
 
         if (this.method != null) {
             switch (this.method) {
-            case METHOD_GET:
-            case METHOD_POST:
-                return this.method;
+                case METHOD_GET:
+                case METHOD_POST:
+                    return this.method;
             }
         }
         return METHOD_UNKNOWN;
+    }
+
+    /**
+     * The interface Http method.
+     */
+    @Retention(RetentionPolicy.SOURCE)
+    @StringDef({METHOD_GET,
+            METHOD_POST,
+            METHOD_UNKNOWN})
+    public @interface HttpMethod {
     }
 }
