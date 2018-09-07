@@ -1,10 +1,10 @@
-/**
+/*
  * Copyright(c) 2012-2018 optile GmbH. All Rights Reserved.
  * https://www.optile.net
- * <p>
+ *
  * This software is the property of optile GmbH. Distribution  of  this
  * software without agreement in writing is strictly prohibited.
- * <p>
+ *
  * This software may not be copied, used or distributed unless agreement
  * has been received in full.
  */
@@ -111,7 +111,7 @@ abstract class BaseConnection {
      * This will be changed at a later stage as no external
      * libraries should be used
      */
-    Gson gson;
+    final Gson gson;
 
     /**
      * Construct a new BaseConnection
@@ -182,7 +182,7 @@ abstract class BaseConnection {
      * @throws MalformedURLException throws when the url is in an incorrect format
      * @throws IOException when i.e. a network error occured
      */
-    HttpURLConnection createGetConnection(final String url) throws MalformedURLException, IOException {
+    HttpURLConnection createGetConnection(final String url) throws IOException {
         return createGetConnection(new URL(url));
     }
 
@@ -210,7 +210,7 @@ abstract class BaseConnection {
      * @throws MalformedURLException throws when the url is in an incorrect format
      * @throws IOException I/O related exception.
      */
-    HttpURLConnection createPostConnection(final String url) throws MalformedURLException, IOException {
+    HttpURLConnection createPostConnection(final String url) throws IOException {
         return createPostConnection(new URL(url));
     }
 
@@ -301,8 +301,9 @@ abstract class BaseConnection {
             if (!TextUtils.isEmpty(data) && !TextUtils.isEmpty(contentType) && contentType.contains(CONTENTYPE_JSON)) {
                 info = gson.fromJson(data, ErrorInfo.class);
             }
-        } catch (IOException e) {
-        } catch (JsonParseException e) {
+        } catch (IOException | JsonParseException e) {
+            // Ignore the exceptions since the ErrorInfo is an optional field
+            // and it is more important to not loose the status error code
         }
         final ErrorDetails details = new ErrorDetails(source, errorType, statusCode, data, info);
         return new NetworkException(details, source, null);
@@ -317,14 +318,14 @@ abstract class BaseConnection {
      * @return NetworkResponse network exception
      */
     NetworkException createNetworkException(final String source, String errorType, Exception cause) {
-        final ErrorDetails details = new ErrorDetails(source, errorType, 0, null);
+        final ErrorDetails details = new ErrorDetails(source, errorType, 0, null, null);
         return new NetworkException(details, source, cause);
     }
 
     /**
      * Set connection properties
      *
-     * @param conn
+     * @param conn the url connection
      */
     private void setConnProperties(final HttpURLConnection conn) {
         conn.setConnectTimeout(TIMEOUT_CONNECT);

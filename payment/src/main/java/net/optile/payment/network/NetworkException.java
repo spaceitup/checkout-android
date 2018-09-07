@@ -1,4 +1,4 @@
-/**
+/*
  * Copyright(c) 2012-2018 optile GmbH. All Rights Reserved.
  * https://www.optile.net
  * <p>

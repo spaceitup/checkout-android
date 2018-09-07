@@ -1,4 +1,4 @@
-/**
+/*
  * Copyright(c) 2012-2018 optile GmbH. All Rights Reserved.
  * https://www.optile.net
  * <p>
@@ -44,7 +44,7 @@ public final class ListConnection extends BaseConnection {
      * The base url i.e. used for creating
      * a new payment session
      */
-    private String baseUrl;
+    private final String baseUrl;
 
     /**
      * Construct a new ListConnection
