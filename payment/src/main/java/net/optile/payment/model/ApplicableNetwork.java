@@ -317,7 +317,6 @@ public class ApplicableNetwork {
      * Note: only one applicable network or account registration can be selected within a LIST.
      *
      * @return <code>true</code> network should be initially selected.
-     * @see AccountRegistration#getSelected() AccountRegistration#getSelected()
      */
     public Boolean getSelected() {
         return selected;

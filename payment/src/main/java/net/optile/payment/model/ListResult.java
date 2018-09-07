@@ -183,7 +183,6 @@ public class ListResult {
      * Sets LIST operation type.
      *
      * @param operationType Operation type value.
-     * @see #getOperationType() #getOperationType()for more information.
      */
     public void setOperationType(final String operationType) {
         this.operationType = operationType;
@@ -207,7 +206,6 @@ public class ListResult {
      * Sets value of allowDelete flag.
      *
      * @param allowDelete the <code>true</code> to allow deleting of accounts, <code>false</code> to disallow that.
-     * @see #getAllowDelete() #getAllowDelete()
      */
     public void setAllowDelete(final Boolean allowDelete) {
         this.allowDelete = allowDelete;

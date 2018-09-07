@@ -30,6 +30,8 @@ public class ChargeConnectionTest {
 
     /**
      * Create charge.
+     *
+     * @throws NetworkException the network exception
      */
     @Test(expected = IllegalArgumentException.class)
     public void createCharge_invalidURL_exception() throws NetworkException {
@@ -39,6 +41,8 @@ public class ChargeConnectionTest {
 
     /**
      * Create charge invalid data invalid value error.
+     *
+     * @throws NetworkException the network exception
      */
     @Test(expected = IllegalArgumentException.class)
     public void createCharge_invalidData_exception() throws NetworkException {

@@ -25,6 +25,8 @@ public class ListConnectionTest {
 
     /**
      * Create payment session invalid authorization invalid value error.
+     *
+     * @throws NetworkException the network exception
      */
     @Test(expected = IllegalArgumentException.class)
     public void createPaymentSession_invalidAuthorization_invalidValueError() throws NetworkException {
@@ -34,6 +36,8 @@ public class ListConnectionTest {
 
     /**
      * Create payment session invalid list data invalid value error.
+     *
+     * @throws NetworkException the network exception
      */
     @Test(expected = IllegalArgumentException.class)
     public void createPaymentSession_invalidListData_invalidValueError() throws NetworkException {
@@ -43,6 +47,8 @@ public class ListConnectionTest {
 
     /**
      * Gets list result invalid url invalid value error.
+     *
+     * @throws NetworkException the network exception
      */
     @Test(expected = IllegalArgumentException.class)
     public void getListResult_invalidURL_invalidValueError() throws NetworkException {

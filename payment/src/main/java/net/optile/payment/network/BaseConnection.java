@@ -19,7 +19,6 @@ import java.io.OutputStream;
 import java.net.CookieHandler;
 import java.net.CookieManager;
 import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
 import java.net.URL;
 
 import com.google.gson.Gson;
@@ -179,7 +178,6 @@ abstract class BaseConnection {
      *
      * @param url the url pointing to the Payment API
      * @return HttpURLConnection a HttpURLConnection object
-     * @throws MalformedURLException throws when the url is in an incorrect format
      * @throws IOException when i.e. a network error occurred
      */
     HttpURLConnection createGetConnection(final String url) throws IOException {
@@ -207,7 +205,6 @@ abstract class BaseConnection {
      *
      * @param url the url for the connection
      * @return HttpURLConnection the created HttpURLConnection
-     * @throws MalformedURLException throws when the url is in an incorrect format
      * @throws IOException I/O related exception.
      */
     HttpURLConnection createPostConnection(final String url) throws IOException {

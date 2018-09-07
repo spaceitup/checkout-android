@@ -95,7 +95,8 @@ public class AccountRegistration {
     /**
      * Gets value of maskedAccount.
      *
-     * @return Masked (i.e. incomplete) information about this account that can be used to identify the account to the customer without         giving away sensitive information.
+     * @return Masked (i.e. incomplete) information about this account that can be used to identify the account to the customer without         
+     *         giving away sensitive information.
      */
     public AccountMask getMaskedAccount() {
         return maskedAccount;
@@ -104,7 +105,8 @@ public class AccountRegistration {
     /**
      * Sets value of maskedAccount.
      *
-     * @param maskedAccount Masked (i.e. incomplete) information about this account that can be used to identify the account to the customer            without giving away sensitive information.
+     * @param maskedAccount Masked (i.e. incomplete) information about this account that can be used to identify the account to the customer            
+     *                      without giving away sensitive information.
      */
     public void setMaskedAccount(final AccountMask maskedAccount) {
         this.maskedAccount = maskedAccount;
@@ -116,7 +118,6 @@ public class AccountRegistration {
      * Note: only one applicable network or account registration can be selected within a LIST.
      *
      * @return <code>true</code> means that this account registration is selected, <code>false</code> and <code>null</code> means it is not.
-     * @see ApplicableNetwork#getSelected() ApplicableNetwork#getSelected()
      */
     public Boolean getSelected() {
         return selected;
@@ -125,7 +126,7 @@ public class AccountRegistration {
     /**
      * Sets indication of account registration selection.
      *
-     * @param selected <code>true</code> means that this account registration is selected, <code>false</code> and <code>null</code> means it            is not.
+     * @param selected <code>true</code> means that this account registration is selected, <code>false</code> and <code>null</code> means it is not.
      */
     public void setSelected(final Boolean selected) {
         this.selected = selected;

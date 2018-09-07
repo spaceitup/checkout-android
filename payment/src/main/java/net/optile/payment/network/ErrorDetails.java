@@ -66,8 +66,8 @@ public final class ErrorDetails {
     /**
      * Construct a new ErrorDetails object containing all information about a network error
      *
-     * @param errorType the error type
      * @param source the source
+     * @param errorType the error type
      * @param statusCode the status code
      * @param errorData the error data
      * @param errorInfo the error info
