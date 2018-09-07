@@ -23,22 +23,10 @@ import android.support.annotation.StringDef;
  */
 public class Redirect {
 
-    /**
-     * The constant METHOD_GET.
-     */
-    public final static String METHOD_GET = "GET";
-    /**
-     * The constant METHOD_POST.
-     */
-    public final static String METHOD_POST = "POST";
-    /**
-     * The constant METHOD_UNKNOWN.
-     */
-    public final static String METHOD_UNKNOWN = "UnknownMethod";
     /** Simple API, always present */
     private URL url;
     /** Simple API, always present */
-    @HttpMethod
+    @HttpMethod.Definition
     private String method;
     /** Simple API, optional */
     private List<Parameter> parameters;
@@ -68,7 +56,7 @@ public class Redirect {
      *
      * @return the method.
      */
-    @HttpMethod
+    @HttpMethod.Definition
     public String getMethod() {
         return method;
     }
@@ -78,7 +66,7 @@ public class Redirect {
      *
      * @param method the method to set.
      */
-    public void setMethod(@HttpMethod String method) {
+    public void setMethod(@HttpMethod.Definition String method) {
         this.method = method;
     }
 
@@ -118,33 +106,4 @@ public class Redirect {
         this.suppressIFrame = suppressIFrame;
     }
 
-    /**
-     * Gets method as a checked value.
-     * If the value does not match any predefined modes then return
-     * METHOD_UNKNOWN.
-     *
-     * @return the method.
-     */
-    @HttpMethod
-    public String getCheckedMethod() {
-
-        if (this.method != null) {
-            switch (this.method) {
-                case METHOD_GET:
-                case METHOD_POST:
-                    return this.method;
-            }
-        }
-        return METHOD_UNKNOWN;
-    }
-
-    /**
-     * The interface Http method.
-     */
-    @Retention(RetentionPolicy.SOURCE)
-    @StringDef({ METHOD_GET,
-        METHOD_POST,
-        METHOD_UNKNOWN })
-    public @interface HttpMethod {
-    }
 }
