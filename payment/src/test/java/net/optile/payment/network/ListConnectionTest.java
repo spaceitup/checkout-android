@@ -11,8 +11,6 @@
 
 package net.optile.payment.network;
 
-import static org.junit.Assert.assertTrue;
-
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.robolectric.RobolectricTestRunner;
@@ -26,33 +24,27 @@ public class ListConnectionTest {
     /**
      * Create payment session invalid authorization invalid value error.
      */
-    @Test
-    public void createPaymentSession_invalidAuthorization_invalidValueError() {
-
+    @Test(expected = IllegalArgumentException.class)
+    public void createPaymentSession_invalidAuthorization_invalidValueError() throws NetworkException {
         ListConnection conn = new ListConnection("http://localhost");
-        NetworkResponse resp = conn.createPaymentSession(null, "{}");
-        assertTrue(resp.hasError(NetworkError.INVALID_VALUE));
+        ListResult result = conn.createPaymentSession(null, "{}");
     }
 
     /**
      * Create payment session invalid list data invalid value error.
      */
-    @Test
+    @Test(expected = IllegalArgumentException.class)
     public void createPaymentSession_invalidListData_invalidValueError() {
-
         ListConnection conn = new ListConnection("http://localhost");
         NetworkResponse resp = conn.createPaymentSession("abc123", "");
-        assertTrue(resp.hasError(NetworkError.INVALID_VALUE));
     }
 
     /**
      * Gets list result invalid url invalid value error.
      */
-    @Test
+    @Test(expected = IllegalArgumentException.class)
     public void getListResult_invalidURL_invalidValueError() {
-
         ListConnection conn = new ListConnection("http://localhost");
         NetworkResponse resp = conn.getListResult(null);
-        assertTrue(resp.hasError(NetworkError.INVALID_VALUE));
     }
 }

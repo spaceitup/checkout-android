@@ -12,7 +12,6 @@
 package net.optile.payment.network;
 
 import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertTrue;
 
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -32,30 +31,25 @@ public class ChargeConnectionTest {
      *
      * @throws Exception the exception
      */
-    @Test
-    public void createCharge() throws Exception {
-
+    @Test(expected = IllegalArgumentException.class)
+    public void createCharge() {
         ChargeConnection conn = new ChargeConnection();
-        NetworkResponse resp = conn.createCharge(null, "{}");
-        assertTrue(resp.hasError(NetworkError.INVALID_VALUE));
+        OperationResult result = conn.createCharge(null, "{}");
     }
 
     /**
      * Create charge invalid data invalid value error.
      */
-    @Test
+    @Test(expected = IllegalArgumentException.class)
     public void createCharge_invalidData_invalidValueError() {
-
         ChargeConnection conn = new ChargeConnection();
-
         URL url = null;
         try {
             url = new URL("http://localhost");
         } catch (MalformedURLException e) {
+            e.printStackTrace();
         }
         assertNotNull(url);
-
-        NetworkResponse resp = conn.createCharge(url, "");
-        assertTrue(resp.hasError(NetworkError.INVALID_VALUE));
+        OperationResult result = conn.createCharge(url, "");
     }
 }

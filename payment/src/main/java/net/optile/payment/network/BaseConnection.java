@@ -180,7 +180,7 @@ abstract class BaseConnection {
      * @param url the url pointing to the Payment API
      * @return HttpURLConnection a HttpURLConnection object
      * @throws MalformedURLException throws when the url is in an incorrect format
-     * @throws IOException when i.e. a network error occured
+     * @throws IOException when i.e. a network error occurred
      */
     HttpURLConnection createGetConnection(final String url) throws IOException {
         return createGetConnection(new URL(url));
@@ -191,7 +191,7 @@ abstract class BaseConnection {
      *
      * @param url the Url pointing to the Payment API
      * @return HttpURLConnection a HttpURLConnection object
-     * @throws IOException when i.e. a network error occured
+     * @throws IOException when i.e. a network error occurred
      */
     HttpURLConnection createGetConnection(final URL url) throws IOException {
         final HttpURLConnection conn = (HttpURLConnection) url.openConnection();
@@ -234,8 +234,8 @@ abstract class BaseConnection {
      * Reads a String from the given Inputstream.
      *
      * @param conn the HttpURLConnection to read from
-     * @return the string representation read from the inputstream
-     * @throws IOException when an error occured
+     * @return the string representation read from the Inputstream
+     * @throws IOException when an error occurred
      */
     String readFromInputStream(final HttpURLConnection conn) throws IOException {
 
@@ -251,7 +251,7 @@ abstract class BaseConnection {
      *
      * @param conn the HttpURLConnection to read from
      * @return the string representation read from the inputstream
-     * @throws IOException when an error occured
+     * @throws IOException when an error occurred
      */
     String readFromErrorStream(final HttpURLConnection conn) throws IOException {
 
@@ -306,7 +306,7 @@ abstract class BaseConnection {
             // and it is more important to not loose the status error code
         }
         final ErrorDetails details = new ErrorDetails(source, errorType, statusCode, data, info);
-        return new NetworkException(details, source, null);
+        return new NetworkException(details, source);
     }
 
     /**
@@ -340,7 +340,7 @@ abstract class BaseConnection {
      */
     private String readFromBufferedReader(final BufferedReader in) throws IOException {
         final StringBuilder buf = new StringBuilder();
-        String line = null;
+        String line;
 
         while ((line = in.readLine()) != null) {
             buf.append(line);

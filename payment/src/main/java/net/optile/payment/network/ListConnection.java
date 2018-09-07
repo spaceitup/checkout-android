@@ -63,7 +63,7 @@ public final class ListConnection extends BaseConnection {
      * @param authorization the authorization header data
      * @param listData the data containing the request body for the list request
      * @return the ListResult
-     * @throws NetworkException when an error occured while making the request
+     * @throws NetworkException when an error occurred while making the request
      */
     public ListResult createPaymentSession(final String authorization, final String listData) throws NetworkException {
         final String source = "ListConnection[createPaymentSession]";
@@ -163,7 +163,7 @@ public final class ListConnection extends BaseConnection {
      *
      * @param data the response data received from the API
      * @return the ListResult
-     * @throws JsonParseException when an error occured during parsing
+     * @throws JsonParseException when an error occurred during parsing
      */
     private ListResult handleCreatePaymentSessionOk(final String data) throws JsonParseException {
         return gson.fromJson(data, ListResult.class);
@@ -174,7 +174,7 @@ public final class ListConnection extends BaseConnection {
      *
      * @param data the response data received from the Payment API
      * @return the ListResult
-     * @throws JsonParseException when an error occured during parsing
+     * @throws JsonParseException when an error occurred during parsing
      */
     private ListResult handleGetListResultOk(final String data) throws JsonParseException {
         return gson.fromJson(data, ListResult.class);
