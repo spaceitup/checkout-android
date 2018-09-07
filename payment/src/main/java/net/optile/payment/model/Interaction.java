@@ -11,10 +11,10 @@
 
 package net.optile.payment.model;
 
-import android.support.annotation.StringDef;
-
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
+
+import android.support.annotation.StringDef;
 
 /**
  * This class is designed to hold interaction information that prescribes further reaction of merchant portal to this transaction or
@@ -283,13 +283,13 @@ public class Interaction {
      * The interface Interaction code.
      */
     @Retention(RetentionPolicy.SOURCE)
-    @StringDef({CODE_PROCEED,
-            CODE_ABORT,
-            CODE_TRY_OTHER_NETWORK,
-            CODE_TRY_OTHER_ACCOUNT,
-            CODE_RETRY,
-            CODE_RELOAD,
-            CODE_UNKNOWN})
+    @StringDef({ CODE_PROCEED,
+        CODE_ABORT,
+        CODE_TRY_OTHER_NETWORK,
+        CODE_TRY_OTHER_ACCOUNT,
+        CODE_RETRY,
+        CODE_RELOAD,
+        CODE_UNKNOWN })
     public @interface InteractionCode {
     }
 
@@ -297,35 +297,35 @@ public class Interaction {
      * The interface Interaction reason.
      */
     @Retention(RetentionPolicy.SOURCE)
-    @StringDef({REASON_OK,
-            REASON_PENDING,
-            REASON_STRONG_AUTHENTICATION,
-            REASON_DECLINED,
-            REASON_EXCEEDS_LIMIT,
-            REASON_TEMPORARY_FAILURE,
-            REASON_NETWORK_FAILURE,
-            REASON_BLACKLISTED,
-            REASON_BLOCKED,
-            REASON_SYSTEM_FAILURE,
-            REASON_INVALID_ACCOUNT,
-            REASON_FRAUD,
-            REASON_ADDITIONAL_NETWORKS,
-            REASON_INVALID_REQUEST,
-            REASON_SCHEDULED,
-            REASON_NO_NETWORKS,
-            REASON_DUPLICATE_OPERATION,
-            REASON_CHARGEBACK,
-            REASON_RISK_DETECTED,
-            REASON_CUSTOMER_ABORT,
-            REASON_EXPIRED_SESSION,
-            REASON_EXPIRED_ACCOUNT,
-            REASON_ACCOUNT_NOT_ACTIVATED,
-            REASON_TRUSTED_CUSTOMER,
-            REASON_UNKNOWN_CUSTOMER,
-            REASON_ACTIVATED,
-            REASON_UPDATED,
-            REASON_TAKE_ACTION,
-            REASON_UNKNOWN})
+    @StringDef({ REASON_OK,
+        REASON_PENDING,
+        REASON_STRONG_AUTHENTICATION,
+        REASON_DECLINED,
+        REASON_EXCEEDS_LIMIT,
+        REASON_TEMPORARY_FAILURE,
+        REASON_NETWORK_FAILURE,
+        REASON_BLACKLISTED,
+        REASON_BLOCKED,
+        REASON_SYSTEM_FAILURE,
+        REASON_INVALID_ACCOUNT,
+        REASON_FRAUD,
+        REASON_ADDITIONAL_NETWORKS,
+        REASON_INVALID_REQUEST,
+        REASON_SCHEDULED,
+        REASON_NO_NETWORKS,
+        REASON_DUPLICATE_OPERATION,
+        REASON_CHARGEBACK,
+        REASON_RISK_DETECTED,
+        REASON_CUSTOMER_ABORT,
+        REASON_EXPIRED_SESSION,
+        REASON_EXPIRED_ACCOUNT,
+        REASON_ACCOUNT_NOT_ACTIVATED,
+        REASON_TRUSTED_CUSTOMER,
+        REASON_UNKNOWN_CUSTOMER,
+        REASON_ACTIVATED,
+        REASON_UPDATED,
+        REASON_TAKE_ACTION,
+        REASON_UNKNOWN })
     public @interface InteractionReason {
     }
 }

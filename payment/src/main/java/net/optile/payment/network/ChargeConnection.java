@@ -11,22 +11,21 @@
 
 package net.optile.payment.network;
 
-import android.text.TextUtils;
-
-import com.google.gson.JsonParseException;
-
-import net.optile.payment.model.OperationResult;
+import static net.optile.payment.network.ErrorDetails.API_ERROR;
+import static net.optile.payment.network.ErrorDetails.CONN_ERROR;
+import static net.optile.payment.network.ErrorDetails.INTERNAL_ERROR;
+import static net.optile.payment.network.ErrorDetails.PROTOCOL_ERROR;
+import static net.optile.payment.network.ErrorDetails.SECURITY_ERROR;
 
 import java.io.IOException;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 
-import static net.optile.payment.network.ErrorDetails.API_ERROR;
-import static net.optile.payment.network.ErrorDetails.CONN_ERROR;
-import static net.optile.payment.network.ErrorDetails.INTERNAL_ERROR;
-import static net.optile.payment.network.ErrorDetails.PROTOCOL_ERROR;
-import static net.optile.payment.network.ErrorDetails.SECURITY_ERROR;
+import com.google.gson.JsonParseException;
+
+import android.text.TextUtils;
+import net.optile.payment.model.OperationResult;
 
 /**
  * Class implementing the communication with the Charge payment API
@@ -41,7 +40,7 @@ public final class ChargeConnection extends BaseConnection {
     /**
      * Create a new charge through the Payment API
      *
-     * @param url  the url of the charge
+     * @param url the url of the charge
      * @param data the data containing the request body for the charge request
      * @return the OperationResult object received from the Payment API
      * @throws NetworkException the network exception

@@ -11,12 +11,12 @@
 
 package net.optile.payment.model;
 
-import android.support.annotation.StringDef;
-
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.net.URL;
 import java.util.List;
+
+import android.support.annotation.StringDef;
 
 /**
  * This class is designed to hold information to redirect customers browser as a result of operation execution.
@@ -142,9 +142,9 @@ public class Redirect {
      * The interface Http method.
      */
     @Retention(RetentionPolicy.SOURCE)
-    @StringDef({METHOD_GET,
-            METHOD_POST,
-            METHOD_UNKNOWN})
+    @StringDef({ METHOD_GET,
+        METHOD_POST,
+        METHOD_UNKNOWN })
     public @interface HttpMethod {
     }
 }

@@ -11,25 +11,22 @@
 
 package net.optile.example.checkout;
 
-import android.content.Context;
-import android.util.Log;
-
-import net.optile.payment.model.ApplicableNetwork;
-import net.optile.payment.model.ListResult;
-import net.optile.payment.model.OperationResult;
-import net.optile.payment.model.Redirect;
-
-import net.optile.example.R;
-import net.optile.example.util.AppUtils;
-import net.optile.payment.network.ChargeConnection;
-import net.optile.payment.network.ListConnection;
-import net.optile.payment.network.NetworkException;
-
 import java.net.URL;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.Callable;
 
+import android.content.Context;
+import android.util.Log;
+import net.optile.example.R;
+import net.optile.example.util.AppUtils;
+import net.optile.payment.model.ApplicableNetwork;
+import net.optile.payment.model.ListResult;
+import net.optile.payment.model.OperationResult;
+import net.optile.payment.model.Redirect;
+import net.optile.payment.network.ChargeConnection;
+import net.optile.payment.network.ListConnection;
+import net.optile.payment.network.NetworkException;
 import rx.Single;
 import rx.SingleSubscriber;
 import rx.Subscription;
@@ -62,7 +59,7 @@ final class CheckoutPresenter {
      * Check if there are any pending subscriptions and unsubscribe if needed
      */
     public void onStop() {
-        
+
         if (subscription != null) {
             subscription.unsubscribe();
             subscription = null;
@@ -94,40 +91,40 @@ final class CheckoutPresenter {
 
         final String listData = AppUtils.readRawResource(context.getResources(), R.raw.list);
         final String chargeData = AppUtils.readRawResource(context.getResources(), R.raw.charge);
-        
+
         final Single<Void> single = Single.fromCallable(new Callable<Void>() {
 
-                @Override
-                public Void call() throws CheckoutException {
-                    test(url, auth, listData, chargeData);
-                    return null;
-                }
-            });
-        
+            @Override
+            public Void call() throws CheckoutException {
+                test(url, auth, listData, chargeData);
+                return null;
+            }
+        });
+
         this.subscription = single.subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe(new SingleSubscriber<Void>() {
 
-                    @Override
-                    public void onSuccess(Void param) {
-                        Log.i(TAG, "onSuccess");
-                    }
+                @Override
+                public void onSuccess(Void param) {
+                    Log.i(TAG, "onSuccess");
+                }
 
-                    @Override
-                    public void onError(Throwable error) {
-                        Log.i(TAG, "onError: " + error);
-                    }
-                });
+                @Override
+                public void onError(Throwable error) {
+                    Log.i(TAG, "onError: " + error);
+                }
+            });
     }
 
-    /** 
-     * REMIND, this code must be removed later. It is only used for testing the 
+    /**
+     * REMIND, this code must be removed later. It is only used for testing the
      * SDK during development.
-     * 
-     * @param url 
-     * @param authorization 
-     * @param listData 
-     * @param chargeData 
+     *
+     * @param url
+     * @param authorization
+     * @param listData
+     * @param chargeData
      */
     private void test(String url, String authorization, String listData, String chargeData) throws CheckoutException {
         ListConnection conn = new ListConnection(url);
@@ -139,7 +136,7 @@ final class CheckoutPresenter {
 
             // Test the self URL and load list session
             if (selfURL != null) {
-                result = conn.getListResult(selfURL);            
+                result = conn.getListResult(selfURL);
             }
 
             // Test a charge request
@@ -147,7 +144,7 @@ final class CheckoutPresenter {
             String code = null;
 
             for (ApplicableNetwork network : networks) {
-            
+
                 if (network.getCode().equals("CARTEBLEUE")) {
                     testChargeRequest(network, chargeData);
                 }
@@ -157,25 +154,25 @@ final class CheckoutPresenter {
             e.printStackTrace();
         }
     }
-        
-    /** 
-     * REMIND, this code must be removed later. It is only used for testing the 
+
+    /**
+     * REMIND, this code must be removed later. It is only used for testing the
      * SDK during development.
-     * 
-     * @param network 
-     * @param chargeData 
-     */    
+     *
+     * @param network
+     * @param chargeData
+     */
     private void testChargeRequest(ApplicableNetwork network, String chargeData) throws NetworkException {
 
         Log.i(TAG, "testChargeRequest Network[" + network.getCode() + ", " + network.getLabel() + "]");
-            
+
         Map<String, URL> links = network.getLinks();
         URL url = links.get("operation");
 
         ChargeConnection conn = new ChargeConnection();
         OperationResult result = conn.createCharge(url, chargeData);
         Redirect redirect = result.getRedirect();
-        
+
         Log.i(TAG, "Charge response: " + redirect.getCheckedMethod());
     }
 }

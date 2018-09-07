@@ -11,11 +11,11 @@
 
 package net.optile.payment.network;
 
+import static org.junit.Assert.assertTrue;
+
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.robolectric.RobolectricTestRunner;
-
-import static org.junit.Assert.assertTrue;
 
 /**
  * The type List connection test.

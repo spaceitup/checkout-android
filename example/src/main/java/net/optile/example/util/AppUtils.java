@@ -11,12 +11,12 @@
 
 package net.optile.example.util;
 
-import android.content.res.Resources;
-
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+
+import android.content.res.Resources;
 
 /**
  * The type App utils.
@@ -26,7 +26,7 @@ public final class AppUtils {
     /**
      * Read the contents of the raw resource
      *
-     * @param res   The system Resources
+     * @param res The system Resources
      * @param resId The resource id
      * @return The String or an empty string if something went wrong
      */
@@ -36,8 +36,8 @@ public final class AppUtils {
         String line = null;
 
         try (InputStream is = res.openRawResource(resId);
-             InputStreamReader isr = new InputStreamReader(is);
-             BufferedReader br = new BufferedReader(isr)) {
+            InputStreamReader isr = new InputStreamReader(is);
+            BufferedReader br = new BufferedReader(isr)) {
 
             while ((line = br.readLine()) != null) {
                 sb.append(line.trim());

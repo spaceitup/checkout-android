@@ -11,12 +11,11 @@
 
 package net.optile.payment.network;
 
-import android.support.annotation.StringDef;
-
-import net.optile.payment.model.ErrorInfo;
-
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
+
+import android.support.annotation.StringDef;
+import net.optile.payment.model.ErrorInfo;
 
 /**
  * A class representing the details about the error
@@ -67,14 +66,14 @@ public final class ErrorDetails {
     /**
      * Construct a new ErrorDetails object containing all information about a network error
      *
-     * @param errorType  the error type
-     * @param source     the source
+     * @param errorType the error type
+     * @param source the source
      * @param statusCode the status code
-     * @param errorData  the error data
-     * @param errorInfo  the error info
+     * @param errorData the error data
+     * @param errorInfo the error info
      */
     public ErrorDetails(@ErrorType final String errorType, final String source,
-                        final int statusCode, final String errorData, final ErrorInfo errorInfo) {
+        final int statusCode, final String errorData, final ErrorInfo errorInfo) {
         this.errorType = errorType;
         this.source = source;
         this.statusCode = statusCode;
@@ -124,11 +123,11 @@ public final class ErrorDetails {
      */
     @Retention(RetentionPolicy.SOURCE)
     @StringDef({
-            API_ERROR,
-            CONN_ERROR,
-            INTERNAL_ERROR,
-            SECURITY_ERROR,
-            PROTOCOL_ERROR
+        API_ERROR,
+        CONN_ERROR,
+        INTERNAL_ERROR,
+        SECURITY_ERROR,
+        PROTOCOL_ERROR
     })
     public @interface ErrorType {
     }

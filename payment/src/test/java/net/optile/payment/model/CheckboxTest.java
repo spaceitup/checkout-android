@@ -11,9 +11,9 @@
 
 package net.optile.payment.model;
 
-import org.junit.Test;
-
 import static org.junit.Assert.assertEquals;
+
+import org.junit.Test;
 
 /**
  * The type Checkbox test.

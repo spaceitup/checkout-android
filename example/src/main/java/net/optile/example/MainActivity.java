@@ -15,10 +15,8 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
-
 import net.optile.example.checkout.CheckoutActivity;
 
 /**
@@ -26,8 +24,8 @@ import net.optile.example.checkout.CheckoutActivity;
  */
 public final class MainActivity extends AppCompatActivity {
 
-    private static String TAG  = "payment_MainActivity";
-    
+    private static String TAG = "payment_MainActivity";
+
     /**
      * {@inheritDoc}
      */
@@ -41,10 +39,10 @@ public final class MainActivity extends AppCompatActivity {
 
         final Button button = findViewById(R.id.button_id);
         button.setOnClickListener(new View.OnClickListener() {
-                public void onClick(View v) {
-                    onButtonClicked();
-                }
-            });
+            public void onClick(View v) {
+                onButtonClicked();
+            }
+        });
     }
 
     private void onButtonClicked() {

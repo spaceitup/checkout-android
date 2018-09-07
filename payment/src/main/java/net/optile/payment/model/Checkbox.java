@@ -11,10 +11,10 @@
 
 package net.optile.payment.model;
 
-import android.support.annotation.StringDef;
-
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
+
+import android.support.annotation.StringDef;
 
 /**
  * This class is designed to hold information checkbox element that is displayed on payment page.
@@ -168,13 +168,13 @@ public class Checkbox {
      * The interface Checkbox mode.
      */
     @Retention(RetentionPolicy.SOURCE)
-    @StringDef({MODE_OPTIONAL,
-            MODE_OPTIONAL_PRESELECTED,
-            MODE_REQUIRED,
-            MODE_REQUIRED_PRESELECTED,
-            MODE_FORCED,
-            MODE_FORCED_DISPLAYED,
-            MODE_UNKNOWN})
+    @StringDef({ MODE_OPTIONAL,
+        MODE_OPTIONAL_PRESELECTED,
+        MODE_REQUIRED,
+        MODE_REQUIRED_PRESELECTED,
+        MODE_FORCED,
+        MODE_FORCED_DISPLAYED,
+        MODE_UNKNOWN })
     public @interface CheckboxMode {
     }
 }

@@ -11,11 +11,11 @@
 
 package net.optile.payment.model;
 
-import android.support.annotation.StringDef;
-
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.util.List;
+
+import android.support.annotation.StringDef;
 
 /**
  * Form input element description.
@@ -155,12 +155,12 @@ public class InputElement {
      * The interface Input element type.
      */
     @Retention(RetentionPolicy.SOURCE)
-    @StringDef({TYPE_STRING,
-            TYPE_NUMERIC,
-            TYPE_INTEGER,
-            TYPE_SELECT,
-            TYPE_CHECKBOX,
-            TYPE_UNKNOWN})
+    @StringDef({ TYPE_STRING,
+        TYPE_NUMERIC,
+        TYPE_INTEGER,
+        TYPE_SELECT,
+        TYPE_CHECKBOX,
+        TYPE_UNKNOWN })
     public @interface InputElementType {
     }
 }

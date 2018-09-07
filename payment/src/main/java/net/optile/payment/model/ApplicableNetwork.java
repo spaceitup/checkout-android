@@ -11,13 +11,13 @@
 
 package net.optile.payment.model;
 
-import android.support.annotation.StringDef;
-
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.net.URL;
 import java.util.List;
 import java.util.Map;
+
+import android.support.annotation.StringDef;
 
 /**
  * This class is designed to hold information about applicable payment network.
@@ -505,22 +505,22 @@ public class ApplicableNetwork {
      * The interface Payment method.
      */
     @Retention(RetentionPolicy.SOURCE)
-    @StringDef({METHOD_BANK_TRANSFER,
-            METHOD_BILLING_PROVIDER,
-            METHOD_CASH_ON_DELIVERY,
-            METHOD_CHECK_PAYMENT,
-            METHOD_CREDIT_CARD,
-            METHOD_DEBIT_CARD,
-            METHOD_DIRECT_DEBIT,
-            METHOD_ELECTRONIC_INVOICE,
-            METHOD_GIFT_CARD,
-            METHOD_MOBILE_PAYMENT,
-            METHOD_ONLINE_BANK_TRANSFER,
-            METHOD_OPEN_INVOICE,
-            METHOD_PREPAID_CARD,
-            METHOD_TERMINAL,
-            METHOD_WALLET,
-            METHOD_UNKNOWN})
+    @StringDef({ METHOD_BANK_TRANSFER,
+        METHOD_BILLING_PROVIDER,
+        METHOD_CASH_ON_DELIVERY,
+        METHOD_CHECK_PAYMENT,
+        METHOD_CREDIT_CARD,
+        METHOD_DEBIT_CARD,
+        METHOD_DIRECT_DEBIT,
+        METHOD_ELECTRONIC_INVOICE,
+        METHOD_GIFT_CARD,
+        METHOD_MOBILE_PAYMENT,
+        METHOD_ONLINE_BANK_TRANSFER,
+        METHOD_OPEN_INVOICE,
+        METHOD_PREPAID_CARD,
+        METHOD_TERMINAL,
+        METHOD_WALLET,
+        METHOD_UNKNOWN })
     public @interface PaymentMethod {
     }
 
@@ -528,12 +528,12 @@ public class ApplicableNetwork {
      * The interface Registration type.
      */
     @Retention(RetentionPolicy.SOURCE)
-    @StringDef({REGTYPE_NONE,
-            REGTYPE_OPTIONAL,
-            REGTYPE_FORCED,
-            REGTYPE_OPTIONAL_PRESELECTED,
-            REGTYPE_FORCED_DISPLAYED,
-            REGTYPE_UNKNOWN})
+    @StringDef({ REGTYPE_NONE,
+        REGTYPE_OPTIONAL,
+        REGTYPE_FORCED,
+        REGTYPE_OPTIONAL_PRESELECTED,
+        REGTYPE_FORCED_DISPLAYED,
+        REGTYPE_UNKNOWN })
     public @interface RegistrationType {
     }
 }

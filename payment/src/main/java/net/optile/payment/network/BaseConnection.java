@@ -11,15 +11,6 @@
 
 package net.optile.payment.network;
 
-import android.os.Build;
-import android.text.TextUtils;
-
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
-import com.google.gson.JsonParseException;
-
-import net.optile.payment.model.ErrorInfo;
-
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
@@ -30,6 +21,14 @@ import java.net.CookieManager;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
+
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.google.gson.JsonParseException;
+
+import android.os.Build;
+import android.text.TextUtils;
+import net.optile.payment.model.ErrorInfo;
 
 /**
  * The base class for all Payment API implementations
@@ -181,7 +180,7 @@ abstract class BaseConnection {
      * @param url the url pointing to the Payment API
      * @return HttpURLConnection a HttpURLConnection object
      * @throws MalformedURLException throws when the url is in an incorrect format
-     * @throws IOException           when i.e. a network error occured
+     * @throws IOException when i.e. a network error occured
      */
     HttpURLConnection createGetConnection(final String url) throws MalformedURLException, IOException {
         return createGetConnection(new URL(url));
@@ -209,7 +208,7 @@ abstract class BaseConnection {
      * @param url the url for the connection
      * @return HttpURLConnection the created HttpURLConnection
      * @throws MalformedURLException throws when the url is in an incorrect format
-     * @throws IOException           I/O related exception.
+     * @throws IOException I/O related exception.
      */
     HttpURLConnection createPostConnection(final String url) throws MalformedURLException, IOException {
         return createPostConnection(new URL(url));
@@ -241,8 +240,8 @@ abstract class BaseConnection {
     String readFromInputStream(final HttpURLConnection conn) throws IOException {
 
         try (InputStream in = conn.getInputStream();
-             InputStreamReader ir = new InputStreamReader(in);
-             BufferedReader rd = new BufferedReader(ir)) {
+            InputStreamReader ir = new InputStreamReader(in);
+            BufferedReader rd = new BufferedReader(ir)) {
             return readFromBufferedReader(rd);
         }
     }
@@ -260,8 +259,8 @@ abstract class BaseConnection {
             return null;
         }
         try (InputStream in = conn.getErrorStream();
-             InputStreamReader ir = new InputStreamReader(in);
-             BufferedReader rd = new BufferedReader(ir)) {
+            InputStreamReader ir = new InputStreamReader(in);
+            BufferedReader rd = new BufferedReader(ir)) {
             return readFromBufferedReader(rd);
         }
     }
@@ -284,13 +283,14 @@ abstract class BaseConnection {
     /**
      * Handle the error response from the Payment API
      *
-     * @param source     the source
-     * @param errorType  the error type
+     * @param source the source
+     * @param errorType the error type
      * @param statusCode the status code
-     * @param conn       the conn
+     * @param conn the conn
      * @return NetworkException network exception
      */
-    NetworkException createNetworkException(final String source, final String errorType, final int statusCode, final HttpURLConnection conn) {
+    NetworkException createNetworkException(final String source, final String errorType, final int statusCode,
+        final HttpURLConnection conn) {
         String data = null;
         ErrorInfo info = null;
 
@@ -311,9 +311,9 @@ abstract class BaseConnection {
     /**
      * Handle the error response from the Payment API
      *
-     * @param source    the source
+     * @param source the source
      * @param errorType the error type
-     * @param cause     the cause
+     * @param cause the cause
      * @return NetworkResponse network exception
      */
     NetworkException createNetworkException(final String source, String errorType, Exception cause) {

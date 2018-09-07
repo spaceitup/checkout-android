@@ -11,23 +11,22 @@
 
 package net.optile.payment.network;
 
-import android.net.Uri;
-import android.text.TextUtils;
-
-import com.google.gson.JsonParseException;
-
-import net.optile.payment.model.ListResult;
+import static net.optile.payment.network.ErrorDetails.API_ERROR;
+import static net.optile.payment.network.ErrorDetails.CONN_ERROR;
+import static net.optile.payment.network.ErrorDetails.INTERNAL_ERROR;
+import static net.optile.payment.network.ErrorDetails.PROTOCOL_ERROR;
+import static net.optile.payment.network.ErrorDetails.SECURITY_ERROR;
 
 import java.io.IOException;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 
-import static net.optile.payment.network.ErrorDetails.API_ERROR;
-import static net.optile.payment.network.ErrorDetails.CONN_ERROR;
-import static net.optile.payment.network.ErrorDetails.INTERNAL_ERROR;
-import static net.optile.payment.network.ErrorDetails.PROTOCOL_ERROR;
-import static net.optile.payment.network.ErrorDetails.SECURITY_ERROR;
+import com.google.gson.JsonParseException;
+
+import android.net.Uri;
+import android.text.TextUtils;
+import net.optile.payment.model.ListResult;
 
 /**
  * Class implementing the communication with the List payment API
@@ -62,7 +61,7 @@ public final class ListConnection extends BaseConnection {
      * Merchant Server-side. This request will be removed later.
      *
      * @param authorization the authorization header data
-     * @param listData      the data containing the request body for the list request
+     * @param listData the data containing the request body for the list request
      * @return the ListResult
      * @throws NetworkException when an error occured while making the request
      */
@@ -80,10 +79,10 @@ public final class ListConnection extends BaseConnection {
         HttpURLConnection conn = null;
         try {
             final String requestUrl = Uri.parse(baseUrl).buildUpon()
-                    .appendPath(URI_PATH_API)
-                    .appendPath(URI_PATH_LISTS)
-                    .appendQueryParameter(URI_PARAM_VIEW, VALUE_VIEW)
-                    .build().toString();
+                .appendPath(URI_PATH_API)
+                .appendPath(URI_PATH_LISTS)
+                .appendQueryParameter(URI_PARAM_VIEW, VALUE_VIEW)
+                .build().toString();
 
             conn = createPostConnection(requestUrl);
             conn.setRequestProperty(HEADER_AUTHORIZATION, authorization);
@@ -131,8 +130,8 @@ public final class ListConnection extends BaseConnection {
         HttpURLConnection conn = null;
         try {
             final String requestUrl = Uri.parse(url.toString()).buildUpon()
-                    .appendQueryParameter(URI_PARAM_VIEW, VALUE_VIEW)
-                    .build().toString();
+                .appendQueryParameter(URI_PARAM_VIEW, VALUE_VIEW)
+                .build().toString();
 
             conn = createGetConnection(requestUrl);
             conn.setRequestProperty(HEADER_CONTENT_TYPE, VALUE_APP_JSON);
