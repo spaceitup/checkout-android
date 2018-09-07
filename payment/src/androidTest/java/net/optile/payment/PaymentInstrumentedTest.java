@@ -1,3 +1,14 @@
+/*
+ * Copyright(c) 2012-2018 optile GmbH. All Rights Reserved.
+ * https://www.optile.net
+ *
+ * This software is the property of optile GmbH. Distribution  of  this
+ * software without agreement in writing is strictly prohibited.
+ *
+ * This software may not be copied, used or distributed unless agreement
+ * has been received in full.
+ */
+
 package net.optile.payment;
 
 import android.content.Context;
@@ -15,7 +26,10 @@ import static org.junit.Assert.*;
  * @see <a href="http://d.android.com/tools/testing">Testing documentation</a>
  */
 @RunWith(AndroidJUnit4.class)
-public class ExampleInstrumentedTest {
+public class PaymentInstrumentedTest {
+    /**
+     * Use app context.
+     */
     @Test
     public void useAppContext() {
         // Context of the app under test.

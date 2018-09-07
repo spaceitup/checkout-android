@@ -1,15 +1,28 @@
 apply plugin: 'com.android.library'
 
+assemble.dependsOn('lint')
+
 android {
-    compileSdkVersion 27
 
+    testOptions {
+        unitTests {
+            includeAndroidResources = true
+        }
+    }
 
+    compileOptions {
+        sourceCompatibility rootProject.javaCompatVersion
+        targetCompatibility rootProject.javaCompatVersion
+    }
+
+    compileSdkVersion rootProject.compileSdkVersion
+    buildToolsVersion rootProject.buildToolsVersion
 
     defaultConfig {
-        minSdkVersion 19
-        targetSdkVersion 27
-        versionCode 1
-        versionName "1.0"
+        minSdkVersion rootProject.minSdkVersion
+        targetSdkVersion rootProject.targetSdkVersion
+        versionCode rootProject.versionCode
+        versionName rootProject.versionName
 
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
 
@@ -21,14 +34,18 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
-
 }
 
 dependencies {
-    implementation fileTree(dir: 'libs', include: ['*.jar'])
 
-    implementation 'com.android.support:appcompat-v7:27.1.1'
-    testImplementation 'junit:junit:4.12'
-    androidTestImplementation 'com.android.support.test:runner:1.0.2'
-    androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
+    implementation "com.android.support:support-annotations:${rootProject.supportLibVersion}"
+    implementation "com.android.support:appcompat-v7:${rootProject.supportLibVersion}"
+    implementation "com.google.code.gson:gson:${rootProject.gsonVersion}"
+
+    testImplementation "junit:junit:${rootProject.junitVersion}"
+    testImplementation "org.mockito:mockito-core:${rootProject.mockitoCoreVersion}"
+    testImplementation "org.robolectric:robolectric:${rootProject.robolectricVersion}"
+
+    androidTestImplementation "com.android.support.test:runner:${rootProject.runnerVersion}"
+    androidTestImplementation "com.android.support.test.espresso:espresso-core:${rootProject.espressoCoreVersion}"
 }
