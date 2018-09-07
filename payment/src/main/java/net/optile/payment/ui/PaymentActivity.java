@@ -18,7 +18,7 @@ import android.support.v7.widget.Toolbar;
 import net.optile.payment.R;
 
 /**
- * The type Payment activity.
+ * The PaymentPage activity.
  */
 public final class PaymentActivity extends AppCompatActivity {
 
