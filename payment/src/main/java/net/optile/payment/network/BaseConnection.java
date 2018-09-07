@@ -36,15 +36,6 @@ import net.optile.payment.model.ErrorInfo;
 abstract class BaseConnection {
 
     /**
-     * The constant TIMEOUT_CONNECT.
-     */
-    final static int TIMEOUT_CONNECT = 5000;
-    /**
-     * The constant TIMEOUT_READ.
-     */
-    final static int TIMEOUT_READ = 30000;
-
-    /**
      * The constant HEADER_AUTHORIZATION.
      */
     final static String HEADER_AUTHORIZATION = "Authorization";
@@ -60,6 +51,15 @@ abstract class BaseConnection {
      * The constant HEADER_USER_AGENT.
      */
     final static String HEADER_USER_AGENT = "User-Agent";
+
+    /**
+     * The constant TIMEOUT_CONNECT.
+     */
+    final static int TIMEOUT_CONNECT = 5000;
+    /**
+     * The constant TIMEOUT_READ.
+     */
+    final static int TIMEOUT_READ = 30000;
 
     /**
      * The constant UTF8.
