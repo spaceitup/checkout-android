@@ -15,6 +15,8 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.robolectric.RobolectricTestRunner;
 
+import net.optile.payment.model.ListResult;
+
 /**
  * The type List connection test.
  */
@@ -34,17 +36,17 @@ public class ListConnectionTest {
      * Create payment session invalid list data invalid value error.
      */
     @Test(expected = IllegalArgumentException.class)
-    public void createPaymentSession_invalidListData_invalidValueError() {
+    public void createPaymentSession_invalidListData_invalidValueError() throws NetworkException {
         ListConnection conn = new ListConnection("http://localhost");
-        NetworkResponse resp = conn.createPaymentSession("abc123", "");
+        ListResult result = conn.createPaymentSession("abc123", "");
     }
 
     /**
      * Gets list result invalid url invalid value error.
      */
     @Test(expected = IllegalArgumentException.class)
-    public void getListResult_invalidURL_invalidValueError() {
+    public void getListResult_invalidURL_invalidValueError() throws NetworkException {
         ListConnection conn = new ListConnection("http://localhost");
-        NetworkResponse resp = conn.getListResult(null);
+        ListResult result = conn.getListResult(null);
     }
 }

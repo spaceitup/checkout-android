@@ -20,6 +20,8 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.robolectric.RobolectricTestRunner;
 
+import net.optile.payment.model.OperationResult;
+
 /**
  * The type Charge connection test.
  */
@@ -28,11 +30,9 @@ public class ChargeConnectionTest {
 
     /**
      * Create charge.
-     *
-     * @throws Exception the exception
      */
     @Test(expected = IllegalArgumentException.class)
-    public void createCharge() {
+    public void createCharge_invalidURL_exception() throws NetworkException {
         ChargeConnection conn = new ChargeConnection();
         OperationResult result = conn.createCharge(null, "{}");
     }
@@ -41,7 +41,7 @@ public class ChargeConnectionTest {
      * Create charge invalid data invalid value error.
      */
     @Test(expected = IllegalArgumentException.class)
-    public void createCharge_invalidData_invalidValueError() {
+    public void createCharge_invalidData_exception() throws NetworkException {
         ChargeConnection conn = new ChargeConnection();
         URL url = null;
         try {
