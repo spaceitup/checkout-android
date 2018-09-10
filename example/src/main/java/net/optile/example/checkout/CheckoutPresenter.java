@@ -175,7 +175,7 @@ final class CheckoutPresenter {
         Redirect redirect = result.getRedirect();
 
         String method = redirect.getMethod();
-        if (HttpMethod.isHttpMethod(method)) {
+        if (HttpMethod.isValid(method)) {
             Log.i(TAG, "valid HttpMethod: " + method);
         } else {
             Log.i(TAG, "not a valid HttpMethod: " + method);
