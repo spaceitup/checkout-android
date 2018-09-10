@@ -17,7 +17,7 @@ import java.lang.annotation.RetentionPolicy;
 import android.support.annotation.StringDef;
 
 /**
- * This class describes registration type behavior for applicable network.
+ * This class describes possible checkbox display modes.
  */
 public class CheckboxMode {
 

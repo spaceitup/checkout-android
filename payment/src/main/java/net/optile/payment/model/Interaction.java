@@ -12,8 +12,7 @@
 package net.optile.payment.model;
 
 /**
- * This class is designed to hold interaction information that prescribes further reaction
- * of merchant portal to this transaction or operation.
+ * This class is designed to hold interaction information that prescribes further reaction of merchant portal to this transaction or operation.
  */
 public class Interaction {
     /** Simple API, always present */

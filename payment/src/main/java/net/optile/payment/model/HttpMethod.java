@@ -48,6 +48,3 @@ public class HttpMethod {
         POST })
     public @interface Definition { }
 }
-
-
-
