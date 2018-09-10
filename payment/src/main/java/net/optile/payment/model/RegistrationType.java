@@ -33,7 +33,7 @@ public class RegistrationType {
      * @param type the registration type to validate
      * @return true when valid, false otherwise
      */
-    public static boolean isRegistrationType(String type) {
+    public static boolean isRegistrationType(final String type) {
 
         if (type != null) {
             switch (type) {

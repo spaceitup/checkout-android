@@ -34,7 +34,7 @@ public class InteractionCode {
      * @param code the interaction code to validate
      * @return true when valid, false otherwise
      */
-    public static boolean isInteractionCode(String code) {
+    public static boolean isInteractionCode(final String code) {
 
         if (code != null) {
             switch (code) {

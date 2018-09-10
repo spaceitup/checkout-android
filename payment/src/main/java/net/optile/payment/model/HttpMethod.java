@@ -30,7 +30,7 @@ public class HttpMethod {
      * @param method the http method to validate
      * @return true when valid, false otherwise
      */
-    public static boolean isHttpMethod(String method) {
+    public static boolean isHttpMethod(final String method) {
 
         if (method != null) {
             switch (method) {

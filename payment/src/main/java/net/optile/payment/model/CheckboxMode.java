@@ -34,7 +34,7 @@ public class CheckboxMode {
      * @param mode the checkbox mode to validate
      * @return true when valid, false otherwise
      */
-    public static boolean isCheckboxMode(String mode) {
+    public static boolean isCheckboxMode(final String mode) {
 
         if (mode != null) {
             switch (mode) {

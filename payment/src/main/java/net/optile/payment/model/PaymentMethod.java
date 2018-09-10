@@ -43,7 +43,7 @@ public class PaymentMethod {
      * @param method the payment method to validate
      * @return true when valid, false otherwise
      */
-    public static boolean isPaymentMethod(String method) {
+    public static boolean isPaymentMethod(final String method) {
 
         if (method != null) {
             switch (method) {

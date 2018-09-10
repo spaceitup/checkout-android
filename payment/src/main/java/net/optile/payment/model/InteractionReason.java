@@ -56,7 +56,7 @@ public class InteractionReason {
      * @param reason the interaction reason to validate
      * @return true when valid, false otherwise
      */
-    public static boolean isInteractionReason(String reason) {
+    public static boolean isInteractionReason(final String reason) {
 
         if (reason != null) {
             switch (reason) {
