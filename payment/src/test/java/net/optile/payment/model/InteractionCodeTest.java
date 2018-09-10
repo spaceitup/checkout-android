@@ -23,7 +23,7 @@ public class InteractionCodeTest {
 
     @Test
     public void isInteractionCode_invalidValue_false() {
-        assertFalse(InteractionCode.isInteractionCode("foo"));
+        assertFalse(InteractionCode.isValid("foo"));
     }
 
     @Test
