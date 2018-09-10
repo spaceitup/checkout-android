@@ -11,13 +11,9 @@
 
 package net.optile.payment.model;
 
-import java.lang.annotation.Retention;
-import java.lang.annotation.RetentionPolicy;
 import java.net.URL;
 import java.util.List;
 import java.util.Map;
-
-import android.support.annotation.StringDef;
 
 /**
  * This class is designed to hold information about applicable payment network.
@@ -99,7 +95,7 @@ public class ApplicableNetwork {
      *
      * @return the method.
      */
-    @PaymentMethod
+    @PaymentMethod.Definition
     public String getMethod() {
         return method;
     }
@@ -109,7 +105,7 @@ public class ApplicableNetwork {
      *
      * @param method the method to set.
      */
-    public void setMethod(@PaymentMethod final String method) {
+    public void setMethod(@PaymentMethod.Definition final String method) {
         this.method = method;
     }
 

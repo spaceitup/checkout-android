@@ -13,6 +13,7 @@ package net.optile.payment.model;
 
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
+
 import android.support.annotation.StringDef;
 
 /**
@@ -25,37 +26,36 @@ public class RegistrationType {
     public final static String FORCED = "FORCED";
     public final static String OPTIONAL_PRESELECTED = "OPTIONAL_PRESELECTED";
     public final static String FORCED_DISPLAYED = "FORCED_DISPLAYED";
-    public final static String INVALID_VALUE = "InvalidValue"; 
-    
-    @Retention(RetentionPolicy.SOURCE)
-    @StringDef({ NONE,
-            OPTIONAL,
-            FORCED,
-            OPTIONAL_PRESELECTED,
-            FORCED_DISPLAYED })
-            public @interface Definition {}
 
     /**
-     * Gets registration type as a checked value.
-     * If the value does not match any predefined types then return 
-     * INVALID_VALUE
+     * Check if the given type is a valid registration type
      *
-     * @return the checked registration type
+     * @param type the registration type to validate
+     * @return true when valid, false otherwise
      */
-    public static String getCheckedRegistrationType(String type) {
+    public static boolean isRegistrationType(String type) {
 
-        if (this.type != null) {
-            switch (this.type) {
+        if (type != null) {
+            switch (type) {
                 case NONE:
                 case OPTIONAL:
                 case FORCED:
                 case OPTIONAL_PRESELECTED:
                 case FORCED_DISPLAYED:
-                    return this.registration;
+                    return true;
             }
         }
-        return INVALID_VALUE;
+        return false;
     }
+
+    @Retention(RetentionPolicy.SOURCE)
+    @StringDef({
+        NONE,
+        OPTIONAL,
+        FORCED,
+        OPTIONAL_PRESELECTED,
+        FORCED_DISPLAYED })
+    public @interface Definition { }
 }
 
 

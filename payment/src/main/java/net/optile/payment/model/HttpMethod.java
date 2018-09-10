@@ -13,6 +13,7 @@ package net.optile.payment.model;
 
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
+
 import android.support.annotation.StringDef;
 
 /**
@@ -22,31 +23,30 @@ public class HttpMethod {
 
     public final static String GET = "GET";
     public final static String POST = "POST";
-    public final static String INVALID_VALUE = "INVALID_VALUE"; 
-    
-    @Retention(RetentionPolicy.SOURCE)
-    @StringDef({ GET,
-            POST })
-            public @interface Definition {}
-    
+
     /**
-     * Gets method as a checked value.
-     * If the value does not match any predefined methods then return 
-     * INVALID_VALUE
+     * Check if the given method is a valid http method
      *
-     * @return the checked registration type
+     * @param method the http method to validate
+     * @return true when valid, false otherwise
      */
-    public static String getCheckedMethod(String method) {
+    public static boolean isHttpMethod(String method) {
 
         if (method != null) {
             switch (method) {
                 case GET:
                 case POST:
-                    return method;
+                    return true;
             }
         }
-        return INVALID_VALUE;
+        return false;
     }
+
+    @Retention(RetentionPolicy.SOURCE)
+    @StringDef({
+        GET,
+        POST })
+    public @interface Definition { }
 }
 
 

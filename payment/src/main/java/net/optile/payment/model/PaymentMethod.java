@@ -13,6 +13,7 @@ package net.optile.payment.model;
 
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
+
 import android.support.annotation.StringDef;
 
 /**
@@ -35,13 +36,44 @@ public class PaymentMethod {
     public final static String PREPAID_CARD = "PREPAID_CARD";
     public final static String TERMINAL = "TERMINAL";
     public final static String WALLET = "WALLET";
-    public final static String INVALID_VALUE = "InvalidValue";
+
+    /**
+     * Check if the given method is a valid payment method
+     *
+     * @param method the payment method to validate
+     * @return true when valid, false otherwise
+     */
+    public static boolean isPaymentMethod(String method) {
+
+        if (method != null) {
+            switch (method) {
+                case BANK_TRANSFER:
+                case BILLING_PROVIDER:
+                case CASH_ON_DELIVERY:
+                case CHECK_PAYMENT:
+                case CREDIT_CARD:
+                case DEBIT_CARD:
+                case DIRECT_DEBIT:
+                case ELECTRONIC_INVOICE:
+                case GIFT_CARD:
+                case MOBILE_PAYMENT:
+                case ONLINE_BANK_TRANSFER:
+                case OPEN_INVOICE:
+                case PREPAID_CARD:
+                case TERMINAL:
+                case WALLET:
+                    return true;
+            }
+        }
+        return false;
+    }
 
     /**
      * The interface Definition
      */
     @Retention(RetentionPolicy.SOURCE)
-    @StringDef({ BANK_TRANSFER,
+    @StringDef({
+        BANK_TRANSFER,
         BILLING_PROVIDER,
         CASH_ON_DELIVERY,
         CHECK_PAYMENT,
@@ -55,39 +87,6 @@ public class PaymentMethod {
         OPEN_INVOICE,
         PREPAID_CARD,
         TERMINAL,
-        METHOD_WALLET })
-    public @interface Definition {}
-
-    /**
-     * Gets method as a checked value.
-     * If the value does not match any predefined methods then return
-     * INVALID_VALUE.
-     *
-     * @return the checked method
-     */
-    @PaymentMethod
-    public String getCheckedMethod() {
-
-        if (this.method != null) {
-            switch (this.method) {
-                case METHOD_BANK_TRANSFER:
-                case METHOD_BILLING_PROVIDER:
-                case METHOD_CASH_ON_DELIVERY:
-                case METHOD_CHECK_PAYMENT:
-                case METHOD_CREDIT_CARD:
-                case METHOD_DEBIT_CARD:
-                case METHOD_DIRECT_DEBIT:
-                case METHOD_ELECTRONIC_INVOICE:
-                case METHOD_GIFT_CARD:
-                case METHOD_MOBILE_PAYMENT:
-                case METHOD_ONLINE_BANK_TRANSFER:
-                case METHOD_OPEN_INVOICE:
-                case METHOD_PREPAID_CARD:
-                case METHOD_TERMINAL:
-                case METHOD_WALLET:
-                    return this.method;
-            }
-        }
-        return INVALID_VALUE;
-    }
+        WALLET })
+    public @interface Definition { }
 }

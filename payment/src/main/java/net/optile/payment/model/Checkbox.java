@@ -11,11 +11,6 @@
 
 package net.optile.payment.model;
 
-import java.lang.annotation.Retention;
-import java.lang.annotation.RetentionPolicy;
-
-import android.support.annotation.StringDef;
-
 /**
  * This class is designed to hold information checkbox element that is displayed on payment page.
  */

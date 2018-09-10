@@ -11,12 +11,8 @@
 
 package net.optile.payment.model;
 
-import java.lang.annotation.Retention;
-import java.lang.annotation.RetentionPolicy;
 import java.net.URL;
 import java.util.List;
-
-import android.support.annotation.StringDef;
 
 /**
  * This class is designed to hold information to redirect customers browser as a result of operation execution.

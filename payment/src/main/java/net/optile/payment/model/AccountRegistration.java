@@ -95,8 +95,8 @@ public class AccountRegistration {
     /**
      * Gets value of maskedAccount.
      *
-     * @return Masked (i.e. incomplete) information about this account that can be used to identify the account to the customer without         
-     *         giving away sensitive information.
+     * @return Masked (i.e. incomplete) information about this account that can be used to identify the account to the customer without
+     * giving away sensitive information.
      */
     public AccountMask getMaskedAccount() {
         return maskedAccount;
@@ -105,8 +105,8 @@ public class AccountRegistration {
     /**
      * Sets value of maskedAccount.
      *
-     * @param maskedAccount Masked (i.e. incomplete) information about this account that can be used to identify the account to the customer            
-     *                      without giving away sensitive information.
+     * @param maskedAccount Masked (i.e. incomplete) information about this account that can be used to identify the account to the customer
+     * without giving away sensitive information.
      */
     public void setMaskedAccount(final AccountMask maskedAccount) {
         this.maskedAccount = maskedAccount;
@@ -173,7 +173,7 @@ public class AccountRegistration {
      *
      * @return Form elements.
      */
-    public java.util.List<InputElement> getLocalizedInputElements() {
+    public List<InputElement> getLocalizedInputElements() {
         return localizedInputElements;
     }
 

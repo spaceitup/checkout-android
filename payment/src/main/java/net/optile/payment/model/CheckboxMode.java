@@ -13,6 +13,7 @@ package net.optile.payment.model;
 
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
+
 import android.support.annotation.StringDef;
 
 /**
@@ -20,44 +21,42 @@ import android.support.annotation.StringDef;
  */
 public class CheckboxMode {
 
-    public final static String MODE_OPTIONAL = "OPTIONAL";
-    public final static String MODE_OPTIONAL_PRESELECTED = "OPTIONAL_PRESELECTED";
-    public final static String MODE_REQUIRED = "REQUIRED";
-    public final static String MODE_REQUIRED_PRESELECTED = "REQUIRED_PRESELECTED";
-    public final static String MODE_FORCED = "FORCED";
-    public final static String MODE_FORCED_DISPLAYED = "FORCED_DISPLAYED";
-    public final static String INVALID_VALUE = "InvalidValue";
-
-    @Retention(RetentionPolicy.SOURCE)
-    @StringDef({ MODE_OPTIONAL,
-        MODE_OPTIONAL_PRESELECTED,
-        MODE_REQUIRED,
-        MODE_REQUIRED_PRESELECTED,
-        MODE_FORCED,
-        MODE_FORCED_DISPLAYED,
-        MODE_UNKNOWN })
-    public @interface Definition {}
+    public final static String OPTIONAL = "OPTIONAL";
+    public final static String OPTIONAL_PRESELECTED = "OPTIONAL_PRESELECTED";
+    public final static String REQUIRED = "REQUIRED";
+    public final static String REQUIRED_PRESELECTED = "REQUIRED_PRESELECTED";
+    public final static String FORCED = "FORCED";
+    public final static String FORCED_DISPLAYED = "FORCED_DISPLAYED";
 
     /**
-     * Gets mode of displayed checkbox as a checked value.
-     * If the value does not match any predefined modes then return
-     * INVALID_VALUE.
+     * Check if the given mode is a valid checkbox mode
      *
-     * @return the checked mode
+     * @param mode the checkbox mode to validate
+     * @return true when valid, false otherwise
      */
-    public static String getCheckedMode(String mode) {
+    public static boolean isCheckboxMode(String mode) {
 
-        if (this.mode != null) {
-            switch (this.mode) {
-                case MODE_OPTIONAL:
-                case MODE_OPTIONAL_PRESELECTED:
-                case MODE_REQUIRED:
-                case MODE_REQUIRED_PRESELECTED:
-                case MODE_FORCED:
-                case MODE_FORCED_DISPLAYED:
-                    return this.mode;
+        if (mode != null) {
+            switch (mode) {
+                case OPTIONAL:
+                case OPTIONAL_PRESELECTED:
+                case REQUIRED:
+                case REQUIRED_PRESELECTED:
+                case FORCED:
+                case FORCED_DISPLAYED:
+                    return true;
             }
         }
-        return INVALID_VALUE;
+        return false;
     }
+
+    @Retention(RetentionPolicy.SOURCE)
+    @StringDef({
+        OPTIONAL,
+        OPTIONAL_PRESELECTED,
+        REQUIRED,
+        REQUIRED_PRESELECTED,
+        FORCED,
+        FORCED_DISPLAYED })
+    public @interface Definition { }
 }
