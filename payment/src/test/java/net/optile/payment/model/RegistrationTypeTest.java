@@ -15,7 +15,6 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
 import org.junit.Test;
-import static net.optile.payment.model.RegistrationType.isRegistrationType;
 
 /**
  * The RegistrationType test
@@ -24,15 +23,15 @@ public class RegistrationTypeTest {
 
     @Test
     public void isRegistrationType_invalidValue_false() {
-        assertFalse(RegistrationType.isRegistrationType("foo"));
+        assertFalse(RegistrationType.isValid("foo"));
     }
 
     @Test
     public void isRegistrationType_validValue_true() {
-        assertTrue(isRegistrationType(RegistrationType.NONE));
-        assertTrue(isRegistrationType(RegistrationType.OPTIONAL));
-        assertTrue(isRegistrationType(RegistrationType.FORCED));
-        assertTrue(isRegistrationType(RegistrationType.OPTIONAL_PRESELECTED));
-        assertTrue(isRegistrationType(RegistrationType.FORCED_DISPLAYED));
+        assertTrue(RegistrationType.isValid(RegistrationType.NONE));
+        assertTrue(RegistrationType.isValid(RegistrationType.OPTIONAL));
+        assertTrue(RegistrationType.isValid(RegistrationType.FORCED));
+        assertTrue(RegistrationType.isValid(RegistrationType.OPTIONAL_PRESELECTED));
+        assertTrue(RegistrationType.isValid(RegistrationType.FORCED_DISPLAYED));
     }
 }

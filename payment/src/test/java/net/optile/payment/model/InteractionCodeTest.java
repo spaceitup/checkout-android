@@ -15,7 +15,6 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
 import org.junit.Test;
-import static net.optile.payment.model.InteractionCode.isInteractionCode;
 
 /**
  * The InteractionCode test
@@ -29,11 +28,11 @@ public class InteractionCodeTest {
 
     @Test
     public void isInteractionCode_validValue_true() {
-        assertTrue(isInteractionCode(InteractionCode.PROCEED));
-        assertTrue(isInteractionCode(InteractionCode.ABORT));
-        assertTrue(isInteractionCode(InteractionCode.TRY_OTHER_NETWORK));
-        assertTrue(isInteractionCode(InteractionCode.TRY_OTHER_ACCOUNT));
-        assertTrue(isInteractionCode(InteractionCode.RETRY));
-        assertTrue(isInteractionCode(InteractionCode.RELOAD));
+        assertTrue(InteractionCode.isValid(InteractionCode.PROCEED));
+        assertTrue(InteractionCode.isValid(InteractionCode.ABORT));
+        assertTrue(InteractionCode.isValid(InteractionCode.TRY_OTHER_NETWORK));
+        assertTrue(InteractionCode.isValid(InteractionCode.TRY_OTHER_ACCOUNT));
+        assertTrue(InteractionCode.isValid(InteractionCode.RETRY));
+        assertTrue(InteractionCode.isValid(InteractionCode.RELOAD));
     }
 }

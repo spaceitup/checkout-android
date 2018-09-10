@@ -15,7 +15,6 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
 import org.junit.Test;
-import static net.optile.payment.model.InteractionReason.isInteractionReason;
 
 /**
  * The InteractionReason test
@@ -24,38 +23,38 @@ public class InteractionReasonTest {
 
     @Test
     public void isInteractionReason_invalidValue_false() {
-        assertFalse(InteractionReason.isInteractionReason("foo"));
+        assertFalse(InteractionReason.isValid("foo"));
     }
 
     @Test
     public void isInteractionReason_validValue_true() {
-        assertTrue(isInteractionReason(InteractionReason.OK));
-        assertTrue(isInteractionReason(InteractionReason.PENDING));
-        assertTrue(isInteractionReason(InteractionReason.STRONG_AUTHENTICATION));
-        assertTrue(isInteractionReason(InteractionReason.DECLINED));
-        assertTrue(isInteractionReason(InteractionReason.EXCEEDS_LIMIT));
-        assertTrue(isInteractionReason(InteractionReason.TEMPORARY_FAILURE));
-        assertTrue(isInteractionReason(InteractionReason.NETWORK_FAILURE));
-        assertTrue(isInteractionReason(InteractionReason.BLACKLISTED));
-        assertTrue(isInteractionReason(InteractionReason.BLOCKED));
-        assertTrue(isInteractionReason(InteractionReason.SYSTEM_FAILURE));
-        assertTrue(isInteractionReason(InteractionReason.INVALID_ACCOUNT));
-        assertTrue(isInteractionReason(InteractionReason.FRAUD));
-        assertTrue(isInteractionReason(InteractionReason.ADDITIONAL_NETWORKS));
-        assertTrue(isInteractionReason(InteractionReason.INVALID_REQUEST));
-        assertTrue(isInteractionReason(InteractionReason.SCHEDULED));
-        assertTrue(isInteractionReason(InteractionReason.NO_NETWORKS));
-        assertTrue(isInteractionReason(InteractionReason.DUPLICATE_OPERATION));
-        assertTrue(isInteractionReason(InteractionReason.CHARGEBACK));
-        assertTrue(isInteractionReason(InteractionReason.RISK_DETECTED));
-        assertTrue(isInteractionReason(InteractionReason.CUSTOMER_ABORT));
-        assertTrue(isInteractionReason(InteractionReason.EXPIRED_SESSION));
-        assertTrue(isInteractionReason(InteractionReason.EXPIRED_ACCOUNT));
-        assertTrue(isInteractionReason(InteractionReason.ACCOUNT_NOT_ACTIVATED));  
-        assertTrue(isInteractionReason(InteractionReason.TRUSTED_CUSTOMER));
-        assertTrue(isInteractionReason(InteractionReason.UNKNOWN_CUSTOMER));
-        assertTrue(isInteractionReason(InteractionReason.ACTIVATED));
-        assertTrue(isInteractionReason(InteractionReason.UPDATED));
-        assertTrue(isInteractionReason(InteractionReason.TAKE_ACTION));
+        assertTrue(InteractionReason.isValid(InteractionReason.OK));
+        assertTrue(InteractionReason.isValid(InteractionReason.PENDING));
+        assertTrue(InteractionReason.isValid(InteractionReason.STRONG_AUTHENTICATION));
+        assertTrue(InteractionReason.isValid(InteractionReason.DECLINED));
+        assertTrue(InteractionReason.isValid(InteractionReason.EXCEEDS_LIMIT));
+        assertTrue(InteractionReason.isValid(InteractionReason.TEMPORARY_FAILURE));
+        assertTrue(InteractionReason.isValid(InteractionReason.NETWORK_FAILURE));
+        assertTrue(InteractionReason.isValid(InteractionReason.BLACKLISTED));
+        assertTrue(InteractionReason.isValid(InteractionReason.BLOCKED));
+        assertTrue(InteractionReason.isValid(InteractionReason.SYSTEM_FAILURE));
+        assertTrue(InteractionReason.isValid(InteractionReason.INVALID_ACCOUNT));
+        assertTrue(InteractionReason.isValid(InteractionReason.FRAUD));
+        assertTrue(InteractionReason.isValid(InteractionReason.ADDITIONAL_NETWORKS));
+        assertTrue(InteractionReason.isValid(InteractionReason.INVALID_REQUEST));
+        assertTrue(InteractionReason.isValid(InteractionReason.SCHEDULED));
+        assertTrue(InteractionReason.isValid(InteractionReason.NO_NETWORKS));
+        assertTrue(InteractionReason.isValid(InteractionReason.DUPLICATE_OPERATION));
+        assertTrue(InteractionReason.isValid(InteractionReason.CHARGEBACK));
+        assertTrue(InteractionReason.isValid(InteractionReason.RISK_DETECTED));
+        assertTrue(InteractionReason.isValid(InteractionReason.CUSTOMER_ABORT));
+        assertTrue(InteractionReason.isValid(InteractionReason.EXPIRED_SESSION));
+        assertTrue(InteractionReason.isValid(InteractionReason.EXPIRED_ACCOUNT));
+        assertTrue(InteractionReason.isValid(InteractionReason.ACCOUNT_NOT_ACTIVATED));  
+        assertTrue(InteractionReason.isValid(InteractionReason.TRUSTED_CUSTOMER));
+        assertTrue(InteractionReason.isValid(InteractionReason.UNKNOWN_CUSTOMER));
+        assertTrue(InteractionReason.isValid(InteractionReason.ACTIVATED));
+        assertTrue(InteractionReason.isValid(InteractionReason.UPDATED));
+        assertTrue(InteractionReason.isValid(InteractionReason.TAKE_ACTION));
     }
 }

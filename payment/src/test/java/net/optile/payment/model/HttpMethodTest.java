@@ -15,7 +15,6 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
 import org.junit.Test;
-import static net.optile.payment.model.HttpMethod.isHttpMethod;
 
 /**
  * The CheckboxMode test
@@ -24,12 +23,12 @@ public class HttpMethodTest {
 
     @Test
     public void isHttpMethod_invalidValue_false() {
-        assertFalse(HttpMethod.isHttpMethod("foo"));
+        assertFalse(HttpMethod.isValid("foo"));
     }
 
     @Test
     public void isHttpMethod_validValue_true() {
-        assertTrue(isHttpMethod(HttpMethod.GET));
-        assertTrue(isHttpMethod(HttpMethod.POST));
+        assertTrue(HttpMethod.isValid(HttpMethod.GET));
+        assertTrue(HttpMethod.isValid(HttpMethod.POST));
     }
 }

@@ -48,7 +48,7 @@ public class InputElementType {
      * @param type the input element type to validate
      * @return true when valid, false otherwise
      */
-    public static boolean isInputElementType(final String type) {
+    public static boolean isValid(final String type) {
 
         if (type != null) {
             switch (type) {
