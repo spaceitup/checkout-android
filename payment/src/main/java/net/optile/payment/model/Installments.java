@@ -11,6 +11,8 @@
 
 package net.optile.payment.model;
 
+import java.util.List;
+
 /**
  * Installments information.
  */
@@ -18,7 +20,7 @@ public class Installments {
     /** payment amount of original payment */
     private PaymentAmount originalPayment;
     /** installments plans */
-    private java.util.List<InstallmentsPlan> plans;
+    private List<InstallmentsPlan> plans;
 
     /**
      * Gets amount data of original payment.
@@ -43,7 +45,7 @@ public class Installments {
      *
      * @return Installments plans.
      */
-    public java.util.List<InstallmentsPlan> getPlans() {
+    public List<InstallmentsPlan> getPlans() {
         return plans;
     }
 
@@ -52,7 +54,7 @@ public class Installments {
      *
      * @param plans Installments plans.
      */
-    public void setPlans(final java.util.List<InstallmentsPlan> plans) {
+    public void setPlans(final List<InstallmentsPlan> plans) {
         this.plans = plans;
     }
 }

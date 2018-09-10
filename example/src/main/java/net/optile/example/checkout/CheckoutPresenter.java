@@ -24,6 +24,7 @@ import net.optile.payment.model.ApplicableNetwork;
 import net.optile.payment.model.ListResult;
 import net.optile.payment.model.OperationResult;
 import net.optile.payment.model.Redirect;
+import net.optile.payment.model.HttpMethod;
 import net.optile.payment.network.ChargeConnection;
 import net.optile.payment.network.ListConnection;
 import net.optile.payment.network.NetworkException;
@@ -173,6 +174,11 @@ final class CheckoutPresenter {
         OperationResult result = conn.createCharge(url, chargeData);
         Redirect redirect = result.getRedirect();
 
-        Log.i(TAG, "Charge response: " + redirect.getCheckedMethod());
+        String method = redirect.getMethod();
+        if (HttpMethod.isValid(method)) {
+            Log.i(TAG, "valid HttpMethod: " + method);
+        } else {
+            Log.i(TAG, "not a valid HttpMethod: " + method);
+        }
     }
 }

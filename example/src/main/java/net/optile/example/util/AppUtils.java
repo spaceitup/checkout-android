@@ -11,6 +11,7 @@
 
 package net.optile.example.util;
 
+import android.util.Log;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
@@ -23,6 +24,8 @@ import android.content.res.Resources;
  */
 public final class AppUtils {
 
+    private final static String TAG = "payment_AppUtils";
+    
     /**
      * Read the contents of the raw resource
      *
@@ -43,6 +46,7 @@ public final class AppUtils {
                 sb.append(line.trim());
             }
         } catch (IOException e) {
+            Log.wtf(TAG, e);
         }
         return sb.toString();
     }
