@@ -9,7 +9,7 @@
  * has been received in full.
  */
 
-package net.optile.payment.ui;
+package net.optile.payment.ui.internal;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -17,12 +17,24 @@ import android.support.v7.widget.Toolbar;
 import net.optile.payment.R;
 
 /**
- * The PaymentPage activity.
+ * The PaymentPageActivity showing available payment methods
  */
-public final class PaymentActivity extends AppCompatActivity {
+public final class PaymentPageActivity extends AppCompatActivity {
 
-    private static String TAG = "payment_PaymentActivity";
+    private static String TAG = "payment_PaymentPageActivity";
 
+    /** 
+     * Create the start intent for this Activity
+     * 
+     * @param context Context to create the intent
+     * 
+     * @return the newly created start intent 
+     */
+    public static Intent createStartIntent(Context context) {
+        final Intent intent = new Intent(context, PaymentPageActivity.class);
+        return intent;
+    }
+    
     /**
      * {@inheritDoc}
      */
