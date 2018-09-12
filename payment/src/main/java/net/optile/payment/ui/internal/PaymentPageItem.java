@@ -12,14 +12,7 @@
 package net.optile.payment.ui.internal;
 
 /**
- * The PaymentPage View interface that the View part of the MVP should implement
+ * 
  */
-public interface PaymentPageView {
-
-    /** 
-     * Is the view currently active
-     * 
-     * @return true when active, false otherwise 
-     */
-    boolean isActive();
+class PaymentPageItem {
 }

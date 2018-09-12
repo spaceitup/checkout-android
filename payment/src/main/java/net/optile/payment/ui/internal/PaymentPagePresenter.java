@@ -27,23 +27,28 @@ final class PaymentPagePresenter {
     private PaymentPageView view;
 
     /**
-     * The list of payment methods
+     * The list of currently loaded payment methods
      */
-    private List<SearchItem> items;
+    private List<PaymentPageItem> items;
 
     /**
-     * Create a new SearchPresenter
+     * Is this presenter started
      */
-    SearchPresenter(SearchView view) {
+    private boolean started;
+
+    /**
+     * Create a new PaymentPagePresenter
+     */
+    PaymentPagePresenter(PaymentPageView view) {
         this.view = view;
-        this.curPage = -1;
-        this.items = new ArrayList<SearchItem>();
+        this.items = new ArrayList<PaymentPageItem>();
     }
 
     /** 
      * Notify this presenter that it should be stopped
      */
     public void onStop() {
+        this.started = false;
     }
 
     /** 
@@ -52,7 +57,8 @@ final class PaymentPagePresenter {
      * @param listUrl the listUrl for which the payment methods should be loaded
      */
     public void onStart(String listUrl) {
-
+        this.started = true;
+        
         if (!listUrl.equals(this.listUrl)) {
             // REMIND: clear the previously loaded ListResult and clear all list elements
         }
