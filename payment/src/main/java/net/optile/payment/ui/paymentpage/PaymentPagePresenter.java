@@ -29,25 +29,31 @@ final class PaymentPagePresenter {
     /**
      * The list of currently loaded payment methods
      */
-    private List<PaymentPageItem> items;
+    private List<PaymentListItem> items;
 
     /**
      * Is this presenter started
      */
     private boolean started;
 
+    /** The list item type */
+    private int listItemType;
+
+    /** The listUrl pointing to the ListResult in the Payment API */
+    private String listUrl;
+    
     /**
      * Create a new PaymentPagePresenter
      */
     PaymentPagePresenter(PaymentPageView view) {
         this.view = view;
-        this.items = new ArrayList<PaymentPageItem>();
+        this.items = new ArrayList<PaymentListItem>();
     }
 
     /** 
      * Notify this presenter that it should be stopped
      */
-    public void onStop() {
+    void onStop() {
         this.started = false;
     }
 
@@ -56,8 +62,12 @@ final class PaymentPagePresenter {
      *
      * @param listUrl the listUrl for which the payment methods should be loaded
      */
-    public void onStart(String listUrl) {
+    void onStart(String listUrl) {
         this.started = true;
         this.listUrl = listUrl;
+    }
+
+    private int nextListItemType() {
+        return listItemType++;
     }
 }

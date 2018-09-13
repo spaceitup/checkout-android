@@ -83,7 +83,7 @@ public final class PaymentPageActivity extends AppCompatActivity implements Paym
     public void onSaveInstanceState(Bundle savedInstanceState) {
         super.onSaveInstanceState(savedInstanceState);
         savedInstanceState.putString(EXTRA_LISTURL, listUrl);
-        savedInstanceState.putString(EXTRA_PAYMENTTHEME, theme);
+        savedInstanceState.putParcelable(EXTRA_PAYMENTTHEME, theme);
     }
 
     /**

@@ -11,12 +11,16 @@
 
 package net.optile.payment.ui.paymentpage;
 
+import android.view.View;
+import android.support.v7.widget.RecyclerView;
+
+
 /**
  * The PaymentListViewHolder holding all Views for easy access
  */
 class PaymentListViewHolder extends RecyclerView.ViewHolder {
 
-    public PaymentListViewHolder(View parent) {
+    PaymentListViewHolder(View parent) {
         super(parent);
     }
 }

@@ -22,11 +22,12 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import java.util.List;
+import net.optile.payment.R;
 
 /**
  * The PaymentListAdapter containing the list of items
  */
-public class PaymentListAdapter extends RecyclerView.Adapter<PaymentListAdapter.ViewHolder> {
+class PaymentListAdapter extends RecyclerView.Adapter<PaymentListViewHolder> {
 
     private final static String TAG = "payment_PaymentListAdapter";
 
@@ -45,7 +46,15 @@ public class PaymentListAdapter extends RecyclerView.Adapter<PaymentListAdapter.
      */
     private OnItemListener listener;
 
-    public PaymentListAdapter(PaymentPageActivity activity, List<PaymentListItem> items) {
+    /** 
+     * Construct a new PaymentListAdapter
+     * 
+     * @param activity 
+     * @param items 
+     * 
+     * @return 
+     */
+    PaymentListAdapter(PaymentPageActivity activity, List<PaymentListItem> items) {
         this.activity = activity;
         this.items = items;
     }
@@ -54,7 +63,7 @@ public class PaymentListAdapter extends RecyclerView.Adapter<PaymentListAdapter.
      * {@inheritDoc}
      */
     @Override
-    public PaymentListAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public PaymentListViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
 
         Context context = parent.getContext();
         LayoutInflater inflater = LayoutInflater.from(context);
@@ -66,16 +75,16 @@ public class PaymentListAdapter extends RecyclerView.Adapter<PaymentListAdapter.
      * {@inheritDoc}
      */
     @Override
-    public void onBindViewHolder(PaymentListAdapter.ViewHolder holder, int position) {
+    public void onBindViewHolder(PaymentListViewHolder holder, int position) {
         PaymentListItem item = items.get(position);
     }
 
     /**
-     * Set the listener in this adapter
+     * Set the item listener in this adapter
      *
      * @param listener
      */
-    public void setListener(OnItemClickListener listener) {
+    public void setListener(OnItemListener listener) {
         this.listener = listener;
     }
 
@@ -92,7 +101,7 @@ public class PaymentListAdapter extends RecyclerView.Adapter<PaymentListAdapter.
      */
     @Override
     public int getItemViewType(int position) {
-        return items.get(position).id;
+        return items.get(position).type;
     }
     
     /**
@@ -114,15 +123,15 @@ public class PaymentListAdapter extends RecyclerView.Adapter<PaymentListAdapter.
     }
 
     /**
-     * Get the PaymentListItem with its id matching the viewType
+     * Get the PaymentListItem with its type matching the viewType
      *
-     * @param viewType
-     * @return the PaymentListItem given the index or null if not found
+     * @param type the type of the view
+     * @return the PaymentListItem with the same type or null if not found
      */
-    private PaymentListItem getItemWithViewType(int viewType) {
+    private PaymentListItem getItemWithViewType(int type) {
 
         for (PaymentListItem item : items) {
-            if (item.id == viewType) {
+            if (item.type == type) {
                 return item;
             }
         }
@@ -150,7 +159,7 @@ public class PaymentListAdapter extends RecyclerView.Adapter<PaymentListAdapter.
 
         if (listener != null) {
             PaymentListItem item = items.get(position);
-            listener.onItemClick(item, position);
+            listener.onItemClicked(item, position);
         }
     }
 
