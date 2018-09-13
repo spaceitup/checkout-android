@@ -6,7 +6,7 @@
     
     <application>
     <activity
-        android:name="net.optile.payment.ui.internal.PaymentPageActivity">
+        android:name="net.optile.payment.ui.paymentpage.PaymentPageActivity">
     </activity>
     </application>
 </manifest>

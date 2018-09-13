@@ -19,7 +19,7 @@ import java.util.concurrent.Callable;
 import android.content.Context;
 import android.util.Log;
 import net.optile.example.R;
-import net.optile.example.util.AppUtils;
+import net.optile.payment.util.PaymentUtils;
 import net.optile.payment.model.ApplicableNetwork;
 import net.optile.payment.model.ListResult;
 import net.optile.payment.model.OperationResult;

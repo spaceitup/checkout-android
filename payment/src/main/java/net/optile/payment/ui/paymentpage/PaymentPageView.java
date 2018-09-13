@@ -9,7 +9,7 @@
  * has been received in full.
  */
 
-package net.optile.payment.ui.internal;
+package net.optile.payment.ui.paymentpage;
 
 /**
  * The PaymentPage View interface that the View part of the MVP should implement

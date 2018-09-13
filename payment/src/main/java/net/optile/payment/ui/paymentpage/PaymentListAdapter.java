@@ -1,0 +1,164 @@
+/*
+ * Copyright(c) 2012-2018 optile GmbH. All Rights Reserved.
+ * https://www.optile.net
+ *
+ * This software is the property of optile GmbH. Distribution  of  this
+ * software without agreement in writing is strictly prohibited.
+ *
+ * This software may not be copied, used or distributed unless agreement
+ * has been received in full.
+ */
+
+package net.optile.payment.ui.paymentpage;
+
+import android.app.Activity;
+import android.content.Context;
+import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.TextView;
+
+import java.util.List;
+
+/**
+ * The PaymentListAdapter containing the list of items
+ */
+public class PaymentListAdapter extends RecyclerView.Adapter<PaymentListAdapter.ViewHolder> {
+
+    private final static String TAG = "payment_PaymentListAdapter";
+
+    /**
+     * The list of items in this adapter
+     */
+    private List<PaymentListItem> items;
+
+    /**
+     * The PaymentPageActivity
+     */
+    private PaymentPageActivity activity;
+
+    /**
+     * The item listener
+     */
+    private OnItemListener listener;
+
+    public PaymentListAdapter(PaymentPageActivity activity, List<PaymentListItem> items) {
+        this.activity = activity;
+        this.items = items;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public PaymentListAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+
+        Context context = parent.getContext();
+        LayoutInflater inflater = LayoutInflater.from(context);
+        View view = inflater.inflate(R.layout.listitem_paymentpage, parent, false);
+        return new PaymentListViewHolder(view);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void onBindViewHolder(PaymentListAdapter.ViewHolder holder, int position) {
+        PaymentListItem item = items.get(position);
+    }
+
+    /**
+     * Set the listener in this adapter
+     *
+     * @param listener
+     */
+    public void setListener(OnItemClickListener listener) {
+        this.listener = listener;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public int getItemCount() {
+        return items.size();
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public int getItemViewType(int position) {
+        return items.get(position).id;
+    }
+    
+    /**
+     * Clear
+     */
+    public void clear() {
+        items.clear();
+        notifyDataSetChanged();
+    }
+
+    /**
+     * Get the PaymentListItem at the given index
+     *
+     * @param index the index of the PaymentListItem
+     * @return the PaymentListItem given the index or null if not found
+     */
+    private PaymentListItem getItemFromIndex(int index) {
+        return index >= 0 && index < items.size() ? items.get(index) : null;
+    }
+
+    /**
+     * Get the PaymentListItem with its id matching the viewType
+     *
+     * @param viewType
+     * @return the PaymentListItem given the index or null if not found
+     */
+    private PaymentListItem getItemWithViewType(int viewType) {
+
+        for (PaymentListItem item : items) {
+            if (item.id == viewType) {
+                return item;
+            }
+        }
+        return null;
+    }
+
+    /**
+     * Set new items in this adapter and notify any
+     * listeners.
+     *
+     * @param newItems
+     */
+    public void setItems(List<PaymentListItem> newItems) {
+        items.clear();
+        items.addAll(newItems);
+        notifyDataSetChanged();
+    }
+
+    /**
+     * handleOnClick
+     *
+     * @param position
+     */
+    private void handleOnClick(int position) {
+
+        if (listener != null) {
+            PaymentListItem item = items.get(position);
+            listener.onItemClick(item, position);
+        }
+    }
+
+    /**
+     * The item listener
+     */
+    public interface OnItemListener {
+        void onItemClicked(PaymentListItem item, int position);
+        void onActionClicked(PaymentListItem item, int position);
+    }
+}

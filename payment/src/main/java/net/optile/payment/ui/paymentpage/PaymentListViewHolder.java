@@ -9,10 +9,14 @@
  * has been received in full.
  */
 
-package net.optile.payment.ui.internal;
+package net.optile.payment.ui.paymentpage;
 
 /**
- * 
+ * The PaymentListViewHolder holding all Views for easy access
  */
-class PaymentPageItem {
+class PaymentListViewHolder extends RecyclerView.ViewHolder {
+
+    public PaymentListViewHolder(View parent) {
+        super(parent);
+    }
 }

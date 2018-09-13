@@ -9,7 +9,7 @@
  * has been received in full.
  */
 
-package net.optile.example.util;
+package net.optile.payment.util;
 
 import android.util.Log;
 import java.io.BufferedReader;
@@ -20,11 +20,11 @@ import java.io.InputStreamReader;
 import android.content.res.Resources;
 
 /**
- * The type App utils.
+ * The PaymentUtils class containing helper methods
  */
-public final class AppUtils {
+public final class PaymentUtils {
 
-    private final static String TAG = "payment_AppUtils";
+    private final static String TAG = "payment_PaymentUtils";
     
     /**
      * Read the contents of the raw resource

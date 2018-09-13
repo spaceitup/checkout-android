@@ -1,0 +1,2605 @@
+{
+    "links": {
+        "self": "https://api.integration.oscato.com/pci/v1/5b993b0e78620501f948f169l72h0h2s3tq8vktj4nf89g48q6"
+    },
+    "timestamp": "2018-09-12T16:13:02.348+0000",
+    "operation": "LIST",
+    "resultCode": "00000.11.000",
+    "resultInfo": "26 applicable and 0 registered networks are found",
+    "returnCode": {
+        "name": "OK",
+        "source": "GATEWAY"
+    },
+    "status": {
+        "code": "listed",
+        "reason": "listed"
+    },
+    "interaction": {
+        "code": "PROCEED",
+        "reason": "OK"
+    },
+    "identification": {
+        "longId": "5b993b0e78620501f948f169l72h0h2s3tq8vktj4nf89g48q6",
+        "shortId": "09736-67497",
+        "transactionId": "tr102"
+    },
+    "networks": {
+        "applicable": [
+            {
+                "code": "CARTEBLEUE",
+                "label": "Carte Bleue",
+                "method": "DEBIT_CARD",
+                "grouping": "DEBIT_CARD",
+                "registration": "OPTIONAL",
+                "recurrence": "NONE",
+                "redirect": false,
+                "links": {
+                    "logo": "https://resources.integration.oscato.com/resource/network/SPACEITUP/nl_NL/CARTEBLEUE/logo2x.png",
+                    "self": "https://api.integration.oscato.com/pci/v1/5b993b0e78620501f948f169l72h0h2s3tq8vktj4nf89g48q6/CARTEBLEUE",
+                    "lang": "https://resources.integration.oscato.com/resource/lang/SPACEITUP/nl_NL/CARTEBLEUE.properties",
+                    "operation": "https://api.integration.oscato.com/pci/v1/5b993b0e78620501f948f169l72h0h2s3tq8vktj4nf89g48q6/CARTEBLEUE/charge",
+                    "validation": "https://api.integration.oscato.com/pci/v1/5b993b0e78620501f948f169l72h0h2s3tq8vktj4nf89g48q6/SPACEITUP/nl_NL/CARTEBLEUE/standard/validate"
+                },
+                "button": "button.charge.label",
+                "selected": false,
+                "localizedInputElements": [
+                    {
+                        "name": "number",
+                        "type": "numeric",
+                        "label": "Kaartnummer"
+                    },
+                    {
+                        "name": "holderName",
+                        "type": "string",
+                        "label": "Naam houder"
+                    },
+                    {
+                        "name": "expiryMonth",
+                        "type": "select",
+                        "label": "Expiry month",
+                        "options": [
+                            {
+                                "value": "01",
+                                "label": "01"
+                            },
+                            {
+                                "value": "02",
+                                "label": "02"
+                            },
+                            {
+                                "value": "03",
+                                "label": "03"
+                            },
+                            {
+                                "value": "04",
+                                "label": "04"
+                            },
+                            {
+                                "value": "05",
+                                "label": "05"
+                            },
+                            {
+                                "value": "06",
+                                "label": "06"
+                            },
+                            {
+                                "value": "07",
+                                "label": "07"
+                            },
+                            {
+                                "value": "08",
+                                "label": "08"
+                            },
+                            {
+                                "value": "09",
+                                "label": "09"
+                            },
+                            {
+                                "value": "10",
+                                "label": "10"
+                            },
+                            {
+                                "value": "11",
+                                "label": "11"
+                            },
+                            {
+                                "value": "12",
+                                "label": "12"
+                            }
+                        ],
+                    },
+                    {
+                        "name": "expiryYear",
+                        "type": "select",
+                        "label": "Expiry year",
+                        "options": [
+                            {
+                                "value": "2018",
+                                "label": "2018"
+                            },
+                            {
+                                "value": "2019",
+                                "label": "2019"
+                            },
+                            {
+                                "value": "2020",
+                                "label": "2020"
+                            },
+                            {
+                                "value": "2021",
+                                "label": "2021"
+                            },
+                            {
+                                "value": "2022",
+                                "label": "2022"
+                            },
+                            {
+                                "value": "2023",
+                                "label": "2023"
+                            },
+                            {
+                                "value": "2024",
+                                "label": "2024"
+                            },
+                            {
+                                "value": "2025",
+                                "label": "2025"
+                            },
+                            {
+                                "value": "2026",
+                                "label": "2026"
+                            },
+                            {
+                                "value": "2027",
+                                "label": "2027"
+                            },
+                            {
+                                "value": "2028",
+                                "label": "2028"
+                            },
+                            {
+                                "value": "2029",
+                                "label": "2029"
+                            },
+                            {
+                                "value": "2030",
+                                "label": "2030"
+                            },
+                            {
+                                "value": "2031",
+                                "label": "2031"
+                            },
+                            {
+                                "value": "2032",
+                                "label": "2032"
+                            }
+                        ],
+                    },
+                    {
+                        "name": "verificationCode",
+                        "type": "integer",
+                        "label": "Verificatiecode"
+                    }
+                ],
+            },
+            {
+                "code": "PAYPAL",
+                "label": "PayPal",
+                "method": "WALLET",
+                "grouping": "WALLET",
+                "registration": "OPTIONAL",
+                "recurrence": "NONE",
+                "redirect": true,
+                "links": {
+                    "logo": "https://resources.integration.oscato.com/resource/network/SPACEITUP/nl_NL/PAYPAL/logo2x.png",
+                    "self": "https://api.integration.oscato.com/pci/v1/5b993b0e78620501f948f169l72h0h2s3tq8vktj4nf89g48q6/PAYPAL",
+                    "lang": "https://resources.integration.oscato.com/resource/lang/SPACEITUP/nl_NL/PAYPAL.properties",
+                    "operation": "https://api.integration.oscato.com/pci/v1/5b993b0e78620501f948f169l72h0h2s3tq8vktj4nf89g48q6/PAYPAL/charge",
+                    "validation": "https://api.integration.oscato.com/pci/v1/5b993b0e78620501f948f169l72h0h2s3tq8vktj4nf89g48q6/SPACEITUP/nl_NL/PAYPAL/standard/validate"
+                },
+                "button": "button.charge.label",
+                "selected": false,
+                "contractData": {
+                    "PAGE_ENVIRONMENT": "sandbox",
+                    "JAVASCRIPT_INTEGRATION": "false",
+                    "PAGE_BUTTON_LOCALE": "nl_NL"
+                }
+            },
+            {
+                "code": "SEPADD",
+                "label": "SEPA",
+                "method": "DIRECT_DEBIT",
+                "grouping": "DIRECT_DEBIT",
+                "registration": "OPTIONAL",
+                "recurrence": "NONE",
+                "redirect": false,
+                "links": {
+                    "logo": "https://resources.integration.oscato.com/resource/network/SPACEITUP/nl_NL/SEPADD/logo2x.png",
+                    "self": "https://api.integration.oscato.com/pci/v1/5b993b0e78620501f948f169l72h0h2s3tq8vktj4nf89g48q6/SEPADD",
+                    "lang": "https://resources.integration.oscato.com/resource/lang/SPACEITUP/nl_NL/SEPADD.properties",
+                    "operation": "https://api.integration.oscato.com/pci/v1/5b993b0e78620501f948f169l72h0h2s3tq8vktj4nf89g48q6/SEPADD/charge",
+                    "validation": "https://api.integration.oscato.com/pci/v1/5b993b0e78620501f948f169l72h0h2s3tq8vktj4nf89g48q6/SPACEITUP/nl_NL/SEPADD/standard/validate"
+                },
+                "button": "button.charge.label",
+                "selected": false,
+                "localizedInputElements": [
+                    {
+                        "name": "holderName",
+                        "type": "string",
+                        "label": "Rekeninghouder"
+                    },
+                    {
+                        "name": "iban",
+                        "type": "string",
+                        "label": "IBAN"
+                    },
+                    {
+                        "name": "bic",
+                        "type": "string",
+                        "label": "BIC"
+                    }
+                ],
+            },
+            {
+                "code": "AMEX",
+                "label": "American Express",
+                "method": "CREDIT_CARD",
+                "grouping": "CREDIT_CARD",
+                "registration": "OPTIONAL",
+                "recurrence": "NONE",
+                "redirect": false,
+                "links": {
+                    "logo": "https://resources.integration.oscato.com/resource/network/SPACEITUP/nl_NL/AMEX/logo2x.png",
+                    "self": "https://api.integration.oscato.com/pci/v1/5b993b0e78620501f948f169l72h0h2s3tq8vktj4nf89g48q6/AMEX",
+                    "lang": "https://resources.integration.oscato.com/resource/lang/SPACEITUP/nl_NL/AMEX.properties",
+                    "operation": "https://api.integration.oscato.com/pci/v1/5b993b0e78620501f948f169l72h0h2s3tq8vktj4nf89g48q6/AMEX/charge",
+                    "validation": "https://api.integration.oscato.com/pci/v1/5b993b0e78620501f948f169l72h0h2s3tq8vktj4nf89g48q6/SPACEITUP/nl_NL/AMEX/standard/validate"
+                },
+                "button": "button.charge.label",
+                "selected": false,
+                "localizedInputElements": [
+                    {
+                        "name": "number",
+                        "type": "numeric",
+                        "label": "Kaartnummer"
+                    },
+                    {
+                        "name": "holderName",
+                        "type": "string",
+                        "label": "Naam houder"
+                    },
+                    {
+                        "name": "expiryMonth",
+                        "type": "select",
+                        "label": "Expiry month",
+                        "options": [
+                            {
+                                "value": "01",
+                                "label": "01"
+                            },
+                            {
+                                "value": "02",
+                                "label": "02"
+                            },
+                            {
+                                "value": "03",
+                                "label": "03"
+                            },
+                            {
+                                "value": "04",
+                                "label": "04"
+                            },
+                            {
+                                "value": "05",
+                                "label": "05"
+                            },
+                            {
+                                "value": "06",
+                                "label": "06"
+                            },
+                            {
+                                "value": "07",
+                                "label": "07"
+                            },
+                            {
+                                "value": "08",
+                                "label": "08"
+                            },
+                            {
+                                "value": "09",
+                                "label": "09"
+                            },
+                            {
+                                "value": "10",
+                                "label": "10"
+                            },
+                            {
+                                "value": "11",
+                                "label": "11"
+                            },
+                            {
+                                "value": "12",
+                                "label": "12"
+                            }
+                        ],
+                    },
+                    {
+                        "name": "expiryYear",
+                        "type": "select",
+                        "label": "Expiry year",
+                        "options": [
+                            {
+                                "value": "2018",
+                                "label": "2018"
+                            },
+                            {
+                                "value": "2019",
+                                "label": "2019"
+                            },
+                            {
+                                "value": "2020",
+                                "label": "2020"
+                            },
+                            {
+                                "value": "2021",
+                                "label": "2021"
+                            },
+                            {
+                                "value": "2022",
+                                "label": "2022"
+                            },
+                            {
+                                "value": "2023",
+                                "label": "2023"
+                            },
+                            {
+                                "value": "2024",
+                                "label": "2024"
+                            },
+                            {
+                                "value": "2025",
+                                "label": "2025"
+                            },
+                            {
+                                "value": "2026",
+                                "label": "2026"
+                            },
+                            {
+                                "value": "2027",
+                                "label": "2027"
+                            },
+                            {
+                                "value": "2028",
+                                "label": "2028"
+                            },
+                            {
+                                "value": "2029",
+                                "label": "2029"
+                            },
+                            {
+                                "value": "2030",
+                                "label": "2030"
+                            },
+                            {
+                                "value": "2031",
+                                "label": "2031"
+                            },
+                            {
+                                "value": "2032",
+                                "label": "2032"
+                            }
+                        ],
+                    },
+                    {
+                        "name": "verificationCode",
+                        "type": "integer",
+                        "label": "Verificatiecode"
+                    }
+                ],
+            },
+            {
+                "code": "DINERS",
+                "label": "Diners Club",
+                "method": "CREDIT_CARD",
+                "grouping": "CREDIT_CARD",
+                "registration": "OPTIONAL",
+                "recurrence": "NONE",
+                "redirect": false,
+                "links": {
+                    "logo": "https://resources.integration.oscato.com/resource/network/SPACEITUP/nl_NL/DINERS/logo2x.png",
+                    "self": "https://api.integration.oscato.com/pci/v1/5b993b0e78620501f948f169l72h0h2s3tq8vktj4nf89g48q6/DINERS",
+                    "lang": "https://resources.integration.oscato.com/resource/lang/SPACEITUP/nl_NL/DINERS.properties",
+                    "operation": "https://api.integration.oscato.com/pci/v1/5b993b0e78620501f948f169l72h0h2s3tq8vktj4nf89g48q6/DINERS/charge",
+                    "validation": "https://api.integration.oscato.com/pci/v1/5b993b0e78620501f948f169l72h0h2s3tq8vktj4nf89g48q6/SPACEITUP/nl_NL/DINERS/standard/validate"
+                },
+                "button": "button.charge.label",
+                "selected": false,
+                "localizedInputElements": [
+                    {
+                        "name": "number",
+                        "type": "numeric",
+                        "label": "Kaartnummer"
+                    },
+                    {
+                        "name": "holderName",
+                        "type": "string",
+                        "label": "Naam houder"
+                    },
+                    {
+                        "name": "expiryMonth",
+                        "type": "select",
+                        "label": "Expiry month",
+                        "options": [
+                            {
+                                "value": "01",
+                                "label": "01"
+                            },
+                            {
+                                "value": "02",
+                                "label": "02"
+                            },
+                            {
+                                "value": "03",
+                                "label": "03"
+                            },
+                            {
+                                "value": "04",
+                                "label": "04"
+                            },
+                            {
+                                "value": "05",
+                                "label": "05"
+                            },
+                            {
+                                "value": "06",
+                                "label": "06"
+                            },
+                            {
+                                "value": "07",
+                                "label": "07"
+                            },
+                            {
+                                "value": "08",
+                                "label": "08"
+                            },
+                            {
+                                "value": "09",
+                                "label": "09"
+                            },
+                            {
+                                "value": "10",
+                                "label": "10"
+                            },
+                            {
+                                "value": "11",
+                                "label": "11"
+                            },
+                            {
+                                "value": "12",
+                                "label": "12"
+                            }
+                        ],
+                    },
+                    {
+                        "name": "expiryYear",
+                        "type": "select",
+                        "label": "Expiry year",
+                        "options": [
+                            {
+                                "value": "2018",
+                                "label": "2018"
+                            },
+                            {
+                                "value": "2019",
+                                "label": "2019"
+                            },
+                            {
+                                "value": "2020",
+                                "label": "2020"
+                            },
+                            {
+                                "value": "2021",
+                                "label": "2021"
+                            },
+                            {
+                                "value": "2022",
+                                "label": "2022"
+                            },
+                            {
+                                "value": "2023",
+                                "label": "2023"
+                            },
+                            {
+                                "value": "2024",
+                                "label": "2024"
+                            },
+                            {
+                                "value": "2025",
+                                "label": "2025"
+                            },
+                            {
+                                "value": "2026",
+                                "label": "2026"
+                            },
+                            {
+                                "value": "2027",
+                                "label": "2027"
+                            },
+                            {
+                                "value": "2028",
+                                "label": "2028"
+                            },
+                            {
+                                "value": "2029",
+                                "label": "2029"
+                            },
+                            {
+                                "value": "2030",
+                                "label": "2030"
+                            },
+                            {
+                                "value": "2031",
+                                "label": "2031"
+                            },
+                            {
+                                "value": "2032",
+                                "label": "2032"
+                            }
+                        ],
+                    },
+                    {
+                        "name": "verificationCode",
+                        "type": "integer",
+                        "label": "Verificatiecode"
+                    }
+                ],
+            },
+            {
+                "code": "DISCOVER",
+                "label": "Discover",
+                "method": "CREDIT_CARD",
+                "grouping": "CREDIT_CARD",
+                "registration": "OPTIONAL",
+                "recurrence": "NONE",
+                "redirect": false,
+                "links": {
+                    "logo": "https://resources.integration.oscato.com/resource/network/SPACEITUP/nl_NL/DISCOVER/logo2x.png",
+                    "self": "https://api.integration.oscato.com/pci/v1/5b993b0e78620501f948f169l72h0h2s3tq8vktj4nf89g48q6/DISCOVER",
+                    "lang": "https://resources.integration.oscato.com/resource/lang/SPACEITUP/nl_NL/DISCOVER.properties",
+                    "operation": "https://api.integration.oscato.com/pci/v1/5b993b0e78620501f948f169l72h0h2s3tq8vktj4nf89g48q6/DISCOVER/charge",
+                    "validation": "https://api.integration.oscato.com/pci/v1/5b993b0e78620501f948f169l72h0h2s3tq8vktj4nf89g48q6/SPACEITUP/nl_NL/DISCOVER/standard/validate"
+                },
+                "button": "button.charge.label",
+                "selected": false,
+                "localizedInputElements": [
+                    {
+                        "name": "number",
+                        "type": "numeric",
+                        "label": "Kaartnummer"
+                    },
+                    {
+                        "name": "holderName",
+                        "type": "string",
+                        "label": "Naam houder"
+                    },
+                    {
+                        "name": "expiryMonth",
+                        "type": "select",
+                        "label": "Expiry month",
+                        "options": [
+                            {
+                                "value": "01",
+                                "label": "01"
+                            },
+                            {
+                                "value": "02",
+                                "label": "02"
+                            },
+                            {
+                                "value": "03",
+                                "label": "03"
+                            },
+                            {
+                                "value": "04",
+                                "label": "04"
+                            },
+                            {
+                                "value": "05",
+                                "label": "05"
+                            },
+                            {
+                                "value": "06",
+                                "label": "06"
+                            },
+                            {
+                                "value": "07",
+                                "label": "07"
+                            },
+                            {
+                                "value": "08",
+                                "label": "08"
+                            },
+                            {
+                                "value": "09",
+                                "label": "09"
+                            },
+                            {
+                                "value": "10",
+                                "label": "10"
+                            },
+                            {
+                                "value": "11",
+                                "label": "11"
+                            },
+                            {
+                                "value": "12",
+                                "label": "12"
+                            }
+                        ],
+                    },
+                    {
+                        "name": "expiryYear",
+                        "type": "select",
+                        "label": "Expiry year",
+                        "options": [
+                            {
+                                "value": "2018",
+                                "label": "2018"
+                            },
+                            {
+                                "value": "2019",
+                                "label": "2019"
+                            },
+                            {
+                                "value": "2020",
+                                "label": "2020"
+                            },
+                            {
+                                "value": "2021",
+                                "label": "2021"
+                            },
+                            {
+                                "value": "2022",
+                                "label": "2022"
+                            },
+                            {
+                                "value": "2023",
+                                "label": "2023"
+                            },
+                            {
+                                "value": "2024",
+                                "label": "2024"
+                            },
+                            {
+                                "value": "2025",
+                                "label": "2025"
+                            },
+                            {
+                                "value": "2026",
+                                "label": "2026"
+                            },
+                            {
+                                "value": "2027",
+                                "label": "2027"
+                            },
+                            {
+                                "value": "2028",
+                                "label": "2028"
+                            },
+                            {
+                                "value": "2029",
+                                "label": "2029"
+                            },
+                            {
+                                "value": "2030",
+                                "label": "2030"
+                            },
+                            {
+                                "value": "2031",
+                                "label": "2031"
+                            },
+                            {
+                                "value": "2032",
+                                "label": "2032"
+                            }
+                        ],
+                    },
+                    {
+                        "name": "verificationCode",
+                        "type": "integer",
+                        "label": "Verificatiecode"
+                    }
+                ],
+            },
+            {
+                "code": "EEV",
+                "label": "Direct Debit",
+                "method": "DIRECT_DEBIT",
+                "grouping": "DIRECT_DEBIT",
+                "registration": "OPTIONAL",
+                "recurrence": "NONE",
+                "redirect": false,
+                "links": {
+                    "logo": "https://resources.integration.oscato.com/resource/network/SPACEITUP/nl_NL/EEV/logo2x.png",
+                    "self": "https://api.integration.oscato.com/pci/v1/5b993b0e78620501f948f169l72h0h2s3tq8vktj4nf89g48q6/EEV",
+                    "lang": "https://resources.integration.oscato.com/resource/lang/SPACEITUP/nl_NL/EEV.properties",
+                    "operation": "https://api.integration.oscato.com/pci/v1/5b993b0e78620501f948f169l72h0h2s3tq8vktj4nf89g48q6/EEV/charge",
+                    "validation": "https://api.integration.oscato.com/pci/v1/5b993b0e78620501f948f169l72h0h2s3tq8vktj4nf89g48q6/SPACEITUP/nl_NL/EEV/standard/validate"
+                },
+                "button": "button.charge.label",
+                "selected": false
+            },
+            {
+                "code": "ELVDE",
+                "label": "Direct Debit",
+                "method": "DIRECT_DEBIT",
+                "grouping": "DIRECT_DEBIT",
+                "registration": "OPTIONAL",
+                "recurrence": "NONE",
+                "redirect": false,
+                "links": {
+                    "logo": "https://resources.integration.oscato.com/resource/network/SPACEITUP/nl_NL/ELVDE/logo2x.png",
+                    "self": "https://api.integration.oscato.com/pci/v1/5b993b0e78620501f948f169l72h0h2s3tq8vktj4nf89g48q6/ELVDE",
+                    "lang": "https://resources.integration.oscato.com/resource/lang/SPACEITUP/nl_NL/ELVDE.properties",
+                    "operation": "https://api.integration.oscato.com/pci/v1/5b993b0e78620501f948f169l72h0h2s3tq8vktj4nf89g48q6/ELVDE/charge",
+                    "validation": "https://api.integration.oscato.com/pci/v1/5b993b0e78620501f948f169l72h0h2s3tq8vktj4nf89g48q6/SPACEITUP/nl_NL/ELVDE/standard/validate"
+                },
+                "button": "button.charge.label",
+                "selected": false,
+                "localizedInputElements": [
+                    {
+                        "name": "number",
+                        "type": "numeric",
+                        "label": "Rekeningnummer"
+                    },
+                    {
+                        "name": "bankCode",
+                        "type": "string",
+                        "label": "Bankcode"
+                    },
+                    {
+                        "name": "holderName",
+                        "type": "string",
+                        "label": "Naam houder"
+                    }
+                ],
+            },
+            {
+                "code": "IDEAL",
+                "label": "iDEAL",
+                "method": "ONLINE_BANK_TRANSFER",
+                "grouping": "ONLINE_BANK_TRANSFER",
+                "registration": "OPTIONAL",
+                "recurrence": "NONE",
+                "redirect": true,
+                "links": {
+                    "logo": "https://resources.integration.oscato.com/resource/network/SPACEITUP/nl_NL/IDEAL/logo2x.png",
+                    "self": "https://api.integration.oscato.com/pci/v1/5b993b0e78620501f948f169l72h0h2s3tq8vktj4nf89g48q6/IDEAL",
+                    "lang": "https://resources.integration.oscato.com/resource/lang/SPACEITUP/nl_NL/IDEAL.properties",
+                    "operation": "https://api.integration.oscato.com/pci/v1/5b993b0e78620501f948f169l72h0h2s3tq8vktj4nf89g48q6/IDEAL/charge",
+                    "validation": "https://api.integration.oscato.com/pci/v1/5b993b0e78620501f948f169l72h0h2s3tq8vktj4nf89g48q6/SPACEITUP/nl_NL/IDEAL/standard/validate"
+                },
+                "button": "button.charge.label",
+                "selected": false
+            },
+            {
+                "code": "INSTALLMENT_SEPA",
+                "label": "Purchase on rates",
+                "method": "DIRECT_DEBIT",
+                "grouping": "DIRECT_DEBIT",
+                "registration": "NONE",
+                "recurrence": "NONE",
+                "redirect": false,
+                "links": {
+                    "logo": "https://resources.integration.oscato.com/resource/network/SPACEITUP/nl_NL/INSTALLMENT_SEPA/logo2x.png",
+                    "self": "https://api.integration.oscato.com/pci/v1/5b993b0e78620501f948f169l72h0h2s3tq8vktj4nf89g48q6/INSTALLMENT_SEPA",
+                    "lang": "https://resources.integration.oscato.com/resource/lang/SPACEITUP/nl_NL/INSTALLMENT_SEPA.properties",
+                    "operation": "https://api.integration.oscato.com/pci/v1/5b993b0e78620501f948f169l72h0h2s3tq8vktj4nf89g48q6/INSTALLMENT_SEPA/activate",
+                    "validation": "https://api.integration.oscato.com/pci/v1/5b993b0e78620501f948f169l72h0h2s3tq8vktj4nf89g48q6/SPACEITUP/nl_NL/INSTALLMENT_SEPA/standard/validate"
+                },
+                "button": "button.activate.label",
+                "selected": false,
+                "localizedInputElements": [
+                    {
+                        "name": "customerBirthYear",
+                        "type": "select",
+                        "label": "account.customerBirthYear.label",
+                        "options": [
+                            {
+                                "value": "2018"
+                            },
+                            {
+                                "value": "2017"
+                            },
+                            {
+                                "value": "2016"
+                            },
+                            {
+                                "value": "2015"
+                            },
+                            {
+                                "value": "2014"
+                            },
+                            {
+                                "value": "2013"
+                            },
+                            {
+                                "value": "2012"
+                            },
+                            {
+                                "value": "2011"
+                            },
+                            {
+                                "value": "2010"
+                            },
+                            {
+                                "value": "2009"
+                            },
+                            {
+                                "value": "2008"
+                            },
+                            {
+                                "value": "2007"
+                            },
+                            {
+                                "value": "2006"
+                            },
+                            {
+                                "value": "2005"
+                            },
+                            {
+                                "value": "2004"
+                            },
+                            {
+                                "value": "2003"
+                            },
+                            {
+                                "value": "2002"
+                            },
+                            {
+                                "value": "2001"
+                            },
+                            {
+                                "value": "2000"
+                            },
+                            {
+                                "value": "1999"
+                            },
+                            {
+                                "value": "1998"
+                            },
+                            {
+                                "value": "1997"
+                            },
+                            {
+                                "value": "1996"
+                            },
+                            {
+                                "value": "1995"
+                            },
+                            {
+                                "value": "1994"
+                            },
+                            {
+                                "value": "1993"
+                            },
+                            {
+                                "value": "1992"
+                            },
+                            {
+                                "value": "1991"
+                            },
+                            {
+                                "value": "1990"
+                            },
+                            {
+                                "value": "1989"
+                            },
+                            {
+                                "value": "1988"
+                            },
+                            {
+                                "value": "1987"
+                            },
+                            {
+                                "value": "1986"
+                            },
+                            {
+                                "value": "1985"
+                            },
+                            {
+                                "value": "1984"
+                            },
+                            {
+                                "value": "1983"
+                            },
+                            {
+                                "value": "1982"
+                            },
+                            {
+                                "value": "1981"
+                            },
+                            {
+                                "value": "1980"
+                            },
+                            {
+                                "value": "1979"
+                            },
+                            {
+                                "value": "1978"
+                            },
+                            {
+                                "value": "1977"
+                            },
+                            {
+                                "value": "1976"
+                            },
+                            {
+                                "value": "1975"
+                            },
+                            {
+                                "value": "1974"
+                            },
+                            {
+                                "value": "1973"
+                            },
+                            {
+                                "value": "1972"
+                            },
+                            {
+                                "value": "1971"
+                            },
+                            {
+                                "value": "1970"
+                            },
+                            {
+                                "value": "1969"
+                            },
+                            {
+                                "value": "1968"
+                            },
+                            {
+                                "value": "1967"
+                            },
+                            {
+                                "value": "1966"
+                            },
+                            {
+                                "value": "1965"
+                            },
+                            {
+                                "value": "1964"
+                            },
+                            {
+                                "value": "1963"
+                            },
+                            {
+                                "value": "1962"
+                            },
+                            {
+                                "value": "1961"
+                            },
+                            {
+                                "value": "1960"
+                            },
+                            {
+                                "value": "1959"
+                            },
+                            {
+                                "value": "1958"
+                            },
+                            {
+                                "value": "1957"
+                            },
+                            {
+                                "value": "1956"
+                            },
+                            {
+                                "value": "1955"
+                            },
+                            {
+                                "value": "1954"
+                            },
+                            {
+                                "value": "1953"
+                            },
+                            {
+                                "value": "1952"
+                            },
+                            {
+                                "value": "1951"
+                            },
+                            {
+                                "value": "1950"
+                            },
+                            {
+                                "value": "1949"
+                            },
+                            {
+                                "value": "1948"
+                            },
+                            {
+                                "value": "1947"
+                            },
+                            {
+                                "value": "1946"
+                            },
+                            {
+                                "value": "1945"
+                            },
+                            {
+                                "value": "1944"
+                            },
+                            {
+                                "value": "1943"
+                            },
+                            {
+                                "value": "1942"
+                            },
+                            {
+                                "value": "1941"
+                            },
+                            {
+                                "value": "1940"
+                            },
+                            {
+                                "value": "1939"
+                            }
+                        ],
+                    },
+                    {
+                        "name": "optIn",
+                        "type": "checkbox",
+                        "label": "account.optIn.label"
+                    },
+                    {
+                        "name": "customerBirthDay",
+                        "type": "select",
+                        "label": "account.customerBirthDay.label",
+                        "options": [
+                            {
+                                "value": "01"
+                            },
+                            {
+                                "value": "02"
+                            },
+                            {
+                                "value": "03"
+                            },
+                            {
+                                "value": "04"
+                            },
+                            {
+                                "value": "05"
+                            },
+                            {
+                                "value": "06"
+                            },
+                            {
+                                "value": "07"
+                            },
+                            {
+                                "value": "08"
+                            },
+                            {
+                                "value": "09"
+                            },
+                            {
+                                "value": "10"
+                            },
+                            {
+                                "value": "11"
+                            },
+                            {
+                                "value": "12"
+                            },
+                            {
+                                "value": "13"
+                            },
+                            {
+                                "value": "14"
+                            },
+                            {
+                                "value": "15"
+                            },
+                            {
+                                "value": "16"
+                            },
+                            {
+                                "value": "17"
+                            },
+                            {
+                                "value": "18"
+                            },
+                            {
+                                "value": "19"
+                            },
+                            {
+                                "value": "20"
+                            },
+                            {
+                                "value": "21"
+                            },
+                            {
+                                "value": "22"
+                            },
+                            {
+                                "value": "23"
+                            },
+                            {
+                                "value": "24"
+                            },
+                            {
+                                "value": "25"
+                            },
+                            {
+                                "value": "26"
+                            },
+                            {
+                                "value": "27"
+                            },
+                            {
+                                "value": "28"
+                            },
+                            {
+                                "value": "29"
+                            },
+                            {
+                                "value": "30"
+                            },
+                            {
+                                "value": "31"
+                            }
+                        ],
+                    },
+                    {
+                        "name": "customerBirthMonth",
+                        "type": "select",
+                        "label": "account.customerBirthMonth.label",
+                        "options": [
+                            {
+                                "value": "01",
+                                "label": "account.customerBirthMonth.01"
+                            },
+                            {
+                                "value": "02",
+                                "label": "account.customerBirthMonth.02"
+                            },
+                            {
+                                "value": "03",
+                                "label": "account.customerBirthMonth.03"
+                            },
+                            {
+                                "value": "04",
+                                "label": "account.customerBirthMonth.04"
+                            },
+                            {
+                                "value": "05",
+                                "label": "account.customerBirthMonth.05"
+                            },
+                            {
+                                "value": "06",
+                                "label": "account.customerBirthMonth.06"
+                            },
+                            {
+                                "value": "07",
+                                "label": "account.customerBirthMonth.07"
+                            },
+                            {
+                                "value": "08",
+                                "label": "account.customerBirthMonth.08"
+                            },
+                            {
+                                "value": "09",
+                                "label": "account.customerBirthMonth.09"
+                            },
+                            {
+                                "value": "10",
+                                "label": "account.customerBirthMonth.10"
+                            },
+                            {
+                                "value": "11",
+                                "label": "account.customerBirthMonth.11"
+                            },
+                            {
+                                "value": "12",
+                                "label": "account.customerBirthMonth.12"
+                            }
+                        ],
+                    }
+                ],
+            },
+            {
+                "code": "MAESTRO",
+                "label": "Maestro",
+                "method": "DEBIT_CARD",
+                "grouping": "DEBIT_CARD",
+                "registration": "OPTIONAL",
+                "recurrence": "NONE",
+                "redirect": false,
+                "links": {
+                    "logo": "https://resources.integration.oscato.com/resource/network/SPACEITUP/nl_NL/MAESTRO/logo2x.png",
+                    "self": "https://api.integration.oscato.com/pci/v1/5b993b0e78620501f948f169l72h0h2s3tq8vktj4nf89g48q6/MAESTRO",
+                    "lang": "https://resources.integration.oscato.com/resource/lang/SPACEITUP/nl_NL/MAESTRO.properties",
+                    "operation": "https://api.integration.oscato.com/pci/v1/5b993b0e78620501f948f169l72h0h2s3tq8vktj4nf89g48q6/MAESTRO/charge",
+                    "validation": "https://api.integration.oscato.com/pci/v1/5b993b0e78620501f948f169l72h0h2s3tq8vktj4nf89g48q6/SPACEITUP/nl_NL/MAESTRO/standard/validate"
+                },
+                "button": "button.charge.label",
+                "selected": false,
+                "localizedInputElements": [
+                    {
+                        "name": "number",
+                        "type": "numeric",
+                        "label": "Kaartnummer"
+                    },
+                    {
+                        "name": "holderName",
+                        "type": "string",
+                        "label": "Naam houder"
+                    },
+                    {
+                        "name": "expiryMonth",
+                        "type": "select",
+                        "label": "Expiry month",
+                        "options": [
+                            {
+                                "value": "01",
+                                "label": "01"
+                            },
+                            {
+                                "value": "02",
+                                "label": "02"
+                            },
+                            {
+                                "value": "03",
+                                "label": "03"
+                            },
+                            {
+                                "value": "04",
+                                "label": "04"
+                            },
+                            {
+                                "value": "05",
+                                "label": "05"
+                            },
+                            {
+                                "value": "06",
+                                "label": "06"
+                            },
+                            {
+                                "value": "07",
+                                "label": "07"
+                            },
+                            {
+                                "value": "08",
+                                "label": "08"
+                            },
+                            {
+                                "value": "09",
+                                "label": "09"
+                            },
+                            {
+                                "value": "10",
+                                "label": "10"
+                            },
+                            {
+                                "value": "11",
+                                "label": "11"
+                            },
+                            {
+                                "value": "12",
+                                "label": "12"
+                            }
+                        ],
+                    },
+                    {
+                        "name": "expiryYear",
+                        "type": "select",
+                        "label": "Expiry year",
+                        "options": [
+                            {
+                                "value": "2018",
+                                "label": "2018"
+                            },
+                            {
+                                "value": "2019",
+                                "label": "2019"
+                            },
+                            {
+                                "value": "2020",
+                                "label": "2020"
+                            },
+                            {
+                                "value": "2021",
+                                "label": "2021"
+                            },
+                            {
+                                "value": "2022",
+                                "label": "2022"
+                            },
+                            {
+                                "value": "2023",
+                                "label": "2023"
+                            },
+                            {
+                                "value": "2024",
+                                "label": "2024"
+                            },
+                            {
+                                "value": "2025",
+                                "label": "2025"
+                            },
+                            {
+                                "value": "2026",
+                                "label": "2026"
+                            },
+                            {
+                                "value": "2027",
+                                "label": "2027"
+                            },
+                            {
+                                "value": "2028",
+                                "label": "2028"
+                            },
+                            {
+                                "value": "2029",
+                                "label": "2029"
+                            },
+                            {
+                                "value": "2030",
+                                "label": "2030"
+                            },
+                            {
+                                "value": "2031",
+                                "label": "2031"
+                            },
+                            {
+                                "value": "2032",
+                                "label": "2032"
+                            }
+                        ],
+                    },
+                    {
+                        "name": "verificationCode",
+                        "type": "integer",
+                        "label": "Verificatiecode"
+                    }
+                ],
+            },
+            {
+                "code": "MASTERCARD",
+                "label": "MasterCard",
+                "method": "CREDIT_CARD",
+                "grouping": "CREDIT_CARD",
+                "registration": "OPTIONAL",
+                "recurrence": "NONE",
+                "redirect": false,
+                "links": {
+                    "logo": "https://resources.integration.oscato.com/resource/network/SPACEITUP/nl_NL/MASTERCARD/logo2x.png",
+                    "self": "https://api.integration.oscato.com/pci/v1/5b993b0e78620501f948f169l72h0h2s3tq8vktj4nf89g48q6/MASTERCARD",
+                    "lang": "https://resources.integration.oscato.com/resource/lang/SPACEITUP/nl_NL/MASTERCARD.properties",
+                    "operation": "https://api.integration.oscato.com/pci/v1/5b993b0e78620501f948f169l72h0h2s3tq8vktj4nf89g48q6/MASTERCARD/charge",
+                    "validation": "https://api.integration.oscato.com/pci/v1/5b993b0e78620501f948f169l72h0h2s3tq8vktj4nf89g48q6/SPACEITUP/nl_NL/MASTERCARD/standard/validate"
+                },
+                "button": "button.charge.label",
+                "selected": false,
+                "localizedInputElements": [
+                    {
+                        "name": "number",
+                        "type": "numeric",
+                        "label": "Kaartnummer"
+                    },
+                    {
+                        "name": "holderName",
+                        "type": "string",
+                        "label": "Naam houder"
+                    },
+                    {
+                        "name": "expiryMonth",
+                        "type": "select",
+                        "label": "Expiry month",
+                        "options": [
+                            {
+                                "value": "01",
+                                "label": "01"
+                            },
+                            {
+                                "value": "02",
+                                "label": "02"
+                            },
+                            {
+                                "value": "03",
+                                "label": "03"
+                            },
+                            {
+                                "value": "04",
+                                "label": "04"
+                            },
+                            {
+                                "value": "05",
+                                "label": "05"
+                            },
+                            {
+                                "value": "06",
+                                "label": "06"
+                            },
+                            {
+                                "value": "07",
+                                "label": "07"
+                            },
+                            {
+                                "value": "08",
+                                "label": "08"
+                            },
+                            {
+                                "value": "09",
+                                "label": "09"
+                            },
+                            {
+                                "value": "10",
+                                "label": "10"
+                            },
+                            {
+                                "value": "11",
+                                "label": "11"
+                            },
+                            {
+                                "value": "12",
+                                "label": "12"
+                            }
+                        ],
+                    },
+                    {
+                        "name": "expiryYear",
+                        "type": "select",
+                        "label": "Expiry year",
+                        "options": [
+                            {
+                                "value": "2018",
+                                "label": "2018"
+                            },
+                            {
+                                "value": "2019",
+                                "label": "2019"
+                            },
+                            {
+                                "value": "2020",
+                                "label": "2020"
+                            },
+                            {
+                                "value": "2021",
+                                "label": "2021"
+                            },
+                            {
+                                "value": "2022",
+                                "label": "2022"
+                            },
+                            {
+                                "value": "2023",
+                                "label": "2023"
+                            },
+                            {
+                                "value": "2024",
+                                "label": "2024"
+                            },
+                            {
+                                "value": "2025",
+                                "label": "2025"
+                            },
+                            {
+                                "value": "2026",
+                                "label": "2026"
+                            },
+                            {
+                                "value": "2027",
+                                "label": "2027"
+                            },
+                            {
+                                "value": "2028",
+                                "label": "2028"
+                            },
+                            {
+                                "value": "2029",
+                                "label": "2029"
+                            },
+                            {
+                                "value": "2030",
+                                "label": "2030"
+                            },
+                            {
+                                "value": "2031",
+                                "label": "2031"
+                            },
+                            {
+                                "value": "2032",
+                                "label": "2032"
+                            }
+                        ],
+                    },
+                    {
+                        "name": "verificationCode",
+                        "type": "integer",
+                        "label": "Verificatiecode"
+                    }
+                ],
+            },
+            {
+                "code": "MISTERCASH",
+                "label": "Bancontact/Mister Cash",
+                "method": "DEBIT_CARD",
+                "grouping": "DEBIT_CARD",
+                "registration": "OPTIONAL",
+                "recurrence": "NONE",
+                "redirect": false,
+                "links": {
+                    "logo": "https://resources.integration.oscato.com/resource/network/SPACEITUP/nl_NL/MISTERCASH/logo2x.png",
+                    "self": "https://api.integration.oscato.com/pci/v1/5b993b0e78620501f948f169l72h0h2s3tq8vktj4nf89g48q6/MISTERCASH",
+                    "lang": "https://resources.integration.oscato.com/resource/lang/SPACEITUP/nl_NL/MISTERCASH.properties",
+                    "operation": "https://api.integration.oscato.com/pci/v1/5b993b0e78620501f948f169l72h0h2s3tq8vktj4nf89g48q6/MISTERCASH/charge",
+                    "validation": "https://api.integration.oscato.com/pci/v1/5b993b0e78620501f948f169l72h0h2s3tq8vktj4nf89g48q6/SPACEITUP/nl_NL/MISTERCASH/standard/validate"
+                },
+                "button": "button.charge.label",
+                "selected": false,
+                "localizedInputElements": [
+                    {
+                        "name": "number",
+                        "type": "numeric",
+                        "label": "Kaartnummer"
+                    },
+                    {
+                        "name": "expiryMonth",
+                        "type": "select",
+                        "label": "Expiry month",
+                        "options": [
+                            {
+                                "value": "01",
+                                "label": "01"
+                            },
+                            {
+                                "value": "02",
+                                "label": "02"
+                            },
+                            {
+                                "value": "03",
+                                "label": "03"
+                            },
+                            {
+                                "value": "04",
+                                "label": "04"
+                            },
+                            {
+                                "value": "05",
+                                "label": "05"
+                            },
+                            {
+                                "value": "06",
+                                "label": "06"
+                            },
+                            {
+                                "value": "07",
+                                "label": "07"
+                            },
+                            {
+                                "value": "08",
+                                "label": "08"
+                            },
+                            {
+                                "value": "09",
+                                "label": "09"
+                            },
+                            {
+                                "value": "10",
+                                "label": "10"
+                            },
+                            {
+                                "value": "11",
+                                "label": "11"
+                            },
+                            {
+                                "value": "12",
+                                "label": "12"
+                            }
+                        ],
+                    },
+                    {
+                        "name": "expiryYear",
+                        "type": "select",
+                        "label": "Expiry year",
+                        "options": [
+                            {
+                                "value": "2018",
+                                "label": "2018"
+                            },
+                            {
+                                "value": "2019",
+                                "label": "2019"
+                            },
+                            {
+                                "value": "2020",
+                                "label": "2020"
+                            },
+                            {
+                                "value": "2021",
+                                "label": "2021"
+                            },
+                            {
+                                "value": "2022",
+                                "label": "2022"
+                            },
+                            {
+                                "value": "2023",
+                                "label": "2023"
+                            },
+                            {
+                                "value": "2024",
+                                "label": "2024"
+                            },
+                            {
+                                "value": "2025",
+                                "label": "2025"
+                            },
+                            {
+                                "value": "2026",
+                                "label": "2026"
+                            },
+                            {
+                                "value": "2027",
+                                "label": "2027"
+                            },
+                            {
+                                "value": "2028",
+                                "label": "2028"
+                            },
+                            {
+                                "value": "2029",
+                                "label": "2029"
+                            },
+                            {
+                                "value": "2030",
+                                "label": "2030"
+                            },
+                            {
+                                "value": "2031",
+                                "label": "2031"
+                            },
+                            {
+                                "value": "2032",
+                                "label": "2032"
+                            }
+                        ],
+                    }
+                ],
+            },
+            {
+                "code": "MISTERCASH-R",
+                "label": "Bancontact/Mister Cash",
+                "method": "DEBIT_CARD",
+                "grouping": "DEBIT_CARD",
+                "registration": "OPTIONAL",
+                "recurrence": "NONE",
+                "redirect": true,
+                "links": {
+                    "logo": "https://resources.integration.oscato.com/resource/network/SPACEITUP/nl_NL/MISTERCASH-R/logo2x.png",
+                    "self": "https://api.integration.oscato.com/pci/v1/5b993b0e78620501f948f169l72h0h2s3tq8vktj4nf89g48q6/MISTERCASH-R",
+                    "lang": "https://resources.integration.oscato.com/resource/lang/SPACEITUP/nl_NL/MISTERCASH-R.properties",
+                    "operation": "https://api.integration.oscato.com/pci/v1/5b993b0e78620501f948f169l72h0h2s3tq8vktj4nf89g48q6/MISTERCASH-R/charge",
+                    "validation": "https://api.integration.oscato.com/pci/v1/5b993b0e78620501f948f169l72h0h2s3tq8vktj4nf89g48q6/SPACEITUP/nl_NL/MISTERCASH-R/standard/validate"
+                },
+                "button": "button.charge.label",
+                "selected": false
+            },
+            {
+                "code": "PAYFAST",
+                "label": "PayFast",
+                "method": "WALLET",
+                "grouping": "WALLET",
+                "registration": "NONE",
+                "recurrence": "NONE",
+                "redirect": true,
+                "links": {
+                    "logo": "https://resources.integration.oscato.com/resource/network/SPACEITUP/nl_NL/PAYFAST/logo2x.png",
+                    "self": "https://api.integration.oscato.com/pci/v1/5b993b0e78620501f948f169l72h0h2s3tq8vktj4nf89g48q6/PAYFAST",
+                    "lang": "https://resources.integration.oscato.com/resource/lang/SPACEITUP/nl_NL/PAYFAST.properties",
+                    "operation": "https://api.integration.oscato.com/pci/v1/5b993b0e78620501f948f169l72h0h2s3tq8vktj4nf89g48q6/PAYFAST/charge",
+                    "validation": "https://api.integration.oscato.com/pci/v1/5b993b0e78620501f948f169l72h0h2s3tq8vktj4nf89g48q6/SPACEITUP/nl_NL/PAYFAST/standard/validate"
+                },
+                "button": "button.charge.label",
+                "selected": false
+            },
+            {
+                "code": "POSTEPAY",
+                "label": "PostePay",
+                "method": "DEBIT_CARD",
+                "grouping": "DEBIT_CARD",
+                "registration": "OPTIONAL",
+                "recurrence": "NONE",
+                "redirect": false,
+                "links": {
+                    "logo": "https://resources.integration.oscato.com/resource/network/SPACEITUP/nl_NL/POSTEPAY/logo2x.png",
+                    "self": "https://api.integration.oscato.com/pci/v1/5b993b0e78620501f948f169l72h0h2s3tq8vktj4nf89g48q6/POSTEPAY",
+                    "lang": "https://resources.integration.oscato.com/resource/lang/SPACEITUP/nl_NL/POSTEPAY.properties",
+                    "operation": "https://api.integration.oscato.com/pci/v1/5b993b0e78620501f948f169l72h0h2s3tq8vktj4nf89g48q6/POSTEPAY/charge",
+                    "validation": "https://api.integration.oscato.com/pci/v1/5b993b0e78620501f948f169l72h0h2s3tq8vktj4nf89g48q6/SPACEITUP/nl_NL/POSTEPAY/standard/validate"
+                },
+                "button": "button.charge.label",
+                "selected": false,
+                "localizedInputElements": [
+                    {
+                        "name": "number",
+                        "type": "numeric",
+                        "label": "Kaartnummer"
+                    },
+                    {
+                        "name": "holderName",
+                        "type": "string",
+                        "label": "Naam houder"
+                    },
+                    {
+                        "name": "expiryMonth",
+                        "type": "select",
+                        "label": "Expiry month",
+                        "options": [
+                            {
+                                "value": "01",
+                                "label": "01"
+                            },
+                            {
+                                "value": "02",
+                                "label": "02"
+                            },
+                            {
+                                "value": "03",
+                                "label": "03"
+                            },
+                            {
+                                "value": "04",
+                                "label": "04"
+                            },
+                            {
+                                "value": "05",
+                                "label": "05"
+                            },
+                            {
+                                "value": "06",
+                                "label": "06"
+                            },
+                            {
+                                "value": "07",
+                                "label": "07"
+                            },
+                            {
+                                "value": "08",
+                                "label": "08"
+                            },
+                            {
+                                "value": "09",
+                                "label": "09"
+                            },
+                            {
+                                "value": "10",
+                                "label": "10"
+                            },
+                            {
+                                "value": "11",
+                                "label": "11"
+                            },
+                            {
+                                "value": "12",
+                                "label": "12"
+                            }
+                        ],
+                    },
+                    {
+                        "name": "expiryYear",
+                        "type": "select",
+                        "label": "Expiry year",
+                        "options": [
+                            {
+                                "value": "2018",
+                                "label": "2018"
+                            },
+                            {
+                                "value": "2019",
+                                "label": "2019"
+                            },
+                            {
+                                "value": "2020",
+                                "label": "2020"
+                            },
+                            {
+                                "value": "2021",
+                                "label": "2021"
+                            },
+                            {
+                                "value": "2022",
+                                "label": "2022"
+                            },
+                            {
+                                "value": "2023",
+                                "label": "2023"
+                            },
+                            {
+                                "value": "2024",
+                                "label": "2024"
+                            },
+                            {
+                                "value": "2025",
+                                "label": "2025"
+                            },
+                            {
+                                "value": "2026",
+                                "label": "2026"
+                            },
+                            {
+                                "value": "2027",
+                                "label": "2027"
+                            },
+                            {
+                                "value": "2028",
+                                "label": "2028"
+                            },
+                            {
+                                "value": "2029",
+                                "label": "2029"
+                            },
+                            {
+                                "value": "2030",
+                                "label": "2030"
+                            },
+                            {
+                                "value": "2031",
+                                "label": "2031"
+                            },
+                            {
+                                "value": "2032",
+                                "label": "2032"
+                            }
+                        ],
+                    },
+                    {
+                        "name": "verificationCode",
+                        "type": "integer",
+                        "label": "Verificatiecode"
+                    }
+                ],
+            },
+            {
+                "code": "PRZELEW24",
+                "label": "Przelew24 (BZWBK)",
+                "method": "ONLINE_BANK_TRANSFER",
+                "grouping": "ONLINE_BANK_TRANSFER",
+                "registration": "NONE",
+                "recurrence": "NONE",
+                "redirect": true,
+                "links": {
+                    "logo": "https://resources.integration.oscato.com/resource/network/SPACEITUP/nl_NL/PRZELEW24/logo2x.png",
+                    "self": "https://api.integration.oscato.com/pci/v1/5b993b0e78620501f948f169l72h0h2s3tq8vktj4nf89g48q6/PRZELEW24",
+                    "lang": "https://resources.integration.oscato.com/resource/lang/SPACEITUP/nl_NL/PRZELEW24.properties",
+                    "operation": "https://api.integration.oscato.com/pci/v1/5b993b0e78620501f948f169l72h0h2s3tq8vktj4nf89g48q6/PRZELEW24/charge",
+                    "validation": "https://api.integration.oscato.com/pci/v1/5b993b0e78620501f948f169l72h0h2s3tq8vktj4nf89g48q6/SPACEITUP/nl_NL/PRZELEW24/standard/validate"
+                },
+                "button": "button.charge.label",
+                "selected": false
+            },
+            {
+                "code": "RATEPAY",
+                "label": "RatePAY Invoice",
+                "method": "OPEN_INVOICE",
+                "grouping": "OPEN_INVOICE",
+                "registration": "NONE",
+                "recurrence": "NONE",
+                "redirect": false,
+                "links": {
+                    "logo": "https://resources.integration.oscato.com/resource/network/SPACEITUP/nl_NL/RATEPAY/logo2x.png",
+                    "self": "https://api.integration.oscato.com/pci/v1/5b993b0e78620501f948f169l72h0h2s3tq8vktj4nf89g48q6/RATEPAY",
+                    "lang": "https://resources.integration.oscato.com/resource/lang/SPACEITUP/nl_NL/RATEPAY.properties",
+                    "operation": "https://api.integration.oscato.com/pci/v1/5b993b0e78620501f948f169l72h0h2s3tq8vktj4nf89g48q6/RATEPAY/charge",
+                    "validation": "https://api.integration.oscato.com/pci/v1/5b993b0e78620501f948f169l72h0h2s3tq8vktj4nf89g48q6/SPACEITUP/nl_NL/RATEPAY/standard/validate"
+                },
+                "button": "button.charge.label",
+                "selected": false
+            },
+            {
+                "code": "SOFORTUEBERWEISUNG",
+                "label": "Sofort.",
+                "method": "ONLINE_BANK_TRANSFER",
+                "grouping": "ONLINE_BANK_TRANSFER",
+                "registration": "NONE",
+                "recurrence": "NONE",
+                "redirect": true,
+                "links": {
+                    "logo": "https://resources.integration.oscato.com/resource/network/SPACEITUP/nl_NL/SOFORTUEBERWEISUNG/logo2x.png",
+                    "self": "https://api.integration.oscato.com/pci/v1/5b993b0e78620501f948f169l72h0h2s3tq8vktj4nf89g48q6/SOFORTUEBERWEISUNG",
+                    "lang": "https://resources.integration.oscato.com/resource/lang/SPACEITUP/nl_NL/SOFORTUEBERWEISUNG.properties",
+                    "operation": "https://api.integration.oscato.com/pci/v1/5b993b0e78620501f948f169l72h0h2s3tq8vktj4nf89g48q6/SOFORTUEBERWEISUNG/charge",
+                    "validation": "https://api.integration.oscato.com/pci/v1/5b993b0e78620501f948f169l72h0h2s3tq8vktj4nf89g48q6/SPACEITUP/nl_NL/SOFORTUEBERWEISUNG/standard/validate"
+                },
+                "button": "button.charge.label",
+                "selected": false
+            },
+            {
+                "code": "TRUSTPAY_ONLINE",
+                "label": "TrustPay",
+                "method": "ONLINE_BANK_TRANSFER",
+                "grouping": "ONLINE_BANK_TRANSFER",
+                "registration": "NONE",
+                "recurrence": "NONE",
+                "redirect": true,
+                "links": {
+                    "logo": "https://resources.integration.oscato.com/resource/network/SPACEITUP/nl_NL/TRUSTPAY_ONLINE/logo2x.png",
+                    "self": "https://api.integration.oscato.com/pci/v1/5b993b0e78620501f948f169l72h0h2s3tq8vktj4nf89g48q6/TRUSTPAY_ONLINE",
+                    "lang": "https://resources.integration.oscato.com/resource/lang/SPACEITUP/nl_NL/TRUSTPAY_ONLINE.properties",
+                    "operation": "https://api.integration.oscato.com/pci/v1/5b993b0e78620501f948f169l72h0h2s3tq8vktj4nf89g48q6/TRUSTPAY_ONLINE/charge",
+                    "validation": "https://api.integration.oscato.com/pci/v1/5b993b0e78620501f948f169l72h0h2s3tq8vktj4nf89g48q6/SPACEITUP/nl_NL/TRUSTPAY_ONLINE/standard/validate"
+                },
+                "button": "button.charge.label",
+                "selected": false
+            },
+            {
+                "code": "UNIONPAY",
+                "label": "UnionPay",
+                "method": "CREDIT_CARD",
+                "grouping": "CREDIT_CARD",
+                "registration": "OPTIONAL",
+                "recurrence": "NONE",
+                "redirect": false,
+                "links": {
+                    "logo": "https://resources.integration.oscato.com/resource/network/SPACEITUP/nl_NL/UNIONPAY/logo2x.png",
+                    "self": "https://api.integration.oscato.com/pci/v1/5b993b0e78620501f948f169l72h0h2s3tq8vktj4nf89g48q6/UNIONPAY",
+                    "lang": "https://resources.integration.oscato.com/resource/lang/SPACEITUP/nl_NL/UNIONPAY.properties",
+                    "operation": "https://api.integration.oscato.com/pci/v1/5b993b0e78620501f948f169l72h0h2s3tq8vktj4nf89g48q6/UNIONPAY/charge",
+                    "validation": "https://api.integration.oscato.com/pci/v1/5b993b0e78620501f948f169l72h0h2s3tq8vktj4nf89g48q6/SPACEITUP/nl_NL/UNIONPAY/standard/validate"
+                },
+                "button": "button.charge.label",
+                "selected": false,
+                "localizedInputElements": [
+                    {
+                        "name": "number",
+                        "type": "numeric",
+                        "label": "Kaartnummer"
+                    },
+                    {
+                        "name": "holderName",
+                        "type": "string",
+                        "label": "Naam houder"
+                    },
+                    {
+                        "name": "expiryMonth",
+                        "type": "select",
+                        "label": "Expiry month",
+                        "options": [
+                            {
+                                "value": "01",
+                                "label": "01"
+                            },
+                            {
+                                "value": "02",
+                                "label": "02"
+                            },
+                            {
+                                "value": "03",
+                                "label": "03"
+                            },
+                            {
+                                "value": "04",
+                                "label": "04"
+                            },
+                            {
+                                "value": "05",
+                                "label": "05"
+                            },
+                            {
+                                "value": "06",
+                                "label": "06"
+                            },
+                            {
+                                "value": "07",
+                                "label": "07"
+                            },
+                            {
+                                "value": "08",
+                                "label": "08"
+                            },
+                            {
+                                "value": "09",
+                                "label": "09"
+                            },
+                            {
+                                "value": "10",
+                                "label": "10"
+                            },
+                            {
+                                "value": "11",
+                                "label": "11"
+                            },
+                            {
+                                "value": "12",
+                                "label": "12"
+                            }
+                        ],
+                    },
+                    {
+                        "name": "expiryYear",
+                        "type": "select",
+                        "label": "Expiry year",
+                        "options": [
+                            {
+                                "value": "2018",
+                                "label": "2018"
+                            },
+                            {
+                                "value": "2019",
+                                "label": "2019"
+                            },
+                            {
+                                "value": "2020",
+                                "label": "2020"
+                            },
+                            {
+                                "value": "2021",
+                                "label": "2021"
+                            },
+                            {
+                                "value": "2022",
+                                "label": "2022"
+                            },
+                            {
+                                "value": "2023",
+                                "label": "2023"
+                            },
+                            {
+                                "value": "2024",
+                                "label": "2024"
+                            },
+                            {
+                                "value": "2025",
+                                "label": "2025"
+                            },
+                            {
+                                "value": "2026",
+                                "label": "2026"
+                            },
+                            {
+                                "value": "2027",
+                                "label": "2027"
+                            },
+                            {
+                                "value": "2028",
+                                "label": "2028"
+                            },
+                            {
+                                "value": "2029",
+                                "label": "2029"
+                            },
+                            {
+                                "value": "2030",
+                                "label": "2030"
+                            },
+                            {
+                                "value": "2031",
+                                "label": "2031"
+                            },
+                            {
+                                "value": "2032",
+                                "label": "2032"
+                            }
+                        ],
+                    },
+                    {
+                        "name": "verificationCode",
+                        "type": "integer",
+                        "label": "Verificatiecode"
+                    }
+                ],
+            },
+            {
+                "code": "UNIONPAY-R",
+                "label": "UnionPay",
+                "method": "CREDIT_CARD",
+                "grouping": "CREDIT_CARD",
+                "registration": "OPTIONAL",
+                "recurrence": "NONE",
+                "redirect": true,
+                "links": {
+                    "logo": "https://resources.integration.oscato.com/resource/network/SPACEITUP/nl_NL/UNIONPAY-R/logo2x.png",
+                    "self": "https://api.integration.oscato.com/pci/v1/5b993b0e78620501f948f169l72h0h2s3tq8vktj4nf89g48q6/UNIONPAY-R",
+                    "lang": "https://resources.integration.oscato.com/resource/lang/SPACEITUP/nl_NL/UNIONPAY-R.properties",
+                    "operation": "https://api.integration.oscato.com/pci/v1/5b993b0e78620501f948f169l72h0h2s3tq8vktj4nf89g48q6/UNIONPAY-R/charge",
+                    "validation": "https://api.integration.oscato.com/pci/v1/5b993b0e78620501f948f169l72h0h2s3tq8vktj4nf89g48q6/SPACEITUP/nl_NL/UNIONPAY-R/standard/validate"
+                },
+                "button": "button.charge.label",
+                "selected": false
+            },
+            {
+                "code": "VISA",
+                "label": "Visa",
+                "method": "CREDIT_CARD",
+                "grouping": "CREDIT_CARD",
+                "registration": "OPTIONAL",
+                "recurrence": "NONE",
+                "redirect": false,
+                "links": {
+                    "logo": "https://resources.integration.oscato.com/resource/network/SPACEITUP/nl_NL/VISA/logo2x.png",
+                    "self": "https://api.integration.oscato.com/pci/v1/5b993b0e78620501f948f169l72h0h2s3tq8vktj4nf89g48q6/VISA",
+                    "lang": "https://resources.integration.oscato.com/resource/lang/SPACEITUP/nl_NL/VISA.properties",
+                    "operation": "https://api.integration.oscato.com/pci/v1/5b993b0e78620501f948f169l72h0h2s3tq8vktj4nf89g48q6/VISA/charge",
+                    "validation": "https://api.integration.oscato.com/pci/v1/5b993b0e78620501f948f169l72h0h2s3tq8vktj4nf89g48q6/SPACEITUP/nl_NL/VISA/standard/validate"
+                },
+                "button": "button.charge.label",
+                "selected": false,
+                "localizedInputElements": [
+                    {
+                        "name": "number",
+                        "type": "numeric",
+                        "label": "Kaartnummer"
+                    },
+                    {
+                        "name": "holderName",
+                        "type": "string",
+                        "label": "Naam houder"
+                    },
+                    {
+                        "name": "expiryMonth",
+                        "type": "select",
+                        "label": "Expiry month",
+                        "options": [
+                            {
+                                "value": "01",
+                                "label": "01"
+                            },
+                            {
+                                "value": "02",
+                                "label": "02"
+                            },
+                            {
+                                "value": "03",
+                                "label": "03"
+                            },
+                            {
+                                "value": "04",
+                                "label": "04"
+                            },
+                            {
+                                "value": "05",
+                                "label": "05"
+                            },
+                            {
+                                "value": "06",
+                                "label": "06"
+                            },
+                            {
+                                "value": "07",
+                                "label": "07"
+                            },
+                            {
+                                "value": "08",
+                                "label": "08"
+                            },
+                            {
+                                "value": "09",
+                                "label": "09"
+                            },
+                            {
+                                "value": "10",
+                                "label": "10"
+                            },
+                            {
+                                "value": "11",
+                                "label": "11"
+                            },
+                            {
+                                "value": "12",
+                                "label": "12"
+                            }
+                        ],
+                    },
+                    {
+                        "name": "expiryYear",
+                        "type": "select",
+                        "label": "Expiry year",
+                        "options": [
+                            {
+                                "value": "2018",
+                                "label": "2018"
+                            },
+                            {
+                                "value": "2019",
+                                "label": "2019"
+                            },
+                            {
+                                "value": "2020",
+                                "label": "2020"
+                            },
+                            {
+                                "value": "2021",
+                                "label": "2021"
+                            },
+                            {
+                                "value": "2022",
+                                "label": "2022"
+                            },
+                            {
+                                "value": "2023",
+                                "label": "2023"
+                            },
+                            {
+                                "value": "2024",
+                                "label": "2024"
+                            },
+                            {
+                                "value": "2025",
+                                "label": "2025"
+                            },
+                            {
+                                "value": "2026",
+                                "label": "2026"
+                            },
+                            {
+                                "value": "2027",
+                                "label": "2027"
+                            },
+                            {
+                                "value": "2028",
+                                "label": "2028"
+                            },
+                            {
+                                "value": "2029",
+                                "label": "2029"
+                            },
+                            {
+                                "value": "2030",
+                                "label": "2030"
+                            },
+                            {
+                                "value": "2031",
+                                "label": "2031"
+                            },
+                            {
+                                "value": "2032",
+                                "label": "2032"
+                            }
+                        ],
+                    },
+                    {
+                        "name": "verificationCode",
+                        "type": "integer",
+                        "label": "Verificatiecode"
+                    }
+                ],
+            },
+            {
+                "code": "VISAELECTRON",
+                "label": "Visa Electron",
+                "method": "DEBIT_CARD",
+                "grouping": "DEBIT_CARD",
+                "registration": "OPTIONAL",
+                "recurrence": "NONE",
+                "redirect": false,
+                "links": {
+                    "logo": "https://resources.integration.oscato.com/resource/network/SPACEITUP/nl_NL/VISAELECTRON/logo2x.png",
+                    "self": "https://api.integration.oscato.com/pci/v1/5b993b0e78620501f948f169l72h0h2s3tq8vktj4nf89g48q6/VISAELECTRON",
+                    "lang": "https://resources.integration.oscato.com/resource/lang/SPACEITUP/nl_NL/VISAELECTRON.properties",
+                    "operation": "https://api.integration.oscato.com/pci/v1/5b993b0e78620501f948f169l72h0h2s3tq8vktj4nf89g48q6/VISAELECTRON/charge",
+                    "validation": "https://api.integration.oscato.com/pci/v1/5b993b0e78620501f948f169l72h0h2s3tq8vktj4nf89g48q6/SPACEITUP/nl_NL/VISAELECTRON/standard/validate"
+                },
+                "button": "button.charge.label",
+                "selected": false,
+                "localizedInputElements": [
+                    {
+                        "name": "number",
+                        "type": "numeric",
+                        "label": "Kaartnummer"
+                    },
+                    {
+                        "name": "holderName",
+                        "type": "string",
+                        "label": "Naam houder"
+                    },
+                    {
+                        "name": "expiryMonth",
+                        "type": "select",
+                        "label": "Expiry month",
+                        "options": [
+                            {
+                                "value": "01",
+                                "label": "01"
+                            },
+                            {
+                                "value": "02",
+                                "label": "02"
+                            },
+                            {
+                                "value": "03",
+                                "label": "03"
+                            },
+                            {
+                                "value": "04",
+                                "label": "04"
+                            },
+                            {
+                                "value": "05",
+                                "label": "05"
+                            },
+                            {
+                                "value": "06",
+                                "label": "06"
+                            },
+                            {
+                                "value": "07",
+                                "label": "07"
+                            },
+                            {
+                                "value": "08",
+                                "label": "08"
+                            },
+                            {
+                                "value": "09",
+                                "label": "09"
+                            },
+                            {
+                                "value": "10",
+                                "label": "10"
+                            },
+                            {
+                                "value": "11",
+                                "label": "11"
+                            },
+                            {
+                                "value": "12",
+                                "label": "12"
+                            }
+                        ],
+                    },
+                    {
+                        "name": "expiryYear",
+                        "type": "select",
+                        "label": "Expiry year",
+                        "options": [
+                            {
+                                "value": "2018",
+                                "label": "2018"
+                            },
+                            {
+                                "value": "2019",
+                                "label": "2019"
+                            },
+                            {
+                                "value": "2020",
+                                "label": "2020"
+                            },
+                            {
+                                "value": "2021",
+                                "label": "2021"
+                            },
+                            {
+                                "value": "2022",
+                                "label": "2022"
+                            },
+                            {
+                                "value": "2023",
+                                "label": "2023"
+                            },
+                            {
+                                "value": "2024",
+                                "label": "2024"
+                            },
+                            {
+                                "value": "2025",
+                                "label": "2025"
+                            },
+                            {
+                                "value": "2026",
+                                "label": "2026"
+                            },
+                            {
+                                "value": "2027",
+                                "label": "2027"
+                            },
+                            {
+                                "value": "2028",
+                                "label": "2028"
+                            },
+                            {
+                                "value": "2029",
+                                "label": "2029"
+                            },
+                            {
+                                "value": "2030",
+                                "label": "2030"
+                            },
+                            {
+                                "value": "2031",
+                                "label": "2031"
+                            },
+                            {
+                                "value": "2032",
+                                "label": "2032"
+                            }
+                        ],
+                    },
+                    {
+                        "name": "verificationCode",
+                        "type": "integer",
+                        "label": "Verificatiecode"
+                    }
+                ],
+            },
+            {
+                "code": "VISA_DANKORT",
+                "label": "Visa Dankort",
+                "method": "DEBIT_CARD",
+                "grouping": "DEBIT_CARD",
+                "registration": "OPTIONAL",
+                "recurrence": "NONE",
+                "redirect": false,
+                "links": {
+                    "logo": "https://resources.integration.oscato.com/resource/network/SPACEITUP/nl_NL/VISA_DANKORT/logo2x.png",
+                    "self": "https://api.integration.oscato.com/pci/v1/5b993b0e78620501f948f169l72h0h2s3tq8vktj4nf89g48q6/VISA_DANKORT",
+                    "lang": "https://resources.integration.oscato.com/resource/lang/SPACEITUP/nl_NL/VISA_DANKORT.properties",
+                    "operation": "https://api.integration.oscato.com/pci/v1/5b993b0e78620501f948f169l72h0h2s3tq8vktj4nf89g48q6/VISA_DANKORT/charge",
+                    "validation": "https://api.integration.oscato.com/pci/v1/5b993b0e78620501f948f169l72h0h2s3tq8vktj4nf89g48q6/SPACEITUP/nl_NL/VISA_DANKORT/standard/validate"
+                },
+                "button": "button.charge.label",
+                "selected": false,
+                "localizedInputElements": [
+                    {
+                        "name": "number",
+                        "type": "numeric",
+                        "label": "Card Number"
+                    },
+                    {
+                        "name": "holderName",
+                        "type": "string",
+                        "label": "Holder Name"
+                    },
+                    {
+                        "name": "expiryMonth",
+                        "type": "select",
+                        "label": "Expiry month",
+                        "options": [
+                            {
+                                "value": "01",
+                                "label": "01"
+                            },
+                            {
+                                "value": "02",
+                                "label": "02"
+                            },
+                            {
+                                "value": "03",
+                                "label": "03"
+                            },
+                            {
+                                "value": "04",
+                                "label": "04"
+                            },
+                            {
+                                "value": "05",
+                                "label": "05"
+                            },
+                            {
+                                "value": "06",
+                                "label": "06"
+                            },
+                            {
+                                "value": "07",
+                                "label": "07"
+                            },
+                            {
+                                "value": "08",
+                                "label": "08"
+                            },
+                            {
+                                "value": "09",
+                                "label": "09"
+                            },
+                            {
+                                "value": "10",
+                                "label": "10"
+                            },
+                            {
+                                "value": "11",
+                                "label": "11"
+                            },
+                            {
+                                "value": "12",
+                                "label": "12"
+                            }
+                        ],
+                    },
+                    {
+                        "name": "expiryYear",
+                        "type": "select",
+                        "label": "Expiry year",
+                        "options": [
+                            {
+                                "value": "2018",
+                                "label": "2018"
+                            },
+                            {
+                                "value": "2019",
+                                "label": "2019"
+                            },
+                            {
+                                "value": "2020",
+                                "label": "2020"
+                            },
+                            {
+                                "value": "2021",
+                                "label": "2021"
+                            },
+                            {
+                                "value": "2022",
+                                "label": "2022"
+                            },
+                            {
+                                "value": "2023",
+                                "label": "2023"
+                            },
+                            {
+                                "value": "2024",
+                                "label": "2024"
+                            },
+                            {
+                                "value": "2025",
+                                "label": "2025"
+                            },
+                            {
+                                "value": "2026",
+                                "label": "2026"
+                            },
+                            {
+                                "value": "2027",
+                                "label": "2027"
+                            },
+                            {
+                                "value": "2028",
+                                "label": "2028"
+                            },
+                            {
+                                "value": "2029",
+                                "label": "2029"
+                            },
+                            {
+                                "value": "2030",
+                                "label": "2030"
+                            },
+                            {
+                                "value": "2031",
+                                "label": "2031"
+                            },
+                            {
+                                "value": "2032",
+                                "label": "2032"
+                            }
+                        ],
+                    },
+                    {
+                        "name": "verificationCode",
+                        "type": "integer",
+                        "label": "Verification Code"
+                    }
+                ],
+            },
+            {
+                "code": "VORKASSE",
+                "label": "Prepayment",
+                "method": "BANK_TRANSFER",
+                "grouping": "BANK_TRANSFER",
+                "registration": "NONE",
+                "recurrence": "NONE",
+                "redirect": false,
+                "links": {
+                    "logo": "https://resources.integration.oscato.com/resource/network/SPACEITUP/nl_NL/VORKASSE/logo2x.png",
+                    "self": "https://api.integration.oscato.com/pci/v1/5b993b0e78620501f948f169l72h0h2s3tq8vktj4nf89g48q6/VORKASSE",
+                    "lang": "https://resources.integration.oscato.com/resource/lang/SPACEITUP/nl_NL/VORKASSE.properties",
+                    "operation": "https://api.integration.oscato.com/pci/v1/5b993b0e78620501f948f169l72h0h2s3tq8vktj4nf89g48q6/VORKASSE/charge",
+                    "validation": "https://api.integration.oscato.com/pci/v1/5b993b0e78620501f948f169l72h0h2s3tq8vktj4nf89g48q6/SPACEITUP/nl_NL/VORKASSE/standard/validate"
+                },
+                "button": "button.charge.label",
+                "selected": false
+            }
+        ],
+    },
+    "operationType": "CHARGE"
+}

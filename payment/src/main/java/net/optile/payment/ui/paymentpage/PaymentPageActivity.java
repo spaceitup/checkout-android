@@ -9,7 +9,7 @@
  * has been received in full.
  */
 
-package net.optile.payment.ui.internal;
+package net.optile.payment.ui.paymentpage;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;

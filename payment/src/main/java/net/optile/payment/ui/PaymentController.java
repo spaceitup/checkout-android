@@ -19,7 +19,7 @@ import android.app.Activity;
 import android.util.Patterns;
 import android.text.TextUtils;
 
-import net.optile.payment.ui.internal.PaymentPageActivity;
+import net.optile.payment.ui.paymentpage.PaymentPageActivity;
 
 /**
  * The PaymentController

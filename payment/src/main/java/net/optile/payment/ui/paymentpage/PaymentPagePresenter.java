@@ -9,7 +9,7 @@
  * has been received in full.
  */
 
-package net.optile.payment.ui.internal;
+package net.optile.payment.ui.paymentpage;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -58,10 +58,6 @@ final class PaymentPagePresenter {
      */
     public void onStart(String listUrl) {
         this.started = true;
-        
-        if (!listUrl.equals(this.listUrl)) {
-            // REMIND: clear the previously loaded ListResult and clear all list elements
-        }
         this.listUrl = listUrl;
     }
 }
