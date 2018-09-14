@@ -22,6 +22,13 @@ public interface CheckoutView {
      * @return true when active, false otherwise
      */
     boolean isActive();
+
+    /** 
+     * Open the PaymentPage for the provided listUrl
+     * 
+     * @param listUrl the current listUrl
+     */
+    void openPaymentPage(String listUrl);
 }
 
 

@@ -43,11 +43,14 @@ public final class PaymentUtils {
             BufferedReader br = new BufferedReader(isr)) {
 
             while ((line = br.readLine()) != null) {
-                sb.append(line.trim());
+                sb.append(line);
             }
         } catch (IOException e) {
             Log.wtf(TAG, e);
         }
+        Log.i(TAG, "rad: " + sb.length());
         return sb.toString();
     }
+
+    
 }

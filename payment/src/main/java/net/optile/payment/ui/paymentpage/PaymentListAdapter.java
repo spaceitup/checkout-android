@@ -64,10 +64,9 @@ class PaymentListAdapter extends RecyclerView.Adapter<PaymentListViewHolder> {
      */
     @Override
     public PaymentListViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-
         Context context = parent.getContext();
         LayoutInflater inflater = LayoutInflater.from(context);
-        View view = inflater.inflate(R.layout.listitem_paymentpage, parent, false);
+        View view = inflater.inflate(R.layout.list_item_paymentpage, parent, false);
         return new PaymentListViewHolder(view);
     }
 
@@ -77,6 +76,7 @@ class PaymentListAdapter extends RecyclerView.Adapter<PaymentListViewHolder> {
     @Override
     public void onBindViewHolder(PaymentListViewHolder holder, int position) {
         PaymentListItem item = items.get(position);
+        // Fill the ViewHolder with information
     }
 
     /**

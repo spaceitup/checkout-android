@@ -19,20 +19,17 @@ import java.util.List;
  */
 final class PaymentListItem {
 
-    /** The list of networks presented in this item */
     List<ApplicableNetwork> networks;
 
-    /** The type of this item */
     int type;
     
-    /** The currently selected network in this item */
     int index;
 
     /** 
-     * Construct a PaymentListItem
+     * Construct a new PaymentListItem
      *
-     * @param type the type of this PaymentListItem
-     * @param 
+     * @param type     the type of this PaymentListItem
+     * @param networks the list of networks combined in this list item
      */
     PaymentListItem(int type, List<ApplicableNetwork> networks) {
         this.type = type;

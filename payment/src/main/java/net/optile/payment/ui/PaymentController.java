@@ -11,6 +11,8 @@
 
 package net.optile.payment.ui;
 
+import android.util.Log;
+
 import java.net.URL;
 import java.net.MalformedURLException;
 
@@ -26,6 +28,8 @@ import net.optile.payment.ui.paymentpage.PaymentPageActivity;
  */
 public final class PaymentController {
 
+    private final static String TAG = "payment_PaymentController";
+    
     /** The url pointing to the current list */
     private String listUrl;
     

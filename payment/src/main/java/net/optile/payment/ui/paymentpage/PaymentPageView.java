@@ -11,6 +11,8 @@
 
 package net.optile.payment.ui.paymentpage;
 
+import android.content.Context;
+
 /**
  * The PaymentPage View interface that the View part of the MVP should implement
  */
@@ -22,4 +24,11 @@ public interface PaymentPageView {
      * @return true when active, false otherwise 
      */
     boolean isActive();
+
+    /** 
+     * Get the Context from this view
+     * 
+     * @return context 
+     */
+    Context getContext2();
 }

@@ -1,6 +1,6 @@
 <resources>
     <string name="app_name">PaymentExample</string>
-    <string name="checkout_title">Checkout</string>
+    <string name="title_checkout">My Shopping Cart</string>
+    <string name="button_checkout">Continue to Pay</string>    
     <string name="url">https://api.integration.oscato.com</string>
-    
 </resources>

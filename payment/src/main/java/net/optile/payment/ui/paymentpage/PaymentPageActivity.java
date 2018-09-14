@@ -11,6 +11,7 @@
 
 package net.optile.payment.ui.paymentpage;
 
+import android.util.Log;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -60,7 +61,7 @@ public final class PaymentPageActivity extends AppCompatActivity implements Paym
     @Override
     protected void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
+        
         if (savedInstanceState != null && savedInstanceState.containsKey(EXTRA_LISTURL)) {
             this.listUrl = savedInstanceState.getString(EXTRA_LISTURL);
             this.theme = savedInstanceState.getParcelable(EXTRA_PAYMENTTHEME);
@@ -106,12 +107,19 @@ public final class PaymentPageActivity extends AppCompatActivity implements Paym
         presenter.onStart(this.listUrl);
     }
 
-    /** 
-     * Is this view currently active
-     * 
-     * @return true when active, false otherwise
+    /**
+     * {@inheritDoc}
      */
+    @Override
     public boolean isActive() {
         return this.active;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public Context getContext2() {
+        return this;
     }
 }

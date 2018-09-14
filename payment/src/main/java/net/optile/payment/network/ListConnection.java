@@ -27,6 +27,7 @@ import com.google.gson.JsonParseException;
 import android.net.Uri;
 import android.text.TextUtils;
 import net.optile.payment.model.ListResult;
+import net.optile.payment.util.PaymentUtils;
 
 /**
  * Class implementing the communication with the List payment API
@@ -120,16 +121,16 @@ public final class ListConnection extends BaseConnection {
      * @return the NetworkResponse containing either an error or the ListResult
      * @throws NetworkException the network exception
      */
-    public ListResult getListResult(final URL url) throws NetworkException {
+    public ListResult getListResult(final String url) throws NetworkException {
         final String source = "ListConnection[getListResult]";
 
-        if (url == null) {
+        if (TextUtils.isEmpty(url)) {
             throw new IllegalArgumentException(source + " - url cannot be null or empty");
         }
 
         HttpURLConnection conn = null;
         try {
-            final String requestUrl = Uri.parse(url.toString()).buildUpon()
+            final String requestUrl = Uri.parse(url).buildUpon()
                 .appendQueryParameter(URI_PARAM_VIEW, VALUE_VIEW)
                 .build().toString();
 

@@ -18,16 +18,13 @@ import java.util.concurrent.Callable;
 
 import android.content.Context;
 import android.util.Log;
+
 import net.optile.example.R;
 import net.optile.payment.util.PaymentUtils;
-import net.optile.payment.model.ApplicableNetwork;
 import net.optile.payment.model.ListResult;
-import net.optile.payment.model.OperationResult;
-import net.optile.payment.model.Redirect;
-import net.optile.payment.model.HttpMethod;
-import net.optile.payment.network.ChargeConnection;
 import net.optile.payment.network.ListConnection;
 import net.optile.payment.network.NetworkException;
+
 import rx.Single;
 import rx.SingleSubscriber;
 import rx.Subscription;
@@ -68,47 +65,43 @@ final class CheckoutPresenter {
     }
 
     /**
-     * Is this presenter currently making a new list request
+     * Is this presenter currently creating a new payment session
      *
      * @return true when active, false otherwise
      */
-    boolean isCreateListSessionActive() {
+    boolean isCreatePaymentSessionActive() {
         return subscription != null && !subscription.isUnsubscribed();
     }
 
     /**
-     * Initiate a checkout request in the mobile app.
+     * Start the payment session
      *
      * @param context The context needed to obtain system resources
      */
-    void checkout(final Context context) {
+    void startPaymentSession(final Context context) {
 
-        if (isCreateListSessionActive()) {
+        if (isCreatePaymentSessionActive()) {
             return;
         }
-
         final String url = context.getString(R.string.url);
         final String auth = context.getString(R.string.payment_authorization);
+        final String listData = PaymentUtils.readRawResource(context.getResources(), R.raw.list);
 
-        final String listData = AppUtils.readRawResource(context.getResources(), R.raw.list);
-        final String chargeData = AppUtils.readRawResource(context.getResources(), R.raw.charge);
-
-        final Single<Void> single = Single.fromCallable(new Callable<Void>() {
+        final Single<String> single = Single.fromCallable(new Callable<String>() {
 
             @Override
-            public Void call() throws CheckoutException {
-                test(url, auth, listData, chargeData);
-                return null;
+            public String call() throws CheckoutException {
+                return createPaymentSession(url, auth, listData);
             }
         });
 
         this.subscription = single.subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
-            .subscribe(new SingleSubscriber<Void>() {
+            .subscribe(new SingleSubscriber<String>() {
 
                 @Override
-                public void onSuccess(Void param) {
-                    Log.i(TAG, "onSuccess");
+                public void onSuccess(String listUrl) {
+                    view.openPaymentPage(listUrl);
                 }
 
                 @Override
@@ -120,65 +113,27 @@ final class CheckoutPresenter {
 
     /**
      * REMIND, this code must be removed later. It is only used for testing the
-     * SDK during development.
+     * SDK during development
      *
      * @param url
      * @param authorization
      * @param listData
-     * @param chargeData
      */
-    private void test(String url, String authorization, String listData, String chargeData) throws CheckoutException {
+    private String createPaymentSession(String url, String authorization, String listData) throws CheckoutException {
         ListConnection conn = new ListConnection(url);
 
         try {
             ListResult result = conn.createPaymentSession(authorization, listData);
             Map<String, URL> links = result.getLinks();
-            URL selfURL = links.get("self");
-
-            // Test the self URL and load list session
-            if (selfURL != null) {
-                result = conn.getListResult(selfURL);
+            URL selfUrl = null;
+            
+            if (links == null || (selfUrl = links.get("self")) == null) {
+                throw new CheckoutException("Error creating payment session, missing self url");
             }
-
-            // Test a charge request
-            List<ApplicableNetwork> networks = result.getNetworks().getApplicable();
-            String code = null;
-
-            for (ApplicableNetwork network : networks) {
-
-                if (network.getCode().equals("CARTEBLEUE")) {
-                    testChargeRequest(network, chargeData);
-                }
-            }
+            return selfUrl.toString();
+                
         } catch (NetworkException e) {
-            Log.i(TAG, "NetworkException: " + e.details);
-            e.printStackTrace();
-        }
-    }
-
-    /**
-     * REMIND, this code must be removed later. It is only used for testing the
-     * SDK during development.
-     *
-     * @param network
-     * @param chargeData
-     */
-    private void testChargeRequest(ApplicableNetwork network, String chargeData) throws NetworkException {
-
-        Log.i(TAG, "testChargeRequest Network[" + network.getCode() + ", " + network.getLabel() + "]");
-
-        Map<String, URL> links = network.getLinks();
-        URL url = links.get("operation");
-
-        ChargeConnection conn = new ChargeConnection();
-        OperationResult result = conn.createCharge(url, chargeData);
-        Redirect redirect = result.getRedirect();
-
-        String method = redirect.getMethod();
-        if (HttpMethod.isValid(method)) {
-            Log.i(TAG, "valid HttpMethod: " + method);
-        } else {
-            Log.i(TAG, "not a valid HttpMethod: " + method);
+            throw new CheckoutException("Error creating payment session", e);
         }
     }
 }

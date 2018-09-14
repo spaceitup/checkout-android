@@ -6,11 +6,18 @@
     android:layout_height="match_parent">
 
     <android.support.v7.widget.Toolbar
+        xmlns:app="http://schemas.android.com/apk/res-auto" 
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
         android:background="?attr/colorPrimary"
         android:layout_alignParentTop="true"
-        app:popupTheme="@style/AppTheme.PopupOverlay" />
+        app:title="@string/title_checkout"/>
 
+    <Button
+        android:id="@+id/button_checkout"
+        android:layout_height="wrap_content"
+        android:layout_width="wrap_content"
+        android:layout_centerInParent="true"        
+        android:text="@string/button_checkout" />    
 </RelativeLayout>

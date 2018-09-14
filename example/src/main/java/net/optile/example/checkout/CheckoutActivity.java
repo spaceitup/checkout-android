@@ -11,12 +11,17 @@
 
 package net.optile.example.checkout;
 
+import android.util.Log;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import net.optile.example.R;
+import android.widget.Button;
+import android.view.View;
+
+import net.optile.payment.ui.PaymentController;
 
 /**
  * Activity for performing a checkout payment
@@ -24,7 +29,8 @@ import net.optile.example.R;
 public final class CheckoutActivity extends AppCompatActivity implements CheckoutView {
 
     private static String TAG = "payment_CheckoutActivity";
-
+    private static int PAYMENT_REQUEST = 1;
+    
     private CheckoutPresenter presenter;
 
     private boolean active;
@@ -51,6 +57,12 @@ public final class CheckoutActivity extends AppCompatActivity implements Checkou
         final Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
+        final Button button = findViewById(R.id.button_checkout);
+        button.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                onButtonClicked();
+            }
+        });
         this.presenter = new CheckoutPresenter(this);
     }
 
@@ -71,8 +83,6 @@ public final class CheckoutActivity extends AppCompatActivity implements Checkou
     public void onResume() {
         super.onResume();
         this.active = true;
-
-        this.presenter.checkout(this);
     }
 
     /**
@@ -81,5 +91,20 @@ public final class CheckoutActivity extends AppCompatActivity implements Checkou
     @Override
     public boolean isActive() {
         return this.active;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void openPaymentPage(String listUrl) {
+        Log.i(TAG, "openPaymentPage: " + listUrl);
+        PaymentController controller = PaymentController.getInstance();
+        controller.setListUrl(listUrl);
+        controller.showPaymentPage(this, PAYMENT_REQUEST, null);
+    }
+
+    private void onButtonClicked() {
+        presenter.startPaymentSession(this);
     }
 }

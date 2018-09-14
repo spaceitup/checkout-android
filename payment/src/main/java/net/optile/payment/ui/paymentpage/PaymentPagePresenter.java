@@ -11,8 +11,18 @@
 
 package net.optile.payment.ui.paymentpage;
 
+import android.util.Log;
+
 import java.util.ArrayList;
 import java.util.List;
+
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.google.gson.JsonParseException;
+
+import net.optile.payment.R;
+import net.optile.payment.model.ListResult;
+import net.optile.payment.util.PaymentUtils;
 
 /**
  * The PaymentPagePresenter implementing the presenter part of the MVP
@@ -58,16 +68,24 @@ final class PaymentPagePresenter {
     }
 
     /** 
-     * Notify this presenter that it should be started
+     * Notify this presenter that it should start
      *
      * @param listUrl the listUrl for which the payment methods should be loaded
      */
     void onStart(String listUrl) {
         this.started = true;
         this.listUrl = listUrl;
+        //loadListResult();
     }
 
     private int nextListItemType() {
         return listItemType++;
+    }
+
+    private void loadListResult() {
+        final String data = PaymentUtils.readRawResource(view.getContext2().getResources(), R.raw.listresult);
+        Log.i(TAG, "data: " + data.length());
+        //Gson gson = new GsonBuilder().create();
+        //ListResult result = gson.fromJson(data, ListResult.class);
     }
 }
