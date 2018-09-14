@@ -35,4 +35,12 @@ final class PaymentListItem {
         this.type = type;
         this.network = network;
     }
+
+    String getCode() {
+        return network.getCode();
+    }
+    
+    String getLabel() {
+        return network.getLabel();
+    }
 }

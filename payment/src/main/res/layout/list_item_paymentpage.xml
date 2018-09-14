@@ -7,9 +7,8 @@
     android:background="?android:attr/selectableItemBackground" >
 
     <TextView
-        android:id="@+id/label_title"
+        android:id="@+id/text_title"
         style="@style/PaymentText.Medium"
-        android:text="This is a test"
         android:layout_centerInParent="true"/>
 
 </RelativeLayout>

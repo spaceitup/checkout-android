@@ -100,12 +100,12 @@ final class PaymentPagePresenter {
         List<PaymentListItem> items = new ArrayList<PaymentListItem>();
         Networks nw = result.getNetworks();
         if (nw == null) {
-            view.showPaymentListItems(items);
+            view.setItems(items);
             return;
         }
         List<ApplicableNetwork> an = nw.getApplicable();
         if (an == null || an.size() == 0) {
-            view.showPaymentListItems(items);
+            view.setItems(items);
             return;
         }
         showApplicableNetworks(an);

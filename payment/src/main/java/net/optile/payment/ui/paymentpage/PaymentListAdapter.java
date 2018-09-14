@@ -11,6 +11,7 @@
 
 package net.optile.payment.ui.paymentpage;
 
+import android.util.Log;
 import android.app.Activity;
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
@@ -76,7 +77,7 @@ class PaymentListAdapter extends RecyclerView.Adapter<PaymentListViewHolder> {
     @Override
     public void onBindViewHolder(PaymentListViewHolder holder, int position) {
         PaymentListItem item = items.get(position);
-        // Fill the ViewHolder with information
+        holder.title.setText(item.getCode() + " - " + item.getLabel());
     }
 
     /**

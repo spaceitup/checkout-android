@@ -15,10 +15,13 @@ import android.util.Log;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import net.optile.payment.R;
 import android.content.Intent;
 import android.content.Context;
 import java.util.List;
+import java.util.ArrayList;
 import net.optile.payment.ui.PaymentTheme;
 
 /**
@@ -31,6 +34,8 @@ public final class PaymentPageActivity extends AppCompatActivity implements Paym
     private static String EXTRA_PAYMENTTHEME = "extra_paymenttheme";
 
     private PaymentPagePresenter presenter;
+
+    private PaymentListAdapter adapter;
     
     private String listUrl;
 
@@ -67,9 +72,27 @@ public final class PaymentPageActivity extends AppCompatActivity implements Paym
             this.theme = intent.getParcelableExtra(EXTRA_PAYMENTTHEME);
         }
         setContentView(R.layout.activity_paymentpage);
+
+        initToolbar();
+        initPresenter();
+        initPaymentList();
+    }
+
+    private void initToolbar() {
         final Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        presenter = new PaymentPagePresenter(this);
+    }
+    
+    private void initPresenter() {
+        this.presenter = new PaymentPagePresenter(this);
+    }
+
+    private void initPaymentList() {
+        this.adapter = new PaymentListAdapter(this, new ArrayList<PaymentListItem>());
+        RecyclerView recyclerView = findViewById(R.id.recyclerview_paymentlist);
+        recyclerView.setAdapter(adapter);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        //adapter.setListener(this);
     }
 
     /**

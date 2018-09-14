@@ -12,15 +12,19 @@
 package net.optile.payment.ui.paymentpage;
 
 import android.view.View;
+import android.widget.TextView;
 import android.support.v7.widget.RecyclerView;
-
+import net.optile.payment.R;
 
 /**
  * The PaymentListViewHolder holding all Views for easy access
  */
 class PaymentListViewHolder extends RecyclerView.ViewHolder {
 
+    final TextView title;
+    
     PaymentListViewHolder(View parent) {
         super(parent);
+        this.title = parent.findViewById(R.id.text_title);
     }
 }

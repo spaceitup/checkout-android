@@ -15,7 +15,7 @@ import android.content.Context;
 import java.util.List;
 
 /**
- * The PaymentPage View interface that the View part of the MVP should implement
+ * The PaymentPageView interface is the View part of the MVP, this is implemented by the PaymentPageActivity
  */
 public interface PaymentPageView {
 
