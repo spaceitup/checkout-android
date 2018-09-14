@@ -12,6 +12,7 @@
 package net.optile.payment.ui.paymentpage;
 
 import android.content.Context;
+import java.util.List;
 
 /**
  * The PaymentPage View interface that the View part of the MVP should implement
@@ -31,4 +32,19 @@ public interface PaymentPageView {
      * @return context 
      */
     Context getContext();
+
+    /** 
+     * Set the list of PaymentListItems in the adapter 
+     * 
+     * @param items the items to be set 
+     */
+    void setItems(List<PaymentListItem> items);
+
+    /** 
+     * Abort the payment and notify the user of this SDK
+     * 
+     * @param code   the code indicating what went wrong
+     * @param reason reason the reason why the payment has been aborted
+     */
+    void abortPayment(String code, String reason);
 }

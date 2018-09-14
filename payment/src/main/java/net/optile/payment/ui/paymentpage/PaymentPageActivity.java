@@ -18,7 +18,7 @@ import android.support.v7.widget.Toolbar;
 import net.optile.payment.R;
 import android.content.Intent;
 import android.content.Context;
-
+import java.util.List;
 import net.optile.payment.ui.PaymentTheme;
 
 /**
@@ -30,16 +30,12 @@ public final class PaymentPageActivity extends AppCompatActivity implements Paym
     private static String EXTRA_LISTURL = "extra_listurl";
     private static String EXTRA_PAYMENTTHEME = "extra_paymenttheme";
 
-    /** The url pointing to the ListResult in the Payment API */
+    private PaymentPagePresenter presenter;
+    
     private String listUrl;
 
-    /** The theme to apply to this PaymentPage */
     private PaymentTheme theme;
 
-    /** The presenter of this view */
-    private PaymentPagePresenter presenter;
-
-    /** Is this view currently active or not */
     private boolean active;
     
     /** 
@@ -59,7 +55,7 @@ public final class PaymentPageActivity extends AppCompatActivity implements Paym
      * {@inheritDoc}
      */
     @Override
-    protected void onCreate(final Bundle savedInstanceState) {
+    public void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         
         if (savedInstanceState != null && savedInstanceState.containsKey(EXTRA_LISTURL)) {
@@ -71,7 +67,6 @@ public final class PaymentPageActivity extends AppCompatActivity implements Paym
             this.theme = intent.getParcelableExtra(EXTRA_PAYMENTTHEME);
         }
         setContentView(R.layout.activity_paymentpage);
-
         final Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         presenter = new PaymentPagePresenter(this);
@@ -104,7 +99,8 @@ public final class PaymentPageActivity extends AppCompatActivity implements Paym
     public void onResume() {
         super.onResume();
         this.active = true;
-        presenter.onStart(this.listUrl);
+        presenter.onStart();
+        presenter.refresh(this.listUrl);
     }
 
     /**
@@ -121,5 +117,20 @@ public final class PaymentPageActivity extends AppCompatActivity implements Paym
     @Override
     public Context getContext() {
         return this;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void setItems(List<PaymentListItem> items) {
+        adapter.setItems(items);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void abortPayment(String code, String reason) {
     }
 }

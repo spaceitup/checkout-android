@@ -19,7 +19,7 @@ import java.util.List;
  */
 final class PaymentListItem {
 
-    List<ApplicableNetwork> networks;
+    ApplicableNetwork network;
 
     int type;
     
@@ -28,11 +28,11 @@ final class PaymentListItem {
     /** 
      * Construct a new PaymentListItem
      *
-     * @param type     the type of this PaymentListItem
-     * @param networks the list of networks combined in this list item
+     * @param type    the type of this PaymentListItem
+     * @param network the ApplicableNetwork to be shown
      */
-    PaymentListItem(int type, List<ApplicableNetwork> networks) {
+    PaymentListItem(int type, ApplicableNetwork network) {
         this.type = type;
-        this.networks = networks;
+        this.network = network;
     }
 }
