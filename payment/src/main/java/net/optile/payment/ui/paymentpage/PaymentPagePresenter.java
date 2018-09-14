@@ -24,12 +24,19 @@ import net.optile.payment.R;
 import net.optile.payment.model.ListResult;
 import net.optile.payment.util.PaymentUtils;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+
+import android.content.res.Resources;
+
 /**
  * The PaymentPagePresenter implementing the presenter part of the MVP
  */
 final class PaymentPagePresenter {
 
-    private final static String TAG = "payment_PaymentPagePresenter";
+    private final static String TAG = "pay_PayPresenter";
 
     /**
      * The PaymentPageView that implements the view part of the MVP
@@ -75,7 +82,7 @@ final class PaymentPagePresenter {
     void onStart(String listUrl) {
         this.started = true;
         this.listUrl = listUrl;
-        //loadListResult();
+        loadListResult();
     }
 
     private int nextListItemType() {
@@ -83,9 +90,14 @@ final class PaymentPagePresenter {
     }
 
     private void loadListResult() {
-        final String data = PaymentUtils.readRawResource(view.getContext2().getResources(), R.raw.listresult);
-        Log.i(TAG, "data: " + data.length());
-        //Gson gson = new GsonBuilder().create();
-        //ListResult result = gson.fromJson(data, ListResult.class);
+
+        try {
+            final String data = PaymentUtils.readRawResource(view.getContext().getResources(), R.raw.listresult);
+            Log.i(TAG, "data: " + data.length());
+            Gson gson = new GsonBuilder().create();
+            ListResult result = gson.fromJson(data, ListResult.class);
+        } catch (JsonParseException e) {
+            Log.wtf(TAG, e);
+        }
     }
 }

@@ -26,7 +26,7 @@ import net.optile.payment.ui.PaymentTheme;
  */
 public final class PaymentPageActivity extends AppCompatActivity implements PaymentPageView {
 
-    private static String TAG = "payment_PaymentPageActivity";
+    private static String TAG = "pay_PayActivity";
     private static String EXTRA_LISTURL = "extra_listurl";
     private static String EXTRA_PAYMENTTHEME = "extra_paymenttheme";
 
@@ -119,7 +119,7 @@ public final class PaymentPageActivity extends AppCompatActivity implements Paym
      * {@inheritDoc}
      */
     @Override
-    public Context getContext2() {
+    public Context getContext() {
         return this;
     }
 }

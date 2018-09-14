@@ -30,5 +30,5 @@ public interface PaymentPageView {
      * 
      * @return context 
      */
-    Context getContext2();
+    Context getContext();
 }
