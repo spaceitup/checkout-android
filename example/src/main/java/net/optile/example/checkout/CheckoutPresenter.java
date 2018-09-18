@@ -92,6 +92,7 @@ final class CheckoutPresenter {
             @Override
             public String call() throws CheckoutException {
                 return createPaymentSession(url, auth, listData);
+                
             }
         });
 

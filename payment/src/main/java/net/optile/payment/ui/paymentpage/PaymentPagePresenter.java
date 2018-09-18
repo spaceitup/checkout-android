@@ -27,7 +27,17 @@ import net.optile.payment.model.Interaction;
 import net.optile.payment.model.InteractionCode;
 import net.optile.payment.model.Networks;
 
+import net.optile.payment.core.Workers;
+import net.optile.payment.core.WorkerTask;
+import net.optile.payment.core.WorkerSubscriber;
+import net.optile.payment.core.PaymentException;
+
+import net.optile.payment.network.NetworkException;
+
 import net.optile.payment.util.PaymentUtils;
+
+import java.util.concurrent.Callable;
+import java.util.concurrent.Future;
 
 /**
  * The PaymentPagePresenter implementing the presenter part of the MVP
@@ -68,7 +78,8 @@ final class PaymentPagePresenter {
     }
 
     void refresh(final String listUrl) {
-        loadLocalListResult();
+        //loadLocalListResult();
+        test();
     }
 
     private int nextListItemType() {
@@ -133,5 +144,47 @@ final class PaymentPagePresenter {
         } catch (JsonParseException e) {
             Log.wtf(TAG, e);
         }
+    }
+
+    private void test() {
+        executeTest(7000);
+        executeTest(5000);
+        executeTest(4000);
+        executeTest(2000);
+    }
+
+    private void executeTest(final int sleep) {
+
+        WorkerTask<String> task = WorkerTask.fromCallable(new Callable<String>() {
+                @Override
+                public String call() throws PaymentException {
+                    return loadListResult(sleep);
+                }
+            });
+
+        task.subscribe(new WorkerSubscriber<String>() {
+
+                @Override
+                public void onSuccess(String listUrl) {
+                    Log.i(TAG, "oSuccess: " + listUrl);
+                    //view.openPaymentPage(listUrl);
+                }
+
+                @Override
+                public void onError(Throwable error) {
+                    Log.i(TAG, "onError: " + error);
+                }
+            });
+        Workers.getInstance().forNetworkTasks().execute(task); 
+    }
+
+    private String loadListResult(int sleep) throws PaymentException {
+        Log.i(TAG, "starting: " + sleep);
+
+        try {
+            Thread.sleep(sleep);
+        } catch (InterruptedException e) {
+        }
+        return "done: " + sleep;
     }
 }

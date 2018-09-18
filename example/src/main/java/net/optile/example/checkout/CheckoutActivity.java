@@ -21,7 +21,7 @@ import net.optile.example.R;
 import android.widget.Button;
 import android.view.View;
 
-import net.optile.payment.ui.PaymentController;
+import net.optile.payment.ui.PaymentUI;
 
 /**
  * Activity for performing a checkout payment
@@ -99,9 +99,9 @@ public final class CheckoutActivity extends AppCompatActivity implements Checkou
     @Override
     public void openPaymentPage(String listUrl) {
         Log.i(TAG, "openPaymentPage: " + listUrl);
-        PaymentController controller = PaymentController.getInstance();
-        controller.setListUrl(listUrl);
-        controller.showPaymentPage(this, PAYMENT_REQUEST, null);
+        PaymentUI paymentUI = PaymentUI.getInstance();
+        paymentUI.setListUrl(listUrl);
+        paymentUI.showPaymentPage(this, PAYMENT_REQUEST, null);
     }
 
     private void onButtonClicked() {

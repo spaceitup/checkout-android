@@ -24,35 +24,35 @@ import android.text.TextUtils;
 import net.optile.payment.ui.paymentpage.PaymentPageActivity;
 
 /**
- * The PaymentController
+ * The PaymentUI is the PaymentPage controller
  */
-public final class PaymentController {
+public final class PaymentUI {
 
-    private final static String TAG = "payment_PaymentController";
+    private final static String TAG = "payment_PaymentUI";
     
     /** The url pointing to the current list */
     private String listUrl;
     
     private static class InstanceHolder {
-        static final PaymentController INSTANCE = new PaymentController();
+        static final PaymentUI INSTANCE = new PaymentUI();
     }
     
-    private PaymentController() {
+    private PaymentUI() {
     }
 
     /** 
-     * Get the instance of this PaymentController
+     * Get the instance of this PaymentUI
      * 
-     * @return the instance of this PaymentController 
+     * @return the instance of this PaymentUI 
      */
-    public static PaymentController getInstance() {
+    public static PaymentUI getInstance() {
         return InstanceHolder.INSTANCE;
     }
 
     /** 
-     * Set the listUrl in this PaymentController
+     * Set the listUrl in this PaymentUI
      * 
-     * @param listUrl the listUrl to be set in this controller
+     * @param listUrl the listUrl to be set in this paymentUI
      * @throws IllegalArgumentException when the listUrl is not a valid scheme 
      */
     public void setListUrl(String listUrl) {
@@ -67,7 +67,7 @@ public final class PaymentController {
     }
 
     /** 
-     * Get the listUrl in this PaymentController
+     * Get the listUrl in this PaymentUI
      * 
      * @return the listUrl or null if not previously set
      */
@@ -93,7 +93,6 @@ public final class PaymentController {
         if (theme == null) {
             theme = PaymentTheme.createPaymentThemeBuilder().build();
         }
-
         activity.finishActivity(requestCode);
         Intent intent = PaymentPageActivity.createStartIntent(activity, listUrl, theme);
         activity.startActivityForResult(intent, requestCode);
