@@ -121,10 +121,9 @@ final class CheckoutPresenter {
      * @param listData
      */
     private String createPaymentSession(String url, String authorization, String listData) throws CheckoutException {
-        ListConnection conn = new ListConnection(url);
-
+        ListConnection conn = new ListConnection();
         try {
-            ListResult result = conn.createPaymentSession(authorization, listData);
+            ListResult result = conn.createPaymentSession(url, authorization, listData);
             Map<String, URL> links = result.getLinks();
             URL selfUrl = null;
             

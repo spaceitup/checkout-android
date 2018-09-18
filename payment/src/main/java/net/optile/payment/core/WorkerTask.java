@@ -11,21 +11,20 @@
 
 package net.optile.payment.core;
 
+import android.os.Looper;
+import android.os.Handler;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.FutureTask;
 import java.util.concurrent.Callable;
 import android.util.Log;
 
 /**
- * A WorkerTask executing one task
+ * A WorkerTask executing one Callable and notifying the WorkerSubscriber once it is completed
  */
 public final class WorkerTask<V> extends FutureTask<V> {
 
     private final static String TAG = "pay_WorkerTask";
 
-    /** 
-     * The subscriber notified when this task is completed 
-     */
     private WorkerSubscriber subscriber;
 
     private WorkerTask(Callable<V> callable) {
@@ -42,6 +41,11 @@ public final class WorkerTask<V> extends FutureTask<V> {
         return new WorkerTask<V>(callable);
     }
 
+    /** 
+     * Subscribe the WorkerSubscriber to this task, this subscriber will be notified when the task is successfull or has failed
+     * 
+     * @param subscriber the subscriber to assign to this task
+     */
     public void subscribe(WorkerSubscriber<V> subscriber) {
         this.subscriber = subscriber;
     }
@@ -51,17 +55,34 @@ public final class WorkerTask<V> extends FutureTask<V> {
      */
     @Override
     protected void done() {
-        WorkerSubscriber s = this.subscriber;
-        if (s == null) {
+        WorkerSubscriber subscriber = this.subscriber;
+        if (subscriber == null) {
             return;
         }
         try {
-            V result = get();
-            s.onSuccess(result);
+            callSuccessOnMainThread(subscriber, get());
         } catch (InterruptedException e) {
-            s.onError(e);
+            callErrorOnMainThread(subscriber, e);
         } catch (ExecutionException e) {
-            s.onError(e.getCause());
+            callErrorOnMainThread(subscriber, e.getCause());
         }
+    }
+
+    private void callSuccessOnMainThread(final WorkerSubscriber subscriber, final V result) {
+        Handler handler = new Handler(Looper.getMainLooper());
+        handler.post(new Runnable() {
+                public void run() {
+                    subscriber.onSuccess(result);
+                }
+            });
+    }
+
+    private void callErrorOnMainThread(final WorkerSubscriber subscriber, final Throwable throwable)  {
+        Handler handler = new Handler(Looper.getMainLooper());
+        handler.post(new Runnable() {
+                public void run() {
+                    subscriber.onError(throwable);
+                }
+            });
     }
 }

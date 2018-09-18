@@ -33,11 +33,11 @@ import net.optile.payment.core.WorkerSubscriber;
 import net.optile.payment.core.PaymentException;
 
 import net.optile.payment.network.NetworkException;
+import net.optile.payment.network.ListConnection;
 
 import net.optile.payment.util.PaymentUtils;
 
 import java.util.concurrent.Callable;
-import java.util.concurrent.Future;
 
 /**
  * The PaymentPagePresenter implementing the presenter part of the MVP
@@ -77,15 +77,24 @@ final class PaymentPagePresenter {
         this.started = true;
     }
 
+    /** 
+     * Refresh the ListResult, this will result in reloading the ListResult and language file
+     * 
+     * @param listUrl the url pointing to the ListResult in the Payment API
+     */
     void refresh(final String listUrl) {
-        //loadLocalListResult();
-        test();
+        asyncLoadListResult(listUrl);
     }
 
     private int nextListItemType() {
         return listItemType++;
     }
 
+    /** 
+     * Handle the incoming list result
+     * 
+     * @param result 
+     */
     private void handleListResult(ListResult result) {
         Interaction interaction = result.getInteraction();
         String code = interaction.getCode();
@@ -135,41 +144,20 @@ final class PaymentPagePresenter {
         return new PaymentListItem(nextListItemType(), network);
     }
     
-    private void loadLocalListResult() {
-        try {
-            final String data = PaymentUtils.readRawResource(view.getContext().getResources(), R.raw.listresult);
-            final Gson gson = new GsonBuilder().create();
-            final ListResult result = gson.fromJson(data, ListResult.class); 
-            handleListResult(result);
-        } catch (JsonParseException e) {
-            Log.wtf(TAG, e);
-        }
-    }
+    private void asyncLoadListResult(final String listUrl) {
 
-    private void test() {
-        executeTest(7000);
-        executeTest(5000);
-        executeTest(4000);
-        executeTest(2000);
-    }
-
-    private void executeTest(final int sleep) {
-
-        WorkerTask<String> task = WorkerTask.fromCallable(new Callable<String>() {
+        WorkerTask<ListResult> task = WorkerTask.fromCallable(new Callable<ListResult>() {
                 @Override
-                public String call() throws PaymentException {
-                    return loadListResult(sleep);
+                public ListResult call() throws NetworkException {
+                    return loadListResult(listUrl);
                 }
             });
 
-        task.subscribe(new WorkerSubscriber<String>() {
-
+        task.subscribe(new WorkerSubscriber<ListResult>() {
                 @Override
-                public void onSuccess(String listUrl) {
-                    Log.i(TAG, "oSuccess: " + listUrl);
-                    //view.openPaymentPage(listUrl);
+                public void onSuccess(ListResult listResult) {
+                    handleListResult(listResult);
                 }
-
                 @Override
                 public void onError(Throwable error) {
                     Log.i(TAG, "onError: " + error);
@@ -178,13 +166,8 @@ final class PaymentPagePresenter {
         Workers.getInstance().forNetworkTasks().execute(task); 
     }
 
-    private String loadListResult(int sleep) throws PaymentException {
-        Log.i(TAG, "starting: " + sleep);
-
-        try {
-            Thread.sleep(sleep);
-        } catch (InterruptedException e) {
-        }
-        return "done: " + sleep;
+    private ListResult loadListResult(String listUrl) throws NetworkException {
+        ListConnection conn = new ListConnection();
+        return conn.getListResult(listUrl);
     }
 }

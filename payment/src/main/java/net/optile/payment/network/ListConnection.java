@@ -17,7 +17,10 @@ import static net.optile.payment.network.ErrorDetails.INTERNAL_ERROR;
 import static net.optile.payment.network.ErrorDetails.PROTOCOL_ERROR;
 import static net.optile.payment.network.ErrorDetails.SECURITY_ERROR;
 
+import java.util.Properties;
 import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.InputStream;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -42,37 +45,25 @@ public final class ListConnection extends BaseConnection {
     private final static String TAG = "payment_ListConnection";
 
     /**
-     * The base url i.e. used for creating
-     * a new payment session
-     */
-    private final String baseUrl;
-
-    /**
-     * Construct a new ListConnection
-     *
-     * @param baseUrl The url to be used
-     */
-    public ListConnection(final String baseUrl) {
-        this.baseUrl = baseUrl;
-    }
-
-    /**
      * Create a new payment session through the Payment API. Remind this is not
      * a request mobile apps should be making as this call is normally executed
      * Merchant Server-side. This request will be removed later.
      *
+     * @param baseUrl the base url of the Payment API
      * @param authorization the authorization header data
      * @param listData the data containing the request body for the list request
      * @return the ListResult
      * @throws NetworkException when an error occurred while making the request
      */
-    public ListResult createPaymentSession(final String authorization, final String listData) throws NetworkException {
+    public ListResult createPaymentSession(final String baseUrl, final String authorization, final String listData) throws NetworkException {
         final String source = "ListConnection[createPaymentSession]";
 
+        if (TextUtils.isEmpty(baseUrl)) {
+            throw new IllegalArgumentException(source + " - baseUrl cannot be null or empty");
+        }
         if (TextUtils.isEmpty(authorization)) {
             throw new IllegalArgumentException(source + " - authorization cannot be null or empty");
         }
-
         if (TextUtils.isEmpty(listData)) {
             throw new IllegalArgumentException(source + " - data cannot be null or empty");
         }
@@ -159,6 +150,30 @@ public final class ListConnection extends BaseConnection {
         }
     }
 
+    /** 
+     * Load the List language properties given the URL
+     * 
+     * @param url the URL pointing to the List language properties file
+     * 
+     * @return the Properties object containing the language properties
+     * @throws NetworkException when an error occured while loading the language properties
+     */
+    public Properties getLanguageProperties(final URL url) throws NetworkException {
+        final String source = "ListConnection[getLanguageProperties]";
+
+        if (url == null) {
+            throw new IllegalArgumentException(source + " - url cannot be null");
+        }
+        Properties prop = new Properties();
+        try (InputStream in = url.openStream();
+             InputStreamReader ir = new InputStreamReader(in)) {
+            prop.load(ir);
+            return prop;
+        } catch (IOException e) {
+            throw createNetworkException(source, CONN_ERROR, e);            
+        }
+    }
+    
     /**
      * Handle the create new payment session OK state
      *
