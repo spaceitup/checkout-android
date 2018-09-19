@@ -46,11 +46,10 @@ public final class ListConnection extends BaseConnection {
      * a request mobile apps should be making as this call is normally executed
      * Merchant Server-side. This request will be removed later.
      *
-     * @param baseUrl the base url of the Payment API
+     * @param baseUrl       the base url of the Payment API
      * @param authorization the authorization header data
-     * @param listData the data containing the request body for the list request
-     * @return the ListResult
-     * @throws NetworkException when an error occurred while making the request
+     * @param listData      the data containing the request body for the list request
+     * @return              the ListResult
      */
     public ListResult createPaymentSession(final String baseUrl, final String authorization, final String listData) throws NetworkException {
         final String source = "ListConnection[createPaymentSession]";
@@ -106,8 +105,7 @@ public final class ListConnection extends BaseConnection {
      * obtain the details of an active list session
      *
      * @param url the url pointing to the list
-     * @return the NetworkResponse containing either an error or the ListResult
-     * @throws NetworkException the network exception
+     * @return    the NetworkResponse containing either an error or the ListResult
      */
     public ListResult getListResult(final String url) throws NetworkException {
         final String source = "ListConnection[getListResult]";
@@ -151,9 +149,7 @@ public final class ListConnection extends BaseConnection {
      * Load the language file given the URL into Properties object
      * 
      * @param url the URL pointing to the language entries
-     * 
-     * @return the Properties object containing the language entries
-     * @throws NetworkException when an error occurred while loading the language entries
+     * @return    the Properties object containing the language entries
      */
     public Properties getLanguage(final URL url) throws NetworkException {
         final String source = "ListConnection[getLanguage]";
@@ -175,8 +171,7 @@ public final class ListConnection extends BaseConnection {
      * Handle the create new payment session OK state
      *
      * @param data the response data received from the API
-     * @return the ListResult
-     * @throws JsonParseException when an error occurred during parsing
+     * @return     the ListResult
      */
     private ListResult handleCreatePaymentSessionOk(final String data) throws JsonParseException {
         return gson.fromJson(data, ListResult.class);
@@ -186,8 +181,7 @@ public final class ListConnection extends BaseConnection {
      * Handle get list result OK state
      *
      * @param data the response data received from the Payment API
-     * @return the ListResult
-     * @throws JsonParseException when an error occurred during parsing
+     * @return     the ListResult
      */
     private ListResult handleGetListResultOk(final String data) throws JsonParseException {
         return gson.fromJson(data, ListResult.class);

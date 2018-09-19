@@ -44,7 +44,7 @@ public final class PaymentPageActivity extends AppCompatActivity implements Paym
      * Create the start intent for this Activity
      * 
      * @param context Context to create the intent
-     * @return the newly created start intent
+     * @return        newly created start intent
      */
     public static Intent createStartIntent(Context context, String listUrl, PaymentTheme theme) {
         final Intent intent = new Intent(context, PaymentPageActivity.class);

@@ -26,8 +26,8 @@ final class PaymentHolder {
     /** 
      * Construct a new PaymentHolder object
      * 
-     * @param listResult the object holding the current list session data 
-     * @param methods the list of PaymentMethods supported by this Payment
+     * @param listResult Object holding the current list session data 
+     * @param methods    list of PaymentMethods supported by the current Payment session
      */
     PaymentHolder(ListResult listResult, List<PaymentMethod> methods) {
         this.listResult = listResult;

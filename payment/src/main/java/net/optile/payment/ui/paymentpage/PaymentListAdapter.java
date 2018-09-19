@@ -27,14 +27,8 @@ import net.optile.payment.R;
  */
 class PaymentListAdapter extends RecyclerView.Adapter<PaymentListViewHolder> {
 
-    /**
-     * The list of items in this adapter
-     */
     private final List<PaymentListItem> items;
 
-    /**
-     * The item listener
-     */
     private OnItemListener listener;
 
     /** 
@@ -102,7 +96,7 @@ class PaymentListAdapter extends RecyclerView.Adapter<PaymentListViewHolder> {
      * Set new items in this adapter and notify any
      * listeners.
      *
-     * @param newItems the list of PaymentListItems that should be set
+     * @param newItems list of PaymentListItems that should be set
      */
     public void setItems(List<PaymentListItem> newItems) {
         items.clear();
@@ -113,8 +107,8 @@ class PaymentListAdapter extends RecyclerView.Adapter<PaymentListViewHolder> {
     /**
      * Get the PaymentListItem at the given index
      *
-     * @param index the index of the PaymentListItem
-     * @return the PaymentListItem given the index or null if not found
+     * @param index index of the PaymentListItem
+     * @return      PaymentListItem given the index or null if not found
      */
     private PaymentListItem getItemFromIndex(int index) {
         return index >= 0 && index < items.size() ? items.get(index) : null;
@@ -123,8 +117,8 @@ class PaymentListAdapter extends RecyclerView.Adapter<PaymentListViewHolder> {
     /**
      * Get the PaymentListItem with its type matching the viewType
      *
-     * @param type the type of the view
-     * @return the PaymentListItem with the same type or null if not found
+     * @param type type of the view
+     * @return     PaymentListItem with the same type or null if not found
      */
     private PaymentListItem getItemWithViewType(int type) {
 

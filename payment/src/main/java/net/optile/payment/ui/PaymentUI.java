@@ -46,7 +46,6 @@ public final class PaymentUI {
      * Set the listUrl in this PaymentUI
      * 
      * @param listUrl the listUrl to be set in this paymentUI
-     * @throws IllegalArgumentException when the listUrl is not a valid scheme 
      */
     public void setListUrl(String listUrl) {
 

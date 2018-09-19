@@ -36,15 +36,15 @@ interface PaymentPageView {
     /** 
      * Set the list of PaymentListItems in the adapter 
      * 
-     * @param items the items to be set 
+     * @param items items to be set in the view 
      */
     void setItems(List<PaymentListItem> items);
 
     /** 
      * Abort the payment and notify the user of this SDK
      * 
-     * @param code   the code indicating what went wrong
-     * @param reason reason the reason why the payment has been aborted
+     * @param code   code indicating what went wrong
+     * @param reason reason why the payment has been aborted
      */
     void abortPayment(String code, String reason);
 }

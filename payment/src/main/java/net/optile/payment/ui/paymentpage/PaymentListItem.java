@@ -23,8 +23,8 @@ final class PaymentListItem {
     /** 
      * Construct a new PaymentListItem
      *
-     * @param type    the type of this PaymentListItem
-     * @param method the PaymentMethod to be shown
+     * @param type   type of this PaymentListItem
+     * @param method PaymentMethod to be shown
      */
     PaymentListItem(int type, PaymentMethod method) {
         this.type = type;

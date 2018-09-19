@@ -26,8 +26,8 @@ final class PaymentMethod {
     /** 
      * Construct a new PaymentMethod object
      * 
-     * @param network the ApplicableNetwork for this Payment method 
-     * @param language the localized language file
+     * @param network  ApplicableNetwork used in this PaymentMethod 
+     * @param language localized language file
      */
     PaymentMethod(ApplicableNetwork network, Properties language) {
         this.network = network;
