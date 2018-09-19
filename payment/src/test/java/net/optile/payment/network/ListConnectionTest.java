@@ -11,6 +11,8 @@
 
 package net.optile.payment.network;
 
+import java.util.Properties;
+
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.robolectric.RobolectricTestRunner;
@@ -24,35 +26,57 @@ import net.optile.payment.model.ListResult;
 public class ListConnectionTest {
 
     /**
-     * Create payment session invalid authorization invalid value error.
+     * Create payment session invalid baseUrl
      *
      * @throws NetworkException the network exception
      */
     @Test(expected = IllegalArgumentException.class)
-    public void createPaymentSession_invalidAuthorization_invalidValueError() throws NetworkException {
-        ListConnection conn = new ListConnection("http://localhost");
-        ListResult result = conn.createPaymentSession(null, "{}");
+    public void createPaymentSession_invalidBaseUrl_IllegalArgumentException() throws NetworkException {
+        ListConnection conn = new ListConnection();
+        ListResult result = conn.createPaymentSession(null, "auth123", "{}");
     }
 
     /**
-     * Create payment session invalid list data invalid value error.
+     * Create payment session invalid authorization
      *
      * @throws NetworkException the network exception
      */
     @Test(expected = IllegalArgumentException.class)
-    public void createPaymentSession_invalidListData_invalidValueError() throws NetworkException {
-        ListConnection conn = new ListConnection("http://localhost");
-        ListResult result = conn.createPaymentSession("abc123", "");
+    public void createPaymentSession_invalidAuthorization_IllegalArgumentException() throws NetworkException {
+        ListConnection conn = new ListConnection();
+        ListResult result = conn.createPaymentSession("http://localhost", null, "{}");
     }
 
     /**
-     * Gets list result invalid url invalid value error.
+     * Create payment session invalid list data
      *
      * @throws NetworkException the network exception
      */
     @Test(expected = IllegalArgumentException.class)
-    public void getListResult_invalidURL_invalidValueError() throws NetworkException {
-        ListConnection conn = new ListConnection("http://localhost");
+    public void createPaymentSession_invalidListData_IllegalArgumentException() throws NetworkException {
+        ListConnection conn = new ListConnection();
+        ListResult result = conn.createPaymentSession("http://localhost", "auth123", "");
+    }
+
+    /**
+     * Gets list result invalid url
+     *
+     * @throws NetworkException the network exception
+     */
+    @Test(expected = IllegalArgumentException.class)
+    public void getListResult_invalidURL_IllegalArgumentException() throws NetworkException {
+        ListConnection conn = new ListConnection();
         ListResult result = conn.getListResult(null);
+    }
+
+    /**
+     * Gets language Properties invalid url
+     *
+     * @throws NetworkException the network exception
+     */
+    @Test(expected = IllegalArgumentException.class)
+    public void getLanguage_invalidURL_IllegalArgumentException() throws NetworkException {
+        ListConnection conn = new ListConnection();
+        Properties lang = conn.getLanguage(null);
     }
 }
