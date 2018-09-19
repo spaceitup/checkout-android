@@ -11,36 +11,31 @@
 
 package net.optile.payment.ui.paymentpage;
 
-import net.optile.payment.model.ApplicableNetwork;
-import java.util.List;
-
 /**
- * A Payment list item in the payment page. This item may contain multiple ApplicableNetwork elements.
+ * A Payment list item in the payment page.
  */
 final class PaymentListItem {
 
-    ApplicableNetwork network;
+    final int type;
 
-    int type;
-    
-    int index;
+    final PaymentMethod method;
 
     /** 
      * Construct a new PaymentListItem
      *
      * @param type    the type of this PaymentListItem
-     * @param network the ApplicableNetwork to be shown
+     * @param method the PaymentMethod to be shown
      */
-    PaymentListItem(int type, ApplicableNetwork network) {
+    PaymentListItem(int type, PaymentMethod method) {
         this.type = type;
-        this.network = network;
+        this.method = method;
     }
 
     String getCode() {
-        return network.getCode();
+        return method.getCode();
     }
     
     String getLabel() {
-        return network.getLabel();
+        return method.getLabel();
     }
 }

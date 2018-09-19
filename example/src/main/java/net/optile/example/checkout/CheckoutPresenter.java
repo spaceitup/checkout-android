@@ -88,23 +88,19 @@ final class CheckoutPresenter {
         final String listData = PaymentUtils.readRawResource(context.getResources(), R.raw.list);
 
         final Single<String> single = Single.fromCallable(new Callable<String>() {
-
             @Override
             public String call() throws CheckoutException {
                 return createPaymentSession(url, auth, listData);
                 
             }
         });
-
         this.subscription = single.subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe(new SingleSubscriber<String>() {
-
                 @Override
                 public void onSuccess(String listUrl) {
                     view.openPaymentPage(listUrl);
                 }
-
                 @Override
                 public void onError(Throwable error) {
                     Log.i(TAG, "onError: " + error);

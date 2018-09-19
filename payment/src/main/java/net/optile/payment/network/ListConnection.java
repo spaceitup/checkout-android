@@ -151,15 +151,15 @@ public final class ListConnection extends BaseConnection {
     }
 
     /** 
-     * Load the List language properties given the URL
+     * Load the language file given the URL into Properties object
      * 
-     * @param url the URL pointing to the List language properties file
+     * @param url the URL pointing to the language entries
      * 
-     * @return the Properties object containing the language properties
-     * @throws NetworkException when an error occured while loading the language properties
+     * @return the Properties object containing the language entries
+     * @throws NetworkException when an error occured while loading the language entries
      */
-    public Properties getLanguageProperties(final URL url) throws NetworkException {
-        final String source = "ListConnection[getLanguageProperties]";
+    public Properties getLanguage(final URL url) throws NetworkException {
+        final String source = "ListConnection[getLanguage]";
 
         if (url == null) {
             throw new IllegalArgumentException(source + " - url cannot be null");

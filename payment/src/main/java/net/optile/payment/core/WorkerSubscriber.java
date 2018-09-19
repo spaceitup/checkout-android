@@ -21,12 +21,12 @@ public interface WorkerSubscriber<V> {
      * 
      * @param param the result parameter 
      */
-    public void onSuccess(V param);
+    void onSuccess(V param);
 
     /** 
      * An error occured while executing the WorkerTask
      * 
      * @param error the cause of the error
      */
-    public void onError(Throwable error);
+    void onError(Throwable error);
 }
