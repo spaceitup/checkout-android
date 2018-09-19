@@ -27,8 +27,6 @@ import net.optile.payment.R;
  */
 class PaymentListAdapter extends RecyclerView.Adapter<PaymentListViewHolder> {
 
-    private final static String TAG = "pay_PayAdapter";
-
     /**
      * The list of items in this adapter
      */

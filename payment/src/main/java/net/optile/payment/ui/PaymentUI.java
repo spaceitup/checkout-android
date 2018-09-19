@@ -22,8 +22,6 @@ import net.optile.payment.ui.paymentpage.PaymentPageActivity;
  * The PaymentUI is the PaymentPage controller
  */
 public final class PaymentUI {
-
-    private final static String TAG = "payment_PaymentUI";
     
     /** The url pointing to the current list */
     private String listUrl;

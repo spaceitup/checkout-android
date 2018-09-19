@@ -41,8 +41,6 @@ import net.optile.payment.model.ListResult;
  */
 public final class ListConnection extends BaseConnection {
 
-    private final static String TAG = "payment_ListConnection";
-
     /**
      * Create a new payment session through the Payment API. Remind this is not
      * a request mobile apps should be making as this call is normally executed

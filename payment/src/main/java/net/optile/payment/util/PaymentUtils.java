@@ -48,7 +48,6 @@ public final class PaymentUtils {
         } catch (IOException e) {
             Log.wtf(TAG, e);
         }
-        Log.i(TAG, "rad: " + sb.length());
         return sb.toString();
     }
 

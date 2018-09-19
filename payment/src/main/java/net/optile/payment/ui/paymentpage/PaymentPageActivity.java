@@ -27,7 +27,6 @@ import net.optile.payment.ui.PaymentTheme;
  */
 public final class PaymentPageActivity extends AppCompatActivity implements PaymentPageView {
 
-    private final static String TAG = "pay_PayActivity";
     private final static String EXTRA_LISTURL = "extra_listurl";
     private final static String EXTRA_PAYMENTTHEME = "extra_paymenttheme";
 
