@@ -11,11 +11,6 @@
 
 package net.optile.payment.ui;
 
-import android.util.Log;
-
-import java.net.URL;
-import java.net.MalformedURLException;
-
 import android.content.Intent;
 import android.app.Activity;
 import android.util.Patterns;

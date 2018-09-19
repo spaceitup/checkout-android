@@ -19,7 +19,6 @@ import android.os.Parcelable;
  */
 public final class PaymentTheme implements Parcelable {
 
-
     private PaymentTheme() {
     }
 

@@ -24,7 +24,7 @@ public interface WorkerSubscriber<V> {
     void onSuccess(V param);
 
     /** 
-     * An error occured while executing the WorkerTask
+     * An error occurred while executing the WorkerTask
      * 
      * @param error the cause of the error
      */

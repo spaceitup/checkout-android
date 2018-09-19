@@ -11,18 +11,15 @@
 
 package net.optile.payment.ui.paymentpage;
 
-import android.util.Log;
-import android.app.Activity;
 import android.content.Context;
+import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
-import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
-import android.widget.TextView;
 
 import java.util.List;
+import java.util.ArrayList;
 import net.optile.payment.R;
 
 /**
@@ -35,12 +32,7 @@ class PaymentListAdapter extends RecyclerView.Adapter<PaymentListViewHolder> {
     /**
      * The list of items in this adapter
      */
-    private List<PaymentListItem> items;
-
-    /**
-     * The PaymentPageActivity
-     */
-    private PaymentPageActivity activity;
+    private final List<PaymentListItem> items;
 
     /**
      * The item listener
@@ -49,22 +41,16 @@ class PaymentListAdapter extends RecyclerView.Adapter<PaymentListViewHolder> {
 
     /** 
      * Construct a new PaymentListAdapter
-     * 
-     * @param activity 
-     * @param items 
-     * 
-     * @return 
      */
-    PaymentListAdapter(PaymentPageActivity activity, List<PaymentListItem> items) {
-        this.activity = activity;
-        this.items = items;
+    PaymentListAdapter() {
+        this.items = new ArrayList<>();
     }
 
     /**
      * {@inheritDoc}
      */
     @Override
-    public PaymentListViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public @NonNull PaymentListViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         Context context = parent.getContext();
         LayoutInflater inflater = LayoutInflater.from(context);
         View view = inflater.inflate(R.layout.list_item_paymentpage, parent, false);
@@ -75,15 +61,16 @@ class PaymentListAdapter extends RecyclerView.Adapter<PaymentListViewHolder> {
      * {@inheritDoc}
      */
     @Override
-    public void onBindViewHolder(PaymentListViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull PaymentListViewHolder holder, int position) {
         PaymentListItem item = items.get(position);
-        holder.title.setText(item.getCode() + " - " + item.getLabel());
+        String text = item.getCode() + "-" + item.getLabel();
+        holder.title.setText(text);
     }
 
     /**
      * Set the item listener in this adapter
      *
-     * @param listener
+     * @param listener the listener interested on events from the item
      */
     public void setListener(OnItemListener listener) {
         this.listener = listener;
@@ -106,13 +93,25 @@ class PaymentListAdapter extends RecyclerView.Adapter<PaymentListViewHolder> {
     }
     
     /**
-     * Clear
+     * Clear all items from this adapter
      */
     public void clear() {
         items.clear();
         notifyDataSetChanged();
     }
 
+    /**
+     * Set new items in this adapter and notify any
+     * listeners.
+     *
+     * @param newItems the list of PaymentListItems that should be set
+     */
+    public void setItems(List<PaymentListItem> newItems) {
+        items.clear();
+        items.addAll(newItems);
+        notifyDataSetChanged();
+    }
+    
     /**
      * Get the PaymentListItem at the given index
      *
@@ -139,23 +138,6 @@ class PaymentListAdapter extends RecyclerView.Adapter<PaymentListViewHolder> {
         return null;
     }
 
-    /**
-     * Set new items in this adapter and notify any
-     * listeners.
-     *
-     * @param newItems
-     */
-    public void setItems(List<PaymentListItem> newItems) {
-        items.clear();
-        items.addAll(newItems);
-        notifyDataSetChanged();
-    }
-
-    /**
-     * handleOnClick
-     *
-     * @param position
-     */
     private void handleOnClick(int position) {
 
         if (listener != null) {

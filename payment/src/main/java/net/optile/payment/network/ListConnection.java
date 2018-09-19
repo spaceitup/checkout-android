@@ -17,20 +17,19 @@ import static net.optile.payment.network.ErrorDetails.INTERNAL_ERROR;
 import static net.optile.payment.network.ErrorDetails.PROTOCOL_ERROR;
 import static net.optile.payment.network.ErrorDetails.SECURITY_ERROR;
 
-import java.util.Properties;
 import java.io.IOException;
-import java.io.InputStreamReader;
 import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.Properties;
 
 import com.google.gson.JsonParseException;
 
 import android.net.Uri;
 import android.text.TextUtils;
 import net.optile.payment.model.ListResult;
-import net.optile.payment.util.PaymentUtils;
 
 /**
  * Class implementing the communication with the List payment API
@@ -156,7 +155,7 @@ public final class ListConnection extends BaseConnection {
      * @param url the URL pointing to the language entries
      * 
      * @return the Properties object containing the language entries
-     * @throws NetworkException when an error occured while loading the language entries
+     * @throws NetworkException when an error occurred while loading the language entries
      */
     public Properties getLanguage(final URL url) throws NetworkException {
         final String source = "ListConnection[getLanguage]";

@@ -17,7 +17,7 @@ import java.util.List;
 /**
  * The PaymentPageView interface is the View part of the MVP, this is implemented by the PaymentPageActivity
  */
-public interface PaymentPageView {
+interface PaymentPageView {
 
     /** 
      * Is the view currently active

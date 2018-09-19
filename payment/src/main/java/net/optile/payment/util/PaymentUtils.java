@@ -36,7 +36,7 @@ public final class PaymentUtils {
     public static String readRawResource(Resources res, int resId) {
 
         StringBuilder sb = new StringBuilder();
-        String line = null;
+        String line;
 
         try (InputStream is = res.openRawResource(resId);
             InputStreamReader isr = new InputStreamReader(is);

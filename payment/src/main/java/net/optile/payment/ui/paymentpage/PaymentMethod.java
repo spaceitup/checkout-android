@@ -19,11 +19,9 @@ import net.optile.payment.model.ApplicableNetwork;
  */
 final class PaymentMethod {
 
-    /** The ApplicableNetwork of this payment method */
-    ApplicableNetwork network;
+    final ApplicableNetwork network;
 
-    /** The Properties containing the localized language file */
-    Properties language;
+    final Properties language;
 
     /** 
      * Construct a new PaymentMethod object

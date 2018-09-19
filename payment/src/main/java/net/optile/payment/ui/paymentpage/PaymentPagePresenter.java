@@ -11,36 +11,25 @@
 
 package net.optile.payment.ui.paymentpage;
 
-import android.util.Log;
-
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Properties;
-import java.net.URL;
+import java.util.concurrent.Callable;
 
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
-import com.google.gson.JsonParseException;
-
-import net.optile.payment.R;
-import net.optile.payment.model.ListResult;
+import android.util.Log;
+import net.optile.payment.core.PaymentException;
+import net.optile.payment.core.WorkerSubscriber;
+import net.optile.payment.core.WorkerTask;
+import net.optile.payment.core.Workers;
 import net.optile.payment.model.ApplicableNetwork;
 import net.optile.payment.model.Interaction;
 import net.optile.payment.model.InteractionCode;
+import net.optile.payment.model.ListResult;
 import net.optile.payment.model.Networks;
-
-import net.optile.payment.core.Workers;
-import net.optile.payment.core.WorkerTask;
-import net.optile.payment.core.WorkerSubscriber;
-import net.optile.payment.core.PaymentException;
-
-import net.optile.payment.network.NetworkException;
 import net.optile.payment.network.ListConnection;
-
-import net.optile.payment.util.PaymentUtils;
-
-import java.util.concurrent.Callable;
+import net.optile.payment.network.NetworkException;
 
 /**
  * The PaymentPagePresenter implementing the presenter part of the MVP
@@ -77,8 +66,6 @@ final class PaymentPagePresenter {
 
     /** 
      * Notify this presenter that it should start
-     *
-     * @param listUrl the listUrl for which the payment methods should be loaded
      */
     void onStart() {
         this.started = true;
@@ -119,7 +106,7 @@ final class PaymentPagePresenter {
     }
 
     private void handleStateProceed(final PaymentHolder holder) {
-        List<PaymentListItem> items = new ArrayList<PaymentListItem>();
+        List<PaymentListItem> items = new ArrayList<>();
 
         for (PaymentMethod method : holder.methods) {
             items.add(createPaymentListItem(method));
@@ -163,8 +150,8 @@ final class PaymentPagePresenter {
         }
     }
     
-    private List<PaymentMethod> loadPaymentMethods(final ListResult listResult) throws PaymentException, NetworkException {
-        List<PaymentMethod> methods = new ArrayList<PaymentMethod>();
+    private List<PaymentMethod> loadPaymentMethods(final ListResult listResult) throws NetworkException, PaymentException {
+        List<PaymentMethod> methods = new ArrayList<>();
         Networks nw = listResult.getNetworks();
         if (nw == null) {
             return methods;
@@ -174,18 +161,24 @@ final class PaymentPagePresenter {
             return methods;
         }
         for (ApplicableNetwork network : an) {
-            methods.add(new PaymentMethod(network, loadNetworkLanguage(network)));
+            if (isSupported(network)) {
+                methods.add(new PaymentMethod(network, loadNetworkLanguage(network)));
+            }
         }
         return methods;
     }
 
-    private Properties loadNetworkLanguage(final ApplicableNetwork network) throws PaymentException, NetworkException {
+    private Properties loadNetworkLanguage(final ApplicableNetwork network) throws NetworkException, PaymentException {
         Map<String, URL> links = network.getLinks();
-        URL langUrl = null;
+        URL langUrl;
 
         if (links == null || (langUrl = links.get("lang")) == null) {
             throw new PaymentException("Error loading language, missing 'lang' url");
         }
         return listConnection.getLanguage(langUrl);
+    }
+
+    private boolean isSupported(ApplicableNetwork network) {
+        return !network.getRedirect();
     }
 }

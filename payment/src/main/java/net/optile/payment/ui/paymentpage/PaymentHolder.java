@@ -11,7 +11,6 @@
 
 package net.optile.payment.ui.paymentpage;
 
-import java.util.Properties;
 import net.optile.payment.model.ListResult;
 import java.util.List;
 
@@ -20,11 +19,9 @@ import java.util.List;
  */
 final class PaymentHolder {
 
-    /** The ListResult holding information about the current list session */
-    ListResult listResult;
+    final ListResult listResult;
 
-    /** The list of PaymentMethods supported in this Payment */
-    List<PaymentMethod> methods;
+    final List<PaymentMethod> methods;
 
     /** 
      * Construct a new PaymentHolder object

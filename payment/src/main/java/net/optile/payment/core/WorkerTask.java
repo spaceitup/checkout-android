@@ -16,16 +16,13 @@ import android.os.Handler;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.FutureTask;
 import java.util.concurrent.Callable;
-import android.util.Log;
 
 /**
  * A WorkerTask executing one Callable and notifying the WorkerSubscriber once it is completed
  */
 public final class WorkerTask<V> extends FutureTask<V> {
 
-    private final static String TAG = "pay_WorkerTask";
-
-    private WorkerSubscriber subscriber;
+    private WorkerSubscriber<V> subscriber;
 
     private WorkerTask(Callable<V> callable) {
         super(callable);
@@ -34,15 +31,15 @@ public final class WorkerTask<V> extends FutureTask<V> {
     /** 
      * Create a new WorkerTask from the Callable
      * 
-     * @param callable 
+     * @param callable the Callable from which the WorkerTask is created
      * @return The newly created WorkerTask 
      */
     public static <V> WorkerTask<V> fromCallable(final Callable<V> callable) {
-        return new WorkerTask<V>(callable);
+        return new WorkerTask<>(callable);
     }
 
     /** 
-     * Subscribe the WorkerSubscriber to this task, this subscriber will be notified when the task is successfull or has failed
+     * Subscribe the WorkerSubscriber to this task, this subscriber will be notified when the task is successful or has failed
      * 
      * @param subscriber the subscriber to assign to this task
      */
@@ -55,7 +52,7 @@ public final class WorkerTask<V> extends FutureTask<V> {
      */
     @Override
     protected void done() {
-        WorkerSubscriber subscriber = this.subscriber;
+        WorkerSubscriber<V> subscriber = this.subscriber;
         if (subscriber == null) {
             return;
         }
@@ -68,7 +65,7 @@ public final class WorkerTask<V> extends FutureTask<V> {
         }
     }
 
-    private void callSuccessOnMainThread(final WorkerSubscriber subscriber, final V result) {
+    private void callSuccessOnMainThread(final WorkerSubscriber<V> subscriber, final V result) {
         Handler handler = new Handler(Looper.getMainLooper());
         handler.post(new Runnable() {
                 public void run() {
@@ -77,7 +74,7 @@ public final class WorkerTask<V> extends FutureTask<V> {
             });
     }
 
-    private void callErrorOnMainThread(final WorkerSubscriber subscriber, final Throwable throwable)  {
+    private void callErrorOnMainThread(final WorkerSubscriber<V> subscriber, final Throwable throwable)  {
         Handler handler = new Handler(Looper.getMainLooper());
         handler.post(new Runnable() {
                 public void run() {

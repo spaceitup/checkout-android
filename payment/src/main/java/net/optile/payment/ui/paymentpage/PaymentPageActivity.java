@@ -11,7 +11,6 @@
 
 package net.optile.payment.ui.paymentpage;
 
-import android.util.Log;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -21,7 +20,6 @@ import net.optile.payment.R;
 import android.content.Intent;
 import android.content.Context;
 import java.util.List;
-import java.util.ArrayList;
 import net.optile.payment.ui.PaymentTheme;
 
 /**
@@ -88,7 +86,7 @@ public final class PaymentPageActivity extends AppCompatActivity implements Paym
     }
 
     private void initPaymentList() {
-        this.adapter = new PaymentListAdapter(this, new ArrayList<PaymentListItem>());
+        this.adapter = new PaymentListAdapter();
         RecyclerView recyclerView = findViewById(R.id.recyclerview_paymentlist);
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
