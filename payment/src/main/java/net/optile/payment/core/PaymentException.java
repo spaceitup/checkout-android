@@ -29,7 +29,7 @@ public class PaymentException extends Exception {
      * {@inheritDoc}
      *
      * @param detailMessage the detail message
-     * @param cause the cause
+     * @param cause         the cause
      */
     public PaymentException(final String detailMessage, final Throwable cause) {
         super(detailMessage, cause);

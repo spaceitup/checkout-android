@@ -32,7 +32,7 @@ public final class WorkerTask<V> extends FutureTask<V> {
      * Create a new WorkerTask from the Callable
      * 
      * @param callable the Callable from which the WorkerTask is created
-     * @return The newly created WorkerTask 
+     * @return         newly created WorkerTask 
      */
     public static <V> WorkerTask<V> fromCallable(final Callable<V> callable) {
         return new WorkerTask<>(callable);
