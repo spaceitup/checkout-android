@@ -129,6 +129,8 @@ final class CheckoutPresenter {
             return selfUrl.toString();
                 
         } catch (NetworkException e) {
+            Log.wtf(TAG, e);
+            Log.i(TAG, e.details.toString());
             throw new CheckoutException("Error creating payment session", e);
         }
     }

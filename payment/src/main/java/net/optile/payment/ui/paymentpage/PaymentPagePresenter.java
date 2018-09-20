@@ -12,6 +12,7 @@
 package net.optile.payment.ui.paymentpage;
 
 import java.net.URL;
+import java.net.MalformedURLException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -46,7 +47,6 @@ final class PaymentPagePresenter {
 
     private int listItemType;
 
-    
     /**
      * Create a new PaymentPagePresenter
      *
@@ -126,7 +126,6 @@ final class PaymentPagePresenter {
                     return loadPayment(listUrl);
                 }
             });
-
         task.subscribe(new WorkerSubscriber<PaymentHolder>() {
                 @Override
                 public void onSuccess(PaymentHolder holder) {
@@ -143,8 +142,8 @@ final class PaymentPagePresenter {
     private PaymentHolder loadPayment(final String listUrl) throws PaymentException {
         try {
             ListResult listResult = listConnection.getListResult(listUrl);
-            List<PaymentMethod> methods = loadPaymentMethods(listResult);
-            return new PaymentHolder(listResult, methods);
+            return new PaymentHolder(listResult, loadPageLanguage(listResult),
+                                     loadPaymentMethods(listResult));
         } catch (NetworkException e) {
             throw new PaymentException("PaymentPagePresenter[loadPayment]", e);
         }
@@ -173,11 +172,46 @@ final class PaymentPagePresenter {
         URL langUrl;
 
         if (links == null || (langUrl = links.get("lang")) == null) {
-            throw new PaymentException("Error loading language, missing 'lang' url");
+            throw new PaymentException("Error loading network language, missing 'lang' link in ApplicableNetwork");
         }
-        return listConnection.getLanguage(langUrl);
+        return listConnection.getLanguage(langUrl, new Properties());
     }
 
+    /** 
+     * This method loads the payment page language file. 
+     * The URL for the paymentpage language file is constructed from the URL of one of the ApplicableNetwork entries.
+     *
+     * @param listResult 
+     * @return the properties object containing the language entries 
+     */
+    private Properties loadPageLanguage(final ListResult listResult) throws NetworkException, PaymentException {
+        Properties prop = new Properties();
+        Networks nw = listResult.getNetworks();
+
+        if (nw == null) {
+            return prop;
+        }
+        List<ApplicableNetwork> an = nw.getApplicable();
+
+        if (an == null || an.size() == 0) {
+            return prop;
+        }
+        ApplicableNetwork network = an.get(0);
+        Map<String, URL> links = network.getLinks();
+        URL langUrl;
+        
+        if (links == null || (langUrl = links.get("lang")) == null) {
+            throw new PaymentException("Error loading payment page language, missing 'lang' link in ApplicableNetwork");
+        }
+        try {
+            String newUrl = langUrl.toString().replaceAll(network.getCode(), "paymentpage");
+            langUrl = new URL(newUrl);
+            return listConnection.getLanguage(langUrl, prop);
+        } catch (MalformedURLException e) {
+            throw new PaymentException("PaymentPagePresenter[loadPageLanguage]", e);
+        }
+    }
+    
     private boolean isSupported(ApplicableNetwork network) {
         return !network.getRedirect();
     }

@@ -55,8 +55,7 @@ class PaymentListAdapter extends RecyclerView.Adapter<PaymentListViewHolder> {
     @Override
     public void onBindViewHolder(@NonNull PaymentListViewHolder holder, int position) {
         PaymentListItem item = items.get(position);
-        String text = item.getCode() + "-" + item.getLabel();
-        holder.title.setText(text);
+        holder.title.setText(item.getLabel());
     }
 
     /**

@@ -3,7 +3,8 @@
     package="net.optile.payment" >
 
     <uses-permission android:name="android.permission.INTERNET" />
-    <application>
+    <application
+        android:hardwareAccelerated="true">
         <activity
             android:name="net.optile.payment.ui.paymentpage.PaymentPageActivity"
             android:theme="@style/PaymentTheme.NoActionBar">

@@ -70,21 +70,14 @@ public final class PaymentPageActivity extends AppCompatActivity implements Paym
         }
         setContentView(R.layout.activity_paymentpage);
 
-        initToolbar();
-        initPresenter();
-        initPaymentList();
-    }
-
-    private void initToolbar() {
+        // initialize the toolbar
         final Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-    }
-    
-    private void initPresenter() {
-        this.presenter = new PaymentPagePresenter(this);
-    }
 
-    private void initPaymentList() {
+        // initialize the presenter
+        this.presenter = new PaymentPagePresenter(this);
+
+        // initialize the list adapter
         this.adapter = new PaymentListAdapter();
         RecyclerView recyclerView = findViewById(R.id.recyclerview_paymentlist);
         recyclerView.setAdapter(adapter);

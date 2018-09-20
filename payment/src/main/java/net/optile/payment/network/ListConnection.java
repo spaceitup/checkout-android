@@ -146,18 +146,18 @@ public final class ListConnection extends BaseConnection {
     }
 
     /** 
-     * Load the language file given the URL into Properties object
+     * Load the language file given the URL into the Properties object
      * 
-     * @param url the URL pointing to the language entries
-     * @return    the Properties object containing the language entries
+     * @param url  the pointing to the language entries
+     * @param prop in which the language properties should be stored
+     * @return     Properties object containing the language entries
      */
-    public Properties getLanguage(final URL url) throws NetworkException {
+    public Properties getLanguage(final URL url, Properties prop) throws NetworkException {
         final String source = "ListConnection[getLanguage]";
 
         if (url == null) {
             throw new IllegalArgumentException(source + " - url cannot be null");
         }
-        Properties prop = new Properties();
         try (InputStream in = url.openStream();
              InputStreamReader ir = new InputStreamReader(in)) {
             prop.load(ir);
