@@ -21,7 +21,6 @@
             android:id="@+id/cardview_content"            
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:minHeight="@dimen/cardview_minheight"
             android:padding="@dimen/border_medium">
 
             <LinearLayout
@@ -35,7 +34,7 @@
                     android:id="@+id/image_logo"
                     android:layout_width="@dimen/cardview_logo_width"
                     android:layout_height="@dimen/cardview_logo_height"
-                    android:background="@color/color_primary"
+                    android:background="@color/color_cardview_logo_background"
                     android:layout_marginRight="@dimen/border_small"
                     android:adjustViewBounds="true"/>
                 
