@@ -67,6 +67,12 @@ class PaymentListAdapter extends RecyclerView.Adapter<PaymentListViewHolder> {
         if (logoUrl != null) {
             Glide.with(activity).asBitmap().load(logoUrl.toString()).into(holder.logo);
         }
+        int sel = activity.getSelected();
+        if (sel == position) {
+            holder.expand();
+        } else {
+            holder.collapse();
+        }
     }
 
     /**
