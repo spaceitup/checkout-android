@@ -34,7 +34,6 @@
                     android:id="@+id/image_logo"
                     android:layout_width="@dimen/cardview_logo_width"
                     android:layout_height="@dimen/cardview_logo_height"
-                    android:background="@color/color_cardview_logo_background"
                     android:layout_marginRight="@dimen/border_small"
                     android:adjustViewBounds="true"/>
                 

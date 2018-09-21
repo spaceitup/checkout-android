@@ -36,6 +36,7 @@ ext {
     targetSdkVersion = 27
     buildToolsVersion = "27.0.3"
     gsonVersion = "2.8.5"
+    bumptechGlideVersion = "4.8.0"
     supportLibVersion = "27.1.1"
     junitVersion = "4.12"
     mockitoCoreVersion = "2.21.0"

@@ -18,9 +18,12 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import java.net.URL;
 import java.util.List;
 import java.util.ArrayList;
 import net.optile.payment.R;
+
+import com.bumptech.glide.Glide;
 
 /**
  * The PaymentListAdapter containing the list of items
@@ -31,10 +34,13 @@ class PaymentListAdapter extends RecyclerView.Adapter<PaymentListViewHolder> {
 
     private OnItemListener listener;
 
+    private PaymentPageActivity activity;
+    
     /** 
      * Construct a new PaymentListAdapter
      */
-    PaymentListAdapter() {
+    PaymentListAdapter(PaymentPageActivity activity) {
+        this.activity = activity;
         this.items = new ArrayList<>();
     }
 
@@ -55,7 +61,12 @@ class PaymentListAdapter extends RecyclerView.Adapter<PaymentListViewHolder> {
     @Override
     public void onBindViewHolder(@NonNull PaymentListViewHolder holder, int position) {
         PaymentListItem item = items.get(position);
+        URL logoUrl = item.method.getLink("logo");
         holder.title.setText(item.getLabel());
+
+        if (logoUrl != null) {
+            Glide.with(activity).asBitmap().load(logoUrl.toString()).into(holder.logo);
+        }
     }
 
     /**

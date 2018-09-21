@@ -11,6 +11,8 @@
 
 package net.optile.payment.ui.paymentpage;
 
+import java.net.URL;
+import java.util.Map;
 import java.util.Properties;
 import net.optile.payment.model.ApplicableNetwork;
 
@@ -21,16 +23,27 @@ final class PaymentMethod {
 
     final ApplicableNetwork network;
 
-    final Properties language;
+    private Properties language;
 
     /** 
      * Construct a new PaymentMethod object
      * 
-     * @param network  ApplicableNetwork used in this PaymentMethod 
-     * @param language localized language file
+     * @param network ApplicableNetwork used in this PaymentMethod 
      */
-    PaymentMethod(ApplicableNetwork network, Properties language) {
+    PaymentMethod(ApplicableNetwork network) {
         this.network = network;
+    }
+
+    URL getLink(String name) {
+        Map<String, URL> links = network.getLinks();
+        return links != null ? links.get(name) : null;
+    }
+
+    ApplicableNetwork getNetwork() {
+        return network;
+    }
+    
+    void setLanguage(Properties language) {
         this.language = language;
     }
 
@@ -40,5 +53,9 @@ final class PaymentMethod {
     
     String getLabel() {
         return network.getLabel();
+    }
+
+    String translate(String key, String defValue) {
+        return language != null ? language.getProperty(key, defValue) : defValue;
     }
 }

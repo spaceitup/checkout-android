@@ -13,6 +13,7 @@ package net.optile.payment.ui.paymentpage;
 
 import android.view.View;
 import android.widget.TextView;
+import android.widget.ImageView;
 import android.support.v7.widget.RecyclerView;
 import net.optile.payment.R;
 
@@ -22,9 +23,12 @@ import net.optile.payment.R;
 class PaymentListViewHolder extends RecyclerView.ViewHolder {
 
     final TextView title;
+
+    final ImageView logo;
     
     PaymentListViewHolder(View parent) {
         super(parent);
         this.title = parent.findViewById(R.id.text_title);
+        this.logo = parent.findViewById(R.id.image_logo);
     }
 }

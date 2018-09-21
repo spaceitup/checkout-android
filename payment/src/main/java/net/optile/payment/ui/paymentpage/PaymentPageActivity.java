@@ -78,7 +78,7 @@ public final class PaymentPageActivity extends AppCompatActivity implements Paym
         this.presenter = new PaymentPagePresenter(this);
 
         // initialize the list adapter
-        this.adapter = new PaymentListAdapter();
+        this.adapter = new PaymentListAdapter(this);
         RecyclerView recyclerView = findViewById(R.id.recyclerview_paymentlist);
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));

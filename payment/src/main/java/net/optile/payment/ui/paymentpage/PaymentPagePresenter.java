@@ -142,8 +142,9 @@ final class PaymentPagePresenter {
     private PaymentHolder loadPayment(final String listUrl) throws PaymentException {
         try {
             ListResult listResult = listConnection.getListResult(listUrl);
-            return new PaymentHolder(listResult, loadPageLanguage(listResult),
-                                     loadPaymentMethods(listResult));
+            PaymentHolder holder = new PaymentHolder(listResult, loadPaymentMethods(listResult));
+            holder.setLanguage(loadPageLanguage(holder.methods));
+            return holder;
         } catch (NetworkException e) {
             throw new PaymentException("PaymentPagePresenter[loadPayment]", e);
         }
@@ -152,29 +153,32 @@ final class PaymentPagePresenter {
     private List<PaymentMethod> loadPaymentMethods(final ListResult listResult) throws NetworkException, PaymentException {
         List<PaymentMethod> methods = new ArrayList<>();
         Networks nw = listResult.getNetworks();
+
         if (nw == null) {
             return methods;
         }
         List<ApplicableNetwork> an = nw.getApplicable();
+
         if (an == null || an.size() == 0) {
             return methods;
         }
         for (ApplicableNetwork network : an) {
             if (isSupported(network)) {
-                methods.add(new PaymentMethod(network, loadNetworkLanguage(network)));
+                methods.add(loadPaymentMethod(network));
             }
         }
         return methods;
     }
 
-    private Properties loadNetworkLanguage(final ApplicableNetwork network) throws NetworkException, PaymentException {
-        Map<String, URL> links = network.getLinks();
-        URL langUrl;
+    private PaymentMethod loadPaymentMethod(final ApplicableNetwork network) throws NetworkException, PaymentException {
+        PaymentMethod method = new PaymentMethod(network);
+        URL langUrl = method.getLink("lang");
 
-        if (links == null || (langUrl = links.get("lang")) == null) {
-            throw new PaymentException("Error loading network language, missing 'lang' link in ApplicableNetwork");
+        if (langUrl == null) {
+            throw new PaymentException("Error loading network language, missing 'lang' link in ApplicableNetwork");            
         }
-        return listConnection.getLanguage(langUrl, new Properties());
+        method.setLanguage(listConnection.getLanguage(langUrl, new Properties()));
+        return method;
     }
 
     /** 
@@ -184,27 +188,20 @@ final class PaymentPagePresenter {
      * @param listResult 
      * @return the properties object containing the language entries 
      */
-    private Properties loadPageLanguage(final ListResult listResult) throws NetworkException, PaymentException {
+    private Properties loadPageLanguage(final List<PaymentMethod> methods) throws NetworkException, PaymentException {
         Properties prop = new Properties();
-        Networks nw = listResult.getNetworks();
 
-        if (nw == null) {
+        if (methods.size() == 0) {
             return prop;
         }
-        List<ApplicableNetwork> an = nw.getApplicable();
-
-        if (an == null || an.size() == 0) {
-            return prop;
-        }
-        ApplicableNetwork network = an.get(0);
-        Map<String, URL> links = network.getLinks();
-        URL langUrl;
+        PaymentMethod method = methods.get(0);
+        URL langUrl = method.getLink("lang");
         
-        if (links == null || (langUrl = links.get("lang")) == null) {
+        if (langUrl == null) {
             throw new PaymentException("Error loading payment page language, missing 'lang' link in ApplicableNetwork");
         }
         try {
-            String newUrl = langUrl.toString().replaceAll(network.getCode(), "paymentpage");
+            String newUrl = langUrl.toString().replaceAll(method.getCode(), "paymentpage");
             langUrl = new URL(newUrl);
             return listConnection.getLanguage(langUrl, prop);
         } catch (MalformedURLException e) {

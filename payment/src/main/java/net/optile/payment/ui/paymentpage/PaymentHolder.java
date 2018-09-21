@@ -24,18 +24,24 @@ final class PaymentHolder {
 
     final List<PaymentMethod> methods;
 
-    final Properties language;
+    private Properties language;
 
     /** 
      * Construct a new PaymentHolder object
      * 
      * @param listResult Object holding the current list session data 
-     * @param language   containing the paymentpage language properties
      * @param methods    list of PaymentMethods supported by the current Payment session
      */
-    PaymentHolder(ListResult listResult, Properties language, List<PaymentMethod> methods) {
+    PaymentHolder(ListResult listResult, List<PaymentMethod> methods) {
         this.listResult = listResult;
-        this.language = language;
         this.methods = methods;
+    }
+
+    void setLanguage(Properties language) {
+        this.language = language;
+    }
+    
+    String translate(String key, String defValue) {
+        return language != null ? language.getProperty(key, defValue) : defValue;
     }
 }
