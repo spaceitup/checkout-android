@@ -52,7 +52,7 @@ class PaymentListAdapter extends RecyclerView.Adapter<PaymentListViewHolder> {
         Context context = parent.getContext();
         LayoutInflater inflater = LayoutInflater.from(context);
         View view = inflater.inflate(R.layout.list_item_paymentpage, parent, false);
-        return new PaymentListViewHolder(view);
+        return new PaymentListViewHolder(this, view);
     }
 
     /**
@@ -113,7 +113,14 @@ class PaymentListAdapter extends RecyclerView.Adapter<PaymentListViewHolder> {
         items.addAll(newItems);
         notifyDataSetChanged();
     }
-    
+
+    void handleOnClick(int position) {
+        if (listener != null) {
+            PaymentListItem item = items.get(position);
+            listener.onItemClicked(item, position);
+        }
+    }
+
     /**
      * Get the PaymentListItem at the given index
      *
@@ -138,14 +145,6 @@ class PaymentListAdapter extends RecyclerView.Adapter<PaymentListViewHolder> {
             }
         }
         return null;
-    }
-
-    private void handleOnClick(int position) {
-
-        if (listener != null) {
-            PaymentListItem item = items.get(position);
-            listener.onItemClicked(item, position);
-        }
     }
 
     /**

@@ -25,10 +25,28 @@ class PaymentListViewHolder extends RecyclerView.ViewHolder {
     final TextView title;
 
     final ImageView logo;
+
+    final View inputFields;
     
-    PaymentListViewHolder(View parent) {
+    final PaymentListAdapter adapter;
+    
+    PaymentListViewHolder(PaymentListAdapter adapter, View parent) {
         super(parent);
+        this.adapter = adapter;
         this.title = parent.findViewById(R.id.text_title);
         this.logo = parent.findViewById(R.id.image_logo);
+        this.inputFields = parent.findViewById(R.id.layout_inputfields);
+        
+        View view = parent.findViewById(R.id.cardview);
+        view.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    adapter.handleOnClick(getAdapterPosition());
+                }
+            });
+    }
+
+    void toggle() {
+        inputFields.setVisibility(inputFields.getVisibility() == View.VISIBLE ? View.GONE : View.VISIBLE);
     }
 }

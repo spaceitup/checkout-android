@@ -39,10 +39,6 @@ final class PaymentMethod {
         return links != null ? links.get(name) : null;
     }
 
-    ApplicableNetwork getNetwork() {
-        return network;
-    }
-    
     void setLanguage(Properties language) {
         this.language = language;
     }

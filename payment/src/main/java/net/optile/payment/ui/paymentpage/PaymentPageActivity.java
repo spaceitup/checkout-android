@@ -16,17 +16,21 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.LinearSmoothScroller;
 import net.optile.payment.R;
 import android.content.Intent;
 import android.content.Context;
+import android.util.Log;
 import java.util.List;
 import net.optile.payment.ui.PaymentTheme;
+import android.transition.TransitionManager;
 
 /**
  * The PaymentPageActivity showing available payment methods
  */
-public final class PaymentPageActivity extends AppCompatActivity implements PaymentPageView {
+public final class PaymentPageActivity extends AppCompatActivity implements PaymentPageView, PaymentListAdapter.OnItemListener {
 
+    private final static String TAG = "pay_PaymentPageActivity";
     private final static String EXTRA_LISTURL = "extra_listurl";
     private final static String EXTRA_PAYMENTTHEME = "extra_paymenttheme";
 
@@ -39,6 +43,8 @@ public final class PaymentPageActivity extends AppCompatActivity implements Paym
     private PaymentTheme theme;
 
     private boolean active;
+
+    private RecyclerView recyclerView;
     
     /** 
      * Create the start intent for this Activity
@@ -79,10 +85,11 @@ public final class PaymentPageActivity extends AppCompatActivity implements Paym
 
         // initialize the list adapter
         this.adapter = new PaymentListAdapter(this);
-        RecyclerView recyclerView = findViewById(R.id.recyclerview_paymentlist);
-        recyclerView.setAdapter(adapter);
-        recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        //adapter.setListener(this);
+        this.adapter.setListener(this);
+
+        this.recyclerView = findViewById(R.id.recyclerview_paymentlist);
+        this.recyclerView.setAdapter(adapter);
+        this.recyclerView.setLayoutManager(new LinearLayoutManager(this));
     }
 
     /**
@@ -145,5 +152,42 @@ public final class PaymentPageActivity extends AppCompatActivity implements Paym
      */
     @Override
     public void abortPayment(String code, String reason) {
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void onItemClicked(PaymentListItem item, int position) {
+        Log.i(TAG, "on Item Clicked: " + position);
+        PaymentListViewHolder holder = (PaymentListViewHolder)recyclerView.findViewHolderForAdapterPosition(position);
+        if (holder != null) {
+            holder.toggle();
+            smoothScrollToItem(position);
+            //TransitionManager.beginDelayedTransition(recyclerView); 
+            //recyclerView.scrollToPosition(position);
+            //TransitionManager.beginDelayedTransition(recyclerView);
+            //adapter.notifyDataSetChanged();
+
+
+        }
+    }
+
+    private void smoothScrollToItem(int position) {
+        RecyclerView.SmoothScroller smoothScroller = new LinearSmoothScroller(this) {
+                @Override protected int getVerticalSnapPreference() {
+                    return LinearSmoothScroller.SNAP_TO_START;
+                }
+            };
+        smoothScroller.setTargetPosition(position);
+        recyclerView.getLayoutManager().startSmoothScroll(smoothScroller);
+    }
+    
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void onActionClicked(PaymentListItem item, int position) {
+        Log.i(TAG, "on Action Clicked: " + position);
     }
 }
