@@ -22,7 +22,7 @@ final class PaymentHolder {
 
     final ListResult listResult;
 
-    final List<PaymentMethod> methods;
+    final List<PaymentItem> items;
 
     private Properties language;
 
@@ -30,11 +30,11 @@ final class PaymentHolder {
      * Construct a new PaymentHolder object
      * 
      * @param listResult Object holding the current list session data 
-     * @param methods    list of PaymentMethods supported by the current Payment session
+     * @param items      list of PaymentItems supported by the current Payment session
      */
-    PaymentHolder(ListResult listResult, List<PaymentMethod> methods) {
+    PaymentHolder(ListResult listResult, List<PaymentItem> items) {
         this.listResult = listResult;
-        this.methods = methods;
+        this.items = items;
     }
 
     void setLanguage(Properties language) {

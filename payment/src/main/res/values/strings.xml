@@ -1,3 +1,4 @@
 <resources>
     <string name="title_paymentpage">Payment Page</string>
+    <string name="label_paymentpage_empty">No payment methods available</string>    
 </resources>

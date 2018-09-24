@@ -158,6 +158,9 @@ public final class ListConnection extends BaseConnection {
         if (url == null) {
             throw new IllegalArgumentException(source + " - url cannot be null");
         }
+        if (prop == null) {
+            throw new IllegalArgumentException(source + " - properties cannot be null");
+        }
         try (InputStream in = url.openStream();
              InputStreamReader ir = new InputStreamReader(in)) {
             prop.load(ir);

@@ -30,4 +30,23 @@
     <style name="PaymentText.Medium">
         <item name="android:textSize">16sp</item>
     </style>
+
+    <style name="PaymentText.Medium.Gray">
+        <item name="android:textSize">16sp</item>
+        <item name="android:textColor">@color/text_dark_third</item>
+    </style>
+    
+    <style name="PaymentProgressBar" parent="@style/Widget.AppCompat.ProgressBar">
+        <item name="android:layout_width">@dimen/progressbar_size</item>
+        <item name="android:layout_height">@dimen/progressbar_size</item>
+    </style>
+
+    <style name="PaymentInputLayout" parent="TextAppearance.AppCompat">
+        <item name="android:textColorHint">@color/text_dark_third</item>
+        <item name="android:textSize">16sp</item>
+        <item name="colorControlNormal">@color/text_dark_second</item>
+        <item name="colorControlActivated">@color/color_primary</item>
+        <item name="colorControlHighlight">@color/text_dark_second</item>
+    </style>
+    
 </resources>

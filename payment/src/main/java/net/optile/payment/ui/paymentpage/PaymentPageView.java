@@ -27,6 +27,13 @@ interface PaymentPageView {
     boolean isActive();
 
     /** 
+     * Show or hide the loading animation 
+     * 
+     * @param show if true show the loading animation, false hides the loading animation
+     */
+    void showLoading(boolean show);
+    
+    /** 
      * Get the Context from this view
      * 
      * @return context 
@@ -40,6 +47,11 @@ interface PaymentPageView {
      */
     void setItems(List<PaymentListItem> items);
 
+    /** 
+     * Clear all items from the payment page
+     */
+    void clearItems();
+    
     /** 
      * Abort the payment and notify the user of this SDK
      * 

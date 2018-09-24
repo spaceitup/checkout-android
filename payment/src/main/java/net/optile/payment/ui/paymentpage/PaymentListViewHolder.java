@@ -21,6 +21,8 @@ import android.view.animation.Animation.AnimationListener;
 import android.view.animation.Animation;
 import android.view.animation.AccelerateInterpolator;
 
+import java.util.LinkedHashMap;
+
 /**
  * The PaymentListViewHolder holding all Views for easy access
  */
@@ -33,6 +35,8 @@ class PaymentListViewHolder extends RecyclerView.ViewHolder {
     final View inputFields;
     
     final PaymentListAdapter adapter;
+
+    final LinkedHashMap<String, View> views;
     
     PaymentListViewHolder(PaymentListAdapter adapter, View parent) {
         super(parent);
@@ -40,6 +44,7 @@ class PaymentListViewHolder extends RecyclerView.ViewHolder {
         this.title = parent.findViewById(R.id.text_title);
         this.logo = parent.findViewById(R.id.image_logo);
         this.inputFields = parent.findViewById(R.id.layout_inputfields);
+        this.views = new LinkedHashMap<>();
         
         View view = parent.findViewById(R.id.cardview);
         view.setOnClickListener(new View.OnClickListener() {
@@ -50,15 +55,7 @@ class PaymentListViewHolder extends RecyclerView.ViewHolder {
             });
     }
 
-    void expand() {
-        if (inputFields.getVisibility() == View.GONE) {
-            inputFields.setVisibility(View.VISIBLE);
-        }
-    }
-
-    void collapse() {
-        if (inputFields.getVisibility() == View.VISIBLE) {
-            inputFields.setVisibility(View.GONE);
-        }
+    void expand(boolean expand) {
+        inputFields.setVisibility(expand ? View.VISIBLE : View.GONE);
     }
 }

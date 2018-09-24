@@ -11,6 +11,10 @@
 
 package net.optile.payment.network;
 
+import static org.junit.Assert.assertNotNull;
+
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.Properties;
 
 import org.junit.Test;
@@ -77,6 +81,24 @@ public class ListConnectionTest {
     @Test(expected = IllegalArgumentException.class)
     public void getLanguage_invalidURL_IllegalArgumentException() throws NetworkException {
         ListConnection conn = new ListConnection();
-        Properties lang = conn.getLanguage(null);
+        Properties lang = conn.getLanguage(null, new Properties());
+    }
+
+    /**
+     * Gets language Properties invalid properties
+     *
+     * @throws NetworkException the network exception
+     */
+    @Test(expected = IllegalArgumentException.class)
+    public void getLanguage_invalidProperties_IllegalArgumentException() throws NetworkException {
+        ListConnection conn = new ListConnection();
+        URL url = null;
+        try {
+            url = new URL("http://localhost");
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+        }
+        assertNotNull(url);
+        Properties lang = conn.getLanguage(url, null);
     }
 }

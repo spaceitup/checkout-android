@@ -12,25 +12,27 @@
 package net.optile.payment.ui.paymentpage;
 
 import java.net.URL;
+import java.util.List;
 import java.util.Map;
 import java.util.Properties;
 import net.optile.payment.model.ApplicableNetwork;
+import net.optile.payment.model.InputElement;
 
 /**
  * Class for holding the ApplicableNetwork with its localized language file
  */
-final class PaymentMethod {
+final class PaymentItem {
 
     final ApplicableNetwork network;
 
     private Properties language;
 
     /** 
-     * Construct a new PaymentMethod object
+     * Construct a new PaymentItem object
      * 
-     * @param network ApplicableNetwork used in this PaymentMethod 
+     * @param network ApplicableNetwork used in this PaymentItem 
      */
-    PaymentMethod(ApplicableNetwork network) {
+    PaymentItem(ApplicableNetwork network) {
         this.network = network;
     }
 
@@ -51,6 +53,10 @@ final class PaymentMethod {
         return network.getLabel();
     }
 
+    List<InputElement> getSortedInputElements() {
+        return network.getLocalizedInputElements();
+    }
+    
     String translate(String key, String defValue) {
         return language != null ? language.getProperty(key, defValue) : defValue;
     }

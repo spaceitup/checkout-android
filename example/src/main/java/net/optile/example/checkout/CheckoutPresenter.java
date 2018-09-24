@@ -12,19 +12,16 @@
 package net.optile.example.checkout;
 
 import java.net.URL;
-import java.util.List;
 import java.util.Map;
 import java.util.concurrent.Callable;
 
 import android.content.Context;
 import android.util.Log;
-
 import net.optile.example.R;
-import net.optile.payment.util.PaymentUtils;
 import net.optile.payment.model.ListResult;
 import net.optile.payment.network.ListConnection;
 import net.optile.payment.network.NetworkException;
-
+import net.optile.payment.util.PaymentUtils;
 import rx.Single;
 import rx.SingleSubscriber;
 import rx.Subscription;
@@ -91,7 +88,7 @@ final class CheckoutPresenter {
             @Override
             public String call() throws CheckoutException {
                 return createPaymentSession(url, auth, listData);
-                
+
             }
         });
         this.subscription = single.subscribeOn(Schedulers.io())
@@ -101,6 +98,7 @@ final class CheckoutPresenter {
                 public void onSuccess(String listUrl) {
                     view.openPaymentPage(listUrl);
                 }
+
                 @Override
                 public void onError(Throwable error) {
                     Log.i(TAG, "onError: " + error);
@@ -122,12 +120,12 @@ final class CheckoutPresenter {
             ListResult result = conn.createPaymentSession(url, authorization, listData);
             Map<String, URL> links = result.getLinks();
             URL selfUrl = null;
-            
+
             if (links == null || (selfUrl = links.get("self")) == null) {
                 throw new CheckoutException("Error creating payment session, missing self url");
             }
             return selfUrl.toString();
-                
+
         } catch (NetworkException e) {
             Log.wtf(TAG, e);
             Log.i(TAG, e.details.toString());

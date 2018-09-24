@@ -11,16 +11,15 @@
 
 package net.optile.example.checkout;
 
-import android.util.Log;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import net.optile.example.R;
-import android.widget.Button;
+import android.util.Log;
 import android.view.View;
-
+import android.widget.Button;
+import net.optile.example.R;
 import net.optile.payment.ui.PaymentUI;
 
 /**
@@ -30,7 +29,7 @@ public final class CheckoutActivity extends AppCompatActivity implements Checkou
 
     private static String TAG = "payment_CheckoutActivity";
     private static int PAYMENT_REQUEST = 1;
-    
+
     private CheckoutPresenter presenter;
 
     private boolean active;

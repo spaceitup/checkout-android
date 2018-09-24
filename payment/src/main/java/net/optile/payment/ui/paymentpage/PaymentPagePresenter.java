@@ -38,7 +38,7 @@ import net.optile.payment.network.NetworkException;
 final class PaymentPagePresenter {
 
     private final static String TAG = "pay_PayPresenter";
-
+    
     private final ListConnection listConnection;
 
     private final PaymentPageView view;
@@ -50,7 +50,7 @@ final class PaymentPagePresenter {
     /**
      * Create a new PaymentPagePresenter
      *
-     * @param view The PaymentPageView displaying the payment methods
+     * @param view The PaymentPageView displaying the payment items
      */
     PaymentPagePresenter(final PaymentPageView view) {
         this.view = view;
@@ -108,14 +108,14 @@ final class PaymentPagePresenter {
     private void handleStateProceed(final PaymentHolder holder) {
         List<PaymentListItem> items = new ArrayList<>();
 
-        for (PaymentMethod method : holder.methods) {
-            items.add(createPaymentListItem(method));
+        for (PaymentItem item : holder.items) {
+            items.add(createPaymentListItem(item));
         }
         view.setItems(items);
     }
 
-    private PaymentListItem createPaymentListItem(final PaymentMethod method) {
-        return new PaymentListItem(nextListItemType(), method);
+    private PaymentListItem createPaymentListItem(final PaymentItem item) {
+        return new PaymentListItem(nextListItemType(), item);
     }
     
     private void asyncLoadPayment(final String listUrl) {
@@ -129,56 +129,60 @@ final class PaymentPagePresenter {
         task.subscribe(new WorkerSubscriber<PaymentHolder>() {
                 @Override
                 public void onSuccess(PaymentHolder holder) {
+                    view.showLoading(false);
                     handlePayment(holder);
                 }
                 @Override
                 public void onError(Throwable error) {
+                    view.showLoading(false);
                     Log.i(TAG, "onError: " + error);
                 }
             });
+        view.clearItems();
+        view.showLoading(true);
         Workers.getInstance().forNetworkTasks().execute(task); 
     }
 
     private PaymentHolder loadPayment(final String listUrl) throws PaymentException {
         try {
             ListResult listResult = listConnection.getListResult(listUrl);
-            PaymentHolder holder = new PaymentHolder(listResult, loadPaymentMethods(listResult));
-            holder.setLanguage(loadPageLanguage(holder.methods));
+            PaymentHolder holder = new PaymentHolder(listResult, loadPaymentItems(listResult));
+            holder.setLanguage(loadPageLanguage(holder.items));
             return holder;
         } catch (NetworkException e) {
             throw new PaymentException("PaymentPagePresenter[loadPayment]", e);
         }
     }
     
-    private List<PaymentMethod> loadPaymentMethods(final ListResult listResult) throws NetworkException, PaymentException {
-        List<PaymentMethod> methods = new ArrayList<>();
+    private List<PaymentItem> loadPaymentItems(final ListResult listResult) throws NetworkException, PaymentException {
+        List<PaymentItem> items = new ArrayList<>();
         Networks nw = listResult.getNetworks();
 
         if (nw == null) {
-            return methods;
+            return items;
         }
         List<ApplicableNetwork> an = nw.getApplicable();
 
         if (an == null || an.size() == 0) {
-            return methods;
+            return items;
         }
         for (ApplicableNetwork network : an) {
             if (isSupported(network)) {
-                methods.add(loadPaymentMethod(network));
+                items.add(loadPaymentItem(network));
             }
         }
-        return methods;
+        return items;
     }
 
-    private PaymentMethod loadPaymentMethod(final ApplicableNetwork network) throws NetworkException, PaymentException {
-        PaymentMethod method = new PaymentMethod(network);
-        URL langUrl = method.getLink("lang");
+    private PaymentItem loadPaymentItem(final ApplicableNetwork network) throws NetworkException, PaymentException {
+        PaymentItem item = new PaymentItem(network);
+        URL langUrl = item.getLink("lang");
 
         if (langUrl == null) {
             throw new PaymentException("Error loading network language, missing 'lang' link in ApplicableNetwork");            
         }
-        method.setLanguage(listConnection.getLanguage(langUrl, new Properties()));
-        return method;
+        item.setLanguage(listConnection.getLanguage(langUrl, new Properties()));
+        return item;
     }
 
     /** 
@@ -188,20 +192,20 @@ final class PaymentPagePresenter {
      * @param listResult 
      * @return the properties object containing the language entries 
      */
-    private Properties loadPageLanguage(final List<PaymentMethod> methods) throws NetworkException, PaymentException {
+    private Properties loadPageLanguage(final List<PaymentItem> items) throws NetworkException, PaymentException {
         Properties prop = new Properties();
 
-        if (methods.size() == 0) {
+        if (items.size() == 0) {
             return prop;
         }
-        PaymentMethod method = methods.get(0);
-        URL langUrl = method.getLink("lang");
+        PaymentItem item = items.get(0);
+        URL langUrl = item.getLink("lang");
         
         if (langUrl == null) {
             throw new PaymentException("Error loading payment page language, missing 'lang' link in ApplicableNetwork");
         }
         try {
-            String newUrl = langUrl.toString().replaceAll(method.getCode(), "paymentpage");
+            String newUrl = langUrl.toString().replaceAll(item.getCode(), "paymentpage");
             langUrl = new URL(newUrl);
             return listConnection.getLanguage(langUrl, prop);
         } catch (MalformedURLException e) {

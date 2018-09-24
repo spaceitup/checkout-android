@@ -11,6 +11,9 @@
 
 package net.optile.payment.ui.paymentpage;
 
+import java.util.List;
+import net.optile.payment.model.InputElement;
+
 /**
  * A Payment list item in the payment page.
  */
@@ -18,24 +21,30 @@ final class PaymentListItem {
 
     final int type;
 
-    final PaymentMethod method;
+    final PaymentItem item;
 
+    boolean expanded;
+    
     /** 
      * Construct a new PaymentListItem
      *
-     * @param type   type of this PaymentListItem
-     * @param method PaymentMethod to be shown
+     * @param type type of this PaymentListItem
+     * @param item PaymentItem to be shown
      */
-    PaymentListItem(int type, PaymentMethod method) {
+    PaymentListItem(int type, PaymentItem item) {
         this.type = type;
-        this.method = method;
+        this.item = item;
     }
 
     String getCode() {
-        return method.getCode();
+        return item.getCode();
     }
     
     String getLabel() {
-        return method.getLabel();
+        return item.getLabel();
+    }
+
+    List<InputElement> getSortedInputElements() {
+        return item.getSortedInputElements();
     }
 }

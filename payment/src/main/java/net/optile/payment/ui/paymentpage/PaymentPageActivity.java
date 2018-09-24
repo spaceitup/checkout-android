@@ -20,6 +20,7 @@ import android.support.v7.widget.LinearSmoothScroller;
 import android.animation.AnimatorListenerAdapter;
 import android.animation.Animator;
 import android.view.View;
+import android.widget.ProgressBar;
 
 import net.optile.payment.R;
 import android.content.Intent;
@@ -28,6 +29,7 @@ import android.util.Log;
 import java.util.List;
 import net.optile.payment.ui.PaymentTheme;
 import android.transition.TransitionManager;
+import android.transition.AutoTransition;
 
 /**
  * The PaymentPageActivity showing available payment methods
@@ -50,8 +52,6 @@ public final class PaymentPageActivity extends AppCompatActivity implements Paym
 
     private RecyclerView recyclerView;
 
-    private int selected;
-    
     /** 
      * Create the start intent for this Activity
      * 
@@ -157,6 +157,14 @@ public final class PaymentPageActivity extends AppCompatActivity implements Paym
      * {@inheritDoc}
      */
     @Override
+    public void clearItems() {
+        adapter.clear();
+    }
+    
+    /**
+     * {@inheritDoc}
+     */
+    @Override
     public void abortPayment(String code, String reason) {
     }
 
@@ -173,51 +181,34 @@ public final class PaymentPageActivity extends AppCompatActivity implements Paym
      */
     @Override
     public void onItemClicked(PaymentListItem item, int position) {
-
-        /*
-          final PaymentListViewHolder newHolder = (PaymentListViewHolder)recyclerView.findViewHolderForAdapterPosition(position);            
-
-          if (newHolder != null) {
-          newHolder.inputFields.setVisibility(View.VISIBLE);
-          smoothScrollToItem(position);
-          }
-          if (this.selected != -1) {
-          final PaymentListViewHolder curHolder = (PaymentListViewHolder)recyclerView.findViewHolderForLayoutPosition(this.selected);            
-          if (curHolder != null) {
-          curHolder.inputFields.postDelayed(new Runnable() {
-          public void run() {
-          curHolder.inputFields.setVisibility(View.GONE);
-          }
-          }, 1000);
-          }
-          }*/
-        switchItems(this.selected);
-        this.selected = position;
-    }
-
-    void switchItems(int position) {
-
         final PaymentListViewHolder holder = (PaymentListViewHolder)recyclerView.findViewHolderForAdapterPosition(position);            
-        if (holder != null) {
-            Log.i(TAG, "holder: " + holder.inputFields.getHeight());
-            holder.inputFields.animate()
-                .translationY(holder.inputFields.getHeight())
-                .setDuration(10000)
-                .setListener(new AnimatorListenerAdapter() {
-                        @Override
-                        public void onAnimationEnd(Animator animation) {
-                            super.onAnimationEnd(animation);
-                            holder.inputFields.setVisibility(View.GONE);
-                        }
-                    });
-            recyclerView.scheduleLayoutAnimation();
-            //TransitionManager.beginDelayedTransition(recyclerView);
+
+        if (item.expanded) {
+            item.expanded = false;
+            if (holder != null) {
+                holder.expand(false);
+            }
         }
-        
+        else {
+            item.expanded = true;
+            if (holder != null) {
+                holder.expand(true);
+            }
+            smoothScrollToItem(position);
+        }
     }
-    
-    int getSelected() {
-        return this.selected;
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void showLoading(boolean show) {
+
+        if (!isActive()) {
+            return;
+        }
+        ProgressBar progressBar = findViewById(R.id.progressbar);
+        progressBar.setVisibility(show ? View.VISIBLE : View.GONE);
     }
     
     private void smoothScrollToItem(int position) {
