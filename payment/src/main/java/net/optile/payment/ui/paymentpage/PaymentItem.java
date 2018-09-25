@@ -11,8 +11,10 @@
 
 package net.optile.payment.ui.paymentpage;
 
+import android.util.Log;
 import java.net.URL;
 import java.util.List;
+import java.util.ArrayList;
 import java.util.Map;
 import java.util.Properties;
 import net.optile.payment.model.ApplicableNetwork;
@@ -41,10 +43,6 @@ final class PaymentItem {
         return links != null ? links.get(name) : null;
     }
 
-    void setLanguage(Properties language) {
-        this.language = language;
-    }
-
     String getCode() {
         return network.getCode();
     }
@@ -53,11 +51,21 @@ final class PaymentItem {
         return network.getLabel();
     }
 
-    List<InputElement> getSortedInputElements() {
-        return network.getLocalizedInputElements();
+    List<InputElement> getInputElements() {
+        List<InputElement> elements = network.getLocalizedInputElements();
+        return elements == null ? new ArrayList<InputElement>() : elements;
     }
-    
+
+    void setLanguage(Properties language) {
+        this.language = language;
+    }
+
     String translate(String key, String defValue) {
-        return language != null ? language.getProperty(key, defValue) : defValue;
+        return language != null && key != null ? language.getProperty(key, defValue) : defValue;
     }
+
+    String getButton() {
+        return network.getButton();
+    }
+
 }

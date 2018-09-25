@@ -149,7 +149,7 @@ public final class PaymentPageActivity extends AppCompatActivity implements Paym
      * {@inheritDoc}
      */
     @Override
-    public void setItems(List<PaymentListItem> items) {
+    public void setItems(List<PaymentGroup> items) {
         adapter.setItems(items);
     }
 
@@ -165,14 +165,14 @@ public final class PaymentPageActivity extends AppCompatActivity implements Paym
      * {@inheritDoc}
      */
     @Override
-    public void abortPayment(String code, String reason) {
+    public void abortPayment(final String code, final String reason) {
     }
 
     /**
      * {@inheritDoc}
      */
     @Override
-    public void onActionClicked(PaymentListItem item, int position) {
+    public void onActionClicked(final PaymentGroup item, final int position) {
         Log.i(TAG, "on Action Clicked: " + position);
     }
     
@@ -180,7 +180,7 @@ public final class PaymentPageActivity extends AppCompatActivity implements Paym
      * {@inheritDoc}
      */
     @Override
-    public void onItemClicked(PaymentListItem item, int position) {
+    public void onItemClicked(final PaymentGroup item, final int position) {
         final PaymentListViewHolder holder = (PaymentListViewHolder)recyclerView.findViewHolderForAdapterPosition(position);            
 
         if (item.expanded) {
@@ -202,7 +202,7 @@ public final class PaymentPageActivity extends AppCompatActivity implements Paym
      * {@inheritDoc}
      */
     @Override
-    public void showLoading(boolean show) {
+    public void showLoading(final boolean show) {
 
         if (!isActive()) {
             return;
@@ -210,8 +210,12 @@ public final class PaymentPageActivity extends AppCompatActivity implements Paym
         ProgressBar progressBar = findViewById(R.id.progressbar);
         progressBar.setVisibility(show ? View.VISIBLE : View.GONE);
     }
+
+    String translate(final String key, final String defValue) {
+        return presenter.translate(key, defValue);
+    }
     
-    private void smoothScrollToItem(int position) {
+    private void smoothScrollToItem(final int position) {
         RecyclerView.SmoothScroller smoothScroller = new LinearSmoothScroller(this) {
                 @Override protected int getVerticalSnapPreference() {
                     return LinearSmoothScroller.SNAP_TO_START;

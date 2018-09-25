@@ -14,6 +14,7 @@ package net.optile.payment.ui.paymentpage;
 import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,7 +22,16 @@ import android.view.ViewGroup;
 import java.net.URL;
 import java.util.List;
 import java.util.ArrayList;
+
 import net.optile.payment.R;
+import net.optile.payment.model.InputElement;
+import net.optile.payment.model.InputElementType;
+import net.optile.payment.ui.widget.StringInputWidget;
+import net.optile.payment.ui.widget.NumericInputWidget;
+import net.optile.payment.ui.widget.IntegerInputWidget;
+import net.optile.payment.ui.widget.SelectInputWidget;
+import net.optile.payment.ui.widget.CheckBoxInputWidget;
+import net.optile.payment.ui.widget.ButtonWidget;
 
 import com.bumptech.glide.Glide;
 
@@ -30,7 +40,9 @@ import com.bumptech.glide.Glide;
  */
 class PaymentListAdapter extends RecyclerView.Adapter<PaymentListViewHolder> {
 
-    private final List<PaymentListItem> items;
+    private final static String BUTTON_WIDGET = "ButtonWidget";
+    
+    private final List<PaymentGroup> items;
 
     private OnItemListener listener;
 
@@ -53,9 +65,9 @@ class PaymentListAdapter extends RecyclerView.Adapter<PaymentListViewHolder> {
         LayoutInflater inflater = LayoutInflater.from(context);
         View view = inflater.inflate(R.layout.list_item_paymentpage, parent, false);
 
-        PaymentListItem item = getItemWithViewType(viewType);
+        PaymentGroup group = getGroupWithViewType(viewType);
         PaymentListViewHolder holder = new PaymentListViewHolder(this, view);
-        addInputViewsToHolder(holder, inflater, item);
+        addWidgetsToHolder(holder, group, inflater, parent);
         return holder;
     }
 
@@ -64,12 +76,22 @@ class PaymentListAdapter extends RecyclerView.Adapter<PaymentListViewHolder> {
      */
     @Override
     public void onBindViewHolder(@NonNull PaymentListViewHolder holder, int position) {
-        PaymentItem item = items.get(position).item;
-        URL logoUrl = item.getLink("logo");
-        holder.title.setText(item.getLabel());
+        PaymentGroup group = items.get(position);
+        URL logoUrl = group.getLink("logo");
+        holder.title.setText(group.getLabel());
 
         if (logoUrl != null) {
             Glide.with(activity).asBitmap().load(logoUrl.toString()).into(holder.logo);
+        }
+
+        String buttonLabel = activity.translate(group.getButton(), null);
+        ButtonWidget widget = (ButtonWidget)holder.getFormWidget(BUTTON_WIDGET);
+
+        if (TextUtils.isEmpty(buttonLabel)) {
+            widget.setVisible(false);
+        } else {
+            widget.setLabel(buttonLabel);
+            widget.setVisible(true);
         }
     }
 
@@ -110,9 +132,9 @@ class PaymentListAdapter extends RecyclerView.Adapter<PaymentListViewHolder> {
      * Set new items in this adapter and notify any
      * listeners.
      *
-     * @param newItems list of PaymentListItems that should be set
+     * @param newItems list of PaymentGroups that should be set
      */
-    public void setItems(final List<PaymentListItem> newItems) {
+    public void setItems(final List<PaymentGroup> newItems) {
         items.clear();
         items.addAll(newItems);
         notifyDataSetChanged();
@@ -120,73 +142,72 @@ class PaymentListAdapter extends RecyclerView.Adapter<PaymentListViewHolder> {
 
     void handleOnClick(final int position) {
         if (listener != null) {
-            PaymentListItem item = items.get(position);
+            PaymentGroup item = items.get(position);
             listener.onItemClicked(item, position);
         }
     }
 
     /**
-     * Get the PaymentListItem at the given index
+     * Get the PaymentGroup at the given index
      *
-     * @param index index of the PaymentListItem
-     * @return      PaymentListItem given the index or null if not found
+     * @param index index of the PaymentGroup
+     * @return      PaymentGroup given the index or null if not found
      */
-    private PaymentListItem getItemFromIndex(final int index) {
+    private PaymentGroup getItemFromIndex(final int index) {
         return index >= 0 && index < items.size() ? items.get(index) : null;
     }
 
     /**
-     * Get the PaymentListItem with its type matching the viewType
+     * Get the group with its type matching the viewType
      *
      * @param type type of the view
-     * @return     PaymentListItem with the same type or null if not found
+     * @return     PaymentGroup with the same type or null if not found
      */
-    private PaymentListItem getItemWithViewType(final int type) {
+    private PaymentGroup getGroupWithViewType(final int type) {
 
-        for (PaymentListItem item : items) {
-            if (item.type == type) {
-                return item;
+        for (PaymentGroup group : items) {
+            if (group.type == type) {
+                return group;
             }
         }
         return null;
     }
 
-    private void addInputElementsToHolder(final PaymentListViewHolder holder, final LayoutInflater inflater, final PaymentListItem item) {
-        List<InputElement> elements = item.getSortedInputElements();
-        if (elements == null) {
-            return;
-        }
-        String type; 
-        for (InputElement element : elements) {
+    private void addWidgetsToHolder(final PaymentListViewHolder holder, final PaymentGroup group, final LayoutInflater inflater, ViewGroup parent) {
+
+        for (InputElement element : group.elements) {
             switch (element.getType()) {
-            case InputElementType.STRING:
-                addStringElementToHolder(holder, inflater, element);
-                break;
             case InputElementType.NUMERIC:
-                addNumericElementToHolder(holder, inflater, element);
+                View view = inflater.inflate(R.layout.widget_input_numeric, parent, false);
+                holder.addFormWidget(new NumericInputWidget(element.getName(), view, element));
                 break;
             case InputElementType.INTEGER:
-                addIntegerElementToHolder(holder, inflater, element);
+                view = inflater.inflate(R.layout.widget_input_integer, parent, false);
+                holder.addFormWidget(new IntegerInputWidget(element.getName(), view, element));
                 break;
             case InputElementType.SELECT:
-                addSelectElementToHolder(holder, inflater, element);
+                view = inflater.inflate(R.layout.widget_input_select, parent, false);
+                holder.addFormWidget(new SelectInputWidget(element.getName(), view, element));
+                break;
             case InputElementType.CHECKBOX:
-                addCheckboxlementToHolder(holder, inflater, element);                
+                view = inflater.inflate(R.layout.widget_input_checkbox, parent, false);
+                holder.addFormWidget(new CheckBoxInputWidget(element.getName(), view, element));
+                break;
+            case InputElementType.STRING:
+            default:
+                view = inflater.inflate(R.layout.widget_input_string, parent, false);
+                holder.addFormWidget(new StringInputWidget(element.getName(), view, element));
             }
         }
+        View view = inflater.inflate(R.layout.widget_button, parent, false);
+        holder.addFormWidget(new ButtonWidget(BUTTON_WIDGET, view));
     }
-
-    private void addStringElementToHolder(final PaymentListViewHolder holder, final LayoutInflater inflater, final InputElement element) {
-
-        View view = inflater.inflate(R.layout.widget_input_string, parent, false);
-        
-    }
-
+    
     /**
      * The item listener
      */
     public interface OnItemListener {
-        void onItemClicked(PaymentListItem item, int position);
-        void onActionClicked(PaymentListItem item, int position);
+        void onItemClicked(PaymentGroup item, int position);
+        void onActionClicked(PaymentGroup item, int position);
     }
 }

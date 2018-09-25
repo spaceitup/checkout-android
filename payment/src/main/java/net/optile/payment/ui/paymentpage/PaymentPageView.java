@@ -41,11 +41,11 @@ interface PaymentPageView {
     Context getContext();
 
     /** 
-     * Set the list of PaymentListItems in the adapter 
+     * Set the list of PaymentGroups in the adapter 
      * 
      * @param items items to be set in the view 
      */
-    void setItems(List<PaymentListItem> items);
+    void setItems(List<PaymentGroup> items);
 
     /** 
      * Clear all items from the payment page

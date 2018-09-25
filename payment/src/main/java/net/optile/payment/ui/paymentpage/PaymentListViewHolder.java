@@ -12,6 +12,7 @@
 package net.optile.payment.ui.paymentpage;
 
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.TextView;
 import android.widget.ImageView;
 import android.support.v7.widget.RecyclerView;
@@ -20,6 +21,8 @@ import android.view.animation.TranslateAnimation;
 import android.view.animation.Animation.AnimationListener;
 import android.view.animation.Animation;
 import android.view.animation.AccelerateInterpolator;
+import net.optile.payment.ui.widget.FormWidget;
+import net.optile.payment.ui.widget.ButtonWidget;
 
 import java.util.LinkedHashMap;
 
@@ -32,19 +35,19 @@ class PaymentListViewHolder extends RecyclerView.ViewHolder {
 
     final ImageView logo;
 
-    final View inputFields;
+    final ViewGroup formLayout;
     
     final PaymentListAdapter adapter;
 
-    final LinkedHashMap<String, View> views;
-    
+    private LinkedHashMap<String, FormWidget> widgets;
+
     PaymentListViewHolder(PaymentListAdapter adapter, View parent) {
         super(parent);
         this.adapter = adapter;
         this.title = parent.findViewById(R.id.text_title);
         this.logo = parent.findViewById(R.id.image_logo);
-        this.inputFields = parent.findViewById(R.id.layout_inputfields);
-        this.views = new LinkedHashMap<>();
+        this.formLayout = parent.findViewById(R.id.layout_form);
+        this.widgets = new LinkedHashMap<>();
         
         View view = parent.findViewById(R.id.cardview);
         view.setOnClickListener(new View.OnClickListener() {
@@ -56,6 +59,15 @@ class PaymentListViewHolder extends RecyclerView.ViewHolder {
     }
 
     void expand(boolean expand) {
-        inputFields.setVisibility(expand ? View.VISIBLE : View.GONE);
+        formLayout.setVisibility(expand ? View.VISIBLE : View.GONE);
+    }
+
+    void addFormWidget(FormWidget widget) {
+        widgets.put(widget.getName(), widget);
+        formLayout.addView(widget.getRootView());
+    }
+
+    FormWidget getFormWidget(String name) {
+        return (FormWidget)widgets.get(name);
     }
 }

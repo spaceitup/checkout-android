@@ -43,9 +43,11 @@ final class PaymentPagePresenter {
 
     private final PaymentPageView view;
 
+    private PaymentHolder paymentHolder;
+    
     private boolean started;
 
-    private int listItemType;
+    private int groupType;
 
     /**
      * Create a new PaymentPagePresenter
@@ -80,12 +82,17 @@ final class PaymentPagePresenter {
         asyncLoadPayment(listUrl);
     }
 
-    private int nextListItemType() {
-        return listItemType++;
+    String translate(final String key, final String defValue) {
+        return paymentHolder != null ? paymentHolder.translate(key, defValue) : defValue;
+    }
+    
+    private int nextGroupType() {
+        return groupType++;
     }
 
-    private void handlePayment(final PaymentHolder holder) {
-        Interaction interaction = holder.listResult.getInteraction();
+    private void handlePayment(final PaymentHolder paymentHolder) {
+        this.paymentHolder = paymentHolder;
+        Interaction interaction = paymentHolder.listResult.getInteraction();
         String code = interaction.getCode();
 
         if (!InteractionCode.isValid(code)) {
@@ -94,7 +101,7 @@ final class PaymentPagePresenter {
         }
         switch (code) {
         case InteractionCode.PROCEED:
-            handleStateProceed(holder);
+            handleStateProceed(paymentHolder);
             break;
         case InteractionCode.ABORT:
         case InteractionCode.TRY_OTHER_NETWORK:
@@ -106,16 +113,16 @@ final class PaymentPagePresenter {
     }
 
     private void handleStateProceed(final PaymentHolder holder) {
-        List<PaymentListItem> items = new ArrayList<>();
+        List<PaymentGroup> items = new ArrayList<>();
 
         for (PaymentItem item : holder.items) {
-            items.add(createPaymentListItem(item));
+            items.add(createPaymentGroup(item));
         }
         view.setItems(items);
     }
 
-    private PaymentListItem createPaymentListItem(final PaymentItem item) {
-        return new PaymentListItem(nextListItemType(), item);
+    private PaymentGroup createPaymentGroup(final PaymentItem item) {
+        return new PaymentGroup(nextGroupType(), item, item.getInputElements());
     }
     
     private void asyncLoadPayment(final String listUrl) {

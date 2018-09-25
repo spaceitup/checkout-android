@@ -11,29 +11,35 @@
 
 package net.optile.payment.ui.paymentpage;
 
+import java.net.URL;
 import java.util.List;
+import java.util.LinkedHashMap;
 import net.optile.payment.model.InputElement;
 
 /**
  * A Payment list item in the payment page.
  */
-final class PaymentListItem {
+final class PaymentGroup {
 
     final int type;
 
     final PaymentItem item;
 
+    final List<InputElement> elements;
+    
     boolean expanded;
     
     /** 
-     * Construct a new PaymentListItem
+     * Construct a new PaymentGroup
      *
-     * @param type type of this PaymentListItem
-     * @param item PaymentItem to be shown
+     * @param type     type of this PaymentGroup
+     * @param item     PaymentItem to be shown
+     * @param elements containing the ordered list of InputElements
      */
-    PaymentListItem(int type, PaymentItem item) {
+    PaymentGroup(int type, PaymentItem item, List<InputElement> elements) {
         this.type = type;
         this.item = item;
+        this.elements = elements;
     }
 
     String getCode() {
@@ -44,7 +50,11 @@ final class PaymentListItem {
         return item.getLabel();
     }
 
-    List<InputElement> getSortedInputElements() {
-        return item.getSortedInputElements();
+    URL getLink(String link) {
+        return item.getLink(link);
+    }
+
+    String getButton() {
+        return item.getButton();
     }
 }
