@@ -49,7 +49,7 @@ class PaymentListViewHolder extends RecyclerView.ViewHolder {
         this.formLayout = parent.findViewById(R.id.layout_form);
         this.widgets = new LinkedHashMap<>();
         
-        View view = parent.findViewById(R.id.cardview);
+        View view = parent.findViewById(R.id.layout_header);
         view.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {

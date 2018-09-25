@@ -18,15 +18,15 @@ import net.optile.payment.model.InputElement;
 import android.support.design.widget.TextInputLayout;
     
 /**
- * Class for handling the String input type
+ * Class for handling the Select input type
  */
 public final class SelectInputWidget extends FormWidget {
 
     private final InputElement element;
     
-    private final EditText inputValue;
+    private final EditText input;
 
-    private final TextInputLayout inputLayout;
+    private final TextInputLayout layout;
     
     /** 
      * Construct a new SelectInputWidget
@@ -38,11 +38,11 @@ public final class SelectInputWidget extends FormWidget {
     public SelectInputWidget(String name, View rootView, InputElement element) {
         super(name, rootView);
         this.element = element;
-        inputLayout = rootView.findViewById(R.id.layout_input);
-        inputValue = rootView.findViewById(R.id.input_string);
+        layout = rootView.findViewById(R.id.layout_value);
+        input = rootView.findViewById(R.id.input_value);
 
-        inputLayout.setHintAnimationEnabled(false);
-        inputLayout.setHint(element.getLabel());
-        inputLayout.setHintAnimationEnabled(true);
+        layout.setHintAnimationEnabled(false);
+        layout.setHint(element.getLabel());
+        layout.setHintAnimationEnabled(true);
     }
 }

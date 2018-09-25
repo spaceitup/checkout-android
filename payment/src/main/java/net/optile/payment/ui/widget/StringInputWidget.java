@@ -24,9 +24,9 @@ public final class StringInputWidget extends FormWidget {
 
     private final InputElement element;
     
-    private final EditText inputValue;
+    private final EditText input;
 
-    private final TextInputLayout inputLayout;
+    private final TextInputLayout layout;
     
     /** 
      * Construct a new StringInputWidget
@@ -38,11 +38,11 @@ public final class StringInputWidget extends FormWidget {
     public StringInputWidget(String name, View rootView, InputElement element) {
         super(name, rootView);
         this.element = element;
-        inputLayout = rootView.findViewById(R.id.layout_input);
-        inputValue = rootView.findViewById(R.id.input_string);
+        layout = rootView.findViewById(R.id.layout_value);
+        input = rootView.findViewById(R.id.input_value);
 
-        inputLayout.setHintAnimationEnabled(false);
-        inputLayout.setHint(element.getLabel());
-        inputLayout.setHintAnimationEnabled(true);
+        layout.setHintAnimationEnabled(false);
+        layout.setHint(element.getLabel());
+        layout.setHintAnimationEnabled(true);
     }
 }

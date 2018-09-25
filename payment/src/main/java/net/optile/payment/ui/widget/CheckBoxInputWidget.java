@@ -13,7 +13,8 @@ package net.optile.payment.ui.widget;
 
 import net.optile.payment.R;
 import android.view.View;
-import android.widget.EditText;
+import android.widget.TextView;
+import android.widget.CheckBox;
 import net.optile.payment.model.InputElement;
 import android.support.design.widget.TextInputLayout;
     
@@ -24,9 +25,9 @@ public final class CheckBoxInputWidget extends FormWidget {
 
     private final InputElement element;
     
-    private final EditText inputValue;
+    private final CheckBox value;
 
-    private final TextInputLayout inputLayout;
+    private final TextView label;
     
     /** 
      * Construct a new CheckBoxInputWidget
@@ -38,11 +39,8 @@ public final class CheckBoxInputWidget extends FormWidget {
     public CheckBoxInputWidget(String name, View rootView, InputElement element) {
         super(name, rootView);
         this.element = element;
-        inputLayout = rootView.findViewById(R.id.layout_input);
-        inputValue = rootView.findViewById(R.id.input_string);
 
-        inputLayout.setHintAnimationEnabled(false);
-        inputLayout.setHint(element.getLabel());
-        inputLayout.setHintAnimationEnabled(true);
+        label = rootView.findViewById(R.id.label_value);
+        value = rootView.findViewById(R.id.checkbox_value);
     }
 }
