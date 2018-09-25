@@ -97,7 +97,6 @@ public final class CheckoutActivity extends AppCompatActivity implements Checkou
      */
     @Override
     public void openPaymentPage(String listUrl) {
-        Log.i(TAG, "openPaymentPage: " + listUrl);
         PaymentUI paymentUI = PaymentUI.getInstance();
         paymentUI.setListUrl(listUrl);
         paymentUI.showPaymentPage(this, PAYMENT_REQUEST, null);

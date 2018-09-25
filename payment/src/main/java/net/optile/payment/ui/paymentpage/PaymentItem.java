@@ -53,7 +53,7 @@ final class PaymentItem {
 
     List<InputElement> getInputElements() {
         List<InputElement> elements = network.getLocalizedInputElements();
-        return elements == null ? new ArrayList<InputElement>() : elements;
+        return elements == null ? new ArrayList<>() : elements;
     }
 
     void setLanguage(Properties language) {

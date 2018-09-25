@@ -32,6 +32,18 @@ interface PaymentPageView {
      * @param show if true show the loading animation, false hides the loading animation
      */
     void showLoading(boolean show);
+
+    /** 
+     * Show the message in the center of the payment page
+     * 
+     * @param resId the string resource id
+     */
+    void showCenterMessage(int resId);
+
+    /** 
+     * Hide the message in the center of the payment page
+     */
+    void hideCenterMessage();
     
     /** 
      * Get the Context from this view

@@ -19,7 +19,9 @@ import java.util.Map;
 import java.util.Properties;
 import java.util.concurrent.Callable;
 
+import net.optile.payment.R;
 import android.util.Log;
+import android.text.TextUtils;
 import net.optile.payment.core.PaymentException;
 import net.optile.payment.core.WorkerSubscriber;
 import net.optile.payment.core.WorkerTask;
@@ -118,6 +120,9 @@ final class PaymentPagePresenter {
         for (PaymentItem item : holder.items) {
             items.add(createPaymentGroup(item));
         }
+        if (items.size() == 0) {
+            view.showCenterMessage(R.string.error_paymentpage_empty);
+        }
         view.setItems(items);
     }
 
@@ -145,6 +150,8 @@ final class PaymentPagePresenter {
                     Log.i(TAG, "onError: " + error);
                 }
             });
+
+        view.hideCenterMessage();
         view.clearItems();
         view.showLoading(true);
         Workers.getInstance().forNetworkTasks().execute(task); 
@@ -196,7 +203,7 @@ final class PaymentPagePresenter {
      * This method loads the payment page language file. 
      * The URL for the paymentpage language file is constructed from the URL of one of the ApplicableNetwork entries.
      *
-     * @param listResult 
+     * @param items contains the list of PaymentItem elements
      * @return the properties object containing the language entries 
      */
     private Properties loadPageLanguage(final List<PaymentItem> items) throws NetworkException, PaymentException {
@@ -221,6 +228,9 @@ final class PaymentPagePresenter {
     }
     
     private boolean isSupported(ApplicableNetwork network) {
-        return !network.getRedirect();
+
+        // Check if the button is an activate button
+        String button = network.getButton();
+        return (TextUtils.isEmpty(button) || !button.contains("activate")) && !network.getRedirect();
     }
 }

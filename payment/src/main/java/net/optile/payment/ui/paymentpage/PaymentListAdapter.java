@@ -65,9 +65,11 @@ class PaymentListAdapter extends RecyclerView.Adapter<PaymentListViewHolder> {
         LayoutInflater inflater = LayoutInflater.from(context);
         View view = inflater.inflate(R.layout.list_item_paymentpage, parent, false);
 
-        PaymentGroup group = getGroupWithViewType(viewType);
         PaymentListViewHolder holder = new PaymentListViewHolder(this, view);
-        addWidgetsToHolder(holder, group, inflater, parent);
+        PaymentGroup group = getGroupWithViewType(viewType);
+        if (group != null) {
+            addWidgetsToHolder(holder, group, inflater, parent);
+        }
         return holder;
     }
 
@@ -86,12 +88,13 @@ class PaymentListAdapter extends RecyclerView.Adapter<PaymentListViewHolder> {
 
         String buttonLabel = activity.translate(group.getButton(), null);
         ButtonWidget widget = (ButtonWidget)holder.getFormWidget(BUTTON_WIDGET);
-
-        if (TextUtils.isEmpty(buttonLabel)) {
-            widget.setVisible(false);
-        } else {
-            widget.setLabel(buttonLabel);
-            widget.setVisible(true);
+        if (widget != null) {
+            if (TextUtils.isEmpty(buttonLabel)) {
+                widget.setVisible(false);
+            } else {
+                widget.setLabel(buttonLabel);
+                widget.setVisible(true);
+            }
         }
     }
 

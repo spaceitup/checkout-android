@@ -20,6 +20,7 @@ import android.support.v7.widget.LinearSmoothScroller;
 import android.animation.AnimatorListenerAdapter;
 import android.animation.Animator;
 import android.view.View;
+import android.widget.TextView;
 import android.widget.ProgressBar;
 
 import net.optile.payment.R;
@@ -160,12 +161,31 @@ public final class PaymentPageActivity extends AppCompatActivity implements Paym
     public void clearItems() {
         adapter.clear();
     }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void showCenterMessage(final int resId) {
+        TextView view = findViewById(R.id.label_center);
+        view.setText(resId);
+        view.setVisibility(View.VISIBLE);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void hideCenterMessage() {
+        findViewById(R.id.label_center).setVisibility(View.GONE);
+    }
     
     /**
      * {@inheritDoc}
      */
     @Override
     public void abortPayment(final String code, final String reason) {
+        Log.i(TAG, "abortPayment: " + code + ", " + reason);
     }
 
     /**

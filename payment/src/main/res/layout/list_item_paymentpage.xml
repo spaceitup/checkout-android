@@ -1,57 +1,59 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:paddingHorizontal="@dimen/border_xsmall">
+		xmlns:android="http://schemas.android.com/apk/res/android"
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:paddingLeft="@dimen/border_xsmall"
+		android:paddingRight="@dimen/border_xsmall">        
 
-    <android.support.v7.widget.CardView
-        xmlns:tools="http://schemas.android.com/tools"
-        xmlns:cardview="http://schemas.android.com/apk/res-auto"
-        android:id="@+id/cardview"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:foreground="?android:attr/selectableItemBackground"
-        cardview:cardBackgroundColor="@android:color/white"
-        cardview:cardUseCompatPadding="true"
-        cardview:cardCornerRadius="@dimen/cardview_radius">
+	<android.support.v7.widget.CardView
+			xmlns:cardview="http://schemas.android.com/apk/res-auto"
+			android:id="@+id/cardview"
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:foreground="?android:attr/selectableItemBackground"
+			cardview:cardBackgroundColor="@android:color/white"
+			cardview:cardUseCompatPadding="true"
+			cardview:cardCornerRadius="@dimen/cardview_radius">
 
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+		<RelativeLayout
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content">
 
-            <LinearLayout
-                android:id="@+id/layout_header"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_alignParentTop="true"
-                android:clickable="true"
-                android:padding="@dimen/border_small"
-                android:gravity="center_vertical"
-                android:orientation="horizontal">
+			<LinearLayout
+					android:id="@+id/layout_header"
+					android:layout_width="match_parent"
+					android:layout_height="wrap_content"
+					android:layout_alignParentTop="true"
+					android:clickable="true"
+					android:padding="@dimen/border_small"
+					android:gravity="center_vertical"
+					android:orientation="horizontal"
+					android:focusable="true">
 
-                <ImageView
-                    android:id="@+id/image_logo"
-                    android:layout_width="@dimen/cardview_logo_width"
-                    android:layout_height="@dimen/cardview_logo_height"
-                    android:layout_marginRight="@dimen/border_small"
-                    android:adjustViewBounds="true"/>
+				<ImageView
+						android:id="@+id/image_logo"
+						android:layout_width="@dimen/cardview_logo_width"
+						android:layout_height="@dimen/cardview_logo_height"
+						android:layout_marginEnd="@dimen/border_small"
+						android:adjustViewBounds="true"
+						android:contentDescription="@string/paymentmethod_logo"/>
 
-                <TextView
-                    android:id="@+id/text_title"
-                    style="@style/PaymentText.Medium" />
-            </LinearLayout>
+				<TextView
+						android:id="@+id/text_title"
+						style="@style/PaymentText.Medium"/>
+			</LinearLayout>
 
-            <LinearLayout
-                android:id="@+id/layout_form"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/layout_header"
-                android:padding="@dimen/border_small"
-                android:visibility="gone"
-                android:orientation="vertical">
-            </LinearLayout>
-        </RelativeLayout>
+			<LinearLayout
+					android:id="@+id/layout_form"
+					android:layout_width="match_parent"
+					android:layout_height="wrap_content"
+					android:layout_below="@id/layout_header"
+					android:padding="@dimen/border_small"
+					android:visibility="gone"
+					android:orientation="vertical">
+			</LinearLayout>
+		</RelativeLayout>
 
-    </android.support.v7.widget.CardView>
+	</android.support.v7.widget.CardView>
 </LinearLayout>
