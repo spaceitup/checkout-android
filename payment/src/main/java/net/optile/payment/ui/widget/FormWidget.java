@@ -12,7 +12,6 @@
 package net.optile.payment.ui.widget;
 
 import android.view.View;
-import net.optile.payment.model.InputElement;
 
 /**
  * The base InputWidget

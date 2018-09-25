@@ -1,5 +1,5 @@
 <resources>
 	<string name="title_paymentpage">Payment Page</string>
 	<string name="error_paymentpage_empty">The payment methods in the current payment session are not supported by this app.</string>
-    <string name="paymentmethod_logo">PaymentMethod logo</string>
+	<string name="paymentmethod_logo">PaymentMethod logo</string>
 </resources>
