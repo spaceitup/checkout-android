@@ -70,7 +70,7 @@ public final class PaymentPageActivity extends AppCompatActivity implements Paym
      * {@inheritDoc}
      */
     @Override
-    public void onCreate(final Bundle savedInstanceState) {
+    public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         
         if (savedInstanceState != null && savedInstanceState.containsKey(EXTRA_LISTURL)) {
@@ -166,7 +166,7 @@ public final class PaymentPageActivity extends AppCompatActivity implements Paym
      * {@inheritDoc}
      */
     @Override
-    public void showCenterMessage(final int resId) {
+    public void showCenterMessage(int resId) {
         TextView view = findViewById(R.id.label_center);
         view.setText(resId);
         view.setVisibility(View.VISIBLE);
@@ -184,7 +184,7 @@ public final class PaymentPageActivity extends AppCompatActivity implements Paym
      * {@inheritDoc}
      */
     @Override
-    public void abortPayment(final String code, final String reason) {
+    public void abortPayment(String code, String reason) {
         Log.i(TAG, "abortPayment: " + code + ", " + reason);
     }
 
@@ -192,7 +192,7 @@ public final class PaymentPageActivity extends AppCompatActivity implements Paym
      * {@inheritDoc}
      */
     @Override
-    public void onActionClicked(final PaymentGroup item, final int position) {
+    public void onActionClicked(PaymentGroup item, int position) {
         Log.i(TAG, "on Action Clicked: " + position);
     }
     
@@ -200,7 +200,7 @@ public final class PaymentPageActivity extends AppCompatActivity implements Paym
      * {@inheritDoc}
      */
     @Override
-    public void onItemClicked(final PaymentGroup item, final int position) {
+    public void onItemClicked(PaymentGroup item, int position) {
         final PaymentListViewHolder holder = (PaymentListViewHolder)recyclerView.findViewHolderForAdapterPosition(position);            
 
         if (item.expanded) {
@@ -222,20 +222,20 @@ public final class PaymentPageActivity extends AppCompatActivity implements Paym
      * {@inheritDoc}
      */
     @Override
-    public void showLoading(final boolean show) {
+    public void showLoading(boolean show) {
 
         if (!isActive()) {
             return;
         }
-        ProgressBar progressBar = findViewById(R.id.progressbar);
+        final ProgressBar progressBar = findViewById(R.id.progressbar);
         progressBar.setVisibility(show ? View.VISIBLE : View.GONE);
     }
 
-    String translate(final String key, final String defValue) {
+    String translate(String key, String defValue) {
         return presenter.translate(key, defValue);
     }
     
-    private void smoothScrollToItem(final int position) {
+    private void smoothScrollToItem(int position) {
         RecyclerView.SmoothScroller smoothScroller = new LinearSmoothScroller(this) {
                 @Override protected int getVerticalSnapPreference() {
                     return LinearSmoothScroller.SNAP_TO_START;

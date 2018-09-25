@@ -34,7 +34,6 @@ public final class PaymentUtils {
      * @return The String or an empty string if something went wrong
      */
     public static String readRawResource(Resources res, int resId) {
-
         StringBuilder sb = new StringBuilder();
         String line;
 

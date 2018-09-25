@@ -34,7 +34,7 @@ public final class WorkerTask<V> extends FutureTask<V> {
      * @param callable the Callable from which the WorkerTask is created
      * @return         newly created WorkerTask 
      */
-    public static <V> WorkerTask<V> fromCallable(final Callable<V> callable) {
+    public static <V> WorkerTask<V> fromCallable(Callable<V> callable) {
         return new WorkerTask<>(callable);
     }
 
@@ -65,7 +65,7 @@ public final class WorkerTask<V> extends FutureTask<V> {
         }
     }
 
-    private void callSuccessOnMainThread(final WorkerSubscriber<V> subscriber, final V result) {
+    private void callSuccessOnMainThread(WorkerSubscriber<V> subscriber, V result) {
         Handler handler = new Handler(Looper.getMainLooper());
         handler.post(new Runnable() {
                 public void run() {
@@ -74,7 +74,7 @@ public final class WorkerTask<V> extends FutureTask<V> {
             });
     }
 
-    private void callErrorOnMainThread(final WorkerSubscriber<V> subscriber, final Throwable throwable)  {
+    private void callErrorOnMainThread(WorkerSubscriber<V> subscriber, Throwable throwable)  {
         Handler handler = new Handler(Looper.getMainLooper());
         handler.post(new Runnable() {
                 public void run() {

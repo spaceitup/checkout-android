@@ -56,7 +56,7 @@ final class PaymentPagePresenter {
      *
      * @param view The PaymentPageView displaying the payment items
      */
-    PaymentPagePresenter(final PaymentPageView view) {
+    PaymentPagePresenter(PaymentPageView view) {
         this.view = view;
         this.listConnection = new ListConnection();
     }
@@ -80,11 +80,11 @@ final class PaymentPagePresenter {
      * 
      * @param listUrl the url pointing to the ListResult in the Payment API
      */
-    void refresh(final String listUrl) {
+    void refresh(String listUrl) {
         asyncLoadPayment(listUrl);
     }
 
-    String translate(final String key, final String defValue) {
+    String translate(String key, final String defValue) {
         return paymentHolder != null ? paymentHolder.translate(key, defValue) : defValue;
     }
     
@@ -92,7 +92,7 @@ final class PaymentPagePresenter {
         return groupType++;
     }
 
-    private void handlePayment(final PaymentHolder paymentHolder) {
+    private void handlePayment(PaymentHolder paymentHolder) {
         this.paymentHolder = paymentHolder;
         Interaction interaction = paymentHolder.listResult.getInteraction();
         String code = interaction.getCode();
@@ -114,7 +114,7 @@ final class PaymentPagePresenter {
         }
     }
 
-    private void handleStateProceed(final PaymentHolder holder) {
+    private void handleStateProceed(PaymentHolder holder) {
         List<PaymentGroup> items = new ArrayList<>();
 
         for (PaymentItem item : holder.items) {
@@ -126,11 +126,11 @@ final class PaymentPagePresenter {
         view.setItems(items);
     }
 
-    private PaymentGroup createPaymentGroup(final PaymentItem item) {
+    private PaymentGroup createPaymentGroup(PaymentItem item) {
         return new PaymentGroup(nextGroupType(), item, item.getInputElements());
     }
     
-    private void asyncLoadPayment(final String listUrl) {
+    private void asyncLoadPayment(String listUrl) {
 
         WorkerTask<PaymentHolder> task = WorkerTask.fromCallable(new Callable<PaymentHolder>() {
                 @Override
@@ -157,7 +157,7 @@ final class PaymentPagePresenter {
         Workers.getInstance().forNetworkTasks().execute(task); 
     }
 
-    private PaymentHolder loadPayment(final String listUrl) throws PaymentException {
+    private PaymentHolder loadPayment(String listUrl) throws PaymentException {
         try {
             ListResult listResult = listConnection.getListResult(listUrl);
             PaymentHolder holder = new PaymentHolder(listResult, loadPaymentItems(listResult));
@@ -168,7 +168,7 @@ final class PaymentPagePresenter {
         }
     }
     
-    private List<PaymentItem> loadPaymentItems(final ListResult listResult) throws NetworkException, PaymentException {
+    private List<PaymentItem> loadPaymentItems(ListResult listResult) throws NetworkException, PaymentException {
         List<PaymentItem> items = new ArrayList<>();
         Networks nw = listResult.getNetworks();
 
@@ -188,7 +188,7 @@ final class PaymentPagePresenter {
         return items;
     }
 
-    private PaymentItem loadPaymentItem(final ApplicableNetwork network) throws NetworkException, PaymentException {
+    private PaymentItem loadPaymentItem(ApplicableNetwork network) throws NetworkException, PaymentException {
         PaymentItem item = new PaymentItem(network);
         URL langUrl = item.getLink("lang");
 
@@ -206,7 +206,7 @@ final class PaymentPagePresenter {
      * @param items contains the list of PaymentItem elements
      * @return the properties object containing the language entries 
      */
-    private Properties loadPageLanguage(final List<PaymentItem> items) throws NetworkException, PaymentException {
+    private Properties loadPageLanguage(List<PaymentItem> items) throws NetworkException, PaymentException {
         Properties prop = new Properties();
 
         if (items.size() == 0) {

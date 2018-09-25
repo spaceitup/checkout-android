@@ -51,7 +51,7 @@ class PaymentListAdapter extends RecyclerView.Adapter<PaymentListViewHolder> {
     /** 
      * Construct a new PaymentListAdapter
      */
-    PaymentListAdapter(final PaymentPageActivity activity) {
+    PaymentListAdapter(PaymentPageActivity activity) {
         this.activity = activity;
         this.items = new ArrayList<>();
     }
@@ -60,7 +60,7 @@ class PaymentListAdapter extends RecyclerView.Adapter<PaymentListViewHolder> {
      * {@inheritDoc}
      */
     @Override
-    public @NonNull PaymentListViewHolder onCreateViewHolder(@NonNull final ViewGroup parent, final int viewType) {
+    public @NonNull PaymentListViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         Context context = parent.getContext();
         LayoutInflater inflater = LayoutInflater.from(context);
         View view = inflater.inflate(R.layout.list_item_paymentpage, parent, false);
@@ -103,7 +103,7 @@ class PaymentListAdapter extends RecyclerView.Adapter<PaymentListViewHolder> {
      *
      * @param listener the listener interested on events from the item
      */
-    public void setListener(final OnItemListener listener) {
+    public void setListener(OnItemListener listener) {
         this.listener = listener;
     }
 
@@ -119,7 +119,7 @@ class PaymentListAdapter extends RecyclerView.Adapter<PaymentListViewHolder> {
      * {@inheritDoc}
      */
     @Override
-    public int getItemViewType(final int position) {
+    public int getItemViewType(int position) {
         return items.get(position).type;
     }
     
@@ -137,13 +137,13 @@ class PaymentListAdapter extends RecyclerView.Adapter<PaymentListViewHolder> {
      *
      * @param newItems list of PaymentGroups that should be set
      */
-    public void setItems(final List<PaymentGroup> newItems) {
+    public void setItems(List<PaymentGroup> newItems) {
         items.clear();
         items.addAll(newItems);
         notifyDataSetChanged();
     }
 
-    void handleOnClick(final int position) {
+    void handleOnClick(int position) {
         if (listener != null) {
             PaymentGroup item = items.get(position);
             listener.onItemClicked(item, position);
@@ -156,7 +156,7 @@ class PaymentListAdapter extends RecyclerView.Adapter<PaymentListViewHolder> {
      * @param index index of the PaymentGroup
      * @return      PaymentGroup given the index or null if not found
      */
-    private PaymentGroup getItemFromIndex(final int index) {
+    private PaymentGroup getItemFromIndex(int index) {
         return index >= 0 && index < items.size() ? items.get(index) : null;
     }
 
@@ -166,7 +166,7 @@ class PaymentListAdapter extends RecyclerView.Adapter<PaymentListViewHolder> {
      * @param type type of the view
      * @return     PaymentGroup with the same type or null if not found
      */
-    private PaymentGroup getGroupWithViewType(final int type) {
+    private PaymentGroup getGroupWithViewType(int type) {
 
         for (PaymentGroup group : items) {
             if (group.type == type) {
@@ -176,7 +176,7 @@ class PaymentListAdapter extends RecyclerView.Adapter<PaymentListViewHolder> {
         return null;
     }
 
-    private void addWidgetsToHolder(final PaymentListViewHolder holder, final PaymentGroup group, final LayoutInflater inflater, ViewGroup parent) {
+    private void addWidgetsToHolder(PaymentListViewHolder holder, PaymentGroup group, LayoutInflater inflater, ViewGroup parent) {
 
         for (InputElement element : group.elements) {
             switch (element.getType()) {
