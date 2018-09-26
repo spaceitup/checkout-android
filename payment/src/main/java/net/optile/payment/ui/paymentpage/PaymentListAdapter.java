@@ -11,6 +11,7 @@
 
 package net.optile.payment.ui.paymentpage;
 
+import android.util.Log;
 import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
@@ -40,6 +41,8 @@ import com.bumptech.glide.Glide;
  */
 class PaymentListAdapter extends RecyclerView.Adapter<PaymentListViewHolder> {
 
+
+    private final static String TAG = "pay_PaymentListAdapter";
     private final static String BUTTON_WIDGET = "ButtonWidget";
     
     private final List<PaymentGroup> items;
@@ -65,11 +68,12 @@ class PaymentListAdapter extends RecyclerView.Adapter<PaymentListViewHolder> {
         LayoutInflater inflater = LayoutInflater.from(context);
         View view = inflater.inflate(R.layout.list_item_paymentpage, parent, false);
 
-        PaymentListViewHolder holder = new PaymentListViewHolder(this, view);
+        PaymentListViewHolder holder = new PaymentListViewHolder(this, view, viewType);
         PaymentGroup group = getGroupWithViewType(viewType);
+
         if (group != null) {
             addWidgetsToHolder(holder, group, inflater, parent);
-        }
+        } 
         return holder;
     }
 
@@ -96,6 +100,7 @@ class PaymentListAdapter extends RecyclerView.Adapter<PaymentListViewHolder> {
                 widget.setVisible(true);
             }
         }
+        holder.expand(group.expanded);
     }
 
     /**

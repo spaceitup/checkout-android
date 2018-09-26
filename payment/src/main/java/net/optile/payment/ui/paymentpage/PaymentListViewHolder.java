@@ -11,6 +11,7 @@
 
 package net.optile.payment.ui.paymentpage;
 
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
@@ -41,8 +42,11 @@ class PaymentListViewHolder extends RecyclerView.ViewHolder {
 
     private LinkedHashMap<String, FormWidget> widgets;
 
-    PaymentListViewHolder(PaymentListAdapter adapter, View parent) {
+    private int viewType;
+    
+    PaymentListViewHolder(PaymentListAdapter adapter, View parent, int viewType) {
         super(parent);
+        this.viewType = viewType;
         this.adapter = adapter;
         this.title = parent.findViewById(R.id.text_title);
         this.logo = parent.findViewById(R.id.image_logo);
@@ -59,7 +63,14 @@ class PaymentListViewHolder extends RecyclerView.ViewHolder {
     }
 
     void expand(boolean expand) {
-        formLayout.setVisibility(expand ? View.VISIBLE : View.GONE);
+        Log.i("pay_Holder", "expand: " + expand + ", viewType: " + viewType);
+        if (expand) {
+            Log.i("pay_Holder", "expand VISIBLE");
+            formLayout.setVisibility(View.VISIBLE);
+        } else {
+            Log.i("pay_Holder", "collapse GONE");            
+            formLayout.setVisibility(View.GONE);
+        }
     }
 
     void addFormWidget(FormWidget widget) {

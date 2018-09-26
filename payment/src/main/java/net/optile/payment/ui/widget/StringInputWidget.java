@@ -13,10 +13,10 @@ package net.optile.payment.ui.widget;
 
 import net.optile.payment.R;
 import android.view.View;
-import android.widget.EditText;
 import net.optile.payment.model.InputElement;
 import android.support.design.widget.TextInputLayout;
-    
+import android.support.design.widget.TextInputEditText;
+
 /**
  * Class for handling the String input type
  */
@@ -24,7 +24,7 @@ public final class StringInputWidget extends FormWidget {
 
     private final InputElement element;
     
-    private final EditText input;
+    private final TextInputEditText input;
 
     private final TextInputLayout layout;
     
