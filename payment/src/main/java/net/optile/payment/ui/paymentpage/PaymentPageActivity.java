@@ -49,9 +49,7 @@ public final class PaymentPageActivity extends AppCompatActivity implements Paym
 
     private RecyclerView recyclerView;
 
-    private int curSelected = -1;
-
-    private PaymentGroup curGroup;
+    private int selIndex;
 
     /**
      * Create the start intent for this Activity
@@ -150,17 +148,13 @@ public final class PaymentPageActivity extends AppCompatActivity implements Paym
      * {@inheritDoc}
      */
     @Override
-    public void setItems(List<PaymentGroup> items) {
-
+    public void setItems(int selIndex, List<PaymentGroup> items) {
+        this.selIndex = selIndex;
         if (items.size() > 0) {
-            curGroup = items.get(0);
-            curGroup.expanded = true;
-            curSelected = 0;
-        } else {
-            curGroup = null;
-            curSelected = -1;
+            items.get(selIndex).expanded = true;
         }
         adapter.setItems(items);
+        recyclerView.scrollToPosition(selIndex);
     }
 
     /**
@@ -211,28 +205,28 @@ public final class PaymentPageActivity extends AppCompatActivity implements Paym
     @Override
     public void onItemClicked(PaymentGroup item, int position) {
 
-        if (position == this.curSelected) {
+        if (position == this.selIndex) {
             return;
         }
-        PaymentListViewHolder holder = (PaymentListViewHolder) recyclerView.findViewHolderForAdapterPosition(this.curSelected);
-
+        // first, hide the current selected element
+        PaymentListViewHolder holder = (PaymentListViewHolder) recyclerView.findViewHolderForAdapterPosition(this.selIndex);
         if (holder != null) {
             holder.expand(false);
             adapter.notifyItemChanged(position);
         }
         hideKeyboard();
-
+        PaymentGroup curGroup = adapter.getItemFromIndex(this.selIndex);
         curGroup.expanded = false;
-        holder = (PaymentListViewHolder) recyclerView.findViewHolderForAdapterPosition(position);
 
+        // second, expand the new selected element
+        holder = (PaymentListViewHolder) recyclerView.findViewHolderForAdapterPosition(position);
         if (holder != null) {
             holder.expand(true);
             adapter.notifyItemChanged(position);
             recyclerView.scrollToPosition(position);
         }
         item.expanded = true;
-        curSelected = position;
-        curGroup = item;
+        this.selIndex = position;
     }
 
     /**

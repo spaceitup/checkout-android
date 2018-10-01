@@ -51,6 +51,10 @@ final class PaymentItem {
         return network.getLabel();
     }
 
+    boolean getSelected() {
+        return network.getSelected();
+    }
+
     List<InputElement> getInputElements() {
         List<InputElement> elements = network.getLocalizedInputElements();
         return elements == null ? new ArrayList<>() : elements;

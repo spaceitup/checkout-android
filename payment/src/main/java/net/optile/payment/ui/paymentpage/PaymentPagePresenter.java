@@ -115,14 +115,20 @@ final class PaymentPagePresenter {
 
     private void handleStateProceed(PaymentHolder holder) {
         List<PaymentGroup> items = new ArrayList<>();
+        PaymentGroup group = null;
+        int selIndex = -1;
 
-        for (PaymentItem item : holder.items) {
-            items.add(createPaymentGroup(item));
+        for (int i = 0, e = holder.items.size(); i < e; i++) {
+            group = createPaymentGroup(holder.items.get(i));
+            if (selIndex == -1 && group.getSelected()) {
+                selIndex = i;
+            }
+            items.add(group);
         }
         if (items.size() == 0) {
             view.showCenterMessage(R.string.error_paymentpage_empty);
         }
-        view.setItems(items);
+        view.setItems(selIndex == -1 ? 0 : selIndex, items);
     }
 
     private PaymentGroup createPaymentGroup(PaymentItem item) {

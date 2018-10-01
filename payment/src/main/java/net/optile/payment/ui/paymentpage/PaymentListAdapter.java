@@ -161,7 +161,7 @@ class PaymentListAdapter extends RecyclerView.Adapter<PaymentListViewHolder> {
      * @param index index of the PaymentGroup
      * @return PaymentGroup given the index or null if not found
      */
-    private PaymentGroup getItemFromIndex(int index) {
+    PaymentGroup getItemFromIndex(int index) {
         return index >= 0 && index < items.size() ? items.get(index) : null;
     }
 

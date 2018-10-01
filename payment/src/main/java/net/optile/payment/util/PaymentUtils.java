@@ -27,6 +27,16 @@ public final class PaymentUtils {
     private final static String TAG = "payment_PaymentUtils";
 
     /**
+     * Check if the Boolean object is true, the Boolean object may be null.
+     *
+     * @param val the value to check
+     * @return true when the val is not null and true
+     */
+    public static boolean isTrue(Boolean val) {
+        return val != null && val;
+    }
+
+    /**
      * Read the contents of the raw resource
      *
      * @param res The system Resources

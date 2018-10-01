@@ -42,6 +42,10 @@ final class PaymentGroup {
         this.elements = elements;
     }
 
+    boolean getSelected() {
+        return item.getSelected();
+    }
+
     String getCode() {
         return item.getCode();
     }

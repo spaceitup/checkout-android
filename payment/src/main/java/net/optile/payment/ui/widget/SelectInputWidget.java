@@ -11,12 +11,16 @@
 
 package net.optile.payment.ui.widget;
 
-import android.support.design.widget.TextInputEditText;
-import android.support.design.widget.TextInputLayout;
+import java.util.List;
+
 import android.view.View;
-import android.view.inputmethod.EditorInfo;
+import android.widget.ArrayAdapter;
+import android.widget.Spinner;
+import android.widget.TextView;
 import net.optile.payment.R;
 import net.optile.payment.model.InputElement;
+import net.optile.payment.model.SelectOption;
+import net.optile.payment.util.PaymentUtils;
 
 /**
  * Class for handling the Select input type
@@ -25,9 +29,9 @@ public final class SelectInputWidget extends FormWidget {
 
     private final InputElement element;
 
-    private final TextInputEditText input;
+    private final Spinner spinner;
 
-    private final TextInputLayout layout;
+    private final TextView label;
 
     /**
      * Construct a new SelectInputWidget
@@ -39,16 +43,46 @@ public final class SelectInputWidget extends FormWidget {
     public SelectInputWidget(String name, View rootView, InputElement element) {
         super(name, rootView);
         this.element = element;
-        layout = rootView.findViewById(R.id.layout_value);
-        input = rootView.findViewById(R.id.input_value);
-
-        layout.setHintAnimationEnabled(false);
-        layout.setHint(element.getLabel());
-        layout.setHintAnimationEnabled(true);
+        spinner = rootView.findViewById(R.id.input_spinner);
+        label = rootView.findViewById(R.id.input_label);
+        label.setText(element.getLabel());
+        initSpinner(element);
     }
 
-    public boolean setImeOptions(boolean last) {
-        input.setImeOptions(last ? EditorInfo.IME_ACTION_DONE : EditorInfo.IME_ACTION_NEXT);
-        return true;
+    private void initSpinner(InputElement element) {
+
+        List<SelectOption> options = element.getOptions();
+        if (options == null || options.size() == 0) {
+            return;
+        }
+        ArrayAdapter<SpinnerItem> adapter = new ArrayAdapter<>(rootView.getContext(), R.layout.spinner_item);
+        int selIndex = 0;
+        SelectOption option = null;
+
+        for (int i = 0, e = options.size(); i < e; i++) {
+            option = options.get(i);
+            adapter.add(new SpinnerItem(option.getValue(), option.getLabel()));
+
+            if (PaymentUtils.isTrue(option.getSelected())) {
+                selIndex = i;
+            }
+        }
+        spinner.setAdapter(adapter);
+        spinner.setSelection(selIndex);
+    }
+
+    class SpinnerItem {
+
+        String value;
+        String label;
+
+        SpinnerItem(String value, String label) {
+            this.value = value;
+            this.label = label;
+        }
+
+        public String toString() {
+            return label;
+        }
     }
 }

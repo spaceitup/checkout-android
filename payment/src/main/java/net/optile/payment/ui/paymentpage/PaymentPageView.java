@@ -56,9 +56,10 @@ interface PaymentPageView {
     /**
      * Set the list of PaymentGroups in the adapter
      *
+     * @param selIndex is the index of the selected PaymentGroup
      * @param items items to be set in the view
      */
-    void setItems(List<PaymentGroup> items);
+    void setItems(int selIndex, List<PaymentGroup> items);
 
     /**
      * Clear all items from the payment page
