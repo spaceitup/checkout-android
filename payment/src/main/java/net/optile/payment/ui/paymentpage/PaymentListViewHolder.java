@@ -63,12 +63,9 @@ class PaymentListViewHolder extends RecyclerView.ViewHolder {
     }
 
     void expand(boolean expand) {
-        Log.i("pay_Holder", "expand: " + expand + ", viewType: " + viewType);
         if (expand) {
-            Log.i("pay_Holder", "expand VISIBLE");
             formLayout.setVisibility(View.VISIBLE);
         } else {
-            Log.i("pay_Holder", "collapse GONE");            
             formLayout.setVisibility(View.GONE);
         }
     }

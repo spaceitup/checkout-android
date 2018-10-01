@@ -54,6 +54,7 @@ public final class PaymentPageActivity extends AppCompatActivity implements Paym
     private RecyclerView recyclerView;
 
     private int curSelected = -1;
+
     private PaymentGroup curGroup;
     
     /** 
@@ -154,6 +155,15 @@ public final class PaymentPageActivity extends AppCompatActivity implements Paym
      */
     @Override
     public void setItems(List<PaymentGroup> items) {
+
+        if (items.size() > 0) {
+            curGroup = items.get(0);
+            curGroup.expanded = true;
+            curSelected = 0;
+        } else {
+            curGroup = null;
+            curSelected = -1;
+        }
         adapter.setItems(items);
     }
 
@@ -205,35 +215,26 @@ public final class PaymentPageActivity extends AppCompatActivity implements Paym
     @Override
     public void onItemClicked(PaymentGroup item, int position) {
 
-        if (curSelected != -1 && curSelected != position) {
-            PaymentListViewHolder test = (PaymentListViewHolder)recyclerView.findViewHolderForAdapterPosition(curSelected);            
-            if (test != null) {
-                test.expand(false);
-                adapter.notifyItemChanged(curSelected);
-            }
-            curGroup.expanded = false;
-            curSelected = -1;
-            curGroup = null;
+        if (position == this.curSelected) {
+            return;
         }
+        PaymentListViewHolder holder = (PaymentListViewHolder)recyclerView.findViewHolderForAdapterPosition(this.curSelected);            
 
-        final PaymentListViewHolder holder = (PaymentListViewHolder)recyclerView.findViewHolderForAdapterPosition(position);            
-        if (item.expanded) {
-            if (holder != null) {
-                holder.expand(false);
-                adapter.notifyItemChanged(position);
-            }
-            item.expanded = false;
+        if (holder != null) {
+            holder.expand(false);
+            adapter.notifyItemChanged(position);
         }
-        else {
-            if (holder != null) {
-                holder.expand(true);
-                smoothScrollToItem(position);
-                adapter.notifyItemChanged(position);
-            }
-            item.expanded = true;
-            curSelected = position;
-            curGroup = item;
+        curGroup.expanded = false;
+        holder = (PaymentListViewHolder)recyclerView.findViewHolderForAdapterPosition(position);                    
+
+        if (holder != null) {
+            holder.expand(true);
+            adapter.notifyItemChanged(position);
+            recyclerView.scrollToPosition(position);
         }
+        item.expanded = true;
+        curSelected = position;
+        curGroup = item;
     }
 
     /**
@@ -251,15 +252,5 @@ public final class PaymentPageActivity extends AppCompatActivity implements Paym
 
     String translate(String key, String defValue) {
         return presenter.translate(key, defValue);
-    }
-    
-    private void smoothScrollToItem(int position) {
-        RecyclerView.SmoothScroller smoothScroller = new LinearSmoothScroller(this) {
-                @Override protected int getVerticalSnapPreference() {
-                    return LinearSmoothScroller.SNAP_TO_START;
-                }
-            };
-        smoothScroller.setTargetPosition(position);
-        recyclerView.getLayoutManager().startSmoothScroll(smoothScroller);
     }
 }
