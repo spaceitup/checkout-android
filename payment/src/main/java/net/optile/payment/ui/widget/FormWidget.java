@@ -38,4 +38,8 @@ public abstract class FormWidget {
     public void setVisible(boolean visible) {
         rootView.setVisibility(visible ? View.VISIBLE : View.GONE);
     }
+
+    public boolean setImeOptions(boolean last) {
+        return false;
+    }
 }

@@ -11,21 +11,21 @@
 
 package net.optile.payment.ui.widget;
 
-import net.optile.payment.R;
 import android.view.View;
 import android.widget.Button;
-    
+import net.optile.payment.R;
+
 /**
  * Class for showing the submit button
  */
 public final class ButtonWidget extends FormWidget {
 
     private final Button button;
-    
-    /** 
+
+    /**
      * Construct a new ButtonWidget
-     * 
-     * @param name     name 
+     *
+     * @param name name
      * @param rootView the root view of this button
      */
     public ButtonWidget(String name, View rootView) {

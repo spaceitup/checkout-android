@@ -11,11 +11,12 @@
 
 package net.optile.payment.core;
 
-import android.os.Looper;
-import android.os.Handler;
+import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.FutureTask;
-import java.util.concurrent.Callable;
+
+import android.os.Handler;
+import android.os.Looper;
 
 /**
  * A WorkerTask executing one Callable and notifying the WorkerSubscriber once it is completed
@@ -28,25 +29,25 @@ public final class WorkerTask<V> extends FutureTask<V> {
         super(callable);
     }
 
-    /** 
+    /**
      * Create a new WorkerTask from the Callable
-     * 
+     *
      * @param callable the Callable from which the WorkerTask is created
-     * @return         newly created WorkerTask 
+     * @return newly created WorkerTask
      */
     public static <V> WorkerTask<V> fromCallable(Callable<V> callable) {
         return new WorkerTask<>(callable);
     }
 
-    /** 
+    /**
      * Subscribe the WorkerSubscriber to this task, this subscriber will be notified when the task is successful or has failed
-     * 
+     *
      * @param subscriber the subscriber to assign to this task
      */
     public void subscribe(WorkerSubscriber<V> subscriber) {
         this.subscriber = subscriber;
     }
-    
+
     /**
      * {@inheritDoc}
      */
@@ -68,18 +69,18 @@ public final class WorkerTask<V> extends FutureTask<V> {
     private void callSuccessOnMainThread(WorkerSubscriber<V> subscriber, V result) {
         Handler handler = new Handler(Looper.getMainLooper());
         handler.post(new Runnable() {
-                public void run() {
-                    subscriber.onSuccess(result);
-                }
-            });
+            public void run() {
+                subscriber.onSuccess(result);
+            }
+        });
     }
 
-    private void callErrorOnMainThread(WorkerSubscriber<V> subscriber, Throwable throwable)  {
+    private void callErrorOnMainThread(WorkerSubscriber<V> subscriber, Throwable throwable) {
         Handler handler = new Handler(Looper.getMainLooper());
         handler.post(new Runnable() {
-                public void run() {
-                    subscriber.onError(throwable);
-                }
-            });
+            public void run() {
+                subscriber.onError(throwable);
+            }
+        });
     }
 }

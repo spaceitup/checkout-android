@@ -37,7 +37,7 @@ abstract class BaseConnection {
 
     final static int TIMEOUT_CONNECT = 5000;
     final static int TIMEOUT_READ = 30000;
-    
+
     final static String HEADER_AUTHORIZATION = "Authorization";
     final static String HEADER_ACCEPT = "Accept";
     final static String HEADER_CONTENT_TYPE = "Content-Type";
@@ -134,7 +134,7 @@ abstract class BaseConnection {
      * Creates a new HTTP GET connection given the String url
      *
      * @param url the url pointing to the Payment API
-     * @return    HttpURLConnection a HttpURLConnection object
+     * @return HttpURLConnection a HttpURLConnection object
      */
     HttpURLConnection createGetConnection(final String url) throws IOException {
         return createGetConnection(new URL(url));
@@ -144,7 +144,7 @@ abstract class BaseConnection {
      * Creates a new HTTP GET connection
      *
      * @param url the Url pointing to the Payment API
-     * @return    HttpURLConnection a HttpURLConnection object
+     * @return HttpURLConnection a HttpURLConnection object
      */
     HttpURLConnection createGetConnection(final URL url) throws IOException {
         final HttpURLConnection conn = (HttpURLConnection) url.openConnection();
@@ -159,7 +159,7 @@ abstract class BaseConnection {
      * Creates an HTTP POST connection with the given String url
      *
      * @param url the url for the connection
-     * @return    HttpURLConnection the created HttpURLConnection
+     * @return HttpURLConnection the created HttpURLConnection
      */
     HttpURLConnection createPostConnection(final String url) throws IOException {
         return createPostConnection(new URL(url));
@@ -169,7 +169,7 @@ abstract class BaseConnection {
      * Creates a HTTP POST connection
      *
      * @param url the url for the connection
-     * @return    HttpURLConnection the created HttpURLConnection
+     * @return HttpURLConnection the created HttpURLConnection
      */
     HttpURLConnection createPostConnection(final URL url) throws IOException {
         final HttpURLConnection conn = (HttpURLConnection) url.openConnection();
@@ -184,7 +184,7 @@ abstract class BaseConnection {
      * Reads a String from the given Inputstream.
      *
      * @param conn the HttpURLConnection to read from
-     * @return     the string representation read from the Inputstream
+     * @return the string representation read from the Inputstream
      */
     String readFromInputStream(final HttpURLConnection conn) throws IOException {
 
@@ -199,7 +199,7 @@ abstract class BaseConnection {
      * Reads a String from the error stream
      *
      * @param conn the HttpURLConnection to read from
-     * @return     the string representation read from the inputstream
+     * @return the string representation read from the inputstream
      */
     String readFromErrorStream(final HttpURLConnection conn) throws IOException {
 
@@ -219,7 +219,7 @@ abstract class BaseConnection {
      *
      * @param conn the conn
      * @param data the data
-   */
+     */
     void writeToOutputStream(final HttpURLConnection conn, String data) throws IOException {
 
         try (OutputStream out = conn.getOutputStream()) {
@@ -230,11 +230,11 @@ abstract class BaseConnection {
     /**
      * Handle the error response from the Payment API
      *
-     * @param source     the source
-     * @param errorType  the error type
+     * @param source the source
+     * @param errorType the error type
      * @param statusCode the status code
-     * @param conn       the conn
-     * @return           NetworkException network exception
+     * @param conn the conn
+     * @return NetworkException network exception
      */
     NetworkException createNetworkException(final String source, final String errorType, final int statusCode,
         final HttpURLConnection conn) {
@@ -260,10 +260,10 @@ abstract class BaseConnection {
     /**
      * Handle the error response from the Payment API
      *
-     * @param source    the source
+     * @param source the source
      * @param errorType the error type
-     * @param cause     the cause
-     * @return          NetworkResponse network exception
+     * @param cause the cause
+     * @return NetworkResponse network exception
      */
     NetworkException createNetworkException(final String source, String errorType, Exception cause) {
         final ErrorDetails details = new ErrorDetails(source, errorType, 0, null, null);

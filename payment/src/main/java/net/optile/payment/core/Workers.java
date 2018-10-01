@@ -11,8 +11,8 @@
 
 package net.optile.payment.core;
 
-import java.util.concurrent.Executors;
 import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 /**
  * The Singleton class maintaining a list of Workers processing background tasks
@@ -20,18 +20,14 @@ import java.util.concurrent.ExecutorService;
 public final class Workers {
 
     private ExecutorService networkService;
-    
+
     private Workers() {
         this.networkService = Executors.newCachedThreadPool();
     }
-    
-    private static class InstanceHolder {
-        static final Workers INSTANCE = new Workers();
-    }
 
-    /** 
+    /**
      * Get the instance of this Workers
-     * 
+     *
      * @return the instance of this Workers
      */
     public static Workers getInstance() {
@@ -40,10 +36,14 @@ public final class Workers {
 
     /**
      * Get the WorkerExecutor for network tasks
-     * 
-     * @return the network executor for network tasks 
+     *
+     * @return the network executor for network tasks
      */
     public ExecutorService forNetworkTasks() {
         return networkService;
+    }
+
+    private static class InstanceHolder {
+        static final Workers INSTANCE = new Workers();
     }
 }

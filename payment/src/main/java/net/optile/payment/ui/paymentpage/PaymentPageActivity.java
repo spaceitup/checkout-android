@@ -11,26 +11,22 @@
 
 package net.optile.payment.ui.paymentpage;
 
+import java.util.List;
+
+import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.LinearSmoothScroller;
-import android.animation.AnimatorListenerAdapter;
-import android.animation.Animator;
-import android.view.View;
-import android.widget.TextView;
-import android.widget.ProgressBar;
-
-import net.optile.payment.R;
-import android.content.Intent;
-import android.content.Context;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
-import java.util.List;
+import android.view.View;
+import android.view.inputmethod.InputMethodManager;
+import android.widget.ProgressBar;
+import android.widget.TextView;
+import net.optile.payment.R;
 import net.optile.payment.ui.PaymentTheme;
-import android.transition.TransitionManager;
-import android.transition.AutoTransition;
 
 /**
  * The PaymentPageActivity showing available payment methods
@@ -44,7 +40,7 @@ public final class PaymentPageActivity extends AppCompatActivity implements Paym
     private PaymentPagePresenter presenter;
 
     private PaymentListAdapter adapter;
-    
+
     private String listUrl;
 
     private PaymentTheme theme;
@@ -56,12 +52,12 @@ public final class PaymentPageActivity extends AppCompatActivity implements Paym
     private int curSelected = -1;
 
     private PaymentGroup curGroup;
-    
-    /** 
+
+    /**
      * Create the start intent for this Activity
-     * 
+     *
      * @param context Context to create the intent
-     * @return        newly created start intent
+     * @return newly created start intent
      */
     public static Intent createStartIntent(Context context, String listUrl, PaymentTheme theme) {
         final Intent intent = new Intent(context, PaymentPageActivity.class);
@@ -69,14 +65,14 @@ public final class PaymentPageActivity extends AppCompatActivity implements Paym
         intent.putExtra(EXTRA_PAYMENTTHEME, theme);
         return intent;
     }
-    
+
     /**
      * {@inheritDoc}
      */
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        
+
         if (savedInstanceState != null && savedInstanceState.containsKey(EXTRA_LISTURL)) {
             this.listUrl = savedInstanceState.getString(EXTRA_LISTURL);
             this.theme = savedInstanceState.getParcelable(EXTRA_PAYMENTTHEME);
@@ -192,7 +188,7 @@ public final class PaymentPageActivity extends AppCompatActivity implements Paym
     public void hideCenterMessage() {
         findViewById(R.id.label_center).setVisibility(View.GONE);
     }
-    
+
     /**
      * {@inheritDoc}
      */
@@ -208,7 +204,7 @@ public final class PaymentPageActivity extends AppCompatActivity implements Paym
     public void onActionClicked(PaymentGroup item, int position) {
         Log.i(TAG, "on Action Clicked: " + position);
     }
-    
+
     /**
      * {@inheritDoc}
      */
@@ -218,14 +214,16 @@ public final class PaymentPageActivity extends AppCompatActivity implements Paym
         if (position == this.curSelected) {
             return;
         }
-        PaymentListViewHolder holder = (PaymentListViewHolder)recyclerView.findViewHolderForAdapterPosition(this.curSelected);            
+        PaymentListViewHolder holder = (PaymentListViewHolder) recyclerView.findViewHolderForAdapterPosition(this.curSelected);
 
         if (holder != null) {
             holder.expand(false);
             adapter.notifyItemChanged(position);
         }
+        hideKeyboard();
+
         curGroup.expanded = false;
-        holder = (PaymentListViewHolder)recyclerView.findViewHolderForAdapterPosition(position);                    
+        holder = (PaymentListViewHolder) recyclerView.findViewHolderForAdapterPosition(position);
 
         if (holder != null) {
             holder.expand(true);
@@ -252,5 +250,13 @@ public final class PaymentPageActivity extends AppCompatActivity implements Paym
 
     String translate(String key, String defValue) {
         return presenter.translate(key, defValue);
+    }
+
+    private void hideKeyboard() {
+        InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+
+        if (imm != null) {
+            imm.hideSoftInputFromWindow(recyclerView.getWindowToken(), 0);
+        }
     }
 }

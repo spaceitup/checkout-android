@@ -19,34 +19,6 @@ import android.os.Parcelable;
  */
 public final class PaymentTheme implements Parcelable {
 
-    private PaymentTheme() {
-    }
-
-    private PaymentTheme(Parcel in) {
-    }
-
-    /** 
-     * Create a new PaymentThemeBuilder, this builder can be used to build a new PaymentTheme
-     * 
-     * @return the newly created PaymentThemeBuilder 
-     */
-    public static PaymentThemeBuilder createPaymentThemeBuilder() {
-        return new PaymentThemeBuilder();
-    }
-
-    /** 
-     * Class PaymentThemeBuilder for building PaymentTheme
-     */
-    public static class PaymentThemeBuilder {
-
-        private PaymentThemeBuilder() {
-        }
-        
-        public PaymentTheme build() {
-            return new PaymentTheme();
-        }
-    }
-
     public static final Parcelable.Creator<PaymentTheme> CREATOR = new Parcelable.Creator<PaymentTheme>() {
 
         public PaymentTheme createFromParcel(Parcel in) {
@@ -57,7 +29,22 @@ public final class PaymentTheme implements Parcelable {
             return new PaymentTheme[size];
         }
     };
-    
+
+    private PaymentTheme() {
+    }
+
+    private PaymentTheme(Parcel in) {
+    }
+
+    /**
+     * Create a new PaymentThemeBuilder, this builder can be used to build a new PaymentTheme
+     *
+     * @return the newly created PaymentThemeBuilder
+     */
+    public static PaymentThemeBuilder createPaymentThemeBuilder() {
+        return new PaymentThemeBuilder();
+    }
+
     /**
      * {@inheritDoc}
      */
@@ -65,11 +52,24 @@ public final class PaymentTheme implements Parcelable {
     public int describeContents() {
         return 0;
     }
-    
+
     /**
      * {@inheritDoc}
      */
     @Override
     public void writeToParcel(Parcel out, int flags) {
+    }
+
+    /**
+     * Class PaymentThemeBuilder for building PaymentTheme
+     */
+    public static class PaymentThemeBuilder {
+
+        private PaymentThemeBuilder() {
+        }
+
+        public PaymentTheme build() {
+            return new PaymentTheme();
+        }
     }
 }

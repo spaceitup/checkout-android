@@ -11,12 +11,12 @@
 
 package net.optile.payment.ui.paymentpage;
 
-import android.util.Log;
 import java.net.URL;
-import java.util.List;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 import java.util.Properties;
+
 import net.optile.payment.model.ApplicableNetwork;
 import net.optile.payment.model.InputElement;
 
@@ -29,10 +29,10 @@ final class PaymentItem {
 
     private Properties language;
 
-    /** 
+    /**
      * Construct a new PaymentItem object
-     * 
-     * @param network ApplicableNetwork used in this PaymentItem 
+     *
+     * @param network ApplicableNetwork used in this PaymentItem
      */
     PaymentItem(ApplicableNetwork network) {
         this.network = network;
@@ -46,7 +46,7 @@ final class PaymentItem {
     String getCode() {
         return network.getCode();
     }
-    
+
     String getLabel() {
         return network.getLabel();
     }

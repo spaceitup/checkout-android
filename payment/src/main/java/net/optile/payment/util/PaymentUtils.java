@@ -11,13 +11,13 @@
 
 package net.optile.payment.util;
 
-import android.util.Log;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 
 import android.content.res.Resources;
+import android.util.Log;
 
 /**
  * The PaymentUtils class containing helper methods
@@ -25,7 +25,7 @@ import android.content.res.Resources;
 public final class PaymentUtils {
 
     private final static String TAG = "payment_PaymentUtils";
-    
+
     /**
      * Read the contents of the raw resource
      *
@@ -49,6 +49,4 @@ public final class PaymentUtils {
         }
         return sb.toString();
     }
-
-    
 }

@@ -66,13 +66,14 @@ public final class ErrorDetails {
     /**
      * Construct a new ErrorDetails object containing all information about a network error
      *
-     * @param source     the source
-     * @param errorType  the error type
+     * @param source the source
+     * @param errorType the error type
      * @param statusCode the status code
-     * @param errorData  the error data
-     * @param errorInfo  the error info
+     * @param errorData the error data
+     * @param errorInfo the error info
      */
-    public ErrorDetails(final String source, @ErrorType final String errorType, final int statusCode, final String errorData, final ErrorInfo errorInfo) {
+    public ErrorDetails(final String source, @ErrorType final String errorType, final int statusCode, final String errorData,
+        final ErrorInfo errorInfo) {
         this.source = source;
         this.errorType = errorType;
         this.statusCode = statusCode;
@@ -84,7 +85,7 @@ public final class ErrorDetails {
      * Check if this error is of the given type
      *
      * @param errorType the error type
-     * @return          true when it is the same error, false otherwise
+     * @return true when it is the same error, false otherwise
      */
     public boolean isError(@ErrorType final String errorType) {
         return this.errorType.equals(errorType);

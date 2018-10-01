@@ -11,17 +11,16 @@
 
 package net.optile.payment.ui.paymentpage;
 
-import java.net.URL;
 import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 import java.util.Properties;
 import java.util.concurrent.Callable;
 
-import net.optile.payment.R;
-import android.util.Log;
 import android.text.TextUtils;
+import android.util.Log;
+import net.optile.payment.R;
 import net.optile.payment.core.PaymentException;
 import net.optile.payment.core.WorkerSubscriber;
 import net.optile.payment.core.WorkerTask;
@@ -40,13 +39,13 @@ import net.optile.payment.network.NetworkException;
 final class PaymentPagePresenter {
 
     private final static String TAG = "pay_PayPresenter";
-    
+
     private final ListConnection listConnection;
 
     private final PaymentPageView view;
 
     private PaymentHolder paymentHolder;
-    
+
     private boolean started;
 
     private int groupType;
@@ -61,23 +60,23 @@ final class PaymentPagePresenter {
         this.listConnection = new ListConnection();
     }
 
-    /** 
+    /**
      * Notify this presenter that it should be stopped
      */
     void onStop() {
         this.started = false;
     }
 
-    /** 
+    /**
      * Notify this presenter that it should start
      */
     void onStart() {
         this.started = true;
     }
 
-    /** 
+    /**
      * Refresh the ListResult, this will result in reloading the ListResult and language file
-     * 
+     *
      * @param listUrl the url pointing to the ListResult in the Payment API
      */
     void refresh(String listUrl) {
@@ -87,7 +86,7 @@ final class PaymentPagePresenter {
     String translate(String key, final String defValue) {
         return paymentHolder != null ? paymentHolder.translate(key, defValue) : defValue;
     }
-    
+
     private int nextGroupType() {
         return groupType++;
     }
@@ -102,15 +101,15 @@ final class PaymentPagePresenter {
             return;
         }
         switch (code) {
-        case InteractionCode.PROCEED:
-            handleStateProceed(paymentHolder);
-            break;
-        case InteractionCode.ABORT:
-        case InteractionCode.TRY_OTHER_NETWORK:
-        case InteractionCode.TRY_OTHER_ACCOUNT:
-        case InteractionCode.RETRY:
-        case InteractionCode.RELOAD:
-            view.abortPayment(code, interaction.getReason());
+            case InteractionCode.PROCEED:
+                handleStateProceed(paymentHolder);
+                break;
+            case InteractionCode.ABORT:
+            case InteractionCode.TRY_OTHER_NETWORK:
+            case InteractionCode.TRY_OTHER_ACCOUNT:
+            case InteractionCode.RETRY:
+            case InteractionCode.RELOAD:
+                view.abortPayment(code, interaction.getReason());
         }
     }
 
@@ -129,32 +128,33 @@ final class PaymentPagePresenter {
     private PaymentGroup createPaymentGroup(PaymentItem item) {
         return new PaymentGroup(nextGroupType(), item, item.getInputElements());
     }
-    
+
     private void asyncLoadPayment(String listUrl) {
 
         WorkerTask<PaymentHolder> task = WorkerTask.fromCallable(new Callable<PaymentHolder>() {
-                @Override
-                public PaymentHolder call() throws PaymentException {
-                    return loadPayment(listUrl);
-                }
-            });
+            @Override
+            public PaymentHolder call() throws PaymentException {
+                return loadPayment(listUrl);
+            }
+        });
         task.subscribe(new WorkerSubscriber<PaymentHolder>() {
-                @Override
-                public void onSuccess(PaymentHolder holder) {
-                    view.showLoading(false);
-                    handlePayment(holder);
-                }
-                @Override
-                public void onError(Throwable error) {
-                    view.showLoading(false);
-                    Log.i(TAG, "onError: " + error);
-                }
-            });
+            @Override
+            public void onSuccess(PaymentHolder holder) {
+                view.showLoading(false);
+                handlePayment(holder);
+            }
+
+            @Override
+            public void onError(Throwable error) {
+                view.showLoading(false);
+                Log.i(TAG, "onError: " + error);
+            }
+        });
 
         view.hideCenterMessage();
         view.clearItems();
         view.showLoading(true);
-        Workers.getInstance().forNetworkTasks().execute(task); 
+        Workers.getInstance().forNetworkTasks().execute(task);
     }
 
     private PaymentHolder loadPayment(String listUrl) throws PaymentException {
@@ -167,7 +167,7 @@ final class PaymentPagePresenter {
             throw new PaymentException("PaymentPagePresenter[loadPayment]", e);
         }
     }
-    
+
     private List<PaymentItem> loadPaymentItems(ListResult listResult) throws NetworkException, PaymentException {
         List<PaymentItem> items = new ArrayList<>();
         Networks nw = listResult.getNetworks();
@@ -193,18 +193,18 @@ final class PaymentPagePresenter {
         URL langUrl = item.getLink("lang");
 
         if (langUrl == null) {
-            throw new PaymentException("Error loading network language, missing 'lang' link in ApplicableNetwork");            
+            throw new PaymentException("Error loading network language, missing 'lang' link in ApplicableNetwork");
         }
         item.setLanguage(listConnection.getLanguage(langUrl, new Properties()));
         return item;
     }
 
-    /** 
-     * This method loads the payment page language file. 
+    /**
+     * This method loads the payment page language file.
      * The URL for the paymentpage language file is constructed from the URL of one of the ApplicableNetwork entries.
      *
      * @param items contains the list of PaymentItem elements
-     * @return the properties object containing the language entries 
+     * @return the properties object containing the language entries
      */
     private Properties loadPageLanguage(List<PaymentItem> items) throws NetworkException, PaymentException {
         Properties prop = new Properties();
@@ -214,7 +214,7 @@ final class PaymentPagePresenter {
         }
         PaymentItem item = items.get(0);
         URL langUrl = item.getLink("lang");
-        
+
         if (langUrl == null) {
             throw new PaymentException("Error loading payment page language, missing 'lang' link in ApplicableNetwork");
         }
@@ -226,7 +226,7 @@ final class PaymentPagePresenter {
             throw new PaymentException("PaymentPagePresenter[loadPageLanguage]", e);
         }
     }
-    
+
     private boolean isSupported(ApplicableNetwork network) {
 
         // Check if the button is an activate button

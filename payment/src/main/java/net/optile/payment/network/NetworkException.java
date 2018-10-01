@@ -24,7 +24,7 @@ public class NetworkException extends Exception {
     /**
      * {@inheritDoc}
      *
-     * @param details       the details
+     * @param details the details
      * @param detailMessage the detail message
      */
     public NetworkException(final ErrorDetails details, final String detailMessage) {
@@ -35,9 +35,9 @@ public class NetworkException extends Exception {
     /**
      * {@inheritDoc}
      *
-     * @param details       the details
+     * @param details the details
      * @param detailMessage the detail message
-     * @param cause         the cause
+     * @param cause the cause
      */
     public NetworkException(final ErrorDetails details, final String detailMessage, final Throwable cause) {
         super(detailMessage, cause);

@@ -46,12 +46,13 @@ public final class ListConnection extends BaseConnection {
      * a request mobile apps should be making as this call is normally executed
      * Merchant Server-side. This request will be removed later.
      *
-     * @param baseUrl       the base url of the Payment API
+     * @param baseUrl the base url of the Payment API
      * @param authorization the authorization header data
-     * @param listData      the data containing the request body for the list request
-     * @return              the ListResult
+     * @param listData the data containing the request body for the list request
+     * @return the ListResult
      */
-    public ListResult createPaymentSession(final String baseUrl, final String authorization, final String listData) throws NetworkException {
+    public ListResult createPaymentSession(final String baseUrl, final String authorization, final String listData)
+        throws NetworkException {
         final String source = "ListConnection[createPaymentSession]";
 
         if (TextUtils.isEmpty(baseUrl)) {
@@ -105,7 +106,7 @@ public final class ListConnection extends BaseConnection {
      * obtain the details of an active list session
      *
      * @param url the url pointing to the list
-     * @return    the NetworkResponse containing either an error or the ListResult
+     * @return the NetworkResponse containing either an error or the ListResult
      */
     public ListResult getListResult(final String url) throws NetworkException {
         final String source = "ListConnection[getListResult]";
@@ -145,12 +146,12 @@ public final class ListConnection extends BaseConnection {
         }
     }
 
-    /** 
+    /**
      * Load the language file given the URL into the Properties object
-     * 
-     * @param url  the pointing to the language entries
+     *
+     * @param url the pointing to the language entries
      * @param prop in which the language properties should be stored
-     * @return     Properties object containing the language entries
+     * @return Properties object containing the language entries
      */
     public Properties getLanguage(final URL url, Properties prop) throws NetworkException {
         final String source = "ListConnection[getLanguage]";
@@ -162,19 +163,19 @@ public final class ListConnection extends BaseConnection {
             throw new IllegalArgumentException(source + " - properties cannot be null");
         }
         try (InputStream in = url.openStream();
-             InputStreamReader ir = new InputStreamReader(in)) {
+            InputStreamReader ir = new InputStreamReader(in)) {
             prop.load(ir);
             return prop;
         } catch (IOException e) {
-            throw createNetworkException(source, CONN_ERROR, e);            
+            throw createNetworkException(source, CONN_ERROR, e);
         }
     }
-    
+
     /**
      * Handle the create new payment session OK state
      *
      * @param data the response data received from the API
-     * @return     the ListResult
+     * @return the ListResult
      */
     private ListResult handleCreatePaymentSessionOk(final String data) throws JsonParseException {
         return gson.fromJson(data, ListResult.class);
@@ -184,7 +185,7 @@ public final class ListConnection extends BaseConnection {
      * Handle get list result OK state
      *
      * @param data the response data received from the Payment API
-     * @return     the ListResult
+     * @return the ListResult
      */
     private ListResult handleGetListResultOk(final String data) throws JsonParseException {
         return gson.fromJson(data, ListResult.class);

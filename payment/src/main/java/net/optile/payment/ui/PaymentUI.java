@@ -11,40 +11,44 @@
 
 package net.optile.payment.ui;
 
-import android.content.Intent;
 import android.app.Activity;
-import android.util.Patterns;
+import android.content.Intent;
 import android.text.TextUtils;
-
+import android.util.Patterns;
 import net.optile.payment.ui.paymentpage.PaymentPageActivity;
 
 /**
  * The PaymentUI is the PaymentPage controller
  */
 public final class PaymentUI {
-    
+
     /** The url pointing to the current list */
     private String listUrl;
-    
-    private static class InstanceHolder {
-        static final PaymentUI INSTANCE = new PaymentUI();
-    }
-    
+
     private PaymentUI() {
     }
 
-    /** 
+    /**
      * Get the instance of this PaymentUI
-     * 
-     * @return the instance of this PaymentUI 
+     *
+     * @return the instance of this PaymentUI
      */
     public static PaymentUI getInstance() {
         return InstanceHolder.INSTANCE;
     }
 
-    /** 
+    /**
+     * Get the listUrl in this PaymentUI
+     *
+     * @return the listUrl or null if not previously set
+     */
+    public String getListUrl() {
+        return listUrl;
+    }
+
+    /**
      * Set the listUrl in this PaymentUI
-     * 
+     *
      * @param listUrl the listUrl to be set in this paymentUI
      */
     public void setListUrl(String listUrl) {
@@ -58,21 +62,12 @@ public final class PaymentUI {
         this.listUrl = listUrl;
     }
 
-    /** 
-     * Get the listUrl in this PaymentUI
-     * 
-     * @return the listUrl or null if not previously set
-     */
-    public String getListUrl() {
-        return listUrl;
-    }
-
-    /** 
+    /**
      * Show the PaymentPage with the PaymentTheme for the look and feel.
-     * 
-     * @param activity    the activity that will be notified when this PaymentPage is finished
-     * @param requestCode the requestCode to be used for identifying results in the parent activity 
-     * @param theme       the optional theme, if null then the default PaymentTheme will be used
+     *
+     * @param activity the activity that will be notified when this PaymentPage is finished
+     * @param requestCode the requestCode to be used for identifying results in the parent activity
+     * @param theme the optional theme, if null then the default PaymentTheme will be used
      */
     public void showPaymentPage(Activity activity, int requestCode, PaymentTheme theme) {
 
@@ -89,5 +84,9 @@ public final class PaymentUI {
         Intent intent = PaymentPageActivity.createStartIntent(activity, listUrl, theme);
         activity.startActivityForResult(intent, requestCode);
         activity.overridePendingTransition(0, 0);
+    }
+
+    private static class InstanceHolder {
+        static final PaymentUI INSTANCE = new PaymentUI();
     }
 }

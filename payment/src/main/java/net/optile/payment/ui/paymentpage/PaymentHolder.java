@@ -11,9 +11,10 @@
 
 package net.optile.payment.ui.paymentpage;
 
-import net.optile.payment.model.ListResult;
 import java.util.List;
 import java.util.Properties;
+
+import net.optile.payment.model.ListResult;
 
 /**
  * Class for holding the ListResult and the list of supported PaymentMethods
@@ -26,11 +27,11 @@ final class PaymentHolder {
 
     private Properties language;
 
-    /** 
+    /**
      * Construct a new PaymentHolder object
-     * 
-     * @param listResult Object holding the current list session data 
-     * @param items      list of PaymentItems supported by the current Payment session
+     *
+     * @param listResult Object holding the current list session data
+     * @param items list of PaymentItems supported by the current Payment session
      */
     PaymentHolder(ListResult listResult, List<PaymentItem> items) {
         this.listResult = listResult;
@@ -40,7 +41,7 @@ final class PaymentHolder {
     void setLanguage(Properties language) {
         this.language = language;
     }
-    
+
     String translate(String key, String defValue) {
         return language != null ? language.getProperty(key, defValue) : defValue;
     }

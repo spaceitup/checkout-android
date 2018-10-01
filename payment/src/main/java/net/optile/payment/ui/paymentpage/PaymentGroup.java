@@ -13,7 +13,7 @@ package net.optile.payment.ui.paymentpage;
 
 import java.net.URL;
 import java.util.List;
-import java.util.LinkedHashMap;
+
 import net.optile.payment.model.InputElement;
 
 /**
@@ -26,14 +26,14 @@ final class PaymentGroup {
     final PaymentItem item;
 
     final List<InputElement> elements;
-    
+
     boolean expanded;
-    
-    /** 
+
+    /**
      * Construct a new PaymentGroup
      *
-     * @param type     type of this PaymentGroup
-     * @param item     PaymentItem to be shown
+     * @param type type of this PaymentGroup
+     * @param item PaymentItem to be shown
      * @param elements containing the ordered list of InputElements
      */
     PaymentGroup(int type, PaymentItem item, List<InputElement> elements) {
@@ -45,7 +45,7 @@ final class PaymentGroup {
     String getCode() {
         return item.getCode();
     }
-    
+
     String getLabel() {
         return item.getLabel();
     }

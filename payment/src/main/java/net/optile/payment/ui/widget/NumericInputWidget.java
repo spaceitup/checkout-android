@@ -11,27 +11,28 @@
 
 package net.optile.payment.ui.widget;
 
-import net.optile.payment.R;
-import android.view.View;
-import net.optile.payment.model.InputElement;
-import android.support.design.widget.TextInputLayout;
 import android.support.design.widget.TextInputEditText;
-    
+import android.support.design.widget.TextInputLayout;
+import android.view.View;
+import android.view.inputmethod.EditorInfo;
+import net.optile.payment.R;
+import net.optile.payment.model.InputElement;
+
 /**
  * Class for handling the Numeric input type
  */
 public final class NumericInputWidget extends FormWidget {
 
     private final InputElement element;
-    
+
     private final TextInputEditText input;
 
     private final TextInputLayout layout;
-    
-    /** 
+
+    /**
      * Construct a new NumericInputWidget
-     * 
-     * @param name     name identifying this widget
+     *
+     * @param name name identifying this widget
      * @param rootView the root view of this input
      * @param element the InputElement this widget is displaying
      */
@@ -44,5 +45,10 @@ public final class NumericInputWidget extends FormWidget {
         layout.setHintAnimationEnabled(false);
         layout.setHint(element.getLabel());
         layout.setHintAnimationEnabled(true);
+    }
+
+    public boolean setImeOptions(boolean last) {
+        input.setImeOptions(last ? EditorInfo.IME_ACTION_DONE : EditorInfo.IME_ACTION_NEXT);
+        return true;
     }
 }
