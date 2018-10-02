@@ -216,14 +216,11 @@ class PaymentListAdapter extends RecyclerView.Adapter<PaymentListViewHolder> {
     private void addWidgetsToHolder(PaymentListViewHolder holder, PaymentGroup group, LayoutInflater inflater, ViewGroup parent) {
         List<FormWidget> widgets = createWidgets(group.elements, inflater, parent);
         FormWidget widget;
-        boolean last = true;
 
-        // Run backwards through the list of widgets in order to set the
-        // proper ImeOptions for soft keyboard navigation
         for (int i = widgets.size(); i > 0; ) {
             widget = widgets.get(--i);
-            if (widget.setImeOptions(last)) {
-                last = false;
+            if (widget.setLastImeOptionsWidget()) {
+                break;
             }
         }
         holder.addWidgets(widgets);
