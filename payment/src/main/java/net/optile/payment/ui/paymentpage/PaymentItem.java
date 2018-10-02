@@ -28,10 +28,10 @@ final class PaymentItem {
 
     final ApplicableNetwork network;
 
-    private Properties language;
-
     final boolean supported;
     
+    private Properties language;
+
     /**
      * Construct a new PaymentItem object
      *
