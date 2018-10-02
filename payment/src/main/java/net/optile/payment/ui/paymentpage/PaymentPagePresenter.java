@@ -40,7 +40,7 @@ import net.optile.payment.network.ErrorDetails;
 final class PaymentPagePresenter {
 
     private final static String TAG = "pay_PayPresenter";
-    
+
     private final ListConnection listConnection;
 
     private final PaymentPageView view;
@@ -102,7 +102,7 @@ final class PaymentPagePresenter {
         view.showLoading(false);
 
         if (error instanceof NetworkException) {
-            handleNetworkError((NetworkException)error);
+            handleNetworkError((NetworkException) error);
             return;
         }
         // TODO: Handle unrecoverable errors
@@ -122,25 +122,25 @@ final class PaymentPagePresenter {
         // TODO: Handle the rest of the errors in the ErrorDetails
         Log.e(TAG, details.toString());
     }
-    
+
     private void handleInteraction(Interaction interaction) {
         String code = interaction.getCode();
         String reason = interaction.getReason();
-        
+
         if (!InteractionCode.isValid(code)) {
             view.abortPayment(code, reason, "Unknown interaction code received");
             return;
         }
         switch (code) {
-        case InteractionCode.PROCEED:
-            handleStateProceed(paymentHolder);
-            break;
-        case InteractionCode.ABORT:
-        case InteractionCode.TRY_OTHER_NETWORK:
-        case InteractionCode.TRY_OTHER_ACCOUNT:
-        case InteractionCode.RETRY:
-        case InteractionCode.RELOAD:
-            view.abortPayment(code, reason, translateInteraction(code, reason));
+            case InteractionCode.PROCEED:
+                handleStateProceed(paymentHolder);
+                break;
+            case InteractionCode.ABORT:
+            case InteractionCode.TRY_OTHER_NETWORK:
+            case InteractionCode.TRY_OTHER_ACCOUNT:
+            case InteractionCode.RETRY:
+            case InteractionCode.RELOAD:
+                view.abortPayment(code, reason, translateInteraction(code, reason));
         }
     }
 
@@ -150,7 +150,7 @@ final class PaymentPagePresenter {
         PaymentItem item;
         int selIndex = -1;
         int nrItems = holder.items.size();
-        
+
         for (int i = 0; i < nrItems; i++) {
             item = holder.items.get(i);
             if (item.supported) {
@@ -163,13 +163,12 @@ final class PaymentPagePresenter {
         }
         if (nrItems == 0) {
             view.showCenterMessage(R.string.error_paymentpage_empty);
-        }
-        else if (groups.size() == 0) {
-            view.showCenterMessage(R.string.error_paymentpage_notsupported);            
+        } else if (groups.size() == 0) {
+            view.showCenterMessage(R.string.error_paymentpage_notsupported);
         }
         view.setItems(selIndex == -1 ? 0 : selIndex, groups);
     }
-    
+
     private PaymentGroup createPaymentGroup(PaymentItem item) {
         return new PaymentGroup(nextGroupType(), item, item.getInputElements());
     }
@@ -179,7 +178,7 @@ final class PaymentPagePresenter {
         sb.append(code).append(".").append(reason);
         return translate(sb.toString(), sb.toString());
     }
-    
+
     private void asyncLoadPayment(final String listUrl) {
 
         WorkerTask<PaymentHolder> task = WorkerTask.fromCallable(new Callable<PaymentHolder>() {

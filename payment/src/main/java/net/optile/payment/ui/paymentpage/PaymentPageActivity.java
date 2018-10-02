@@ -18,7 +18,9 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.LinearSmoothScroller;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.SimpleItemAnimator;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
@@ -27,8 +29,6 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import net.optile.payment.R;
 import net.optile.payment.ui.PaymentTheme;
-import android.support.v7.widget.SimpleItemAnimator;
-import android.support.v7.widget.LinearSmoothScroller;
 
 /**
  * The PaymentPageActivity showing available payment methods
@@ -100,7 +100,7 @@ public final class PaymentPageActivity extends AppCompatActivity implements Paym
 
         RecyclerView.ItemAnimator animator = recyclerView.getItemAnimator();
         if (animator instanceof SimpleItemAnimator) {
-            ((SimpleItemAnimator)animator).setSupportsChangeAnimations(false);
+            ((SimpleItemAnimator) animator).setSupportsChangeAnimations(false);
         }
     }
 
@@ -215,15 +215,15 @@ public final class PaymentPageActivity extends AppCompatActivity implements Paym
         int curIndex = this.selIndex;
         this.selIndex = position;
         hideKeyboard();
-        
+
         // first, hide the current selected element
-        PaymentListViewHolder holder = (PaymentListViewHolder)recyclerView.findViewHolderForAdapterPosition(curIndex);
+        PaymentListViewHolder holder = (PaymentListViewHolder) recyclerView.findViewHolderForAdapterPosition(curIndex);
         if (holder != null) {
             holder.expand(false);
             adapter.notifyItemChanged(curIndex);
         }
         // second, expand the new selected element
-        holder = (PaymentListViewHolder)recyclerView.findViewHolderForAdapterPosition(position);
+        holder = (PaymentListViewHolder) recyclerView.findViewHolderForAdapterPosition(position);
         if (holder != null) {
             holder.expand(true);
             adapter.notifyItemChanged(position);
@@ -248,7 +248,7 @@ public final class PaymentPageActivity extends AppCompatActivity implements Paym
     int getSelected() {
         return selIndex;
     }
-    
+
     String translate(String key, String defValue) {
         return presenter.translate(key, defValue);
     }
@@ -263,11 +263,12 @@ public final class PaymentPageActivity extends AppCompatActivity implements Paym
 
     private void smoothScrollToPosition(int position) {
         RecyclerView.SmoothScroller smoothScroller = new LinearSmoothScroller(this) {
-                @Override protected int getVerticalSnapPreference() {
-                    return LinearSmoothScroller.SNAP_TO_START;
-                }
-            };
+            @Override
+            protected int getVerticalSnapPreference() {
+                return LinearSmoothScroller.SNAP_TO_START;
+            }
+        };
         smoothScroller.setTargetPosition(position);
-        recyclerView.getLayoutManager().startSmoothScroll(smoothScroller);        
+        recyclerView.getLayoutManager().startSmoothScroll(smoothScroller);
     }
 }

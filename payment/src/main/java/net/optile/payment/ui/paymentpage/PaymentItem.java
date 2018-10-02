@@ -17,9 +17,9 @@ import java.util.List;
 import java.util.Map;
 import java.util.Properties;
 
-import net.optile.payment.util.PaymentUtils;
 import net.optile.payment.model.ApplicableNetwork;
 import net.optile.payment.model.InputElement;
+import net.optile.payment.util.PaymentUtils;
 
 /**
  * Class for holding the ApplicableNetwork with its localized language file
@@ -29,7 +29,7 @@ final class PaymentItem {
     final ApplicableNetwork network;
 
     final boolean supported;
-    
+
     private Properties language;
 
     /**
