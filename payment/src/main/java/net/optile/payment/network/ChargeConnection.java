@@ -43,7 +43,6 @@ public final class ChargeConnection extends BaseConnection {
      * @param url the url of the charge
      * @param data the data containing the request body for the charge request
      * @return the OperationResult object received from the Payment API
-     * @throws NetworkException the network exception
      */
     public OperationResult createCharge(final URL url, final String data) throws NetworkException {
         final String source = "ChargeConnection[createCharge]";
