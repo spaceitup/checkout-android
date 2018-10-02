@@ -11,6 +11,7 @@
 
 package net.optile.payment.ui.paymentpage;
 
+import java.util.Map;
 import java.util.HashMap;
 import java.util.List;
 
@@ -35,7 +36,7 @@ class PaymentListViewHolder extends RecyclerView.ViewHolder {
 
     final PaymentListAdapter adapter;
 
-    private HashMap<String, FormWidget> widgets;
+    private Map<String, FormWidget> widgets;
 
     PaymentListViewHolder(PaymentListAdapter adapter, View parent) {
         super(parent);
