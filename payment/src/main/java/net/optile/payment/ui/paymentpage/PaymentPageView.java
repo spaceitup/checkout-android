@@ -69,8 +69,9 @@ interface PaymentPageView {
     /**
      * Abort the payment and notify the user of this SDK
      *
-     * @param code code indicating what went wrong
-     * @param reason reason why the payment has been aborted
+     * @param code    code indicating what went wrong
+     * @param reason  reason why the payment has been aborted
+     * @param message containing the localized message to be shown to the user
      */
-    void abortPayment(String code, String reason);
+    void abortPayment(String code, String reason, String message);
 }

@@ -57,7 +57,7 @@ public final class SelectInputWidget extends FormWidget {
         }
         ArrayAdapter<SpinnerItem> adapter = new ArrayAdapter<>(rootView.getContext(), R.layout.spinner_item);
         int selIndex = 0;
-        SelectOption option = null;
+        SelectOption option;
 
         for (int i = 0, e = options.size(); i < e; i++) {
             option = options.get(i);

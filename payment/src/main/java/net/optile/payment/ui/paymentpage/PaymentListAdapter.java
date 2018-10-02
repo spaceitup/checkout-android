@@ -68,7 +68,7 @@ class PaymentListAdapter extends RecyclerView.Adapter<PaymentListViewHolder> {
         LayoutInflater inflater = LayoutInflater.from(context);
         View view = inflater.inflate(R.layout.list_item_paymentpage, parent, false);
 
-        PaymentListViewHolder holder = new PaymentListViewHolder(this, view, viewType);
+        PaymentListViewHolder holder = new PaymentListViewHolder(this, view);
         PaymentGroup group = getGroupWithViewType(viewType);
 
         if (group != null) {

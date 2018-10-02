@@ -184,8 +184,8 @@ public final class PaymentPageActivity extends AppCompatActivity implements Paym
      * {@inheritDoc}
      */
     @Override
-    public void abortPayment(String code, String reason) {
-        Log.i(TAG, "abortPayment: " + code + ", " + reason);
+    public void abortPayment(String code, String reason, String message) {
+        Log.i(TAG, "abortPayment: " + code + ", " + reason + ", " + message);
     }
 
     /**

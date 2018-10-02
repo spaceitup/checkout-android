@@ -30,13 +30,16 @@ final class PaymentItem {
 
     private Properties language;
 
+    final boolean supported;
+    
     /**
      * Construct a new PaymentItem object
      *
      * @param network ApplicableNetwork used in this PaymentItem
      */
-    PaymentItem(ApplicableNetwork network) {
+    PaymentItem(ApplicableNetwork network, boolean supported) {
         this.network = network;
+        this.supported = supported;
     }
 
     URL getLink(String name) {

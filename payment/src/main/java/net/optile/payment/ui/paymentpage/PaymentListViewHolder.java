@@ -37,11 +37,8 @@ class PaymentListViewHolder extends RecyclerView.ViewHolder {
 
     private LinkedHashMap<String, FormWidget> widgets;
 
-    private int viewType;
-
-    PaymentListViewHolder(PaymentListAdapter adapter, View parent, int viewType) {
+    PaymentListViewHolder(PaymentListAdapter adapter, View parent) {
         super(parent);
-        this.viewType = viewType;
         this.adapter = adapter;
         this.title = parent.findViewById(R.id.text_title);
         this.logo = parent.findViewById(R.id.image_logo);
