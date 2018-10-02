@@ -47,8 +47,8 @@ public final class IntegerInputWidget extends FormWidget {
         layout.setHintAnimationEnabled(true);
     }
 
-    public boolean setImeOptions(boolean last) {
-        input.setImeOptions(last ? EditorInfo.IME_ACTION_DONE : EditorInfo.IME_ACTION_NEXT);
+    public boolean setLastImeOptionsWidget() {
+        input.setImeOptions(EditorInfo.IME_ACTION_DONE);
         return true;
     }
 }

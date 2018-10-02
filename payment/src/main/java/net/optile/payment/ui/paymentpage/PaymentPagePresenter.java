@@ -30,9 +30,9 @@ import net.optile.payment.model.Interaction;
 import net.optile.payment.model.InteractionCode;
 import net.optile.payment.model.ListResult;
 import net.optile.payment.model.Networks;
+import net.optile.payment.network.ErrorDetails;
 import net.optile.payment.network.ListConnection;
 import net.optile.payment.network.NetworkException;
-import net.optile.payment.network.ErrorDetails;
 
 /**
  * The PaymentPagePresenter implementing the presenter part of the MVP
