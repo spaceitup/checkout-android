@@ -33,7 +33,7 @@ import net.optile.payment.ui.PaymentTheme;
 /**
  * The PaymentPageActivity showing available payment methods
  */
-public final class PaymentPageActivity extends AppCompatActivity implements PaymentPageView, PaymentListAdapter.OnItemListener {
+public final class PaymentPageActivity extends AppCompatActivity implements PaymentPageView {
 
     private final static String TAG = "pay_PaymentPageActivity";
     private final static String EXTRA_LISTURL = "extra_listurl";
@@ -41,18 +41,14 @@ public final class PaymentPageActivity extends AppCompatActivity implements Paym
 
     private PaymentPagePresenter presenter;
 
-    private PaymentListAdapter adapter;
-
     private String listUrl;
 
     private PaymentTheme theme;
 
     private boolean active;
 
-    private RecyclerView recyclerView;
-
-    private int selIndex;
-
+    private PaymentList paymentList;
+    
     /**
      * Create the start intent for this Activity
      *
@@ -83,25 +79,10 @@ public final class PaymentPageActivity extends AppCompatActivity implements Paym
         }
         setContentView(R.layout.activity_paymentpage);
 
-        // initialize the toolbar
         final Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-
-        // initialize the presenter
         this.presenter = new PaymentPagePresenter(this);
-
-        // initialize the list adapter
-        this.adapter = new PaymentListAdapter(this);
-        this.adapter.setListener(this);
-
-        this.recyclerView = findViewById(R.id.recyclerview_paymentlist);
-        this.recyclerView.setAdapter(adapter);
-        this.recyclerView.setLayoutManager(new LinearLayoutManager(this));
-
-        RecyclerView.ItemAnimator animator = recyclerView.getItemAnimator();
-        if (animator instanceof SimpleItemAnimator) {
-            ((SimpleItemAnimator) animator).setSupportsChangeAnimations(false);
-        }
+        this.paymentList = new PaymentList(this, findViewById(R.id.recyclerview_paymentlist));
     }
 
     /**
@@ -156,9 +137,7 @@ public final class PaymentPageActivity extends AppCompatActivity implements Paym
      */
     @Override
     public void setItems(int selIndex, List<PaymentGroup> items) {
-        this.selIndex = selIndex;
-        adapter.setItems(items);
-        recyclerView.scrollToPosition(selIndex);
+        paymentList.setItems(selIndex, items);
     }
 
     /**
@@ -166,7 +145,7 @@ public final class PaymentPageActivity extends AppCompatActivity implements Paym
      */
     @Override
     public void clearItems() {
-        adapter.clear();
+        paymentList.clearItems();
     }
 
     /**
@@ -199,43 +178,6 @@ public final class PaymentPageActivity extends AppCompatActivity implements Paym
      * {@inheritDoc}
      */
     @Override
-    public void onActionClicked(PaymentGroup item, int position) {
-        Log.i(TAG, "on Action Clicked: " + position);
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public void onItemClicked(PaymentGroup item, int position) {
-
-        if (position == this.selIndex) {
-            return;
-        }
-        int curIndex = this.selIndex;
-        this.selIndex = position;
-        hideKeyboard();
-
-        // first, hide the current selected element
-        PaymentListViewHolder holder = (PaymentListViewHolder) recyclerView.findViewHolderForAdapterPosition(curIndex);
-        if (holder != null) {
-            holder.expand(false);
-            adapter.notifyItemChanged(curIndex);
-        }
-        // second, expand the new selected element
-        holder = (PaymentListViewHolder) recyclerView.findViewHolderForAdapterPosition(position);
-        if (holder != null) {
-            holder.expand(true);
-            adapter.notifyItemChanged(position);
-            smoothScrollToPosition(position);
-        }
-
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
     public void showLoading(boolean show) {
 
         if (!isActive()) {
@@ -245,30 +187,7 @@ public final class PaymentPageActivity extends AppCompatActivity implements Paym
         progressBar.setVisibility(show ? View.VISIBLE : View.GONE);
     }
 
-    int getSelected() {
-        return selIndex;
-    }
-
     String translate(String key, String defValue) {
         return presenter.translate(key, defValue);
-    }
-
-    private void hideKeyboard() {
-        InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
-
-        if (imm != null) {
-            imm.hideSoftInputFromWindow(recyclerView.getWindowToken(), 0);
-        }
-    }
-
-    private void smoothScrollToPosition(int position) {
-        RecyclerView.SmoothScroller smoothScroller = new LinearSmoothScroller(this) {
-            @Override
-            protected int getVerticalSnapPreference() {
-                return LinearSmoothScroller.SNAP_TO_START;
-            }
-        };
-        smoothScroller.setTargetPosition(position);
-        recyclerView.getLayoutManager().startSmoothScroll(smoothScroller);
     }
 }

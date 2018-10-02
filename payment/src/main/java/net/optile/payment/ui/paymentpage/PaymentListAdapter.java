@@ -46,15 +46,15 @@ class PaymentListAdapter extends RecyclerView.Adapter<PaymentListViewHolder> {
 
     private final List<PaymentGroup> items;
 
+    private PaymentPageActivity activity;
+    
     private OnItemListener listener;
 
-    private PaymentPageActivity activity;
+    private PaymentList paymentList;
 
-    /**
-     * Construct a new PaymentListAdapter
-     */
-    PaymentListAdapter(PaymentPageActivity activity) {
+    PaymentListAdapter(PaymentPageActivity activity, PaymentList paymentList) {
         this.activity = activity;
+        this.paymentList = paymentList;
         this.items = new ArrayList<>();
     }
 
@@ -100,7 +100,7 @@ class PaymentListAdapter extends RecyclerView.Adapter<PaymentListViewHolder> {
                 widget.setVisible(true);
             }
         }
-        holder.expand(position == activity.getSelected());
+        holder.expand(position == paymentList.getSelected());
     }
 
     /**
