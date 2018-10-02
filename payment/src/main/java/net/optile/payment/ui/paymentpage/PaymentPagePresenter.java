@@ -146,22 +146,20 @@ final class PaymentPagePresenter {
 
     private void handleStateProceed(PaymentHolder holder) {
         List<PaymentGroup> groups = new ArrayList<>();
-        PaymentGroup group;
-        PaymentItem item;
         int selIndex = -1;
-        int nrItems = holder.items.size();
+        int index = 0;
 
-        for (int i = 0; i < nrItems; i++) {
-            item = holder.items.get(i);
+        for (PaymentItem item : holder.items) {
             if (item.supported) {
-                group = createPaymentGroup(item);
+                PaymentGroup group = createPaymentGroup(item);
                 if (selIndex == -1 && group.isSelected()) {
-                    selIndex = i;
+                    selIndex = index;
                 }
                 groups.add(group);
+                index++;
             }
         }
-        if (nrItems == 0) {
+        if (holder.items.size() == 0) {
             view.showCenterMessage(R.string.error_paymentpage_empty);
         } else if (groups.size() == 0) {
             view.showCenterMessage(R.string.error_paymentpage_notsupported);
