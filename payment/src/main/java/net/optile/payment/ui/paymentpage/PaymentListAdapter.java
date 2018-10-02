@@ -46,10 +46,10 @@ class PaymentListAdapter extends RecyclerView.Adapter<PaymentListViewHolder> {
 
     private final List<PaymentGroup> items;
 
+    private final PaymentList list;
+
     private OnItemListener listener;
-
-    private PaymentList list;
-
+    
     PaymentListAdapter(PaymentList list) {
         this.list = list;
         this.items = new ArrayList<>();
