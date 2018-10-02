@@ -27,8 +27,6 @@ final class PaymentGroup {
 
     final List<InputElement> elements;
 
-    boolean expanded;
-
     /**
      * Construct a new PaymentGroup
      *
@@ -42,8 +40,8 @@ final class PaymentGroup {
         this.elements = elements;
     }
 
-    boolean getSelected() {
-        return item.getSelected();
+    boolean isSelected() {
+        return item.isSelected();
     }
 
     String getCode() {

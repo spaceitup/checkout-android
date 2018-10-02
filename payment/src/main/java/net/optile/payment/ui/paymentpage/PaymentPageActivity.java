@@ -150,9 +150,6 @@ public final class PaymentPageActivity extends AppCompatActivity implements Paym
     @Override
     public void setItems(int selIndex, List<PaymentGroup> items) {
         this.selIndex = selIndex;
-        if (items.size() > 0) {
-            items.get(selIndex).expanded = true;
-        }
         adapter.setItems(items);
         recyclerView.scrollToPosition(selIndex);
     }
@@ -216,7 +213,6 @@ public final class PaymentPageActivity extends AppCompatActivity implements Paym
         }
         hideKeyboard();
         PaymentGroup curGroup = adapter.getItemFromIndex(this.selIndex);
-        curGroup.expanded = false;
 
         // second, expand the new selected element
         holder = (PaymentListViewHolder) recyclerView.findViewHolderForAdapterPosition(position);
@@ -225,7 +221,6 @@ public final class PaymentPageActivity extends AppCompatActivity implements Paym
             adapter.notifyItemChanged(position);
             recyclerView.scrollToPosition(position);
         }
-        item.expanded = true;
         this.selIndex = position;
     }
 
@@ -242,6 +237,10 @@ public final class PaymentPageActivity extends AppCompatActivity implements Paym
         progressBar.setVisibility(show ? View.VISIBLE : View.GONE);
     }
 
+    int getSelected() {
+        return selIndex;
+    }
+    
     String translate(String key, String defValue) {
         return presenter.translate(key, defValue);
     }

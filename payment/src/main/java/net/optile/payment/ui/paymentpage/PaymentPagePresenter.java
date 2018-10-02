@@ -120,7 +120,7 @@ final class PaymentPagePresenter {
 
         for (int i = 0, e = holder.items.size(); i < e; i++) {
             group = createPaymentGroup(holder.items.get(i));
-            if (selIndex == -1 && group.getSelected()) {
+            if (selIndex == -1 && group.isSelected()) {
                 selIndex = i;
             }
             items.add(group);

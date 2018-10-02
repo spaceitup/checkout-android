@@ -17,6 +17,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Properties;
 
+import net.optile.payment.util.PaymentUtils;
 import net.optile.payment.model.ApplicableNetwork;
 import net.optile.payment.model.InputElement;
 
@@ -51,8 +52,8 @@ final class PaymentItem {
         return network.getLabel();
     }
 
-    boolean getSelected() {
-        return network.getSelected();
+    boolean isSelected() {
+        return PaymentUtils.isTrue(network.getSelected());
     }
 
     List<InputElement> getInputElements() {

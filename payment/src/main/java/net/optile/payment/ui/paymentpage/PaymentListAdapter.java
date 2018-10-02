@@ -100,7 +100,7 @@ class PaymentListAdapter extends RecyclerView.Adapter<PaymentListViewHolder> {
                 widget.setVisible(true);
             }
         }
-        holder.expand(group.expanded);
+        holder.expand(position == activity.getSelected());
     }
 
     /**
