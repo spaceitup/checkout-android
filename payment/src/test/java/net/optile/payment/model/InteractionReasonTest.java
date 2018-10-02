@@ -50,7 +50,7 @@ public class InteractionReasonTest {
         assertTrue(InteractionReason.isValid(InteractionReason.CUSTOMER_ABORT));
         assertTrue(InteractionReason.isValid(InteractionReason.EXPIRED_SESSION));
         assertTrue(InteractionReason.isValid(InteractionReason.EXPIRED_ACCOUNT));
-        assertTrue(InteractionReason.isValid(InteractionReason.ACCOUNT_NOT_ACTIVATED));  
+        assertTrue(InteractionReason.isValid(InteractionReason.ACCOUNT_NOT_ACTIVATED));
         assertTrue(InteractionReason.isValid(InteractionReason.TRUSTED_CUSTOMER));
         assertTrue(InteractionReason.isValid(InteractionReason.UNKNOWN_CUSTOMER));
         assertTrue(InteractionReason.isValid(InteractionReason.ACTIVATED));

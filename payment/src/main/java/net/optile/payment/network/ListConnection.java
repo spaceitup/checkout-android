@@ -18,9 +18,12 @@ import static net.optile.payment.network.ErrorDetails.PROTOCOL_ERROR;
 import static net.optile.payment.network.ErrorDetails.SECURITY_ERROR;
 
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.Properties;
 
 import com.google.gson.JsonParseException;
 
@@ -38,40 +41,26 @@ import net.optile.payment.model.ListResult;
  */
 public final class ListConnection extends BaseConnection {
 
-    private final static String TAG = "payment_ListConnection";
-
-    /**
-     * The base url i.e. used for creating
-     * a new payment session
-     */
-    private final String baseUrl;
-
-    /**
-     * Construct a new ListConnection
-     *
-     * @param baseUrl The url to be used
-     */
-    public ListConnection(final String baseUrl) {
-        this.baseUrl = baseUrl;
-    }
-
     /**
      * Create a new payment session through the Payment API. Remind this is not
      * a request mobile apps should be making as this call is normally executed
      * Merchant Server-side. This request will be removed later.
      *
+     * @param baseUrl the base url of the Payment API
      * @param authorization the authorization header data
      * @param listData the data containing the request body for the list request
      * @return the ListResult
-     * @throws NetworkException when an error occurred while making the request
      */
-    public ListResult createPaymentSession(final String authorization, final String listData) throws NetworkException {
+    public ListResult createPaymentSession(final String baseUrl, final String authorization, final String listData)
+        throws NetworkException {
         final String source = "ListConnection[createPaymentSession]";
 
+        if (TextUtils.isEmpty(baseUrl)) {
+            throw new IllegalArgumentException(source + " - baseUrl cannot be null or empty");
+        }
         if (TextUtils.isEmpty(authorization)) {
             throw new IllegalArgumentException(source + " - authorization cannot be null or empty");
         }
-
         if (TextUtils.isEmpty(listData)) {
             throw new IllegalArgumentException(source + " - data cannot be null or empty");
         }
@@ -118,18 +107,17 @@ public final class ListConnection extends BaseConnection {
      *
      * @param url the url pointing to the list
      * @return the NetworkResponse containing either an error or the ListResult
-     * @throws NetworkException the network exception
      */
-    public ListResult getListResult(final URL url) throws NetworkException {
+    public ListResult getListResult(final String url) throws NetworkException {
         final String source = "ListConnection[getListResult]";
 
-        if (url == null) {
+        if (TextUtils.isEmpty(url)) {
             throw new IllegalArgumentException(source + " - url cannot be null or empty");
         }
 
         HttpURLConnection conn = null;
         try {
-            final String requestUrl = Uri.parse(url.toString()).buildUpon()
+            final String requestUrl = Uri.parse(url).buildUpon()
                 .appendQueryParameter(URI_PARAM_VIEW, VALUE_VIEW)
                 .build().toString();
 
@@ -159,11 +147,35 @@ public final class ListConnection extends BaseConnection {
     }
 
     /**
+     * Load the language file given the URL into the Properties object
+     *
+     * @param url the pointing to the language entries
+     * @param prop in which the language properties should be stored
+     * @return Properties object containing the language entries
+     */
+    public Properties getLanguage(final URL url, Properties prop) throws NetworkException {
+        final String source = "ListConnection[getLanguage]";
+
+        if (url == null) {
+            throw new IllegalArgumentException(source + " - url cannot be null");
+        }
+        if (prop == null) {
+            throw new IllegalArgumentException(source + " - properties cannot be null");
+        }
+        try (InputStream in = url.openStream();
+            InputStreamReader ir = new InputStreamReader(in)) {
+            prop.load(ir);
+            return prop;
+        } catch (IOException e) {
+            throw createNetworkException(source, CONN_ERROR, e);
+        }
+    }
+
+    /**
      * Handle the create new payment session OK state
      *
      * @param data the response data received from the API
      * @return the ListResult
-     * @throws JsonParseException when an error occurred during parsing
      */
     private ListResult handleCreatePaymentSessionOk(final String data) throws JsonParseException {
         return gson.fromJson(data, ListResult.class);
@@ -174,7 +186,6 @@ public final class ListConnection extends BaseConnection {
      *
      * @param data the response data received from the Payment API
      * @return the ListResult
-     * @throws JsonParseException when an error occurred during parsing
      */
     private ListResult handleGetListResultOk(final String data) throws JsonParseException {
         return gson.fromJson(data, ListResult.class);

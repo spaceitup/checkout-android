@@ -72,7 +72,8 @@ public final class ErrorDetails {
      * @param errorData the error data
      * @param errorInfo the error info
      */
-    public ErrorDetails(final String source, @ErrorType final String errorType, final int statusCode, final String errorData, final ErrorInfo errorInfo) {
+    public ErrorDetails(final String source, @ErrorType final String errorType, final int statusCode, final String errorData,
+        final ErrorInfo errorInfo) {
         this.source = source;
         this.errorType = errorType;
         this.statusCode = statusCode;

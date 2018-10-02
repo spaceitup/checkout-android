@@ -9,26 +9,24 @@
  * has been received in full.
  */
 
-package net.optile.example.checkout;
+package net.optile.payment.core;
 
 /**
- * The interface Checkout view.
+ * WorkerSubscriber listening for a WorkerTask to be completed
  */
-public interface CheckoutView {
+public interface WorkerSubscriber<V> {
 
     /**
-     * Is the CheckoutView active
+     * The WorkerTask has successfully completed
      *
-     * @return true when active, false otherwise
+     * @param param the result parameter
      */
-    boolean isActive();
+    void onSuccess(V param);
 
     /**
-     * Open the PaymentPage for the provided listUrl
+     * An error occurred while executing the WorkerTask
      *
-     * @param listUrl the current listUrl
+     * @param error the cause of the error
      */
-    void openPaymentPage(String listUrl);
+    void onError(Throwable error);
 }
-
-
