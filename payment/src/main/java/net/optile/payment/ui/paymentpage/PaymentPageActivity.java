@@ -212,22 +212,24 @@ public final class PaymentPageActivity extends AppCompatActivity implements Paym
         if (position == this.selIndex) {
             return;
         }
+        int curIndex = this.selIndex;
+        this.selIndex = position;
         hideKeyboard();
-
+        
         // first, hide the current selected element
-        PaymentListViewHolder holder = (PaymentListViewHolder)recyclerView.findViewHolderForAdapterPosition(this.selIndex);
+        PaymentListViewHolder holder = (PaymentListViewHolder)recyclerView.findViewHolderForAdapterPosition(curIndex);
         if (holder != null) {
             holder.expand(false);
-            adapter.notifyItemChanged(this.selIndex);
+            adapter.notifyItemChanged(curIndex);
         }
         // second, expand the new selected element
-        holder = (PaymentListViewHolder) recyclerView.findViewHolderForAdapterPosition(position);
+        holder = (PaymentListViewHolder)recyclerView.findViewHolderForAdapterPosition(position);
         if (holder != null) {
             holder.expand(true);
             adapter.notifyItemChanged(position);
             smoothScrollToPosition(position);
         }
-        this.selIndex = position;
+
     }
 
     /**

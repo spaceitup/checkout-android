@@ -28,7 +28,7 @@ import net.optile.payment.ui.PaymentUI;
 public final class CheckoutActivity extends AppCompatActivity implements CheckoutView {
 
     private static String TAG = "payment_CheckoutActivity";
-    private static int PAYMENT_REQUEST = 1;
+    private static int PAYMENT_REQUEST_CODE = 1;
 
     private CheckoutPresenter presenter;
 
@@ -99,7 +99,7 @@ public final class CheckoutActivity extends AppCompatActivity implements Checkou
     public void openPaymentPage(String listUrl) {
         PaymentUI paymentUI = PaymentUI.getInstance();
         paymentUI.setListUrl(listUrl);
-        paymentUI.showPaymentPage(this, PAYMENT_REQUEST, null);
+        paymentUI.showPaymentPage(this, PAYMENT_REQUEST_CODE, null);
     }
 
     private void onButtonClicked() {
