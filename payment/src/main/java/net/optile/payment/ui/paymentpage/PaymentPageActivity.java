@@ -27,6 +27,7 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import net.optile.payment.R;
 import net.optile.payment.ui.PaymentTheme;
+import android.support.v7.widget.SimpleItemAnimator;
 
 /**
  * The PaymentPageActivity showing available payment methods
@@ -95,6 +96,11 @@ public final class PaymentPageActivity extends AppCompatActivity implements Paym
         this.recyclerView = findViewById(R.id.recyclerview_paymentlist);
         this.recyclerView.setAdapter(adapter);
         this.recyclerView.setLayoutManager(new LinearLayoutManager(this));
+
+        RecyclerView.ItemAnimator animator = recyclerView.getItemAnimator();
+        if (animator instanceof SimpleItemAnimator) {
+            ((SimpleItemAnimator)animator).setSupportsChangeAnimations(false);
+        }
     }
 
     /**
@@ -205,15 +211,14 @@ public final class PaymentPageActivity extends AppCompatActivity implements Paym
         if (position == this.selIndex) {
             return;
         }
+        hideKeyboard();
+
         // first, hide the current selected element
-        PaymentListViewHolder holder = (PaymentListViewHolder) recyclerView.findViewHolderForAdapterPosition(this.selIndex);
+        PaymentListViewHolder holder = (PaymentListViewHolder)recyclerView.findViewHolderForAdapterPosition(this.selIndex);
         if (holder != null) {
             holder.expand(false);
-            adapter.notifyItemChanged(position);
+            adapter.notifyItemChanged(this.selIndex);
         }
-        hideKeyboard();
-        PaymentGroup curGroup = adapter.getItemFromIndex(this.selIndex);
-
         // second, expand the new selected element
         holder = (PaymentListViewHolder) recyclerView.findViewHolderForAdapterPosition(position);
         if (holder != null) {
