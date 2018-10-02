@@ -11,7 +11,7 @@
 
 package net.optile.payment.ui.paymentpage;
 
-import java.util.LinkedHashMap;
+import java.util.HashMap;
 import java.util.List;
 
 import android.support.v7.widget.RecyclerView;
@@ -35,7 +35,7 @@ class PaymentListViewHolder extends RecyclerView.ViewHolder {
 
     final PaymentListAdapter adapter;
 
-    private LinkedHashMap<String, FormWidget> widgets;
+    private HashMap<String, FormWidget> widgets;
 
     PaymentListViewHolder(PaymentListAdapter adapter, View parent) {
         super(parent);
@@ -43,7 +43,7 @@ class PaymentListViewHolder extends RecyclerView.ViewHolder {
         this.title = parent.findViewById(R.id.text_title);
         this.logo = parent.findViewById(R.id.image_logo);
         this.formLayout = parent.findViewById(R.id.layout_form);
-        this.widgets = new LinkedHashMap<>();
+        this.widgets = new HashMap<>();
 
         View view = parent.findViewById(R.id.layout_header);
         view.setOnClickListener(new View.OnClickListener() {
