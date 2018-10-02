@@ -68,6 +68,4 @@ class PaymentListViewHolder extends RecyclerView.ViewHolder {
     FormWidget getFormWidget(String name) {
         return widgets.get(name);
     }
-
-
 }

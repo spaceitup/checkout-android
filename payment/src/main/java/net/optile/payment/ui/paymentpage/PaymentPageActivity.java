@@ -28,6 +28,7 @@ import android.widget.TextView;
 import net.optile.payment.R;
 import net.optile.payment.ui.PaymentTheme;
 import android.support.v7.widget.SimpleItemAnimator;
+import android.support.v7.widget.LinearSmoothScroller;
 
 /**
  * The PaymentPageActivity showing available payment methods
@@ -224,7 +225,7 @@ public final class PaymentPageActivity extends AppCompatActivity implements Paym
         if (holder != null) {
             holder.expand(true);
             adapter.notifyItemChanged(position);
-            recyclerView.scrollToPosition(position);
+            smoothScrollToPosition(position);
         }
         this.selIndex = position;
     }
@@ -256,5 +257,15 @@ public final class PaymentPageActivity extends AppCompatActivity implements Paym
         if (imm != null) {
             imm.hideSoftInputFromWindow(recyclerView.getWindowToken(), 0);
         }
+    }
+
+    private void smoothScrollToPosition(int position) {
+        RecyclerView.SmoothScroller smoothScroller = new LinearSmoothScroller(this) {
+                @Override protected int getVerticalSnapPreference() {
+                    return LinearSmoothScroller.SNAP_TO_START;
+                }
+            };
+        smoothScroller.setTargetPosition(position);
+        recyclerView.getLayoutManager().startSmoothScroll(smoothScroller);        
     }
 }
