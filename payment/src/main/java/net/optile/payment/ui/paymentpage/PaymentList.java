@@ -38,28 +38,32 @@ final class PaymentList implements PaymentListAdapter.OnItemListener {
 
     private final static String TAG = "pay_PaymentList";
     
-    private PaymentPageActivity activity;
+    private final PaymentPageActivity activity;
     
-    private PaymentListAdapter adapter;
+    private final PaymentListAdapter adapter;
 
-    private RecyclerView recyclerView;
+    private final RecyclerView recyclerView;
 
     private int selIndex;
 
     PaymentList(PaymentPageActivity activity, RecyclerView recyclerView) {
         this.activity = activity;
-        this.recyclerView = recyclerView;
-        this.adapter = new PaymentListAdapter(activity, this);
+        this.adapter = new PaymentListAdapter(this);
         this.adapter.setListener(this);
+
+        this.recyclerView = recyclerView;
         this.recyclerView.setAdapter(adapter);
         this.recyclerView.setLayoutManager(new LinearLayoutManager(activity));
-
         RecyclerView.ItemAnimator animator = recyclerView.getItemAnimator();
         if (animator instanceof SimpleItemAnimator) {
             ((SimpleItemAnimator) animator).setSupportsChangeAnimations(false);
         }
     }
 
+    PaymentPageActivity getActivity() {
+        return activity;
+    }
+    
     void setItems(int selIndex, List<PaymentGroup> items) {
         this.selIndex = selIndex;
         adapter.setItems(items);
@@ -111,10 +115,6 @@ final class PaymentList implements PaymentListAdapter.OnItemListener {
         return selIndex;
     }
 
-    String translate(String key, String defValue) {
-        return activity.translate(key, defValue);
-    }
-    
     private void hideKeyboard() {
         InputMethodManager imm = (InputMethodManager) activity.getSystemService(Context.INPUT_METHOD_SERVICE);
 

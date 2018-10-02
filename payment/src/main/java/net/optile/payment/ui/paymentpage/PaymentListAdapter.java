@@ -46,15 +46,12 @@ class PaymentListAdapter extends RecyclerView.Adapter<PaymentListViewHolder> {
 
     private final List<PaymentGroup> items;
 
-    private PaymentPageActivity activity;
-    
     private OnItemListener listener;
 
-    private PaymentList paymentList;
+    private PaymentList list;
 
-    PaymentListAdapter(PaymentPageActivity activity, PaymentList paymentList) {
-        this.activity = activity;
-        this.paymentList = paymentList;
+    PaymentListAdapter(PaymentList list) {
+        this.list = list;
         this.items = new ArrayList<>();
     }
 
@@ -85,7 +82,8 @@ class PaymentListAdapter extends RecyclerView.Adapter<PaymentListViewHolder> {
         PaymentGroup group = items.get(position);
         URL logoUrl = group.getLink("logo");
         holder.title.setText(group.getLabel());
-
+        PaymentPageActivity activity = list.getActivity();
+        
         if (logoUrl != null) {
             Glide.with(activity).asBitmap().load(logoUrl.toString()).into(holder.logo);
         }
@@ -100,7 +98,7 @@ class PaymentListAdapter extends RecyclerView.Adapter<PaymentListViewHolder> {
                 widget.setVisible(true);
             }
         }
-        holder.expand(position == paymentList.getSelected());
+        holder.expand(position == list.getSelected());
     }
 
     /**
