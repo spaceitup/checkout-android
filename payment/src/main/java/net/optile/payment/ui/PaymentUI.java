@@ -18,7 +18,8 @@ import android.util.Patterns;
 import net.optile.payment.ui.paymentpage.PaymentPageActivity;
 
 /**
- * The PaymentUI is the PaymentPage controller
+ * The PaymentUI is the controller to initialize and launch the Payment Page.
+ * The Payment Page shows payment methods which can be used to finalize payments through optile's Payment API.
  */
 public final class PaymentUI {
 

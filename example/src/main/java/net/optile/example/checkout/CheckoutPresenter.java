@@ -62,9 +62,9 @@ final class CheckoutPresenter {
     }
 
     /**
-     * Is this presenter currently creating a new payment session
+     * Check if the presenter is creating a new payment session.
      *
-     * @return true when active, false otherwise
+     * @return true when creating a payment session, false otherwise
      */
     boolean isCreatePaymentSessionActive() {
         return subscription != null && !subscription.isUnsubscribed();
@@ -118,18 +118,19 @@ final class CheckoutPresenter {
         ListConnection conn = new ListConnection();
         try {
             ListResult result = conn.createPaymentSession(url, authorization, listData);
-            Map<String, URL> links = result.getLinks();
-            URL selfUrl = null;
-
-            if (links == null || (selfUrl = links.get("self")) == null) {
+            URL selfUrl = getSelfUrl(result.getLinks());
+            if (selfUrl == null) {
                 throw new CheckoutException("Error creating payment session, missing self url");
             }
             return selfUrl.toString();
-
         } catch (NetworkException e) {
-            Log.wtf(TAG, e);
             Log.i(TAG, e.details.toString());
+            Log.wtf(TAG, e);
             throw new CheckoutException("Error creating payment session", e);
         }
+    }
+
+    private URL getSelfUrl(Map<String, URL> links) {
+        return links != null ? links.get("self") : null;
     }
 }
