@@ -50,10 +50,14 @@ public final class NumericInputWidget extends FormWidget {
         layout.setHintAnimationEnabled(true);
     }
 
+    public Object getValue() {
+        return input.getText().toString().trim();
+    }
+    
     public void putValue(Charge charge) throws PaymentException {
         String val = input.getText().toString().trim();
         if (!TextUtils.isEmpty(val)) {
-            charge.putValue(name, val); 
+            charge.putValue(element.getName(), val); 
         }
     }
     

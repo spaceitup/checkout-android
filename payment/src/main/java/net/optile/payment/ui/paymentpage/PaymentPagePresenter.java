@@ -11,6 +11,7 @@
 
 package net.optile.payment.ui.paymentpage;
 
+import java.util.Map;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
@@ -20,7 +21,9 @@ import java.util.concurrent.Callable;
 
 import android.text.TextUtils;
 import android.util.Log;
+import org.json.JSONException;
 import net.optile.payment.R;
+import net.optile.payment.form.Charge;
 import net.optile.payment.core.PaymentException;
 import net.optile.payment.core.WorkerSubscriber;
 import net.optile.payment.core.WorkerTask;
@@ -30,9 +33,12 @@ import net.optile.payment.model.Interaction;
 import net.optile.payment.model.InteractionCode;
 import net.optile.payment.model.ListResult;
 import net.optile.payment.model.Networks;
+import net.optile.payment.model.OperationResult;
 import net.optile.payment.network.ErrorDetails;
 import net.optile.payment.network.ListConnection;
+import net.optile.payment.network.ChargeConnection;
 import net.optile.payment.network.NetworkException;
+import net.optile.payment.ui.widget.FormWidget;
 
 /**
  * The PaymentPagePresenter implementing the presenter part of the MVP
@@ -43,6 +49,8 @@ final class PaymentPagePresenter {
 
     private final ListConnection listConnection;
 
+    private final ChargeConnection chargeConnection;
+    
     private final PaymentPageView view;
 
     private PaymentSession session;
@@ -59,6 +67,7 @@ final class PaymentPagePresenter {
     PaymentPagePresenter(PaymentPageView view) {
         this.view = view;
         this.listConnection = new ListConnection();
+        this.chargeConnection = new ChargeConnection();
     }
 
     /**
@@ -76,25 +85,45 @@ final class PaymentPagePresenter {
     }
 
     /**
-     * Refresh the ListResult, this will result in reloading the ListResult and language file
+     * Load the PaymentSession from the Payment API. once loaded, populate the View with the newly loaded groups of payment methods.
      *
      * @param listUrl the url pointing to the ListResult in the Payment API
      */
-    void refresh(String listUrl) {
-        asyncLoadPaymentSession(listUrl);
+    void loadPaymentSession(String listUrl) {
+        asyncGetPaymentSession(listUrl);
     }
 
+    /** 
+     * Make a charge request for the given PaymentItem
+     * 
+     * @param widgets
+     * @param group 
+     */
+    void makeChargeRequest(Map<String, FormWidget> widgets, PaymentGroup group) {
+        URL url = group.getLink("operation");
+        Charge charge = new Charge();
+
+        try {
+            for (FormWidget widget : widgets.values()) {
+                widget.putValue(charge);
+            }
+            asyncPostChargeRequest(url, charge);
+        } catch (PaymentException e) {
+            Log.wtf(TAG, e);
+        }         
+    }
+        
     private int nextGroupType() {
         return groupType++;
     }
 
-    private void handleSuccess(PaymentSession session) {
+    private void getPaymentSessionSuccess(PaymentSession session) {
         view.showLoading(false);
         this.session = session;
         handleInteraction(session.listResult.getInteraction());
     }
 
-    private void handleError(Throwable error) {
+    private void getPaymentSessionError(Throwable error) {
         view.showLoading(false);
 
         if (error instanceof NetworkException) {
@@ -105,6 +134,16 @@ final class PaymentPagePresenter {
         Log.wtf(TAG, error);
     }
 
+    private void postChargeRequestSuccess(OperationResult result) {
+        view.showLoading(false);
+        Log.i(TAG, "charge request success");
+    }
+
+    private void postChargeRequestError(Throwable error) {
+        view.showLoading(false);
+        Log.wtf(TAG, error);
+    }
+    
     private void handleNetworkError(NetworkException exception) {
         ErrorDetails details = exception.details;
 
@@ -149,23 +188,23 @@ final class PaymentPagePresenter {
         view.showPaymentSession(session);
     }
 
-    private void asyncLoadPaymentSession(final String listUrl) {
+    private void asyncGetPaymentSession(final String listUrl) {
 
         WorkerTask<PaymentSession> task = WorkerTask.fromCallable(new Callable<PaymentSession>() {
             @Override
             public PaymentSession call() throws NetworkException, PaymentException {
-                return loadPaymentSession(listUrl);
+                return getPaymentSession(listUrl);
             }
         });
         task.subscribe(new WorkerSubscriber<PaymentSession>() {
             @Override
             public void onSuccess(PaymentSession paymentSession) {
-                handleSuccess(paymentSession);
+                getPaymentSessionSuccess(paymentSession);
             }
 
             @Override
             public void onError(Throwable error) {
-                handleError(error);
+                getPaymentSessionError(error);
             }
         });
         view.hideCenterMessage();
@@ -174,7 +213,7 @@ final class PaymentPagePresenter {
         Workers.getInstance().forNetworkTasks().execute(task);
     }
 
-    private PaymentSession loadPaymentSession(String listUrl) throws NetworkException, PaymentException {
+    private PaymentSession getPaymentSession(String listUrl) throws NetworkException, PaymentException {
         ListResult listResult = listConnection.getListResult(listUrl);
         List<PaymentItem> items = loadPaymentItems(listResult);
         List<PaymentGroup> groups = new ArrayList<>();
@@ -260,5 +299,32 @@ final class PaymentPagePresenter {
     private boolean isSupported(ApplicableNetwork network) {
         String button = network.getButton();
         return (TextUtils.isEmpty(button) || !button.contains("activate")) && !network.getRedirect();
+    }
+    
+    private void asyncPostChargeRequest(final URL url, final Charge charge) {
+
+        WorkerTask<OperationResult> task = WorkerTask.fromCallable(new Callable<OperationResult>() {
+            @Override
+            public OperationResult call() throws NetworkException {
+                return postChargeRequest(url, charge);
+            }
+        });
+        task.subscribe(new WorkerSubscriber<OperationResult>() {
+            @Override
+            public void onSuccess(OperationResult result) {
+                postChargeRequestSuccess(result);
+            }
+
+            @Override
+            public void onError(Throwable error) {
+                postChargeRequestError(error);
+            }
+        });
+        view.showLoading(true);
+        Workers.getInstance().forNetworkTasks().execute(task);
+    }
+
+    private OperationResult postChargeRequest(URL url, Charge charge) throws NetworkException {
+        return chargeConnection.createCharge(url, charge);
     }
 }

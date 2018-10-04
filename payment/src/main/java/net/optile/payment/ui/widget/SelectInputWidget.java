@@ -54,7 +54,7 @@ public final class SelectInputWidget extends FormWidget {
     public void putValue(Charge charge) throws PaymentException {
         SpinnerItem selected = (SpinnerItem)spinner.getSelectedItem();
         if (selected != null) {
-            charge.putValue(name, selected.value); 
+            charge.putValue(element.getName(), selected.value); 
         }
     }
     

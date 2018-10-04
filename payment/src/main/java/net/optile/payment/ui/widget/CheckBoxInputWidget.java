@@ -18,7 +18,6 @@ import net.optile.payment.R;
 import net.optile.payment.model.InputElement;
 import net.optile.payment.form.Charge;
 import net.optile.payment.core.PaymentException;
-
 /**
  * Class for handling the CheckBox input type
  */
@@ -45,6 +44,6 @@ public final class CheckBoxInputWidget extends FormWidget {
     }
 
     public void putValue(Charge charge) throws PaymentException {
-        charge.putValue(name, value.isChecked()); 
+        charge.putValue(element.getName(), value.isChecked()); 
     }
 }

@@ -18,6 +18,7 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SimpleItemAnimator;
 import android.util.Log;
 import android.view.inputmethod.InputMethodManager;
+import android.view.View;
 
 /**
  * The PaymentList showing available payment methods in a list
@@ -56,6 +57,10 @@ final class PaymentList implements PaymentListAdapter.OnItemListener {
         return activity;
     }
 
+    void setVisible(boolean visible) {
+        recyclerView.setVisibility(visible ? View.VISIBLE : View.INVISIBLE);
+    }
+    
     void setPaymentSession(PaymentSession session) {
         this.selIndex = session.selIndex;
         adapter.setPaymentSession(session);
@@ -71,7 +76,10 @@ final class PaymentList implements PaymentListAdapter.OnItemListener {
      */
     @Override
     public void onActionClicked(PaymentGroup item, int position) {
-        Log.i(TAG, "on Action Clicked: " + position);
+        PaymentListViewHolder holder = (PaymentListViewHolder) recyclerView.findViewHolderForAdapterPosition(position);
+        if (holder != null) {
+            activity.makeChargeRequest(item, holder.getWidgets());
+        }
     }
 
     /**
@@ -100,7 +108,6 @@ final class PaymentList implements PaymentListAdapter.OnItemListener {
             adapter.notifyItemChanged(position);
             smoothScrollToPosition(position);
         }
-
     }
 
     private void hideKeyboard() {

@@ -17,6 +17,7 @@ import java.util.List;
 
 import com.bumptech.glide.Glide;
 
+import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
@@ -39,7 +40,6 @@ import net.optile.payment.ui.widget.StringInputWidget;
  */
 class PaymentListAdapter extends RecyclerView.Adapter<PaymentListViewHolder> {
 
-
     private final static String TAG = "pay_PaymentListAdapter";
     private final static String BUTTON_WIDGET = "ButtonWidget";
 
@@ -50,7 +50,7 @@ class PaymentListAdapter extends RecyclerView.Adapter<PaymentListViewHolder> {
     private OnItemListener listener;
 
     private PaymentSession session;
-
+    
     PaymentListAdapter(PaymentList list) {
         this.list = list;
         this.items = new ArrayList<>();
@@ -82,7 +82,7 @@ class PaymentListAdapter extends RecyclerView.Adapter<PaymentListViewHolder> {
         PaymentGroup group = items.get(position);
         URL logoUrl = group.getLink("logo");
         holder.title.setText(group.getLabel());
-
+        
         if (logoUrl != null) {
             Glide.with(list.getContext()).asBitmap().load(logoUrl.toString()).into(holder.logo);
         }
@@ -152,6 +152,13 @@ class PaymentListAdapter extends RecyclerView.Adapter<PaymentListViewHolder> {
         }
     }
 
+    void handleOnAction(int position) {
+        if (listener != null) {
+            PaymentGroup item = items.get(position);
+            listener.onActionClicked(item, position);
+        }
+    }
+    
     /**
      * Get the PaymentGroup at the given index
      *

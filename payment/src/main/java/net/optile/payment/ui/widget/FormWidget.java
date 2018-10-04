@@ -24,11 +24,17 @@ public abstract class FormWidget {
 
     final String name;
 
+    OnWidgetListener listener;
+    
     FormWidget(String name, View rootView) {
         this.name = name;
         this.rootView = rootView;
     }
 
+    public void setListener(OnWidgetListener listener) {
+        this.listener = listener;
+    }
+    
     public View getRootView() {
         return rootView;
     }
@@ -47,4 +53,11 @@ public abstract class FormWidget {
 
     public void putValue(Charge charge) throws PaymentException {
     }
+
+    /**
+     * The widget listener
+     */
+    public interface OnWidgetListener {
+        void onActionClicked(FormWidget widget);
+    }    
 }

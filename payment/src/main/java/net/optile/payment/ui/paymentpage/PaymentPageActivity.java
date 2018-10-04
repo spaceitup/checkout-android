@@ -11,6 +11,7 @@
 
 package net.optile.payment.ui.paymentpage;
 
+import java.util.Map;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -21,6 +22,7 @@ import android.view.View;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import net.optile.payment.R;
+import net.optile.payment.ui.widget.FormWidget;
 import net.optile.payment.ui.PaymentTheme;
 
 /**
@@ -106,7 +108,7 @@ public final class PaymentPageActivity extends AppCompatActivity implements Paym
         super.onResume();
         this.active = true;
         presenter.onStart();
-        presenter.refresh(this.listUrl);
+        presenter.loadPaymentSession(this.listUrl);
     }
 
     /**
@@ -178,5 +180,10 @@ public final class PaymentPageActivity extends AppCompatActivity implements Paym
         }
         final ProgressBar progressBar = findViewById(R.id.progressbar);
         progressBar.setVisibility(show ? View.VISIBLE : View.GONE);
+        paymentList.setVisible(!show);
+    }
+
+    void makeChargeRequest(PaymentGroup group, Map<String, FormWidget> widgets) {
+        presenter.makeChargeRequest(widgets, group);
     }
 }

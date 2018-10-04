@@ -53,7 +53,7 @@ public final class IntegerInputWidget extends FormWidget {
     public void putValue(Charge charge) throws PaymentException {
         String val = input.getText().toString().trim();
         if (!TextUtils.isEmpty(val)) {
-            charge.putValue(name, val); 
+            charge.putValue(element.getName(), val); 
         }
     }
     

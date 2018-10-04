@@ -31,9 +31,21 @@ public final class ButtonWidget extends FormWidget {
     public ButtonWidget(String name, View rootView) {
         super(name, rootView);
         button = rootView.findViewById(R.id.button);
+        button.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    handleOnClick();
+                }
+            });
     }
 
     public void setLabel(String label) {
         button.setText(label);
+    }
+
+    private void handleOnClick() {
+        if (this.listener != null) {
+            listener.onActionClicked(this);
+        }
     }
 }

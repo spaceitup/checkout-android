@@ -40,6 +40,10 @@ final class PaymentGroup {
         this.elements = elements;
     }
 
+    PaymentItem getActivePaymentItem() {
+        return item;
+    }
+    
     boolean isSelected() {
         return item.isSelected();
     }
