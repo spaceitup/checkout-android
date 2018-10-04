@@ -12,6 +12,8 @@
 package net.optile.payment.ui.widget;
 
 import android.view.View;
+import net.optile.payment.form.Charge;
+import net.optile.payment.core.PaymentException;
 
 /**
  * The base InputWidget
@@ -41,5 +43,8 @@ public abstract class FormWidget {
 
     public boolean setLastImeOptionsWidget() {
         return false;
+    }
+
+    public void putValue(Charge charge) throws PaymentException {
     }
 }

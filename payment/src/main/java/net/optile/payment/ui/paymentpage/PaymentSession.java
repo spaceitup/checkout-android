@@ -52,6 +52,12 @@ final class PaymentSession {
         return language != null ? language.getProperty(key, defValue) : defValue;
     }
 
+    String translateInteraction(String code, String reason) {
+        StringBuilder sb = new StringBuilder("interaction.");
+        sb.append(code).append(".").append(reason);
+        return translate(sb.toString(), sb.toString());        
+    }
+    
     int getApplicableNetworkSize() {
         Networks nw = listResult.getNetworks();
         if (nw == null) {

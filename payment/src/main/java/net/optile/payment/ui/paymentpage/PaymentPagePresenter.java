@@ -112,7 +112,7 @@ final class PaymentPagePresenter {
             Interaction interaction = details.errorInfo.getInteraction();
             String code = interaction.getCode();
             String reason = interaction.getReason();
-            view.abortPayment(code, reason, translateInteraction(code, reason));
+            view.abortPayment(code, reason, session.translateInteraction(code, reason));
             return;
         }
         // TODO: Handle the rest of the errors in the ErrorDetails
@@ -136,7 +136,7 @@ final class PaymentPagePresenter {
             case InteractionCode.TRY_OTHER_ACCOUNT:
             case InteractionCode.RETRY:
             case InteractionCode.RELOAD:
-                view.abortPayment(code, reason, translateInteraction(code, reason));
+                view.abortPayment(code, reason, session.translateInteraction(code, reason));
         }
     }
 
@@ -147,12 +147,6 @@ final class PaymentPagePresenter {
             view.showCenterMessage(R.string.error_paymentpage_notsupported);
         }
         view.showPaymentSession(session);
-    }
-
-    private String translateInteraction(String code, String reason) {
-        StringBuilder sb = new StringBuilder("interaction.");
-        sb.append(code).append(".").append(reason);
-        return session.translate(sb.toString(), sb.toString());
     }
 
     private void asyncLoadPaymentSession(final String listUrl) {

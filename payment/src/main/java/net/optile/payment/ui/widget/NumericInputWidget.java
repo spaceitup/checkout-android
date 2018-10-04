@@ -11,10 +11,13 @@
 
 package net.optile.payment.ui.widget;
 
+import android.text.TextUtils;
 import android.support.design.widget.TextInputEditText;
 import android.support.design.widget.TextInputLayout;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
+import net.optile.payment.form.Charge;
+import net.optile.payment.core.PaymentException;
 import net.optile.payment.R;
 import net.optile.payment.model.InputElement;
 
@@ -47,6 +50,13 @@ public final class NumericInputWidget extends FormWidget {
         layout.setHintAnimationEnabled(true);
     }
 
+    public void putValue(Charge charge) throws PaymentException {
+        String val = input.getText().toString().trim();
+        if (!TextUtils.isEmpty(val)) {
+            charge.putValue(name, val); 
+        }
+    }
+    
     public boolean setLastImeOptionsWidget() {
         input.setImeOptions(EditorInfo.IME_ACTION_DONE);
         return true;

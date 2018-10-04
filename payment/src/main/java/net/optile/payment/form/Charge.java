@@ -11,6 +11,7 @@
 
 package net.optile.payment.form;
 
+import net.optile.payment.core.PaymentException;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -25,8 +26,12 @@ public class Charge {
         account = new JSONObject();
     }
 
-    public void putToAccount(String name, Object value) throws JSONException {
-        account.put(name, value);
+    public void putValue(String name, Object value) throws PaymentException {
+        try {
+            account.put(name, value);
+        } catch (JSONException e) {
+            throw new PaymentException("Charge[putValue]", e);
+        }
     }
 
     public String toJson() throws JSONException {
