@@ -90,6 +90,8 @@ final class PaymentPagePresenter {
      * @param listUrl the url pointing to the ListResult in the Payment API
      */
     void loadPaymentSession(String listUrl) {
+        view.clear();
+        view.showLoading(true);
         asyncGetPaymentSession(listUrl);
     }
 
@@ -107,6 +109,7 @@ final class PaymentPagePresenter {
             for (FormWidget widget : widgets.values()) {
                 widget.putValue(charge);
             }
+            view.showLoading(true);
             asyncPostChargeRequest(url, charge);
         } catch (PaymentException e) {
             Log.wtf(TAG, e);
@@ -136,7 +139,8 @@ final class PaymentPagePresenter {
 
     private void postChargeRequestSuccess(OperationResult result) {
         view.showLoading(false);
-        Log.i(TAG, "charge request success");
+        Log.i(TAG, "charge request success: " + result.getResultInfo());
+        
     }
 
     private void postChargeRequestError(Throwable error) {
@@ -180,11 +184,6 @@ final class PaymentPagePresenter {
     }
 
     private void handleStateProceed() {
-        if (session.getApplicableNetworkSize() == 0) {
-            view.showCenterMessage(R.string.error_paymentpage_empty);
-        } else if (session.groups.size() == 0) {
-            view.showCenterMessage(R.string.error_paymentpage_notsupported);
-        }
         view.showPaymentSession(session);
     }
 
@@ -201,15 +200,11 @@ final class PaymentPagePresenter {
             public void onSuccess(PaymentSession paymentSession) {
                 getPaymentSessionSuccess(paymentSession);
             }
-
             @Override
             public void onError(Throwable error) {
                 getPaymentSessionError(error);
             }
         });
-        view.hideCenterMessage();
-        view.clear();
-        view.showLoading(true);
         Workers.getInstance().forNetworkTasks().execute(task);
     }
 
@@ -314,13 +309,11 @@ final class PaymentPagePresenter {
             public void onSuccess(OperationResult result) {
                 postChargeRequestSuccess(result);
             }
-
             @Override
             public void onError(Throwable error) {
                 postChargeRequestError(error);
             }
         });
-        view.showLoading(true);
         Workers.getInstance().forNetworkTasks().execute(task);
     }
 

@@ -133,6 +133,12 @@ public final class PaymentPageActivity extends AppCompatActivity implements Paym
     @Override
     public void showPaymentSession(PaymentSession session) {
         paymentList.setPaymentSession(session);
+
+        if (session.getApplicableNetworkSize() == 0) {
+            view.showCenterMessage(R.string.error_paymentpage_empty);
+        } else if (session.groups.size() == 0) {
+            view.showCenterMessage(R.string.error_paymentpage_notsupported);
+        }
     }
 
     /**
@@ -140,25 +146,8 @@ public final class PaymentPageActivity extends AppCompatActivity implements Paym
      */
     @Override
     public void clear() {
+        hideCenterMessage();
         paymentList.clear();
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public void showCenterMessage(int resId) {
-        TextView view = findViewById(R.id.label_center);
-        view.setText(resId);
-        view.setVisibility(View.VISIBLE);
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public void hideCenterMessage() {
-        findViewById(R.id.label_center).setVisibility(View.GONE);
     }
 
     /**
@@ -185,5 +174,15 @@ public final class PaymentPageActivity extends AppCompatActivity implements Paym
 
     void makeChargeRequest(PaymentGroup group, Map<String, FormWidget> widgets) {
         presenter.makeChargeRequest(widgets, group);
+    }
+
+    private void showCenterMessage(int resId) {
+        TextView view = findViewById(R.id.label_center);
+        view.setText(resId);
+        view.setVisibility(View.VISIBLE);
+    }
+
+    private void hideCenterMessage() {
+        findViewById(R.id.label_center).setVisibility(View.GONE);
     }
 }
