@@ -11,9 +11,9 @@
 
 package net.optile.payment.ui.paymentpage;
 
-import java.util.Map;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import android.support.v7.widget.RecyclerView;
 import android.view.View;

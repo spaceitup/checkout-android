@@ -11,8 +11,8 @@
 
 package net.optile.payment.form;
 
-import org.json.JSONObject;
 import org.json.JSONException;
+import org.json.JSONObject;
 
 /**
  * Class holding the Charge form values

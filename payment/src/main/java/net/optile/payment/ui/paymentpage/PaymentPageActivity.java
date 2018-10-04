@@ -11,20 +11,13 @@
 
 package net.optile.payment.ui.paymentpage;
 
-import java.util.List;
-
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.LinearSmoothScroller;
-import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.SimpleItemAnimator;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
-import android.view.inputmethod.InputMethodManager;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import net.optile.payment.R;
@@ -48,7 +41,7 @@ public final class PaymentPageActivity extends AppCompatActivity implements Paym
     private boolean active;
 
     private PaymentList paymentList;
-    
+
     /**
      * Create the start intent for this Activity
      *
@@ -136,16 +129,16 @@ public final class PaymentPageActivity extends AppCompatActivity implements Paym
      * {@inheritDoc}
      */
     @Override
-    public void setItems(int selIndex, List<PaymentGroup> items) {
-        paymentList.setItems(selIndex, items);
+    public void showPaymentSession(PaymentSession session) {
+        paymentList.setPaymentSession(session);
     }
 
     /**
      * {@inheritDoc}
      */
     @Override
-    public void clearItems() {
-        paymentList.clearItems();
+    public void clear() {
+        paymentList.clear();
     }
 
     /**
@@ -185,9 +178,5 @@ public final class PaymentPageActivity extends AppCompatActivity implements Paym
         }
         final ProgressBar progressBar = findViewById(R.id.progressbar);
         progressBar.setVisibility(show ? View.VISIBLE : View.GONE);
-    }
-
-    String translate(String key, String defValue) {
-        return presenter.translate(key, defValue);
     }
 }

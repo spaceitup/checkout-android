@@ -11,25 +11,13 @@
 
 package net.optile.payment.ui.paymentpage;
 
-import java.util.List;
-
-import android.util.Log;
 import android.content.Context;
-import android.content.Intent;
-import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.LinearSmoothScroller;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SimpleItemAnimator;
-import android.support.v7.widget.Toolbar;
 import android.util.Log;
-import android.view.View;
 import android.view.inputmethod.InputMethodManager;
-import android.widget.ProgressBar;
-import android.widget.TextView;
-import net.optile.payment.R;
-import net.optile.payment.ui.PaymentTheme;
 
 /**
  * The PaymentList showing available payment methods in a list
@@ -37,9 +25,9 @@ import net.optile.payment.ui.PaymentTheme;
 final class PaymentList implements PaymentListAdapter.OnItemListener {
 
     private final static String TAG = "pay_PaymentList";
-    
+
     private final PaymentPageActivity activity;
-    
+
     private final PaymentListAdapter adapter;
 
     private final RecyclerView recyclerView;
@@ -60,17 +48,21 @@ final class PaymentList implements PaymentListAdapter.OnItemListener {
         }
     }
 
-    PaymentPageActivity getActivity() {
+    int getSelected() {
+        return selIndex;
+    }
+
+    Context getContext() {
         return activity;
     }
-    
-    void setItems(int selIndex, List<PaymentGroup> items) {
-        this.selIndex = selIndex;
-        adapter.setItems(items);
+
+    void setPaymentSession(PaymentSession session) {
+        this.selIndex = session.selIndex;
+        adapter.setPaymentSession(session);
         recyclerView.scrollToPosition(selIndex);
     }
 
-    void clearItems() {
+    void clear() {
         adapter.clear();
     }
 
@@ -109,10 +101,6 @@ final class PaymentList implements PaymentListAdapter.OnItemListener {
             smoothScrollToPosition(position);
         }
 
-    }
-
-    int getSelected() {
-        return selIndex;
     }
 
     private void hideKeyboard() {

@@ -28,8 +28,6 @@ final class PaymentItem {
 
     final ApplicableNetwork network;
 
-    final boolean supported;
-
     private Properties language;
 
     /**
@@ -37,9 +35,8 @@ final class PaymentItem {
      *
      * @param network ApplicableNetwork used in this PaymentItem
      */
-    PaymentItem(ApplicableNetwork network, boolean supported) {
+    PaymentItem(ApplicableNetwork network) {
         this.network = network;
-        this.supported = supported;
     }
 
     URL getLink(String name) {
@@ -75,5 +72,4 @@ final class PaymentItem {
     String getButton() {
         return network.getButton();
     }
-
 }

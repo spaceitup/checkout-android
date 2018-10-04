@@ -45,7 +45,7 @@ final class PaymentPagePresenter {
 
     private final PaymentPageView view;
 
-    private PaymentHolder paymentHolder;
+    private PaymentSession session;
 
     private boolean started;
 
@@ -81,21 +81,17 @@ final class PaymentPagePresenter {
      * @param listUrl the url pointing to the ListResult in the Payment API
      */
     void refresh(String listUrl) {
-        asyncLoadPayment(listUrl);
-    }
-
-    String translate(String key, final String defValue) {
-        return paymentHolder != null ? paymentHolder.translate(key, defValue) : defValue;
+        asyncLoadPaymentSession(listUrl);
     }
 
     private int nextGroupType() {
         return groupType++;
     }
 
-    private void handleSuccess(PaymentHolder paymentHolder) {
+    private void handleSuccess(PaymentSession session) {
         view.showLoading(false);
-        this.paymentHolder = paymentHolder;
-        handleInteraction(paymentHolder.listResult.getInteraction());
+        this.session = session;
+        handleInteraction(session.listResult.getInteraction());
     }
 
     private void handleError(Throwable error) {
@@ -133,7 +129,7 @@ final class PaymentPagePresenter {
         }
         switch (code) {
             case InteractionCode.PROCEED:
-                handleStateProceed(paymentHolder);
+                handleStateProceed();
                 break;
             case InteractionCode.ABORT:
             case InteractionCode.TRY_OTHER_NETWORK:
@@ -144,51 +140,33 @@ final class PaymentPagePresenter {
         }
     }
 
-    private void handleStateProceed(PaymentHolder holder) {
-        List<PaymentGroup> groups = new ArrayList<>();
-        int selIndex = -1;
-        int index = 0;
-
-        for (PaymentItem item : holder.items) {
-            if (item.supported) {
-                PaymentGroup group = createPaymentGroup(item);
-                if (selIndex == -1 && group.isSelected()) {
-                    selIndex = index;
-                }
-                groups.add(group);
-                index++;
-            }
-        }
-        if (holder.items.size() == 0) {
+    private void handleStateProceed() {
+        if (session.getApplicableNetworkSize() == 0) {
             view.showCenterMessage(R.string.error_paymentpage_empty);
-        } else if (groups.size() == 0) {
+        } else if (session.groups.size() == 0) {
             view.showCenterMessage(R.string.error_paymentpage_notsupported);
         }
-        view.setItems(selIndex == -1 ? 0 : selIndex, groups);
-    }
-
-    private PaymentGroup createPaymentGroup(PaymentItem item) {
-        return new PaymentGroup(nextGroupType(), item, item.getInputElements());
+        view.showPaymentSession(session);
     }
 
     private String translateInteraction(String code, String reason) {
         StringBuilder sb = new StringBuilder("interaction.");
         sb.append(code).append(".").append(reason);
-        return translate(sb.toString(), sb.toString());
+        return session.translate(sb.toString(), sb.toString());
     }
 
-    private void asyncLoadPayment(final String listUrl) {
+    private void asyncLoadPaymentSession(final String listUrl) {
 
-        WorkerTask<PaymentHolder> task = WorkerTask.fromCallable(new Callable<PaymentHolder>() {
+        WorkerTask<PaymentSession> task = WorkerTask.fromCallable(new Callable<PaymentSession>() {
             @Override
-            public PaymentHolder call() throws NetworkException, PaymentException {
-                return loadPayment(listUrl);
+            public PaymentSession call() throws NetworkException, PaymentException {
+                return loadPaymentSession(listUrl);
             }
         });
-        task.subscribe(new WorkerSubscriber<PaymentHolder>() {
+        task.subscribe(new WorkerSubscriber<PaymentSession>() {
             @Override
-            public void onSuccess(PaymentHolder holder) {
-                handleSuccess(holder);
+            public void onSuccess(PaymentSession paymentSession) {
+                handleSuccess(paymentSession);
             }
 
             @Override
@@ -197,16 +175,30 @@ final class PaymentPagePresenter {
             }
         });
         view.hideCenterMessage();
-        view.clearItems();
+        view.clear();
         view.showLoading(true);
         Workers.getInstance().forNetworkTasks().execute(task);
     }
 
-    private PaymentHolder loadPayment(String listUrl) throws NetworkException, PaymentException {
+    private PaymentSession loadPaymentSession(String listUrl) throws NetworkException, PaymentException {
         ListResult listResult = listConnection.getListResult(listUrl);
-        PaymentHolder holder = new PaymentHolder(listResult, loadPaymentItems(listResult));
-        holder.setLanguage(loadPageLanguage(holder.items));
-        return holder;
+        List<PaymentItem> items = loadPaymentItems(listResult);
+        List<PaymentGroup> groups = new ArrayList<>();
+
+        int selIndex = -1;
+        int index = 0;
+        for (PaymentItem item : items) {
+            PaymentGroup group = createPaymentGroup(item);
+            if (selIndex == -1 && group.isSelected()) {
+                selIndex = index;
+            }
+            groups.add(group);
+            index++;
+        }
+        selIndex = selIndex == -1 ? 0 : selIndex;
+        PaymentSession session = new PaymentSession(listResult, groups, selIndex);
+        session.setLanguage(loadPageLanguage(items));
+        return session;
     }
 
     private List<PaymentItem> loadPaymentItems(ListResult listResult) throws NetworkException, PaymentException {
@@ -222,22 +214,25 @@ final class PaymentPagePresenter {
             return items;
         }
         for (ApplicableNetwork network : an) {
-            items.add(loadPaymentItem(network));
+            if (isSupported(network)) {
+                items.add(loadPaymentItem(network));
+            }
         }
         return items;
     }
 
     private PaymentItem loadPaymentItem(ApplicableNetwork network) throws NetworkException, PaymentException {
-        PaymentItem item = new PaymentItem(network, isSupported(network));
-
-        if (item.supported) {
-            URL langUrl = item.getLink("lang");
-            if (langUrl == null) {
-                throw new PaymentException("Error loading network language, missing 'lang' link in ApplicableNetwork");
-            }
-            item.setLanguage(listConnection.getLanguage(langUrl, new Properties()));
+        PaymentItem item = new PaymentItem(network);
+        URL langUrl = item.getLink("lang");
+        if (langUrl == null) {
+            throw new PaymentException("Error loading network language, missing 'lang' link in ApplicableNetwork");
         }
+        item.setLanguage(listConnection.getLanguage(langUrl, new Properties()));
         return item;
+    }
+
+    private PaymentGroup createPaymentGroup(PaymentItem item) {
+        return new PaymentGroup(nextGroupType(), item, item.getInputElements());
     }
 
     /**

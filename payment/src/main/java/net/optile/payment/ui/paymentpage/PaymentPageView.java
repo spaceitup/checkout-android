@@ -11,8 +11,6 @@
 
 package net.optile.payment.ui.paymentpage;
 
-import java.util.List;
-
 import android.content.Context;
 
 /**
@@ -54,17 +52,16 @@ interface PaymentPageView {
     Context getContext();
 
     /**
-     * Set the list of PaymentGroups in the adapter
+     * Show the PaymentSession to the user
      *
-     * @param selIndex is the index of the selected PaymentGroup
-     * @param items items to be set in the view
+     * @param session the payment session to be shown to the user
      */
-    void setItems(int selIndex, List<PaymentGroup> items);
+    void showPaymentSession(PaymentSession session);
 
     /**
-     * Clear all items from the payment page
+     * Clear the view from any previously shown PaymentSessions
      */
-    void clearItems();
+    void clear();
 
     /**
      * Abort the payment and notify the user of this SDK
