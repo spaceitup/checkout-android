@@ -61,10 +61,11 @@ final class PaymentList implements PaymentListAdapter.OnItemListener {
         recyclerView.setVisibility(visible ? View.VISIBLE : View.INVISIBLE);
     }
     
-    void setPaymentSession(PaymentSession session) {
+    void showPaymentSession(PaymentSession session) {
         this.selIndex = session.selIndex;
         adapter.setPaymentSession(session);
         recyclerView.scrollToPosition(selIndex);
+        setVisible(true);
     }
 
     void clear() {

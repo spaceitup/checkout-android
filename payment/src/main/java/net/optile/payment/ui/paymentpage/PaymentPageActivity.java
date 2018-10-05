@@ -14,6 +14,7 @@ package net.optile.payment.ui.paymentpage;
 import java.util.Map;
 import android.content.Context;
 import android.content.Intent;
+import android.app.Activity;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -21,9 +22,13 @@ import android.util.Log;
 import android.view.View;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.support.design.widget.Snackbar;
 import net.optile.payment.R;
 import net.optile.payment.ui.widget.FormWidget;
 import net.optile.payment.ui.PaymentTheme;
+import net.optile.payment.ui.PaymentResult;
+import net.optile.payment.ui.PaymentUI;
+import android.view.MenuItem;
 
 /**
  * The PaymentPageActivity showing available payment methods
@@ -44,6 +49,10 @@ public final class PaymentPageActivity extends AppCompatActivity implements Paym
 
     private PaymentList paymentList;
 
+    private ProgressBar progressBar;
+
+    private TextView centerMessage;
+    
     /**
      * Create the start intent for this Activity
      *
@@ -63,6 +72,7 @@ public final class PaymentPageActivity extends AppCompatActivity implements Paym
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setResult(Activity.RESULT_CANCELED, null);
 
         if (savedInstanceState != null && savedInstanceState.containsKey(EXTRA_LISTURL)) {
             this.listUrl = savedInstanceState.getString(EXTRA_LISTURL);
@@ -74,8 +84,14 @@ public final class PaymentPageActivity extends AppCompatActivity implements Paym
         }
         setContentView(R.layout.activity_paymentpage);
 
+        this.progressBar = findViewById(R.id.progressbar);
+        this.centerMessage = findViewById(R.id.label_center);
+        
         final Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
+
         this.presenter = new PaymentPagePresenter(this);
         this.paymentList = new PaymentList(this, findViewById(R.id.recyclerview_paymentlist));
     }
@@ -97,7 +113,7 @@ public final class PaymentPageActivity extends AppCompatActivity implements Paym
     public void onPause() {
         super.onPause();
         this.active = false;
-        presenter.onStop();
+        this.presenter.onStop();
     }
 
     /**
@@ -107,10 +123,23 @@ public final class PaymentPageActivity extends AppCompatActivity implements Paym
     public void onResume() {
         super.onResume();
         this.active = true;
-        presenter.onStart();
-        presenter.loadPaymentSession(this.listUrl);
+        presenter.load(this.listUrl);
     }
 
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+
+        switch (item.getItemId()) {
+        case android.R.id.home:
+            supportFinishAfterTransition();
+            return true;
+        }
+        return false;
+    }
+    
     /**
      * {@inheritDoc}
      */
@@ -132,12 +161,16 @@ public final class PaymentPageActivity extends AppCompatActivity implements Paym
      */
     @Override
     public void showPaymentSession(PaymentSession session) {
-        paymentList.setPaymentSession(session);
 
+        if (!isActive()) {
+            return;
+        }
         if (session.getApplicableNetworkSize() == 0) {
-            view.showCenterMessage(R.string.error_paymentpage_empty);
+            showCenterMessage(R.string.error_paymentpage_empty);
         } else if (session.groups.size() == 0) {
-            view.showCenterMessage(R.string.error_paymentpage_notsupported);
+            showCenterMessage(R.string.error_paymentpage_notsupported);
+        } else {
+            paymentList.showPaymentSession(session);
         }
     }
 
@@ -146,7 +179,10 @@ public final class PaymentPageActivity extends AppCompatActivity implements Paym
      */
     @Override
     public void clear() {
-        hideCenterMessage();
+        if (!isActive()) {
+            return;
+        }
+        centerMessage.setVisibility(View.GONE);
         paymentList.clear();
     }
 
@@ -154,35 +190,55 @@ public final class PaymentPageActivity extends AppCompatActivity implements Paym
      * {@inheritDoc}
      */
     @Override
-    public void abortPayment(String code, String reason, String message) {
-        Log.i(TAG, "abortPayment: " + code + ", " + reason + ", " + message);
+    public void closePaymentPage(boolean success, PaymentResult result) {
+        if (!isActive()) {
+            return;
+        }
+        Intent intent = new Intent();
+        intent.putExtra(PaymentUI.EXTRA_PAYMENT_RESULT, result);
+        setResult(success ? Activity.RESULT_OK : Activity.RESULT_CANCELED, intent);
+        finish();
+    }
+    
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void showLoading(boolean show) {
+        if (!isActive()) {
+            return;
+        }
+        if (show) {
+            paymentList.setVisible(false);
+            centerMessage.setVisibility(View.GONE);
+            progressBar.setVisibility(View.VISIBLE);
+        } else {
+            progressBar.setVisibility(View.GONE);
+        }
     }
 
     /**
      * {@inheritDoc}
      */
     @Override
-    public void showLoading(boolean show) {
-
+    public void showError(int resId) {
         if (!isActive()) {
             return;
         }
-        final ProgressBar progressBar = findViewById(R.id.progressbar);
-        progressBar.setVisibility(show ? View.VISIBLE : View.GONE);
-        paymentList.setVisible(!show);
-    }
+        paymentList.setVisible(true);
+        centerMessage.setVisibility(View.VISIBLE);
 
+        String message = getString(resId);
+        Snackbar snackbar = Snackbar.make(findViewById(R.id.layout_paymentpage), message, Snackbar.LENGTH_LONG);
+        snackbar.show();
+    }
+    
     void makeChargeRequest(PaymentGroup group, Map<String, FormWidget> widgets) {
-        presenter.makeChargeRequest(widgets, group);
+        presenter.charge(widgets, group);
     }
 
     private void showCenterMessage(int resId) {
-        TextView view = findViewById(R.id.label_center);
-        view.setText(resId);
-        view.setVisibility(View.VISIBLE);
-    }
-
-    private void hideCenterMessage() {
-        findViewById(R.id.label_center).setVisibility(View.GONE);
+        centerMessage.setText(resId);
+        centerMessage.setVisibility(View.VISIBLE);
     }
 }

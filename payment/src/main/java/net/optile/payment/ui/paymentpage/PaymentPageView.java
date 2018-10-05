@@ -12,6 +12,7 @@
 package net.optile.payment.ui.paymentpage;
 
 import android.content.Context;
+import net.optile.payment.ui.PaymentResult;
 
 /**
  * The PaymentPageView interface is the View part of the MVP, this is implemented by the PaymentPageActivity
@@ -51,12 +52,18 @@ interface PaymentPageView {
      */
     void clear();
 
+    /** 
+     * Show the error to the user
+     * 
+     * @param resId the resource string id
+     */
+    void showError(int resId);
+    
     /**
      * Abort the payment and notify the user of this SDK
      *
-     * @param code code indicating what went wrong
-     * @param reason reason why the payment has been aborted
-     * @param message containing the localized message to be shown to the user
+     * @param success indicating if the payment request was successfull
+     * @param result containing the result code and reason of the payment
      */
-    void abortPayment(String code, String reason, String message);
+    void closePaymentPage(boolean success, PaymentResult result);
 }

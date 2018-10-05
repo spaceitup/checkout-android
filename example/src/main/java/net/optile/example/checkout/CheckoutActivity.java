@@ -13,7 +13,10 @@ package net.optile.example.checkout;
 
 import android.content.Context;
 import android.content.Intent;
+import android.app.Activity;
 import android.os.Bundle;
+import android.os.Handler;
+import android.widget.Toast;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
@@ -21,6 +24,7 @@ import android.view.View;
 import android.widget.Button;
 import net.optile.example.R;
 import net.optile.payment.ui.PaymentUI;
+import android.support.design.widget.Snackbar;
 
 /**
  * Activity for performing a checkout payment
@@ -34,6 +38,8 @@ public final class CheckoutActivity extends AppCompatActivity implements Checkou
 
     private boolean active;
 
+    private boolean paymentSuccess;
+    
     /**
      * Create an Intent to launch this activity
      *
@@ -82,8 +88,37 @@ public final class CheckoutActivity extends AppCompatActivity implements Checkou
     public void onResume() {
         super.onResume();
         this.active = true;
+
+        if (paymentSuccess) {
+            paymentSuccess = false;
+            final Handler handler = new Handler();
+            handler.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        showSuccessSnackbar();
+                    }
+                }, 500);
+        }
     }
 
+    private void showSuccessSnackbar() {
+        Snackbar snackbar = Snackbar.make(findViewById(R.id.layout_activity),
+                                          getString(R.string.payment_success),
+                                          Snackbar.LENGTH_LONG);
+        snackbar.show();
+    }
+    
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+
+        if (resultCode == Activity.RESULT_OK) {
+            this.paymentSuccess = true;
+        }
+    }
+    
     /**
      * {@inheritDoc}
      */
@@ -103,6 +138,6 @@ public final class CheckoutActivity extends AppCompatActivity implements Checkou
     }
 
     private void onButtonClicked() {
-        presenter.startPaymentSession(this);
+        presenter.createPaymentSession(this);
     }
 }

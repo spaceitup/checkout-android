@@ -19,7 +19,8 @@ import android.os.Handler;
 import android.os.Looper;
 
 /**
- * A WorkerTask executing one Callable and notifying the WorkerSubscriber once it is completed
+ * A WorkerTask executing one Callable and notifying the WorkerSubscriber once it is completed.
+ * The WorkerSubscriber must be subscribed or unsubscribed on the main UI Thread.
  */
 public final class WorkerTask<V> extends FutureTask<V> {
 
@@ -49,37 +50,44 @@ public final class WorkerTask<V> extends FutureTask<V> {
     }
 
     /**
+     * Unsubscribe from this stask, this subscriber will not be notified anymore
+     */
+    public void unsubscribe() {
+        this.subscriber = null;
+    }
+    
+    /**
      * {@inheritDoc}
      */
     @Override
     protected void done() {
-        WorkerSubscriber<V> subscriber = this.subscriber;
-        if (subscriber == null) {
-            return;
-        }
         try {
-            callSuccessOnMainThread(subscriber, get());
+            callSuccessOnMainThread(get());
         } catch (InterruptedException e) {
-            callErrorOnMainThread(subscriber, e);
+            callErrorOnMainThread(e);
         } catch (ExecutionException e) {
-            callErrorOnMainThread(subscriber, e.getCause());
+            callErrorOnMainThread(e.getCause());
         }
     }
 
-    private void callSuccessOnMainThread(WorkerSubscriber<V> subscriber, V result) {
+    private void callSuccessOnMainThread(V result) {
         Handler handler = new Handler(Looper.getMainLooper());
         handler.post(new Runnable() {
             public void run() {
-                subscriber.onSuccess(result);
+                if (subscriber != null) {
+                    subscriber.onSuccess(result);
+                }
             }
         });
     }
 
-    private void callErrorOnMainThread(WorkerSubscriber<V> subscriber, Throwable throwable) {
+    private void callErrorOnMainThread(Throwable throwable) {
         Handler handler = new Handler(Looper.getMainLooper());
         handler.post(new Runnable() {
             public void run() {
-                subscriber.onError(throwable);
+                if (subscriber != null) {
+                    subscriber.onError(throwable);
+                }
             }
         });
     }

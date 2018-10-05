@@ -11,6 +11,8 @@
 
 package net.optile.payment.ui.paymentpage;
 
+import java.net.URL;
+import java.util.Map;
 import java.util.List;
 import java.util.Properties;
 
@@ -44,6 +46,16 @@ final class PaymentSession {
         this.selIndex = selIndex;
     }
 
+    URL getLink(String name) {
+        Map<String, URL> links = listResult.getLinks();
+        return links != null ? links.get(name) : null;
+    }
+    
+    boolean isListUrl(String listUrl) {
+        URL url = getLink("self");
+        return url != null && url.toString().equals(listUrl);
+    }
+    
     void setLanguage(Properties language) {
         this.language = language;
     }

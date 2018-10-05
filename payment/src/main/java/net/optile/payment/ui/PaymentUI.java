@@ -23,6 +23,8 @@ import net.optile.payment.ui.paymentpage.PaymentPageActivity;
  */
 public final class PaymentUI {
 
+    public final static String EXTRA_PAYMENT_RESULT = "paymentresult";
+    
     /** The url pointing to the current list */
     private String listUrl;
 
