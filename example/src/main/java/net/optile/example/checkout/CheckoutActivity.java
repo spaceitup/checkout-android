@@ -24,6 +24,7 @@ import android.view.View;
 import android.widget.Button;
 import net.optile.example.R;
 import net.optile.payment.ui.PaymentUI;
+import net.optile.payment.ui.PaymentResult;
 import android.support.design.widget.Snackbar;
 
 /**
@@ -116,6 +117,7 @@ public final class CheckoutActivity extends AppCompatActivity implements Checkou
 
         if (resultCode == Activity.RESULT_OK) {
             this.paymentSuccess = true;
+            PaymentResult result = data.getParcelableExtra(PaymentUI.EXTRA_PAYMENT_RESULT);
         }
     }
     

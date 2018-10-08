@@ -10,15 +10,22 @@
  */
 package net.optile.payment.ui;
 
+import android.text.TextUtils;
+import android.util.Log;
 import android.os.Parcel;
 import android.os.Parcelable;
+import net.optile.payment.model.Interaction;
+import net.optile.payment.model.OperationResult;
+import net.optile.payment.util.GsonHelper;
+import com.google.gson.JsonSyntaxException;
 
 /**
- * Class for holding the payment result details
+ * Class for holding the payment interaction and operationresult
  */
 public final class PaymentResult implements Parcelable {
 
-    public static final Parcelable.Creator<PaymentResult> CREATOR = new Parcelable.Creator<PaymentResult>() {
+    private final static String TAG = "pay_PaymentResult"; 
+    public final static Parcelable.Creator<PaymentResult> CREATOR = new Parcelable.Creator<PaymentResult>() {
 
         public PaymentResult createFromParcel(Parcel in) {
             return new PaymentResult(in);
@@ -28,42 +35,56 @@ public final class PaymentResult implements Parcelable {
             return new PaymentResult[size];
         }
     };
-    private String code;
-    private String reason;
-    private String message;
-
+    private String resultInfo;
+    private Interaction interaction;
+    private OperationResult operationResult;
+        
     /**
-     * Construct a new PaymentResult with the interaction values
+     * Construct a new PaymentResult with the interaction values and the optional operationResult
      *
-     * @param code holding the interaction code
-     * @param reason holding the interaction reason
-     * @param message a localized message about the code and reason
+     * @param resultInfo a string containing a description of the result info
+     * @param interaction the mandatory interaction 
+     * @param operationResult the optional OperationResult
      */
-    public PaymentResult(String code, String reason, String message) {
-        this.code = code;
-        this.reason = reason;
-        this.message = message;
+    public PaymentResult(String resultInfo, Interaction interaction, OperationResult operationResult) {
+        this.resultInfo = resultInfo;
+        this.interaction = interaction;
+        this.operationResult = operationResult;
     }
 
     private PaymentResult() {
     }
 
     private PaymentResult(Parcel in) {
-        this.code = in.readString();
-        this.reason = in.readString();
-        this.message = in.readString();
+        this.resultInfo = in.readString();
+
+        GsonHelper gson = GsonHelper.getInstance();
+        try {
+            String json = in.readString();
+            if (!TextUtils.isEmpty(json)) {
+                this.interaction = gson.fromJson(json, Interaction.class);
+            }
+            json = in.readString();
+            if (!TextUtils.isEmpty(json)) {
+                this.operationResult = gson.fromJson(json, OperationResult.class);
+            }
+        } catch (JsonSyntaxException e) {
+            // this should never happen since we use the same GsonHelper
+            // to produce these Json strings
+            Log.wtf(TAG, e);
+        }
     }
 
-    public String getCode() {
-        return code;
+    public String getResultInfo() {
+        return resultInfo;
+    }
+    
+    public Interaction getInteraction() {
+        return interaction;
     }
 
-    public String getReason() {
-        return reason;
-    }
-
-    public String getMessage() {
-        return message;
+    public OperationResult getOperationResult() {
+        return operationResult;
     }
 
     /**
@@ -79,8 +100,18 @@ public final class PaymentResult implements Parcelable {
      */
     @Override
     public void writeToParcel(Parcel out, int flags) {
-        out.writeString(code);
-        out.writeString(reason);
-        out.writeString(message);
+        GsonHelper gson = GsonHelper.getInstance();
+        out.writeString(resultInfo);
+
+        String interactionJson = null;
+        if (interaction != null) {
+            interactionJson = gson.toJson(this.interaction);
+        }
+        String operationResultJson = null;
+        if (operationResult != null) {
+            operationResultJson = gson.toJson(this.operationResult);
+        }
+        out.writeString(interactionJson);
+        out.writeString(operationResultJson);
     }
 }

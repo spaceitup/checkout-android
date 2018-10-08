@@ -31,6 +31,7 @@ import net.optile.payment.model.ApplicableNetwork;
 import net.optile.payment.model.ErrorInfo;
 import net.optile.payment.model.Interaction;
 import net.optile.payment.model.InteractionCode;
+import net.optile.payment.model.InteractionReason;
 import net.optile.payment.model.ListResult;
 import net.optile.payment.model.Networks;
 import net.optile.payment.model.OperationResult;
@@ -135,11 +136,12 @@ final class PaymentPagePresenter {
         this.session = session;
 
         Interaction interaction = session.listResult.getInteraction();
+        String resultInfo = session.listResult.getResultInfo();
         String code = interaction.getCode();
         String reason = interaction.getReason();
 
-        if (!InteractionCode.isValid(code)) {
-            closePage(false, code, reason, "Load - unknown interaction code");
+        if (!(InteractionCode.isValid(code) && InteractionReason.isValid(reason))) {
+            view.showError(R.string.error_paymentpage_unknown_interaction);
             return;
         }
         switch (code) {
@@ -151,7 +153,7 @@ final class PaymentPagePresenter {
             case InteractionCode.TRY_OTHER_ACCOUNT:
             case InteractionCode.RETRY:
             case InteractionCode.RELOAD:
-                closePage(false, code, reason);
+                closePage(false, resultInfo, interaction, null);
         }
     }
 
@@ -185,10 +187,7 @@ final class PaymentPagePresenter {
     }
 
     private void handleLoadErrorInfo(ErrorInfo errorInfo) {
-        Interaction interaction = errorInfo.getInteraction();
-        String code = interaction.getCode();
-        String reason = interaction.getReason();
-        closePage(false, code, reason);
+        closePage(false, errorInfo.getResultInfo(), errorInfo.getInteraction(), null);
     }
 
     private void callbackChargeSuccess(OperationResult result) {
@@ -196,23 +195,24 @@ final class PaymentPagePresenter {
         this.chargeTask = null;
 
         Interaction interaction = result.getInteraction();
+        String resultInfo = result.getResultInfo();
         String code = interaction.getCode();
         String reason = interaction.getReason();
-
-        if (!InteractionCode.isValid(code)) {
-            closePage(false, code, reason, "Charge - unknown interaction code");
+        
+        if (!(InteractionCode.isValid(code) && InteractionReason.isValid(reason))) {
+            view.showError(R.string.error_paymentpage_unknown_interaction);
             return;
         }
         switch (code) {
             case InteractionCode.PROCEED:
-                closePage(true, code, reason);
+                closePage(true, resultInfo, interaction, result);
                 break;
             case InteractionCode.ABORT:
             case InteractionCode.TRY_OTHER_NETWORK:
             case InteractionCode.TRY_OTHER_ACCOUNT:
             case InteractionCode.RETRY:
             case InteractionCode.RELOAD:
-                closePage(false, code, reason);
+                closePage(false, resultInfo, interaction, result);
         }
     }
 
@@ -246,10 +246,7 @@ final class PaymentPagePresenter {
     }
 
     private void handleChargeErrorInfo(ErrorInfo errorInfo) {
-        Interaction interaction = errorInfo.getInteraction();
-        String code = interaction.getCode();
-        String reason = interaction.getReason();
-        closePage(false, code, reason);
+        closePage(false, errorInfo.getResultInfo(), errorInfo.getInteraction(), null);
     }
 
     private int nextGroupType() {
@@ -392,11 +389,8 @@ final class PaymentPagePresenter {
         return chargeConnection.createCharge(url, charge);
     }
 
-    private void closePage(boolean success, String code, String reason) {
-        this.closePage(success, code, reason, session.translateInteraction(code, reason));
-    }
-
-    private void closePage(boolean success, String code, String reason, String message) {
-        view.closePaymentPage(success, new PaymentResult(code, reason, message));
+    private void closePage(boolean success, String resultInfo, Interaction interaction, OperationResult operationResult) {
+        PaymentResult paymentResult = new PaymentResult(resultInfo, interaction, operationResult);
+        view.closePaymentPage(success, paymentResult);
     }
 }
