@@ -10,21 +10,21 @@
  */
 package net.optile.payment.ui;
 
-import android.text.TextUtils;
-import android.util.Log;
+import com.google.gson.JsonSyntaxException;
+
 import android.os.Parcel;
 import android.os.Parcelable;
+import android.text.TextUtils;
+import android.util.Log;
 import net.optile.payment.model.Interaction;
 import net.optile.payment.model.OperationResult;
 import net.optile.payment.util.GsonHelper;
-import com.google.gson.JsonSyntaxException;
 
 /**
  * Class for holding the payment interaction and operationresult
  */
 public final class PaymentResult implements Parcelable {
 
-    private final static String TAG = "pay_PaymentResult"; 
     public final static Parcelable.Creator<PaymentResult> CREATOR = new Parcelable.Creator<PaymentResult>() {
 
         public PaymentResult createFromParcel(Parcel in) {
@@ -35,15 +35,16 @@ public final class PaymentResult implements Parcelable {
             return new PaymentResult[size];
         }
     };
+    private final static String TAG = "pay_PaymentResult";
     private String resultInfo;
     private Interaction interaction;
     private OperationResult operationResult;
-        
+
     /**
      * Construct a new PaymentResult with the interaction values and the optional operationResult
      *
      * @param resultInfo a string containing a description of the result info
-     * @param interaction the mandatory interaction 
+     * @param interaction the mandatory interaction
      * @param operationResult the optional OperationResult
      */
     public PaymentResult(String resultInfo, Interaction interaction, OperationResult operationResult) {
@@ -78,7 +79,7 @@ public final class PaymentResult implements Parcelable {
     public String getResultInfo() {
         return resultInfo;
     }
-    
+
     public Interaction getInteraction() {
         return interaction;
     }

@@ -62,7 +62,7 @@ interface PaymentPageView {
     /**
      * Abort the payment and notify the user of this SDK
      *
-     * @param success indicating if the payment request was successfull
+     * @param success indicating if the payment request was successful
      * @param result containing the result code and reason of the payment
      */
     void closePaymentPage(boolean success, PaymentResult result);

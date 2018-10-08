@@ -198,7 +198,7 @@ final class PaymentPagePresenter {
         String resultInfo = result.getResultInfo();
         String code = interaction.getCode();
         String reason = interaction.getReason();
-        
+
         if (!(InteractionCode.isValid(code) && InteractionReason.isValid(reason))) {
             view.showError(R.string.error_paymentpage_unknown_interaction);
             return;

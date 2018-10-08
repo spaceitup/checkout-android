@@ -26,10 +26,19 @@ public final class GsonHelper {
         this.gson = new GsonBuilder().create();
     }
 
-    /** 
-     * This method serializes the specified object into its equivalent Json representation. 
-     * 
-     * @return Json representation of src  
+    /**
+     * Get the instance of this GsonHelper
+     *
+     * @return the instance of this GsonHelper
+     */
+    public static GsonHelper getInstance() {
+        return InstanceHolder.INSTANCE;
+    }
+
+    /**
+     * This method serializes the specified object into its equivalent Json representation.
+     *
+     * @return Json representation of src
      */
     public String toJson(Object src) {
         return gson.toJson(src);
@@ -37,15 +46,6 @@ public final class GsonHelper {
 
     public <T> T fromJson(String json, Class<T> classOfT) throws JsonSyntaxException {
         return gson.fromJson(json, classOfT);
-    }
-
-    /**
-     * Get the instance of this GsonHelper 
-     *
-     * @return the instance of this GsonHelper
-     */
-    public static GsonHelper getInstance() {
-        return InstanceHolder.INSTANCE;
     }
 
     private static class InstanceHolder {
