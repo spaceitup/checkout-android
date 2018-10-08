@@ -115,4 +115,23 @@ public final class PaymentResult implements Parcelable {
         out.writeString(interactionJson);
         out.writeString(operationResultJson);
     }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public String toString() {
+        StringBuilder sb = new StringBuilder("PaymentResult[");
+        sb.append("resultInfo: ");
+        sb.append(this.resultInfo);
+
+        if (interaction != null) {
+            sb.append(", code: ");
+            sb.append(interaction.getCode());
+            sb.append(", reason: ");
+            sb.append(interaction.getReason());
+        }
+        sb.append("]");
+        return sb.toString();
+    }
 }

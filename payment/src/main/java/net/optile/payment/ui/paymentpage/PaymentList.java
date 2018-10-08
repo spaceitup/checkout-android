@@ -87,29 +87,36 @@ final class PaymentList implements PaymentListAdapter.OnItemListener {
      */
     @Override
     public void onItemClicked(PaymentGroup item, int position) {
-
-        if (position == this.selIndex) {
-            return;
-        }
-        int curIndex = this.selIndex;
-        this.selIndex = position;
         hideKeyboard();
 
-        // first, hide the current selected element
-        PaymentListViewHolder holder = (PaymentListViewHolder) recyclerView.findViewHolderForAdapterPosition(curIndex);
+        if (position == this.selIndex) {
+            this.selIndex = -1;
+            collapseViewHolder(position);
+        } else {
+            int curIndex = this.selIndex;
+            this.selIndex = position;
+            collapseViewHolder(curIndex);
+            expandViewHolder(position);
+        }
+    }
+
+    private void collapseViewHolder(int position) {
+        PaymentListViewHolder holder = (PaymentListViewHolder) recyclerView.findViewHolderForAdapterPosition(position);
         if (holder != null) {
             holder.expand(false);
-            adapter.notifyItemChanged(curIndex);
+            adapter.notifyItemChanged(position);
         }
-        // second, expand the new selected element
-        holder = (PaymentListViewHolder) recyclerView.findViewHolderForAdapterPosition(position);
+    }
+
+    private void expandViewHolder(int position) {
+        PaymentListViewHolder holder = (PaymentListViewHolder) recyclerView.findViewHolderForAdapterPosition(position);
         if (holder != null) {
             holder.expand(true);
             adapter.notifyItemChanged(position);
             smoothScrollToPosition(position);
         }
     }
-
+    
     private void hideKeyboard() {
         InputMethodManager imm = (InputMethodManager) activity.getSystemService(Context.INPUT_METHOD_SERVICE);
 

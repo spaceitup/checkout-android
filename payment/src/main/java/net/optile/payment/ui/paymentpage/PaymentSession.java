@@ -19,6 +19,7 @@ import java.util.Properties;
 import net.optile.payment.model.ApplicableNetwork;
 import net.optile.payment.model.ListResult;
 import net.optile.payment.model.Networks;
+import net.optile.payment.model.Interaction;
 
 /**
  * Class for storing the ListResult and the list of supported PaymentMethods
@@ -64,9 +65,9 @@ final class PaymentSession {
         return language != null ? language.getProperty(key, defValue) : defValue;
     }
 
-    String translateInteraction(String code, String reason) {
+    String translateInteraction(Interaction interaction) {
         StringBuilder sb = new StringBuilder("interaction.");
-        sb.append(code).append(".").append(reason);
+        sb.append(interaction.getCode()).append(".").append(interaction.getReason());
         return translate(sb.toString(), sb.toString());
     }
 

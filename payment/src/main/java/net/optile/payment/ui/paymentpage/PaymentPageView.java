@@ -60,6 +60,13 @@ interface PaymentPageView {
     void showError(int resId);
 
     /**
+     * Show a message to the user
+     *
+     * @param message the message to be shown
+     */
+    void showMessage(String message);
+    
+    /**
      * Abort the payment and notify the user of this SDK
      *
      * @param success indicating if the payment request was successful

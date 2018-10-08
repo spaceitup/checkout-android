@@ -13,6 +13,7 @@ package net.optile.payment.ui.paymentpage;
 
 import java.util.Map;
 
+import android.text.TextUtils;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
@@ -225,16 +226,24 @@ public final class PaymentPageActivity extends AppCompatActivity implements Paym
      * {@inheritDoc}
      */
     @Override
+    public void showMessage(String message) {
+        if (!isActive()) {
+            return;
+        }
+        showSnackBar(message);        
+    }
+    
+    /**
+     * {@inheritDoc}
+     */
+    @Override
     public void showError(int resId) {
         if (!isActive()) {
             return;
         }
         paymentList.setVisible(true);
         centerMessage.setVisibility(View.VISIBLE);
-
-        String message = getString(resId);
-        Snackbar snackbar = Snackbar.make(findViewById(R.id.layout_paymentpage), message, Snackbar.LENGTH_LONG);
-        snackbar.show();
+        showSnackBar(getString(resId));
     }
 
     void makeChargeRequest(PaymentGroup group, Map<String, FormWidget> widgets) {
@@ -244,5 +253,13 @@ public final class PaymentPageActivity extends AppCompatActivity implements Paym
     private void showCenterMessage(int resId) {
         centerMessage.setText(resId);
         centerMessage.setVisibility(View.VISIBLE);
+    }
+
+    private void showSnackBar(String message) {
+        if (TextUtils.isEmpty(message)) {
+            return;
+        }
+        Snackbar snackbar = Snackbar.make(findViewById(R.id.layout_paymentpage), message, Snackbar.LENGTH_LONG);
+        snackbar.show();
     }
 }
