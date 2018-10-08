@@ -132,7 +132,6 @@ final class PaymentPagePresenter {
     }
 
     private void callbackLoadSuccess(PaymentSession session) {
-        view.showLoading(false);
         this.loadTask = null;
         this.session = session;
 
@@ -142,11 +141,13 @@ final class PaymentPagePresenter {
         String reason = interaction.getReason();
 
         if (!(InteractionCode.isValid(code) && InteractionReason.isValid(reason))) {
+            view.showLoading(false);
             view.showError(R.string.error_paymentpage_unknown_interaction);
             return;
         }
         switch (code) {
             case InteractionCode.PROCEED:
+                view.showLoading(false);
                 view.showPaymentSession(session);
                 break;
             default:
