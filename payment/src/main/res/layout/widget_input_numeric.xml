@@ -16,8 +16,8 @@
 				android:id="@+id/input_value"
 				android:layout_width="match_parent"
 				android:layout_height="wrap_content"
-                android:text="4111111111111111"
-                android:imeOptions="actionNext"
+				android:text="4111111111111111"
+				android:imeOptions="actionNext"
 				android:inputType="textNoSuggestions|textCapSentences"/>
 
 	</android.support.design.widget.TextInputLayout>

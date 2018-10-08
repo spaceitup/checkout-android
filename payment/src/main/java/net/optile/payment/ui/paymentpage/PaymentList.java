@@ -16,9 +16,8 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.LinearSmoothScroller;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SimpleItemAnimator;
-import android.util.Log;
-import android.view.inputmethod.InputMethodManager;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 
 /**
  * The PaymentList showing available payment methods in a list
@@ -60,7 +59,7 @@ final class PaymentList implements PaymentListAdapter.OnItemListener {
     void setVisible(boolean visible) {
         recyclerView.setVisibility(visible ? View.VISIBLE : View.INVISIBLE);
     }
-    
+
     void showPaymentSession(PaymentSession session) {
         this.selIndex = session.selIndex;
         adapter.setPaymentSession(session);
@@ -79,7 +78,7 @@ final class PaymentList implements PaymentListAdapter.OnItemListener {
     public void onActionClicked(PaymentGroup item, int position) {
         PaymentListViewHolder holder = (PaymentListViewHolder) recyclerView.findViewHolderForAdapterPosition(position);
         if (holder != null) {
-            activity.makeChargeRequest(item, holder.getWidgets());
+            activity.makeChargeRequest(item, holder.widgets);
         }
     }
 

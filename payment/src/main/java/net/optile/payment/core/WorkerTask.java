@@ -55,7 +55,7 @@ public final class WorkerTask<V> extends FutureTask<V> {
     public void unsubscribe() {
         this.subscriber = null;
     }
-    
+
     /**
      * {@inheritDoc}
      */

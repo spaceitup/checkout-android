@@ -11,35 +11,34 @@
 
 package net.optile.payment.ui.paymentpage;
 
-import java.util.Map;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.Properties;
 import java.util.concurrent.Callable;
 
 import android.text.TextUtils;
 import android.util.Log;
-import org.json.JSONException;
 import net.optile.payment.R;
-import net.optile.payment.ui.PaymentResult;
-import net.optile.payment.form.Charge;
 import net.optile.payment.core.PaymentException;
 import net.optile.payment.core.WorkerSubscriber;
 import net.optile.payment.core.WorkerTask;
 import net.optile.payment.core.Workers;
+import net.optile.payment.form.Charge;
 import net.optile.payment.model.ApplicableNetwork;
+import net.optile.payment.model.ErrorInfo;
 import net.optile.payment.model.Interaction;
 import net.optile.payment.model.InteractionCode;
 import net.optile.payment.model.ListResult;
 import net.optile.payment.model.Networks;
 import net.optile.payment.model.OperationResult;
-import net.optile.payment.model.ErrorInfo;
+import net.optile.payment.network.ChargeConnection;
 import net.optile.payment.network.ErrorDetails;
 import net.optile.payment.network.ListConnection;
-import net.optile.payment.network.ChargeConnection;
 import net.optile.payment.network.NetworkException;
+import net.optile.payment.ui.PaymentResult;
 import net.optile.payment.ui.widget.FormWidget;
 
 /**
@@ -52,7 +51,7 @@ final class PaymentPagePresenter {
     private final ListConnection listConnection;
 
     private final ChargeConnection chargeConnection;
-    
+
     private final PaymentPageView view;
 
     private PaymentSession session;
@@ -62,7 +61,7 @@ final class PaymentPagePresenter {
     private WorkerTask<OperationResult> chargeTask;
 
     private WorkerTask<PaymentSession> loadTask;
-    
+
     /**
      * Create a new PaymentPagePresenter
      *
@@ -95,7 +94,8 @@ final class PaymentPagePresenter {
 
         if (loadTask != null) {
             return;
-        } else if (session != null && session.isListUrl(listUrl)) {
+        }
+        if (session != null && session.isListUrl(listUrl)) {
             view.showPaymentSession(session);
         } else {
             view.clear();
@@ -104,9 +104,9 @@ final class PaymentPagePresenter {
         }
     }
 
-    /** 
+    /**
      * Make a charge request for the selected PaymentGroup with widgets
-     * 
+     *
      * @param widgets containing the user input data
      * @param group selected group of payment methods
      */
@@ -126,12 +126,12 @@ final class PaymentPagePresenter {
         } catch (PaymentException e) {
             Log.wtf(TAG, e);
             view.showError(R.string.error_paymentpage_unknown);
-        }         
+        }
     }
-    
+
     private void callbackLoadSuccess(PaymentSession session) {
         view.showLoading(false);
-        this.loadTask = null;        
+        this.loadTask = null;
         this.session = session;
 
         Interaction interaction = session.listResult.getInteraction();
@@ -158,7 +158,7 @@ final class PaymentPagePresenter {
     private void callbackLoadError(Throwable error) {
         view.showLoading(false);
         this.loadTask = null;
-        
+
         if (error instanceof NetworkException) {
             handleLoadNetworkError((NetworkException) error);
             return;
@@ -174,13 +174,13 @@ final class PaymentPagePresenter {
             handleLoadErrorInfo(details.errorInfo);
             return;
         }
-        Log.e(TAG, "handleLoadNetworkError: " + details.toString());        
+        Log.e(TAG, "handleLoadNetworkError: " + details.toString());
         switch (details.errorType) {
-        case ErrorDetails.CONN_ERROR:
-            view.showError(R.string.error_paymentpage_connerror);            
-            break;
-        default:
-            view.showError(R.string.error_paymentpage_unknown);
+            case ErrorDetails.CONN_ERROR:
+                view.showError(R.string.error_paymentpage_connerror);
+                break;
+            default:
+                view.showError(R.string.error_paymentpage_unknown);
         }
     }
 
@@ -190,7 +190,7 @@ final class PaymentPagePresenter {
         String reason = interaction.getReason();
         closePage(false, code, reason);
     }
-    
+
     private void callbackChargeSuccess(OperationResult result) {
         view.showLoading(false);
         this.chargeTask = null;
@@ -237,11 +237,11 @@ final class PaymentPagePresenter {
         }
         Log.e(TAG, "handleChargeNetworkError: " + details.toString());
         switch (details.errorType) {
-        case ErrorDetails.CONN_ERROR:
-            view.showError(R.string.error_paymentpage_connerror);            
-            break;
-        default:
-            view.showError(R.string.error_paymentpage_unknown);
+            case ErrorDetails.CONN_ERROR:
+                view.showError(R.string.error_paymentpage_connerror);
+                break;
+            default:
+                view.showError(R.string.error_paymentpage_unknown);
         }
     }
 
@@ -251,7 +251,7 @@ final class PaymentPagePresenter {
         String reason = interaction.getReason();
         closePage(false, code, reason);
     }
-    
+
     private int nextGroupType() {
         return groupType++;
     }
@@ -269,6 +269,7 @@ final class PaymentPagePresenter {
             public void onSuccess(PaymentSession paymentSession) {
                 callbackLoadSuccess(paymentSession);
             }
+
             @Override
             public void onError(Throwable error) {
                 callbackLoadError(error);
@@ -364,7 +365,7 @@ final class PaymentPagePresenter {
         String button = network.getButton();
         return (TextUtils.isEmpty(button) || !button.contains("activate")) && !network.getRedirect();
     }
-    
+
     private void asyncPostChargeRequest(final URL url, final Charge charge) {
 
         chargeTask = WorkerTask.fromCallable(new Callable<OperationResult>() {
@@ -378,6 +379,7 @@ final class PaymentPagePresenter {
             public void onSuccess(OperationResult result) {
                 callbackChargeSuccess(result);
             }
+
             @Override
             public void onError(Throwable error) {
                 callbackChargeError(error);
@@ -393,7 +395,7 @@ final class PaymentPagePresenter {
     private void closePage(boolean success, String code, String reason) {
         this.closePage(success, code, reason, session.translateInteraction(code, reason));
     }
-    
+
     private void closePage(boolean success, String code, String reason, String message) {
         view.closePaymentPage(success, new PaymentResult(code, reason, message));
     }

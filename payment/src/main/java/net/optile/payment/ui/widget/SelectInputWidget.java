@@ -17,12 +17,12 @@ import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Spinner;
 import android.widget.TextView;
-import net.optile.payment.form.Charge;
 import net.optile.payment.R;
+import net.optile.payment.core.PaymentException;
+import net.optile.payment.form.Charge;
 import net.optile.payment.model.InputElement;
 import net.optile.payment.model.SelectOption;
 import net.optile.payment.util.PaymentUtils;
-import net.optile.payment.core.PaymentException;
 
 /**
  * Class for handling the Select input type
@@ -52,12 +52,12 @@ public final class SelectInputWidget extends FormWidget {
     }
 
     public void putValue(Charge charge) throws PaymentException {
-        SpinnerItem selected = (SpinnerItem)spinner.getSelectedItem();
+        SpinnerItem selected = (SpinnerItem) spinner.getSelectedItem();
         if (selected != null) {
-            charge.putValue(element.getName(), selected.value); 
+            charge.putValue(element.getName(), selected.value);
         }
     }
-    
+
     private void initSpinner(InputElement element) {
 
         List<SelectOption> options = element.getOptions();
@@ -81,11 +81,10 @@ public final class SelectInputWidget extends FormWidget {
     }
 
 
-    
     class SpinnerItem {
 
-        String label;
-        String value;
+        final String label;
+        final String value;
 
         SpinnerItem(String label, String value) {
             this.label = label;

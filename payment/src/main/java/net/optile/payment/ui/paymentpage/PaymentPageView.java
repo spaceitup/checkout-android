@@ -52,13 +52,13 @@ interface PaymentPageView {
      */
     void clear();
 
-    /** 
+    /**
      * Show the error to the user
-     * 
+     *
      * @param resId the resource string id
      */
     void showError(int resId);
-    
+
     /**
      * Abort the payment and notify the user of this SDK
      *

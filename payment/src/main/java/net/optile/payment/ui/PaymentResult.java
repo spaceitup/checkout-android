@@ -18,18 +18,26 @@ import android.os.Parcelable;
  */
 public final class PaymentResult implements Parcelable {
 
+    public static final Parcelable.Creator<PaymentResult> CREATOR = new Parcelable.Creator<PaymentResult>() {
+
+        public PaymentResult createFromParcel(Parcel in) {
+            return new PaymentResult(in);
+        }
+
+        public PaymentResult[] newArray(int size) {
+            return new PaymentResult[size];
+        }
+    };
     private String code;
-
     private String reason;
-
     private String message;
-    
-    /** 
+
+    /**
      * Construct a new PaymentResult with the interaction values
-     * 
+     *
      * @param code holding the interaction code
      * @param reason holding the interaction reason
-     * @param message a localized message about the code and reason 
+     * @param message a localized message about the code and reason
      */
     public PaymentResult(String code, String reason, String message) {
         this.code = code;
@@ -45,7 +53,7 @@ public final class PaymentResult implements Parcelable {
         this.reason = in.readString();
         this.message = in.readString();
     }
-    
+
     public String getCode() {
         return code;
     }
@@ -57,17 +65,6 @@ public final class PaymentResult implements Parcelable {
     public String getMessage() {
         return message;
     }
-    
-    public static final Parcelable.Creator<PaymentResult> CREATOR = new Parcelable.Creator<PaymentResult>() {
-
-        public PaymentResult createFromParcel(Parcel in) {
-            return new PaymentResult(in);
-        }
-
-        public PaymentResult[] newArray(int size) {
-            return new PaymentResult[size];
-        }
-    };
 
     /**
      * {@inheritDoc}

@@ -22,12 +22,12 @@ import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 
-import com.google.gson.JsonParseException;
 import org.json.JSONException;
 
-import android.text.TextUtils;
-import net.optile.payment.model.OperationResult;
+import com.google.gson.JsonParseException;
+
 import net.optile.payment.form.Charge;
+import net.optile.payment.model.OperationResult;
 
 /**
  * Class implementing the communication with the Charge payment API
@@ -77,7 +77,7 @@ public final class ChargeConnection extends BaseConnection {
         } catch (MalformedURLException e) {
             throw createNetworkException(source, INTERNAL_ERROR, e);
         } catch (JSONException e) {
-            throw createNetworkException(source, INTERNAL_ERROR, e);            
+            throw createNetworkException(source, INTERNAL_ERROR, e);
         } catch (IOException e) {
             throw createNetworkException(source, CONN_ERROR, e);
         } catch (SecurityException e) {

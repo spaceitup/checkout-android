@@ -12,8 +12,8 @@
 package net.optile.payment.ui.paymentpage;
 
 import java.net.URL;
-import java.util.Map;
 import java.util.List;
+import java.util.Map;
 import java.util.Properties;
 
 import net.optile.payment.model.ApplicableNetwork;
@@ -50,12 +50,12 @@ final class PaymentSession {
         Map<String, URL> links = listResult.getLinks();
         return links != null ? links.get(name) : null;
     }
-    
+
     boolean isListUrl(String listUrl) {
         URL url = getLink("self");
         return url != null && url.toString().equals(listUrl);
     }
-    
+
     void setLanguage(Properties language) {
         this.language = language;
     }
@@ -67,9 +67,9 @@ final class PaymentSession {
     String translateInteraction(String code, String reason) {
         StringBuilder sb = new StringBuilder("interaction.");
         sb.append(code).append(".").append(reason);
-        return translate(sb.toString(), sb.toString());        
+        return translate(sb.toString(), sb.toString());
     }
-    
+
     int getApplicableNetworkSize() {
         Networks nw = listResult.getNetworks();
         if (nw == null) {

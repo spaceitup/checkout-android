@@ -12,23 +12,24 @@
 package net.optile.payment.ui.paymentpage;
 
 import java.util.Map;
+
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
-import android.app.Activity;
 import android.os.Bundle;
+import android.support.design.widget.Snackbar;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.ProgressBar;
 import android.widget.TextView;
-import android.support.design.widget.Snackbar;
 import net.optile.payment.R;
-import net.optile.payment.ui.widget.FormWidget;
-import net.optile.payment.ui.PaymentTheme;
 import net.optile.payment.ui.PaymentResult;
+import net.optile.payment.ui.PaymentTheme;
 import net.optile.payment.ui.PaymentUI;
-import android.view.MenuItem;
+import net.optile.payment.ui.widget.FormWidget;
 
 /**
  * The PaymentPageActivity showing available payment methods
@@ -52,7 +53,7 @@ public final class PaymentPageActivity extends AppCompatActivity implements Paym
     private ProgressBar progressBar;
 
     private TextView centerMessage;
-    
+
     /**
      * Create the start intent for this Activity
      *
@@ -86,12 +87,15 @@ public final class PaymentPageActivity extends AppCompatActivity implements Paym
 
         this.progressBar = findViewById(R.id.progressbar);
         this.centerMessage = findViewById(R.id.label_center);
-        
+
         final Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setDisplayShowHomeEnabled(true);
+        ActionBar actionBar = getSupportActionBar();
 
+        if (actionBar != null) {
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+            getSupportActionBar().setDisplayShowHomeEnabled(true);
+        }
         this.presenter = new PaymentPagePresenter(this);
         this.paymentList = new PaymentList(this, findViewById(R.id.recyclerview_paymentlist));
     }
@@ -133,13 +137,13 @@ public final class PaymentPageActivity extends AppCompatActivity implements Paym
     public boolean onOptionsItemSelected(MenuItem item) {
 
         switch (item.getItemId()) {
-        case android.R.id.home:
-            supportFinishAfterTransition();
-            return true;
+            case android.R.id.home:
+                supportFinishAfterTransition();
+                return true;
         }
         return false;
     }
-    
+
     /**
      * {@inheritDoc}
      */
@@ -199,7 +203,7 @@ public final class PaymentPageActivity extends AppCompatActivity implements Paym
         setResult(success ? Activity.RESULT_OK : Activity.RESULT_CANCELED, intent);
         finish();
     }
-    
+
     /**
      * {@inheritDoc}
      */
@@ -232,7 +236,7 @@ public final class PaymentPageActivity extends AppCompatActivity implements Paym
         Snackbar snackbar = Snackbar.make(findViewById(R.id.layout_paymentpage), message, Snackbar.LENGTH_LONG);
         snackbar.show();
     }
-    
+
     void makeChargeRequest(PaymentGroup group, Map<String, FormWidget> widgets) {
         presenter.charge(widgets, group);
     }

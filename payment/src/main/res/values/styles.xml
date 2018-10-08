@@ -8,7 +8,7 @@
 	</style>
 
 	<style name="PaymentThemeToolbar" parent="ThemeOverlay.AppCompat.Dark.ActionBar"></style>
-    
+
 	<style name="PaymentTheme.NoActionBar">
 		<item name="windowActionBar">false</item>
 		<item name="windowNoTitle">true</item>

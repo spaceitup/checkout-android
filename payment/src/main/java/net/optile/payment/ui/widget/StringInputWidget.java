@@ -11,15 +11,15 @@
 
 package net.optile.payment.ui.widget;
 
-import android.text.TextUtils;
 import android.support.design.widget.TextInputEditText;
 import android.support.design.widget.TextInputLayout;
-import net.optile.payment.form.Charge;
+import android.text.TextUtils;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
 import net.optile.payment.R;
-import net.optile.payment.model.InputElement;
 import net.optile.payment.core.PaymentException;
+import net.optile.payment.form.Charge;
+import net.optile.payment.model.InputElement;
 
 /**
  * Class for handling the String input type
@@ -53,10 +53,10 @@ public final class StringInputWidget extends FormWidget {
     public void putValue(Charge charge) throws PaymentException {
         String val = input.getText().toString().trim();
         if (!TextUtils.isEmpty(val)) {
-            charge.putValue(element.getName(), val); 
+            charge.putValue(element.getName(), val);
         }
     }
-    
+
     public boolean setLastImeOptionsWidget() {
         input.setImeOptions(EditorInfo.IME_ACTION_DONE);
         return true;

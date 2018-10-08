@@ -37,11 +37,10 @@ class PaymentListViewHolder extends RecyclerView.ViewHolder {
     final PaymentListAdapter adapter;
 
     final FormWidget.OnWidgetListener listener;
-    
-    private Map<String, FormWidget> widgets;
 
-    
-    
+    final Map<String, FormWidget> widgets;
+
+
     PaymentListViewHolder(PaymentListAdapter adapter, View parent) {
         super(parent);
         this.adapter = adapter;
@@ -59,17 +58,13 @@ class PaymentListViewHolder extends RecyclerView.ViewHolder {
         });
 
         listener = new FormWidget.OnWidgetListener() {
-                @Override
-                public void onActionClicked(FormWidget widget) {
-                    adapter.handleOnAction(getAdapterPosition());
-                }
-            };
+            @Override
+            public void onActionClicked(FormWidget widget) {
+                adapter.handleOnAction(getAdapterPosition());
+            }
+        };
     }
 
-    Map<String, FormWidget> getWidgets() {
-        return widgets;
-    }
-    
     void expand(boolean expand) {
         formLayout.setVisibility(expand ? View.VISIBLE : View.GONE);
     }

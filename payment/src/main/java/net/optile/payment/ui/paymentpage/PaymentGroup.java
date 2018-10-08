@@ -43,7 +43,7 @@ final class PaymentGroup {
     PaymentItem getActivePaymentItem() {
         return item;
     }
-    
+
     boolean isSelected() {
         return item.isSelected();
     }

@@ -15,9 +15,10 @@ import android.view.View;
 import android.widget.CheckBox;
 import android.widget.TextView;
 import net.optile.payment.R;
-import net.optile.payment.model.InputElement;
-import net.optile.payment.form.Charge;
 import net.optile.payment.core.PaymentException;
+import net.optile.payment.form.Charge;
+import net.optile.payment.model.InputElement;
+
 /**
  * Class for handling the CheckBox input type
  */
@@ -44,6 +45,6 @@ public final class CheckBoxInputWidget extends FormWidget {
     }
 
     public void putValue(Charge charge) throws PaymentException {
-        charge.putValue(element.getName(), value.isChecked()); 
+        charge.putValue(element.getName(), value.isChecked());
     }
 }

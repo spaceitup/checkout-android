@@ -17,8 +17,8 @@
 				android:layout_width="match_parent"
 				android:layout_height="wrap_content"
 				android:maxLength="4"
-                android:text="123"
-                android:imeOptions="actionNext"
+				android:text="123"
+				android:imeOptions="actionNext"
 				android:inputType="number"/>
 
 	</android.support.design.widget.TextInputLayout>
