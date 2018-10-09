@@ -15,6 +15,7 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.Properties;
 import java.util.concurrent.Callable;
 
@@ -25,14 +26,19 @@ import net.optile.payment.core.PaymentException;
 import net.optile.payment.core.WorkerSubscriber;
 import net.optile.payment.core.WorkerTask;
 import net.optile.payment.core.Workers;
+import net.optile.payment.form.Charge;
 import net.optile.payment.model.ApplicableNetwork;
 import net.optile.payment.model.Interaction;
 import net.optile.payment.model.InteractionCode;
 import net.optile.payment.model.ListResult;
 import net.optile.payment.model.Networks;
+import net.optile.payment.model.OperationResult;
+import net.optile.payment.network.ChargeConnection;
 import net.optile.payment.network.ErrorDetails;
 import net.optile.payment.network.ListConnection;
 import net.optile.payment.network.NetworkException;
+import net.optile.payment.ui.PaymentResult;
+import net.optile.payment.ui.widget.FormWidget;
 
 /**
  * The PaymentPagePresenter implementing the presenter part of the MVP
@@ -43,13 +49,19 @@ final class PaymentPagePresenter {
 
     private final ListConnection listConnection;
 
+    private final ChargeConnection chargeConnection;
+
     private final PaymentPageView view;
 
-    private PaymentHolder paymentHolder;
-
-    private boolean started;
+    private PaymentSession session;
 
     private int groupType;
+
+    private WorkerTask<OperationResult> chargeTask;
+
+    private WorkerTask<PaymentSession> loadTask;
+
+    private String listUrl;
 
     /**
      * Create a new PaymentPagePresenter
@@ -59,154 +71,221 @@ final class PaymentPagePresenter {
     PaymentPagePresenter(PaymentPageView view) {
         this.view = view;
         this.listConnection = new ListConnection();
+        this.chargeConnection = new ChargeConnection();
     }
 
-    /**
-     * Notify this presenter that it should be stopped
-     */
     void onStop() {
-        this.started = false;
+        if (loadTask != null) {
+            loadTask.unsubscribe();
+            loadTask = null;
+        }
+        if (chargeTask != null) {
+            chargeTask.unsubscribe();
+            chargeTask = null;
+        }
     }
 
     /**
-     * Notify this presenter that it should start
-     */
-    void onStart() {
-        this.started = true;
-    }
-
-    /**
-     * Refresh the ListResult, this will result in reloading the ListResult and language file
+     * Load the PaymentSession from the Payment API. once loaded, populate the View with the newly loaded groups of payment methods.
+     * If a previous session with the same listUrl is available then reuse the existing one.
      *
      * @param listUrl the url pointing to the ListResult in the Payment API
      */
-    void refresh(String listUrl) {
-        asyncLoadPayment(listUrl);
+    void load(String listUrl) {
+
+        if (loadTask != null) {
+            return;
+        }
+        this.listUrl = listUrl;
+
+        if (session != null && session.isListUrl(listUrl)) {
+            view.showPaymentSession(session);
+        } else {
+            view.showLoading(true);
+            loadPaymentSession(listUrl);
+        }
     }
 
-    String translate(String key, final String defValue) {
-        return paymentHolder != null ? paymentHolder.translate(key, defValue) : defValue;
+    /**
+     * Make a charge request for the selected PaymentGroup with widgets
+     *
+     * @param widgets containing the user input data
+     * @param group selected group of payment methods
+     */
+    void charge(Map<String, FormWidget> widgets, PaymentGroup group) {
+
+        if (chargeTask != null) {
+            return;
+        }
+        URL url = group.getLink("operation");
+        Charge charge = new Charge();
+
+        try {
+            for (FormWidget widget : widgets.values()) {
+                widget.putValue(charge);
+            }
+            view.showLoading(true);
+            postChargeRequest(url, charge);
+        } catch (PaymentException e) {
+            Log.wtf(TAG, e);
+            view.showError(R.string.error_paymentpage_unknown);
+        }
+    }
+
+    private void callbackLoadSuccess(PaymentSession session) {
+        this.loadTask = null;
+
+        Interaction interaction = session.listResult.getInteraction();
+        String resultInfo = session.listResult.getResultInfo();
+        String code = interaction.getCode();
+
+        switch (code) {
+            case InteractionCode.PROCEED:
+                this.session = session;
+                view.showPaymentSession(session);
+                break;
+            default:
+                closePage(false, resultInfo, interaction, null);
+        }
+    }
+
+    private void callbackLoadError(Throwable error) {
+        this.loadTask = null;
+
+        if (error instanceof NetworkException) {
+            handleLoadNetworkError((NetworkException) error);
+            return;
+        }
+        view.showError(R.string.error_paymentpage_unknown);
+        Log.wtf(TAG, error);
+    }
+
+    private void handleLoadNetworkError(NetworkException exception) {
+        ErrorDetails details = exception.details;
+
+        if (details.errorInfo != null) {
+            closePage(false, details.errorInfo.getResultInfo(), details.errorInfo.getInteraction(), null);
+            return;
+        }
+        switch (details.errorType) {
+            case ErrorDetails.CONN_ERROR:
+                view.showError(R.string.error_paymentpage_connerror);
+                break;
+            default:
+                view.showError(R.string.error_paymentpage_unknown);
+        }
+        Log.e(TAG, "handleLoadNetworkError: " + details.toString());
+    }
+
+    private void callbackChargeSuccess(OperationResult result) {
+        this.chargeTask = null;
+        Interaction interaction = result.getInteraction();
+        String resultInfo = result.getResultInfo();
+        String code = interaction.getCode();
+
+        switch (code) {
+            case InteractionCode.PROCEED:
+                closePage(true, resultInfo, interaction, result);
+                break;
+            case InteractionCode.TRY_OTHER_NETWORK:
+            case InteractionCode.TRY_OTHER_ACCOUNT:
+            case InteractionCode.RETRY:
+            case InteractionCode.RELOAD:
+                reloadPaymentSession(interaction);
+                break;
+            case InteractionCode.ABORT:
+            default:
+                closePage(false, resultInfo, interaction, result);
+        }
+    }
+
+    private void reloadPaymentSession(Interaction interaction) {
+        if (!view.isActive()) {
+            return;
+        }
+        String msg = session.translateInteraction(interaction);
+        if (!TextUtils.isEmpty(msg)) {
+            view.displayMessage(msg);
+        }
+        loadPaymentSession(this.listUrl);
+    }
+
+    private void callbackChargeError(Throwable error) {
+        this.chargeTask = null;
+
+        if (error instanceof NetworkException) {
+            handleChargeNetworkError((NetworkException) error);
+            return;
+        }
+        view.showError(R.string.error_paymentpage_unknown);
+        Log.wtf(TAG, error);
+    }
+
+    private void handleChargeNetworkError(NetworkException exception) {
+        ErrorDetails details = exception.details;
+
+        if (details.errorInfo != null) {
+            closePage(false, details.errorInfo.getResultInfo(), details.errorInfo.getInteraction(), null);
+            return;
+        }
+        switch (details.errorType) {
+            case ErrorDetails.CONN_ERROR:
+                view.showError(R.string.error_paymentpage_connerror);
+                break;
+            default:
+                view.showError(R.string.error_paymentpage_unknown);
+        }
+        Log.e(TAG, "handleChargeNetworkError: " + details.toString());
     }
 
     private int nextGroupType() {
         return groupType++;
     }
 
-    private void handleSuccess(PaymentHolder paymentHolder) {
-        view.showLoading(false);
-        this.paymentHolder = paymentHolder;
-        handleInteraction(paymentHolder.listResult.getInteraction());
-    }
+    private void loadPaymentSession(final String listUrl) {
+        this.session = null;
+        view.clear();
 
-    private void handleError(Throwable error) {
-        view.showLoading(false);
-
-        if (error instanceof NetworkException) {
-            handleNetworkError((NetworkException) error);
-            return;
-        }
-        // TODO: Handle unrecoverable errors
-        Log.wtf(TAG, error);
-    }
-
-    private void handleNetworkError(NetworkException exception) {
-        ErrorDetails details = exception.details;
-
-        if (details.errorInfo != null) {
-            Interaction interaction = details.errorInfo.getInteraction();
-            String code = interaction.getCode();
-            String reason = interaction.getReason();
-            view.abortPayment(code, reason, translateInteraction(code, reason));
-            return;
-        }
-        // TODO: Handle the rest of the errors in the ErrorDetails
-        Log.e(TAG, details.toString());
-    }
-
-    private void handleInteraction(Interaction interaction) {
-        String code = interaction.getCode();
-        String reason = interaction.getReason();
-
-        if (!InteractionCode.isValid(code)) {
-            view.abortPayment(code, reason, "Unknown interaction code received");
-            return;
-        }
-        switch (code) {
-            case InteractionCode.PROCEED:
-                handleStateProceed(paymentHolder);
-                break;
-            case InteractionCode.ABORT:
-            case InteractionCode.TRY_OTHER_NETWORK:
-            case InteractionCode.TRY_OTHER_ACCOUNT:
-            case InteractionCode.RETRY:
-            case InteractionCode.RELOAD:
-                view.abortPayment(code, reason, translateInteraction(code, reason));
-        }
-    }
-
-    private void handleStateProceed(PaymentHolder holder) {
-        List<PaymentGroup> groups = new ArrayList<>();
-        int selIndex = -1;
-        int index = 0;
-
-        for (PaymentItem item : holder.items) {
-            if (item.supported) {
-                PaymentGroup group = createPaymentGroup(item);
-                if (selIndex == -1 && group.isSelected()) {
-                    selIndex = index;
-                }
-                groups.add(group);
-                index++;
-            }
-        }
-        if (holder.items.size() == 0) {
-            view.showCenterMessage(R.string.error_paymentpage_empty);
-        } else if (groups.size() == 0) {
-            view.showCenterMessage(R.string.error_paymentpage_notsupported);
-        }
-        view.setItems(selIndex == -1 ? 0 : selIndex, groups);
-    }
-
-    private PaymentGroup createPaymentGroup(PaymentItem item) {
-        return new PaymentGroup(nextGroupType(), item, item.getInputElements());
-    }
-
-    private String translateInteraction(String code, String reason) {
-        StringBuilder sb = new StringBuilder("interaction.");
-        sb.append(code).append(".").append(reason);
-        return translate(sb.toString(), sb.toString());
-    }
-
-    private void asyncLoadPayment(final String listUrl) {
-
-        WorkerTask<PaymentHolder> task = WorkerTask.fromCallable(new Callable<PaymentHolder>() {
+        loadTask = WorkerTask.fromCallable(new Callable<PaymentSession>() {
             @Override
-            public PaymentHolder call() throws NetworkException, PaymentException {
-                return loadPayment(listUrl);
+            public PaymentSession call() throws NetworkException, PaymentException {
+                return asyncLoadPaymentSession(listUrl);
             }
         });
-        task.subscribe(new WorkerSubscriber<PaymentHolder>() {
+        loadTask.subscribe(new WorkerSubscriber<PaymentSession>() {
             @Override
-            public void onSuccess(PaymentHolder holder) {
-                handleSuccess(holder);
+            public void onSuccess(PaymentSession paymentSession) {
+                callbackLoadSuccess(paymentSession);
             }
 
             @Override
             public void onError(Throwable error) {
-                handleError(error);
+                callbackLoadError(error);
             }
         });
-        view.hideCenterMessage();
-        view.clearItems();
-        view.showLoading(true);
-        Workers.getInstance().forNetworkTasks().execute(task);
+        Workers.getInstance().forNetworkTasks().execute(loadTask);
     }
 
-    private PaymentHolder loadPayment(String listUrl) throws NetworkException, PaymentException {
+    private PaymentSession asyncLoadPaymentSession(String listUrl) throws NetworkException, PaymentException {
         ListResult listResult = listConnection.getListResult(listUrl);
-        PaymentHolder holder = new PaymentHolder(listResult, loadPaymentItems(listResult));
-        holder.setLanguage(loadPageLanguage(holder.items));
-        return holder;
+        List<PaymentItem> items = loadPaymentItems(listResult);
+        List<PaymentGroup> groups = new ArrayList<>();
+
+        int selIndex = -1;
+        int index = 0;
+        for (PaymentItem item : items) {
+            PaymentGroup group = createPaymentGroup(item);
+            if (selIndex == -1 && group.isSelected()) {
+                selIndex = index;
+            }
+            groups.add(group);
+            index++;
+        }
+        // Uncomment if the first card should be selected if none are preselected in the ListResult
+        // selIndex = selIndex == -1 ? 0 : selIndex;
+        PaymentSession session = new PaymentSession(listResult, groups, selIndex);
+        session.setLanguage(loadPageLanguage(items));
+        return session;
     }
 
     private List<PaymentItem> loadPaymentItems(ListResult listResult) throws NetworkException, PaymentException {
@@ -222,22 +301,25 @@ final class PaymentPagePresenter {
             return items;
         }
         for (ApplicableNetwork network : an) {
-            items.add(loadPaymentItem(network));
+            if (isSupported(network)) {
+                items.add(loadPaymentItem(network));
+            }
         }
         return items;
     }
 
     private PaymentItem loadPaymentItem(ApplicableNetwork network) throws NetworkException, PaymentException {
-        PaymentItem item = new PaymentItem(network, isSupported(network));
-
-        if (item.supported) {
-            URL langUrl = item.getLink("lang");
-            if (langUrl == null) {
-                throw new PaymentException("Error loading network language, missing 'lang' link in ApplicableNetwork");
-            }
-            item.setLanguage(listConnection.getLanguage(langUrl, new Properties()));
+        PaymentItem item = new PaymentItem(network);
+        URL langUrl = item.getLink("lang");
+        if (langUrl == null) {
+            throw new PaymentException("Error loading network language, missing 'lang' link in ApplicableNetwork");
         }
+        item.setLanguage(listConnection.getLanguage(langUrl, new Properties()));
         return item;
+    }
+
+    private PaymentGroup createPaymentGroup(PaymentItem item) {
+        return new PaymentGroup(nextGroupType(), item, item.getInputElements());
     }
 
     /**
@@ -271,5 +353,37 @@ final class PaymentPagePresenter {
     private boolean isSupported(ApplicableNetwork network) {
         String button = network.getButton();
         return (TextUtils.isEmpty(button) || !button.contains("activate")) && !network.getRedirect();
+    }
+
+    private void postChargeRequest(final URL url, final Charge charge) {
+        view.showLoading(true);
+
+        chargeTask = WorkerTask.fromCallable(new Callable<OperationResult>() {
+            @Override
+            public OperationResult call() throws NetworkException {
+                return asyncPostChargeRequest(url, charge);
+            }
+        });
+        chargeTask.subscribe(new WorkerSubscriber<OperationResult>() {
+            @Override
+            public void onSuccess(OperationResult result) {
+                callbackChargeSuccess(result);
+            }
+
+            @Override
+            public void onError(Throwable error) {
+                callbackChargeError(error);
+            }
+        });
+        Workers.getInstance().forNetworkTasks().execute(chargeTask);
+    }
+
+    private OperationResult asyncPostChargeRequest(URL url, Charge charge) throws NetworkException {
+        return chargeConnection.createCharge(url, charge);
+    }
+
+    private void closePage(boolean success, String resultInfo, Interaction interaction, OperationResult operationResult) {
+        PaymentResult result = new PaymentResult(resultInfo, interaction, operationResult);
+        view.closePaymentPage(success, result);
     }
 }

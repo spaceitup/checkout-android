@@ -12,6 +12,8 @@
 package net.optile.payment.ui.widget;
 
 import android.view.View;
+import net.optile.payment.core.PaymentException;
+import net.optile.payment.form.Charge;
 
 /**
  * The base InputWidget
@@ -22,9 +24,15 @@ public abstract class FormWidget {
 
     final String name;
 
+    OnWidgetListener listener;
+
     FormWidget(String name, View rootView) {
         this.name = name;
         this.rootView = rootView;
+    }
+
+    public void setListener(OnWidgetListener listener) {
+        this.listener = listener;
     }
 
     public View getRootView() {
@@ -41,5 +49,15 @@ public abstract class FormWidget {
 
     public boolean setLastImeOptionsWidget() {
         return false;
+    }
+
+    public void putValue(Charge charge) throws PaymentException {
+    }
+
+    /**
+     * The widget listener
+     */
+    public interface OnWidgetListener {
+        void onActionClicked(FormWidget widget);
     }
 }

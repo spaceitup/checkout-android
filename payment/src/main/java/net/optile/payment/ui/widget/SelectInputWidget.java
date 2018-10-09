@@ -18,6 +18,8 @@ import android.widget.ArrayAdapter;
 import android.widget.Spinner;
 import android.widget.TextView;
 import net.optile.payment.R;
+import net.optile.payment.core.PaymentException;
+import net.optile.payment.form.Charge;
 import net.optile.payment.model.InputElement;
 import net.optile.payment.model.SelectOption;
 import net.optile.payment.util.PaymentUtils;
@@ -49,6 +51,13 @@ public final class SelectInputWidget extends FormWidget {
         initSpinner(element);
     }
 
+    public void putValue(Charge charge) throws PaymentException {
+        SpinnerItem selected = (SpinnerItem) spinner.getSelectedItem();
+        if (selected != null) {
+            charge.putValue(element.getName(), selected.value);
+        }
+    }
+
     private void initSpinner(InputElement element) {
 
         List<SelectOption> options = element.getOptions();
@@ -61,7 +70,7 @@ public final class SelectInputWidget extends FormWidget {
 
         for (int i = 0, e = options.size(); i < e; i++) {
             option = options.get(i);
-            adapter.add(new SpinnerItem(option.getValue(), option.getLabel()));
+            adapter.add(new SpinnerItem(option.getLabel(), option.getValue()));
 
             if (PaymentUtils.isTrue(option.getSelected())) {
                 selIndex = i;
@@ -71,14 +80,15 @@ public final class SelectInputWidget extends FormWidget {
         spinner.setSelection(selIndex);
     }
 
+
     class SpinnerItem {
 
-        String value;
-        String label;
+        final String label;
+        final String value;
 
-        SpinnerItem(String value, String label) {
-            this.value = value;
+        SpinnerItem(String label, String value) {
             this.label = label;
+            this.value = value;
         }
 
         public String toString() {

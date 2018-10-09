@@ -3,4 +3,5 @@
     <string name="title_checkout">My Shopping Cart</string>
     <string name="button_checkout">Continue to Pay</string>    
     <string name="url">https://api.integration.oscato.com</string>
+    <string name="payment_success">Great, you have now successfully paid for your new TV</string>    
 </resources>

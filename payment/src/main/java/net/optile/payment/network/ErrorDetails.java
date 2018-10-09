@@ -22,26 +22,12 @@ import net.optile.payment.model.ErrorInfo;
  */
 public final class ErrorDetails {
 
-    /**
-     * The constant API_ERROR.
-     */
     public final static String API_ERROR = "API_ERROR";
-    /**
-     * The constant CONN_ERROR.
-     */
     public final static String CONN_ERROR = "CONN_ERROR";
-    /**
-     * The constant INTERNAL_ERROR.
-     */
     public final static String INTERNAL_ERROR = "INTERNAL_ERROR";
-    /**
-     * The constant SECURITY_ERROR.
-     */
     public final static String SECURITY_ERROR = "SECURITY_ERROR";
-    /**
-     * The constant PROTOCOL_ERROR.
-     */
     public final static String PROTOCOL_ERROR = "PROTOCOL_ERROR";
+
     /**
      * The mandatory error type
      */
