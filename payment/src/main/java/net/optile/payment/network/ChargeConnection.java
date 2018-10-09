@@ -22,9 +22,11 @@ import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 
+import org.json.JSONException;
+
 import com.google.gson.JsonParseException;
 
-import android.text.TextUtils;
+import net.optile.payment.form.Charge;
 import net.optile.payment.model.OperationResult;
 
 /**
@@ -41,19 +43,18 @@ public final class ChargeConnection extends BaseConnection {
      * Create a new charge through the Payment API
      *
      * @param url the url of the charge
-     * @param data the data containing the request body for the charge request
+     * @param charge holding the charge request data
      * @return the OperationResult object received from the Payment API
      */
-    public OperationResult createCharge(final URL url, final String data) throws NetworkException {
+    public OperationResult createCharge(final URL url, final Charge charge) throws NetworkException {
         final String source = "ChargeConnection[createCharge]";
 
         if (url == null) {
             throw new IllegalArgumentException(source + " - url cannot be null");
         }
-        if (TextUtils.isEmpty(data)) {
-            throw new IllegalArgumentException(source + " - data cannot be null or empty");
+        if (charge == null) {
+            throw new IllegalArgumentException(source + " - charge cannot be null");
         }
-
         HttpURLConnection conn = null;
 
         try {
@@ -61,7 +62,7 @@ public final class ChargeConnection extends BaseConnection {
             conn.setRequestProperty(HEADER_CONTENT_TYPE, VALUE_APP_JSON);
             conn.setRequestProperty(HEADER_ACCEPT, VALUE_APP_JSON);
 
-            writeToOutputStream(conn, data);
+            writeToOutputStream(conn, charge.toJson());
             conn.connect();
             final int rc = conn.getResponseCode();
 
@@ -74,6 +75,8 @@ public final class ChargeConnection extends BaseConnection {
         } catch (JsonParseException e) {
             throw createNetworkException(source, PROTOCOL_ERROR, e);
         } catch (MalformedURLException e) {
+            throw createNetworkException(source, INTERNAL_ERROR, e);
+        } catch (JSONException e) {
             throw createNetworkException(source, INTERNAL_ERROR, e);
         } catch (IOException e) {
             throw createNetworkException(source, CONN_ERROR, e);

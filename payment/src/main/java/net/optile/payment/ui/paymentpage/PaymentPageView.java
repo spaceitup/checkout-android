@@ -11,9 +11,8 @@
 
 package net.optile.payment.ui.paymentpage;
 
-import java.util.List;
-
 import android.content.Context;
+import net.optile.payment.ui.PaymentResult;
 
 /**
  * The PaymentPageView interface is the View part of the MVP, this is implemented by the PaymentPageActivity
@@ -28,25 +27,6 @@ interface PaymentPageView {
     boolean isActive();
 
     /**
-     * Show or hide the loading animation
-     *
-     * @param show if true show the loading animation, false hides the loading animation
-     */
-    void showLoading(boolean show);
-
-    /**
-     * Show the message in the center of the payment page
-     *
-     * @param resId the string resource id
-     */
-    void showCenterMessage(int resId);
-
-    /**
-     * Hide the message in the center of the payment page
-     */
-    void hideCenterMessage();
-
-    /**
      * Get the Context from this view
      *
      * @return context
@@ -54,24 +34,43 @@ interface PaymentPageView {
     Context getContext();
 
     /**
-     * Set the list of PaymentGroups in the adapter
-     *
-     * @param selIndex is the index of the selected PaymentGroup
-     * @param items items to be set in the view
+     * Clear the list and clear the center message
      */
-    void setItems(int selIndex, List<PaymentGroup> items);
+    void clear();
 
     /**
-     * Clear all items from the payment page
+     * Show or hide the loading animation
+     *
+     * @param show if true show the loading animation, hide otherwise
      */
-    void clearItems();
+    void showLoading(boolean show);
+
+    /**
+     * Stop loading and show the PaymentSession
+     *
+     * @param session the payment session to be shown to the user
+     */
+    void showPaymentSession(PaymentSession session);
+
+    /**
+     * Stop loading and show the error message
+     *
+     * @param resId the resource string id
+     */
+    void showError(int resId);
+
+    /**
+     * Display a notification message to the user
+     *
+     * @param message the message to be shown
+     */
+    void displayMessage(String message);
 
     /**
      * Abort the payment and notify the user of this SDK
      *
-     * @param code code indicating what went wrong
-     * @param reason reason why the payment has been aborted
-     * @param message containing the localized message to be shown to the user
+     * @param success indicating if the payment request was successful
+     * @param result containing the result code and reason of the payment
      */
-    void abortPayment(String code, String reason, String message);
+    void closePaymentPage(boolean success, PaymentResult result);
 }

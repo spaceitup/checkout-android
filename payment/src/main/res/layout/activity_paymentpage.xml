@@ -15,6 +15,7 @@
 			android:background="?attr/colorPrimary"
 			android:layout_alignParentTop="true"
 			android:elevation="@dimen/toolbar_elevation"
+			app:theme="@style/PaymentThemeToolbar"
 			app:title="@string/title_paymentpage"/>
 
 	<LinearLayout
@@ -27,8 +28,7 @@
 			android:id="@+id/recyclerview_paymentlist"
 			android:layout_below="@+id/toolbar"
 			android:layout_width="match_parent"
-			android:layout_height="match_parent"
-	/>
+			android:layout_height="match_parent"/>
 
 	<TextView
 			android:id="@+id/label_center"
@@ -45,5 +45,4 @@
 			style="@style/PaymentProgressBar"
 			android:layout_centerInParent="true"
 			android:visibility="gone"/>
-
 </RelativeLayout>

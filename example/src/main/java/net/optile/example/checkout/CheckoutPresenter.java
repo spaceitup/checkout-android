@@ -70,12 +70,22 @@ final class CheckoutPresenter {
         return subscription != null && !subscription.isUnsubscribed();
     }
 
+    private void callbackPaymentSessionSuccess(String listUrl) {
+        this.subscription = null;
+        view.openPaymentPage(listUrl);
+    }
+
+    private void callbackPaymentSessionError(Throwable error) {
+        this.subscription = null;
+        Log.wtf(TAG, error);
+    }
+    
     /**
      * Start the payment session
      *
      * @param context The context needed to obtain system resources
      */
-    void startPaymentSession(final Context context) {
+    void createPaymentSession(final Context context) {
 
         if (isCreatePaymentSessionActive()) {
             return;
@@ -87,7 +97,7 @@ final class CheckoutPresenter {
         final Single<String> single = Single.fromCallable(new Callable<String>() {
             @Override
             public String call() throws CheckoutException {
-                return createPaymentSession(url, auth, listData);
+                return asyncCreatePaymentSession(url, auth, listData);
 
             }
         });
@@ -96,12 +106,12 @@ final class CheckoutPresenter {
             .subscribe(new SingleSubscriber<String>() {
                 @Override
                 public void onSuccess(String listUrl) {
-                    view.openPaymentPage(listUrl);
+                    callbackPaymentSessionSuccess(listUrl);
                 }
 
                 @Override
                 public void onError(Throwable error) {
-                    Log.i(TAG, "onError: " + error);
+                    callbackPaymentSessionError(error);
                 }
             });
     }
@@ -114,7 +124,7 @@ final class CheckoutPresenter {
      * @param authorization
      * @param listData
      */
-    private String createPaymentSession(String url, String authorization, String listData) throws CheckoutException {
+    private String asyncCreatePaymentSession(String url, String authorization, String listData) throws CheckoutException {
         ListConnection conn = new ListConnection();
         try {
             ListResult result = conn.createPaymentSession(url, authorization, listData);

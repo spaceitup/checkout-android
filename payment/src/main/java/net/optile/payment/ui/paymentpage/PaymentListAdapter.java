@@ -17,7 +17,6 @@ import java.util.List;
 
 import com.bumptech.glide.Glide;
 
-import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
@@ -40,21 +39,19 @@ import net.optile.payment.ui.widget.StringInputWidget;
  */
 class PaymentListAdapter extends RecyclerView.Adapter<PaymentListViewHolder> {
 
-
     private final static String TAG = "pay_PaymentListAdapter";
     private final static String BUTTON_WIDGET = "ButtonWidget";
 
     private final List<PaymentGroup> items;
 
+    private final PaymentList list;
+
     private OnItemListener listener;
 
-    private PaymentPageActivity activity;
+    private PaymentSession session;
 
-    /**
-     * Construct a new PaymentListAdapter
-     */
-    PaymentListAdapter(PaymentPageActivity activity) {
-        this.activity = activity;
+    PaymentListAdapter(PaymentList list) {
+        this.list = list;
         this.items = new ArrayList<>();
     }
 
@@ -64,8 +61,7 @@ class PaymentListAdapter extends RecyclerView.Adapter<PaymentListViewHolder> {
     @Override
     public @NonNull
     PaymentListViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        Context context = parent.getContext();
-        LayoutInflater inflater = LayoutInflater.from(context);
+        LayoutInflater inflater = LayoutInflater.from(parent.getContext());
         View view = inflater.inflate(R.layout.list_item_paymentpage, parent, false);
 
         PaymentListViewHolder holder = new PaymentListViewHolder(this, view);
@@ -87,10 +83,10 @@ class PaymentListAdapter extends RecyclerView.Adapter<PaymentListViewHolder> {
         holder.title.setText(group.getLabel());
 
         if (logoUrl != null) {
-            Glide.with(activity).asBitmap().load(logoUrl.toString()).into(holder.logo);
+            Glide.with(list.getContext()).asBitmap().load(logoUrl.toString()).into(holder.logo);
         }
 
-        String buttonLabel = activity.translate(group.getButton(), null);
+        String buttonLabel = session.translate(group.getButton(), null);
         ButtonWidget widget = (ButtonWidget) holder.getFormWidget(BUTTON_WIDGET);
         if (widget != null) {
             if (TextUtils.isEmpty(buttonLabel)) {
@@ -100,7 +96,7 @@ class PaymentListAdapter extends RecyclerView.Adapter<PaymentListViewHolder> {
                 widget.setVisible(true);
             }
         }
-        holder.expand(position == activity.getSelected());
+        holder.expand(position == list.getSelected());
     }
 
     /**
@@ -137,14 +133,14 @@ class PaymentListAdapter extends RecyclerView.Adapter<PaymentListViewHolder> {
     }
 
     /**
-     * Set new items in this adapter and notify any
-     * listeners.
+     * Set the groups from the PaymentSession in this adapter.
      *
-     * @param newItems list of PaymentGroups that should be set
+     * @param session containing the groups that are set in this adapter
      */
-    public void setItems(List<PaymentGroup> newItems) {
+    public void setPaymentSession(PaymentSession session) {
+        this.session = session;
         items.clear();
-        items.addAll(newItems);
+        items.addAll(session.groups);
         notifyDataSetChanged();
     }
 
@@ -152,6 +148,13 @@ class PaymentListAdapter extends RecyclerView.Adapter<PaymentListViewHolder> {
         if (listener != null) {
             PaymentGroup item = items.get(position);
             listener.onItemClicked(item, position);
+        }
+    }
+
+    void handleOnAction(int position) {
+        if (listener != null) {
+            PaymentGroup item = items.get(position);
+            listener.onActionClicked(item, position);
         }
     }
 
