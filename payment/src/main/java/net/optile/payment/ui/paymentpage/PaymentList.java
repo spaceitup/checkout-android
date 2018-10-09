@@ -68,9 +68,18 @@ final class PaymentList implements PaymentListAdapter.OnItemListener {
     }
 
     void clear() {
+        selIndex = -1;
         adapter.clear();
     }
 
+    void hideKeyboard() {
+        InputMethodManager imm = (InputMethodManager) activity.getSystemService(Context.INPUT_METHOD_SERVICE);
+
+        if (imm != null) {
+            imm.hideSoftInputFromWindow(recyclerView.getWindowToken(), 0);
+        }
+    }
+    
     /**
      * {@inheritDoc}
      */
@@ -114,14 +123,6 @@ final class PaymentList implements PaymentListAdapter.OnItemListener {
             holder.expand(true);
             adapter.notifyItemChanged(position);
             smoothScrollToPosition(position);
-        }
-    }
-
-    private void hideKeyboard() {
-        InputMethodManager imm = (InputMethodManager) activity.getSystemService(Context.INPUT_METHOD_SERVICE);
-
-        if (imm != null) {
-            imm.hideSoftInputFromWindow(recyclerView.getWindowToken(), 0);
         }
     }
 
