@@ -17,9 +17,9 @@ import java.util.Map;
 import java.util.Properties;
 
 import net.optile.payment.model.ApplicableNetwork;
+import net.optile.payment.model.Interaction;
 import net.optile.payment.model.ListResult;
 import net.optile.payment.model.Networks;
-import net.optile.payment.model.Interaction;
 
 /**
  * Class for storing the ListResult and the list of supported PaymentMethods

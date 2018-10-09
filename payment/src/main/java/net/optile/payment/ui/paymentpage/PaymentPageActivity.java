@@ -13,7 +13,6 @@ package net.optile.payment.ui.paymentpage;
 
 import java.util.Map;
 
-import android.text.TextUtils;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
@@ -22,6 +21,7 @@ import android.support.design.widget.Snackbar;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.text.TextUtils;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ProgressBar;
@@ -165,29 +165,11 @@ public final class PaymentPageActivity extends AppCompatActivity implements Paym
      * {@inheritDoc}
      */
     @Override
-    public void showPaymentSession(PaymentSession session) {
-
-        if (!isActive()) {
-            return;
-        }
-        if (session.getApplicableNetworkSize() == 0) {
-            showCenterMessage(R.string.error_paymentpage_empty);
-        } else if (session.groups.size() == 0) {
-            showCenterMessage(R.string.error_paymentpage_notsupported);
-        } else {
-            paymentList.showPaymentSession(session);
-        }
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
     public void clear() {
         if (!isActive()) {
             return;
         }
-        centerMessage.setVisibility(View.GONE);
+        centerMessage.setText("");
         paymentList.clear();
     }
 
@@ -209,6 +191,26 @@ public final class PaymentPageActivity extends AppCompatActivity implements Paym
      * {@inheritDoc}
      */
     @Override
+    public void showPaymentSession(PaymentSession session) {
+
+        if (!isActive()) {
+            return;
+        }
+        progressBar.setVisibility(View.GONE);
+
+        if (session.getApplicableNetworkSize() == 0) {
+            showCenterMessage(R.string.error_paymentpage_empty);
+        } else if (session.groups.size() == 0) {
+            showCenterMessage(R.string.error_paymentpage_notsupported);
+        } else {
+            paymentList.showPaymentSession(session);
+        }
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
     public void showLoading(boolean show) {
         if (!isActive()) {
             return;
@@ -218,7 +220,9 @@ public final class PaymentPageActivity extends AppCompatActivity implements Paym
             centerMessage.setVisibility(View.GONE);
             progressBar.setVisibility(View.VISIBLE);
         } else {
+            paymentList.setVisible(true);
             progressBar.setVisibility(View.GONE);
+            centerMessage.setVisibility(View.VISIBLE);
         }
     }
 
@@ -226,13 +230,13 @@ public final class PaymentPageActivity extends AppCompatActivity implements Paym
      * {@inheritDoc}
      */
     @Override
-    public void showMessage(String message) {
+    public void displayMessage(String message) {
         if (!isActive()) {
             return;
         }
-        showSnackBar(message);        
+        showSnackBar(message);
     }
-    
+
     /**
      * {@inheritDoc}
      */
@@ -242,7 +246,7 @@ public final class PaymentPageActivity extends AppCompatActivity implements Paym
             return;
         }
         paymentList.setVisible(true);
-        centerMessage.setVisibility(View.VISIBLE);
+        progressBar.setVisibility(View.GONE);
         showSnackBar(getString(resId));
     }
 

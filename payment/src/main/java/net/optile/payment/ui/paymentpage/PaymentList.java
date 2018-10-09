@@ -116,7 +116,7 @@ final class PaymentList implements PaymentListAdapter.OnItemListener {
             smoothScrollToPosition(position);
         }
     }
-    
+
     private void hideKeyboard() {
         InputMethodManager imm = (InputMethodManager) activity.getSystemService(Context.INPUT_METHOD_SERVICE);
 

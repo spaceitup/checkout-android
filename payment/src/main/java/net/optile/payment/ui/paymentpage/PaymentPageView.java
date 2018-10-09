@@ -27,13 +27,6 @@ interface PaymentPageView {
     boolean isActive();
 
     /**
-     * Show or hide the loading animation
-     *
-     * @param show if true show the loading animation, false hides the loading animation
-     */
-    void showLoading(boolean show);
-
-    /**
      * Get the Context from this view
      *
      * @return context
@@ -41,31 +34,38 @@ interface PaymentPageView {
     Context getContext();
 
     /**
-     * Show the PaymentSession to the user
+     * Clear the list and clear the center message
+     */
+    void clear();
+
+    /**
+     * Show or hide the loading animation
+     *
+     * @param show if true show the loading animation, hide otherwise
+     */
+    void showLoading(boolean show);
+
+    /**
+     * Stop loading and show the PaymentSession
      *
      * @param session the payment session to be shown to the user
      */
     void showPaymentSession(PaymentSession session);
 
     /**
-     * Clear the view from any previously shown PaymentSessions
-     */
-    void clear();
-
-    /**
-     * Show the error to the user
+     * Stop loading and show the error message
      *
      * @param resId the resource string id
      */
     void showError(int resId);
 
     /**
-     * Show a message to the user
+     * Display a notification message to the user
      *
      * @param message the message to be shown
      */
-    void showMessage(String message);
-    
+    void displayMessage(String message);
+
     /**
      * Abort the payment and notify the user of this SDK
      *
