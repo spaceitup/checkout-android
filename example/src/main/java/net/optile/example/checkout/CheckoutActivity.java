@@ -116,16 +116,15 @@ public final class CheckoutActivity extends AppCompatActivity implements Checkou
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         
-        if (requestCode != PAYMENT_REQUEST_CODE || data == null) {
+        if (requestCode != PAYMENT_REQUEST_CODE) {
             return;
+        }
+        if (data != null && data.hasExtra(PaymentUI.EXTRA_PAYMENT_RESULT)) {
+            PaymentResult result = data.getParcelableExtra(PaymentUI.EXTRA_PAYMENT_RESULT);
+            Log.i(TAG, "PaymentResult[" + result.toString() + "]");
         }
         if (resultCode == Activity.RESULT_OK) {
             this.paymentSuccess = true;
-        }
-        PaymentResult result = data.getParcelableExtra(PaymentUI.EXTRA_PAYMENT_RESULT);
-        if (result != null) {
-            Interaction interaction = result.getInteraction();
-            Log.i(TAG, "PaymentResult[" + result.toString() + "]");
         }
     }
     

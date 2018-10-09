@@ -58,8 +58,8 @@ public final class PaymentResult implements Parcelable {
 
     private PaymentResult(Parcel in) {
         this.resultInfo = in.readString();
-
         GsonHelper gson = GsonHelper.getInstance();
+
         try {
             String json = in.readString();
             if (!TextUtils.isEmpty(json)) {
