@@ -30,6 +30,7 @@ import net.optile.payment.form.Charge;
 import net.optile.payment.model.ApplicableNetwork;
 import net.optile.payment.model.Interaction;
 import net.optile.payment.model.InteractionCode;
+import net.optile.payment.model.InteractionReason;
 import net.optile.payment.model.ListResult;
 import net.optile.payment.model.Networks;
 import net.optile.payment.model.OperationResult;
@@ -134,21 +135,36 @@ final class PaymentPagePresenter {
 
     private void callbackLoadSuccess(PaymentSession session) {
         this.loadTask = null;
-
         Interaction interaction = session.listResult.getInteraction();
         String resultInfo = session.listResult.getResultInfo();
         String code = interaction.getCode();
-
+        String reason = interaction.getReason();
+        
         switch (code) {
             case InteractionCode.PROCEED:
                 this.session = session;
                 view.showPaymentSession(session);
+                break;
+            case InteractionCode.ABORT:
+                handleLoadAbort(resultInfo, interaction, session);
                 break;
             default:
                 closePage(false, resultInfo, interaction, null);
         }
     }
 
+    private void handleLoadAbort(String resultInfo, Interaction interaction, PaymentSession session) {
+        switch (interaction.getReason()) {
+        case InteractionReason.NO_NETWORKS:
+            this.session = session;
+            session.setEmptyMessage(session.translateInteraction(interaction));
+            view.showPaymentSession(session);
+            break;
+        default:
+            closePage(false, resultInfo, interaction, null);            
+        }
+    }
+    
     private void callbackLoadError(Throwable error) {
         this.loadTask = null;
 

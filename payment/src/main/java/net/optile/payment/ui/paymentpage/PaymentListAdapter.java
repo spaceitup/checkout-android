@@ -48,8 +48,6 @@ class PaymentListAdapter extends RecyclerView.Adapter<PaymentListViewHolder> {
 
     private OnItemListener listener;
 
-    private PaymentSession session;
-
     PaymentListAdapter(PaymentList list) {
         this.list = list;
         this.items = new ArrayList<>();
@@ -86,7 +84,7 @@ class PaymentListAdapter extends RecyclerView.Adapter<PaymentListViewHolder> {
             Glide.with(list.getContext()).asBitmap().load(logoUrl.toString()).into(holder.logo);
         }
 
-        String buttonLabel = session.translate(group.getButton(), null);
+        String buttonLabel = list.getPaymentSession().translate(group.getButton(), null);
         ButtonWidget widget = (ButtonWidget) holder.getFormWidget(BUTTON_WIDGET);
         if (widget != null) {
             if (TextUtils.isEmpty(buttonLabel)) {
@@ -133,14 +131,13 @@ class PaymentListAdapter extends RecyclerView.Adapter<PaymentListViewHolder> {
     }
 
     /**
-     * Set the groups from the PaymentSession in this adapter.
+     * Set the payment groups in this adapter
      *
-     * @param session containing the groups that are set in this adapter
+     * @param groups the list of PaymentGroup objects
      */
-    public void setPaymentSession(PaymentSession session) {
-        this.session = session;
+    public void setPaymentGroups(List<PaymentGroup> groups) {
         items.clear();
-        items.addAll(session.groups);
+        items.addAll(groups);
         notifyDataSetChanged();
     }
 
