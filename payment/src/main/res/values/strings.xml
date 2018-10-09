@@ -1,6 +1,5 @@
 <resources>
 	<string name="title_paymentpage">Payment Page</string>
-	<string name="error_paymentpage_empty">There are no payment methods available.</string>
 	<string name="error_paymentpage_notsupported">The payment methods in the current payment session are not supported by this app.</string>
 	<string name="error_paymentpage_connerror">Please check your internet connection.</string>
 	<string name="error_paymentpage_unknown">An error occurred while handling your payment.</string>

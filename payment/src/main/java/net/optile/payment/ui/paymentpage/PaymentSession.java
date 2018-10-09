@@ -34,6 +34,8 @@ final class PaymentSession {
 
     private Properties language;
 
+    private String emptyMessage;
+    
     /**
      * Construct a new PaymentSession object
      *
@@ -59,6 +61,14 @@ final class PaymentSession {
 
     void setLanguage(Properties language) {
         this.language = language;
+    }
+
+    void setEmptyMessage(String emptyMessage) {
+        this.emptyMessage = emptyMessage;
+    }
+
+    String getEmptyMessage() {
+        return emptyMessage;
     }
 
     String translate(String key, String defValue) {

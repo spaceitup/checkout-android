@@ -53,8 +53,6 @@ public final class PaymentPageActivity extends AppCompatActivity implements Paym
 
     private ProgressBar progressBar;
 
-    private TextView centerMessage;
-
     /**
      * Create the start intent for this Activity
      *
@@ -85,9 +83,7 @@ public final class PaymentPageActivity extends AppCompatActivity implements Paym
             this.theme = intent.getParcelableExtra(EXTRA_PAYMENTTHEME);
         }
         setContentView(R.layout.activity_paymentpage);
-
         this.progressBar = findViewById(R.id.progressbar);
-        this.centerMessage = findViewById(R.id.label_center);
 
         final Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -98,7 +94,8 @@ public final class PaymentPageActivity extends AppCompatActivity implements Paym
             getSupportActionBar().setDisplayShowHomeEnabled(true);
         }
         this.presenter = new PaymentPagePresenter(this);
-        this.paymentList = new PaymentList(this, findViewById(R.id.recyclerview_paymentlist));
+        this.paymentList = new PaymentList(this, findViewById(R.id.recyclerview_paymentlist),
+                                           findViewById(R.id.label_empty));
     }
 
     /**
@@ -169,7 +166,6 @@ public final class PaymentPageActivity extends AppCompatActivity implements Paym
         if (!isActive()) {
             return;
         }
-        centerMessage.setText("");
         paymentList.clear();
     }
 
@@ -197,14 +193,7 @@ public final class PaymentPageActivity extends AppCompatActivity implements Paym
             return;
         }
         progressBar.setVisibility(View.GONE);
-
-        if (session.getApplicableNetworkSize() == 0) {
-            showCenterMessage(R.string.error_paymentpage_empty);
-        } else if (session.groups.size() == 0) {
-            showCenterMessage(R.string.error_paymentpage_notsupported);
-        } else {
-            paymentList.showPaymentSession(session);
-        }
+        paymentList.showPaymentSession(session);
     }
 
     /**
@@ -217,12 +206,10 @@ public final class PaymentPageActivity extends AppCompatActivity implements Paym
         }
         if (show) {
             paymentList.setVisible(false);
-            centerMessage.setVisibility(View.GONE);
             progressBar.setVisibility(View.VISIBLE);
         } else {
             paymentList.setVisible(true);
             progressBar.setVisibility(View.GONE);
-            centerMessage.setVisibility(View.VISIBLE);
         }
     }
 
@@ -253,11 +240,6 @@ public final class PaymentPageActivity extends AppCompatActivity implements Paym
     void makeChargeRequest(PaymentGroup group, Map<String, FormWidget> widgets) {
         paymentList.hideKeyboard();
         presenter.charge(widgets, group);
-    }
-
-    private void showCenterMessage(int resId) {
-        centerMessage.setText(resId);
-        centerMessage.setVisibility(View.VISIBLE);
     }
 
     private void showSnackBar(String message) {
