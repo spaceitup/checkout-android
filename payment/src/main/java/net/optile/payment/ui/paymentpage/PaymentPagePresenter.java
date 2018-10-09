@@ -138,8 +138,7 @@ final class PaymentPagePresenter {
         Interaction interaction = session.listResult.getInteraction();
         String resultInfo = session.listResult.getResultInfo();
         String code = interaction.getCode();
-        String reason = interaction.getReason();
-        
+
         switch (code) {
             case InteractionCode.PROCEED:
                 this.session = session;
@@ -157,7 +156,6 @@ final class PaymentPagePresenter {
         switch (interaction.getReason()) {
         case InteractionReason.NO_NETWORKS:
             this.session = session;
-            session.setEmptyMessage(session.translateInteraction(interaction));
             view.showPaymentSession(session);
             break;
         default:
@@ -301,6 +299,12 @@ final class PaymentPagePresenter {
         // selIndex = selIndex == -1 ? 0 : selIndex;
         PaymentSession session = new PaymentSession(listResult, groups, selIndex);
         session.setLanguage(loadPageLanguage(items));
+
+        String emptyMessage = null;
+        if (session.getApplicableNetworkSize() == 0) {
+            String key = "interaction.ABORT.NO_NETWORKS";
+            session.setEmptyMessage(session.translate(key, key));
+        }
         return session;
     }
 
