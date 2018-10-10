@@ -78,20 +78,12 @@ final class PaymentList implements PaymentListAdapter.OnItemListener {
         this.selIndex = session.selIndex;
 
         if (session.groups.size() == 0) {
-            setEmptyMessage(session.getEmptyMessage());
+            emptyMessage.setText(session.getEmptyMessage());
         } else {
             adapter.setPaymentGroups(session.groups);
             recyclerView.scrollToPosition(selIndex);
         }
         setVisible(true);
-    }
-
-    private void setEmptyMessage(String message) {
-        if (TextUtils.isEmpty(message)) {
-            emptyMessage.setText(R.string.error_paymentpage_notsupported);
-        } else {
-            emptyMessage.setText(message);
-        }
     }
     
     void clear() {

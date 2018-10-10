@@ -21,6 +21,7 @@ import java.util.concurrent.Callable;
 
 import android.text.TextUtils;
 import android.util.Log;
+import android.content.Context;
 import net.optile.payment.R;
 import net.optile.payment.core.PaymentException;
 import net.optile.payment.core.WorkerSubscriber;
@@ -300,10 +301,11 @@ final class PaymentPagePresenter {
         PaymentSession session = new PaymentSession(listResult, groups, selIndex);
         session.setLanguage(loadPageLanguage(items));
 
-        String emptyMessage = null;
+        Context context = view.getContext();
         if (session.getApplicableNetworkSize() == 0) {
-            String key = "interaction.ABORT.NO_NETWORKS";
-            session.setEmptyMessage(session.translate(key, key));
+            session.setEmptyMessage(context.getString(R.string.error_paymentpage_empty));
+        } else if (groups.size() == 0) {
+            session.setEmptyMessage(context.getString(R.string.error_paymentpage_notsupported));
         }
         return session;
     }
