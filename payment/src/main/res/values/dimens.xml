@@ -1,18 +1,18 @@
 <resources>
-	<dimen name="border_xxsmall">4dp</dimen>
-	<dimen name="border_xsmall">8dp</dimen>
-	<dimen name="border_small">12dp</dimen>
-	<dimen name="border_medium">16dp</dimen>
-	<dimen name="border_large">20dp</dimen>
-	<dimen name="border_xlarge">30dp</dimen>
-	<dimen name="widget_padding">4dp</dimen>
+    <dimen name="border_xxsmall">4dp</dimen>
+    <dimen name="border_xsmall">8dp</dimen>
+    <dimen name="border_small">12dp</dimen>
+    <dimen name="border_medium">16dp</dimen>
+    <dimen name="border_large">20dp</dimen>
+    <dimen name="border_xlarge">30dp</dimen>
+    <dimen name="widget_padding">4dp</dimen>
 
-	<dimen name="toolbar_elevation">6dp</dimen>
+    <dimen name="toolbar_elevation">6dp</dimen>
 
-	<dimen name="cardview_radius">4dp</dimen>
-	<dimen name="cardview_logo_width">60dp</dimen>
-	<dimen name="cardview_logo_height">40dp</dimen>
+    <dimen name="cardview_radius">4dp</dimen>
+    <dimen name="cardview_logo_width">60dp</dimen>
+    <dimen name="cardview_logo_height">40dp</dimen>
 
-	<dimen name="progressbar_size">40dp</dimen>
+    <dimen name="progressbar_size">40dp</dimen>
 
 </resources>
