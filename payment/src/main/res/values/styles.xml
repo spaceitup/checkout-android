@@ -1,63 +1,63 @@
 <resources>
 
-	<style name="PaymentTheme" parent="Theme.AppCompat.Light.DarkActionBar">
-		<item name="colorPrimary">@color/color_primary</item>
-		<item name="colorPrimaryDark">@color/color_primary_dark</item>
-		<item name="colorAccent">@color/color_ascent</item>
-		<item name="titleTextColor">@android:color/white</item>
-	</style>
+    <style name="PaymentTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+        <item name="colorPrimary">@color/color_primary</item>
+        <item name="colorPrimaryDark">@color/color_primary_dark</item>
+        <item name="colorAccent">@color/color_ascent</item>
+        <item name="titleTextColor">@android:color/white</item>
+    </style>
 
-	<style name="PaymentThemeToolbar" parent="ThemeOverlay.AppCompat.Dark.ActionBar"></style>
+    <style name="PaymentThemeToolbar" parent="ThemeOverlay.AppCompat.Dark.ActionBar"></style>
 
-	<style name="PaymentTheme.NoActionBar">
-		<item name="windowActionBar">false</item>
-		<item name="windowNoTitle">true</item>
-	</style>
+    <style name="PaymentTheme.NoActionBar">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+    </style>
 
-	<style name="PaymentText" parent="@android:style/TextAppearance.Medium">
-		<item name="android:layout_width">wrap_content</item>
-		<item name="android:layout_height">wrap_content</item>
-		<item name="android:textColor">@color/text_dark_primary</item>
-		<item name="android:singleLine">true</item>
-	</style>
+    <style name="PaymentText" parent="@android:style/TextAppearance.Medium">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textColor">@color/text_dark_primary</item>
+        <item name="android:singleLine">true</item>
+    </style>
 
-	<style name="PaymentText.tiny">
-		<item name="android:textSize">12sp</item>
-	</style>
+    <style name="PaymentText.tiny">
+        <item name="android:textSize">12sp</item>
+    </style>
 
-	<style name="PaymentText.Small">
-		<item name="android:textSize">14sp</item>
-	</style>
+    <style name="PaymentText.Small">
+        <item name="android:textSize">14sp</item>
+    </style>
 
-	<style name="PaymentText.Medium">
-		<item name="android:textSize">16sp</item>
-	</style>
+    <style name="PaymentText.Medium">
+        <item name="android:textSize">16sp</item>
+    </style>
 
-	<style name="PaymentText.Large">
-		<item name="android:textSize">20sp</item>
-	</style>
+    <style name="PaymentText.Large">
+        <item name="android:textSize">20sp</item>
+    </style>
 
-	<style name="PaymentText.Medium.Gray">
-		<item name="android:textColor">@color/text_dark_third</item>
-	</style>
+    <style name="PaymentText.Medium.Gray">
+        <item name="android:textColor">@color/text_dark_third</item>
+    </style>
 
-	<style name="PaymentProgressBar" parent="@style/Widget.AppCompat.ProgressBar">
-		<item name="android:layout_width">@dimen/progressbar_size</item>
-		<item name="android:layout_height">@dimen/progressbar_size</item>
-	</style>
+    <style name="PaymentProgressBar" parent="@style/Widget.AppCompat.ProgressBar">
+        <item name="android:layout_width">@dimen/progressbar_size</item>
+        <item name="android:layout_height">@dimen/progressbar_size</item>
+    </style>
 
-	<style name="PaymentWidgetTextInputLayout" parent="TextAppearance.AppCompat">
-		<item name="android:textColorHint">@color/text_dark_third</item>
-		<item name="android:textSize">16sp</item>
-		<item name="colorControlNormal">@color/text_dark_second</item>
-		<item name="colorControlActivated">@color/color_primary</item>
-		<item name="colorControlHighlight">@color/text_dark_second</item>
-	</style>
+    <style name="PaymentWidgetTextInputLayout" parent="TextAppearance.AppCompat">
+        <item name="android:textColorHint">@color/text_dark_third</item>
+        <item name="android:textSize">16sp</item>
+        <item name="colorControlNormal">@color/text_dark_second</item>
+        <item name="colorControlActivated">@color/color_primary</item>
+        <item name="colorControlHighlight">@color/text_dark_second</item>
+    </style>
 
-	<style name="PaymentWidgetButton" parent="Widget.AppCompat.Button.Borderless">
-		<item name="colorButtonNormal">@color/color_primary</item>
-		<item name="android:textColor">@color/text_light_primary</item>
-	</style>
+    <style name="PaymentWidgetButton" parent="Widget.AppCompat.Button.Borderless">
+        <item name="colorButtonNormal">@color/color_primary</item>
+        <item name="android:textColor">@color/text_light_primary</item>
+    </style>
 
 
 </resources>
