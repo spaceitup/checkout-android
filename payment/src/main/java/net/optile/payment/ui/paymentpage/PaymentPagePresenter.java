@@ -19,6 +19,7 @@ import java.util.Map;
 import java.util.Properties;
 import java.util.concurrent.Callable;
 
+import android.content.Context;
 import android.text.TextUtils;
 import android.util.Log;
 import net.optile.payment.R;
@@ -138,33 +139,17 @@ final class PaymentPagePresenter {
         Interaction interaction = session.listResult.getInteraction();
         String resultInfo = session.listResult.getResultInfo();
         String code = interaction.getCode();
-        String reason = interaction.getReason();
-        
+
         switch (code) {
             case InteractionCode.PROCEED:
                 this.session = session;
                 view.showPaymentSession(session);
-                break;
-            case InteractionCode.ABORT:
-                handleLoadAbort(resultInfo, interaction, session);
                 break;
             default:
                 closePage(false, resultInfo, interaction, null);
         }
     }
 
-    private void handleLoadAbort(String resultInfo, Interaction interaction, PaymentSession session) {
-        switch (interaction.getReason()) {
-        case InteractionReason.NO_NETWORKS:
-            this.session = session;
-            session.setEmptyMessage(session.translateInteraction(interaction));
-            view.showPaymentSession(session);
-            break;
-        default:
-            closePage(false, resultInfo, interaction, null);            
-        }
-    }
-    
     private void callbackLoadError(Throwable error) {
         this.loadTask = null;
 
@@ -301,6 +286,13 @@ final class PaymentPagePresenter {
         // selIndex = selIndex == -1 ? 0 : selIndex;
         PaymentSession session = new PaymentSession(listResult, groups, selIndex);
         session.setLanguage(loadPageLanguage(items));
+
+        Context context = view.getContext();
+        if (session.getApplicableNetworkSize() == 0) {
+            session.setEmptyMessage(context.getString(R.string.error_paymentpage_empty));
+        } else if (groups.size() == 0) {
+            session.setEmptyMessage(context.getString(R.string.error_paymentpage_notsupported));
+        }
         return session;
     }
 

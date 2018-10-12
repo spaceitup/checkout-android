@@ -16,11 +16,9 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.LinearSmoothScroller;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SimpleItemAnimator;
-import android.text.TextUtils;
 import android.view.View;
-import android.widget.TextView;
 import android.view.inputmethod.InputMethodManager;
-import net.optile.payment.R;
+import android.widget.TextView;
 
 /**
  * The PaymentList showing available payment methods in a list
@@ -38,7 +36,7 @@ final class PaymentList implements PaymentListAdapter.OnItemListener {
     private final TextView emptyMessage;
 
     private PaymentSession session;
-    
+
     private int selIndex;
 
     PaymentList(PaymentPageActivity activity, RecyclerView recyclerView, TextView emptyMessage) {
@@ -72,13 +70,13 @@ final class PaymentList implements PaymentListAdapter.OnItemListener {
     PaymentSession getPaymentSession() {
         return this.session;
     }
-    
+
     void showPaymentSession(PaymentSession session) {
         this.session = session;
         this.selIndex = session.selIndex;
 
         if (session.groups.size() == 0) {
-            setEmptyMessage(session.getEmptyMessage());
+            emptyMessage.setText(session.getEmptyMessage());
         } else {
             adapter.setPaymentGroups(session.groups);
             recyclerView.scrollToPosition(selIndex);
@@ -86,14 +84,6 @@ final class PaymentList implements PaymentListAdapter.OnItemListener {
         setVisible(true);
     }
 
-    private void setEmptyMessage(String message) {
-        if (TextUtils.isEmpty(message)) {
-            emptyMessage.setText(R.string.error_paymentpage_notsupported);
-        } else {
-            emptyMessage.setText(message);
-        }
-    }
-    
     void clear() {
         this.selIndex = -1;
         this.session = null;
@@ -108,7 +98,7 @@ final class PaymentList implements PaymentListAdapter.OnItemListener {
             imm.hideSoftInputFromWindow(recyclerView.getWindowToken(), 0);
         }
     }
-    
+
     /**
      * {@inheritDoc}
      */
