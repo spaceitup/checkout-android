@@ -19,9 +19,9 @@ import java.util.Map;
 import java.util.Properties;
 import java.util.concurrent.Callable;
 
+import android.content.Context;
 import android.text.TextUtils;
 import android.util.Log;
-import android.content.Context;
 import net.optile.payment.R;
 import net.optile.payment.core.PaymentException;
 import net.optile.payment.core.WorkerSubscriber;
@@ -145,25 +145,11 @@ final class PaymentPagePresenter {
                 this.session = session;
                 view.showPaymentSession(session);
                 break;
-            case InteractionCode.ABORT:
-                handleLoadAbort(resultInfo, interaction, session);
-                break;
             default:
                 closePage(false, resultInfo, interaction, null);
         }
     }
 
-    private void handleLoadAbort(String resultInfo, Interaction interaction, PaymentSession session) {
-        switch (interaction.getReason()) {
-        case InteractionReason.NO_NETWORKS:
-            this.session = session;
-            view.showPaymentSession(session);
-            break;
-        default:
-            closePage(false, resultInfo, interaction, null);            
-        }
-    }
-    
     private void callbackLoadError(Throwable error) {
         this.loadTask = null;
 

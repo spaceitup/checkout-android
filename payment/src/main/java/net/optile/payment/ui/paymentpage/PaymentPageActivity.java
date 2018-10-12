@@ -25,7 +25,6 @@ import android.text.TextUtils;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ProgressBar;
-import android.widget.TextView;
 import net.optile.payment.R;
 import net.optile.payment.ui.PaymentResult;
 import net.optile.payment.ui.PaymentTheme;
@@ -95,7 +94,7 @@ public final class PaymentPageActivity extends AppCompatActivity implements Paym
         }
         this.presenter = new PaymentPagePresenter(this);
         this.paymentList = new PaymentList(this, findViewById(R.id.recyclerview_paymentlist),
-                                           findViewById(R.id.label_empty));
+            findViewById(R.id.label_empty));
     }
 
     /**
@@ -155,7 +154,7 @@ public final class PaymentPageActivity extends AppCompatActivity implements Paym
      */
     @Override
     public Context getContext() {
-        return this;
+        return getApplicationContext();
     }
 
     /**
