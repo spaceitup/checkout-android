@@ -8,7 +8,7 @@
 
     <TextView
         android:id="@+id/input_label"
-        style="@style/PaymentText.Medium.Gray"
+        style="@style/PaymentText.Tiny"
         android:layout_marginLeft="@dimen/border_xxsmall"/>
 
     <Spinner

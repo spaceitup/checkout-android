@@ -4,12 +4,13 @@
     <color name="color_primary_dark">#298226</color>
     <color name="color_ascent">#299928</color>
     <color name="color_list_background">#F2F2F2</color>
-
-    <color name="text_dark_primary">#DD000000</color>
-    <color name="text_dark_second">#8A000000</color>
-    <color name="text_dark_third">#61000000</color>
+    <color name="color_line">#AEABAB</color>
+    
+    <color name="text_dark_primary">#424242</color>
+    <color name="text_dark_second">#66424242</color>
     <color name="text_light_primary">#FFFFFF</color>
-    <color name="text_light_second">#B2FFFFFF</color>
-    <color name="text_light_third">#7FFFFFFF</color>
+    <color name="text_error">#C22D2D</color>
+    <color name="blue">#0000FF</color>
+    <color name="red">#ff0000</color>
 </resources>
  

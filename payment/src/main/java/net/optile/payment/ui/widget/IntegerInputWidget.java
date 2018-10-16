@@ -24,13 +24,7 @@ import net.optile.payment.model.InputElement;
 /**
  * Class for handling the Integer input type
  */
-public final class IntegerInputWidget extends FormWidget {
-
-    private final InputElement element;
-
-    private final TextInputEditText input;
-
-    private final TextInputLayout layout;
+public final class IntegerInputWidget extends TextInputWidget {
 
     /**
      * Construct a new IntegerInputWidget
@@ -40,25 +34,6 @@ public final class IntegerInputWidget extends FormWidget {
      * @param element the InputElement this widget is displaying
      */
     public IntegerInputWidget(String name, View rootView, InputElement element) {
-        super(name, rootView);
-        this.element = element;
-        layout = rootView.findViewById(R.id.layout_value);
-        input = rootView.findViewById(R.id.input_value);
-
-        layout.setHintAnimationEnabled(false);
-        layout.setHint(element.getLabel());
-        layout.setHintAnimationEnabled(true);
-    }
-
-    public void putValue(Charge charge) throws PaymentException {
-        String val = input.getText().toString().trim();
-        if (!TextUtils.isEmpty(val)) {
-            charge.putValue(element.getName(), val);
-        }
-    }
-
-    public boolean setLastImeOptionsWidget() {
-        input.setImeOptions(EditorInfo.IME_ACTION_DONE);
-        return true;
+        super(name, rootView, element);
     }
 }

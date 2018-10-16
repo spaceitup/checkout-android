@@ -187,11 +187,11 @@ class PaymentListAdapter extends RecyclerView.Adapter<PaymentListViewHolder> {
         for (InputElement element : elements) {
             switch (element.getType()) {
                 case InputElementType.NUMERIC:
-                    View view = inflater.inflate(R.layout.widget_input_numeric, parent, false);
+                    View view = inflater.inflate(R.layout.widget_input_text, parent, false);
                     widgets.add(new NumericInputWidget(element.getName(), view, element));
                     break;
                 case InputElementType.INTEGER:
-                    view = inflater.inflate(R.layout.widget_input_integer, parent, false);
+                    view = inflater.inflate(R.layout.widget_input_text, parent, false);
                     widgets.add(new IntegerInputWidget(element.getName(), view, element));
                     break;
                 case InputElementType.SELECT:
@@ -204,7 +204,7 @@ class PaymentListAdapter extends RecyclerView.Adapter<PaymentListViewHolder> {
                     break;
                 case InputElementType.STRING:
                 default:
-                    view = inflater.inflate(R.layout.widget_input_string, parent, false);
+                    view = inflater.inflate(R.layout.widget_input_text, parent, false);
                     widgets.add(new StringInputWidget(element.getName(), view, element));
             }
         }

@@ -9,7 +9,7 @@
 
     <TextView
         android:id="@+id/label_value"
-        style="@style/PaymentText.Medium"
+        style="@style/PaymentText.Tiny"
         android:layout_weight="1"
         android:ellipsize="end"/>
 
