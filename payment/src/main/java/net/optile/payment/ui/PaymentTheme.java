@@ -11,14 +11,31 @@
 
 package net.optile.payment.ui;
 
+import android.text.TextUtils;
 import android.os.Parcel;
 import android.os.Parcelable;
+import net.optile.payment.R;
 
 /**
  * Class to hold the theme settings of the Payment screens in the Android SDK
  */
 public final class PaymentTheme implements Parcelable {
 
+    public final static String INPUT_USERNAME = "userName";
+    public final static String INPUT_CARD = "card";
+    
+    public final static int getInputElementIconRes(String name) {
+
+        if (TextUtils.isEmpty(name)) {
+            
+        }
+        
+        if (name == "userName") {
+            return 
+        }
+
+    }
+    
     public static final Parcelable.Creator<PaymentTheme> CREATOR = new Parcelable.Creator<PaymentTheme>() {
 
         public PaymentTheme createFromParcel(Parcel in) {

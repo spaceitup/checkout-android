@@ -3,7 +3,7 @@
     <dimen name="border_xsmall">8dp</dimen>
     <dimen name="border_small">12dp</dimen>
     <dimen name="border_medium">16dp</dimen>
-    <dimen name="border_large">20dp</dimen>
+    <dimen name="border_large">24dp</dimen>
     <dimen name="border_xlarge">30dp</dimen>
     <dimen name="widget_padding">4dp</dimen>
 
