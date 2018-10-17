@@ -16,7 +16,7 @@ android {
     }
 
     compileSdkVersion rootProject.compileSdkVersion
-    buildToolsVersion rootProject.buildToolsVersion
+    buildToolsVersion '28.0.3'
 
     defaultConfig {
         minSdkVersion rootProject.minSdkVersion

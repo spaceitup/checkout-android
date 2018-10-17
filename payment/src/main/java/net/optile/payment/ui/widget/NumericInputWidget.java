@@ -20,6 +20,7 @@ import net.optile.payment.R;
 import net.optile.payment.core.PaymentException;
 import net.optile.payment.form.Charge;
 import net.optile.payment.model.InputElement;
+import android.text.InputType;
 
 /**
  * Class for handling the Numeric input type
@@ -35,5 +36,6 @@ public final class NumericInputWidget extends TextInputWidget {
      */
     public NumericInputWidget(String name, View rootView, InputElement element) {
         super(name, rootView, element);
+        setInputType(InputType.TYPE_CLASS_NUMBER);
     }
 }

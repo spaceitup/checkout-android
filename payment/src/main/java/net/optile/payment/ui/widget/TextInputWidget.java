@@ -21,17 +21,18 @@ import net.optile.payment.R;
 import net.optile.payment.core.PaymentException;
 import net.optile.payment.form.Charge;
 import net.optile.payment.model.InputElement;
+import android.text.InputType;
 
 /**
  * Class for handling text input
  */
 public abstract class TextInputWidget extends FormWidget {
 
-    private final InputElement element;
+    final InputElement element;
 
-    private final TextInputEditText input;
+    final TextInputEditText input;
 
-    private final TextInputLayout layout;
+    final TextInputLayout layout;
 
     /**
      * Construct a new TextInputWidget
@@ -45,6 +46,7 @@ public abstract class TextInputWidget extends FormWidget {
         this.element = element;
         layout = rootView.findViewById(R.id.layout_value);
         input = rootView.findViewById(R.id.input_value);
+
         layout.setHintAnimationEnabled(false);
         layout.setHint(element.getLabel());
         layout.setHintAnimationEnabled(true);
@@ -77,5 +79,9 @@ public abstract class TextInputWidget extends FormWidget {
     public boolean setLastImeOptionsWidget() {
         input.setImeOptions(EditorInfo.IME_ACTION_DONE);
         return true;
+    }
+
+    void setInputType(int type) {
+        input.setInputType(type);
     }
 }
