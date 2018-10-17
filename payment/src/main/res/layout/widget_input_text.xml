@@ -4,9 +4,18 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="vertical"
+    android:orientation="horizontal"
+    android:gravity="center"
     android:paddingTop="@dimen/widget_padding"
     android:paddingBottom="@dimen/widget_padding">
+
+    <ImageView
+        android:id="@+id/image_icon"
+        android:layout_width="@dimen/widget_icon_size"
+        android:layout_height="@dimen/widget_icon_size"
+        android:layout_marginEnd="@dimen/border_xxsmall"
+        android:src="@drawable/ic_default"
+        android:contentDescription="@string/inputelement_icon"/>
 
     <android.support.design.widget.TextInputLayout
         android:id="@+id/layout_value"

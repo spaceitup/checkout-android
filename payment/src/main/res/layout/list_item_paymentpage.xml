@@ -48,7 +48,10 @@
                 android:id="@+id/layout_form"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/border_medium"
+                android:paddingTop="@dimen/border_medium"
+                android:paddingStart="@dimen/border_small"
+                android:paddingEnd="@dimen/border_small"
+                android:paddingBottom="@dimen/border_xxsmall"
                 android:layout_below="@id/layout_header"
                 android:visibility="gone"
                 android:orientation="vertical">

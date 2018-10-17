@@ -26,6 +26,8 @@ import android.view.ViewGroup;
 import net.optile.payment.R;
 import net.optile.payment.model.InputElement;
 import net.optile.payment.model.InputElementType;
+import net.optile.payment.ui.PaymentUI;
+import net.optile.payment.ui.PaymentTheme;
 import net.optile.payment.ui.widget.ButtonWidget;
 import net.optile.payment.ui.widget.CheckBoxInputWidget;
 import net.optile.payment.ui.widget.FormWidget;
@@ -183,36 +185,46 @@ class PaymentListAdapter extends RecyclerView.Adapter<PaymentListViewHolder> {
 
     private List<FormWidget> createWidgets(List<InputElement> elements, LayoutInflater inflater, ViewGroup parent) {
         List<FormWidget> widgets = new ArrayList<>();
-
         for (InputElement element : elements) {
-            switch (element.getType()) {
-                case InputElementType.NUMERIC:
-                    View view = inflater.inflate(R.layout.widget_input_text, parent, false);
-                    widgets.add(new NumericInputWidget(element.getName(), view, element));
-                    break;
-                case InputElementType.INTEGER:
-                    view = inflater.inflate(R.layout.widget_input_text, parent, false);
-                    widgets.add(new IntegerInputWidget(element.getName(), view, element));
-                    break;
-                case InputElementType.SELECT:
-                    view = inflater.inflate(R.layout.widget_input_select, parent, false);
-                    widgets.add(new SelectInputWidget(element.getName(), view, element));
-                    break;
-                case InputElementType.CHECKBOX:
-                    view = inflater.inflate(R.layout.widget_input_checkbox, parent, false);
-                    widgets.add(new CheckBoxInputWidget(element.getName(), view, element));
-                    break;
-                case InputElementType.STRING:
-                default:
-                    view = inflater.inflate(R.layout.widget_input_text, parent, false);
-                    widgets.add(new StringInputWidget(element.getName(), view, element));
-            }
+            widgets.add(createInputWidget(element, inflater, parent));
         }
         View view = inflater.inflate(R.layout.widget_button, parent, false);
         widgets.add(new ButtonWidget(BUTTON_WIDGET, view));
         return widgets;
     }
 
+    private FormWidget createInputWidget(InputElement element, LayoutInflater inflater, ViewGroup parent) {
+        FormWidget widget;
+        String name = element.getName();
+        String type = element.getType();
+        
+        switch (element.getType()) {
+        case InputElementType.NUMERIC:
+            View view = inflater.inflate(R.layout.widget_input_text, parent, false);
+            widget = new NumericInputWidget(name, view, element);
+            break;
+        case InputElementType.INTEGER:
+            view = inflater.inflate(R.layout.widget_input_text, parent, false);
+            widget = new IntegerInputWidget(name, view, element);
+            break;
+        case InputElementType.SELECT:
+            view = inflater.inflate(R.layout.widget_input_select, parent, false);
+            widget = new SelectInputWidget(name, view, element);
+            break;
+        case InputElementType.CHECKBOX:
+            view = inflater.inflate(R.layout.widget_input_checkbox, parent, false);
+            widget = new CheckBoxInputWidget(name, view, element);
+            break;
+        case InputElementType.STRING:
+        default:
+            view = inflater.inflate(R.layout.widget_input_text, parent, false);
+            widget = new StringInputWidget(name, view, element);
+        }
+        PaymentTheme theme = PaymentUI.getInstance().getPaymentTheme();
+        widget.setIconResource(theme.getWidgetIconRes(name));
+        return widget;
+    }
+    
     private void addWidgetsToHolder(PaymentListViewHolder holder, PaymentGroup group, LayoutInflater inflater, ViewGroup parent) {
         List<FormWidget> widgets = createWidgets(group.elements, inflater, parent);
         FormWidget widget;

@@ -12,47 +12,46 @@
 package net.optile.payment.ui;
 
 import android.text.TextUtils;
-import android.os.Parcel;
-import android.os.Parcelable;
 import net.optile.payment.R;
 
 /**
  * Class to hold the theme settings of the Payment screens in the Android SDK
  */
-public final class PaymentTheme implements Parcelable {
+public final class PaymentTheme {
 
-    public final static String INPUT_USERNAME = "userName";
-    public final static String INPUT_CARD = "card";
+    public final static String INPUT_HOLDERNAME = "holderName";
+    public final static String INPUT_EXPIRYMONTH = "expiryMonth";
+    public final static String INPUT_EXPIRYYEAR = "expiryYear";
+    public final static String INPUT_NUMBER = "number";
+    public final static String INPUT_VERIFICATIONCODE = "verificationCode";
+    public final static String INPUT_IBAN = "iban";
+    public final static String INPUT_BIC = "bic";
     
-    public final static int getInputElementIconRes(String name) {
-
-        if (TextUtils.isEmpty(name)) {
-            
-        }
-        
-        if (name == "userName") {
-            return 
-        }
-
-    }
-    
-    public static final Parcelable.Creator<PaymentTheme> CREATOR = new Parcelable.Creator<PaymentTheme>() {
-
-        public PaymentTheme createFromParcel(Parcel in) {
-            return new PaymentTheme(in);
-        }
-
-        public PaymentTheme[] newArray(int size) {
-            return new PaymentTheme[size];
-        }
-    };
-
     private PaymentTheme() {
     }
 
-    private PaymentTheme(Parcel in) {
-    }
+    public int getWidgetIconRes(String name) {
 
+        if (TextUtils.isEmpty(name)) {
+            return R.drawable.ic_default;
+        }
+        switch (name) {
+        case INPUT_HOLDERNAME:
+            return R.drawable.ic_name;
+        case INPUT_EXPIRYMONTH:
+        case INPUT_EXPIRYYEAR:
+            return R.drawable.ic_date;
+        case INPUT_NUMBER:
+        case INPUT_IBAN:
+        case INPUT_BIC:
+            return R.drawable.ic_card;
+        case INPUT_VERIFICATIONCODE:
+            return R.drawable.ic_lock;
+        default:
+            return R.drawable.ic_default;
+        }
+    }
+    
     /**
      * Create a new PaymentThemeBuilder, this builder can be used to build a new PaymentTheme
      *
@@ -60,21 +59,6 @@ public final class PaymentTheme implements Parcelable {
      */
     public static PaymentThemeBuilder createPaymentThemeBuilder() {
         return new PaymentThemeBuilder();
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public int describeContents() {
-        return 0;
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public void writeToParcel(Parcel out, int flags) {
     }
 
     /**

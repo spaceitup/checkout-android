@@ -143,7 +143,7 @@ public final class CheckoutActivity extends AppCompatActivity implements Checkou
     public void openPaymentPage(String listUrl) {
         PaymentUI paymentUI = PaymentUI.getInstance();
         paymentUI.setListUrl(listUrl);
-        paymentUI.showPaymentPage(this, PAYMENT_REQUEST_CODE, null);
+        paymentUI.showPaymentPage(this, PAYMENT_REQUEST_CODE);
     }
 
     private void onButtonClicked() {

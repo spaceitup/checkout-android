@@ -38,13 +38,10 @@ public final class PaymentPageActivity extends AppCompatActivity implements Paym
 
     private final static String TAG = "pay_PaymentPageActivity";
     private final static String EXTRA_LISTURL = "extra_listurl";
-    private final static String EXTRA_PAYMENTTHEME = "extra_paymenttheme";
 
     private PaymentPagePresenter presenter;
 
     private String listUrl;
-
-    private PaymentTheme theme;
 
     private boolean active;
 
@@ -58,10 +55,9 @@ public final class PaymentPageActivity extends AppCompatActivity implements Paym
      * @param context Context to create the intent
      * @return newly created start intent
      */
-    public static Intent createStartIntent(Context context, String listUrl, PaymentTheme theme) {
+    public static Intent createStartIntent(Context context, String listUrl) {
         final Intent intent = new Intent(context, PaymentPageActivity.class);
         intent.putExtra(EXTRA_LISTURL, listUrl);
-        intent.putExtra(EXTRA_PAYMENTTHEME, theme);
         return intent;
     }
 
@@ -75,11 +71,9 @@ public final class PaymentPageActivity extends AppCompatActivity implements Paym
 
         if (savedInstanceState != null && savedInstanceState.containsKey(EXTRA_LISTURL)) {
             this.listUrl = savedInstanceState.getString(EXTRA_LISTURL);
-            this.theme = savedInstanceState.getParcelable(EXTRA_PAYMENTTHEME);
         } else {
             Intent intent = getIntent();
             this.listUrl = intent.getStringExtra(EXTRA_LISTURL);
-            this.theme = intent.getParcelableExtra(EXTRA_PAYMENTTHEME);
         }
         setContentView(R.layout.activity_paymentpage);
         this.progressBar = findViewById(R.id.progressbar);
@@ -104,7 +98,6 @@ public final class PaymentPageActivity extends AppCompatActivity implements Paym
     public void onSaveInstanceState(Bundle savedInstanceState) {
         super.onSaveInstanceState(savedInstanceState);
         savedInstanceState.putString(EXTRA_LISTURL, listUrl);
-        savedInstanceState.putParcelable(EXTRA_PAYMENTTHEME, theme);
     }
 
     /**

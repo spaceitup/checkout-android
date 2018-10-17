@@ -5,8 +5,11 @@
     <dimen name="border_medium">16dp</dimen>
     <dimen name="border_large">24dp</dimen>
     <dimen name="border_xlarge">30dp</dimen>
-    <dimen name="widget_padding">4dp</dimen>
 
+    <dimen name="widget_padding">2dp</dimen>
+    <dimen name="widget_button_height">44dp</dimen>
+    <dimen name="widget_icon_size">24dp</dimen>    
+    
     <dimen name="toolbar_elevation">6dp</dimen>
 
     <dimen name="cardview_radius">4dp</dimen>

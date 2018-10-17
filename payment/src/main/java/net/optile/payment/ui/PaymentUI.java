@@ -28,6 +28,9 @@ public final class PaymentUI {
     /** The url pointing to the current list */
     private String listUrl;
 
+    /** The cached payment theme */
+    private PaymentTheme theme;
+    
     private PaymentUI() {
     }
 
@@ -65,14 +68,35 @@ public final class PaymentUI {
         this.listUrl = listUrl;
     }
 
+    /** 
+     * Set the payment theme
+     * 
+     * @param theme containing the Payment theme
+     */
+    public void setPaymentTheme(PaymentTheme theme) {
+        this.theme = theme;
+    }
+
+    /** 
+     * Get the PaymentTheme set in this PaymentUI. This method is not Thread safe and must be called from the Main UI Thread.
+     * 
+     * @return the set PaymentTheme or the default PaymentTheme 
+     */
+    public PaymentTheme getPaymentTheme() {
+
+        if (theme == null) {
+            theme = PaymentTheme.createPaymentThemeBuilder().build();
+        }
+        return theme; 
+    }
+    
     /**
      * Show the PaymentPage with the PaymentTheme for the look and feel.
      *
      * @param activity the activity that will be notified when this PaymentPage is finished
      * @param requestCode the requestCode to be used for identifying results in the parent activity
-     * @param theme the optional theme, if null then the default PaymentTheme will be used
      */
-    public void showPaymentPage(Activity activity, int requestCode, PaymentTheme theme) {
+    public void showPaymentPage(Activity activity, int requestCode) {
 
         if (listUrl == null) {
             throw new IllegalStateException("listUrl must be set before showing the PaymentPage");
@@ -80,11 +104,8 @@ public final class PaymentUI {
         if (activity == null) {
             throw new IllegalArgumentException("activity may not be null");
         }
-        if (theme == null) {
-            theme = PaymentTheme.createPaymentThemeBuilder().build();
-        }
         activity.finishActivity(requestCode);
-        Intent intent = PaymentPageActivity.createStartIntent(activity, listUrl, theme);
+        Intent intent = PaymentPageActivity.createStartIntent(activity, listUrl);
         activity.startActivityForResult(intent, requestCode);
         activity.overridePendingTransition(0, 0);
     }

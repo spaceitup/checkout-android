@@ -14,6 +14,7 @@ package net.optile.payment.ui.widget;
 import android.support.design.widget.TextInputEditText;
 import android.support.design.widget.TextInputLayout;
 import android.text.TextUtils;
+import android.widget.ImageView;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
 import net.optile.payment.R;
@@ -44,15 +45,28 @@ public abstract class TextInputWidget extends FormWidget {
         this.element = element;
         layout = rootView.findViewById(R.id.layout_value);
         input = rootView.findViewById(R.id.input_value);
-
         layout.setHintAnimationEnabled(false);
         layout.setHint(element.getLabel());
         layout.setHintAnimationEnabled(true);
-
-        //layout.setErrorEnabled(true);
-        //layout.setError("Foo error");
     }
 
+    public boolean supportsValidation() {
+        return true; 
+    }
+
+    public void setValidation(int state, String message) {
+        super.setValidation(state, message);
+        switch (state) {
+        case VALIDATION_ERROR:
+            layout.setErrorEnabled(true);
+            layout.setError(message);
+            break;
+        default:
+            layout.setErrorEnabled(false);
+            layout.setError(null);
+        }
+    }
+    
     public void putValue(Charge charge) throws PaymentException {
         String val = input.getText().toString().trim();
         if (!TextUtils.isEmpty(val)) {

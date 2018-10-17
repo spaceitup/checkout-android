@@ -9,6 +9,7 @@
         android:id="@+id/button"
         android:theme="@style/PaymentWidgetButton"
         android:layout_width="match_parent"
+        android:minHeight="@dimen/widget_button_height"
         android:layout_height="wrap_content"/>
 </LinearLayout>
 
