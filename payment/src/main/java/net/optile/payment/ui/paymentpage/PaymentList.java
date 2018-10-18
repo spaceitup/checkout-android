@@ -114,6 +114,14 @@ final class PaymentList implements PaymentListAdapter.OnItemListener {
      * {@inheritDoc}
      */
     @Override
+    public void onKeyboardDone(PaymentGroup item, int position) {
+        hideKeyboard();
+    }
+    
+    /**
+     * {@inheritDoc}
+     */
+    @Override
     public void onItemClicked(PaymentGroup item, int position) {
         hideKeyboard();
 

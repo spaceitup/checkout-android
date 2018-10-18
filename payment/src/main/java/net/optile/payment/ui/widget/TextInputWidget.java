@@ -21,9 +21,13 @@ import net.optile.payment.R;
 import net.optile.payment.core.PaymentException;
 import net.optile.payment.form.Charge;
 import net.optile.payment.model.InputElement;
-import net.optile.payment.validate.Validator;
-import net.optile.payment.validate.ValidateResult;
+import net.optile.payment.validation.Validator;
+import net.optile.payment.validation.ValidationResult;
 import android.text.InputType;
+import android.view.inputmethod.EditorInfo;
+import android.widget.TextView;
+import android.view.KeyEvent;
+import android.util.Log;
 
 /**
  * Class for handling text input
@@ -53,22 +57,42 @@ public abstract class TextInputWidget extends FormWidget {
         layout.setHintAnimationEnabled(false);
         layout.setHint(element.getLabel());
         layout.setHintAnimationEnabled(true);
+
+        input.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+
+                @Override
+                public void onFocusChange(View v, boolean hasFocus) {
+                    handleOnFocusChange(hasFocus);
+                }
+            });
+
+        input.setOnEditorActionListener(new TextView.OnEditorActionListener() {        
+                @Override
+                public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+                    if(actionId == EditorInfo.IME_ACTION_DONE){
+                        onKeyboardDone();
+                    }
+                    return false;
+                }
+            });
     }
 
     public boolean validate() {
+        input.clearFocus();
         Validator validator = presenter.getValidator();
 
         if (!validator.supportsType(name)) {
-            setValidation(VALIDATE_OK, false, null);
+            setValidation(VALIDATION_OK, false, null);
             return true;
         }
         String val = input.getText().toString().trim();
-        ValidateResult result = validator.validate(name, val);
+        ValidationResult result = validator.validate(name, val);
 
         if (result.isError()) {
-            setValidation(VALIDATE_ERROR, true, presenter.translateValidateError(result.getError()));
+            setValidation(VALIDATION_ERROR, true, presenter.translateValidateError(result.getError()));
             return false;
         }
+        setValidation(VALIDATION_OK, false, null);
         return true;
     }
 
@@ -89,6 +113,23 @@ public abstract class TextInputWidget extends FormWidget {
         input.setInputType(type);
     }
 
+    private void onKeyboardDone() {
+        validate();
+        presenter.onKeyboardDone();
+    }
+    
+    private String getStringValue() {
+        return input.getText().toString().trim();        
+    }
+    
+    private void handleOnFocusChange(boolean hasFocus) {
+        if (hasFocus) {
+            setValidation(VALIDATION_UNKNOWN, false, null);
+        } else {
+            validate();
+        }
+    }
+    
     private void setValidation(int state, boolean errorEnabled, String message) {
         setState(state);
         layout.setErrorEnabled(errorEnabled);

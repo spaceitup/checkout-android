@@ -9,7 +9,7 @@
  * has been received in full.
  */
 
-package net.optile.payment.validate;
+package net.optile.payment.validation;
 
 import net.optile.payment.core.PaymentInputType;
 import android.text.TextUtils;
@@ -25,7 +25,7 @@ public class Validator {
      * @param type the input type 
      * @param value holding the value for the given input type
      */
-    public ValidateResult validate(String type, String value) {
+    public ValidationResult validate(String type, String value) {
 
         if (TextUtils.isEmpty(type)) {
             throw new IllegalArgumentException("validation type may not be null or empty");
@@ -56,75 +56,75 @@ public class Validator {
         return PaymentInputType.isValid(type);
     }
     
-    private ValidateResult validateAccountNumber(String value) {
+    private ValidationResult validateAccountNumber(String value) {
         String error = null;
 
         if (TextUtils.isEmpty(value)) {
-            error = ValidateResult.MISSING_ACCOUNT_NUMBER;
-        }
-        return new ValidateResult(error);
+            error = ValidationResult.MISSING_ACCOUNT_NUMBER;
+        } 
+        return new ValidationResult(error);
     }
 
-    private ValidateResult validateHolderName(String value) {
+    private ValidationResult validateHolderName(String value) {
         String error = null;
 
         if (TextUtils.isEmpty(value)) {
-            error = ValidateResult.MISSING_HOLDER_NAME;
+            error = ValidationResult.MISSING_HOLDER_NAME;
         }
-        return new ValidateResult(error);
+        return new ValidationResult(error);
     }
 
-    private ValidateResult validateExpiryMonth(String value) {
+    private ValidationResult validateExpiryMonth(String value) {
         String error = null;
 
         if (TextUtils.isEmpty(value)) {
-            error = ValidateResult.MISSING_EXPIRY_MONTH;
+            error = ValidationResult.MISSING_EXPIRY_MONTH;
         }
-        return new ValidateResult(error);
+        return new ValidationResult(error);
     }
 
-    private ValidateResult validateExpiryYear(String value) {
+    private ValidationResult validateExpiryYear(String value) {
         String error = null;
 
         if (TextUtils.isEmpty(value)) {
-            error = ValidateResult.MISSING_EXPIRY_YEAR;
+            error = ValidationResult.MISSING_EXPIRY_YEAR;
         }
-        return new ValidateResult(error);
+        return new ValidationResult(error);
     }
 
-    private ValidateResult validateVerificationCode(String value) {
+    private ValidationResult validateVerificationCode(String value) {
         String error = null;
 
         if (TextUtils.isEmpty(value)) {
-            error = ValidateResult.MISSING_VERIFICATION_CODE;
+            error = ValidationResult.MISSING_VERIFICATION_CODE;
         }
-        return new ValidateResult(error);
+        return new ValidationResult(error);
     }
 
-    private ValidateResult validateBankCode(String value) {
+    private ValidationResult validateBankCode(String value) {
         String error = null;
 
         if (TextUtils.isEmpty(value)) {
-            error = ValidateResult.MISSING_BANK_CODE;
+            error = ValidationResult.MISSING_BANK_CODE;
         }
-        return new ValidateResult(error);
+        return new ValidationResult(error);
     }
 
-    private ValidateResult validateIban(String value) {
+    private ValidationResult validateIban(String value) {
         String error = null;
 
         if (TextUtils.isEmpty(value)) {
-            error = ValidateResult.MISSING_IBAN;
+            error = ValidationResult.MISSING_IBAN;
         }
-        return new ValidateResult(error);
+        return new ValidationResult(error);
     }
     
-    private ValidateResult validateBic(String value) {
+    private ValidationResult validateBic(String value) {
         String error = null;
         
         if (TextUtils.isEmpty(value)) {
-            error = ValidateResult.MISSING_BIC;
+            error = ValidationResult.MISSING_BIC;
         }
-        return new ValidateResult(error);
+        return new ValidationResult(error);
     }
 }

@@ -9,12 +9,12 @@
  * has been received in full.
  */
 
-package net.optile.payment.validate;
+package net.optile.payment.validation;
 
 /**
  * Class holding the result of the validation
  */
-public class ValidateResult {
+public class ValidationResult {
 
     /** The validation error codes */
     public final static String INVALID_ACCOUNT_NUMBER = "INVALID_ACCOUNT_NUMBER";
@@ -43,7 +43,7 @@ public class ValidateResult {
 
     private final String error;
 
-    public ValidateResult(String error) {
+    public ValidationResult(String error) {
         this.error = error;    
     }
 

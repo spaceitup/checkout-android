@@ -18,16 +18,16 @@ import net.optile.payment.form.Charge;
 import android.widget.ImageView;
 import net.optile.payment.R;
 import android.support.v4.content.ContextCompat;
-import net.optile.payment.validate.Validator;
+import net.optile.payment.validation.Validator;
 
 /**
  * The base InputWidget
  */
 public abstract class FormWidget {
 
-    public final static int VALIDATE_UNKNOWN = 0x00;
-    public final static int VALIDATE_ERROR = 0x01;
-    public final static int VALIDATE_OK = 0x02;
+    public final static int VALIDATION_UNKNOWN = 0x00;
+    public final static int VALIDATION_ERROR = 0x01;
+    public final static int VALIDATION_OK = 0x02;
     
     final View rootView;
 
@@ -68,7 +68,7 @@ public abstract class FormWidget {
     }
 
     public boolean isValid() {
-        return this.state == VALIDATE_OK; 
+        return this.state == VALIDATION_OK; 
     }
 
     public void setVisible(boolean visible) {
@@ -83,7 +83,7 @@ public abstract class FormWidget {
     }
 
     public boolean validate() {
-        setState(VALIDATE_OK);
+        setState(VALIDATION_OK);
         return true;
     }
     
@@ -99,10 +99,10 @@ public abstract class FormWidget {
         }
         int colorResId = R.color.validation_ok;
         switch (state) {
-        case VALIDATE_OK:
+        case VALIDATION_OK:
             colorResId = R.color.validation_ok;
             break;
-        case VALIDATE_ERROR:
+        case VALIDATION_ERROR:
             colorResId = R.color.validation_error;
             break;
         default:
@@ -120,6 +120,8 @@ public abstract class FormWidget {
 
         void onActionClicked();
 
+        void onKeyboardDone();
+        
         Validator getValidator();
     }
 }
