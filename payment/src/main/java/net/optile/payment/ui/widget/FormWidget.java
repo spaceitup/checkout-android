@@ -18,27 +18,28 @@ import net.optile.payment.form.Charge;
 import android.widget.ImageView;
 import net.optile.payment.R;
 import android.support.v4.content.ContextCompat;
+import net.optile.payment.validate.Validator;
 
 /**
  * The base InputWidget
  */
 public abstract class FormWidget {
 
-    public final static int VALIDATION_UNKNOWN = 0x00;
-    public final static int VALIDATION_ERROR = 0x01;
-    public final static int VALIDATION_OK = 0x02;
+    public final static int VALIDATE_UNKNOWN = 0x00;
+    public final static int VALIDATE_ERROR = 0x01;
+    public final static int VALIDATE_OK = 0x02;
     
     final View rootView;
 
     final String name;
 
     final ImageView icon;
-    
-    OnWidgetListener listener;
 
-    int validationState;
+    WidgetPresenter presenter;
 
-    String validationMessage;
+    int state;
+
+    String error;
     
     FormWidget(String name, View rootView) {
         this.name = name;
@@ -46,8 +47,8 @@ public abstract class FormWidget {
         this.icon = rootView.findViewById(R.id.image_icon);
     }
 
-    public void setListener(OnWidgetListener listener) {
-        this.listener = listener;
+    public void setPresenter(WidgetPresenter presenter) {
+        this.presenter = presenter;
     }
 
     public View getRootView() {
@@ -62,24 +63,14 @@ public abstract class FormWidget {
         
         if (icon != null) {
             icon.setImageResource(resId);
-            setIconColor(this.validationState);
+            setIconColor(this.state);
         }
     }
 
-    public void setValidation(int state, String message) {
-        this.validationState = state;
-        this.validationMessage = message;
-        setIconColor(validationState);
+    public boolean isValid() {
+        return this.state == VALIDATE_OK; 
     }
 
-    public boolean isValidated() {
-        return this.validationState == VALIDATION_OK; 
-    }
-
-    public boolean supportsValidation() {
-        return false; 
-    }
-    
     public void setVisible(boolean visible) {
         rootView.setVisibility(visible ? View.VISIBLE : View.GONE);
     }
@@ -91,31 +82,44 @@ public abstract class FormWidget {
     public void putValue(Charge charge) throws PaymentException {
     }
 
-    private void setIconColor(int validationState) {
+    public boolean validate() {
+        setState(VALIDATE_OK);
+        return true;
+    }
+    
+    void setState(int state) {
+        this.state = state;
+        setIconColor(state);
+    }
+    
+    private void setIconColor(int state) {
 
         if (icon == null) {
             return;
         }
         int colorResId = R.color.validation_ok;
-        if (supportsValidation()) {
-            switch (validationState) {
-            case VALIDATION_OK:
-                colorResId = R.color.validation_ok;
-                break;
-            case VALIDATION_ERROR:
-                colorResId = R.color.validation_error;
-                break;
-            default:
-                colorResId = R.color.validation_unknown;
-            }
+        switch (state) {
+        case VALIDATE_OK:
+            colorResId = R.color.validation_ok;
+            break;
+        case VALIDATE_ERROR:
+            colorResId = R.color.validation_error;
+            break;
+        default:
+            colorResId = R.color.validation_unknown;
         }
         icon.setColorFilter(ContextCompat.getColor(rootView.getContext(), colorResId));
     }
     
     /**
-     * The widget listener
+     * The widget presenter
      */
-    public interface OnWidgetListener {
-        void onActionClicked(FormWidget widget);
+    public interface WidgetPresenter {
+
+        String translateValidateError(String error);
+
+        void onActionClicked();
+
+        Validator getValidator();
     }
 }

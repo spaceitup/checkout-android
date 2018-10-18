@@ -16,6 +16,7 @@ import android.content.Intent;
 import android.text.TextUtils;
 import android.util.Patterns;
 import net.optile.payment.ui.paymentpage.PaymentPageActivity;
+import net.optile.payment.validate.Validator;
 
 /**
  * The PaymentUI is the controller to initialize and launch the Payment Page.
@@ -25,11 +26,14 @@ public final class PaymentUI {
 
     public final static String EXTRA_PAYMENT_RESULT = "paymentresult";
 
-    /** The url pointing to the current list */
+    /** Url pointing to the current list */
     private String listUrl;
 
-    /** The cached payment theme */
+    /** Cached payment theme */
     private PaymentTheme theme;
+
+    /** Cached Input value Validator */
+    private Validator validator;
     
     private PaymentUI() {
     }
@@ -88,6 +92,28 @@ public final class PaymentUI {
             theme = PaymentTheme.createPaymentThemeBuilder().build();
         }
         return theme; 
+    }
+
+    /** 
+     * Set the input value Validator
+     * 
+     * @param validator input value Validator to be set
+     */
+    public void setValidator(Validator validator) {
+        this.validator = validator;
+    }
+
+    /** 
+     * Get the Validator set in this PaymentUI. This method is not Thread safe and must be called from the Main UI Thread.
+     * 
+     * @return the set Validator or the default Validator 
+     */
+    public Validator getValidator() {
+
+        if (validator == null) {
+            validator = new Validator();
+        }
+        return validator;
     }
     
     /**

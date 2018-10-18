@@ -231,7 +231,16 @@ public final class PaymentPageActivity extends AppCompatActivity implements Paym
 
     void makeChargeRequest(PaymentGroup group, Map<String, FormWidget> widgets) {
         paymentList.hideKeyboard();
-        presenter.charge(widgets, group);
+
+        boolean error = false;
+        for (FormWidget widget : widgets.values()) {
+            if (!widget.validate()) {
+                error = true;
+            }
+        }
+        if (!error) {
+            presenter.charge(widgets, group);
+        }
     }
 
     private void showSnackBar(String message) {

@@ -24,6 +24,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import net.optile.payment.R;
+import net.optile.payment.validate.Validator;
 import net.optile.payment.model.InputElement;
 import net.optile.payment.model.InputElementType;
 import net.optile.payment.ui.PaymentUI;
@@ -143,20 +144,29 @@ class PaymentListAdapter extends RecyclerView.Adapter<PaymentListViewHolder> {
         notifyDataSetChanged();
     }
 
-    void handleOnClick(int position) {
+    void onItemClicked(int position) {
         if (listener != null) {
             PaymentGroup item = items.get(position);
             listener.onItemClicked(item, position);
         }
     }
 
-    void handleOnAction(int position) {
+    void onActionClicked(int position) {
         if (listener != null) {
             PaymentGroup item = items.get(position);
             listener.onActionClicked(item, position);
         }
     }
 
+    String translateValidateError(int position, String error) {
+        PaymentItem item = items.get(position).getActivePaymentItem();        
+        return item.translateError(error);
+    }
+
+    Validator getValidator(int position) {
+        return PaymentUI.getInstance().getValidator();
+    }
+    
     /**
      * Get the PaymentGroup at the given index
      *

@@ -11,22 +11,15 @@
 
 package net.optile.payment.ui;
 
+import net.optile.payment.core.PaymentInputType;
 import android.text.TextUtils;
 import net.optile.payment.R;
 
 /**
  * Class to hold the theme settings of the Payment screens in the Android SDK
  */
-public final class PaymentTheme {
+public class PaymentTheme {
 
-    public final static String INPUT_HOLDERNAME = "holderName";
-    public final static String INPUT_EXPIRYMONTH = "expiryMonth";
-    public final static String INPUT_EXPIRYYEAR = "expiryYear";
-    public final static String INPUT_NUMBER = "number";
-    public final static String INPUT_VERIFICATIONCODE = "verificationCode";
-    public final static String INPUT_IBAN = "iban";
-    public final static String INPUT_BIC = "bic";
-    
     private PaymentTheme() {
     }
 
@@ -36,16 +29,17 @@ public final class PaymentTheme {
             return R.drawable.ic_default;
         }
         switch (name) {
-        case INPUT_HOLDERNAME:
+        case PaymentInputType.HOLDER_NAME:
             return R.drawable.ic_name;
-        case INPUT_EXPIRYMONTH:
-        case INPUT_EXPIRYYEAR:
+        case PaymentInputType.EXPIRY_MONTH:
+        case PaymentInputType.EXPIRY_YEAR:
             return R.drawable.ic_date;
-        case INPUT_NUMBER:
-        case INPUT_IBAN:
-        case INPUT_BIC:
+        case PaymentInputType.BANK_CODE:
+        case PaymentInputType.ACCOUNT_NUMBER:
+        case PaymentInputType.IBAN:
+        case PaymentInputType.BIC:
             return R.drawable.ic_card;
-        case INPUT_VERIFICATIONCODE:
+        case PaymentInputType.VERIFICATION_CODE:
             return R.drawable.ic_lock;
         default:
             return R.drawable.ic_default;

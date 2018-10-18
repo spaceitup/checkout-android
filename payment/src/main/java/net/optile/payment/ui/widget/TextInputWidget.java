@@ -21,6 +21,8 @@ import net.optile.payment.R;
 import net.optile.payment.core.PaymentException;
 import net.optile.payment.form.Charge;
 import net.optile.payment.model.InputElement;
+import net.optile.payment.validate.Validator;
+import net.optile.payment.validate.ValidateResult;
 import android.text.InputType;
 
 /**
@@ -44,6 +46,7 @@ public abstract class TextInputWidget extends FormWidget {
     public TextInputWidget(String name, View rootView, InputElement element) {
         super(name, rootView);
         this.element = element;
+
         layout = rootView.findViewById(R.id.layout_value);
         input = rootView.findViewById(R.id.input_value);
 
@@ -52,25 +55,26 @@ public abstract class TextInputWidget extends FormWidget {
         layout.setHintAnimationEnabled(true);
     }
 
-    public boolean supportsValidation() {
-        return true; 
+    public boolean validate() {
+        Validator validator = presenter.getValidator();
+
+        if (!validator.supportsType(name)) {
+            setValidation(VALIDATE_OK, false, null);
+            return true;
+        }
+        String val = input.getText().toString().trim();
+        ValidateResult result = validator.validate(name, val);
+
+        if (result.isError()) {
+            setValidation(VALIDATE_ERROR, true, presenter.translateValidateError(result.getError()));
+            return false;
+        }
+        return true;
     }
 
-    public void setValidation(int state, String message) {
-        super.setValidation(state, message);
-        switch (state) {
-        case VALIDATION_ERROR:
-            layout.setErrorEnabled(true);
-            layout.setError(message);
-            break;
-        default:
-            layout.setErrorEnabled(false);
-            layout.setError(null);
-        }
-    }
-    
     public void putValue(Charge charge) throws PaymentException {
         String val = input.getText().toString().trim();
+
         if (!TextUtils.isEmpty(val)) {
             charge.putValue(element.getName(), val);
         }
@@ -83,5 +87,11 @@ public abstract class TextInputWidget extends FormWidget {
 
     void setInputType(int type) {
         input.setInputType(type);
+    }
+
+    private void setValidation(int state, boolean errorEnabled, String message) {
+        setState(state);
+        layout.setErrorEnabled(errorEnabled);
+        layout.setError(message);
     }
 }

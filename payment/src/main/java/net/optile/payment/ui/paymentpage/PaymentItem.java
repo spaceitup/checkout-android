@@ -69,6 +69,11 @@ final class PaymentItem {
         return language != null && key != null ? language.getProperty(key, defValue) : defValue;
     }
 
+    String translateError(String error) {
+        StringBuilder sb = new StringBuilder("error.").append(error);
+        return translate(sb.toString(), sb.toString());
+    }
+    
     String getButton() {
         return network.getButton();
     }

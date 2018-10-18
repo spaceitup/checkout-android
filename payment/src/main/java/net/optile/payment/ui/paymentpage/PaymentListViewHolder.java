@@ -22,6 +22,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import net.optile.payment.R;
 import net.optile.payment.ui.widget.FormWidget;
+import net.optile.payment.validate.Validator;
 
 /**
  * The PaymentListViewHolder holding all Views for easy access
@@ -36,7 +37,7 @@ class PaymentListViewHolder extends RecyclerView.ViewHolder {
 
     final PaymentListAdapter adapter;
 
-    final FormWidget.OnWidgetListener listener;
+    final FormWidget.WidgetPresenter presenter;
 
     final Map<String, FormWidget> widgets;
 
@@ -53,16 +54,26 @@ class PaymentListViewHolder extends RecyclerView.ViewHolder {
         view.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                adapter.handleOnClick(getAdapterPosition());
+                adapter.onItemClicked(getAdapterPosition());
             }
         });
 
-        listener = new FormWidget.OnWidgetListener() {
-            @Override
-            public void onActionClicked(FormWidget widget) {
-                adapter.handleOnAction(getAdapterPosition());
-            }
-        };
+        this.presenter = new FormWidget.WidgetPresenter() {
+                @Override
+                public void onActionClicked() {
+                    adapter.onActionClicked(getAdapterPosition());
+                }
+
+                @Override
+                public String translateValidateError(String error) {
+                    return adapter.translateValidateError(getAdapterPosition(), error);
+                }
+
+                @Override
+                public Validator getValidator() {
+                    return adapter.getValidator(getAdapterPosition());
+                }
+            };
     }
 
     void expand(boolean expand) {
@@ -72,7 +83,7 @@ class PaymentListViewHolder extends RecyclerView.ViewHolder {
     void addWidgets(List<FormWidget> items) {
 
         for (FormWidget widget : items) {
-            widget.setListener(listener);
+            widget.setPresenter(presenter);
             widgets.put(widget.getName(), widget);
             formLayout.addView(widget.getRootView());
         }
