@@ -39,7 +39,7 @@ public final class PaymentUtils {
     /**
      * Strips whitespace from the start and end of a String returning an empty String if null input.
      *
-     * @param the String to be trimmed, may be null
+     * @param value the String to be trimmed, may be null
      * @return the trimmed String, or an empty String if null input
      */
     public static String trimToEmpty(String value) {

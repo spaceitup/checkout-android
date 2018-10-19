@@ -52,12 +52,12 @@
 
     <style name="PaymentTextInputLayoutError" parent="TextAppearance.Design.Error">
         <item name="android:textColor">@color/text_error</item>
-        <item name="android:textSize">12dp</item>
+        <item name="android:textSize">12sp</item>
     </style>
 
     <style name="PaymentTextInputLayoutHint" parent="TextAppearance.Design.Hint">
         <item name="android:textColor">@color/text_dark_primary</item>
-        <item name="android:textSize">12dp</item>
+        <item name="android:textSize">12sp</item>
     </style>
 
     <style name="PaymentTextInputLayout" parent="Widget.Design.TextInputLayout">
@@ -73,7 +73,7 @@
 
     <style name="PaymentTextInputEditText" parent="Widget.AppCompat.EditText">
         <item name="android:textColor">@color/text_dark_primary</item>
-        <item name="android:textSize">16dp</item>
+        <item name="android:textSize">16sp</item>
     </style>
 
     <style name="PaymentWidgetButton" parent="Widget.AppCompat.Button.Borderless">
