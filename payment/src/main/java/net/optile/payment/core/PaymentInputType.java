@@ -41,16 +41,16 @@ public class PaymentInputType {
 
         if (type != null) {
             switch (type) {
-            case ACCOUNT_NUMBER:
-            case HOLDER_NAME:
-            case EXPIRY_DATE:
-            case EXPIRY_MONTH:
-            case EXPIRY_YEAR:
-            case VERIFICATION_CODE:
-            case BANK_CODE:
-            case IBAN:
-            case BIC:                
-                return true;
+                case ACCOUNT_NUMBER:
+                case HOLDER_NAME:
+                case EXPIRY_DATE:
+                case EXPIRY_MONTH:
+                case EXPIRY_YEAR:
+                case VERIFICATION_CODE:
+                case BANK_CODE:
+                case IBAN:
+                case BIC:
+                    return true;
             }
         }
         return false;
@@ -58,16 +58,16 @@ public class PaymentInputType {
 
     @Retention(RetentionPolicy.SOURCE)
     @StringDef({
-            ACCOUNT_NUMBER,
-                HOLDER_NAME,
-                EXPIRY_DATE,
-                EXPIRY_MONTH,
-                EXPIRY_YEAR,
-                VERIFICATION_CODE,
-                BANK_CODE,
-                IBAN,
-                BIC
-        })
+        ACCOUNT_NUMBER,
+        HOLDER_NAME,
+        EXPIRY_DATE,
+        EXPIRY_MONTH,
+        EXPIRY_YEAR,
+        VERIFICATION_CODE,
+        BANK_CODE,
+        IBAN,
+        BIC
+    })
     public @interface Definition { }
 }
 

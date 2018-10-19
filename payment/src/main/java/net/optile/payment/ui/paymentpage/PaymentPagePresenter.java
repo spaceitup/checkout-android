@@ -122,11 +122,19 @@ final class PaymentPagePresenter {
         Charge charge = new Charge();
 
         try {
+            boolean error = false;
             for (FormWidget widget : widgets.values()) {
-                widget.putValue(charge);
+
+                if (widget.validate()) {
+                    widget.putValue(charge);
+                } else {
+                    error = true;
+                }
             }
-            view.showLoading(true);
-            postChargeRequest(url, charge);
+            if (!error) {
+                view.showLoading(true);
+                postChargeRequest(url, charge);
+            }
         } catch (PaymentException e) {
             Log.wtf(TAG, e);
             view.showError(R.string.error_paymentpage_unknown);

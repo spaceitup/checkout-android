@@ -29,8 +29,8 @@ import net.optile.payment.R;
 import net.optile.payment.ui.PaymentResult;
 import net.optile.payment.ui.PaymentUI;
 import net.optile.payment.ui.widget.FormWidget;
-import net.optile.payment.validation.Validator;
 import net.optile.payment.validation.ValidationResult;
+import net.optile.payment.validation.Validator;
 
 /**
  * The PaymentPageActivity showing available payment methods
@@ -236,9 +236,9 @@ public final class PaymentPageActivity extends AppCompatActivity implements Paym
     }
 
     ValidationResult validate(PaymentGroup group, String type, String value1, String value2) {
-        PaymentItem item = group.getActivePaymentItem();        
+        PaymentItem item = group.getActivePaymentItem();
         Validator validator = PaymentUI.getInstance().getValidator();
-        ValidationResult result = validator.validate(type, value1, value2);
+        ValidationResult result = validator.validate(item.getPaymentMethod(), type, value1, value2);
 
         if (!result.isError()) {
             return result;
@@ -251,7 +251,7 @@ public final class PaymentPageActivity extends AppCompatActivity implements Paym
         result.setMessage(msg);
         return result;
     }
-    
+
     private void showSnackBar(String message) {
         if (TextUtils.isEmpty(message)) {
             return;

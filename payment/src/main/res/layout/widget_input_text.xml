@@ -30,6 +30,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             style="@style/PaymentTextInputEditText"
+            android:singleLine="true"
             android:imeOptions="actionNext"/>
 
     </android.support.design.widget.TextInputLayout>

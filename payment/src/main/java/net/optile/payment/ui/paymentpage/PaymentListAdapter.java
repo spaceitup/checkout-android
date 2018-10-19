@@ -24,18 +24,16 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import net.optile.payment.R;
-import net.optile.payment.validation.ValidationResult;
 import net.optile.payment.model.InputElement;
 import net.optile.payment.model.InputElementType;
-import net.optile.payment.ui.PaymentUI;
 import net.optile.payment.ui.PaymentTheme;
+import net.optile.payment.ui.PaymentUI;
 import net.optile.payment.ui.widget.ButtonWidget;
 import net.optile.payment.ui.widget.CheckBoxInputWidget;
 import net.optile.payment.ui.widget.FormWidget;
-import net.optile.payment.ui.widget.IntegerInputWidget;
-import net.optile.payment.ui.widget.NumericInputWidget;
 import net.optile.payment.ui.widget.SelectInputWidget;
-import net.optile.payment.ui.widget.StringInputWidget;
+import net.optile.payment.ui.widget.TextInputWidget;
+import net.optile.payment.validation.ValidationResult;
 
 /**
  * The PaymentListAdapter containing the list of items
@@ -147,7 +145,7 @@ class PaymentListAdapter extends RecyclerView.Adapter<PaymentListViewHolder> {
         }
         list.hideKeyboard();
     }
-    
+
     void onActionClicked(int position) {
         if (position < 0 || position >= items.size()) {
             return;
@@ -163,7 +161,7 @@ class PaymentListAdapter extends RecyclerView.Adapter<PaymentListViewHolder> {
         PaymentGroup item = items.get(position);
         return list.validate(item, type, value1, value2);
     }
-    
+
     /**
      * Get the PaymentGroup at the given index
      *
@@ -204,34 +202,25 @@ class PaymentListAdapter extends RecyclerView.Adapter<PaymentListViewHolder> {
         FormWidget widget;
         String name = element.getName();
         String type = element.getType();
-        
+
         switch (element.getType()) {
-        case InputElementType.NUMERIC:
-            View view = inflater.inflate(R.layout.widget_input_text, parent, false);
-            widget = new NumericInputWidget(name, view, element);
-            break;
-        case InputElementType.INTEGER:
-            view = inflater.inflate(R.layout.widget_input_text, parent, false);
-            widget = new IntegerInputWidget(name, view, element);
-            break;
-        case InputElementType.SELECT:
-            view = inflater.inflate(R.layout.widget_input_select, parent, false);
-            widget = new SelectInputWidget(name, view, element);
-            break;
-        case InputElementType.CHECKBOX:
-            view = inflater.inflate(R.layout.widget_input_checkbox, parent, false);
-            widget = new CheckBoxInputWidget(name, view, element);
-            break;
-        case InputElementType.STRING:
-        default:
-            view = inflater.inflate(R.layout.widget_input_text, parent, false);
-            widget = new StringInputWidget(name, view, element);
+            case InputElementType.SELECT:
+                View view = inflater.inflate(R.layout.widget_input_select, parent, false);
+                widget = new SelectInputWidget(name, view, element);
+                break;
+            case InputElementType.CHECKBOX:
+                view = inflater.inflate(R.layout.widget_input_checkbox, parent, false);
+                widget = new CheckBoxInputWidget(name, view, element);
+                break;
+            default:
+                view = inflater.inflate(R.layout.widget_input_text, parent, false);
+                widget = new TextInputWidget(name, view, element);
         }
         PaymentTheme theme = PaymentUI.getInstance().getPaymentTheme();
         widget.setIconResource(theme.getWidgetIconRes(name));
         return widget;
     }
-    
+
     private void addWidgetsToHolder(PaymentListViewHolder holder, PaymentGroup group, LayoutInflater inflater, ViewGroup parent) {
         List<FormWidget> widgets = createWidgets(group.elements, inflater, parent);
         FormWidget widget;

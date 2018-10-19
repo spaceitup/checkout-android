@@ -25,7 +25,7 @@ public class ValidationResult {
 
     public final static String INVALID_EXPIRY_DATE = "INVALID_EXPIRY_DATE";
     public final static String MISSING_EXPIRY_DATE = "MISSING_EXPIRY_DATE";
-    
+
     public final static String INVALID_EXPIRY_MONTH = "INVALID_EXPIRY_MONTH";
     public final static String MISSING_EXPIRY_MONTH = "MISSING_EXPIRY_MONTH";
 
@@ -36,20 +36,20 @@ public class ValidationResult {
     public final static String MISSING_VERIFICATION_CODE = "MISSING_VERIFICATION_CODE";
 
     public final static String INVALID_BANK_CODE = "INVALID_BANK_CODE";
-    public final static String MISSING_BANK_CODE = "MISSING_BANK_CODE";    
+    public final static String MISSING_BANK_CODE = "MISSING_BANK_CODE";
 
     public final static String INVALID_IBAN = "INVALID_IBAN";
-    public final static String MISSING_IBAN = "MISSING_IBAN";    
+    public final static String MISSING_IBAN = "MISSING_IBAN";
 
     public final static String INVALID_BIC = "INVALID_BIC";
-    public final static String MISSING_BIC = "MISSING_BIC";    
+    public final static String MISSING_BIC = "MISSING_BIC";
 
     private final String error;
 
     private String message;
-    
+
     public ValidationResult(String error) {
-        this.error = error;    
+        this.error = error;
     }
 
     public boolean isError() {
@@ -60,12 +60,12 @@ public class ValidationResult {
         return error;
     }
 
-    public void setMessage(String message) {
-        this.message = message;
-    }
-    
     public String getMessage() {
         return message;
+    }
+
+    public void setMessage(String message) {
+        this.message = message;
     }
 }
 

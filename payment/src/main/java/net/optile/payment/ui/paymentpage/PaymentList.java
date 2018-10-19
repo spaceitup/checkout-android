@@ -105,7 +105,7 @@ final class PaymentList {
             activity.makeChargeRequest(item, holder.widgets);
         }
     }
-    
+
     void onItemClicked(PaymentGroup item, int position) {
         hideKeyboard();
 
@@ -123,7 +123,7 @@ final class PaymentList {
     ValidationResult validate(PaymentGroup item, String type, String value1, String value2) {
         return activity.validate(item, type, value1, value2);
     }
-    
+
     private void collapseViewHolder(int position) {
         PaymentListViewHolder holder = (PaymentListViewHolder) recyclerView.findViewHolderForAdapterPosition(position);
         if (holder != null) {

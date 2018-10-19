@@ -59,19 +59,21 @@ class PaymentListViewHolder extends RecyclerView.ViewHolder {
         });
 
         this.presenter = new FormWidget.WidgetPresenter() {
-                @Override
-                public void onActionClicked() {
-                    adapter.onActionClicked(getAdapterPosition());
-                }
-                @Override
-                public void onKeyboardDone() {
-                    adapter.onKeyboardDone(getAdapterPosition());
-                }
-                @Override
-                public ValidationResult validate(String type, String value1, String value2) {
-                    return adapter.validate(getAdapterPosition(), type, value1, value2);
-                }
-            };
+            @Override
+            public void onActionClicked() {
+                adapter.onActionClicked(getAdapterPosition());
+            }
+
+            @Override
+            public void onKeyboardDone() {
+                adapter.onKeyboardDone(getAdapterPosition());
+            }
+
+            @Override
+            public ValidationResult validate(String type, String value1, String value2) {
+                return adapter.validate(getAdapterPosition(), type, value1, value2);
+            }
+        };
     }
 
     void expand(boolean expand) {

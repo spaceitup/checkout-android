@@ -11,13 +11,12 @@
 
 package net.optile.payment.ui.widget;
 
-import android.util.Log;
+import android.support.v4.content.ContextCompat;
 import android.view.View;
-import net.optile.payment.core.PaymentException;
-import net.optile.payment.form.Charge;
 import android.widget.ImageView;
 import net.optile.payment.R;
-import android.support.v4.content.ContextCompat;
+import net.optile.payment.core.PaymentException;
+import net.optile.payment.form.Charge;
 import net.optile.payment.validation.ValidationResult;
 
 /**
@@ -28,7 +27,7 @@ public abstract class FormWidget {
     public final static int VALIDATION_UNKNOWN = 0x00;
     public final static int VALIDATION_ERROR = 0x01;
     public final static int VALIDATION_OK = 0x02;
-    
+
     final View rootView;
 
     final String name;
@@ -40,7 +39,7 @@ public abstract class FormWidget {
     int state;
 
     String error;
-    
+
     FormWidget(String name, View rootView) {
         this.name = name;
         this.rootView = rootView;
@@ -60,7 +59,7 @@ public abstract class FormWidget {
     }
 
     public void setIconResource(int resId) {
-        
+
         if (icon != null) {
             icon.setImageResource(resId);
             setIconColor(this.state);
@@ -68,7 +67,7 @@ public abstract class FormWidget {
     }
 
     public boolean isValid() {
-        return this.state == VALIDATION_OK; 
+        return this.state == VALIDATION_OK;
     }
 
     public void setVisible(boolean visible) {
@@ -86,12 +85,12 @@ public abstract class FormWidget {
         setState(VALIDATION_OK);
         return true;
     }
-    
+
     void setState(int state) {
         this.state = state;
         setIconColor(state);
     }
-    
+
     private void setIconColor(int state) {
 
         if (icon == null) {
@@ -99,18 +98,18 @@ public abstract class FormWidget {
         }
         int colorResId = R.color.validation_ok;
         switch (state) {
-        case VALIDATION_OK:
-            colorResId = R.color.validation_ok;
-            break;
-        case VALIDATION_ERROR:
-            colorResId = R.color.validation_error;
-            break;
-        default:
-            colorResId = R.color.validation_unknown;
+            case VALIDATION_OK:
+                colorResId = R.color.validation_ok;
+                break;
+            case VALIDATION_ERROR:
+                colorResId = R.color.validation_error;
+                break;
+            default:
+                colorResId = R.color.validation_unknown;
         }
         icon.setColorFilter(ContextCompat.getColor(rootView.getContext(), colorResId));
     }
-    
+
     /**
      * The widget presenter
      */
@@ -119,7 +118,7 @@ public abstract class FormWidget {
         void onActionClicked();
 
         void onKeyboardDone();
-        
+
         ValidationResult validate(String type, String value1, String value2);
     }
 }

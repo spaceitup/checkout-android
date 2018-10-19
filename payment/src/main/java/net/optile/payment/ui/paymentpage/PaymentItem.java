@@ -73,8 +73,12 @@ final class PaymentItem {
         StringBuilder sb = new StringBuilder("error.").append(error);
         return translate(sb.toString(), null);
     }
-    
+
     String getButton() {
         return network.getButton();
+    }
+
+    String getPaymentMethod() {
+        return network.getMethod();
     }
 }

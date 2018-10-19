@@ -34,7 +34,7 @@ public final class PaymentUI {
 
     /** Cached input value validator */
     private Validator validator;
-    
+
     private PaymentUI() {
     }
 
@@ -115,7 +115,7 @@ public final class PaymentUI {
     public void setValidator(Validator validator) {
         this.validator = validator;
     }
-    
+
     /**
      * Show the PaymentPage with the PaymentTheme for the look and feel.
      *
