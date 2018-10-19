@@ -23,7 +23,7 @@ public final class CardNumberValidator {
      * @param number the credit card number to check.
      * @return <code>true</code> if the number has passed Luhn check, <code>false</code> otherwise.
      */
-    public final static boolean isValidLuhn(final String number) {
+    public static boolean isValidLuhn(final String number) {
 
         if (number == null) { //check for null - i have no idea what is an initial regEx
             return false;

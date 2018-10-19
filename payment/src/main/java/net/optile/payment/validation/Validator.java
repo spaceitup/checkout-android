@@ -11,8 +11,7 @@
 
 package net.optile.payment.validation;
 
-import java.time.YearMonth;
-
+import java.util.Calendar;
 import android.text.TextUtils;
 import android.util.Log;
 import net.optile.payment.core.PaymentInputType;
@@ -172,8 +171,16 @@ public class Validator {
             return false;
         }
         try {
-            YearMonth exp = YearMonth.of(Integer.parseInt(year), Integer.parseInt(month));
-            return !exp.isBefore(YearMonth.now());
+            int expMonth = Integer.parseInt(month);
+            int expYear = Integer.parseInt(year);
+
+            Calendar cal = Calendar.getInstance();
+            int curMonth = cal.get(Calendar.MONTH) + 1;
+            int curYear = cal.get(Calendar.YEAR);
+
+            if (expYear > curYear || (expYear == curYear && expMonth >= curMonth)) {
+                return true;
+            }
         } catch (NumberFormatException e) {
             // this should never happen since the regex makes sure both are integers
             Log.wtf("pay_DateValidator", e);
