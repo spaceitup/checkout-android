@@ -24,7 +24,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import net.optile.payment.R;
-import net.optile.payment.validation.Validator;
+import net.optile.payment.validation.ValidationResult;
 import net.optile.payment.model.InputElement;
 import net.optile.payment.model.InputElementType;
 import net.optile.payment.ui.PaymentUI;
@@ -48,8 +48,6 @@ class PaymentListAdapter extends RecyclerView.Adapter<PaymentListViewHolder> {
     private final List<PaymentGroup> items;
 
     private final PaymentList list;
-
-    private OnItemListener listener;
 
     PaymentListAdapter(PaymentList list) {
         this.list = list;
@@ -101,15 +99,6 @@ class PaymentListAdapter extends RecyclerView.Adapter<PaymentListViewHolder> {
     }
 
     /**
-     * Set the item listener in this adapter
-     *
-     * @param listener the listener interested on events from the item
-     */
-    public void setListener(OnItemListener listener) {
-        this.listener = listener;
-    }
-
-    /**
      * {@inheritDoc}
      */
     @Override
@@ -145,33 +134,34 @@ class PaymentListAdapter extends RecyclerView.Adapter<PaymentListViewHolder> {
     }
 
     void onItemClicked(int position) {
-        if (listener != null) {
-            PaymentGroup item = items.get(position);
-            listener.onItemClicked(item, position);
+        if (position < 0 || position >= items.size()) {
+            return;
         }
+        PaymentGroup item = items.get(position);
+        list.onItemClicked(item, position);
     }
 
     void onKeyboardDone(int position) {
-        if (listener != null) {
-            PaymentGroup item = items.get(position);
-            listener.onKeyboardDone(item, position);
+        if (position < 0 || position >= items.size()) {
+            return;
         }
+        list.hideKeyboard();
     }
     
     void onActionClicked(int position) {
-        if (listener != null) {
-            PaymentGroup item = items.get(position);
-            listener.onActionClicked(item, position);
+        if (position < 0 || position >= items.size()) {
+            return;
         }
+        PaymentGroup item = items.get(position);
+        list.onActionClicked(item, position);
     }
 
-    String translateValidateError(int position, String error) {
-        PaymentItem item = items.get(position).getActivePaymentItem();        
-        return item.translateError(error);
-    }
-
-    Validator getValidator(int position) {
-        return PaymentUI.getInstance().getValidator();
+    ValidationResult validate(int position, String type, String value1, String value2) {
+        if (position < 0 || position >= items.size()) {
+            return null;
+        }
+        PaymentGroup item = items.get(position);
+        return list.validate(item, type, value1, value2);
     }
     
     /**
@@ -253,16 +243,5 @@ class PaymentListAdapter extends RecyclerView.Adapter<PaymentListViewHolder> {
             }
         }
         holder.addWidgets(widgets);
-    }
-
-    /**
-     * The item listener
-     */
-    public interface OnItemListener {
-        void onItemClicked(PaymentGroup item, int position);
-
-        void onActionClicked(PaymentGroup item, int position);
-
-        void onKeyboardDone(PaymentGroup item, int position);
     }
 }

@@ -19,11 +19,12 @@ import android.support.v7.widget.SimpleItemAnimator;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.TextView;
+import net.optile.payment.validation.ValidationResult;
 
 /**
  * The PaymentList showing available payment methods in a list
  */
-final class PaymentList implements PaymentListAdapter.OnItemListener {
+final class PaymentList {
 
     private final static String TAG = "pay_PaymentList";
 
@@ -42,7 +43,6 @@ final class PaymentList implements PaymentListAdapter.OnItemListener {
     PaymentList(PaymentPageActivity activity, RecyclerView recyclerView, TextView emptyMessage) {
         this.activity = activity;
         this.adapter = new PaymentListAdapter(this);
-        this.adapter.setListener(this);
 
         this.emptyMessage = emptyMessage;
         this.recyclerView = recyclerView;
@@ -99,30 +99,14 @@ final class PaymentList implements PaymentListAdapter.OnItemListener {
         }
     }
 
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public void onActionClicked(PaymentGroup item, int position) {
+    void onActionClicked(PaymentGroup item, int position) {
         PaymentListViewHolder holder = (PaymentListViewHolder) recyclerView.findViewHolderForAdapterPosition(position);
         if (holder != null) {
             activity.makeChargeRequest(item, holder.widgets);
         }
     }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public void onKeyboardDone(PaymentGroup item, int position) {
-        hideKeyboard();
-    }
     
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public void onItemClicked(PaymentGroup item, int position) {
+    void onItemClicked(PaymentGroup item, int position) {
         hideKeyboard();
 
         if (position == this.selIndex) {
@@ -136,6 +120,10 @@ final class PaymentList implements PaymentListAdapter.OnItemListener {
         }
     }
 
+    ValidationResult validate(PaymentGroup item, String type, String value1, String value2) {
+        return activity.validate(item, type, value1, value2);
+    }
+    
     private void collapseViewHolder(int position) {
         PaymentListViewHolder holder = (PaymentListViewHolder) recyclerView.findViewHolderForAdapterPosition(position);
         if (holder != null) {

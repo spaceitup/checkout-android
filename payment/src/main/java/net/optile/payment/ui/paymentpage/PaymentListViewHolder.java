@@ -22,7 +22,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import net.optile.payment.R;
 import net.optile.payment.ui.widget.FormWidget;
-import net.optile.payment.validation.Validator;
+import net.optile.payment.validation.ValidationResult;
 
 /**
  * The PaymentListViewHolder holding all Views for easy access
@@ -68,12 +68,8 @@ class PaymentListViewHolder extends RecyclerView.ViewHolder {
                     adapter.onKeyboardDone(getAdapterPosition());
                 }
                 @Override
-                public String translateValidateError(String error) {
-                    return adapter.translateValidateError(getAdapterPosition(), error);
-                }
-                @Override
-                public Validator getValidator() {
-                    return adapter.getValidator(getAdapterPosition());
+                public ValidationResult validate(String type, String value1, String value2) {
+                    return adapter.validate(getAdapterPosition(), type, value1, value2);
                 }
             };
     }

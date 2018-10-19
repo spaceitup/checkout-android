@@ -23,6 +23,7 @@ public class PaymentInputType {
 
     public final static String ACCOUNT_NUMBER = "number";
     public final static String HOLDER_NAME = "holderName";
+    public final static String EXPIRY_DATE = "expiryDate";
     public final static String EXPIRY_MONTH = "expiryMonth";
     public final static String EXPIRY_YEAR = "expiryYear";
     public final static String VERIFICATION_CODE = "verificationCode";
@@ -42,6 +43,7 @@ public class PaymentInputType {
             switch (type) {
             case ACCOUNT_NUMBER:
             case HOLDER_NAME:
+            case EXPIRY_DATE:
             case EXPIRY_MONTH:
             case EXPIRY_YEAR:
             case VERIFICATION_CODE:
@@ -58,6 +60,7 @@ public class PaymentInputType {
     @StringDef({
             ACCOUNT_NUMBER,
                 HOLDER_NAME,
+                EXPIRY_DATE,
                 EXPIRY_MONTH,
                 EXPIRY_YEAR,
                 VERIFICATION_CODE,

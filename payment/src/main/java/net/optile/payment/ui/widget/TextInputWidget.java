@@ -79,17 +79,10 @@ public abstract class TextInputWidget extends FormWidget {
 
     public boolean validate() {
         input.clearFocus();
-        Validator validator = presenter.getValidator();
-
-        if (!validator.supportsType(name)) {
-            setValidation(VALIDATION_OK, false, null);
-            return true;
-        }
-        String val = input.getText().toString().trim();
-        ValidationResult result = validator.validate(name, val);
+        ValidationResult result = presenter.validate(name, getStringValue(), null);
 
         if (result.isError()) {
-            setValidation(VALIDATION_ERROR, true, presenter.translateValidateError(result.getError()));
+            setValidation(VALIDATION_ERROR, true, result.getMessage());
             return false;
         }
         setValidation(VALIDATION_OK, false, null);
@@ -97,7 +90,7 @@ public abstract class TextInputWidget extends FormWidget {
     }
 
     public void putValue(Charge charge) throws PaymentException {
-        String val = input.getText().toString().trim();
+        String val = getStringValue();
 
         if (!TextUtils.isEmpty(val)) {
             charge.putValue(element.getName(), val);

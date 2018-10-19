@@ -8,8 +8,8 @@
 
     <dimen name="widget_padding">2dp</dimen>
     <dimen name="widget_button_height">44dp</dimen>
-    <dimen name="widget_icon_size">24dp</dimen>    
-    
+    <dimen name="widget_icon_size">24dp</dimen>
+
     <dimen name="toolbar_elevation">6dp</dimen>
 
     <dimen name="cardview_radius">4dp</dimen>

@@ -31,7 +31,6 @@ import net.optile.payment.form.Charge;
 import net.optile.payment.model.ApplicableNetwork;
 import net.optile.payment.model.Interaction;
 import net.optile.payment.model.InteractionCode;
-import net.optile.payment.model.InteractionReason;
 import net.optile.payment.model.ListResult;
 import net.optile.payment.model.Networks;
 import net.optile.payment.model.OperationResult;

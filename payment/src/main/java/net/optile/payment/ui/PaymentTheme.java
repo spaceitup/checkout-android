@@ -31,6 +31,7 @@ public class PaymentTheme {
         switch (name) {
         case PaymentInputType.HOLDER_NAME:
             return R.drawable.ic_name;
+        case PaymentInputType.EXPIRY_DATE:
         case PaymentInputType.EXPIRY_MONTH:
         case PaymentInputType.EXPIRY_YEAR:
             return R.drawable.ic_date;

@@ -18,7 +18,7 @@ import net.optile.payment.form.Charge;
 import android.widget.ImageView;
 import net.optile.payment.R;
 import android.support.v4.content.ContextCompat;
-import net.optile.payment.validation.Validator;
+import net.optile.payment.validation.ValidationResult;
 
 /**
  * The base InputWidget
@@ -116,12 +116,10 @@ public abstract class FormWidget {
      */
     public interface WidgetPresenter {
 
-        String translateValidateError(String error);
-
         void onActionClicked();
 
         void onKeyboardDone();
         
-        Validator getValidator();
+        ValidationResult validate(String type, String value1, String value2);
     }
 }

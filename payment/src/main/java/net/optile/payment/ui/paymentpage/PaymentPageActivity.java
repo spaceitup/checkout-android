@@ -27,9 +27,10 @@ import android.view.View;
 import android.widget.ProgressBar;
 import net.optile.payment.R;
 import net.optile.payment.ui.PaymentResult;
-import net.optile.payment.ui.PaymentTheme;
 import net.optile.payment.ui.PaymentUI;
 import net.optile.payment.ui.widget.FormWidget;
+import net.optile.payment.validation.Validator;
+import net.optile.payment.validation.ValidationResult;
 
 /**
  * The PaymentPageActivity showing available payment methods
@@ -231,18 +232,26 @@ public final class PaymentPageActivity extends AppCompatActivity implements Paym
 
     void makeChargeRequest(PaymentGroup group, Map<String, FormWidget> widgets) {
         paymentList.hideKeyboard();
-
-        boolean error = false;
-        for (FormWidget widget : widgets.values()) {
-            if (!widget.validate()) {
-                error = true;
-            }
-        }
-        if (!error) {
-            presenter.charge(widgets, group);
-        }
+        presenter.charge(widgets, group);
     }
 
+    ValidationResult validate(PaymentGroup group, String type, String value1, String value2) {
+        PaymentItem item = group.getActivePaymentItem();        
+        Validator validator = PaymentUI.getInstance().getValidator();
+        ValidationResult result = validator.validate(type, value1, value2);
+
+        if (!result.isError()) {
+            return result;
+        }
+        String msg = item.translateError(result.getError());
+
+        if (TextUtils.isEmpty(msg)) {
+            msg = getString(R.string.error_paymentpage_validation);
+        }
+        result.setMessage(msg);
+        return result;
+    }
+    
     private void showSnackBar(String message) {
         if (TextUtils.isEmpty(message)) {
             return;

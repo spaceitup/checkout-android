@@ -71,7 +71,7 @@ final class PaymentItem {
 
     String translateError(String error) {
         StringBuilder sb = new StringBuilder("error.").append(error);
-        return translate(sb.toString(), sb.toString());
+        return translate(sb.toString(), null);
     }
     
     String getButton() {

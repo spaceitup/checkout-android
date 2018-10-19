@@ -22,6 +22,9 @@ public class ValidationResult {
 
     public final static String INVALID_HOLDER_NAME = "INVALID_HOLDER_NAME";
     public final static String MISSING_HOLDER_NAME = "MISSING_HOLDER_NAME";
+
+    public final static String INVALID_EXPIRY_DATE = "INVALID_EXPIRY_DATE";
+    public final static String MISSING_EXPIRY_DATE = "MISSING_EXPIRY_DATE";
     
     public final static String INVALID_EXPIRY_MONTH = "INVALID_EXPIRY_MONTH";
     public final static String MISSING_EXPIRY_MONTH = "MISSING_EXPIRY_MONTH";
@@ -43,6 +46,8 @@ public class ValidationResult {
 
     private final String error;
 
+    private String message;
+    
     public ValidationResult(String error) {
         this.error = error;    
     }
@@ -53,6 +58,14 @@ public class ValidationResult {
 
     public String getError() {
         return error;
+    }
+
+    public void setMessage(String message) {
+        this.message = message;
+    }
+    
+    public String getMessage() {
+        return message;
     }
 }
 

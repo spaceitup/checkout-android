@@ -28,7 +28,7 @@
     <style name="PaymentText.Tiny.Bold">
         <item name="android:textStyle">bold</item>
     </style>
-    
+
     <style name="PaymentText.Small">
         <item name="android:textSize">14sp</item>
     </style>
@@ -62,11 +62,11 @@
 
     <style name="PaymentTextInputLayout" parent="Widget.Design.TextInputLayout">
         <!-- hint text color inside EditText -->
-        <item name="android:textColorHint">@color/text_dark_second</item> 
+        <item name="android:textColorHint">@color/text_dark_second</item>
         <!-- This color of the area of text selected -->
-        <item name="android:textColorHighlight">@color/color_primary</item> 
+        <item name="android:textColorHighlight">@color/color_primary</item>
         <!-- underline color disabled -->
-        <item name="colorControlNormal">@color/color_disabled</item> 
+        <item name="colorControlNormal">@color/color_disabled</item>
         <!-- underline color enabled -->
         <item name="colorControlActivated">@color/color_primary</item>
     </style>
@@ -75,10 +75,10 @@
         <item name="android:textColor">@color/text_dark_primary</item>
         <item name="android:textSize">16dp</item>
     </style>
-    
+
     <style name="PaymentWidgetButton" parent="Widget.AppCompat.Button.Borderless">
         <item name="colorButtonNormal">@color/color_primary</item>
         <item name="android:textColor">@color/text_light_primary</item>
-        <item name="android:textStyle">bold</item>        
+        <item name="android:textStyle">bold</item>
     </style>
 </resources>

@@ -11,16 +11,9 @@
 
 package net.optile.payment.ui.widget;
 
-import android.support.design.widget.TextInputEditText;
-import android.support.design.widget.TextInputLayout;
-import android.text.TextUtils;
-import android.view.View;
-import android.view.inputmethod.EditorInfo;
-import net.optile.payment.R;
-import net.optile.payment.core.PaymentException;
-import net.optile.payment.form.Charge;
-import net.optile.payment.model.InputElement;
 import android.text.InputType;
+import android.view.View;
+import net.optile.payment.model.InputElement;
 
 /**
  * Class for handling the String input type

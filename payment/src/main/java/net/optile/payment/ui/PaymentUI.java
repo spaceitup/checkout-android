@@ -26,13 +26,13 @@ public final class PaymentUI {
 
     public final static String EXTRA_PAYMENT_RESULT = "paymentresult";
 
-    /** Url pointing to the current list */
+    /** The url pointing to the current list */
     private String listUrl;
 
-    /** Cached payment theme */
+    /** The cached payment theme */
     private PaymentTheme theme;
 
-    /** Cached Input value Validator */
+    /** Cached input value validator */
     private Validator validator;
     
     private PaymentUI() {
@@ -72,41 +72,32 @@ public final class PaymentUI {
         this.listUrl = listUrl;
     }
 
-    /** 
-     * Set the payment theme
-     * 
-     * @param theme containing the Payment theme
-     */
-    public void setPaymentTheme(PaymentTheme theme) {
-        this.theme = theme;
-    }
-
-    /** 
+    /**
      * Get the PaymentTheme set in this PaymentUI. This method is not Thread safe and must be called from the Main UI Thread.
-     * 
-     * @return the set PaymentTheme or the default PaymentTheme 
+     *
+     * @return the set PaymentTheme or the default PaymentTheme
      */
     public PaymentTheme getPaymentTheme() {
 
         if (theme == null) {
             theme = PaymentTheme.createPaymentThemeBuilder().build();
         }
-        return theme; 
+        return theme;
     }
 
-    /** 
-     * Set the input value Validator
-     * 
-     * @param validator input value Validator to be set
+    /**
+     * Set the payment theme
+     *
+     * @param theme containing the Payment theme
      */
-    public void setValidator(Validator validator) {
-        this.validator = validator;
+    public void setPaymentTheme(PaymentTheme theme) {
+        this.theme = theme;
     }
 
-    /** 
+    /**
      * Get the Validator set in this PaymentUI. This method is not Thread safe and must be called from the Main UI Thread.
-     * 
-     * @return the set Validator or the default Validator 
+     *
+     * @return the set Validator or the default Validator
      */
     public Validator getValidator() {
 
@@ -114,6 +105,15 @@ public final class PaymentUI {
             validator = new Validator();
         }
         return validator;
+    }
+
+    /**
+     * Set the Validator in this PaymentUI
+     *
+     * @param validator containing the Validator
+     */
+    public void setValidator(Validator validator) {
+        this.validator = validator;
     }
     
     /**

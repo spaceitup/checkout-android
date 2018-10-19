@@ -20,40 +20,37 @@ import android.text.TextUtils;
 public class Validator {
 
     /** 
-     * Validate the given input value defined by its type
+     * Validate the given input values defined by its type
      * 
      * @param type the input type 
-     * @param value holding the value for the given input type
+     * @param value1 holding the mandatory first value for the given input type
+     * @param value2 holding the optional second value for the given input type
      */
-    public ValidationResult validate(String type, String value) {
+    public ValidationResult validate(String type, String value1, String value2) {
 
         if (TextUtils.isEmpty(type)) {
             throw new IllegalArgumentException("validation type may not be null or empty");
         }
         switch (type) {
         case PaymentInputType.ACCOUNT_NUMBER:
-            return validateAccountNumber(value);
+            return validateAccountNumber(value1);
         case PaymentInputType.HOLDER_NAME:
-            return validateHolderName(value);
+            return validateHolderName(value1);
         case PaymentInputType.EXPIRY_MONTH:
-            return validateExpiryMonth(value);
+            return validateExpiryMonth(value1);
         case PaymentInputType.EXPIRY_YEAR:
-            return validateExpiryYear(value);
+            return validateExpiryYear(value1);
         case PaymentInputType.VERIFICATION_CODE:
-            return validateVerificationCode(value);
+            return validateVerificationCode(value1);
         case PaymentInputType.BANK_CODE:
-            return validateBankCode(value);
+            return validateBankCode(value1);
         case PaymentInputType.IBAN:
-            return validateIban(value);
+            return validateIban(value1);
         case PaymentInputType.BIC:
-            return validateBic(value);
+            return validateBic(value1);
         default:
-            throw new IllegalArgumentException("Invalid validation type: " + type);
+            return new ValidationResult(null);
         }
-    }
-
-    public boolean supportsType(String type) {
-        return PaymentInputType.isValid(type);
     }
     
     private ValidationResult validateAccountNumber(String value) {
@@ -61,7 +58,9 @@ public class Validator {
 
         if (TextUtils.isEmpty(value)) {
             error = ValidationResult.MISSING_ACCOUNT_NUMBER;
-        } 
+        } else if (!CardNumberValidator.isValidLuhn(value)) {
+            error = ValidationResult.INVALID_ACCOUNT_NUMBER;
+        }
         return new ValidationResult(error);
     }
 
@@ -79,7 +78,7 @@ public class Validator {
 
         if (TextUtils.isEmpty(value)) {
             error = ValidationResult.MISSING_EXPIRY_MONTH;
-        }
+        } 
         return new ValidationResult(error);
     }
 
