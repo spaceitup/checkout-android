@@ -111,14 +111,29 @@ public abstract class FormWidget {
     }
 
     /**
-     * The widget presenter
+     * Each Widget may have a presenter set that can be used to validate the Widget input values.
      */
     public interface WidgetPresenter {
 
+        /**
+         * This method will be called when i.e. the Pay Button has been clicked
+         */
         void onActionClicked();
 
+        /**
+         * This method is called when the Keyboard Ime DONE action has been clicked
+         */
         void onKeyboardDone();
 
+        /**
+         * Widgets call this method to validate their input values. The first value is mandatory, the second is optional.
+         * I.e. A Date widget may use both values to validate the month and year values at the same time.
+         *
+         * @param type type of the value to be validated
+         * @param value1 mandatory first value to validate
+         * @param value2 optional second value to validate
+         * @return ValidationResult holding the result of the validation
+         */
         ValidationResult validate(String type, String value1, String value2);
     }
 }

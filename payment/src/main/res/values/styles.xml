@@ -33,16 +33,40 @@
         <item name="android:textSize">14sp</item>
     </style>
 
+    <style name="PaymentText.Small.Bold">
+        <item name="android:textColor">@color/color_primary</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="PaymentText.Small.Bold.Primary">
+        <item name="android:textColor">@color/color_primary</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
     <style name="PaymentText.Medium">
         <item name="android:textSize">16sp</item>
+    </style>
+
+    <style name="PaymentText.Medium.Bold">
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="PaymentText.Medium.Gray">
+        <item name="android:textColor">@color/text_dark_second</item>
+    </style>
+
+    <style name="PaymentText.Medium.Bold.Gray">
+        <item name="android:textColor">@color/text_dark_second</item>
+        <item name="android:textStyle">bold</item>
     </style>
 
     <style name="PaymentText.Large">
         <item name="android:textSize">20sp</item>
     </style>
 
-    <style name="PaymentText.Medium.Gray">
-        <item name="android:textColor">@color/text_dark_second</item>
+    <style name="PaymentText.Large.Bold">
+        <item name="android:textSize">20sp</item>
+        <item name="android:textStyle">bold</item>
     </style>
 
     <style name="PaymentProgressBar" parent="Widget.AppCompat.ProgressBar">
@@ -62,7 +86,7 @@
 
     <style name="PaymentTextInputLayout" parent="Widget.Design.TextInputLayout">
         <!-- hint text color inside EditText -->
-        <item name="android:textColorHint">@color/text_dark_second</item>
+        <item name="android:textColorHint">@color/color_disabled</item>
         <!-- This color of the area of text selected -->
         <item name="android:textColorHighlight">@color/color_primary</item>
         <!-- underline color disabled -->

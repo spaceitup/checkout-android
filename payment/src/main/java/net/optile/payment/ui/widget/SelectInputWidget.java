@@ -14,10 +14,10 @@ package net.optile.payment.ui.widget;
 import java.util.List;
 
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Spinner;
 import android.widget.TextView;
-import android.widget.AdapterView;
 import net.optile.payment.R;
 import net.optile.payment.core.PaymentException;
 import net.optile.payment.form.Charge;
@@ -78,16 +78,17 @@ public final class SelectInputWidget extends FormWidget {
             }
         }
         spinner.setAdapter(adapter);
-        spinner.setSelection(selIndex, false);
+        spinner.setSelection(selIndex);
         spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-                @Override
-                public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id) {
-                    validate();
-                }
-                @Override
-                public void onNothingSelected(AdapterView<?> parentView) {
-                }
-            });
+            @Override
+            public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id) {
+                validate();
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parentView) {
+            }
+        });
     }
 
     class SpinnerItem {
