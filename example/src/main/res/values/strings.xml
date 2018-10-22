@@ -1,7 +1,7 @@
 <resources>
     <string name="app_name">PaymentExample</string>
-    <string name="title_checkout">My Shopping Cart</string>
-    <string name="button_checkout">Continue to Pay</string>    
+    <string name="title_checkout">PaymentExample</string>
+    <string name="button_checkout">Open Payment Page</string>    
     <string name="url">https://api.integration.oscato.com</string>
     <string name="payment_success">Great, you have now successfully paid for your new TV</string>
     <string name="dialog_error_title">Checkout Error</string>
