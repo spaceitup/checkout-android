@@ -81,7 +81,6 @@ public final class MessageDialogFragment extends DialogFragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.dialogfragment_message, container, false);
-
         initTitle(v);
         initMessage(v);
         initButton(v);
@@ -90,6 +89,7 @@ public final class MessageDialogFragment extends DialogFragment {
 
     private void initTitle(View rootView) {
         TextView tv = rootView.findViewById(R.id.text_title);
+
         if (TextUtils.isEmpty(title)) {
             tv.setVisibility(View.GONE);
             return;

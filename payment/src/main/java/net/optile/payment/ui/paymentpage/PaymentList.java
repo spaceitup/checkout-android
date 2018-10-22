@@ -26,8 +26,6 @@ import net.optile.payment.validation.ValidationResult;
  */
 final class PaymentList {
 
-    private final static String TAG = "pay_PaymentList";
-
     private final PaymentPageActivity activity;
 
     private final PaymentListAdapter adapter;
@@ -43,12 +41,12 @@ final class PaymentList {
     PaymentList(PaymentPageActivity activity, RecyclerView recyclerView, TextView emptyMessage) {
         this.activity = activity;
         this.adapter = new PaymentListAdapter(this);
-
         this.emptyMessage = emptyMessage;
         this.recyclerView = recyclerView;
         this.recyclerView.setAdapter(adapter);
         this.recyclerView.setLayoutManager(new LinearLayoutManager(activity));
         RecyclerView.ItemAnimator animator = recyclerView.getItemAnimator();
+
         if (animator instanceof SimpleItemAnimator) {
             ((SimpleItemAnimator) animator).setSupportsChangeAnimations(false);
         }
@@ -126,6 +124,7 @@ final class PaymentList {
 
     private void collapseViewHolder(int position) {
         PaymentListViewHolder holder = (PaymentListViewHolder) recyclerView.findViewHolderForAdapterPosition(position);
+
         if (holder != null) {
             holder.expand(false);
             adapter.notifyItemChanged(position);
@@ -134,6 +133,7 @@ final class PaymentList {
 
     private void expandViewHolder(int position) {
         PaymentListViewHolder holder = (PaymentListViewHolder) recyclerView.findViewHolderForAdapterPosition(position);
+
         if (holder != null) {
             holder.expand(true);
             adapter.notifyItemChanged(position);
