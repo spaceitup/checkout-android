@@ -3,8 +3,8 @@
     <solid android:color="@color/color_primary" />
     <corners android:radius="@dimen/button_radius" />
     <padding 
-        android:left="@dimen/button_padding"
-        android:right="@dimen/button_padding"
-        android:top="@dimen/button_padding"
-        android:bottom="@dimen/button_padding"/>
+        android:left="@dimen/border_large"
+        android:right="@dimen/border_large"
+        android:top="@dimen/border_small"
+        android:bottom="@dimen/border_small"/>
 </shape>

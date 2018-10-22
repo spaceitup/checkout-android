@@ -99,13 +99,26 @@ public final class MessageDialogFragment extends DialogFragment {
     }
 
     private void initMessage(View rootView) {
-        TextView tv = rootView.findViewById(R.id.text_message);
+        TextView tvTitle = rootView.findViewById(R.id.text_message_title);
+        TextView tvNoTitle = rootView.findViewById(R.id.text_message_notitle);        
+
+        if (TextUtils.isEmpty(title)) {
+            tvTitle.setVisibility(View.GONE);
+            initMessage(tvNoTitle);
+        } else {
+            tvNoTitle.setVisibility(View.GONE);
+            initMessage(tvTitle);
+        }
+    }
+
+    private void initMessage(TextView textView) {
+        
         if (TextUtils.isEmpty(message)) {
-            tv.setVisibility(View.GONE);
+            textView.setVisibility(View.GONE);
             return;
         }
-        tv.setVisibility(View.VISIBLE);
-        tv.setText(message);
+        textView.setVisibility(View.VISIBLE);
+        textView.setText(message);
     }
 
     private void initButton(View rootView) {
