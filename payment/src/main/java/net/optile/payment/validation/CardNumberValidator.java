@@ -25,7 +25,7 @@ public final class CardNumberValidator {
      */
     public static boolean isValidLuhn(final String number) {
 
-        if (number == null) { //check for null - i have no idea what is an initial regEx
+        if (number == null || number.length() == 0) { //check for null - i have no idea what is an initial regEx
             return false;
         }
 

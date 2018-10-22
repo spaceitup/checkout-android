@@ -106,12 +106,6 @@ public final class MessageDialogFragment extends DialogFragment {
         }
         tv.setVisibility(View.VISIBLE);
         tv.setText(message);
-
-        if (TextUtils.isEmpty(title)) {
-            tv.setTextAppearance(R.style.PaymentText_Medium_Bold_Gray);
-        } else {
-            tv.setTextAppearance(R.style.PaymentText_Medium_Gray);
-        }
     }
 
     private void initButton(View rootView) {
