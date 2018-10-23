@@ -16,6 +16,7 @@ import android.content.Intent;
 import android.text.TextUtils;
 import android.util.Patterns;
 import net.optile.payment.ui.paymentpage.PaymentPageActivity;
+import net.optile.payment.validation.Validator;
 
 /**
  * The PaymentUI is the controller to initialize and launch the Payment Page.
@@ -27,6 +28,12 @@ public final class PaymentUI {
 
     /** The url pointing to the current list */
     private String listUrl;
+
+    /** The cached payment theme */
+    private PaymentTheme theme;
+
+    /** Cached input value validator */
+    private Validator validator;
 
     private PaymentUI() {
     }
@@ -66,13 +73,56 @@ public final class PaymentUI {
     }
 
     /**
+     * Get the PaymentTheme set in this PaymentUI. This method is not Thread safe and must be called from the Main UI Thread.
+     *
+     * @return the set PaymentTheme or the default PaymentTheme
+     */
+    public PaymentTheme getPaymentTheme() {
+
+        if (theme == null) {
+            theme = PaymentTheme.createPaymentThemeBuilder().build();
+        }
+        return theme;
+    }
+
+    /**
+     * Set the payment theme
+     *
+     * @param theme containing the Payment theme
+     */
+    public void setPaymentTheme(PaymentTheme theme) {
+        this.theme = theme;
+    }
+
+    /**
+     * Get the Validator set in this PaymentUI. This method is not Thread safe and must be called from the Main UI Thread.
+     *
+     * @return the set Validator or the default Validator
+     */
+    public Validator getValidator() {
+
+        if (validator == null) {
+            validator = new Validator();
+        }
+        return validator;
+    }
+
+    /**
+     * Set the Validator in this PaymentUI
+     *
+     * @param validator containing the Validator
+     */
+    public void setValidator(Validator validator) {
+        this.validator = validator;
+    }
+
+    /**
      * Show the PaymentPage with the PaymentTheme for the look and feel.
      *
      * @param activity the activity that will be notified when this PaymentPage is finished
      * @param requestCode the requestCode to be used for identifying results in the parent activity
-     * @param theme the optional theme, if null then the default PaymentTheme will be used
      */
-    public void showPaymentPage(Activity activity, int requestCode, PaymentTheme theme) {
+    public void showPaymentPage(Activity activity, int requestCode) {
 
         if (listUrl == null) {
             throw new IllegalStateException("listUrl must be set before showing the PaymentPage");
@@ -80,11 +130,8 @@ public final class PaymentUI {
         if (activity == null) {
             throw new IllegalArgumentException("activity may not be null");
         }
-        if (theme == null) {
-            theme = PaymentTheme.createPaymentThemeBuilder().build();
-        }
         activity.finishActivity(requestCode);
-        Intent intent = PaymentPageActivity.createStartIntent(activity, listUrl, theme);
+        Intent intent = PaymentPageActivity.createStartIntent(activity, listUrl);
         activity.startActivityForResult(intent, requestCode);
         activity.overridePendingTransition(0, 0);
     }

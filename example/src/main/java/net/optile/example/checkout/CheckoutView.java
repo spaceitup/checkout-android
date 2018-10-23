@@ -29,6 +29,13 @@ public interface CheckoutView {
      * @param listUrl the current listUrl
      */
     void openPaymentPage(String listUrl);
+
+    /** 
+     * Show an error to the user
+     * 
+     * @param error to be shown to the user
+     */
+    void showError(String error);
 }
 
 

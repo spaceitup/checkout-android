@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/layout"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:paddingTop="@dimen/border_large"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/text_title"
+        android:visibility="gone"
+        android:layout_marginLeft="@dimen/border_large"
+        android:layout_marginRight="@dimen/border_large"
+        android:layout_marginBottom="@dimen/border_medium"
+        android:ellipsize="end"
+        style="@style/PaymentText.Large.Bold"/>
+
+    <TextView
+        android:id="@+id/text_message_notitle"
+        android:visibility="gone"
+        android:layout_marginLeft="@dimen/border_large"
+        android:layout_marginRight="@dimen/border_large"
+        android:layout_marginBottom="@dimen/border_large"            
+        android:singleLine="false"
+        style="@style/PaymentText.Medium.Bold.Gray"/>
+
+    <TextView
+        android:id="@+id/text_message_title"
+        android:visibility="gone"
+        android:layout_marginLeft="@dimen/border_large"
+        android:layout_marginRight="@dimen/border_large"
+        android:layout_marginBottom="@dimen/border_large"            
+        android:singleLine="false"
+        style="@style/PaymentText.Medium.Gray"/>
+    
+    <LinearLayout
+        android:id="@+id/layout_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/border_medium"
+        android:clickable="true"
+        android:visibility="gone"
+        android:layout_gravity="end">
+
+        <TextView
+            android:id="@+id/text_button"
+            style="@style/PaymentText.Small.Bold.Primary"/>
+    </LinearLayout>
+</LinearLayout>

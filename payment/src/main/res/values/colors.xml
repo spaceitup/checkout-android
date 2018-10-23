@@ -2,14 +2,19 @@
 <resources>
     <color name="color_primary">#299928</color>
     <color name="color_primary_dark">#298226</color>
-    <color name="color_ascent">#299928</color>
+    <color name="color_primary_disabled">#66299928</color>
+    <color name="color_ascent">#207a20</color>
     <color name="color_list_background">#F2F2F2</color>
+    <color name="color_disabled">#AEABAB</color>
 
-    <color name="text_dark_primary">#DD000000</color>
+    <color name="text_dark_primary">#FF424242</color>
     <color name="text_dark_second">#8A000000</color>
-    <color name="text_dark_third">#61000000</color>
     <color name="text_light_primary">#FFFFFF</color>
-    <color name="text_light_second">#B2FFFFFF</color>
-    <color name="text_light_third">#7FFFFFFF</color>
+    <color name="text_error">#e66666</color>
+
+    <color name="validation_unknown">#E0E0E0</color>
+    <color name="validation_error">#df3737</color>
+    <color name="validation_ok">#207a20</color>
+
 </resources>
  

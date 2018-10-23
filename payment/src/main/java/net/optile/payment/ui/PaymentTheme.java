@@ -11,29 +11,16 @@
 
 package net.optile.payment.ui;
 
-import android.os.Parcel;
-import android.os.Parcelable;
+import android.text.TextUtils;
+import net.optile.payment.R;
+import net.optile.payment.core.PaymentInputType;
 
 /**
  * Class to hold the theme settings of the Payment screens in the Android SDK
  */
-public final class PaymentTheme implements Parcelable {
-
-    public static final Parcelable.Creator<PaymentTheme> CREATOR = new Parcelable.Creator<PaymentTheme>() {
-
-        public PaymentTheme createFromParcel(Parcel in) {
-            return new PaymentTheme(in);
-        }
-
-        public PaymentTheme[] newArray(int size) {
-            return new PaymentTheme[size];
-        }
-    };
+public class PaymentTheme {
 
     private PaymentTheme() {
-    }
-
-    private PaymentTheme(Parcel in) {
     }
 
     /**
@@ -45,19 +32,28 @@ public final class PaymentTheme implements Parcelable {
         return new PaymentThemeBuilder();
     }
 
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public int describeContents() {
-        return 0;
-    }
+    public int getWidgetIconRes(String name) {
 
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public void writeToParcel(Parcel out, int flags) {
+        if (TextUtils.isEmpty(name)) {
+            return R.drawable.ic_default;
+        }
+        switch (name) {
+            case PaymentInputType.HOLDER_NAME:
+                return R.drawable.ic_name;
+            case PaymentInputType.EXPIRY_DATE:
+            case PaymentInputType.EXPIRY_MONTH:
+            case PaymentInputType.EXPIRY_YEAR:
+                return R.drawable.ic_date;
+            case PaymentInputType.BANK_CODE:
+            case PaymentInputType.ACCOUNT_NUMBER:
+            case PaymentInputType.IBAN:
+            case PaymentInputType.BIC:
+                return R.drawable.ic_card;
+            case PaymentInputType.VERIFICATION_CODE:
+                return R.drawable.ic_lock;
+            default:
+                return R.drawable.ic_default;
+        }
     }
 
     /**

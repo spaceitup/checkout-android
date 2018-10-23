@@ -30,6 +30,7 @@
                 android:gravity="center_vertical"
                 android:orientation="horizontal"
                 android:focusable="true">
+
                 <ImageView
                     android:id="@+id/image_logo"
                     android:layout_width="@dimen/cardview_logo_width"
@@ -47,6 +48,10 @@
                 android:id="@+id/layout_form"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:paddingTop="@dimen/border_medium"
+                android:paddingStart="@dimen/border_small"
+                android:paddingEnd="@dimen/border_small"
+                android:paddingBottom="@dimen/border_xxsmall"
                 android:layout_below="@id/layout_header"
                 android:visibility="gone"
                 android:orientation="vertical">

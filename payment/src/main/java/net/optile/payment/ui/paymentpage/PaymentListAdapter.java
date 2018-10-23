@@ -26,13 +26,14 @@ import android.view.ViewGroup;
 import net.optile.payment.R;
 import net.optile.payment.model.InputElement;
 import net.optile.payment.model.InputElementType;
+import net.optile.payment.ui.PaymentTheme;
+import net.optile.payment.ui.PaymentUI;
 import net.optile.payment.ui.widget.ButtonWidget;
 import net.optile.payment.ui.widget.CheckBoxInputWidget;
 import net.optile.payment.ui.widget.FormWidget;
-import net.optile.payment.ui.widget.IntegerInputWidget;
-import net.optile.payment.ui.widget.NumericInputWidget;
 import net.optile.payment.ui.widget.SelectInputWidget;
-import net.optile.payment.ui.widget.StringInputWidget;
+import net.optile.payment.ui.widget.TextInputWidget;
+import net.optile.payment.validation.ValidationResult;
 
 /**
  * The PaymentListAdapter containing the list of items
@@ -45,8 +46,6 @@ class PaymentListAdapter extends RecyclerView.Adapter<PaymentListViewHolder> {
     private final List<PaymentGroup> items;
 
     private final PaymentList list;
-
-    private OnItemListener listener;
 
     PaymentListAdapter(PaymentList list) {
         this.list = list;
@@ -98,15 +97,6 @@ class PaymentListAdapter extends RecyclerView.Adapter<PaymentListViewHolder> {
     }
 
     /**
-     * Set the item listener in this adapter
-     *
-     * @param listener the listener interested on events from the item
-     */
-    public void setListener(OnItemListener listener) {
-        this.listener = listener;
-    }
-
-    /**
      * {@inheritDoc}
      */
     @Override
@@ -141,18 +131,35 @@ class PaymentListAdapter extends RecyclerView.Adapter<PaymentListViewHolder> {
         notifyDataSetChanged();
     }
 
-    void handleOnClick(int position) {
-        if (listener != null) {
-            PaymentGroup item = items.get(position);
-            listener.onItemClicked(item, position);
+    void onItemClicked(int position) {
+        if (position < 0 || position >= items.size()) {
+            return;
         }
+        PaymentGroup item = items.get(position);
+        list.onItemClicked(item, position);
     }
 
-    void handleOnAction(int position) {
-        if (listener != null) {
-            PaymentGroup item = items.get(position);
-            listener.onActionClicked(item, position);
+    void onKeyboardDone(int position) {
+        if (position < 0 || position >= items.size()) {
+            return;
         }
+        list.hideKeyboard();
+    }
+
+    void onActionClicked(int position) {
+        if (position < 0 || position >= items.size()) {
+            return;
+        }
+        PaymentGroup item = items.get(position);
+        list.onActionClicked(item, position);
+    }
+
+    ValidationResult validate(int position, String type, String value1, String value2) {
+        if (position < 0 || position >= items.size()) {
+            return null;
+        }
+        PaymentGroup item = items.get(position);
+        return list.validate(item, type, value1, value2);
     }
 
     /**
@@ -183,34 +190,35 @@ class PaymentListAdapter extends RecyclerView.Adapter<PaymentListViewHolder> {
 
     private List<FormWidget> createWidgets(List<InputElement> elements, LayoutInflater inflater, ViewGroup parent) {
         List<FormWidget> widgets = new ArrayList<>();
-
         for (InputElement element : elements) {
-            switch (element.getType()) {
-                case InputElementType.NUMERIC:
-                    View view = inflater.inflate(R.layout.widget_input_numeric, parent, false);
-                    widgets.add(new NumericInputWidget(element.getName(), view, element));
-                    break;
-                case InputElementType.INTEGER:
-                    view = inflater.inflate(R.layout.widget_input_integer, parent, false);
-                    widgets.add(new IntegerInputWidget(element.getName(), view, element));
-                    break;
-                case InputElementType.SELECT:
-                    view = inflater.inflate(R.layout.widget_input_select, parent, false);
-                    widgets.add(new SelectInputWidget(element.getName(), view, element));
-                    break;
-                case InputElementType.CHECKBOX:
-                    view = inflater.inflate(R.layout.widget_input_checkbox, parent, false);
-                    widgets.add(new CheckBoxInputWidget(element.getName(), view, element));
-                    break;
-                case InputElementType.STRING:
-                default:
-                    view = inflater.inflate(R.layout.widget_input_string, parent, false);
-                    widgets.add(new StringInputWidget(element.getName(), view, element));
-            }
+            widgets.add(createInputWidget(element, inflater, parent));
         }
         View view = inflater.inflate(R.layout.widget_button, parent, false);
         widgets.add(new ButtonWidget(BUTTON_WIDGET, view));
         return widgets;
+    }
+
+    private FormWidget createInputWidget(InputElement element, LayoutInflater inflater, ViewGroup parent) {
+        FormWidget widget;
+        String name = element.getName();
+        String type = element.getType();
+
+        switch (element.getType()) {
+            case InputElementType.SELECT:
+                View view = inflater.inflate(R.layout.widget_input_select, parent, false);
+                widget = new SelectInputWidget(name, view, element);
+                break;
+            case InputElementType.CHECKBOX:
+                view = inflater.inflate(R.layout.widget_input_checkbox, parent, false);
+                widget = new CheckBoxInputWidget(name, view, element);
+                break;
+            default:
+                view = inflater.inflate(R.layout.widget_input_text, parent, false);
+                widget = new TextInputWidget(name, view, element);
+        }
+        PaymentTheme theme = PaymentUI.getInstance().getPaymentTheme();
+        widget.setIconResource(theme.getWidgetIconRes(name));
+        return widget;
     }
 
     private void addWidgetsToHolder(PaymentListViewHolder holder, PaymentGroup group, LayoutInflater inflater, ViewGroup parent) {
@@ -224,14 +232,5 @@ class PaymentListAdapter extends RecyclerView.Adapter<PaymentListViewHolder> {
             }
         }
         holder.addWidgets(widgets);
-    }
-
-    /**
-     * The item listener
-     */
-    public interface OnItemListener {
-        void onItemClicked(PaymentGroup item, int position);
-
-        void onActionClicked(PaymentGroup item, int position);
     }
 }

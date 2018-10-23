@@ -14,6 +14,7 @@ package net.optile.payment.ui.widget;
 import java.util.List;
 
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -48,7 +49,7 @@ public final class SelectInputWidget extends FormWidget {
         spinner = rootView.findViewById(R.id.input_spinner);
         label = rootView.findViewById(R.id.input_label);
         label.setText(element.getLabel());
-        initSpinner(element);
+        initSpinner();
     }
 
     public void putValue(Charge charge) throws PaymentException {
@@ -58,7 +59,7 @@ public final class SelectInputWidget extends FormWidget {
         }
     }
 
-    private void initSpinner(InputElement element) {
+    private void initSpinner() {
 
         List<SelectOption> options = element.getOptions();
         if (options == null || options.size() == 0) {
@@ -78,8 +79,17 @@ public final class SelectInputWidget extends FormWidget {
         }
         spinner.setAdapter(adapter);
         spinner.setSelection(selIndex);
-    }
+        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id) {
+                validate();
+            }
 
+            @Override
+            public void onNothingSelected(AdapterView<?> parentView) {
+            }
+        });
+    }
 
     class SpinnerItem {
 

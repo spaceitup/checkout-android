@@ -69,7 +69,15 @@ final class PaymentItem {
         return language != null && key != null ? language.getProperty(key, defValue) : defValue;
     }
 
+    String translateError(String error) {
+        return translate("error.".concat(error), null);
+    }
+
     String getButton() {
         return network.getButton();
+    }
+
+    String getPaymentMethod() {
+        return network.getMethod();
     }
 }

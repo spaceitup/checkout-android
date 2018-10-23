@@ -27,9 +27,10 @@ import android.view.View;
 import android.widget.ProgressBar;
 import net.optile.payment.R;
 import net.optile.payment.ui.PaymentResult;
-import net.optile.payment.ui.PaymentTheme;
 import net.optile.payment.ui.PaymentUI;
 import net.optile.payment.ui.widget.FormWidget;
+import net.optile.payment.validation.ValidationResult;
+import net.optile.payment.validation.Validator;
 
 /**
  * The PaymentPageActivity showing available payment methods
@@ -38,13 +39,10 @@ public final class PaymentPageActivity extends AppCompatActivity implements Paym
 
     private final static String TAG = "pay_PaymentPageActivity";
     private final static String EXTRA_LISTURL = "extra_listurl";
-    private final static String EXTRA_PAYMENTTHEME = "extra_paymenttheme";
 
     private PaymentPagePresenter presenter;
 
     private String listUrl;
-
-    private PaymentTheme theme;
 
     private boolean active;
 
@@ -58,10 +56,9 @@ public final class PaymentPageActivity extends AppCompatActivity implements Paym
      * @param context Context to create the intent
      * @return newly created start intent
      */
-    public static Intent createStartIntent(Context context, String listUrl, PaymentTheme theme) {
+    public static Intent createStartIntent(Context context, String listUrl) {
         final Intent intent = new Intent(context, PaymentPageActivity.class);
         intent.putExtra(EXTRA_LISTURL, listUrl);
-        intent.putExtra(EXTRA_PAYMENTTHEME, theme);
         return intent;
     }
 
@@ -75,11 +72,9 @@ public final class PaymentPageActivity extends AppCompatActivity implements Paym
 
         if (savedInstanceState != null && savedInstanceState.containsKey(EXTRA_LISTURL)) {
             this.listUrl = savedInstanceState.getString(EXTRA_LISTURL);
-            this.theme = savedInstanceState.getParcelable(EXTRA_PAYMENTTHEME);
         } else {
             Intent intent = getIntent();
             this.listUrl = intent.getStringExtra(EXTRA_LISTURL);
-            this.theme = intent.getParcelableExtra(EXTRA_PAYMENTTHEME);
         }
         setContentView(R.layout.activity_paymentpage);
         this.progressBar = findViewById(R.id.progressbar);
@@ -104,7 +99,6 @@ public final class PaymentPageActivity extends AppCompatActivity implements Paym
     public void onSaveInstanceState(Bundle savedInstanceState) {
         super.onSaveInstanceState(savedInstanceState);
         savedInstanceState.putString(EXTRA_LISTURL, listUrl);
-        savedInstanceState.putParcelable(EXTRA_PAYMENTTHEME, theme);
     }
 
     /**
@@ -239,6 +233,23 @@ public final class PaymentPageActivity extends AppCompatActivity implements Paym
     void makeChargeRequest(PaymentGroup group, Map<String, FormWidget> widgets) {
         paymentList.hideKeyboard();
         presenter.charge(widgets, group);
+    }
+
+    ValidationResult validate(PaymentGroup group, String type, String value1, String value2) {
+        PaymentItem item = group.getActivePaymentItem();
+        Validator validator = PaymentUI.getInstance().getValidator();
+        ValidationResult result = validator.validate(item.getPaymentMethod(), type, value1, value2);
+
+        if (!result.isError()) {
+            return result;
+        }
+        String msg = item.translateError(result.getError());
+
+        if (TextUtils.isEmpty(msg)) {
+            msg = getString(R.string.error_paymentpage_validation);
+        }
+        result.setMessage(msg);
+        return result;
     }
 
     private void showSnackBar(String message) {

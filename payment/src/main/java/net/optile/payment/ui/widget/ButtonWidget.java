@@ -44,8 +44,6 @@ public final class ButtonWidget extends FormWidget {
     }
 
     private void handleOnClick() {
-        if (this.listener != null) {
-            listener.onActionClicked(this);
-        }
+        presenter.onActionClicked();
     }
 }

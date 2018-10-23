@@ -11,28 +11,43 @@
 
 package net.optile.payment.ui.widget;
 
+import android.support.v4.content.ContextCompat;
 import android.view.View;
+import android.widget.ImageView;
+import net.optile.payment.R;
 import net.optile.payment.core.PaymentException;
 import net.optile.payment.form.Charge;
+import net.optile.payment.validation.ValidationResult;
 
 /**
  * The base InputWidget
  */
 public abstract class FormWidget {
 
+    public final static int VALIDATION_UNKNOWN = 0x00;
+    public final static int VALIDATION_ERROR = 0x01;
+    public final static int VALIDATION_OK = 0x02;
+
     final View rootView;
 
     final String name;
 
-    OnWidgetListener listener;
+    final ImageView icon;
+
+    WidgetPresenter presenter;
+
+    int state;
+
+    String error;
 
     FormWidget(String name, View rootView) {
         this.name = name;
         this.rootView = rootView;
+        this.icon = rootView.findViewById(R.id.image_icon);
     }
 
-    public void setListener(OnWidgetListener listener) {
-        this.listener = listener;
+    public void setPresenter(WidgetPresenter presenter) {
+        this.presenter = presenter;
     }
 
     public View getRootView() {
@@ -41,6 +56,18 @@ public abstract class FormWidget {
 
     public String getName() {
         return name;
+    }
+
+    public void setIconResource(int resId) {
+
+        if (icon != null) {
+            icon.setImageResource(resId);
+            setIconColor(this.state);
+        }
+    }
+
+    public boolean isValid() {
+        return this.state == VALIDATION_OK;
     }
 
     public void setVisible(boolean visible) {
@@ -54,10 +81,59 @@ public abstract class FormWidget {
     public void putValue(Charge charge) throws PaymentException {
     }
 
+    public boolean validate() {
+        setState(VALIDATION_OK);
+        return true;
+    }
+
+    void setState(int state) {
+        this.state = state;
+        setIconColor(state);
+    }
+
+    private void setIconColor(int state) {
+
+        if (icon == null) {
+            return;
+        }
+        int colorResId = R.color.validation_ok;
+        switch (state) {
+            case VALIDATION_OK:
+                colorResId = R.color.validation_ok;
+                break;
+            case VALIDATION_ERROR:
+                colorResId = R.color.validation_error;
+                break;
+            default:
+                colorResId = R.color.validation_unknown;
+        }
+        icon.setColorFilter(ContextCompat.getColor(rootView.getContext(), colorResId));
+    }
+
     /**
-     * The widget listener
+     * Each Widget may have a presenter set that can be used to validate the Widget input values.
      */
-    public interface OnWidgetListener {
-        void onActionClicked(FormWidget widget);
+    public interface WidgetPresenter {
+
+        /**
+         * This method will be called when i.e. the Pay Button has been clicked
+         */
+        void onActionClicked();
+
+        /**
+         * This method is called when the Keyboard Ime DONE action has been clicked
+         */
+        void onKeyboardDone();
+
+        /**
+         * Widgets call this method to validate their input values. The first value is mandatory, the second is optional.
+         * I.e. A Date widget may use both values to validate the month and year values at the same time.
+         *
+         * @param type type of the value to be validated
+         * @param value1 mandatory first value to validate
+         * @param value2 optional second value to validate
+         * @return ValidationResult holding the result of the validation
+         */
+        ValidationResult validate(String type, String value1, String value2);
     }
 }

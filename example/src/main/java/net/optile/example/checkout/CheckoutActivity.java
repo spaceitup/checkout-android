@@ -26,6 +26,7 @@ import net.optile.example.R;
 import net.optile.payment.ui.PaymentUI;
 import net.optile.payment.ui.PaymentResult;
 import net.optile.payment.model.Interaction;
+import net.optile.payment.ui.dialog.MessageDialogFragment;
 import android.support.design.widget.Snackbar;
 
 /**
@@ -109,6 +110,19 @@ public final class CheckoutActivity extends AppCompatActivity implements Checkou
                                           Snackbar.LENGTH_LONG);
         snackbar.show();
     }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void showError(String error) {
+        MessageDialogFragment dialog = new MessageDialogFragment();
+        dialog.setTitle(getString(R.string.dialog_error_title));
+        dialog.setMessage(String.format(getString(R.string.dialog_error_message), error));
+        dialog.setButton(getString(R.string.dialog_error_button), null);
+        dialog.show(getSupportFragmentManager(), "error_dialog");
+    }
+
     
     /**
      * {@inheritDoc}
@@ -143,7 +157,7 @@ public final class CheckoutActivity extends AppCompatActivity implements Checkou
     public void openPaymentPage(String listUrl) {
         PaymentUI paymentUI = PaymentUI.getInstance();
         paymentUI.setListUrl(listUrl);
-        paymentUI.showPaymentPage(this, PAYMENT_REQUEST_CODE, null);
+        paymentUI.showPaymentPage(this, PAYMENT_REQUEST_CODE);
     }
 
     private void onButtonClicked() {

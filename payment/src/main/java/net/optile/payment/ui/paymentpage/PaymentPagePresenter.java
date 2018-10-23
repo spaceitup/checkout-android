@@ -31,7 +31,6 @@ import net.optile.payment.form.Charge;
 import net.optile.payment.model.ApplicableNetwork;
 import net.optile.payment.model.Interaction;
 import net.optile.payment.model.InteractionCode;
-import net.optile.payment.model.InteractionReason;
 import net.optile.payment.model.ListResult;
 import net.optile.payment.model.Networks;
 import net.optile.payment.model.OperationResult;
@@ -123,11 +122,19 @@ final class PaymentPagePresenter {
         Charge charge = new Charge();
 
         try {
+            boolean error = false;
             for (FormWidget widget : widgets.values()) {
-                widget.putValue(charge);
+
+                if (widget.validate()) {
+                    widget.putValue(charge);
+                } else {
+                    error = true;
+                }
             }
-            view.showLoading(true);
-            postChargeRequest(url, charge);
+            if (!error) {
+                view.showLoading(true);
+                postChargeRequest(url, charge);
+            }
         } catch (PaymentException e) {
             Log.wtf(TAG, e);
             view.showError(R.string.error_paymentpage_unknown);

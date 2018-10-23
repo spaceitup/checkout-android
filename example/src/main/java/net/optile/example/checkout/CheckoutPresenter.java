@@ -77,6 +77,7 @@ final class CheckoutPresenter {
 
     private void callbackPaymentSessionError(Throwable error) {
         this.subscription = null;
+        view.showError(error.toString());
         Log.wtf(TAG, error);
     }
     

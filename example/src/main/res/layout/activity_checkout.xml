@@ -17,9 +17,9 @@
 
     <Button
         android:id="@+id/button_checkout"
-        android:layout_height="wrap_content"
+        style="@style/PaymentWidgetButton"
         android:layout_width="wrap_content"
-        android:layout_centerInParent="true"        
-        android:text="@string/button_checkout" />    
-
+        android:layout_height="wrap_content"
+        android:text="@string/button_checkout"
+        android:layout_centerInParent="true" />        
 </RelativeLayout>

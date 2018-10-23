@@ -37,6 +37,16 @@ public final class PaymentUtils {
     }
 
     /**
+     * Strips whitespace from the start and end of a String returning an empty String if null input.
+     *
+     * @param value the String to be trimmed, may be null
+     * @return the trimmed String, or an empty String if null input
+     */
+    public static String trimToEmpty(String value) {
+        return value == null ? "" : value.trim();
+    }
+
+    /**
      * Read the contents of the raw resource
      *
      * @param res The system Resources
