@@ -68,6 +68,9 @@ public final class TextInputWidget extends FormWidget {
         input.clearFocus();
         ValidationResult result = presenter.validate(name, getNormalizedValue(), null);
 
+        if (result == null) {
+            return false;
+        }
         if (result.isError()) {
             setValidation(VALIDATION_ERROR, true, result.getMessage());
             return false;
