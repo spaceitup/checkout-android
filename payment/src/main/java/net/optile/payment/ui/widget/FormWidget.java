@@ -18,6 +18,7 @@ import net.optile.payment.R;
 import net.optile.payment.core.PaymentException;
 import net.optile.payment.form.Charge;
 import net.optile.payment.validation.ValidationResult;
+import android.support.v4.app.DialogFragment;
 
 /**
  * The base InputWidget
@@ -125,6 +126,19 @@ public abstract class FormWidget {
          */
         void onKeyboardDone();
 
+        /** 
+         * Request from this widget that the keyboard should be hidden
+         */
+        void hideKeyboard();
+
+        /** 
+         * Request to show this DialogFragment to the user
+         * 
+         * @param dialog to be shown to the user
+         * @param tag to identify the DialogFragment
+         */
+        void showDialogFragment(DialogFragment dialog, String tag);
+        
         /**
          * Widgets call this method to validate their input values. The first value is mandatory, the second is optional.
          * I.e. A Date widget may use both values to validate the month and year values at the same time.

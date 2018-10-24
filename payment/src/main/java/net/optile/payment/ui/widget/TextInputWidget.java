@@ -37,11 +37,11 @@ public final class TextInputWidget extends FormWidget {
     private final static String NUMERIC_DIGITS = "0123456789 -";
     private final static int INTEGER_MAXLENGTH = 4;
 
-    final InputElement element;
+    private final InputElement element;
 
-    final TextInputEditText input;
+    private final TextInputEditText input;
 
-    final TextInputLayout layout;
+    private final TextInputLayout layout;
 
     /**
      * Construct a new TextInputWidget

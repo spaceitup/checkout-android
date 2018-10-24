@@ -14,7 +14,7 @@
         android:layout_width="@dimen/widget_icon_size"
         android:layout_height="@dimen/widget_icon_size"
         android:layout_marginEnd="@dimen/border_xxsmall"
-        android:src="@drawable/ic_default"
+        android:src="@drawable/ic_date"
         android:contentDescription="@string/inputelement_icon"/>
 
     <LinearLayout
@@ -22,23 +22,28 @@
         android:layout_height="wrap_content"
         android:weightSum="1">
 
+    
         <android.support.design.widget.TextInputLayout
             android:id="@+id/layout_value"
             android:theme="@style/PaymentTextInputLayout"
             android:layout_width="wrap_content"
+            android:layout_weight="0.5"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
             app:errorTextAppearance="@style/PaymentTextInputLayoutError"
             app:hintTextAppearance="@style/PaymentTextInputLayoutHint">
-
+            
             <android.support.design.widget.TextInputEditText
                 android:id="@+id/input_value"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 style="@style/PaymentTextInputEditText"
-                android:singleLine="true"
-                android:imeOptions="actionNext"/>
-
+                android:clickable="false" 
+                android:longClickable="false" 
+                android:cursorVisible="false" 
+                android:focusable="false"
+                android:focusableInTouchMode="false"
+                android:singleLine="true" />
         </android.support.design.widget.TextInputLayout>
+
     </LinearLayout>
 </LinearLayout>

@@ -24,6 +24,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import net.optile.payment.R;
+import net.optile.payment.core.PaymentInputType;
 import net.optile.payment.model.InputElement;
 import net.optile.payment.model.InputElementType;
 import net.optile.payment.ui.PaymentTheme;
@@ -33,7 +34,9 @@ import net.optile.payment.ui.widget.CheckBoxInputWidget;
 import net.optile.payment.ui.widget.FormWidget;
 import net.optile.payment.ui.widget.SelectInputWidget;
 import net.optile.payment.ui.widget.TextInputWidget;
+import net.optile.payment.ui.widget.DateWidget;
 import net.optile.payment.validation.ValidationResult;
+import android.support.v4.app.DialogFragment;
 
 /**
  * The PaymentListAdapter containing the list of items
@@ -132,7 +135,7 @@ class PaymentListAdapter extends RecyclerView.Adapter<PaymentListViewHolder> {
     }
 
     void onItemClicked(int position) {
-        if (position < 0 || position >= items.size()) {
+        if (!isValidPosition(position)) {
             return;
         }
         PaymentGroup item = items.get(position);
@@ -140,14 +143,28 @@ class PaymentListAdapter extends RecyclerView.Adapter<PaymentListViewHolder> {
     }
 
     void onKeyboardDone(int position) {
-        if (position < 0 || position >= items.size()) {
+        if (!isValidPosition(position)) {
             return;
         }
         list.hideKeyboard();
     }
 
+    void hideKeyboard(int position) {
+        if (!isValidPosition(position)) {
+            return;
+        }
+        list.hideKeyboard();
+    }
+
+    void showDialogFragment(int position, DialogFragment dialog, String tag) {
+        if (!isValidPosition(position)) {
+            return;
+        }
+        list.showDialogFragment(dialog, tag);
+    }                    
+    
     void onActionClicked(int position) {
-        if (position < 0 || position >= items.size()) {
+        if (!isValidPosition(position)) {
             return;
         }
         PaymentGroup item = items.get(position);
@@ -155,7 +172,7 @@ class PaymentListAdapter extends RecyclerView.Adapter<PaymentListViewHolder> {
     }
 
     ValidationResult validate(int position, String type, String value1, String value2) {
-        if (position < 0 || position >= items.size()) {
+        if (!isValidPosition(position)) {
             return null;
         }
         PaymentGroup item = items.get(position);
@@ -189,19 +206,46 @@ class PaymentListAdapter extends RecyclerView.Adapter<PaymentListViewHolder> {
     }
 
     private List<FormWidget> createWidgets(List<InputElement> elements, LayoutInflater inflater, ViewGroup parent) {
+        PaymentTheme theme = PaymentUI.getInstance().getPaymentTheme();
         List<FormWidget> widgets = new ArrayList<>();
+        DateWidget dateWidget = null;
+
         for (InputElement element : elements) {
-            widgets.add(createInputWidget(element, inflater, parent));
+
+            switch (element.getName()) {
+            case PaymentInputType.EXPIRY_MONTH:
+                if(dateWidget == null) {
+                    dateWidget = createDateWidget(theme, inflater, parent);
+                    widgets.add(dateWidget);
+                }
+                dateWidget.setMonthInputElement(element);
+                break;
+            case PaymentInputType.EXPIRY_YEAR:
+                if(dateWidget == null) {
+                    dateWidget = createDateWidget(theme, inflater, parent);
+                    widgets.add(dateWidget);
+                }
+                dateWidget.setYearInputElement(element);
+                break;
+            default:
+                widgets.add(createInputWidget(theme, element, inflater, parent));
+            }
         }
         View view = inflater.inflate(R.layout.widget_button, parent, false);
         widgets.add(new ButtonWidget(BUTTON_WIDGET, view));
         return widgets;
     }
 
-    private FormWidget createInputWidget(InputElement element, LayoutInflater inflater, ViewGroup parent) {
+    private DateWidget createDateWidget(PaymentTheme theme, LayoutInflater inflater, ViewGroup parent) {
+        View view = inflater.inflate(R.layout.widget_input_date, parent, false);
+        DateWidget widget = new DateWidget(PaymentInputType.EXPIRY_DATE, view, "Expiry Date");
+        widget.setIconResource(theme.getWidgetIconRes(PaymentInputType.EXPIRY_DATE));
+        return widget;
+    }
+    
+    private FormWidget createInputWidget(PaymentTheme theme, InputElement element, LayoutInflater inflater, ViewGroup parent) {
         FormWidget widget;
         String name = element.getName();
-        String type = element.getType();
 
         switch (element.getType()) {
             case InputElementType.SELECT:
@@ -216,7 +260,6 @@ class PaymentListAdapter extends RecyclerView.Adapter<PaymentListViewHolder> {
                 view = inflater.inflate(R.layout.widget_input_text, parent, false);
                 widget = new TextInputWidget(name, view, element);
         }
-        PaymentTheme theme = PaymentUI.getInstance().getPaymentTheme();
         widget.setIconResource(theme.getWidgetIconRes(name));
         return widget;
     }
@@ -232,5 +275,9 @@ class PaymentListAdapter extends RecyclerView.Adapter<PaymentListViewHolder> {
             }
         }
         holder.addWidgets(widgets);
+    }
+
+    private boolean isValidPosition(int position) {
+        return position >= 0 && position < items.size();
     }
 }

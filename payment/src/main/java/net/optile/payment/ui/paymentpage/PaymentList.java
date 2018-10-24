@@ -20,6 +20,7 @@ import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.TextView;
 import net.optile.payment.validation.ValidationResult;
+import android.support.v4.app.DialogFragment;
 
 /**
  * The PaymentList showing available payment methods in a list
@@ -97,6 +98,10 @@ final class PaymentList {
         }
     }
 
+    void showDialogFragment(DialogFragment dialog, String tag) {
+        dialog.show(activity.getSupportFragmentManager(), tag);
+    }
+    
     void onActionClicked(PaymentGroup item, int position) {
         PaymentListViewHolder holder = (PaymentListViewHolder) recyclerView.findViewHolderForAdapterPosition(position);
         if (holder != null) {
