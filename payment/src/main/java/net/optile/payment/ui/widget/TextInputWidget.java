@@ -11,6 +11,7 @@
 
 package net.optile.payment.ui.widget;
 
+import android.widget.LinearLayout;
 import android.support.design.widget.TextInputEditText;
 import android.support.design.widget.TextInputLayout;
 import android.text.InputFilter;
@@ -28,6 +29,7 @@ import net.optile.payment.form.Charge;
 import net.optile.payment.model.InputElement;
 import net.optile.payment.model.InputElementType;
 import net.optile.payment.validation.ValidationResult;
+import android.view.Gravity;
 
 /**
  * Class for handling text input
@@ -36,7 +38,8 @@ public final class TextInputWidget extends FormWidget {
 
     private final static String NUMERIC_DIGITS = "0123456789 -";
     private final static int INTEGER_MAXLENGTH = 4;
-
+    private final static float INTEGER_WEIGHT = 0.5f;    
+        
     private final InputElement element;
 
     private final TextInputEditText input;
@@ -65,18 +68,22 @@ public final class TextInputWidget extends FormWidget {
     }
 
     public boolean validate() {
-        input.clearFocus();
         ValidationResult result = presenter.validate(name, getNormalizedValue(), null);
 
         if (result == null) {
             return false;
         }
+        boolean validated = false;
         if (result.isError()) {
             setValidation(VALIDATION_ERROR, true, result.getMessage());
-            return false;
+        } else {
+            setValidation(VALIDATION_OK, false, null);
+            validated = true;
         }
-        setValidation(VALIDATION_OK, false, null);
-        return true;
+        if (input.hasFocus()) {
+            input.clearFocus();
+        }
+        return validated;
     }
 
     public void putValue(Charge charge) throws PaymentException {
@@ -97,8 +104,7 @@ public final class TextInputWidget extends FormWidget {
     }
 
     private void onKeyboardDone() {
-        validate();
-        presenter.onKeyboardDone();
+        input.clearFocus();
     }
 
     private void initInputEditText() {
@@ -128,6 +134,9 @@ public final class TextInputWidget extends FormWidget {
                 InputFilter[] filters = new InputFilter[1];
                 filters[0] = new InputFilter.LengthFilter(INTEGER_MAXLENGTH);
                 input.setFilters(filters);
+                layout.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT,
+                                                                     LinearLayout.LayoutParams.WRAP_CONTENT,
+                                                                     INTEGER_WEIGHT));
         }
     }
 
@@ -148,7 +157,7 @@ public final class TextInputWidget extends FormWidget {
     private void handleOnFocusChange(boolean hasFocus) {
         if (hasFocus) {
             setValidation(VALIDATION_UNKNOWN, false, null);
-        } else {
+        } else if (state == VALIDATION_UNKNOWN) {
             validate();
         }
     }

@@ -142,13 +142,6 @@ class PaymentListAdapter extends RecyclerView.Adapter<PaymentListViewHolder> {
         list.onItemClicked(item, position);
     }
 
-    void onKeyboardDone(int position) {
-        if (!isValidPosition(position)) {
-            return;
-        }
-        list.hideKeyboard();
-    }
-
     void hideKeyboard(int position) {
         if (!isValidPosition(position)) {
             return;

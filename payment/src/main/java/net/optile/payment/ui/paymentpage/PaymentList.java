@@ -21,6 +21,7 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.TextView;
 import net.optile.payment.validation.ValidationResult;
 import android.support.v4.app.DialogFragment;
+import android.os.IBinder;
 
 /**
  * The PaymentList showing available payment methods in a list
@@ -94,7 +95,9 @@ final class PaymentList {
         InputMethodManager imm = (InputMethodManager) activity.getSystemService(Context.INPUT_METHOD_SERVICE);
 
         if (imm != null) {
-            imm.hideSoftInputFromWindow(recyclerView.getWindowToken(), 0);
+            View curFocus = activity.getCurrentFocus();
+            IBinder binder = curFocus != null ? curFocus.getWindowToken() : recyclerView.getWindowToken();
+            imm.hideSoftInputFromWindow(binder, 0);
         }
     }
 

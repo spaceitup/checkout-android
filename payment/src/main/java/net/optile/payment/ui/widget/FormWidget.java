@@ -121,11 +121,6 @@ public abstract class FormWidget {
          */
         void onActionClicked();
 
-        /**
-         * This method is called when the Keyboard Ime DONE action has been clicked
-         */
-        void onKeyboardDone();
-
         /** 
          * Request from this widget that the keyboard should be hidden
          */

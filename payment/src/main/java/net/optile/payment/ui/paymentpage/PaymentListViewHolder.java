@@ -66,11 +66,6 @@ class PaymentListViewHolder extends RecyclerView.ViewHolder {
                 }
 
                 @Override
-                public void onKeyboardDone() {
-                    adapter.onKeyboardDone(getAdapterPosition());
-                }
-
-                @Override
                 public void hideKeyboard() {
                     adapter.hideKeyboard(getAdapterPosition());
                 }

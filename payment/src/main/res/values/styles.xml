@@ -93,6 +93,8 @@
         <item name="colorControlNormal">@color/color_disabled</item>
         <!-- underline color enabled -->
         <item name="colorControlActivated">@color/color_primary</item>
+        <item name="android:textColorSecondary">#673ab7</item>
+
     </style>
 
     <style name="PaymentTextInputEditText" parent="Widget.AppCompat.EditText">
