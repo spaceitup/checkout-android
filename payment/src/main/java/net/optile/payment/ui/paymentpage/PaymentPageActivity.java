@@ -13,6 +13,7 @@ package net.optile.payment.ui.paymentpage;
 
 import java.util.Map;
 
+import android.util.Log;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
@@ -39,6 +40,7 @@ public final class PaymentPageActivity extends AppCompatActivity implements Paym
 
     private final static String TAG = "pay_PaymentPageActivity";
     private final static String EXTRA_LISTURL = "extra_listurl";
+    private final static String EXTRA_LIST_INDEX = "extra_listindex";    
 
     private PaymentPagePresenter presenter;
 
@@ -50,6 +52,8 @@ public final class PaymentPageActivity extends AppCompatActivity implements Paym
 
     private ProgressBar progressBar;
 
+    private int cachedListIndex;
+    
     /**
      * Create the start intent for this Activity
      *
@@ -69,13 +73,16 @@ public final class PaymentPageActivity extends AppCompatActivity implements Paym
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setResult(Activity.RESULT_CANCELED, null);
-
-        if (savedInstanceState != null && savedInstanceState.containsKey(EXTRA_LISTURL)) {
+        
+        if (savedInstanceState != null) {
             this.listUrl = savedInstanceState.getString(EXTRA_LISTURL);
+            this.cachedListIndex = savedInstanceState.getInt(EXTRA_LIST_INDEX);
         } else {
             Intent intent = getIntent();
             this.listUrl = intent.getStringExtra(EXTRA_LISTURL);
+            this.cachedListIndex = -1;
         }
+        Log.i(TAG, "onCreate: " + this.cachedListIndex);
         setContentView(R.layout.activity_paymentpage);
         this.progressBar = findViewById(R.id.progressbar);
 
@@ -98,7 +105,9 @@ public final class PaymentPageActivity extends AppCompatActivity implements Paym
     @Override
     public void onSaveInstanceState(Bundle savedInstanceState) {
         super.onSaveInstanceState(savedInstanceState);
+        this.cachedListIndex = paymentList.getSelected();
         savedInstanceState.putString(EXTRA_LISTURL, listUrl);
+        savedInstanceState.putInt(EXTRA_LIST_INDEX, cachedListIndex);
     }
 
     /**
@@ -186,6 +195,11 @@ public final class PaymentPageActivity extends AppCompatActivity implements Paym
             return;
         }
         progressBar.setVisibility(View.GONE);
+
+        if (this.cachedListIndex != -1) {
+            session.setSelIndex(this.cachedListIndex);
+            this.cachedListIndex = -1;
+        }
         paymentList.showPaymentSession(session);
     }
 

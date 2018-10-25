@@ -59,6 +59,10 @@ public abstract class FormWidget {
         return name;
     }
 
+    public String getString(int resId) {
+        return rootView.getContext().getString(resId);
+    }
+    
     public void setIconResource(int resId) {
 
         if (icon != null) {

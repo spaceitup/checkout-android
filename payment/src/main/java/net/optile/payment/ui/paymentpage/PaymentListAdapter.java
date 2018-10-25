@@ -198,27 +198,35 @@ class PaymentListAdapter extends RecyclerView.Adapter<PaymentListViewHolder> {
         return null;
     }
 
-    private List<FormWidget> createWidgets(List<InputElement> elements, LayoutInflater inflater, ViewGroup parent) {
+    private List<FormWidget> createWidgets(PaymentGroup group, LayoutInflater inflater, ViewGroup parent) {
         PaymentTheme theme = PaymentUI.getInstance().getPaymentTheme();
         List<FormWidget> widgets = new ArrayList<>();
         DateWidget dateWidget = null;
 
-        for (InputElement element : elements) {
+        for (InputElement element : group.elements) {
 
             switch (element.getName()) {
             case PaymentInputType.EXPIRY_MONTH:
-                if(dateWidget == null) {
-                    dateWidget = createDateWidget(theme, inflater, parent);
-                    widgets.add(dateWidget);
+                if (group.hasExpiryDate()) {
+                    if (dateWidget == null) {
+                        dateWidget = createDateWidget(theme, inflater, parent, group);
+                        widgets.add(dateWidget);
+                    }
+                    dateWidget.setMonthInputElement(element);
+                } else {
+                    widgets.add(createInputWidget(theme, element, inflater, parent));
                 }
-                dateWidget.setMonthInputElement(element);
                 break;
             case PaymentInputType.EXPIRY_YEAR:
-                if(dateWidget == null) {
-                    dateWidget = createDateWidget(theme, inflater, parent);
-                    widgets.add(dateWidget);
+                if (group.hasExpiryDate()) {
+                    if (dateWidget == null) {
+                        dateWidget = createDateWidget(theme, inflater, parent, group);
+                        widgets.add(dateWidget);
+                    }
+                    dateWidget.setYearInputElement(element);
+                } else {
+                    widgets.add(createInputWidget(theme, element, inflater, parent));
                 }
-                dateWidget.setYearInputElement(element);
                 break;
             default:
                 widgets.add(createInputWidget(theme, element, inflater, parent));
@@ -229,9 +237,11 @@ class PaymentListAdapter extends RecyclerView.Adapter<PaymentListViewHolder> {
         return widgets;
     }
 
-    private DateWidget createDateWidget(PaymentTheme theme, LayoutInflater inflater, ViewGroup parent) {
+        private DateWidget createDateWidget(PaymentTheme theme, LayoutInflater inflater, ViewGroup parent, PaymentGroup group) {
         View view = inflater.inflate(R.layout.widget_input_date, parent, false);
-        DateWidget widget = new DateWidget(PaymentInputType.EXPIRY_DATE, view, "Expiry Date");
+        DateWidget widget = new DateWidget(PaymentInputType.EXPIRY_DATE, view,
+                                           group.getExpiryDateLabel(),
+                                           group.getExpiryDateButton());
         widget.setIconResource(theme.getWidgetIconRes(PaymentInputType.EXPIRY_DATE));
         return widget;
     }
@@ -258,7 +268,7 @@ class PaymentListAdapter extends RecyclerView.Adapter<PaymentListViewHolder> {
     }
 
     private void addWidgetsToHolder(PaymentListViewHolder holder, PaymentGroup group, LayoutInflater inflater, ViewGroup parent) {
-        List<FormWidget> widgets = createWidgets(group.elements, inflater, parent);
+        List<FormWidget> widgets = createWidgets(group, inflater, parent);
         FormWidget widget;
 
         for (int i = widgets.size(); i > 0; ) {

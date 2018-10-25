@@ -29,23 +29,34 @@ import net.optile.payment.R;
  */
 public final class DateDialogFragment extends DialogFragment {
 
+    private String title;
+    
     private String buttonLabel;
 
     private String buttonAction;
 
-    private int selYearIndex;
+    private int yearIndex;
 
     private String[] yearLabels;
 
     private NumberPicker yearPicker;
     
-    private int selMonthIndex;
+    private int monthIndex;
 
     private String[] monthLabels;
     
     private DateDialogListener listener;
 
     private NumberPicker monthPicker;
+
+    /**
+     * Set the title in this date dialog
+     *
+     * @param title shown in the top of this date dialog
+     */
+    public void setTitle(String title) {
+        this.title = title;
+    }
     
     /**
      * Set the button label and action
@@ -67,10 +78,10 @@ public final class DateDialogFragment extends DialogFragment {
         this.listener = listener;
     }
 
-    public void setValues(int selMonthIndex, String[] monthLabels, int selYearIndex, String[] yearLabels) {
-        this.selMonthIndex = selMonthIndex;
+    public void setValues(int monthIndex, String[] monthLabels, int yearIndex, String[] yearLabels) {
+        this.monthIndex = monthIndex;
         this.monthLabels = monthLabels;
-        this.selYearIndex = selYearIndex;
+        this.yearIndex = yearIndex;
         this.yearLabels = yearLabels;
     }
     
@@ -80,22 +91,35 @@ public final class DateDialogFragment extends DialogFragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.dialogfragment_date, container, false);
+        initTitle(v);
         initNumberPickers(v);
         initButton(v);
         return v;
     }
 
-    private void initNumberPickers(View rootView) {
-        
+    private void initNumberPickers(View rootView) {        
         monthPicker = rootView.findViewById(R.id.numberpicker_month);
+        monthPicker.setDisplayedValues(monthLabels);
         monthPicker.setMinValue(0);
         monthPicker.setMaxValue(monthLabels.length - 1);
-        monthPicker.setDisplayedValues(monthLabels);
-
+        monthPicker.setValue(monthIndex);
+        
         yearPicker = rootView.findViewById(R.id.numberpicker_year);
+        yearPicker.setDisplayedValues(yearLabels);
         yearPicker.setMinValue(0);
         yearPicker.setMaxValue(yearLabels.length - 1);
-        yearPicker.setDisplayedValues(yearLabels);
+        yearPicker.setValue(yearIndex);
+    }
+
+    private void initTitle(View rootView) {
+        TextView tv = rootView.findViewById(R.id.text_title);
+
+        if (TextUtils.isEmpty(title)) {
+            tv.setVisibility(View.GONE);
+            return;
+        }
+        tv.setVisibility(View.VISIBLE);
+        tv.setText(title);
     }
     
     private void initButton(View rootView) {
@@ -123,13 +147,17 @@ public final class DateDialogFragment extends DialogFragment {
     }
 
     private void handleButtonClick() {
+
         if (this.listener != null) {
-            listener.onDateChanged(null, null);
+            this.monthIndex = monthPicker.getValue();
+            this.yearIndex = yearPicker.getValue();
+            listener.onDateChanged(monthIndex, monthLabels[monthIndex],
+                                   yearIndex, yearLabels[yearIndex]);
         }
         dismiss();
     }
 
     public interface DateDialogListener {
-        void onDateChanged(String month, String year);
+        void onDateChanged(int monthIndex, String monthLabel, int yearIndex, String yearLabel);
     }
 }

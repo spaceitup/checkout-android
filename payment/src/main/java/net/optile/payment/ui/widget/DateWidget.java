@@ -47,17 +47,19 @@ import java.util.ArrayList;
 /**
  * Class for handling date input
  */
-public final class DateWidget extends FormWidget {
-
-    private final TextInputEditText input;
-
-    private final TextInputLayout layout;
-
-    private final String label;
+public final class DateWidget extends InputLayoutWidget implements DateDialogFragment.DateDialogListener {
 
     private InputElement monthElement;
 
     private InputElement yearElement;
+
+    private final String button;
+
+    private String expiryMonth;
+
+    private String expiryYear;
+
+    private DateDialogFragment dateDialog;
     
     /**
      * Construct a new TextInputWidget
@@ -65,17 +67,11 @@ public final class DateWidget extends FormWidget {
      * @param name name identifying this widget
      * @param rootView the root view of this input
      * @param label localized label for this date widget
+     * @param button localized button label
      */
-    public DateWidget(String name, View rootView, String label) {
-        super(name, rootView);
-        this.label = label;
-        
-        layout = rootView.findViewById(R.id.layout_value);
-        input = rootView.findViewById(R.id.input_value);
-
-        layout.setHintAnimationEnabled(false);
-        layout.setHint(label);
-        layout.setHintAnimationEnabled(true);
+    public DateWidget(String name, View rootView, String label, String button) {
+        super(name, rootView, label);
+        this.button = button;
 
         input.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -83,6 +79,7 @@ public final class DateWidget extends FormWidget {
                     handleOnClick();
                 }
             });
+        setLayoutWidth(WEIGHT_REDUCED);
     }
 
     public void setMonthInputElement(InputElement monthElement) {
@@ -94,7 +91,7 @@ public final class DateWidget extends FormWidget {
     }
     
     public boolean validate() {
-        ValidationResult result = presenter.validate(name, null, null);
+        ValidationResult result = presenter.validate(name, expiryMonth, expiryYear);
 
         if (result == null) {
             return false;
@@ -108,6 +105,11 @@ public final class DateWidget extends FormWidget {
     }
 
     public void putValue(Charge charge) throws PaymentException {
+
+        if (!(TextUtils.isEmpty(expiryMonth) || TextUtils.isEmpty(expiryYear))) {
+            charge.putValue(monthElement.getName(), expiryMonth);
+            charge.putValue(yearElement.getName(), expiryYear);                
+        }
     }
 
     private void handleOnClick() {
@@ -122,6 +124,13 @@ public final class DateWidget extends FormWidget {
         if (monthOptions == null || monthOptions.size() == 0 || yearOptions == null || yearOptions.size() == 0) {
             return;
         }
+        if (this.dateDialog == null) {
+            dateDialog = createDateDialogFragment(monthOptions, yearOptions);
+        }
+        presenter.showDialogFragment(dateDialog, "date_dialog");
+    }
+
+    private DateDialogFragment createDateDialogFragment(List<SelectOption> monthOptions, List<SelectOption> yearOptions) {
         int selMonthIndex = 0;
         String[] monthLabels = new String[monthOptions.size()];
         int selYearIndex = 0;
@@ -131,7 +140,7 @@ public final class DateWidget extends FormWidget {
         for (int i = 0, e = monthOptions.size(); i < e; i++) {
             option = monthOptions.get(i);
             monthLabels[i] = option.getLabel();
-
+            
             if (PaymentUtils.isTrue(option.getSelected())) {
                 selMonthIndex = i;
             }
@@ -139,20 +148,27 @@ public final class DateWidget extends FormWidget {
         for (int i = 0, e = yearOptions.size(); i < e; i++) {
             option = yearOptions.get(i);
             yearLabels[i] = option.getLabel();
-
+            
             if (PaymentUtils.isTrue(option.getSelected())) {
                 selYearIndex = i;
             }
         }
         DateDialogFragment dialog = new DateDialogFragment();
+        dialog.setTitle(label);
         dialog.setValues(selMonthIndex, monthLabels, selYearIndex, yearLabels);
-        dialog.setButton("Select", null);
-        presenter.showDialogFragment(dialog, "date_dialog");
+        dialog.setButton(button, null);
+        dialog.setListener(this);
+        return dialog;
     }
-    
-    private void setValidation(int state, boolean errorEnabled, String message) {
-        setState(state);
-        layout.setErrorEnabled(errorEnabled);
-        layout.setError(message);
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void onDateChanged(int monthIndex, String monthLabel, int yearIndex, String yearLabel) {
+        this.expiryMonth = monthElement.getOptions().get(monthIndex).getValue();
+        this.expiryYear = yearElement.getOptions().get(yearIndex).getValue();         
+        input.setText(String.format(getString(R.string.widget_date_format), monthLabel, yearLabel));
+        validate();
     }
 }

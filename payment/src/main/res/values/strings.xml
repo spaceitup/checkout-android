@@ -7,5 +7,6 @@
     <string name="error_paymentpage_validation">Invalid input value</string>
     <string name="paymentmethod_logo">PaymentMethod logo</string>
     <string name="inputelement_icon">Input Field</string>
-    <string name="widget_date_format">%1$s / %1$s</string>
+    <string name="widget_date_format">%1$s / %2$s</string>
+    <string name="widget_date_button">Select</string>
 </resources>

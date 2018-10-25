@@ -73,7 +73,7 @@ final class PaymentList {
 
     void showPaymentSession(PaymentSession session) {
         this.session = session;
-        this.selIndex = session.selIndex;
+        this.selIndex = session.getSelIndex();
 
         if (session.groups.size() == 0) {
             emptyMessage.setText(session.getEmptyMessage());

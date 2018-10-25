@@ -34,18 +34,12 @@ import android.view.Gravity;
 /**
  * Class for handling text input
  */
-public final class TextInputWidget extends FormWidget {
+public final class TextInputWidget extends InputLayoutWidget {
 
     private final static String NUMERIC_DIGITS = "0123456789 -";
     private final static int INTEGER_MAXLENGTH = 4;
-    private final static float INTEGER_WEIGHT = 0.5f;    
-        
     private final InputElement element;
-
-    private final TextInputEditText input;
-
-    private final TextInputLayout layout;
-
+    
     /**
      * Construct a new TextInputWidget
      *
@@ -54,16 +48,8 @@ public final class TextInputWidget extends FormWidget {
      * @param element the InputElement this widget is displaying
      */
     public TextInputWidget(String name, View rootView, InputElement element) {
-        super(name, rootView);
+        super(name, rootView, element.getLabel());
         this.element = element;
-
-        layout = rootView.findViewById(R.id.layout_value);
-        input = rootView.findViewById(R.id.input_value);
-
-        layout.setHintAnimationEnabled(false);
-        layout.setHint(element.getLabel());
-        layout.setHintAnimationEnabled(true);
-
         initInputEditText();
     }
 
@@ -99,10 +85,6 @@ public final class TextInputWidget extends FormWidget {
         return true;
     }
 
-    void setInputType(int type) {
-        input.setInputType(type);
-    }
-
     private void onKeyboardDone() {
         input.clearFocus();
     }
@@ -125,33 +107,14 @@ public final class TextInputWidget extends FormWidget {
             }
         });
         switch (element.getType()) {
-            case InputElementType.NUMERIC:
-                input.setInputType(InputType.TYPE_CLASS_NUMBER);
-                input.setKeyListener(DigitsKeyListener.getInstance(NUMERIC_DIGITS));
-                break;
-            case InputElementType.INTEGER:
-                input.setInputType(InputType.TYPE_CLASS_NUMBER);
-                InputFilter[] filters = new InputFilter[1];
-                filters[0] = new InputFilter.LengthFilter(INTEGER_MAXLENGTH);
-                input.setFilters(filters);
-                layout.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT,
-                                                                     LinearLayout.LayoutParams.WRAP_CONTENT,
-                                                                     INTEGER_WEIGHT));
+        case InputElementType.NUMERIC:
+            setInputType(InputType.TYPE_CLASS_NUMBER, NUMERIC_DIGITS);
+            break;
+        case InputElementType.INTEGER:
+            setInputType(InputType.TYPE_CLASS_NUMBER, null);
+            setMaxLength(INTEGER_MAXLENGTH);
+            setLayoutWidth(WEIGHT_REDUCED);
         }
-    }
-
-    private String getNormalizedValue() {
-        String val = input.getText().toString().trim();
-
-        switch (name) {
-            case PaymentInputType.ACCOUNT_NUMBER:
-            case PaymentInputType.VERIFICATION_CODE:
-            case PaymentInputType.BANK_CODE:
-            case PaymentInputType.IBAN:
-            case PaymentInputType.BIC:
-                return val.replaceAll("[\\s|-]", "");
-        }
-        return val;
     }
 
     private void handleOnFocusChange(boolean hasFocus) {
@@ -160,11 +123,5 @@ public final class TextInputWidget extends FormWidget {
         } else if (state == VALIDATION_UNKNOWN) {
             validate();
         }
-    }
-
-    private void setValidation(int state, boolean errorEnabled, String message) {
-        setState(state);
-        layout.setErrorEnabled(errorEnabled);
-        layout.setError(message);
     }
 }
