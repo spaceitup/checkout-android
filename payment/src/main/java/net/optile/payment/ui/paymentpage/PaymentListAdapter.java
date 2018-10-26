@@ -47,7 +47,6 @@ class PaymentListAdapter extends RecyclerView.Adapter<PaymentListViewHolder> {
     private final static String BUTTON_WIDGET = "ButtonWidget";
 
     private final List<PaymentGroup> items;
-
     private final PaymentList list;
 
     PaymentListAdapter(PaymentList list) {
