@@ -31,9 +31,7 @@ abstract class InputLayoutWidget extends FormWidget {
     final static float WEIGHT_FULL = 1.0f;
 
     final TextInputEditText input;
-
     final TextInputLayout layout;
-
     final String label;
 
     /**

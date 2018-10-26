@@ -35,9 +35,7 @@ public final class DateWidget extends InputLayoutWidget implements DateDialogFra
     private InputElement monthElement;
     private InputElement yearElement;
     private String expiryMonth;
-
     private String expiryYear;
-
     private DateDialogFragment dateDialog;
 
     /**
@@ -166,7 +164,7 @@ public final class DateWidget extends InputLayoutWidget implements DateDialogFra
         input.setText(String.format(getString(R.string.widget_date_format), monthLabel, yearLabel));
 
         TextView nextField = (TextView) input.focusSearch(View.FOCUS_DOWN);
-        if (nextField != null && nextField instanceof TextInputEditText) {
+        if (nextField instanceof TextInputEditText) {
             nextField.requestFocus();
             presenter.showKeyboard();
         }

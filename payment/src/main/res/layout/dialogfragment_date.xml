@@ -62,7 +62,8 @@
         android:padding="@dimen/border_medium"
         android:clickable="true"
         android:visibility="gone"
-        android:layout_gravity="end">
+        android:layout_gravity="end"
+        android:focusable="true">
 
         <TextView
             android:id="@+id/text_button"

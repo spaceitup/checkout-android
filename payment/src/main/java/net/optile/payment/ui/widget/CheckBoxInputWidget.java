@@ -25,9 +25,7 @@ import net.optile.payment.model.InputElement;
 public final class CheckBoxInputWidget extends FormWidget {
 
     private final InputElement element;
-
     private final CheckBox value;
-
     private final TextView label;
 
     /**

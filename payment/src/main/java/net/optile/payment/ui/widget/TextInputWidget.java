@@ -52,7 +52,6 @@ public final class TextInputWidget extends InputLayoutWidget {
                 return false;
             }
         });
-
         switch (element.getType()) {
             case InputElementType.NUMERIC:
                 setInputType(InputType.TYPE_CLASS_NUMBER, NUMERIC_DIGITS);
