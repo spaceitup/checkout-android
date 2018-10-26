@@ -31,24 +31,18 @@ import net.optile.payment.R;
 public final class DateDialogFragment extends DialogFragment {
 
     private String title;
-
     private String buttonLabel;
-
     private String buttonAction;
 
+    private NumberPicker yearPicker;
     private int yearIndex;
-
     private String[] yearLabels;
 
-    private NumberPicker yearPicker;
-
+    private NumberPicker monthPicker;    
     private int monthIndex;
-
     private String[] monthLabels;
 
     private DateDialogListener listener;
-
-    private NumberPicker monthPicker;
 
     /**
      * Set the title in this date dialog

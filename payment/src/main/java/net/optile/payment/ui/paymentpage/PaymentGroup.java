@@ -22,15 +22,11 @@ import net.optile.payment.model.InputElement;
 final class PaymentGroup {
 
     final int type;
-
     final PaymentItem item;
-
     final List<InputElement> elements;
 
     private boolean hasExpiryDate;
-
     private String expiryDateLabel;
-
     private String expiryDateButton;
 
     /**

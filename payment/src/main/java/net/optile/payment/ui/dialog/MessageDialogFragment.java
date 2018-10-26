@@ -28,13 +28,9 @@ import net.optile.payment.R;
 public final class MessageDialogFragment extends DialogFragment {
 
     private String title;
-
     private String message;
-
     private String buttonLabel;
-
     private String buttonAction;
-
     private MessageDialogListener listener;
 
     /**
