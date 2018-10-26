@@ -11,7 +11,6 @@
 
 package net.optile.payment.ui.dialog;
 
-import java.util.List;
 import android.app.Dialog;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
@@ -20,8 +19,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
-import android.widget.TextView;
 import android.widget.NumberPicker;
+import android.widget.TextView;
 import net.optile.payment.R;
 
 /**
@@ -30,7 +29,7 @@ import net.optile.payment.R;
 public final class DateDialogFragment extends DialogFragment {
 
     private String title;
-    
+
     private String buttonLabel;
 
     private String buttonAction;
@@ -40,11 +39,11 @@ public final class DateDialogFragment extends DialogFragment {
     private String[] yearLabels;
 
     private NumberPicker yearPicker;
-    
+
     private int monthIndex;
 
     private String[] monthLabels;
-    
+
     private DateDialogListener listener;
 
     private NumberPicker monthPicker;
@@ -57,7 +56,7 @@ public final class DateDialogFragment extends DialogFragment {
     public void setTitle(String title) {
         this.title = title;
     }
-    
+
     /**
      * Set the button label and action
      *
@@ -84,7 +83,7 @@ public final class DateDialogFragment extends DialogFragment {
         this.yearIndex = yearIndex;
         this.yearLabels = yearLabels;
     }
-    
+
     /**
      * {@inheritDoc}
      */
@@ -97,13 +96,13 @@ public final class DateDialogFragment extends DialogFragment {
         return v;
     }
 
-    private void initNumberPickers(View rootView) {        
+    private void initNumberPickers(View rootView) {
         monthPicker = rootView.findViewById(R.id.numberpicker_month);
         monthPicker.setDisplayedValues(monthLabels);
         monthPicker.setMinValue(0);
         monthPicker.setMaxValue(monthLabels.length - 1);
         monthPicker.setValue(monthIndex);
-        
+
         yearPicker = rootView.findViewById(R.id.numberpicker_year);
         yearPicker.setDisplayedValues(yearLabels);
         yearPicker.setMinValue(0);
@@ -121,7 +120,7 @@ public final class DateDialogFragment extends DialogFragment {
         tv.setVisibility(View.VISIBLE);
         tv.setText(title);
     }
-    
+
     private void initButton(View rootView) {
         View layout = rootView.findViewById(R.id.layout_button);
         layout.setVisibility(View.VISIBLE);
@@ -152,7 +151,7 @@ public final class DateDialogFragment extends DialogFragment {
             this.monthIndex = monthPicker.getValue();
             this.yearIndex = yearPicker.getValue();
             listener.onDateChanged(monthIndex, monthLabels[monthIndex],
-                                   yearIndex, yearLabels[yearIndex]);
+                yearIndex, yearLabels[yearIndex]);
         }
         dismiss();
     }

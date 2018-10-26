@@ -13,7 +13,6 @@ package net.optile.payment.ui.paymentpage;
 
 import java.util.Map;
 
-import android.util.Log;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
@@ -23,6 +22,7 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ProgressBar;
@@ -40,7 +40,7 @@ public final class PaymentPageActivity extends AppCompatActivity implements Paym
 
     private final static String TAG = "pay_PaymentPageActivity";
     private final static String EXTRA_LISTURL = "extra_listurl";
-    private final static String EXTRA_LIST_INDEX = "extra_listindex";    
+    private final static String EXTRA_LIST_INDEX = "extra_listindex";
 
     private PaymentPagePresenter presenter;
 
@@ -53,7 +53,7 @@ public final class PaymentPageActivity extends AppCompatActivity implements Paym
     private ProgressBar progressBar;
 
     private int cachedListIndex;
-    
+
     /**
      * Create the start intent for this Activity
      *
@@ -73,7 +73,7 @@ public final class PaymentPageActivity extends AppCompatActivity implements Paym
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setResult(Activity.RESULT_CANCELED, null);
-        
+
         if (savedInstanceState != null) {
             this.listUrl = savedInstanceState.getString(EXTRA_LISTURL);
             this.cachedListIndex = savedInstanceState.getInt(EXTRA_LIST_INDEX);

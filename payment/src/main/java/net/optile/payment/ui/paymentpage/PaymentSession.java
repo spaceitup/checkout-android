@@ -64,7 +64,7 @@ final class PaymentSession {
     void setSelIndex(int selIndex) {
         this.selIndex = selIndex;
     }
-    
+
     void setLanguage(Properties language) {
         this.language = language;
     }

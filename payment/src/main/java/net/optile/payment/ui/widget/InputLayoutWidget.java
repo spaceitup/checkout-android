@@ -60,8 +60,23 @@ abstract class InputLayoutWidget extends FormWidget {
         layout.setHintAnimationEnabled(false);
         layout.setHint(label);
         layout.setHintAnimationEnabled(true);
+
+        input.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                handleOnFocusChange(hasFocus);
+            }
+        });
     }
 
+    public boolean setLastImeOptionsWidget() {
+        input.setImeOptions(EditorInfo.IME_ACTION_DONE);
+        return true;
+    }
+
+    void handleOnFocusChange(boolean hasFocus) {
+    }
+    
     void setLayoutWidth(float weight) {
         layout.setLayoutParams(new LinearLayout.LayoutParams(0,
                                                              LinearLayout.LayoutParams.WRAP_CONTENT,

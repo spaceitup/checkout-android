@@ -15,6 +15,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import android.support.v4.app.DialogFragment;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.view.ViewGroup;
@@ -23,7 +24,6 @@ import android.widget.TextView;
 import net.optile.payment.R;
 import net.optile.payment.ui.widget.FormWidget;
 import net.optile.payment.validation.ValidationResult;
-import android.support.v4.app.DialogFragment;
 
 /**
  * The PaymentListViewHolder holding all Views for easy access
@@ -60,25 +60,30 @@ class PaymentListViewHolder extends RecyclerView.ViewHolder {
         });
 
         this.presenter = new FormWidget.WidgetPresenter() {
-                @Override
-                public void onActionClicked() {
-                    adapter.onActionClicked(getAdapterPosition());
-                }
+            @Override
+            public void onActionClicked() {
+                adapter.onActionClicked(getAdapterPosition());
+            }
 
-                @Override
-                public void hideKeyboard() {
-                    adapter.hideKeyboard(getAdapterPosition());
-                }
+            @Override
+            public void hideKeyboard() {
+                adapter.hideKeyboard(getAdapterPosition());
+            }
 
-                @Override
-                public void showDialogFragment(DialogFragment dialog, String tag) {
-                    adapter.showDialogFragment(getAdapterPosition(), dialog, tag);
-                }                    
+            @Override
+            public void showKeyboard() {
+                adapter.showKeyboard(getAdapterPosition());
+            }
                 
-                @Override
-                public ValidationResult validate(String type, String value1, String value2) {
-                    return adapter.validate(getAdapterPosition(), type, value1, value2);
-                }
+            @Override
+            public void showDialogFragment(DialogFragment dialog, String tag) {
+                adapter.showDialogFragment(getAdapterPosition(), dialog, tag);
+            }
+
+            @Override
+            public ValidationResult validate(String type, String value1, String value2) {
+                return adapter.validate(getAdapterPosition(), type, value1, value2);
+            }
         };
     }
 

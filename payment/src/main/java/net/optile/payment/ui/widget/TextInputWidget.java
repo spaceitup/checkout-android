@@ -50,7 +50,26 @@ public final class TextInputWidget extends InputLayoutWidget {
     public TextInputWidget(String name, View rootView, InputElement element) {
         super(name, rootView, element.getLabel());
         this.element = element;
-        initInputEditText();
+
+        input.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+            @Override
+            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+                if (actionId == EditorInfo.IME_ACTION_DONE) {
+                    handleOnKeyboardDone();
+                }
+                return false;
+            }
+        });
+        
+        switch (element.getType()) {
+        case InputElementType.NUMERIC:
+            setInputType(InputType.TYPE_CLASS_NUMBER, NUMERIC_DIGITS);
+            break;
+        case InputElementType.INTEGER:
+            setInputType(InputType.TYPE_CLASS_NUMBER, null);
+            setMaxLength(INTEGER_MAXLENGTH);
+            setLayoutWidth(WEIGHT_REDUCED);
+        }
     }
 
     public boolean validate() {
@@ -80,48 +99,16 @@ public final class TextInputWidget extends InputLayoutWidget {
         }
     }
 
-    public boolean setLastImeOptionsWidget() {
-        input.setImeOptions(EditorInfo.IME_ACTION_DONE);
-        return true;
-    }
-
-    private void onKeyboardDone() {
-        input.clearFocus();
-    }
-
-    private void initInputEditText() {
-
-        input.setOnFocusChangeListener(new View.OnFocusChangeListener() {
-            @Override
-            public void onFocusChange(View v, boolean hasFocus) {
-                handleOnFocusChange(hasFocus);
-            }
-        });
-        input.setOnEditorActionListener(new TextView.OnEditorActionListener() {
-            @Override
-            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
-                if (actionId == EditorInfo.IME_ACTION_DONE) {
-                    onKeyboardDone();
-                }
-                return false;
-            }
-        });
-        switch (element.getType()) {
-        case InputElementType.NUMERIC:
-            setInputType(InputType.TYPE_CLASS_NUMBER, NUMERIC_DIGITS);
-            break;
-        case InputElementType.INTEGER:
-            setInputType(InputType.TYPE_CLASS_NUMBER, null);
-            setMaxLength(INTEGER_MAXLENGTH);
-            setLayoutWidth(WEIGHT_REDUCED);
-        }
-    }
-
-    private void handleOnFocusChange(boolean hasFocus) {
+    void handleOnFocusChange(boolean hasFocus) {
         if (hasFocus) {
             setValidation(VALIDATION_UNKNOWN, false, null);
         } else if (state == VALIDATION_UNKNOWN) {
             validate();
         }
+    }
+
+    void handleOnKeyboardDone() {
+        input.clearFocus();
+        presenter.hideKeyboard();
     }
 }

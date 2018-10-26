@@ -11,6 +11,7 @@
 
 package net.optile.payment.ui.widget;
 
+import android.support.v4.app.DialogFragment;
 import android.support.v4.content.ContextCompat;
 import android.view.View;
 import android.widget.ImageView;
@@ -18,7 +19,6 @@ import net.optile.payment.R;
 import net.optile.payment.core.PaymentException;
 import net.optile.payment.form.Charge;
 import net.optile.payment.validation.ValidationResult;
-import android.support.v4.app.DialogFragment;
 
 /**
  * The base InputWidget
@@ -62,7 +62,7 @@ public abstract class FormWidget {
     public String getString(int resId) {
         return rootView.getContext().getString(resId);
     }
-    
+
     public void setIconResource(int resId) {
 
         if (icon != null) {
@@ -125,19 +125,24 @@ public abstract class FormWidget {
          */
         void onActionClicked();
 
-        /** 
+        /**
          * Request from this widget that the keyboard should be hidden
          */
         void hideKeyboard();
 
-        /** 
+        /**
+         * Request from this widget that the keyboard should be shown
+         */
+        void showKeyboard();
+        
+        /**
          * Request to show this DialogFragment to the user
-         * 
+         *
          * @param dialog to be shown to the user
          * @param tag to identify the DialogFragment
          */
         void showDialogFragment(DialogFragment dialog, String tag);
-        
+
         /**
          * Widgets call this method to validate their input values. The first value is mandatory, the second is optional.
          * I.e. A Date widget may use both values to validate the month and year values at the same time.

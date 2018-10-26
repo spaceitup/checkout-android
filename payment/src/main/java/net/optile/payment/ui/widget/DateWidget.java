@@ -76,7 +76,7 @@ public final class DateWidget extends InputLayoutWidget implements DateDialogFra
         input.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    handleOnClick();
+                    showDateDialogFragment();
                 }
             });
         setLayoutWidth(WEIGHT_REDUCED);
@@ -96,12 +96,18 @@ public final class DateWidget extends InputLayoutWidget implements DateDialogFra
         if (result == null) {
             return false;
         }
+        boolean validated = false;
+
         if (result.isError()) {
             setValidation(VALIDATION_ERROR, true, result.getMessage());
-            return false;
+        } else {
+            setValidation(VALIDATION_OK, false, null);
+            validated = true;
         }
-        setValidation(VALIDATION_OK, false, null);
-        return true;
+        if (input.hasFocus()) {
+            input.clearFocus();
+        }
+        return validated;
     }
 
     public void putValue(Charge charge) throws PaymentException {
@@ -112,7 +118,16 @@ public final class DateWidget extends InputLayoutWidget implements DateDialogFra
         }
     }
 
-    private void handleOnClick() {
+    void handleOnFocusChange(boolean hasFocus) {
+        if (hasFocus) {
+            setValidation(VALIDATION_UNKNOWN, false, null);
+            showDateDialogFragment();
+        } else if (state == VALIDATION_UNKNOWN) {
+            validate();
+        }
+    }
+    
+    private void showDateDialogFragment() {
         presenter.hideKeyboard();
 
         if (monthElement == null || yearElement == null) {
@@ -169,6 +184,11 @@ public final class DateWidget extends InputLayoutWidget implements DateDialogFra
         this.expiryMonth = monthElement.getOptions().get(monthIndex).getValue();
         this.expiryYear = yearElement.getOptions().get(yearIndex).getValue();         
         input.setText(String.format(getString(R.string.widget_date_format), monthLabel, yearLabel));
-        validate();
+
+        TextView nextField = (TextView)input.focusSearch(View.FOCUS_FORWARD);
+        if (nextField != null && nextField instanceof TextInputEditText) {
+            nextField.requestFocus();
+            presenter.showKeyboard();
+        }
     }
 }

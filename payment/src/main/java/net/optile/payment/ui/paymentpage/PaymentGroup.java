@@ -32,7 +32,7 @@ final class PaymentGroup {
     private String expiryDateLabel;
 
     private String expiryDateButton;
-    
+
     /**
      * Construct a new PaymentGroup
      *
@@ -77,7 +77,7 @@ final class PaymentGroup {
     void setHasExpiryDate(boolean hasExpiryDate) {
         this.hasExpiryDate = hasExpiryDate;
     }
-    
+
     String getExpiryDateLabel() {
         return expiryDateLabel;
     }

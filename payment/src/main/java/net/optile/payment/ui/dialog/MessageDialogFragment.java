@@ -100,7 +100,7 @@ public final class MessageDialogFragment extends DialogFragment {
 
     private void initMessage(View rootView) {
         TextView tvTitle = rootView.findViewById(R.id.text_message_title);
-        TextView tvNoTitle = rootView.findViewById(R.id.text_message_notitle);        
+        TextView tvNoTitle = rootView.findViewById(R.id.text_message_notitle);
 
         if (TextUtils.isEmpty(title)) {
             tvTitle.setVisibility(View.GONE);
@@ -112,7 +112,7 @@ public final class MessageDialogFragment extends DialogFragment {
     }
 
     private void initMessage(TextView textView) {
-        
+
         if (TextUtils.isEmpty(message)) {
             textView.setVisibility(View.GONE);
             return;

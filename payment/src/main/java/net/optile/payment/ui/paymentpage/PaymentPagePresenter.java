@@ -23,8 +23,8 @@ import android.content.Context;
 import android.text.TextUtils;
 import android.util.Log;
 import net.optile.payment.R;
-import net.optile.payment.core.PaymentInputType;
 import net.optile.payment.core.PaymentException;
+import net.optile.payment.core.PaymentInputType;
 import net.optile.payment.core.WorkerSubscriber;
 import net.optile.payment.core.WorkerTask;
 import net.optile.payment.core.Workers;
@@ -340,11 +340,11 @@ final class PaymentPagePresenter {
         return group;
     }
 
-    /** 
+    /**
      * Determine if this PaymentGroup should combine the expiryMonth and expiryYear InputElements.
      * Only when the PaymentGroup has expiryMonth, expiryYear and valid expiryDate label the month and year may be combined in one input widget.
      *
-     * @param group to set the expiryDate support 
+     * @param group to set the expiryDate support
      */
     private void setExpiryDateSupport(PaymentGroup group) {
         PaymentItem item = group.getActivePaymentItem();
@@ -355,11 +355,11 @@ final class PaymentPagePresenter {
 
         for (InputElement element : item.getInputElements()) {
             switch (element.getName()) {
-            case PaymentInputType.EXPIRY_MONTH:
-                hasExpiryMonth = true;
-                break;
-            case PaymentInputType.EXPIRY_YEAR:
-                hasExpiryYear = true;
+                case PaymentInputType.EXPIRY_MONTH:
+                    hasExpiryMonth = true;
+                    break;
+                case PaymentInputType.EXPIRY_YEAR:
+                    hasExpiryYear = true;
             }
         }
         if (!TextUtils.isEmpty(expiryDateLabel) && hasExpiryMonth && hasExpiryYear) {
@@ -369,7 +369,7 @@ final class PaymentPagePresenter {
         }
     }
 
-        
+
     /**
      * This method loads the payment page language file.
      * The URL for the paymentpage language file is constructed from the URL of one of the ApplicableNetwork entries.

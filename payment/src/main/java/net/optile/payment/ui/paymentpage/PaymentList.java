@@ -12,6 +12,8 @@
 package net.optile.payment.ui.paymentpage;
 
 import android.content.Context;
+import android.os.IBinder;
+import android.support.v4.app.DialogFragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.LinearSmoothScroller;
 import android.support.v7.widget.RecyclerView;
@@ -20,8 +22,6 @@ import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.TextView;
 import net.optile.payment.validation.ValidationResult;
-import android.support.v4.app.DialogFragment;
-import android.os.IBinder;
 
 /**
  * The PaymentList showing available payment methods in a list
@@ -101,10 +101,18 @@ final class PaymentList {
         }
     }
 
+    void showKeyboard() {
+        InputMethodManager imm = (InputMethodManager) activity.getSystemService(Context.INPUT_METHOD_SERVICE);
+
+        if (imm != null) {
+            imm.toggleSoftInput(InputMethodManager.SHOW_FORCED, 0);
+        }
+    }
+    
     void showDialogFragment(DialogFragment dialog, String tag) {
         dialog.show(activity.getSupportFragmentManager(), tag);
     }
-    
+
     void onActionClicked(PaymentGroup item, int position) {
         PaymentListViewHolder holder = (PaymentListViewHolder) recyclerView.findViewHolderForAdapterPosition(position);
         if (holder != null) {

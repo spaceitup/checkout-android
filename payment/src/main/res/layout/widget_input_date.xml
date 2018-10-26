@@ -27,7 +27,6 @@
             android:theme="@style/PaymentTextInputLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:ellipsize="none"
             app:errorTextAppearance="@style/PaymentTextInputLayoutError"
             app:hintTextAppearance="@style/PaymentTextInputLayoutHint">
 
@@ -39,8 +38,10 @@
                 android:clickable="false"
                 android:longClickable="false"
                 android:cursorVisible="false"
-                android:focusable="false"
-                android:focusableInTouchMode="false"
+                android:editable="false"
+                android:inputType="none"                
+                android:focusable="true"
+                android:focusableInTouchMode="true"
                 android:singleLine="true"/>
         </android.support.design.widget.TextInputLayout>
     </LinearLayout>
