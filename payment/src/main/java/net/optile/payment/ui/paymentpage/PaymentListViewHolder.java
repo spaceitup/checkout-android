@@ -74,7 +74,7 @@ class PaymentListViewHolder extends RecyclerView.ViewHolder {
             public void showKeyboard() {
                 adapter.showKeyboard(getAdapterPosition());
             }
-                
+
             @Override
             public void showDialogFragment(DialogFragment dialog, String tag) {
                 adapter.showDialogFragment(getAdapterPosition(), dialog, tag);

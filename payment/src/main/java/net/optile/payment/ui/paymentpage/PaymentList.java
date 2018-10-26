@@ -108,7 +108,7 @@ final class PaymentList {
             imm.toggleSoftInput(InputMethodManager.SHOW_FORCED, 0);
         }
     }
-    
+
     void showDialogFragment(DialogFragment dialog, String tag) {
         dialog.show(activity.getSupportFragmentManager(), tag);
     }

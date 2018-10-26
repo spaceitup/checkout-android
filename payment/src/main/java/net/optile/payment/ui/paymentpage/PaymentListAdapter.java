@@ -155,7 +155,7 @@ class PaymentListAdapter extends RecyclerView.Adapter<PaymentListViewHolder> {
         }
         list.showKeyboard();
     }
-    
+
     void showDialogFragment(int position, DialogFragment dialog, String tag) {
         if (!isValidPosition(position)) {
             return;

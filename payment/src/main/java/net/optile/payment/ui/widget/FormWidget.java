@@ -134,7 +134,7 @@ public abstract class FormWidget {
          * Request from this widget that the keyboard should be shown
          */
         void showKeyboard();
-        
+
         /**
          * Request to show this DialogFragment to the user
          *

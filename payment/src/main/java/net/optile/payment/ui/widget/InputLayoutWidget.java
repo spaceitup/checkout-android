@@ -11,39 +11,31 @@
 
 package net.optile.payment.ui.widget;
 
-import android.widget.LinearLayout;
 import android.support.design.widget.TextInputEditText;
 import android.support.design.widget.TextInputLayout;
 import android.text.InputFilter;
-import android.text.InputType;
 import android.text.TextUtils;
 import android.text.method.DigitsKeyListener;
-import android.view.KeyEvent;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
-import android.widget.TextView;
+import android.widget.LinearLayout;
 import net.optile.payment.R;
-import net.optile.payment.core.PaymentException;
 import net.optile.payment.core.PaymentInputType;
-import net.optile.payment.form.Charge;
-import net.optile.payment.model.InputElementType;
-import net.optile.payment.validation.ValidationResult;
-import android.view.Gravity;
 
 /**
  * Base class for widgets using the TextInputLayout and TextInputEditText
  */
 abstract class InputLayoutWidget extends FormWidget {
 
-    final static float WEIGHT_REDUCED = 0.65f;    
-    final static float WEIGHT_FULL = 1.0f;        
-    
+    final static float WEIGHT_REDUCED = 0.65f;
+    final static float WEIGHT_FULL = 1.0f;
+
     final TextInputEditText input;
 
     final TextInputLayout layout;
 
     final String label;
-    
+
     /**
      * Construct a new TextInputWidget
      *
@@ -56,7 +48,7 @@ abstract class InputLayoutWidget extends FormWidget {
         this.layout = rootView.findViewById(R.id.layout_value);
         this.input = rootView.findViewById(R.id.input_value);
         this.label = label;
-        
+
         layout.setHintAnimationEnabled(false);
         layout.setHint(label);
         layout.setHintAnimationEnabled(true);
@@ -76,11 +68,11 @@ abstract class InputLayoutWidget extends FormWidget {
 
     void handleOnFocusChange(boolean hasFocus) {
     }
-    
+
     void setLayoutWidth(float weight) {
         layout.setLayoutParams(new LinearLayout.LayoutParams(0,
-                                                             LinearLayout.LayoutParams.WRAP_CONTENT,
-                                                             weight));
+            LinearLayout.LayoutParams.WRAP_CONTENT,
+            weight));
     }
 
     void setMaxLength(int length) {
@@ -96,7 +88,7 @@ abstract class InputLayoutWidget extends FormWidget {
             input.setKeyListener(DigitsKeyListener.getInstance(digits));
         }
     }
-    
+
     String getNormalizedValue() {
         String val = input.getText().toString().trim();
 

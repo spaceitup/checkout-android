@@ -11,25 +11,17 @@
 
 package net.optile.payment.ui.widget;
 
-import android.widget.LinearLayout;
-import android.support.design.widget.TextInputEditText;
-import android.support.design.widget.TextInputLayout;
-import android.text.InputFilter;
 import android.text.InputType;
 import android.text.TextUtils;
-import android.text.method.DigitsKeyListener;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
 import android.widget.TextView;
-import net.optile.payment.R;
 import net.optile.payment.core.PaymentException;
-import net.optile.payment.core.PaymentInputType;
 import net.optile.payment.form.Charge;
 import net.optile.payment.model.InputElement;
 import net.optile.payment.model.InputElementType;
 import net.optile.payment.validation.ValidationResult;
-import android.view.Gravity;
 
 /**
  * Class for handling text input
@@ -39,7 +31,7 @@ public final class TextInputWidget extends InputLayoutWidget {
     private final static String NUMERIC_DIGITS = "0123456789 -";
     private final static int INTEGER_MAXLENGTH = 4;
     private final InputElement element;
-    
+
     /**
      * Construct a new TextInputWidget
      *
@@ -60,15 +52,15 @@ public final class TextInputWidget extends InputLayoutWidget {
                 return false;
             }
         });
-        
+
         switch (element.getType()) {
-        case InputElementType.NUMERIC:
-            setInputType(InputType.TYPE_CLASS_NUMBER, NUMERIC_DIGITS);
-            break;
-        case InputElementType.INTEGER:
-            setInputType(InputType.TYPE_CLASS_NUMBER, null);
-            setMaxLength(INTEGER_MAXLENGTH);
-            setLayoutWidth(WEIGHT_REDUCED);
+            case InputElementType.NUMERIC:
+                setInputType(InputType.TYPE_CLASS_NUMBER, NUMERIC_DIGITS);
+                break;
+            case InputElementType.INTEGER:
+                setInputType(InputType.TYPE_CLASS_NUMBER, null);
+                setMaxLength(INTEGER_MAXLENGTH);
+                setLayoutWidth(WEIGHT_REDUCED);
         }
     }
 

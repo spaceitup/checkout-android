@@ -38,8 +38,7 @@
                 android:clickable="false"
                 android:longClickable="false"
                 android:cursorVisible="false"
-                android:editable="false"
-                android:inputType="none"                
+                android:inputType="none"
                 android:focusable="true"
                 android:focusableInTouchMode="true"
                 android:singleLine="true"/>
