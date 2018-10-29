@@ -167,6 +167,8 @@ public final class DateWidget extends InputLayoutWidget implements DateDialogFra
         if (nextField instanceof TextInputEditText) {
             nextField.requestFocus();
             presenter.showKeyboard();
+        } else {
+            input.clearFocus();
         }
     }
 }
