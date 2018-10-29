@@ -40,7 +40,6 @@ public final class PaymentPageActivity extends AppCompatActivity implements Paym
 
     private final static String TAG = "pay_PaymentPageActivity";
     private final static String EXTRA_LISTURL = "extra_listurl";
-    private final static String EXTRA_LIST_INDEX = "extra_listindex";
 
     private PaymentPagePresenter presenter;
 
@@ -73,14 +72,13 @@ public final class PaymentPageActivity extends AppCompatActivity implements Paym
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setResult(Activity.RESULT_CANCELED, null);
+        this.cachedListIndex = -1;
 
         if (savedInstanceState != null) {
             this.listUrl = savedInstanceState.getString(EXTRA_LISTURL);
-            this.cachedListIndex = savedInstanceState.getInt(EXTRA_LIST_INDEX);
         } else {
             Intent intent = getIntent();
             this.listUrl = intent.getStringExtra(EXTRA_LISTURL);
-            this.cachedListIndex = -1;
         }
         setContentView(R.layout.activity_paymentpage);
         this.progressBar = findViewById(R.id.progressbar);
@@ -106,7 +104,6 @@ public final class PaymentPageActivity extends AppCompatActivity implements Paym
         super.onSaveInstanceState(savedInstanceState);
         this.cachedListIndex = paymentList.getSelected();
         savedInstanceState.putString(EXTRA_LISTURL, listUrl);
-        savedInstanceState.putInt(EXTRA_LIST_INDEX, cachedListIndex);
     }
 
     /**
