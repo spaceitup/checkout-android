@@ -3,7 +3,7 @@
     <string name="title_checkout">PaymentExample</string>
     <string name="button_checkout">Open Payment Page</string>    
     <string name="url">https://api.integration.oscato.com</string>
-    <string name="payment_success">Great, you have now successfully paid for your new TV</string>
+    <string name="payment_success">Great, you have made a successful charge with optile Payment SDK</string>
     <string name="dialog_error_title">Checkout Error</string>
     <string name="dialog_error_message">A Checkout error occurred: %1$s</string>        
     <string name="dialog_error_button">Close</string>        

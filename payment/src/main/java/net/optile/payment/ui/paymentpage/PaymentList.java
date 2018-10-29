@@ -12,6 +12,8 @@
 package net.optile.payment.ui.paymentpage;
 
 import android.content.Context;
+import android.os.IBinder;
+import android.support.v4.app.DialogFragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.LinearSmoothScroller;
 import android.support.v7.widget.RecyclerView;
@@ -71,7 +73,7 @@ final class PaymentList {
 
     void showPaymentSession(PaymentSession session) {
         this.session = session;
-        this.selIndex = session.selIndex;
+        this.selIndex = session.getSelIndex();
 
         if (session.groups.size() == 0) {
             emptyMessage.setText(session.getEmptyMessage());
@@ -93,8 +95,22 @@ final class PaymentList {
         InputMethodManager imm = (InputMethodManager) activity.getSystemService(Context.INPUT_METHOD_SERVICE);
 
         if (imm != null) {
-            imm.hideSoftInputFromWindow(recyclerView.getWindowToken(), 0);
+            View curFocus = activity.getCurrentFocus();
+            IBinder binder = curFocus != null ? curFocus.getWindowToken() : recyclerView.getWindowToken();
+            imm.hideSoftInputFromWindow(binder, 0);
         }
+    }
+
+    void showKeyboard() {
+        InputMethodManager imm = (InputMethodManager) activity.getSystemService(Context.INPUT_METHOD_SERVICE);
+
+        if (imm != null) {
+            imm.toggleSoftInput(InputMethodManager.SHOW_FORCED, 0);
+        }
+    }
+
+    void showDialogFragment(DialogFragment dialog, String tag) {
+        dialog.show(activity.getSupportFragmentManager(), tag);
     }
 
     void onActionClicked(PaymentGroup item, int position) {

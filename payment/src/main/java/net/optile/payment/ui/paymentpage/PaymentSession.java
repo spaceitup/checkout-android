@@ -30,7 +30,7 @@ final class PaymentSession {
 
     final List<PaymentGroup> groups;
 
-    final int selIndex;
+    private int selIndex;
 
     private Properties language;
 
@@ -41,12 +41,10 @@ final class PaymentSession {
      *
      * @param listResult Object holding the current list session data
      * @param groups list of PaymentGroups supported by this PaymentSession
-     * @param selIndex the index of the preselected group
      */
-    PaymentSession(ListResult listResult, List<PaymentGroup> groups, int selIndex) {
+    PaymentSession(ListResult listResult, List<PaymentGroup> groups) {
         this.listResult = listResult;
         this.groups = groups;
-        this.selIndex = selIndex;
     }
 
     URL getLink(String name) {
@@ -57,6 +55,14 @@ final class PaymentSession {
     boolean isListUrl(String listUrl) {
         URL url = getLink("self");
         return url != null && url.toString().equals(listUrl);
+    }
+
+    int getSelIndex() {
+        return this.selIndex;
+    }
+
+    void setSelIndex(int selIndex) {
+        this.selIndex = selIndex;
     }
 
     void setLanguage(Properties language) {

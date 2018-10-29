@@ -73,6 +73,10 @@ final class PaymentItem {
         return translate("error.".concat(error), null);
     }
 
+    String translateAccountLabel(String type) {
+        return translate("account.".concat(type).concat(".label"), null);
+    }
+
     String getButton() {
         return network.getButton();
     }

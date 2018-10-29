@@ -13,7 +13,7 @@
         android:layout_marginLeft="@dimen/border_large"
         android:layout_marginRight="@dimen/border_large"
         android:layout_marginBottom="@dimen/border_medium"
-        android:ellipsize="end"
+        android:singleLine="false"
         style="@style/PaymentText.Large.Bold"/>
 
     <TextView
@@ -21,7 +21,7 @@
         android:visibility="gone"
         android:layout_marginLeft="@dimen/border_large"
         android:layout_marginRight="@dimen/border_large"
-        android:layout_marginBottom="@dimen/border_large"            
+        android:layout_marginBottom="@dimen/border_large"
         android:singleLine="false"
         style="@style/PaymentText.Medium.Bold.Gray"/>
 
@@ -30,10 +30,10 @@
         android:visibility="gone"
         android:layout_marginLeft="@dimen/border_large"
         android:layout_marginRight="@dimen/border_large"
-        android:layout_marginBottom="@dimen/border_large"            
+        android:layout_marginBottom="@dimen/border_large"
         android:singleLine="false"
         style="@style/PaymentText.Medium.Gray"/>
-    
+
     <LinearLayout
         android:id="@+id/layout_button"
         android:layout_width="wrap_content"
@@ -41,7 +41,8 @@
         android:padding="@dimen/border_medium"
         android:clickable="true"
         android:visibility="gone"
-        android:layout_gravity="end">
+        android:layout_gravity="end"
+        android:focusable="true">
 
         <TextView
             android:id="@+id/text_button"

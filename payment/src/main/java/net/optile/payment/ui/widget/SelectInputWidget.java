@@ -31,9 +31,7 @@ import net.optile.payment.util.PaymentUtils;
 public final class SelectInputWidget extends FormWidget {
 
     private final InputElement element;
-
     private final Spinner spinner;
-
     private final TextView label;
 
     /**
@@ -84,7 +82,6 @@ public final class SelectInputWidget extends FormWidget {
             public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id) {
                 validate();
             }
-
             @Override
             public void onNothingSelected(AdapterView<?> parentView) {
             }
@@ -92,7 +89,6 @@ public final class SelectInputWidget extends FormWidget {
     }
 
     class SpinnerItem {
-
         final String label;
         final String value;
 

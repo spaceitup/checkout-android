@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/layout"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:paddingTop="@dimen/border_large"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/text_title"
+        android:visibility="gone"
+        android:layout_marginLeft="@dimen/border_large"
+        android:layout_marginRight="@dimen/border_large"
+        android:layout_marginBottom="@dimen/border_medium"
+        android:singleLine="false"
+        style="@style/PaymentText.Large.Bold"/>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/border_large"
+        android:layout_marginEnd="@dimen/border_large"
+        android:layout_marginBottom="@dimen/border_medium"
+        android:layout_gravity="center"
+        android:orientation="horizontal">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <NumberPicker
+                android:id="@+id/numberpicker_month"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:descendantFocusability="blocksDescendants"
+                android:layout_marginEnd="@dimen/border_medium"
+            />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <NumberPicker
+                android:id="@+id/numberpicker_year"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:descendantFocusability="blocksDescendants"
+                android:layout_marginStart="@dimen/border_medium"
+            />
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/layout_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/border_medium"
+        android:clickable="true"
+        android:visibility="gone"
+        android:layout_gravity="end"
+        android:focusable="true">
+
+        <TextView
+            android:id="@+id/text_button"
+            style="@style/PaymentText.Small.Bold.Primary"/>
+    </LinearLayout>
+</LinearLayout>

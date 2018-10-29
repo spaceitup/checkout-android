@@ -22,10 +22,12 @@ import net.optile.payment.model.InputElement;
 final class PaymentGroup {
 
     final int type;
-
     final PaymentItem item;
-
     final List<InputElement> elements;
+
+    private boolean hasExpiryDate;
+    private String expiryDateLabel;
+    private String expiryDateButton;
 
     /**
      * Construct a new PaymentGroup
@@ -63,4 +65,29 @@ final class PaymentGroup {
     String getButton() {
         return item.getButton();
     }
+
+    boolean hasExpiryDate() {
+        return this.hasExpiryDate;
+    }
+
+    void setHasExpiryDate(boolean hasExpiryDate) {
+        this.hasExpiryDate = hasExpiryDate;
+    }
+
+    String getExpiryDateLabel() {
+        return expiryDateLabel;
+    }
+
+    void setExpiryDateLabel(String expiryDateLabel) {
+        this.expiryDateLabel = expiryDateLabel;
+    }
+
+    public String getExpiryDateButton() {
+        return this.expiryDateButton;
+    }
+
+    public void setExpiryDateButton(String expiryDateButton) {
+        this.expiryDateButton = expiryDateButton;
+    }
+
 }

@@ -24,11 +24,13 @@ import android.text.TextUtils;
 import android.util.Log;
 import net.optile.payment.R;
 import net.optile.payment.core.PaymentException;
+import net.optile.payment.core.PaymentInputType;
 import net.optile.payment.core.WorkerSubscriber;
 import net.optile.payment.core.WorkerTask;
 import net.optile.payment.core.Workers;
 import net.optile.payment.form.Charge;
 import net.optile.payment.model.ApplicableNetwork;
+import net.optile.payment.model.InputElement;
 import net.optile.payment.model.Interaction;
 import net.optile.payment.model.InteractionCode;
 import net.optile.payment.model.ListResult;
@@ -289,9 +291,8 @@ final class PaymentPagePresenter {
             groups.add(group);
             index++;
         }
-        // Uncomment if the first card should be selected if none are preselected in the ListResult
-        // selIndex = selIndex == -1 ? 0 : selIndex;
-        PaymentSession session = new PaymentSession(listResult, groups, selIndex);
+        PaymentSession session = new PaymentSession(listResult, groups);
+        session.setSelIndex(selIndex);
         session.setLanguage(loadPageLanguage(items));
 
         Context context = view.getContext();
@@ -334,8 +335,40 @@ final class PaymentPagePresenter {
     }
 
     private PaymentGroup createPaymentGroup(PaymentItem item) {
-        return new PaymentGroup(nextGroupType(), item, item.getInputElements());
+        PaymentGroup group = new PaymentGroup(nextGroupType(), item, item.getInputElements());
+        setExpiryDateSupport(group);
+        return group;
     }
+
+    /**
+     * Determine if this PaymentGroup should combine the expiryMonth and expiryYear InputElements.
+     * Only when the PaymentGroup has expiryMonth, expiryYear and valid expiryDate label the month and year may be combined in one input widget.
+     *
+     * @param group to set the expiryDate support
+     */
+    private void setExpiryDateSupport(PaymentGroup group) {
+        PaymentItem item = group.getActivePaymentItem();
+        String expiryDateLabel = item.translateAccountLabel(PaymentInputType.EXPIRY_DATE);
+
+        boolean hasExpiryMonth = false;
+        boolean hasExpiryYear = false;
+
+        for (InputElement element : item.getInputElements()) {
+            switch (element.getName()) {
+                case PaymentInputType.EXPIRY_MONTH:
+                    hasExpiryMonth = true;
+                    break;
+                case PaymentInputType.EXPIRY_YEAR:
+                    hasExpiryYear = true;
+            }
+        }
+        if (!TextUtils.isEmpty(expiryDateLabel) && hasExpiryMonth && hasExpiryYear) {
+            group.setHasExpiryDate(true);
+            group.setExpiryDateLabel(expiryDateLabel);
+            group.setExpiryDateButton(view.getContext().getString(R.string.widget_date_button));
+        }
+    }
+
 
     /**
      * This method loads the payment page language file.

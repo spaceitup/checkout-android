@@ -15,6 +15,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import android.support.v4.app.DialogFragment;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.view.ViewGroup;
@@ -65,8 +66,18 @@ class PaymentListViewHolder extends RecyclerView.ViewHolder {
             }
 
             @Override
-            public void onKeyboardDone() {
-                adapter.onKeyboardDone(getAdapterPosition());
+            public void hideKeyboard() {
+                adapter.hideKeyboard(getAdapterPosition());
+            }
+
+            @Override
+            public void showKeyboard() {
+                adapter.showKeyboard(getAdapterPosition());
+            }
+
+            @Override
+            public void showDialogFragment(DialogFragment dialog, String tag) {
+                adapter.showDialogFragment(getAdapterPosition(), dialog, tag);
             }
 
             @Override

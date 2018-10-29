@@ -11,6 +11,7 @@
 
 package net.optile.payment.ui.widget;
 
+import android.support.v4.app.DialogFragment;
 import android.support.v4.content.ContextCompat;
 import android.view.View;
 import android.widget.ImageView;
@@ -29,15 +30,11 @@ public abstract class FormWidget {
     public final static int VALIDATION_OK = 0x02;
 
     final View rootView;
-
     final String name;
-
     final ImageView icon;
 
     WidgetPresenter presenter;
-
     int state;
-
     String error;
 
     FormWidget(String name, View rootView) {
@@ -56,6 +53,10 @@ public abstract class FormWidget {
 
     public String getName() {
         return name;
+    }
+
+    public String getString(int resId) {
+        return rootView.getContext().getString(resId);
     }
 
     public void setIconResource(int resId) {
@@ -111,19 +112,32 @@ public abstract class FormWidget {
     }
 
     /**
-     * Each Widget may have a presenter set that can be used to validate the Widget input values.
+     * The presenter which is controlling each widget
      */
     public interface WidgetPresenter {
 
         /**
-         * This method will be called when i.e. the Pay Button has been clicked
+         * Inform the presenter that the Pay Button has been clicked
          */
         void onActionClicked();
 
         /**
-         * This method is called when the Keyboard Ime DONE action has been clicked
+         * Ask the presenter to hide the keyboard
          */
-        void onKeyboardDone();
+        void hideKeyboard();
+
+        /**
+         * Ask the presenter to show the keyboard
+         */
+        void showKeyboard();
+
+        /**
+         * Ask the presenter to show the DialogFragment
+         *
+         * @param dialog to be shown to the user
+         * @param tag to identify the DialogFragment
+         */
+        void showDialogFragment(DialogFragment dialog, String tag);
 
         /**
          * Widgets call this method to validate their input values. The first value is mandatory, the second is optional.

@@ -6,15 +6,15 @@
     android:layout_height="wrap_content"
     android:orientation="horizontal"
     android:gravity="center"
-    android:layout_marginTop="@dimen/widget_padding"
-    android:layout_marginBottom="@dimen/widget_padding">
+    android:paddingTop="@dimen/widget_padding"
+    android:paddingBottom="@dimen/widget_padding">
 
     <ImageView
         android:id="@+id/image_icon"
         android:layout_width="@dimen/widget_icon_size"
         android:layout_height="@dimen/widget_icon_size"
         android:layout_marginEnd="@dimen/border_xxsmall"
-        android:src="@drawable/ic_default"
+        android:src="@drawable/ic_date"
         android:contentDescription="@string/inputelement_icon"/>
 
     <LinearLayout
@@ -35,8 +35,13 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 style="@style/PaymentTextInputEditText"
-                android:singleLine="true"
-                android:imeOptions="actionNext"/>
+                android:clickable="false"
+                android:longClickable="false"
+                android:cursorVisible="false"
+                android:inputType="none"
+                android:focusable="true"
+                android:focusableInTouchMode="true"
+                android:singleLine="true"/>
         </android.support.design.widget.TextInputLayout>
     </LinearLayout>
 </LinearLayout>
