@@ -82,7 +82,6 @@ public final class PaymentPageActivity extends AppCompatActivity implements Paym
             this.listUrl = intent.getStringExtra(EXTRA_LISTURL);
             this.cachedListIndex = -1;
         }
-        Log.i(TAG, "onCreate: " + this.cachedListIndex);
         setContentView(R.layout.activity_paymentpage);
         this.progressBar = findViewById(R.id.progressbar);
 
