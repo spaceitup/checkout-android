@@ -41,7 +41,7 @@ public final class CheckoutActivity extends AppCompatActivity implements Checkou
 
     private boolean active;
 
-    private boolean paymentSuccess;
+    private CheckoutResult checkoutResult;
     
     /**
      * Create an Intent to launch this activity
@@ -93,17 +93,37 @@ public final class CheckoutActivity extends AppCompatActivity implements Checkou
         this.active = true;
 
         if (paymentSuccess) {
-            paymentSuccess = false;
-            final Handler handler = new Handler();
-            handler.postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-                        showSuccessSnackbar();
-                    }
-                }, 500);
+            handlePaymentSuccess();
+        } else if (paymentResult != null) {
+            handlePaymentFailed();
         }
     }
 
+    private void handlePaymentSuccess() {
+        this.paymentSuccess = false;
+        if (this.paymentResult != null) {
+            
+        }
+        final Handler handler = new Handler();
+        handler.postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    showSuccessSnackbar();
+                }
+            }, 500);
+    }
+
+    private void handlePaymentFailed() {
+        this.paymentSuccess = false;
+        final Handler handler = new Handler();
+        handler.postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    showSuccessSnackbar();
+                }
+            }, 500);
+    }
+    
     private void showSuccessSnackbar() {
         Snackbar snackbar = Snackbar.make(findViewById(R.id.layout_activity),
                                           getString(R.string.payment_success),
@@ -133,13 +153,16 @@ public final class CheckoutActivity extends AppCompatActivity implements Checkou
         if (requestCode != PAYMENT_REQUEST_CODE) {
             return;
         }
+        PaymentResult result = null;
+        boolean success = false;
+        
         if (data != null && data.hasExtra(PaymentUI.EXTRA_PAYMENT_RESULT)) {
-            PaymentResult result = data.getParcelableExtra(PaymentUI.EXTRA_PAYMENT_RESULT);
-            Log.i(TAG, "PaymentResult[" + result.toString() + "]");
+            result = data.getParcelableExtra(PaymentUI.EXTRA_PAYMENT_RESULT);
         }
-        if (resultCode == Activity.RESULT_OK) {
+        if (resultCode == Active.RESULT_OK) {
             this.paymentSuccess = true;
         }
+        this.checkoutResult = new CheckoutResult(success, result);
     }
     
     /**
