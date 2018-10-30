@@ -1,0 +1,44 @@
+//
+// File for increasing the Android version patch, minor and major
+//
+ext.versionProps = new Properties()
+file("version.properties").withInputStream { versionProps.load(it) }
+
+ext.increaseVersion = { index ->
+
+    def versionCode = Integer.parseInt(versionProps.VERSION_CODE) + 1
+    def versionName = versionProps.VERSION_NAME.split("\\.")
+
+    if (versionName.length != 3) {
+        throw new GradleException("versionName has invalid format, should be: <major>.<minor>.<patch> ")
+    }
+    def val = Integer.parseInt(versionName[index])
+    versionName[index] = Integer.toString(val + 1)
+    versionName = versionName.join(".")
+
+    ant.propertyfile(file: "version.properties") {
+        entry(key: "VERSION_CODE", value: versionCode)
+        entry(key: "VERSION_NAME", value: versionName)
+    }    
+}
+
+task('versionMajor') {
+    doLast {
+        increaseVersion(0)
+    }
+}
+
+task('versionMinor') {
+    doLast {
+        increaseVersion(1)
+    }
+}
+
+task('versionPatch') {
+    doLast {
+        increaseVersion(2)
+    }
+}
+
+
+
