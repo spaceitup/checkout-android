@@ -51,21 +51,16 @@ final class PaymentPagePresenter {
     private final static String TAG = "pay_PayPresenter";
 
     private final ListConnection listConnection;
-
     private final ChargeConnection chargeConnection;
-
     private final PaymentPageView view;
 
     private PaymentSession session;
-
     private int groupType;
-
     private WorkerTask<OperationResult> chargeTask;
-
     private WorkerTask<PaymentSession> loadTask;
-
     private String listUrl;
-
+    private Interaction reloadInteraction;
+    
     /**
      * Create a new PaymentPagePresenter
      *
@@ -139,7 +134,7 @@ final class PaymentPagePresenter {
             }
         } catch (PaymentException e) {
             Log.wtf(TAG, e);
-            view.showError(R.string.error_paymentpage_unknown);
+            closePage(R.string.paymentpage_error_unknown, e);
         }
     }
 
@@ -152,7 +147,11 @@ final class PaymentPagePresenter {
         switch (code) {
             case InteractionCode.PROCEED:
                 this.session = session;
-                view.showPaymentSession(session);
+
+                if (reloadInteraction != null) {
+                    showReloadInteractionMessage();
+                    this.reloadInteraction = null;
+                }
                 break;
             default:
                 closePage(false, resultInfo, interaction, null);
@@ -166,8 +165,8 @@ final class PaymentPagePresenter {
             handleLoadNetworkError((NetworkException) error);
             return;
         }
-        view.showError(R.string.error_paymentpage_unknown);
         Log.wtf(TAG, error);
+        closePage(R.string.paymentpage_error_unknown, error);
     }
 
     private void handleLoadNetworkError(NetworkException exception) {
@@ -179,10 +178,10 @@ final class PaymentPagePresenter {
         }
         switch (details.errorType) {
             case ErrorDetails.CONN_ERROR:
-                view.showError(R.string.error_paymentpage_connerror);
+                closePage(R.string.paymentpage_error_connerror, details);
                 break;
             default:
-                view.showError(R.string.error_paymentpage_unknown);
+                closePage(R.string.paymentpage_error_unknown, details);
         }
         Log.e(TAG, "handleLoadNetworkError: " + details.toString());
     }
@@ -213,10 +212,7 @@ final class PaymentPagePresenter {
         if (!view.isActive()) {
             return;
         }
-        String msg = session.translateInteraction(interaction);
-        if (!TextUtils.isEmpty(msg)) {
-            view.displayMessage(msg);
-        }
+        this.reloadInteraction = interaction;
         loadPaymentSession(this.listUrl);
     }
 
@@ -227,7 +223,7 @@ final class PaymentPagePresenter {
             handleChargeNetworkError((NetworkException) error);
             return;
         }
-        view.showError(R.string.error_paymentpage_unknown);
+        view.showError(R.string.paymentpage_error_unknown);
         Log.wtf(TAG, error);
     }
 
@@ -240,14 +236,33 @@ final class PaymentPagePresenter {
         }
         switch (details.errorType) {
             case ErrorDetails.CONN_ERROR:
-                view.showError(R.string.error_paymentpage_connerror);
+                view.showError(R.string.paymentpage_error_connerror);
                 break;
             default:
-                view.showError(R.string.error_paymentpage_unknown);
+                view.showError(R.string.paymentpage_error_unknown);
         }
         Log.e(TAG, "handleChargeNetworkError: " + details.toString());
     }
 
+    private void showReloadInteractionMessage() {
+
+        String msg = session.translateInteraction(interaction);
+        if (!TextUtils.isEmpty(msg)) {
+            view.showDialog(msg);
+        }
+    }
+
+    
+    private void closePage(int mesgResId, ErrorDetails errorDetails) {
+        //PaymentResult result = new PaymentResult(resultInfo, errorDetails);
+        //view.closePaymentPage(success, result);
+    }
+    
+    private void closePage(boolean success, String resultInfo, Interaction interaction, OperationResult operationResult) {
+        //PaymentResult result = new PaymentResult(resultInfo, interaction, operationResult);
+        //view.closePaymentPage(success, result);
+    }
+    
     private int nextGroupType() {
         return groupType++;
     }
@@ -297,9 +312,9 @@ final class PaymentPagePresenter {
 
         Context context = view.getContext();
         if (session.getApplicableNetworkSize() == 0) {
-            session.setEmptyMessage(context.getString(R.string.error_paymentpage_empty));
+            session.setEmptyMessage(context.getString(R.string.paymentpage_error_empty));
         } else if (groups.size() == 0) {
-            session.setEmptyMessage(context.getString(R.string.error_paymentpage_notsupported));
+            session.setEmptyMessage(context.getString(R.string.paymentpage_error_notsupported));
         }
         return session;
     }
@@ -369,7 +384,6 @@ final class PaymentPagePresenter {
         }
     }
 
-
     /**
      * This method loads the payment page language file.
      * The URL for the paymentpage language file is constructed from the URL of one of the ApplicableNetwork entries.
@@ -428,10 +442,5 @@ final class PaymentPagePresenter {
 
     private OperationResult asyncPostChargeRequest(URL url, Charge charge) throws NetworkException {
         return chargeConnection.createCharge(url, charge);
-    }
-
-    private void closePage(boolean success, String resultInfo, Interaction interaction, OperationResult operationResult) {
-        PaymentResult result = new PaymentResult(resultInfo, interaction, operationResult);
-        view.closePaymentPage(success, result);
     }
 }

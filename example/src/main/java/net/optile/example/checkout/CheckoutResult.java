@@ -11,25 +11,27 @@
 
 package net.optile.example.checkout;
 
+import net.optile.payment.ui.PaymentResult;
+
 /**
  * Class for holding the CheckoutResult data
  */
 public class CheckoutResult {
 
-    /** Indicating if the checkout was successfull */
+    /** Indicating if the checkout was successful */
     public boolean success;
 
     /** The PaymentResult received from the Payment SDK, this may be null */
-    public PaymentResult result;
+    public PaymentResult paymentResult;
 
     /**
      * Construct a new CheckoutResult 
      *
      * @param success indicating the payment was successful or failed
-     * @param result optional result containing PaymentResult details
+     * @param paymentResult optional result containing PaymentResult details
      */
-    public CheckoutResult(boolean success, PaymentResult result) {
+    public CheckoutResult(boolean success, PaymentResult paymentResult) {
         this.success = success;
-        this.result = result;
+        this.paymentResult = paymentResult;
     }
 }

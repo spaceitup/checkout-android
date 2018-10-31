@@ -61,6 +61,20 @@ final class CheckoutPresenter {
         }
     }
 
+    /** 
+     * Handle the received checkout result from the optile Payment SDK.
+     *
+     * @param result the result received from the SDK
+     */
+    void handleCheckoutResult(CheckoutResult result) {
+
+        if (result.success) {
+            view.showPaymentSuccess();
+        } else if (result.paymentResult != null) {
+            Log.i(TAG, "CheckoutError[" + result.paymentResult + "]");
+        }
+    }
+    
     /**
      * Check if the presenter is creating a new payment session.
      *
@@ -77,7 +91,7 @@ final class CheckoutPresenter {
 
     private void callbackPaymentSessionError(Throwable error) {
         this.subscription = null;
-        view.showError(error.toString());
+        view.showPaymentError(error.toString());
         Log.wtf(TAG, error);
     }
     

@@ -32,27 +32,27 @@ import net.optile.payment.ui.PaymentUI;
 import net.optile.payment.ui.widget.FormWidget;
 import net.optile.payment.validation.ValidationResult;
 import net.optile.payment.validation.Validator;
+import net.optile.payment.ui.dialog.MessageDialogFragment;
 
 /**
  * The PaymentPageActivity showing available payment methods
  */
 public final class PaymentPageActivity extends AppCompatActivity implements PaymentPageView {
 
-    private final static String TAG = "pay_PaymentPageActivity";
-    private final static String EXTRA_LISTURL = "extra_listurl";
+    private static final String TAG = "pay_PaymentPageActivity";
+    private static final String PAYMENTPAGE_CLOSE = "closepaymentpage";
+    private static final String PAYMENTPAGE_SHOW = "showpaymentpage";    
+    private static final String EXTRA_LISTURL = "extra_listurl";
 
     private PaymentPagePresenter presenter;
-
     private String listUrl;
-
     private boolean active;
-
     private PaymentList paymentList;
-
     private ProgressBar progressBar;
-
     private int cachedListIndex;
-
+    private int activityResult;
+    private PaymentResult paymentResult;
+    
     /**
      * Create the start intent for this Activity
      *
@@ -171,13 +171,13 @@ public final class PaymentPageActivity extends AppCompatActivity implements Paym
      * {@inheritDoc}
      */
     @Override
-    public void closePaymentPage(boolean success, PaymentResult result) {
+    public void closePage(int activityResult, PaymentResult result) {
         if (!isActive()) {
             return;
         }
         Intent intent = new Intent();
         intent.putExtra(PaymentUI.EXTRA_PAYMENT_RESULT, result);
-        setResult(success ? Activity.RESULT_OK : Activity.RESULT_CANCELED, intent);
+        setResult(activityResult, intent);
         finish();
     }
 
@@ -220,26 +220,26 @@ public final class PaymentPageActivity extends AppCompatActivity implements Paym
      * {@inheritDoc}
      */
     @Override
-    public void displayMessage(String message) {
+    public void showDialogAndShowPage(String message) {
         if (!isActive()) {
             return;
         }
-        showSnackBar(message);
+        showDialogFragment(message, PAYMENTPAGE_SHOW);
     }
-
+    
     /**
      * {@inheritDoc}
      */
     @Override
-    public void showError(int resId) {
+    public void showDialogAndClose(String message, int activityResult, PaymentResult paymentResult) {
         if (!isActive()) {
             return;
         }
-        paymentList.setVisible(true);
-        progressBar.setVisibility(View.GONE);
-        showSnackBar(getString(resId));
+        this.activityResult = activityResult;
+        this.paymentResult = paymentResult;
+        showDialogFragment(message, PAYMENTPAGE_CLOSE);
     }
-
+    
     void makeChargeRequest(PaymentGroup group, Map<String, FormWidget> widgets) {
         paymentList.hideKeyboard();
         presenter.charge(widgets, group);
@@ -262,6 +262,37 @@ public final class PaymentPageActivity extends AppCompatActivity implements Paym
         return result;
     }
 
+    private void showDialogFragment(String message) {
+        MessageDialogFragment dialog = new MessageDialogFragment();
+        dialog.setMessage(message);
+        dialog.setButton(getString(R.string.dialog_close_button), null);
+
+        dialog.setListener(new MessageDialogFragment.MessageDialogListener() {
+                @Override
+                public void onMessageDialogClicked(String action) {
+                    handleDialogFragmentAction(action);
+                }
+            });
+        dialog.show(getSupportFragmentManager(), "error_dialog");
+    }
+
+    private void handleDialogFragmentAction(String action) {
+
+        if (action == null) {
+            return;
+        }
+        switch (action) {
+        case PAYMENTPAGE_CLOSE:
+            closePaymentPage(this.activityResult, this.paymentResult);
+            this.activityResult = 0;
+            this.paymentResult = null;
+            break;
+        case PAYMENTPAGE_SHOW:
+            paymentList.setVisible(true);
+            progressBar.setVisibility(View.GONE);
+        }
+    }
+    
     private void showSnackBar(String message) {
         if (TextUtils.isEmpty(message)) {
             return;
