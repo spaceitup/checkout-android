@@ -134,7 +134,7 @@ final class PaymentPagePresenter {
             }
         } catch (PaymentException e) {
             Log.wtf(TAG, e);
-            closePage(R.string.paymentpage_error_unknown, e);
+            showMessageAndClosePage(R.string.paymentpage_error_unknown, e);
         }
     }
 
