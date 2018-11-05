@@ -11,11 +11,11 @@
 
 package net.optile.payment.network;
 
-import static net.optile.payment.network.ErrorDetails.API_ERROR;
-import static net.optile.payment.network.ErrorDetails.CONN_ERROR;
-import static net.optile.payment.network.ErrorDetails.INTERNAL_ERROR;
-import static net.optile.payment.network.ErrorDetails.PROTOCOL_ERROR;
-import static net.optile.payment.network.ErrorDetails.SECURITY_ERROR;
+import static net.optile.payment.core.PaymentError.API_ERROR;
+import static net.optile.payment.core.PaymentError.CONN_ERROR;
+import static net.optile.payment.core.PaymentError.INTERNAL_ERROR;
+import static net.optile.payment.core.PaymentError.PROTOCOL_ERROR;
+import static net.optile.payment.core.PaymentError.SECURITY_ERROR;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -30,6 +30,7 @@ import com.google.gson.JsonParseException;
 import android.net.Uri;
 import android.text.TextUtils;
 import net.optile.payment.model.ListResult;
+import net.optile.payment.core.PaymentException;
 
 /**
  * Class implementing the communication with the List payment API
@@ -52,7 +53,7 @@ public final class ListConnection extends BaseConnection {
      * @return the ListResult
      */
     public ListResult createPaymentSession(final String baseUrl, final String authorization, final String listData)
-        throws NetworkException {
+        throws PaymentException {
         final String source = "ListConnection[createPaymentSession]";
 
         if (TextUtils.isEmpty(baseUrl)) {
@@ -86,16 +87,16 @@ public final class ListConnection extends BaseConnection {
                 case HttpURLConnection.HTTP_OK:
                     return handleCreatePaymentSessionOk(readFromInputStream(conn));
                 default:
-                    throw createNetworkException(source, API_ERROR, rc, conn);
+                    throw createPaymentException(source, API_ERROR, rc, conn);
             }
         } catch (JsonParseException e) {
-            throw createNetworkException(source, PROTOCOL_ERROR, e);
+            throw createPaymentException(source, PROTOCOL_ERROR, e);
         } catch (MalformedURLException e) {
-            throw createNetworkException(source, INTERNAL_ERROR, e);
+            throw createPaymentException(source, INTERNAL_ERROR, e);
         } catch (IOException e) {
-            throw createNetworkException(source, CONN_ERROR, e);
+            throw createPaymentException(source, CONN_ERROR, e);
         } catch (SecurityException e) {
-            throw createNetworkException(source, SECURITY_ERROR, e);
+            throw createPaymentException(source, SECURITY_ERROR, e);
         } finally {
             close(conn);
         }
@@ -108,7 +109,7 @@ public final class ListConnection extends BaseConnection {
      * @param url the url pointing to the list
      * @return the NetworkResponse containing either an error or the ListResult
      */
-    public ListResult getListResult(final String url) throws NetworkException {
+    public ListResult getListResult(final String url) throws PaymentException {
         final String source = "ListConnection[getListResult]";
 
         if (TextUtils.isEmpty(url)) {
@@ -131,16 +132,16 @@ public final class ListConnection extends BaseConnection {
                 case HttpURLConnection.HTTP_OK:
                     return handleGetListResultOk(readFromInputStream(conn));
                 default:
-                    throw createNetworkException(source, API_ERROR, rc, conn);
+                    throw createPaymentException(source, API_ERROR, rc, conn);
             }
         } catch (JsonParseException e) {
-            throw createNetworkException(source, PROTOCOL_ERROR, e);
+            throw createPaymentException(source, PROTOCOL_ERROR, e);
         } catch (MalformedURLException e) {
-            throw createNetworkException(source, INTERNAL_ERROR, e);
+            throw createPaymentException(source, INTERNAL_ERROR, e);
         } catch (IOException e) {
-            throw createNetworkException(source, CONN_ERROR, e);
+            throw createPaymentException(source, CONN_ERROR, e);
         } catch (SecurityException e) {
-            throw createNetworkException(source, SECURITY_ERROR, e);
+            throw createPaymentException(source, SECURITY_ERROR, e);
         } finally {
             close(conn);
         }
@@ -153,7 +154,7 @@ public final class ListConnection extends BaseConnection {
      * @param prop in which the language properties should be stored
      * @return Properties object containing the language entries
      */
-    public Properties getLanguage(final URL url, Properties prop) throws NetworkException {
+    public Properties getLanguage(final URL url, Properties prop) throws PaymentException {
         final String source = "ListConnection[getLanguage]";
 
         if (url == null) {
@@ -167,7 +168,7 @@ public final class ListConnection extends BaseConnection {
             prop.load(ir);
             return prop;
         } catch (IOException e) {
-            throw createNetworkException(source, CONN_ERROR, e);
+            throw createPaymentException(source, CONN_ERROR, e);
         }
     }
 

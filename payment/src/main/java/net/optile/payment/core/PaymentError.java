@@ -9,7 +9,7 @@
  * has been received in full.
  */
 
-package net.optile.payment.network;
+package net.optile.payment.core;
 
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
@@ -20,7 +20,7 @@ import net.optile.payment.model.ErrorInfo;
 /**
  * A class representing the details about the error
  */
-public final class ErrorDetails {
+public final class PaymentError {
 
     public final static String API_ERROR = "API_ERROR";
     public final static String CONN_ERROR = "CONN_ERROR";
@@ -50,7 +50,20 @@ public final class ErrorDetails {
     public final ErrorInfo errorInfo;
 
     /**
-     * Construct a new ErrorDetails object containing all information about a network error
+     * Construct a new PaymentError object containing the information about the payment failure
+     *
+     * @param source the source
+     * @param errorType the error type
+     * @param errorData the error data
+     */
+    public PaymentError(final String source, @ErrorType final String errorType, final String errorData) {
+        this.source = source;
+        this.errorType = errorType;
+        this.errorData = errorData;
+    }
+    
+    /**
+     * Construct a new PaymentError object containing all information about a network error
      *
      * @param source the source
      * @param errorType the error type
@@ -58,7 +71,7 @@ public final class ErrorDetails {
      * @param errorData the error data
      * @param errorInfo the error info
      */
-    public ErrorDetails(final String source, @ErrorType final String errorType, final int statusCode, final String errorData,
+    public PaymentError(final String source, @ErrorType final String errorType, final int statusCode, final String errorData,
         final ErrorInfo errorInfo) {
         this.source = source;
         this.errorType = errorType;
@@ -84,7 +97,7 @@ public final class ErrorDetails {
     public String toString() {
 
         final StringBuilder sb = new StringBuilder();
-        sb.append("ErrorDetails[");
+        sb.append("PaymentError[");
         sb.append("errorType: ");
         sb.append(this.errorType);
 

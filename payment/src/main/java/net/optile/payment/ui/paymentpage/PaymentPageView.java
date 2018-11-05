@@ -53,12 +53,20 @@ interface PaymentPageView {
     void showPaymentSession(PaymentSession session);
 
     /**
-     * Display a message to the user using a DialogFragment, show the PaymentPage after the user closes the Dialog.
+     * Display a message to the user using a DialogFragment.
      *
      * @param message the message to be shown
      */
-    void showDialogAndShowPage(String message);
+    void showDialog(String message);
 
+    /**
+     * Close the payment page with the given activity result
+     *
+     * @param activityResult the result of the activity
+     * @param result containing the result code and reason of the payment
+     */
+    void closePage(int activityResult, PaymentResult result);
+    
     /**
      * Show a message to the user using a DialogFragment, close the PaymentPage after the user has disposed the Dialog.
      * 
@@ -68,11 +76,4 @@ interface PaymentPageView {
      */
     void showDialogAndClosePage(String message, int activityResult, PaymentResult paymentResult);
     
-    /**
-     * Abort the payment and notify the user of this SDK
-     *
-     * @param success indicating if the payment request was successful
-     * @param result containing the result code and reason of the payment
-     */
-    void closePage(boolean success, PaymentResult result);
 }

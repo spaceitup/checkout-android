@@ -29,6 +29,8 @@ import android.os.Build;
 import android.text.TextUtils;
 import android.util.Log;
 import net.optile.payment.model.ErrorInfo;
+import net.optile.payment.core.PaymentException;
+import net.optile.payment.core.PaymentError;
 
 /**
  * The base class for all Payment API implementations
@@ -234,9 +236,9 @@ abstract class BaseConnection {
      * @param errorType the error type
      * @param statusCode the status code
      * @param conn the conn
-     * @return NetworkException network exception
+     * @return PaymentException network exception
      */
-    NetworkException createNetworkException(final String source, final String errorType, final int statusCode,
+    PaymentException createPaymentException(final String source, final String errorType, final int statusCode,
         final HttpURLConnection conn) {
         String data = null;
         ErrorInfo info = null;
@@ -253,8 +255,8 @@ abstract class BaseConnection {
             // and it is more important to not loose the status error code
             Log.wtf(source, e);
         }
-        final ErrorDetails details = new ErrorDetails(source, errorType, statusCode, data, info);
-        return new NetworkException(details, source);
+        final PaymentError error = new PaymentError(source, errorType, statusCode, data, info);
+        return new PaymentException(error, source);
     }
 
     /**
@@ -265,9 +267,9 @@ abstract class BaseConnection {
      * @param cause the cause
      * @return NetworkResponse network exception
      */
-    NetworkException createNetworkException(final String source, String errorType, Exception cause) {
-        final ErrorDetails details = new ErrorDetails(source, errorType, 0, null, null);
-        return new NetworkException(details, source, cause);
+    PaymentException createPaymentException(final String source, String errorType, Exception cause) {
+        final PaymentError error = new PaymentError(source, errorType, 0, null, null);
+        return new PaymentException(error, source, cause);
     }
 
     /**

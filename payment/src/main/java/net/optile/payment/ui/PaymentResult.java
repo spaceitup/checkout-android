@@ -19,7 +19,7 @@ import android.util.Log;
 import net.optile.payment.model.Interaction;
 import net.optile.payment.model.OperationResult;
 import net.optile.payment.util.GsonHelper;
-import net.optile.payment.network.ErrorDetails;
+import net.optile.payment.core.PaymentError;
 
 /**
  * Class for holding the payment interaction and operationresult
@@ -38,20 +38,20 @@ public final class PaymentResult implements Parcelable {
     };
     private final static String TAG = "pay_PaymentResult";
 
-    private ErrorDetails errorDetails;
+    private PaymentError paymentError;
     private String resultInfo;
     private Interaction interaction;
     private OperationResult operationResult;
 
     /**
-     * Construct a new PaymentResult with ErrorDetails. 
+     * Construct a new PaymentResult with PaymentError. 
      *
      * @param resultInfo a string containing a description of the result info
-     * @param errorDetails the error details describing the details about the error situation 
+     * @param paymentError the error details describing the details about the error situation 
      */
-    public PaymentResult(String resultInfo, ErrorDetails details) {
+    public PaymentResult(String resultInfo, PaymentError details) {
         this.resultInfo = resultInfo;
-        this.errorDetails = errorDetails;
+        this.paymentError = paymentError;
     }
     
     /**
@@ -85,7 +85,7 @@ public final class PaymentResult implements Parcelable {
             }
             json = in.readString();
             if (!TextUtils.isEmpty(json)) {
-                this.errorDetails = gson.fromJson(json, ErrorDetails.class);
+                this.paymentError = gson.fromJson(json, PaymentError.class);
             }
         } catch (JsonSyntaxException e) {
             // this should never happen since we use the same GsonHelper
@@ -94,8 +94,8 @@ public final class PaymentResult implements Parcelable {
         }
     }
 
-    public ErrorDetails getErrorDetails() {
-        return resultInfo;
+    public PaymentError getPaymentError() {
+        return paymentError;
     }
     
     public String getResultInfo() {
@@ -134,13 +134,13 @@ public final class PaymentResult implements Parcelable {
         if (operationResult != null) {
             operationResultJson = gson.toJson(this.operationResult);
         }
-        String errorDetailsJson = null;
-        if (errorDetails != null) {
-            errorDetailsJson = gson.toJson(this.errorDetailsJson);
+        String paymentErrorJson = null;
+        if (paymentError != null) {
+            paymentErrorJson = gson.toJson(this.paymentError);
         }
         out.writeString(interactionJson);
         out.writeString(operationResultJson);
-        out.writeString(errorDetailsJson);
+        out.writeString(paymentErrorJson);
     }
 
     /**
@@ -150,8 +150,8 @@ public final class PaymentResult implements Parcelable {
     public String toString() {
         StringBuilder sb = new StringBuilder("PaymentResult[");
 
-        if (this.errorDetails != null) {
-            sb.append(errorDetails.toString());
+        if (this.paymentError != null) {
+            sb.append(paymentError.toString());
         } else {
             sb.append("resultInfo: ");
             sb.append(this.resultInfo);
