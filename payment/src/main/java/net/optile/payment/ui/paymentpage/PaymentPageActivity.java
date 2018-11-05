@@ -167,18 +167,6 @@ public final class PaymentPageActivity extends AppCompatActivity implements Paym
      * {@inheritDoc}
      */
     @Override
-    public void closePage(int activityResult, PaymentResult result) {
-        if (!isActive()) {
-            return;
-        }
-        setActivityResult(activityResult, result);
-        finish();
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
     public void showPaymentSession(PaymentSession session) {
 
         if (!isActive()) {
@@ -214,25 +202,37 @@ public final class PaymentPageActivity extends AppCompatActivity implements Paym
      * {@inheritDoc}
      */
     @Override
-    public void showDialog(String message) {
+    public void closePage(boolean success, PaymentResult result) {
         if (!isActive()) {
             return;
         }
-        showDialogFragment(message, false);
+        setActivityResult(success, result);
+        finish();
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void showMessage(String message) {
+        if (!isActive()) {
+            return;
+        }
+        showMessageDialog(message, false);
     }
     
     /**
      * {@inheritDoc}
      */
     @Override
-    public void showDialogAndClosePage(String message, int activityResult, PaymentResult paymentResult) {
+    public void showMessageAndClosePage(String message, boolean success, PaymentResult result) {
         if (!isActive()) {
             return;
         }
-        setActivityResult(activityResult, paymentResult);
-        showDialogFragment(message, true);
+        setActivityResult(false, result);
+        showMessageDialog(message, true);
     }
-    
+
     void makeChargeRequest(PaymentGroup group, Map<String, FormWidget> widgets) {
         paymentList.hideKeyboard();
         presenter.charge(widgets, group);
@@ -249,13 +249,16 @@ public final class PaymentPageActivity extends AppCompatActivity implements Paym
         String msg = item.translateError(result.getError());
 
         if (TextUtils.isEmpty(msg)) {
-            msg = getString(R.string.error_paymentpage_validation);
+            msg = getString(R.string.paymentpage_error_validation);
         }
         result.setMessage(msg);
         return result;
     }
 
-    private void showDialogFragment(final String message, final boolean finish) {
+    private void showMessageDialog(final String message, final boolean finish) {
+        if (!isActive()) {
+            return;
+        }
         MessageDialogFragment dialog = new MessageDialogFragment();
         dialog.setMessage(message);
         dialog.setNeutralButton(getString(R.string.dialog_close_button));
@@ -276,9 +279,10 @@ public final class PaymentPageActivity extends AppCompatActivity implements Paym
         dialog.show(getSupportFragmentManager(), "paymentpage_dialog");
     }
 
-    private void setActivityResult(int activityResult, PaymentResult result) {
+    private void setActivityResult(boolean success, PaymentResult result) {
         Intent intent = new Intent();
         intent.putExtra(PaymentUI.EXTRA_PAYMENT_RESULT, result);
+        int activityResult = success ? Activity.RESULT_OK : Activity.RESULT_CANCELED;
         setResult(activityResult, intent);
     }
     

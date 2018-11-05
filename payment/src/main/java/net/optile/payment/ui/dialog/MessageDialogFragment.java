@@ -192,7 +192,7 @@ public final class MessageDialogFragment extends DialogFragment {
     }
 
     public interface MessageDialogListener {
-        void onNeutralButtonClicked();
+        void onNeutralButtonClick();
         void onCancelled();
     }
 }

@@ -121,8 +121,8 @@ public final class CheckoutActivity extends AppCompatActivity implements Checkou
         MessageDialogFragment dialog = new MessageDialogFragment();
         dialog.setTitle(getString(R.string.dialog_error_title));
         dialog.setMessage(String.format(getString(R.string.dialog_error_message), message));
-        dialog.setButton(getString(R.string.dialog_error_button), null);
-        dialog.show(getSupportFragmentManager(), "error_dialog");
+        dialog.setNeutralButton(getString(R.string.dialog_error_button));
+        dialog.show(getSupportFragmentManager(), "checkout_dialog");
     }
     
     /**

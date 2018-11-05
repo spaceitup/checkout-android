@@ -30,6 +30,7 @@ import net.optile.payment.core.WorkerSubscriber;
 import net.optile.payment.core.WorkerTask;
 import net.optile.payment.core.Workers;
 import net.optile.payment.form.Charge;
+import net.optile.payment.model.ErrorInfo;
 import net.optile.payment.model.ApplicableNetwork;
 import net.optile.payment.model.InputElement;
 import net.optile.payment.model.Interaction;
@@ -132,8 +133,7 @@ final class PaymentPagePresenter {
                 postChargeRequest(url, charge);
             }
         } catch (PaymentException e) {
-            Log.wtf(TAG, e);
-            showMessageAndClosePage(R.string.paymentpage_error_unknown, e);
+            closeSessionWithError(R.string.paymentpage_error_unknown, e.getMessage(), e.error);
         }
     }
 
@@ -148,43 +148,54 @@ final class PaymentPagePresenter {
                 this.session = session;
 
                 if (reloadInteraction != null) {
-                    showReloadInteractionMessage();
+                    showInteractionMessage(reloadInteraction);
                     this.reloadInteraction = null;
                 }
+                view.showPaymentSession(session);
                 break;
             default:
-                closePage(false, resultInfo, interaction, null);
+                closeSessionWithError(resultInfo, interaction, null);
         }
     }
 
-    private void callbackLoadError(Throwable error) {
+    private void callbackLoadError(Throwable cause) {
         this.loadTask = null;
 
-        if (error instanceof PaymentException) {
-            handleLoadPaymentError((PaymentException) error);
+        if (cause instanceof PaymentException) {
+            handleLoadPaymentException((PaymentException) cause);
             return;
         }
-        Log.wtf(TAG, error);
-        closePage(R.string.paymentpage_error_unknown, error);
+        closeSessionWithError(cause);
     }
 
-    private void handleLoadPaymentError(PaymentException exception) {
-        PaymentError paymentError = exception.paymentError;
+    private void handleLoadPaymentException(PaymentException cause) {
+        String message = cause.getMessage();
+        PaymentError error = cause.error;
 
-        if (paymentError.errorInfo != null) {
-            //closePage(false, paymentError.errorInfo.getResultInfo(), paymentError.errorInfo.getInteraction(), null);
+        if (error.errorInfo != null) {
+            handleLoadErrorInfo(error.errorInfo);
             return;
         }
-        switch (paymentError.errorType) {
+        int errorResId;
+        switch (error.errorType) {
             case PaymentError.CONN_ERROR:
-                //closePage(R.string.paymentpage_error_connerror, paymentError);
+                errorResId = R.string.paymentpage_error_connection;
                 break;
             default:
-                //closePage(R.string.paymentpage_error_unknown, paymentError);
+                errorResId = R.string.paymentpage_error_unknown;
         }
-        Log.e(TAG, "handlePaymentException: " + paymentError.toString());
+        closeSessionWithError(errorResId, message, error);
     }
 
+    private void handleLoadErrorInfo(ErrorInfo info) {
+        String resultInfo = info.getResultInfo();
+        Interaction interaction = info.getInteraction();
+
+        Log.i(TAG, "resultInfo: " + resultInfo);
+        Log.i(TAG, "interaction: " + interaction);
+        closeSessionWithError(resultInfo, interaction, null);
+    }
+    
     private void callbackChargeSuccess(OperationResult result) {
         this.chargeTask = null;
         Interaction interaction = result.getInteraction();
@@ -192,9 +203,10 @@ final class PaymentPagePresenter {
         String code = interaction.getCode();
 
         switch (code) {
+
+                //closeSessionWithSuccess(resultInfo, interaction, result);
+                //break;
             case InteractionCode.PROCEED:
-                closePage(true, resultInfo, interaction, result);
-                break;
             case InteractionCode.TRY_OTHER_NETWORK:
             case InteractionCode.TRY_OTHER_ACCOUNT:
             case InteractionCode.RETRY:
@@ -203,7 +215,7 @@ final class PaymentPagePresenter {
                 break;
             case InteractionCode.ABORT:
             default:
-                closePage(false, resultInfo, interaction, result);
+                closeSessionWithError(resultInfo, interaction, result);
         }
     }
 
@@ -215,51 +227,80 @@ final class PaymentPagePresenter {
         loadPaymentSession(this.listUrl);
     }
 
-    private void callbackChargeError(Throwable error) {
+    private void callbackChargeError(Throwable cause) {
         this.chargeTask = null;
 
-        if (error instanceof PaymentException) {
-            handleChargePaymentError((PaymentException) error);
+        if (cause instanceof PaymentException) {
+            handleChargePaymentError((PaymentException) cause);
             return;
         }
-        //view.showError(R.string.paymentpage_error_unknown);
-        Log.wtf(TAG, error);
+        closeSessionWithError(cause);
     }
 
-    private void handleChargePaymentError(PaymentException exception) {
-        PaymentError paymentError = exception.paymentError;
+    private void handleChargePaymentError(PaymentException cause) {
+        String resultInfo = cause.getMessage();
+        PaymentError error = cause.error;
 
-        if (paymentError.errorInfo != null) {
-            //closePage(false, paymentError.errorInfo.getResultInfo(), paymentError.errorInfo.getInteraction(), null);
+        if (error.errorInfo != null) {
+            handleChargeErrorInfo(error.errorInfo);
             return;
         }
-        switch (paymentError.errorType) {
+        switch (error.errorType) {
             case PaymentError.CONN_ERROR:
-                //view.showError(R.string.paymentpage_error_connerror);
+                handleChargeFailed(R.string.paymentpage_error_connection);
                 break;
             default:
-                //view.showError(R.string.paymentpage_error_unknown);
+                closeSessionWithError(R.string.paymentpage_error_unknown, resultInfo, error);                
         }
-        //Log.e(TAG, "handleChargeNetworkError: " + paymentError.toString());
     }
 
-    private void showReloadInteractionMessage() {
+    private void handleChargeErrorInfo(ErrorInfo info) {
+        String resultInfo = info.getResultInfo();
+        Interaction interaction = info.getInteraction();
+        closeSessionWithError(resultInfo, interaction, null);
+    }
 
+    private String getString(int resId) {
+        return view.getContext().getString(resId);
+    }
+    
+    private void showInteractionMessage(Interaction interaction) {
         String msg = session.translateInteraction(interaction);
         if (!TextUtils.isEmpty(msg)) {
-            //view.showDialog(msg);
+            view.showMessage(msg);
         }
     }
 
-    
-    private void closePage(int mesgResId, PaymentError paymentError) {
-        //PaymentResult result = new PaymentResult(resultInfo, paymentError);
-        //view.closePaymentPage(success, result);
+    private void handleChargeFailed(int errorResId) {
+        view.showPaymentSession(this.session);
+        view.showMessage(getString(errorResId));
+    }
+
+    private void closeSessionWithSuccess(String resultInfo, Interaction interaction, OperationResult operationResult) {
+        PaymentResult result = new PaymentResult(resultInfo, interaction, operationResult);
+        view.closePage(true, result);
+    }
+
+    private void closeSessionWithError(Throwable cause) {
+        Log.wtf(TAG, cause);
+        String resultInfo = cause.toString();
+        PaymentError error = new PaymentError("PaymentPage", PaymentError.INTERNAL_ERROR, resultInfo);
+        view.showMessageAndClosePage(getString(R.string.paymentpage_error_unknown), false, new PaymentResult(resultInfo, error));
     }
     
-    private void closePage(boolean success, String resultInfo, Interaction interaction, OperationResult operationResult) {
-        //PaymentResult result = new PaymentResult(resultInfo, interaction, operationResult);
-        //view.closePaymentPage(success, result);
+    private void closeSessionWithError(int errorResId, String resultInfo, PaymentError error) {
+        PaymentResult result = new PaymentResult(resultInfo, error);
+        view.showMessageAndClosePage(getString(errorResId), false, result);
+    }
+    
+    private void closeSessionWithError(String resultInfo, Interaction interaction, OperationResult operationResult) {
+        PaymentResult result = new PaymentResult(resultInfo, interaction, operationResult);
+        String msg = session.translateInteraction(interaction);
+
+        if (TextUtils.isEmpty(msg)) {
+            msg = getString(R.string.paymentpage_error_unknown);
+        }
+        view.showMessageAndClosePage(msg, false, result);
     }
     
     private int nextGroupType() {
@@ -283,8 +324,8 @@ final class PaymentPagePresenter {
             }
 
             @Override
-            public void onError(Throwable error) {
-                callbackLoadError(error);
+            public void onError(Throwable cause) {
+                callbackLoadError(cause);
             }
         });
         Workers.getInstance().forNetworkTasks().execute(loadTask);
@@ -309,11 +350,10 @@ final class PaymentPagePresenter {
         session.setSelIndex(selIndex);
         session.setLanguage(loadPageLanguage(items));
 
-        Context context = view.getContext();
         if (session.getApplicableNetworkSize() == 0) {
-            session.setEmptyMessage(context.getString(R.string.paymentpage_error_empty));
+            session.setEmptyMessage(getString(R.string.paymentpage_error_empty));
         } else if (groups.size() == 0) {
-            session.setEmptyMessage(context.getString(R.string.paymentpage_error_notsupported));
+            session.setEmptyMessage(getString(R.string.paymentpage_error_notsupported));
         }
         return session;
     }
@@ -379,7 +419,7 @@ final class PaymentPagePresenter {
         if (!TextUtils.isEmpty(expiryDateLabel) && hasExpiryMonth && hasExpiryYear) {
             group.setHasExpiryDate(true);
             group.setExpiryDateLabel(expiryDateLabel);
-            group.setExpiryDateButton(view.getContext().getString(R.string.widget_date_button));
+            group.setExpiryDateButton(getString(R.string.widget_date_button));
         }
     }
 
@@ -432,8 +472,8 @@ final class PaymentPagePresenter {
             }
 
             @Override
-            public void onError(Throwable error) {
-                callbackChargeError(error);
+            public void onError(Throwable cause) {
+                callbackChargeError(cause);
             }
         });
         Workers.getInstance().forNetworkTasks().execute(chargeTask);

@@ -14,6 +14,7 @@ package net.optile.payment.form;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import net.optile.payment.core.PaymentError;
 import net.optile.payment.core.PaymentException;
 
 /**
@@ -31,7 +32,9 @@ public class Charge {
         try {
             account.put(name, value);
         } catch (JSONException e) {
-            throw new PaymentException("Charge[putValue]", e);
+            String msg = "Charge.putValue failed for name: " + name; 
+            PaymentError error = new PaymentError("Charge", PaymentError.INTERNAL_ERROR, msg);
+            throw new PaymentException(error, msg, e);
         }
     }
 

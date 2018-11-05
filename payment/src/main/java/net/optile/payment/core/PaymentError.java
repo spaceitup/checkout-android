@@ -57,9 +57,7 @@ public final class PaymentError {
      * @param errorData the error data
      */
     public PaymentError(final String source, @ErrorType final String errorType, final String errorData) {
-        this.source = source;
-        this.errorType = errorType;
-        this.errorData = errorData;
+        this(source, errorType, 0, errorData, null);
     }
     
     /**

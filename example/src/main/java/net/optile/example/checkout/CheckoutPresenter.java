@@ -20,7 +20,7 @@ import android.util.Log;
 import net.optile.example.R;
 import net.optile.payment.model.ListResult;
 import net.optile.payment.network.ListConnection;
-import net.optile.payment.network.NetworkException;
+import net.optile.payment.core.PaymentException;
 import net.optile.payment.util.PaymentUtils;
 import rx.Single;
 import rx.SingleSubscriber;
@@ -148,8 +148,8 @@ final class CheckoutPresenter {
                 throw new CheckoutException("Error creating payment session, missing self url");
             }
             return selfUrl.toString();
-        } catch (NetworkException e) {
-            Log.i(TAG, e.details.toString());
+        } catch (PaymentException e) {
+            Log.i(TAG, e.error.toString());
             Log.wtf(TAG, e);
             throw new CheckoutException("Error creating payment session", e);
         }
