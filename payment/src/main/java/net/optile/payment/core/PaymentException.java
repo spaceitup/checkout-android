@@ -17,21 +17,30 @@ package net.optile.payment.core;
 public class PaymentException extends Exception {
 
     /**
+     * The details of the error
+     */
+    public final PaymentError error;
+
+    /**
      * {@inheritDoc}
      *
-     * @param detailMessage the detail message
+     * @param error the error
+     * @param message the extra error info
      */
-    public PaymentException(final String detailMessage) {
-        super(detailMessage);
+    public PaymentException(final PaymentError error, final String message) {
+        super(message);
+        this.error = error;
     }
 
     /**
      * {@inheritDoc}
      *
-     * @param detailMessage the detail message
+     * @param error the error
+     * @param message the extra error info
      * @param cause the cause
      */
-    public PaymentException(final String detailMessage, final Throwable cause) {
-        super(detailMessage, cause);
+    public PaymentException(final PaymentError error, final String message, final Throwable cause) {
+        super(message, cause);
+        this.error = error;
     }
 }

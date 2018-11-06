@@ -72,6 +72,11 @@ final class PaymentList {
     }
 
     void showPaymentSession(PaymentSession session) {
+
+        if (this.session == session) {
+            setVisible(true);
+            return;
+        }
         this.session = session;
         this.selIndex = session.getSelIndex();
 

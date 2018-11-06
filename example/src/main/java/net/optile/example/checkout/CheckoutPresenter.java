@@ -20,7 +20,7 @@ import android.util.Log;
 import net.optile.example.R;
 import net.optile.payment.model.ListResult;
 import net.optile.payment.network.ListConnection;
-import net.optile.payment.network.NetworkException;
+import net.optile.payment.core.PaymentException;
 import net.optile.payment.util.PaymentUtils;
 import rx.Single;
 import rx.SingleSubscriber;
@@ -61,6 +61,20 @@ final class CheckoutPresenter {
         }
     }
 
+    /** 
+     * Handle the received checkout result from the optile Payment SDK.
+     *
+     * @param result the result received from the SDK
+     */
+    void handleCheckoutResult(CheckoutResult result) {
+
+        if (result.success) {
+            view.showPaymentSuccess();
+        } else if (result.paymentResult != null) {
+            Log.i(TAG, "CheckoutError[" + result.paymentResult + "]");
+        }
+    }
+    
     /**
      * Check if the presenter is creating a new payment session.
      *
@@ -77,7 +91,7 @@ final class CheckoutPresenter {
 
     private void callbackPaymentSessionError(Throwable error) {
         this.subscription = null;
-        view.showError(error.toString());
+        view.showPaymentError(error.toString());
         Log.wtf(TAG, error);
     }
     
@@ -134,8 +148,8 @@ final class CheckoutPresenter {
                 throw new CheckoutException("Error creating payment session, missing self url");
             }
             return selfUrl.toString();
-        } catch (NetworkException e) {
-            Log.i(TAG, e.details.toString());
+        } catch (PaymentException e) {
+            Log.i(TAG, e.error.toString());
             Log.wtf(TAG, e);
             throw new CheckoutException("Error creating payment session", e);
         }

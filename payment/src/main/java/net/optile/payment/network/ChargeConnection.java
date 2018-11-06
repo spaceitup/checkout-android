@@ -11,11 +11,11 @@
 
 package net.optile.payment.network;
 
-import static net.optile.payment.network.ErrorDetails.API_ERROR;
-import static net.optile.payment.network.ErrorDetails.CONN_ERROR;
-import static net.optile.payment.network.ErrorDetails.INTERNAL_ERROR;
-import static net.optile.payment.network.ErrorDetails.PROTOCOL_ERROR;
-import static net.optile.payment.network.ErrorDetails.SECURITY_ERROR;
+import static net.optile.payment.core.PaymentError.API_ERROR;
+import static net.optile.payment.core.PaymentError.CONN_ERROR;
+import static net.optile.payment.core.PaymentError.INTERNAL_ERROR;
+import static net.optile.payment.core.PaymentError.PROTOCOL_ERROR;
+import static net.optile.payment.core.PaymentError.SECURITY_ERROR;
 
 import java.io.IOException;
 import java.net.HttpURLConnection;
@@ -26,6 +26,7 @@ import org.json.JSONException;
 
 import com.google.gson.JsonParseException;
 
+import net.optile.payment.core.PaymentException;
 import net.optile.payment.form.Charge;
 import net.optile.payment.model.OperationResult;
 
@@ -46,7 +47,7 @@ public final class ChargeConnection extends BaseConnection {
      * @param charge holding the charge request data
      * @return the OperationResult object received from the Payment API
      */
-    public OperationResult createCharge(final URL url, final Charge charge) throws NetworkException {
+    public OperationResult createCharge(final URL url, final Charge charge) throws PaymentException {
         final String source = "ChargeConnection[createCharge]";
 
         if (url == null) {
@@ -70,18 +71,18 @@ public final class ChargeConnection extends BaseConnection {
                 case HttpURLConnection.HTTP_OK:
                     return handleCreateChargeOk(readFromInputStream(conn));
                 default:
-                    throw createNetworkException(source, API_ERROR, rc, conn);
+                    throw createPaymentException(source, API_ERROR, rc, conn);
             }
         } catch (JsonParseException e) {
-            throw createNetworkException(source, PROTOCOL_ERROR, e);
+            throw createPaymentException(source, PROTOCOL_ERROR, e);
         } catch (MalformedURLException e) {
-            throw createNetworkException(source, INTERNAL_ERROR, e);
+            throw createPaymentException(source, INTERNAL_ERROR, e);
         } catch (JSONException e) {
-            throw createNetworkException(source, INTERNAL_ERROR, e);
+            throw createPaymentException(source, INTERNAL_ERROR, e);
         } catch (IOException e) {
-            throw createNetworkException(source, CONN_ERROR, e);
+            throw createPaymentException(source, CONN_ERROR, e);
         } catch (SecurityException e) {
-            throw createNetworkException(source, SECURITY_ERROR, e);
+            throw createPaymentException(source, SECURITY_ERROR, e);
         } finally {
             close(conn);
         }

@@ -29,9 +29,25 @@ public final class MessageDialogFragment extends DialogFragment {
 
     private String title;
     private String message;
-    private String buttonLabel;
-    private String buttonAction;
+    private String neutralButtonLabel;
     private MessageDialogListener listener;
+
+    /**
+     * Construct an empty MessageDialogFragment
+     */
+    public MessageDialogFragment() {
+    }
+
+    /**
+     * Construct a MessageDialogFragment with a title and message
+     *
+     * @param title displayed in the top of the Dialog
+     * @param message displayed in the middle of the dialog
+     */
+    public MessageDialogFragment(String title, String message) {
+        this.title = title;
+        this.message = message;
+    }
 
     /**
      * Set the title in this message dialog
@@ -52,14 +68,13 @@ public final class MessageDialogFragment extends DialogFragment {
     }
 
     /**
-     * Set the button label and action
+     * Set the neutral button label
      *
      * @param label the Label of the button
      * @param action the action of the button
      */
-    public void setButton(String label, String action) {
-        this.buttonLabel = label;
-        this.buttonAction = action;
+    public void setNeutralButton(String label) {
+        this.neutralButtonLabel = label;
     }
 
     /**
@@ -75,11 +90,26 @@ public final class MessageDialogFragment extends DialogFragment {
      * {@inheritDoc}
      */
     @Override
+    public Dialog onCreateDialog(Bundle savedInstanceState) {
+        Dialog dialog = new Dialog(getActivity(), getTheme()) {
+            @Override
+            public void onBackPressed() {
+                handleBackPressed();
+            }
+        };
+        dialog.getWindow().requestFeature(Window.FEATURE_NO_TITLE);
+        return dialog;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.dialogfragment_message, container, false);
         initTitle(v);
         initMessage(v);
-        initButton(v);
+        initButtons(v);
         return v;
     }
 
@@ -117,36 +147,39 @@ public final class MessageDialogFragment extends DialogFragment {
         textView.setText(message);
     }
 
-    private void initButton(View rootView) {
+    private void initButtons(View rootView) {
         View layout = rootView.findViewById(R.id.layout_button);
+
+        if (TextUtils.isEmpty(neutralButtonLabel)) {
+            layout.setVisibility(View.GONE);
+            return;
+        }
         layout.setVisibility(View.VISIBLE);
         TextView tv = rootView.findViewById(R.id.text_button);
-        tv.setText(buttonLabel);
+        tv.setText(neutralButtonLabel);
 
         layout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                handleButtonClick();
+                handleNeutralButtonClick();
             }
         });
     }
 
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public Dialog onCreateDialog(Bundle savedInstanceState) {
-        Dialog dialog = super.onCreateDialog(savedInstanceState);
-        dialog.getWindow().requestFeature(Window.FEATURE_NO_TITLE);
-        return dialog;
-    }
-
-    private void handleButtonClick() {
+    private void handleNeutralButtonClick() {
         if (this.listener != null) {
-            listener.onMessageDialogClicked(this.buttonAction);
+            listener.onNeutralButtonClick();
         }
         dismiss();
     }
+
+    private void handleBackPressed() {
+        if (this.listener != null) {
+            listener.onCancelled();
+        }
+        dismiss();
+    }
+
 
     private void setTextView(final View rootView, final int resId, final String value) {
         TextView tv = rootView.findViewById(resId);
@@ -159,6 +192,8 @@ public final class MessageDialogFragment extends DialogFragment {
     }
 
     public interface MessageDialogListener {
-        void onMessageDialogClicked(String action);
+        void onNeutralButtonClick();
+
+        void onCancelled();
     }
 }

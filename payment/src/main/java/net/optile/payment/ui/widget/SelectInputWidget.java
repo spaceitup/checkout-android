@@ -82,6 +82,7 @@ public final class SelectInputWidget extends FormWidget {
             public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id) {
                 validate();
             }
+
             @Override
             public void onNothingSelected(AdapterView<?> parentView) {
             }

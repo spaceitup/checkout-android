@@ -16,7 +16,6 @@ import java.util.List;
 import android.support.design.widget.TextInputEditText;
 import android.text.TextUtils;
 import android.view.View;
-import android.widget.TextView;
 import net.optile.payment.R;
 import net.optile.payment.core.PaymentException;
 import net.optile.payment.form.Charge;
@@ -50,7 +49,7 @@ public final class DateWidget extends InputLayoutWidget implements DateDialogFra
         super(name, rootView, label);
         this.button = button;
 
-        input.setKeyListener(null);        
+        input.setKeyListener(null);
         input.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

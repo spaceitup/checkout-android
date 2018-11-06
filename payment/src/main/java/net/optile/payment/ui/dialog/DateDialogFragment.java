@@ -38,7 +38,7 @@ public final class DateDialogFragment extends DialogFragment {
     private int yearIndex;
     private String[] yearLabels;
 
-    private NumberPicker monthPicker;    
+    private NumberPicker monthPicker;
     private int monthIndex;
     private String[] monthLabels;
 

@@ -11,7 +11,6 @@
 
 package net.optile.payment.ui.paymentpage;
 
-import android.content.Context;
 import net.optile.payment.ui.PaymentResult;
 
 /**
@@ -27,11 +26,11 @@ interface PaymentPageView {
     boolean isActive();
 
     /**
-     * Get the Context from this view
+     * Get the string resource given the resource id
      *
-     * @return context
+     * @return the string resource
      */
-    Context getContext();
+    String getStringRes(int resId);
 
     /**
      * Clear the list and clear the center message
@@ -53,24 +52,28 @@ interface PaymentPageView {
     void showPaymentSession(PaymentSession session);
 
     /**
-     * Stop loading and show the error message
-     *
-     * @param resId the resource string id
-     */
-    void showError(int resId);
-
-    /**
-     * Display a notification message to the user
+     * Display a message to the user using a Dialog.
      *
      * @param message the message to be shown
      */
-    void displayMessage(String message);
+    void showMessage(String message);
 
     /**
-     * Abort the payment and notify the user of this SDK
+     * Close the payment page with the given PaymentResult
      *
-     * @param success indicating if the payment request was successful
-     * @param result containing the result code and reason of the payment
+     * @param success indicating if the payment was successful or not
+     * @param result containing the result information about the payment
      */
-    void closePaymentPage(boolean success, PaymentResult result);
+    void closePage(boolean success, PaymentResult result);
+
+    /**
+     * Show a message to the user and close the payment page with the given result
+     *
+     * @param message to be shown in a Dialog to the user
+     * @param success indicating if the payment was successful or not
+     * @param result containing the result information about the payment
+     */
+    void showMessageAndClosePage(String message, boolean success, PaymentResult result);
+
+
 }

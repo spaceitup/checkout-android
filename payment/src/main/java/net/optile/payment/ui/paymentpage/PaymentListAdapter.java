@@ -208,7 +208,7 @@ class PaymentListAdapter extends RecyclerView.Adapter<PaymentListViewHolder> {
         PaymentTheme theme = PaymentUI.getInstance().getPaymentTheme();
         List<FormWidget> widgets = new ArrayList<>();
         DateWidget dateWidget = null;
-        
+
         for (InputElement element : group.elements) {
 
             if (!group.hasExpiryDate()) {
