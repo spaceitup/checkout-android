@@ -33,23 +33,6 @@ public final class MessageDialogFragment extends DialogFragment {
     private MessageDialogListener listener;
 
     /**
-     * Construct an empty MessageDialogFragment
-     */
-    public MessageDialogFragment() {
-    }
-
-    /**
-     * Construct a MessageDialogFragment with a title and message
-     *
-     * @param title displayed in the top of the Dialog
-     * @param message displayed in the middle of the dialog
-     */
-    public MessageDialogFragment(String title, String message) {
-        this.title = title;
-        this.message = message;
-    }
-
-    /**
      * Set the title in this message dialog
      *
      * @param title shown in the top of this message dialog
