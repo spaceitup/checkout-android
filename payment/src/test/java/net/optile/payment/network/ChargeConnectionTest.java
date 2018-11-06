@@ -22,6 +22,7 @@ import org.robolectric.RobolectricTestRunner;
 
 import net.optile.payment.form.Charge;
 import net.optile.payment.model.OperationResult;
+import net.optile.payment.core.PaymentException;
 
 /**
  * The type Charge connection test.
@@ -32,10 +33,10 @@ public class ChargeConnectionTest {
     /**
      * Create charge.
      *
-     * @throws NetworkException the network exception
+     * @throws PaymentException the network exception
      */
     @Test(expected = IllegalArgumentException.class)
-    public void createCharge_invalidURL_exception() throws NetworkException {
+    public void createCharge_invalidURL_exception() throws PaymentException {
         ChargeConnection conn = new ChargeConnection();
         Charge charge = new Charge();
         OperationResult result = conn.createCharge(null, charge);
@@ -44,10 +45,10 @@ public class ChargeConnectionTest {
     /**
      * Create charge invalid data invalid value error.
      *
-     * @throws NetworkException the network exception
+     * @throws PaymentException the network exception
      */
     @Test(expected = IllegalArgumentException.class)
-    public void createCharge_invalidData_exception() throws NetworkException {
+    public void createCharge_invalidData_exception() throws PaymentException {
         ChargeConnection conn = new ChargeConnection();
         URL url = null;
         try {
