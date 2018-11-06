@@ -22,6 +22,7 @@ import org.junit.runner.RunWith;
 import org.robolectric.RobolectricTestRunner;
 
 import net.optile.payment.model.ListResult;
+import net.optile.payment.core.PaymentException;
 
 /**
  * The type List connection test.
@@ -32,10 +33,10 @@ public class ListConnectionTest {
     /**
      * Create payment session invalid baseUrl
      *
-     * @throws NetworkException the network exception
+     * @throws PaymentException the network exception
      */
     @Test(expected = IllegalArgumentException.class)
-    public void createPaymentSession_invalidBaseUrl_IllegalArgumentException() throws NetworkException {
+    public void createPaymentSession_invalidBaseUrl_IllegalArgumentException() throws PaymentException {
         ListConnection conn = new ListConnection();
         ListResult result = conn.createPaymentSession(null, "auth123", "{}");
     }
@@ -43,10 +44,10 @@ public class ListConnectionTest {
     /**
      * Create payment session invalid authorization
      *
-     * @throws NetworkException the network exception
+     * @throws PaymentException the network exception
      */
     @Test(expected = IllegalArgumentException.class)
-    public void createPaymentSession_invalidAuthorization_IllegalArgumentException() throws NetworkException {
+    public void createPaymentSession_invalidAuthorization_IllegalArgumentException() throws PaymentException {
         ListConnection conn = new ListConnection();
         ListResult result = conn.createPaymentSession("http://localhost", null, "{}");
     }
@@ -54,10 +55,10 @@ public class ListConnectionTest {
     /**
      * Create payment session invalid list data
      *
-     * @throws NetworkException the network exception
+     * @throws PaymentException the network exception
      */
     @Test(expected = IllegalArgumentException.class)
-    public void createPaymentSession_invalidListData_IllegalArgumentException() throws NetworkException {
+    public void createPaymentSession_invalidListData_IllegalArgumentException() throws PaymentException {
         ListConnection conn = new ListConnection();
         ListResult result = conn.createPaymentSession("http://localhost", "auth123", "");
     }
@@ -65,10 +66,10 @@ public class ListConnectionTest {
     /**
      * Gets list result invalid url
      *
-     * @throws NetworkException the network exception
+     * @throws PaymentException the network exception
      */
     @Test(expected = IllegalArgumentException.class)
-    public void getListResult_invalidURL_IllegalArgumentException() throws NetworkException {
+    public void getListResult_invalidURL_IllegalArgumentException() throws PaymentException {
         ListConnection conn = new ListConnection();
         ListResult result = conn.getListResult(null);
     }
@@ -76,10 +77,10 @@ public class ListConnectionTest {
     /**
      * Gets language Properties invalid url
      *
-     * @throws NetworkException the network exception
+     * @throws PaymentException the network exception
      */
     @Test(expected = IllegalArgumentException.class)
-    public void getLanguage_invalidURL_IllegalArgumentException() throws NetworkException {
+    public void getLanguage_invalidURL_IllegalArgumentException() throws PaymentException {
         ListConnection conn = new ListConnection();
         Properties lang = conn.getLanguage(null, new Properties());
     }
@@ -87,10 +88,10 @@ public class ListConnectionTest {
     /**
      * Gets language Properties invalid properties
      *
-     * @throws NetworkException the network exception
+     * @throws PaymentException the network exception
      */
     @Test(expected = IllegalArgumentException.class)
-    public void getLanguage_invalidProperties_IllegalArgumentException() throws NetworkException {
+    public void getLanguage_invalidProperties_IllegalArgumentException() throws PaymentException {
         ListConnection conn = new ListConnection();
         URL url = null;
         try {

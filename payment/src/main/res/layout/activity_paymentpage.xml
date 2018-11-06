@@ -16,7 +16,7 @@
         android:layout_alignParentTop="true"
         android:elevation="@dimen/toolbar_elevation"
         app:theme="@style/PaymentThemeToolbar"
-        app:title="@string/title_paymentpage"/>
+        app:title="@string/paymentpage_title"/>
 
     <LinearLayout
         android:focusable="true"

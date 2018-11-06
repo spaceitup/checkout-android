@@ -35,7 +35,12 @@ public interface CheckoutView {
      * 
      * @param error to be shown to the user
      */
-    void showError(String error);
+    void showPaymentError(String error);
+
+    /** 
+     * Show that the payment was successful
+     */
+    void showPaymentSuccess();
 }
 
 

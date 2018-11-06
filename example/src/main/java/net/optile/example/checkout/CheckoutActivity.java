@@ -41,7 +41,7 @@ public final class CheckoutActivity extends AppCompatActivity implements Checkou
 
     private boolean active;
 
-    private boolean paymentSuccess;
+    private CheckoutResult checkoutResult;
     
     /**
      * Create an Intent to launch this activity
@@ -92,37 +92,38 @@ public final class CheckoutActivity extends AppCompatActivity implements Checkou
         super.onResume();
         this.active = true;
 
-        if (paymentSuccess) {
-            paymentSuccess = false;
-            final Handler handler = new Handler();
-            handler.postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-                        showSuccessSnackbar();
-                    }
-                }, 500);
+        if (checkoutResult != null) {
+            presenter.handleCheckoutResult(checkoutResult);
+            this.checkoutResult = null;
         }
-    }
-
-    private void showSuccessSnackbar() {
-        Snackbar snackbar = Snackbar.make(findViewById(R.id.layout_activity),
-                                          getString(R.string.payment_success),
-                                          Snackbar.LENGTH_LONG);
-        snackbar.show();
     }
 
     /**
      * {@inheritDoc}
      */
     @Override
-    public void showError(String error) {
-        MessageDialogFragment dialog = new MessageDialogFragment();
-        dialog.setTitle(getString(R.string.dialog_error_title));
-        dialog.setMessage(String.format(getString(R.string.dialog_error_message), error));
-        dialog.setButton(getString(R.string.dialog_error_button), null);
-        dialog.show(getSupportFragmentManager(), "error_dialog");
+    public void showPaymentSuccess() {
+
+        final Handler handler = new Handler();
+        handler.postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    showSnackbar(R.string.payment_success);
+                }
+            }, 500);
     }
 
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void showPaymentError(String message) {
+        MessageDialogFragment dialog = new MessageDialogFragment();
+        dialog.setTitle(getString(R.string.dialog_error_title));
+        dialog.setMessage(String.format(getString(R.string.dialog_error_message), message));
+        dialog.setNeutralButton(getString(R.string.dialog_error_button));
+        dialog.show(getSupportFragmentManager(), "checkout_dialog");
+    }
     
     /**
      * {@inheritDoc}
@@ -133,13 +134,18 @@ public final class CheckoutActivity extends AppCompatActivity implements Checkou
         if (requestCode != PAYMENT_REQUEST_CODE) {
             return;
         }
+        PaymentResult result = null;
+        boolean success = false;
+
+        // The PaymentResult may be null if the user cancelled the PaymentPage without making any charge
+        // request to be optile Payment API.
         if (data != null && data.hasExtra(PaymentUI.EXTRA_PAYMENT_RESULT)) {
-            PaymentResult result = data.getParcelableExtra(PaymentUI.EXTRA_PAYMENT_RESULT);
-            Log.i(TAG, "PaymentResult[" + result.toString() + "]");
+            result = data.getParcelableExtra(PaymentUI.EXTRA_PAYMENT_RESULT);
         }
         if (resultCode == Activity.RESULT_OK) {
-            this.paymentSuccess = true;
+            success = true;
         }
+        this.checkoutResult = new CheckoutResult(success, result);
     }
     
     /**
@@ -160,6 +166,12 @@ public final class CheckoutActivity extends AppCompatActivity implements Checkou
         paymentUI.showPaymentPage(this, PAYMENT_REQUEST_CODE);
     }
 
+    private void showSnackbar(int resId) {
+        Snackbar snackbar = Snackbar.make(findViewById(R.id.layout_activity),
+                                          getString(resId), Snackbar.LENGTH_LONG);
+        snackbar.show();
+    }
+    
     private void onButtonClicked() {
         presenter.createPaymentSession(this);
     }

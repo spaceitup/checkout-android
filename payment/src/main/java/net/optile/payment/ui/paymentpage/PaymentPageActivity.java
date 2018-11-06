@@ -22,13 +22,13 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ProgressBar;
 import net.optile.payment.R;
 import net.optile.payment.ui.PaymentResult;
 import net.optile.payment.ui.PaymentUI;
+import net.optile.payment.ui.dialog.MessageDialogFragment;
 import net.optile.payment.ui.widget.FormWidget;
 import net.optile.payment.validation.ValidationResult;
 import net.optile.payment.validation.Validator;
@@ -38,19 +38,14 @@ import net.optile.payment.validation.Validator;
  */
 public final class PaymentPageActivity extends AppCompatActivity implements PaymentPageView {
 
-    private final static String TAG = "pay_PaymentPageActivity";
-    private final static String EXTRA_LISTURL = "extra_listurl";
+    private static final String TAG = "pay_PaymentPageActivity";
+    private static final String EXTRA_LISTURL = "extra_listurl";
 
     private PaymentPagePresenter presenter;
-
     private String listUrl;
-
     private boolean active;
-
     private PaymentList paymentList;
-
     private ProgressBar progressBar;
-
     private int cachedListIndex;
 
     /**
@@ -152,8 +147,8 @@ public final class PaymentPageActivity extends AppCompatActivity implements Paym
      * {@inheritDoc}
      */
     @Override
-    public Context getContext() {
-        return getApplicationContext();
+    public String getStringRes(int resId) {
+        return getString(resId);
     }
 
     /**
@@ -165,20 +160,6 @@ public final class PaymentPageActivity extends AppCompatActivity implements Paym
             return;
         }
         paymentList.clear();
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public void closePaymentPage(boolean success, PaymentResult result) {
-        if (!isActive()) {
-            return;
-        }
-        Intent intent = new Intent();
-        intent.putExtra(PaymentUI.EXTRA_PAYMENT_RESULT, result);
-        setResult(success ? Activity.RESULT_OK : Activity.RESULT_CANCELED, intent);
-        finish();
     }
 
     /**
@@ -220,24 +201,35 @@ public final class PaymentPageActivity extends AppCompatActivity implements Paym
      * {@inheritDoc}
      */
     @Override
-    public void displayMessage(String message) {
+    public void closePage(boolean success, PaymentResult result) {
         if (!isActive()) {
             return;
         }
-        showSnackBar(message);
+        setActivityResult(success, result);
+        finish();
     }
 
     /**
      * {@inheritDoc}
      */
     @Override
-    public void showError(int resId) {
+    public void showMessage(String message) {
         if (!isActive()) {
             return;
         }
-        paymentList.setVisible(true);
-        progressBar.setVisibility(View.GONE);
-        showSnackBar(getString(resId));
+        showMessageDialog(message, false);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void showMessageAndClosePage(String message, boolean success, PaymentResult result) {
+        if (!isActive()) {
+            return;
+        }
+        setActivityResult(false, result);
+        showMessageDialog(message, true);
     }
 
     void makeChargeRequest(PaymentGroup group, Map<String, FormWidget> widgets) {
@@ -256,10 +248,42 @@ public final class PaymentPageActivity extends AppCompatActivity implements Paym
         String msg = item.translateError(result.getError());
 
         if (TextUtils.isEmpty(msg)) {
-            msg = getString(R.string.error_paymentpage_validation);
+            msg = getString(R.string.paymentpage_error_validation);
         }
         result.setMessage(msg);
         return result;
+    }
+
+    private void showMessageDialog(final String message, final boolean finish) {
+        if (!isActive()) {
+            return;
+        }
+        MessageDialogFragment dialog = new MessageDialogFragment();
+        dialog.setMessage(message);
+        dialog.setNeutralButton(getString(R.string.dialog_close_button));
+        dialog.setListener(new MessageDialogFragment.MessageDialogListener() {
+            @Override
+            public void onNeutralButtonClick() {
+                if (finish) {
+                    finish();
+                }
+            }
+
+            @Override
+            public void onCancelled() {
+                if (finish) {
+                    finish();
+                }
+            }
+        });
+        dialog.show(getSupportFragmentManager(), "paymentpage_dialog");
+    }
+
+    private void setActivityResult(boolean success, PaymentResult result) {
+        Intent intent = new Intent();
+        intent.putExtra(PaymentUI.EXTRA_PAYMENT_RESULT, result);
+        int activityResult = success ? Activity.RESULT_OK : Activity.RESULT_CANCELED;
+        setResult(activityResult, intent);
     }
 
     private void showSnackBar(String message) {
