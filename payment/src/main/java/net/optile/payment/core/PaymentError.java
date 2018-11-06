@@ -59,7 +59,7 @@ public final class PaymentError {
     public PaymentError(final String source, @ErrorType final String errorType, final String errorData) {
         this(source, errorType, 0, errorData, null);
     }
-    
+
     /**
      * Construct a new PaymentError object containing all information about a network error
      *

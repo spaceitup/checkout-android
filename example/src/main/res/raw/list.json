@@ -2,7 +2,7 @@
   "transactionId": "tr102",
   "integration":"DISPLAY_NATIVE",
   "presetFirst":"false",
-  "country": "FR",
+  "country": "DE",
   "customer": {
     "number": "42",
     "email": "john.doe@example.com"
@@ -14,7 +14,7 @@
   },
   "style" : {
     "hostedVersion":"v2",
-    "language":"nl_NL"
+    "language":"en_US"
   },
   "callback": {
     "returnUrl": "https://dev.oscato.com/shop/success.html",

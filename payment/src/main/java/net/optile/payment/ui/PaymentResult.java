@@ -16,10 +16,10 @@ import android.os.Parcel;
 import android.os.Parcelable;
 import android.text.TextUtils;
 import android.util.Log;
+import net.optile.payment.core.PaymentError;
 import net.optile.payment.model.Interaction;
 import net.optile.payment.model.OperationResult;
 import net.optile.payment.util.GsonHelper;
-import net.optile.payment.core.PaymentError;
 
 /**
  * Class for holding the payment interaction and operationresult
@@ -44,16 +44,16 @@ public final class PaymentResult implements Parcelable {
     private OperationResult operationResult;
 
     /**
-     * Construct a new PaymentResult with PaymentError. 
+     * Construct a new PaymentResult with PaymentError.
      *
      * @param resultInfo a string containing a description of the payment result
-     * @param error the error describing the details about the error situation 
+     * @param error the error describing the details about the error situation
      */
     public PaymentResult(String resultInfo, PaymentError error) {
         this.resultInfo = resultInfo;
         this.error = error;
     }
-    
+
     /**
      * Construct a new PaymentResult with the interaction values and the optional operationResult
      *
@@ -97,7 +97,7 @@ public final class PaymentResult implements Parcelable {
     public PaymentError getPaymentError() {
         return error;
     }
-    
+
     public String getResultInfo() {
         return resultInfo;
     }

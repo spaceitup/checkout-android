@@ -32,15 +32,15 @@ public final class MessageDialogFragment extends DialogFragment {
     private String neutralButtonLabel;
     private MessageDialogListener listener;
 
-    /** 
+    /**
      * Construct an empty MessageDialogFragment
      */
     public MessageDialogFragment() {
     }
-    
-    /** 
+
+    /**
      * Construct a MessageDialogFragment with a title and message
-     * 
+     *
      * @param title displayed in the top of the Dialog
      * @param message displayed in the middle of the dialog
      */
@@ -48,7 +48,7 @@ public final class MessageDialogFragment extends DialogFragment {
         this.title = title;
         this.message = message;
     }
-    
+
     /**
      * Set the title in this message dialog
      *
@@ -91,7 +91,7 @@ public final class MessageDialogFragment extends DialogFragment {
      */
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
-        Dialog dialog = new Dialog(getActivity(), getTheme()){
+        Dialog dialog = new Dialog(getActivity(), getTheme()) {
             @Override
             public void onBackPressed() {
                 handleBackPressed();
@@ -149,7 +149,7 @@ public final class MessageDialogFragment extends DialogFragment {
 
     private void initButtons(View rootView) {
         View layout = rootView.findViewById(R.id.layout_button);
-        
+
         if (TextUtils.isEmpty(neutralButtonLabel)) {
             layout.setVisibility(View.GONE);
             return;
@@ -180,7 +180,7 @@ public final class MessageDialogFragment extends DialogFragment {
         dismiss();
     }
 
-    
+
     private void setTextView(final View rootView, final int resId, final String value) {
         TextView tv = rootView.findViewById(resId);
         if (TextUtils.isEmpty(value)) {
@@ -193,6 +193,7 @@ public final class MessageDialogFragment extends DialogFragment {
 
     public interface MessageDialogListener {
         void onNeutralButtonClick();
+
         void onCancelled();
     }
 }

@@ -6,10 +6,10 @@
     <string name="paymentpage_error_unknown">An error occurred while handling your payment.</string>
     <string name="paymentpage_error_validation">Invalid input value</string>
     <string name="paymentpage_method_logo">PaymentMethod logo</string>
-    
+
     <string name="widget_input_icon">Input Field</string>
     <string name="widget_date_format">%1$s / %2$s</string>
     <string name="widget_date_button">Select</string>
 
-    <string name="dialog_close_button">Close</string>    
+    <string name="dialog_close_button">Close</string>
 </resources>

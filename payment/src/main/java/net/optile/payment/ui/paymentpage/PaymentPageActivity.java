@@ -22,17 +22,16 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ProgressBar;
 import net.optile.payment.R;
 import net.optile.payment.ui.PaymentResult;
 import net.optile.payment.ui.PaymentUI;
+import net.optile.payment.ui.dialog.MessageDialogFragment;
 import net.optile.payment.ui.widget.FormWidget;
 import net.optile.payment.validation.ValidationResult;
 import net.optile.payment.validation.Validator;
-import net.optile.payment.ui.dialog.MessageDialogFragment;
 
 /**
  * The PaymentPageActivity showing available payment methods
@@ -48,7 +47,7 @@ public final class PaymentPageActivity extends AppCompatActivity implements Paym
     private PaymentList paymentList;
     private ProgressBar progressBar;
     private int cachedListIndex;
-    
+
     /**
      * Create the start intent for this Activity
      *
@@ -148,8 +147,8 @@ public final class PaymentPageActivity extends AppCompatActivity implements Paym
      * {@inheritDoc}
      */
     @Override
-    public Context getContext() {
-        return getApplicationContext();
+    public String getStringRes(int resId) {
+        return getString(resId);
     }
 
     /**
@@ -220,7 +219,7 @@ public final class PaymentPageActivity extends AppCompatActivity implements Paym
         }
         showMessageDialog(message, false);
     }
-    
+
     /**
      * {@inheritDoc}
      */
@@ -263,19 +262,20 @@ public final class PaymentPageActivity extends AppCompatActivity implements Paym
         dialog.setMessage(message);
         dialog.setNeutralButton(getString(R.string.dialog_close_button));
         dialog.setListener(new MessageDialogFragment.MessageDialogListener() {
-                @Override
-                public void onNeutralButtonClick() {
-                    if (finish) {
-                        finish();
-                    }
+            @Override
+            public void onNeutralButtonClick() {
+                if (finish) {
+                    finish();
                 }
-                @Override
-                public void onCancelled() {
-                    if (finish) {
-                        finish();
-                    }
+            }
+
+            @Override
+            public void onCancelled() {
+                if (finish) {
+                    finish();
                 }
-            });
+            }
+        });
         dialog.show(getSupportFragmentManager(), "paymentpage_dialog");
     }
 
@@ -285,7 +285,7 @@ public final class PaymentPageActivity extends AppCompatActivity implements Paym
         int activityResult = success ? Activity.RESULT_OK : Activity.RESULT_CANCELED;
         setResult(activityResult, intent);
     }
-    
+
     private void showSnackBar(String message) {
         if (TextUtils.isEmpty(message)) {
             return;

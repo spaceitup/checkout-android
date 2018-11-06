@@ -32,7 +32,7 @@ public class Charge {
         try {
             account.put(name, value);
         } catch (JSONException e) {
-            String msg = "Charge.putValue failed for name: " + name; 
+            String msg = "Charge.putValue failed for name: " + name;
             PaymentError error = new PaymentError("Charge", PaymentError.INTERNAL_ERROR, msg);
             throw new PaymentException(error, msg, e);
         }

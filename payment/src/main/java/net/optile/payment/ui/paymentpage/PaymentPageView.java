@@ -11,7 +11,6 @@
 
 package net.optile.payment.ui.paymentpage;
 
-import android.content.Context;
 import net.optile.payment.ui.PaymentResult;
 
 /**
@@ -27,11 +26,11 @@ interface PaymentPageView {
     boolean isActive();
 
     /**
-     * Get the Context from this view
+     * Get the string resource given the resource id
      *
-     * @return context
+     * @return the string resource
      */
-    Context getContext();
+    String getStringRes(int resId);
 
     /**
      * Clear the list and clear the center message
@@ -67,9 +66,9 @@ interface PaymentPageView {
      */
     void closePage(boolean success, PaymentResult result);
 
-    /** 
+    /**
      * Show a message to the user and close the payment page with the given result
-     * 
+     *
      * @param message to be shown in a Dialog to the user
      * @param success indicating if the payment was successful or not
      * @param result containing the result information about the payment

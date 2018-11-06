@@ -26,9 +26,9 @@ import org.json.JSONException;
 
 import com.google.gson.JsonParseException;
 
+import net.optile.payment.core.PaymentException;
 import net.optile.payment.form.Charge;
 import net.optile.payment.model.OperationResult;
-import net.optile.payment.core.PaymentException;
 
 /**
  * Class implementing the communication with the Charge payment API

@@ -29,8 +29,8 @@ import com.google.gson.JsonParseException;
 
 import android.net.Uri;
 import android.text.TextUtils;
-import net.optile.payment.model.ListResult;
 import net.optile.payment.core.PaymentException;
+import net.optile.payment.model.ListResult;
 
 /**
  * Class implementing the communication with the List payment API

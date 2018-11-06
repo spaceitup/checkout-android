@@ -28,9 +28,9 @@ import com.google.gson.JsonParseException;
 import android.os.Build;
 import android.text.TextUtils;
 import android.util.Log;
-import net.optile.payment.model.ErrorInfo;
-import net.optile.payment.core.PaymentException;
 import net.optile.payment.core.PaymentError;
+import net.optile.payment.core.PaymentException;
+import net.optile.payment.model.ErrorInfo;
 
 /**
  * The base class for all Payment API implementations
