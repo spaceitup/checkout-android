@@ -84,7 +84,7 @@ final class PaymentSession {
     String translateInteraction(Interaction interaction) {
         StringBuilder sb = new StringBuilder("interaction.");
         sb.append(interaction.getCode()).append(".").append(interaction.getReason());
-        return translate(sb.toString(), sb.toString());
+        return translate(sb.toString(), null);
     }
 
     int getApplicableNetworkSize() {
