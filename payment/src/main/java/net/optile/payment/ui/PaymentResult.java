@@ -55,16 +55,25 @@ public final class PaymentResult implements Parcelable {
     }
 
     /**
+     * Construct a new PaymentResult with PaymentError.
+     *
+     * @param the OperationResult containing the interaction and resultInfo
+     */
+    public PaymentResult(OperationResult operationResult) {
+        this.resultInfo = operationResult.getResultInfo();
+        this.interaction = operationResult.getInteraction();
+        this.operationResult = operationResult;
+    }
+    
+    /**
      * Construct a new PaymentResult with the interaction values and the optional operationResult
      *
      * @param resultInfo a string containing a description of the result
      * @param interaction the mandatory interaction
-     * @param operationResult the optional OperationResult
      */
-    public PaymentResult(String resultInfo, Interaction interaction, OperationResult operationResult) {
+    public PaymentResult(String resultInfo, Interaction interaction) {
         this.resultInfo = resultInfo;
         this.interaction = interaction;
-        this.operationResult = operationResult;
     }
 
     private PaymentResult() {

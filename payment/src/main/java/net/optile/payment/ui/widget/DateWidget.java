@@ -148,7 +148,7 @@ public final class DateWidget extends InputLayoutWidget implements DateDialogFra
         DateDialogFragment dialog = new DateDialogFragment();
         dialog.setTitle(label);
         dialog.setValues(selMonthIndex, monthLabels, selYearIndex, yearLabels);
-        dialog.setButton(button, null);
+        dialog.setButton(button);
         dialog.setListener(this);
         return dialog;
     }

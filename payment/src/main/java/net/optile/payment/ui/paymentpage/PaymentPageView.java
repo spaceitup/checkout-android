@@ -52,7 +52,7 @@ interface PaymentPageView {
     void showPaymentSession(PaymentSession session);
 
     /**
-     * Display a message to the user using a Dialog.
+     * Display a message to the user using a Dialog
      *
      * @param message the message to be shown
      */
@@ -60,27 +60,21 @@ interface PaymentPageView {
 
     /**
      * Close the payment page with the given PaymentResult
-     *
-     * @param success indicating if the payment was successful or not
-     * @param result containing the result information about the payment
      */
-    void closePage(boolean success, PaymentResult result);
+    void closePage();
 
     /**
      * Show a message to the user and close the payment page with the given result
      *
      * @param message to be shown in a Dialog to the user
-     * @param success indicating if the payment was successful or not
-     * @param result containing the result information about the payment
      */
-    void showMessageAndClosePage(String message, boolean success, PaymentResult result);
+    void showMessageAndClosePage(String message);
 
     /** 
-     * Set the current activity result 
+     * Set the current activity payment result 
      * 
      * @param success true when the charge request was successful, false otherwise
-     * @param result containing the current Payment result
+     * @param result containing the Payment result state
      */
-    void setActivityResult(boolean success, PaymentResult result);
-
+    void setPaymentResult(boolean success, PaymentResult result);
 }

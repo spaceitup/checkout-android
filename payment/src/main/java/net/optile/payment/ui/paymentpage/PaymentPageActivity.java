@@ -201,11 +201,10 @@ public final class PaymentPageActivity extends AppCompatActivity implements Paym
      * {@inheritDoc}
      */
     @Override
-    public void closePage(boolean success, PaymentResult result) {
+    public void closePage() {
         if (!isActive()) {
             return;
         }
-        setActivityResult(success, result);
         finish();
     }
 
@@ -224,11 +223,10 @@ public final class PaymentPageActivity extends AppCompatActivity implements Paym
      * {@inheritDoc}
      */
     @Override
-    public void showMessageAndClosePage(String message, boolean success, PaymentResult result) {
+    public void showMessageAndClosePage(String message) {
         if (!isActive()) {
             return;
         }
-        setActivityResult(false, result);
         showMessageDialog(message, true);
     }
 
@@ -236,7 +234,7 @@ public final class PaymentPageActivity extends AppCompatActivity implements Paym
      * {@inheritDoc}
      */
     @Override
-    public void setActivityResult(boolean success, PaymentResult result) {
+    public void setPaymentResult(boolean success, PaymentResult result) {
         if (!isActive()) {
             return;
         }

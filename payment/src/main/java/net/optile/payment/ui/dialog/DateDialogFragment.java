@@ -32,7 +32,6 @@ public final class DateDialogFragment extends DialogFragment {
 
     private String title;
     private String buttonLabel;
-    private String buttonAction;
 
     private NumberPicker yearPicker;
     private int yearIndex;
@@ -57,11 +56,9 @@ public final class DateDialogFragment extends DialogFragment {
      * Set the button label and action
      *
      * @param label the Label of the button
-     * @param action the action of the button
      */
-    public void setButton(String label, String action) {
+    public void setButton(String label) {
         this.buttonLabel = label;
-        this.buttonAction = action;
     }
 
     /**
