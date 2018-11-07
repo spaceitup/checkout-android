@@ -232,6 +232,20 @@ public final class PaymentPageActivity extends AppCompatActivity implements Paym
         showMessageDialog(message, true);
     }
 
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void setActivityResult(boolean success, PaymentResult result) {
+        if (!isActive()) {
+            return;
+        }
+        Intent intent = new Intent();
+        intent.putExtra(PaymentUI.EXTRA_PAYMENT_RESULT, result);
+        int activityResult = success ? Activity.RESULT_OK : Activity.RESULT_CANCELED;
+        setResult(activityResult, intent);
+    }
+    
     void makeChargeRequest(PaymentGroup group, Map<String, FormWidget> widgets) {
         paymentList.hideKeyboard();
         presenter.charge(widgets, group);
@@ -277,13 +291,6 @@ public final class PaymentPageActivity extends AppCompatActivity implements Paym
             }
         });
         dialog.show(getSupportFragmentManager(), "paymentpage_dialog");
-    }
-
-    private void setActivityResult(boolean success, PaymentResult result) {
-        Intent intent = new Intent();
-        intent.putExtra(PaymentUI.EXTRA_PAYMENT_RESULT, result);
-        int activityResult = success ? Activity.RESULT_OK : Activity.RESULT_CANCELED;
-        setResult(activityResult, intent);
     }
 
     private void showSnackBar(String message) {

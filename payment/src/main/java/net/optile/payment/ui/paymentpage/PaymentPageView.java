@@ -75,5 +75,12 @@ interface PaymentPageView {
      */
     void showMessageAndClosePage(String message, boolean success, PaymentResult result);
 
+    /** 
+     * Set the current activity result 
+     * 
+     * @param success true when the charge request was successful, false otherwise
+     * @param result containing the current Payment result
+     */
+    void setActivityResult(boolean success, PaymentResult result);
 
 }

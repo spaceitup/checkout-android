@@ -72,6 +72,8 @@ final class CheckoutPresenter {
             view.showPaymentSuccess();
         } else if (result.paymentResult != null) {
             Log.i(TAG, "CheckoutError[" + result.paymentResult + "]");
+        } else {
+            Log.i(TAG, "CheckoutError[unknown]");
         }
     }
     

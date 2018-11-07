@@ -198,10 +198,10 @@ final class PaymentPagePresenter {
         }
     }
 
-    private void reloadPaymentSession(Interaction interaction) {
-        if (!view.isActive()) {
-            return;
-        }
+    private void reloadPaymentSession(String resultInfo, Interaction interaction, OperationResult result) {
+        PaymentResult paymentResult = new PaymentResult(resultInfo, interaction, result);
+        view.setActivityResult(false, paymentResult);
+        
         this.reloadInteraction = interaction;
         loadPaymentSession(this.listUrl);
     }
@@ -226,7 +226,7 @@ final class PaymentPagePresenter {
         }
         switch (error.errorType) {
             case PaymentError.CONN_ERROR:
-                continueSessionWithWarning(R.string.paymentpage_error_connection);
+                continueSessionWithWarning(R.string.paymentpage_error_connection, resultInfo, error);
                 break;
             default:
                 closeSessionWithError(R.string.paymentpage_error_unknown, resultInfo, error);
@@ -238,11 +238,11 @@ final class PaymentPagePresenter {
         switch (interaction.getCode()) {
             case InteractionCode.RELOAD:
             case InteractionCode.TRY_OTHER_NETWORK:
-                reloadPaymentSession(interaction);
+                reloadPaymentSession(resultInfo, interaction, result);
                 break;
             case InteractionCode.RETRY:
             case InteractionCode.TRY_OTHER_ACCOUNT:
-                continueSessionWithWarning(interaction);
+                continueSessionWithWarning(resultInfo, interaction, result);
                 break;
             case InteractionCode.ABORT:
                 handleChargeInteractionAbort(resultInfo, interaction, result);
@@ -270,12 +270,18 @@ final class PaymentPagePresenter {
         }
     }
 
-    private void continueSessionWithWarning(int errorResId) {
+    private void continueSessionWithWarning(int errorResId, String resultInfo, PaymentError error) {
+        PaymentResult paymentResult = new PaymentResult(resultInfo, error);
+        view.setActivityResult(false, paymentResult);
+
         view.showPaymentSession(this.session);
         view.showMessage(view.getStringRes(errorResId));
     }
 
-    private void continueSessionWithWarning(Interaction interaction) {
+    private void continueSessionWithWarning(String resultInfo, Interaction interaction, OperationResult result) {
+        PaymentResult paymentResult = new PaymentResult(resultInfo, interaction, result);
+        view.setActivityResult(false, paymentResult);
+
         view.showPaymentSession(this.session);
         showInteractionMessage(interaction);
     }
