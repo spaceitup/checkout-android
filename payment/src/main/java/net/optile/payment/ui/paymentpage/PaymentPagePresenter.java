@@ -419,8 +419,11 @@ final class PaymentPagePresenter {
      */
     private void setExpiryDateSupport(PaymentGroup group) {
         PaymentItem item = group.getActivePaymentItem();
-        String expiryDateLabel = item.translateAccountLabel(PaymentInputType.EXPIRY_DATE);
 
+        if (TextUtils.isEmpty(item.translateAccountLabel(PaymentInputType.EXPIRY_DATE))) {
+            return;
+        }
+        boolean hasDateLabel = 
         boolean hasExpiryMonth = false;
         boolean hasExpiryYear = false;
 

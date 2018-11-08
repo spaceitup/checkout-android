@@ -30,7 +30,7 @@ import net.optile.payment.validation.ValidationResult;
  */
 public final class DateWidget extends InputLayoutWidget implements DateDialogFragment.DateDialogListener {
 
-    private final String button;
+    private String button;
     private InputElement monthElement;
     private InputElement yearElement;
     private String expiryMonth;
@@ -45,10 +45,8 @@ public final class DateWidget extends InputLayoutWidget implements DateDialogFra
      * @param label localized label for this date widget
      * @param button localized button label
      */
-    public DateWidget(String name, View rootView, String label, String button) {
-        super(name, rootView, label);
-        this.button = button;
-
+    public DateWidget(String name, View rootView) {
+        super(name, rootView);
         input.setKeyListener(null);
         input.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -59,6 +57,10 @@ public final class DateWidget extends InputLayoutWidget implements DateDialogFra
         setLayoutWidth(WEIGHT_REDUCED);
     }
 
+    public void setButton(String button) {
+        this.button = button;
+    }
+    
     public void setMonthInputElement(InputElement monthElement) {
         this.monthElement = monthElement;
     }
@@ -127,8 +129,8 @@ public final class DateWidget extends InputLayoutWidget implements DateDialogFra
         String[] monthLabels = new String[monthOptions.size()];
         int selYearIndex = 0;
         String[] yearLabels = new String[yearOptions.size()];
-
         SelectOption option;
+
         for (int i = 0, e = monthOptions.size(); i < e; i++) {
             option = monthOptions.get(i);
             monthLabels[i] = option.getLabel();

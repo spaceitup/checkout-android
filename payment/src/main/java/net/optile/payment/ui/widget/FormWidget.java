@@ -59,6 +59,9 @@ public abstract class FormWidget {
         return rootView.getContext().getString(resId);
     }
 
+    public void setLabel(String label) {
+    }
+    
     public void setIconResource(int resId) {
 
         if (icon != null) {

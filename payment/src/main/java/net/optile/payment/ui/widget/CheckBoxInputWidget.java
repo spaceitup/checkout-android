@@ -17,14 +17,12 @@ import android.widget.TextView;
 import net.optile.payment.R;
 import net.optile.payment.core.PaymentException;
 import net.optile.payment.form.Charge;
-import net.optile.payment.model.InputElement;
 
 /**
  * Class for handling the CheckBox input type
  */
 public final class CheckBoxInputWidget extends FormWidget {
 
-    private final InputElement element;
     private final CheckBox value;
     private final TextView label;
 
@@ -35,14 +33,17 @@ public final class CheckBoxInputWidget extends FormWidget {
      * @param rootView the root view of this input
      * @param element the InputElement this widget is displaying
      */
-    public CheckBoxInputWidget(String name, View rootView, InputElement element) {
+    public CheckBoxInputWidget(String name, View rootView) {
         super(name, rootView);
-        this.element = element;
         label = rootView.findViewById(R.id.label_value);
         value = rootView.findViewById(R.id.checkbox_value);
     }
 
+    public void setLabel(String label) {
+        this.label.setText(label);
+    }
+    
     public void putValue(Charge charge) throws PaymentException {
-        charge.putValue(element.getName(), value.isChecked());
+        charge.putValue(name, value.isChecked());
     }
 }
