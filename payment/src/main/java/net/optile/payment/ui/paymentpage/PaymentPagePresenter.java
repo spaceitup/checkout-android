@@ -303,12 +303,12 @@ final class PaymentPagePresenter {
     private void closeSessionWithError(PaymentResult result) {
         String msg = translateInteraction(result.getInteraction(), view.getStringRes(R.string.paymentpage_error_unknown));
         view.setPaymentResult(false, result);
-        view.showMessageAndClosePage(msg);
+        view.closePageWithMessage(msg);
     }
 
     private void closeSessionWithError(int msgResId, PaymentResult result) {
         view.setPaymentResult(false, result);
-        view.showMessageAndClosePage(view.getStringRes(msgResId));
+        view.closePageWithMessage(view.getStringRes(msgResId));
     }
 
     private String translateInteraction(Interaction interaction, String defMessage) {

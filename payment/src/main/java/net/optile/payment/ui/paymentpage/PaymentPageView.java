@@ -59,16 +59,16 @@ interface PaymentPageView {
     void showMessage(String message);
 
     /**
-     * Close the payment page with the given PaymentResult
+     * Close the payment page
      */
     void closePage();
 
     /**
-     * Show a message to the user and close the payment page with the given result
+     * First show the message to the user and then close the Payment page
      *
      * @param message to be shown in a Dialog to the user
      */
-    void showMessageAndClosePage(String message);
+    void closePageWithMessage(String message);
 
     /** 
      * Set the current activity payment result 

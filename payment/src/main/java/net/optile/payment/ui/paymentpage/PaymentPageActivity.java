@@ -223,7 +223,7 @@ public final class PaymentPageActivity extends AppCompatActivity implements Paym
      * {@inheritDoc}
      */
     @Override
-    public void showMessageAndClosePage(String message) {
+    public void closePageWithMessage(String message) {
         if (!isActive()) {
             return;
         }
