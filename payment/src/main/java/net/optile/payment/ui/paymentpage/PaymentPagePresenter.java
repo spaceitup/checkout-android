@@ -220,9 +220,7 @@ final class PaymentPagePresenter {
             handleChargePaymentError((PaymentException) cause);
             return;
         }
-        String resultInfo = cause.toString();
-        PaymentError error = new PaymentError("PaymentPage", PaymentError.INTERNAL_ERROR, resultInfo);
-        closeSessionWithError(new PaymentResult(resultInfo, error));
+        closeSessionWithError(createPaymentResult(cause));
     }
 
     private void handleChargePaymentError(PaymentException cause) {
