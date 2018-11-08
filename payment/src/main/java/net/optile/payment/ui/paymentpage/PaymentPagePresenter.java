@@ -175,11 +175,13 @@ final class PaymentPagePresenter {
     private void handleLoadPaymentError(PaymentException cause) {
         PaymentError error = cause.error;
         ErrorInfo info = error.errorInfo;
+        PaymentResult result;
         
         if (info != null) {
-            PaymentResult result = new PaymentResult(info.getResultInfo(), info.getInteraction());
+            result = new PaymentResult(info.getResultInfo(), info.getInteraction());
             closeSessionWithError(result);
         } else {
+            result = new PaymentResult(cause.getMessage(), error);
             int msgResId;
             switch (error.errorType) {
             case PaymentError.CONN_ERROR:
@@ -188,7 +190,6 @@ final class PaymentPagePresenter {
             default:
                 msgResId = R.string.paymentpage_error_unknown;
             }
-            PaymentResult result = new PaymentResult(cause.getMessage(), error);
             closeSessionWithError(msgResId, result);
         }
     }
@@ -226,13 +227,14 @@ final class PaymentPagePresenter {
 
     private void handleChargePaymentError(PaymentException cause) {
         PaymentError error = cause.error;
+        ErrorInfo info = error.errorInfo;
+        PaymentResult result;
         
-        if (error.errorInfo != null) {
-            Interaction interaction = error.errorInfo.getInteraction();
-            PaymentResult result = new PaymentResult(error.errorInfo.getResultInfo(), interaction);
+        if (info != null) {
+            result = new PaymentResult(info.getResultInfo(), info.getInteraction());
             handleChargeInteractionError(result);
         } else {
-            PaymentResult result = new PaymentResult(cause.getMessage(), error);
+            result = new PaymentResult(cause.getMessage(), error);
             switch (error.errorType) {
                 case PaymentError.CONN_ERROR:
                     continueSessionWithWarning(R.string.paymentpage_error_connection, result);
