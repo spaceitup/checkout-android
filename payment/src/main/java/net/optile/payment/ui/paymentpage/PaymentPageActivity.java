@@ -201,11 +201,10 @@ public final class PaymentPageActivity extends AppCompatActivity implements Paym
      * {@inheritDoc}
      */
     @Override
-    public void closePage(boolean success, PaymentResult result) {
+    public void closePage() {
         if (!isActive()) {
             return;
         }
-        setActivityResult(success, result);
         finish();
     }
 
@@ -224,14 +223,27 @@ public final class PaymentPageActivity extends AppCompatActivity implements Paym
      * {@inheritDoc}
      */
     @Override
-    public void showMessageAndClosePage(String message, boolean success, PaymentResult result) {
+    public void closePageWithMessage(String message) {
         if (!isActive()) {
             return;
         }
-        setActivityResult(false, result);
         showMessageDialog(message, true);
     }
 
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void setPaymentResult(boolean success, PaymentResult result) {
+        if (!isActive()) {
+            return;
+        }
+        Intent intent = new Intent();
+        intent.putExtra(PaymentUI.EXTRA_PAYMENT_RESULT, result);
+        int activityResult = success ? Activity.RESULT_OK : Activity.RESULT_CANCELED;
+        setResult(activityResult, intent);
+    }
+    
     void makeChargeRequest(PaymentGroup group, Map<String, FormWidget> widgets) {
         paymentList.hideKeyboard();
         presenter.charge(widgets, group);
@@ -277,13 +289,6 @@ public final class PaymentPageActivity extends AppCompatActivity implements Paym
             }
         });
         dialog.show(getSupportFragmentManager(), "paymentpage_dialog");
-    }
-
-    private void setActivityResult(boolean success, PaymentResult result) {
-        Intent intent = new Intent();
-        intent.putExtra(PaymentUI.EXTRA_PAYMENT_RESULT, result);
-        int activityResult = success ? Activity.RESULT_OK : Activity.RESULT_CANCELED;
-        setResult(activityResult, intent);
     }
 
     private void showSnackBar(String message) {

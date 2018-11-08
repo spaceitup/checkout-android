@@ -21,8 +21,8 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.robolectric.RobolectricTestRunner;
 
-import net.optile.payment.model.ListResult;
 import net.optile.payment.core.PaymentException;
+import net.optile.payment.model.ListResult;
 
 /**
  * The type List connection test.
