@@ -52,6 +52,14 @@ final class PaymentItem {
         return network.getLabel();
     }
 
+    String getRecurrence() {
+        return network.getRecurrence();
+    }
+
+    String getRegistration() {
+        return network.getRegistration();
+    }
+    
     boolean isSelected() {
         return PaymentUtils.isTrue(network.getSelected());
     }

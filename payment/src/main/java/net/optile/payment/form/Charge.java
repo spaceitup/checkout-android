@@ -22,9 +22,11 @@ import net.optile.payment.core.PaymentException;
  */
 public class Charge {
 
-    final JSONObject account;
+    private final JSONObject charge;
+    private final JSONObject account;
 
     public Charge() {
+        charge = new JSONObject();
         account = new JSONObject();
     }
 
@@ -38,9 +40,18 @@ public class Charge {
         }
     }
 
+    public void putRegister(String name, boolean value) throws PaymentException {
+        try {
+            charge.put(name, value);
+        } catch (JSONException e) {
+            String msg = "Charge.putRegister failed for name: " + name;
+            PaymentError error = new PaymentError("Charge", PaymentError.INTERNAL_ERROR, msg);
+            throw new PaymentException(error, msg, e);
+        }
+    }
+    
     public String toJson() throws JSONException {
-        JSONObject obj = new JSONObject();
-        obj.put("account", account);
-        return obj.toString();
+        charge.put("account", account);
+        return charge.toString();
     }
 }

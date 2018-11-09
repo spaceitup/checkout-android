@@ -28,6 +28,7 @@ import net.optile.payment.R;
 import net.optile.payment.core.PaymentInputType;
 import net.optile.payment.model.InputElement;
 import net.optile.payment.model.InputElementType;
+import net.optile.payment.model.RegistrationType;
 import net.optile.payment.ui.PaymentTheme;
 import net.optile.payment.ui.PaymentUI;
 import net.optile.payment.ui.widget.ButtonWidget;
@@ -36,6 +37,7 @@ import net.optile.payment.ui.widget.DateWidget;
 import net.optile.payment.ui.widget.FormWidget;
 import net.optile.payment.ui.widget.SelectInputWidget;
 import net.optile.payment.ui.widget.TextInputWidget;
+import net.optile.payment.ui.widget.RegisterWidget;
 import net.optile.payment.validation.ValidationResult;
 
 /**
@@ -45,8 +47,10 @@ class PaymentListAdapter extends RecyclerView.Adapter<PaymentListViewHolder> {
 
     private final static String TAG = "pay_PaymentListAdapter";
     private final static String WIDGET_BUTTON = "widgetButton";
-    private final static String WIDGET_RECURRENCE = "allowRecurrence";
-    private final static String WIDGET_REGISTRATION = "allowRegistration";
+
+    private final static String PAGEKEY_BUTTON_DATE = "button.update.label";
+    private final static String PAGEKEY_REGISTRATION = "autoRegistrationLabel";
+    private final static String PAGEKEY_RECURRENCE = "allowRecurrenceLabel";    
     
     private final List<PaymentGroup> items;
     private final PaymentList list;
@@ -86,35 +90,29 @@ class PaymentListAdapter extends RecyclerView.Adapter<PaymentListViewHolder> {
         if (logoUrl != null) {
             Glide.with(list.getContext()).asBitmap().load(logoUrl.toString()).into(holder.logo);
         }
-
         bindRegistrationWidget(group, holder);
+        bindRecurrenceWidget(group, holder);
         bindButtonWidget(group, holder);
-
         holder.expand(position == list.getSelected());
     }
 
     private void bindRegistrationWidget(PaymentGroup group, PaymentListViewHolder holder) {
-        //String buttonLabel = list.getPaymentSession().translate(group.getButton(), null);
-        ButtonWidget widget = (ButtonWidget) holder.getFormWidget(WIDGET_BUTTON);
-
-        if (widget == null) {
-            return;
-        }
-        if (TextUtils.isEmpty(buttonLabel)) {
-            widget.setVisible(false);
-        } else {
-            widget.setLabel(buttonLabel);
-            widget.setVisible(true);
-        }
+        RegisterWidget widget = (RegisterWidget) holder.getFormWidget(PaymentInputType.REGISTRATION);        
+        widget.setLabel(translate(PAGEKEY_REGISTRATION));
+        widget.setRegistrationType(group.getRegistration());
     }
+
+    private void bindRecurrenceWidget(PaymentGroup group, PaymentListViewHolder holder) {
+        RegisterWidget widget = (RegisterWidget) holder.getFormWidget(PaymentInputType.RECURRENCE);        
+        widget.setLabel(translate(PAGEKEY_RECURRENCE));
+        widget.setRegistrationType(group.getRecurrence());
+    }
+
     
     private void bindButtonWidget(PaymentGroup group, PaymentListViewHolder holder) {
-        String buttonLabel = list.getPaymentSession().translate(group.getButton(), null);
         ButtonWidget widget = (ButtonWidget) holder.getFormWidget(WIDGET_BUTTON);
+        String buttonLabel = translate(group.getButton());
 
-        if (widget == null) {
-            return;
-        }
         if (TextUtils.isEmpty(buttonLabel)) {
             widget.setVisible(false);
         } else {
@@ -229,8 +227,13 @@ class PaymentListAdapter extends RecyclerView.Adapter<PaymentListViewHolder> {
         return null;
     }
 
+    private String translate(String key) {
+        return list.getPaymentSession().translate(key, null);
+    }
+    
     private List<FormWidget> createWidgets(PaymentGroup group, LayoutInflater inflater, ViewGroup parent) {
         PaymentTheme theme = PaymentUI.getInstance().getPaymentTheme();
+        PaymentItem item = group.getActivePaymentItem();
         List<FormWidget> widgets = new ArrayList<>();
         DateWidget dateWidget = null;
 
@@ -243,14 +246,14 @@ class PaymentListAdapter extends RecyclerView.Adapter<PaymentListViewHolder> {
             switch (element.getName()) {
                 case PaymentInputType.EXPIRY_MONTH:
                     if (dateWidget == null) {
-                        dateWidget = createDateWidget(theme, inflater, parent, group);
+                        dateWidget = createDateWidget(theme, item, inflater, parent, group);
                         widgets.add(dateWidget);
                     }
                     dateWidget.setMonthInputElement(element);
                     break;
                 case PaymentInputType.EXPIRY_YEAR:
                     if (dateWidget == null) {
-                        dateWidget = createDateWidget(theme, inflater, parent, group);
+                        dateWidget = createDateWidget(theme, item, inflater, parent, group);
                         widgets.add(dateWidget);
                     }
                     dateWidget.setYearInputElement(element);
@@ -259,24 +262,24 @@ class PaymentListAdapter extends RecyclerView.Adapter<PaymentListViewHolder> {
                     widgets.add(createInputWidget(theme, element, inflater, parent));
             }
         }
-        widgets.add(createCheckBoxInputWidget(inflater, parent, WIDGET_REGISTRATION));
-        widgets.add(createCheckBoxInputWidget(inflater, parent, WIDGET_RECURRENCE));
+        widgets.add(createRegisterWidget(inflater, parent, PaymentInputType.REGISTRATION));
+        widgets.add(createRegisterWidget(inflater, parent, PaymentInputType.RECURRENCE));
 
         View view = inflater.inflate(R.layout.widget_button, parent, false);
         widgets.add(new ButtonWidget(WIDGET_BUTTON, view));
         return widgets;
     }
 
-    private CheckBoxInputWidget createCheckBoxInputWidget(LayoutInflater inflater, ViewGroup parent, String name) {
+    private RegisterWidget createRegisterWidget(LayoutInflater inflater, ViewGroup parent, String name) {
         View view = inflater.inflate(R.layout.widget_input_checkbox, parent, false);
-        return new CheckBoxInputWidget(name, view);
+        return new RegisterWidget(name, view);
     }
                     
-    private DateWidget createDateWidget(PaymentTheme theme, LayoutInflater inflater, ViewGroup parent, PaymentGroup group) {
+    private DateWidget createDateWidget(PaymentTheme theme, PaymentItem item, LayoutInflater inflater, ViewGroup parent, PaymentGroup group) {
         View view = inflater.inflate(R.layout.widget_input_date, parent, false);
         DateWidget widget = new DateWidget(PaymentInputType.EXPIRY_DATE, view);
-        widget.setLabel(group.getExpiryDateLabel());
-        widget.setButton(group.getExpiryDateButton());        
+        widget.setLabel(item.translateAccountLabel(PaymentInputType.EXPIRY_DATE));
+        widget.setButton(translate(PAGEKEY_BUTTON_DATE));
         widget.setIconResource(theme.getWidgetIconRes(PaymentInputType.EXPIRY_DATE));
         return widget;
     }
@@ -291,7 +294,8 @@ class PaymentListAdapter extends RecyclerView.Adapter<PaymentListViewHolder> {
                 widget = new SelectInputWidget(name, view, element);
                 break;
             case InputElementType.CHECKBOX:
-                widget = createCheckBoxInputWidget(inflater, parent, name);
+                view = inflater.inflate(R.layout.widget_input_checkbox, parent, false);
+                widget = new CheckBoxInputWidget(name, view);
                 break;
             default:
                 view = inflater.inflate(R.layout.widget_input_text, parent, false);

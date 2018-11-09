@@ -419,11 +419,6 @@ final class PaymentPagePresenter {
      */
     private void setExpiryDateSupport(PaymentGroup group) {
         PaymentItem item = group.getActivePaymentItem();
-
-        if (TextUtils.isEmpty(item.translateAccountLabel(PaymentInputType.EXPIRY_DATE))) {
-            return;
-        }
-        boolean hasDateLabel = 
         boolean hasExpiryMonth = false;
         boolean hasExpiryYear = false;
 
@@ -436,11 +431,17 @@ final class PaymentPagePresenter {
                     hasExpiryYear = true;
             }
         }
-        if (!TextUtils.isEmpty(expiryDateLabel) && hasExpiryMonth && hasExpiryYear) {
-            group.setHasExpiryDate(true);
-            group.setExpiryDateLabel(expiryDateLabel);
-            group.setExpiryDateButton(view.getStringRes(R.string.widget_date_button));
-        }
+        group.setHasExpiryDate(hasExpiryYear && hasExpiryYear);
+        //if (!TextUtils.isEmpty(expiryDateLabel) && hasExpiryMonth && hasExpiryYear) {
+
+        //if (TextUtils.isEmpty(item.translateAccountLabel(PaymentInputType.EXPIRY_DATE))) {
+        //    return;
+        //}
+
+        //    group.setHasExpiryDate(true);
+        //    group.setExpiryDateLabel(expiryDateLabel);
+        //    group.setExpiryDateButton(view.getStringRes(R.string.widget_date_button));
+        //}
     }
 
     /**
