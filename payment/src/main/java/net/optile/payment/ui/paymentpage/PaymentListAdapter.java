@@ -48,7 +48,7 @@ class PaymentListAdapter extends RecyclerView.Adapter<PaymentListViewHolder> {
     private final static String WIDGET_BUTTON = "widgetButton";
 
     private final static String PAGEKEY_BUTTON_DATE = "button.update.label";
-    private final static String PAGEKEY_AUT_REGISTRATION = "autoRegistrationLabel";
+    private final static String PAGEKEY_AUTO_REGISTRATION = "autoRegistrationLabel";
     private final static String PAGEKEY_ALLOW_RECURRENCE = "allowRecurrenceLabel";
 
     private final List<PaymentGroup> items;
