@@ -48,8 +48,8 @@ class PaymentListAdapter extends RecyclerView.Adapter<PaymentListViewHolder> {
     private final static String WIDGET_BUTTON = "widgetButton";
 
     private final static String PAGEKEY_BUTTON_DATE = "button.update.label";
-    private final static String PAGEKEY_REGISTRATION = "autoRegistrationLabel";
-    private final static String PAGEKEY_RECURRENCE = "allowRecurrenceLabel";
+    private final static String PAGEKEY_AUT_REGISTRATION = "autoRegistrationLabel";
+    private final static String PAGEKEY_ALLOW_RECURRENCE = "allowRecurrenceLabel";
 
     private final List<PaymentGroup> items;
     private final PaymentList list;
@@ -96,14 +96,14 @@ class PaymentListAdapter extends RecyclerView.Adapter<PaymentListViewHolder> {
     }
 
     private void bindRegistrationWidget(PaymentGroup group, PaymentListViewHolder holder) {
-        RegisterWidget widget = (RegisterWidget) holder.getFormWidget(PaymentInputType.REGISTRATION);
-        widget.setLabel(translate(PAGEKEY_REGISTRATION));
+        RegisterWidget widget = (RegisterWidget) holder.getFormWidget(PaymentInputType.AUTO_REGISTRATION);
+        widget.setLabel(translate(PAGEKEY_AUTO_REGISTRATION));
         widget.setRegistrationType(group.getRegistration());
     }
 
     private void bindRecurrenceWidget(PaymentGroup group, PaymentListViewHolder holder) {
-        RegisterWidget widget = (RegisterWidget) holder.getFormWidget(PaymentInputType.RECURRENCE);
-        widget.setLabel(translate(PAGEKEY_RECURRENCE));
+        RegisterWidget widget = (RegisterWidget) holder.getFormWidget(PaymentInputType.ALLOW_RECURRENCE);
+        widget.setLabel(translate(PAGEKEY_ALLOW_RECURRENCE));
         widget.setRegistrationType(group.getRecurrence());
     }
 
@@ -260,8 +260,8 @@ class PaymentListAdapter extends RecyclerView.Adapter<PaymentListViewHolder> {
                     widgets.add(createInputWidget(theme, element, inflater, parent));
             }
         }
-        widgets.add(createRegisterWidget(inflater, parent, PaymentInputType.REGISTRATION));
-        widgets.add(createRegisterWidget(inflater, parent, PaymentInputType.RECURRENCE));
+        widgets.add(createRegisterWidget(inflater, parent, PaymentInputType.AUTO_REGISTRATION));
+        widgets.add(createRegisterWidget(inflater, parent, PaymentInputType.ALLOW_RECURRENCE));
 
         View view = inflater.inflate(R.layout.widget_button, parent, false);
         widgets.add(new ButtonWidget(WIDGET_BUTTON, view));

@@ -38,7 +38,7 @@ public class Charge {
         }
         try {
             switch (name) {
-            case PaymentInputType.ACCOUNT_NUMBER:
+                case PaymentInputType.ACCOUNT_NUMBER:
                 case PaymentInputType.HOLDER_NAME:
                 case PaymentInputType.EXPIRY_MONTH:
                 case PaymentInputType.EXPIRY_YEAR:
@@ -48,8 +48,8 @@ public class Charge {
                 case PaymentInputType.BIC:
                     account.put(name, value);
                     break;
-                case PaymentInputType.RECURRENCE:
-                case PaymentInputType.REGISTRATION:
+                case PaymentInputType.ALLOW_RECURRENCE:
+                case PaymentInputType.AUTO_REGISTRATION:
                     charge.put(name, value);
             }
         } catch (JSONException e) {
