@@ -430,7 +430,7 @@ final class PaymentPagePresenter {
                     hasExpiryYear = true;
             }
         }
-        group.setHasExpiryDate(hasExpiryYear && hasExpiryYear);
+        group.setHasExpiryDate(hasExpiryMonth && hasExpiryYear);
     }
 
     /**
