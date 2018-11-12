@@ -42,11 +42,11 @@ public final class RegisterWidget extends CheckBoxInputWidget {
         switch (type) {
             case RegistrationType.FORCED:
             case RegistrationType.FORCED_DISPLAYED:
-                charge.putRegister(name, true);
+                charge.putValue(name, true);
                 break;
             case RegistrationType.OPTIONAL:
             case RegistrationType.OPTIONAL_PRESELECTED:
-                charge.putRegister(name, isChecked());
+                charge.putValue(name, isChecked());
         }
     }
 

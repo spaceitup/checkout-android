@@ -107,7 +107,6 @@ class PaymentListAdapter extends RecyclerView.Adapter<PaymentListViewHolder> {
         widget.setRegistrationType(group.getRecurrence());
     }
 
-
     private void bindButtonWidget(PaymentGroup group, PaymentListViewHolder holder) {
         ButtonWidget widget = (ButtonWidget) holder.getFormWidget(WIDGET_BUTTON);
         String buttonLabel = translate(group.getButton());
@@ -278,9 +277,9 @@ class PaymentListAdapter extends RecyclerView.Adapter<PaymentListViewHolder> {
         PaymentGroup group) {
         View view = inflater.inflate(R.layout.widget_input_date, parent, false);
         DateWidget widget = new DateWidget(PaymentInputType.EXPIRY_DATE, view);
+        widget.setIconResource(theme.getWidgetIconRes(PaymentInputType.EXPIRY_DATE));
         widget.setLabel(item.translateAccountLabel(PaymentInputType.EXPIRY_DATE));
         widget.setButton(translate(PAGEKEY_BUTTON_DATE));
-        widget.setIconResource(theme.getWidgetIconRes(PaymentInputType.EXPIRY_DATE));
         return widget;
     }
 
@@ -301,8 +300,8 @@ class PaymentListAdapter extends RecyclerView.Adapter<PaymentListViewHolder> {
                 view = inflater.inflate(R.layout.widget_input_text, parent, false);
                 widget = new TextInputWidget(name, view, element);
         }
-        widget.setLabel(element.getLabel());
         widget.setIconResource(theme.getWidgetIconRes(name));
+        widget.setLabel(element.getLabel());
         return widget;
     }
 

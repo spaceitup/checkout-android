@@ -13,9 +13,10 @@ package net.optile.payment.form;
 
 import org.json.JSONException;
 import org.json.JSONObject;
-
+import android.text.TextUtils;
 import net.optile.payment.core.PaymentError;
 import net.optile.payment.core.PaymentException;
+import net.optile.payment.core.PaymentInputType;
 
 /**
  * Class holding the Charge form values
@@ -31,8 +32,26 @@ public class Charge {
     }
 
     public void putValue(String name, Object value) throws PaymentException {
+
+        if (TextUtils.isEmpty(name)) {
+            throw new IllegalArgumentException("Name cannot be null or empty");
+        }
         try {
-            account.put(name, value);
+            switch (name) {
+            case PaymentInputType.ACCOUNT_NUMBER:
+                case PaymentInputType.HOLDER_NAME:
+                case PaymentInputType.EXPIRY_MONTH:
+                case PaymentInputType.EXPIRY_YEAR:
+                case PaymentInputType.VERIFICATION_CODE:
+                case PaymentInputType.BANK_CODE:
+                case PaymentInputType.IBAN:
+                case PaymentInputType.BIC:
+                    account.put(name, value);
+                    break;
+                case PaymentInputType.RECURRENCE:
+                case PaymentInputType.REGISTRATION:
+                    charge.put(name, value);
+            }
         } catch (JSONException e) {
             String msg = "Charge.putValue failed for name: " + name;
             PaymentError error = new PaymentError("Charge", PaymentError.INTERNAL_ERROR, msg);
@@ -40,17 +59,7 @@ public class Charge {
         }
     }
 
-    public void putRegister(String name, boolean value) throws PaymentException {
-        try {
-            charge.put(name, value);
-        } catch (JSONException e) {
-            String msg = "Charge.putRegister failed for name: " + name;
-            PaymentError error = new PaymentError("Charge", PaymentError.INTERNAL_ERROR, msg);
-            throw new PaymentException(error, msg, e);
-        }
-    }
-
-    public String toJson() throws JSONException {
+    public String toJson() throws JSONException { 
         charge.put("account", account);
         return charge.toString();
     }
