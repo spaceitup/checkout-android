@@ -49,7 +49,7 @@ public class Charge {
             throw new PaymentException(error, msg, e);
         }
     }
-    
+
     public String toJson() throws JSONException {
         charge.put("account", account);
         return charge.toString();

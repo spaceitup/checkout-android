@@ -11,11 +11,7 @@
 
 package net.optile.payment.ui.widget;
 
-import android.util.Log;
 import android.view.View;
-import android.widget.CheckBox;
-import android.widget.TextView;
-import net.optile.payment.R;
 import net.optile.payment.core.PaymentException;
 import net.optile.payment.form.Charge;
 import net.optile.payment.model.RegistrationType;
@@ -26,7 +22,7 @@ import net.optile.payment.model.RegistrationType;
 public final class RegisterWidget extends CheckBoxInputWidget {
 
     private String type;
-    
+
     /**
      * Construct a new RegisterWidget
      *
@@ -44,13 +40,13 @@ public final class RegisterWidget extends CheckBoxInputWidget {
             return;
         }
         switch (type) {
-        case RegistrationType.FORCED:
-        case RegistrationType.FORCED_DISPLAYED:
-            charge.putRegister(name, true);
-            break;
-        case RegistrationType.OPTIONAL:
-        case RegistrationType.OPTIONAL_PRESELECTED:
-            charge.putRegister(name, isChecked());
+            case RegistrationType.FORCED:
+            case RegistrationType.FORCED_DISPLAYED:
+                charge.putRegister(name, true);
+                break;
+            case RegistrationType.OPTIONAL:
+            case RegistrationType.OPTIONAL_PRESELECTED:
+                charge.putRegister(name, isChecked());
         }
     }
 
@@ -62,19 +58,19 @@ public final class RegisterWidget extends CheckBoxInputWidget {
             return;
         }
         switch (type) {
-        case RegistrationType.OPTIONAL:
-            setVisible(true);
-            break;
-        case RegistrationType.OPTIONAL_PRESELECTED:
-            setVisible(true);
-            initCheckBox(true, true);
-            break;
-        case RegistrationType.FORCED_DISPLAYED:
-            setVisible(true);
-            initCheckBox(false, true);
-            break;
-        default:
-            setVisible(false);
+            case RegistrationType.OPTIONAL:
+                setVisible(true);
+                break;
+            case RegistrationType.OPTIONAL_PRESELECTED:
+                setVisible(true);
+                initCheckBox(true, true);
+                break;
+            case RegistrationType.FORCED_DISPLAYED:
+                setVisible(true);
+                initCheckBox(false, true);
+                break;
+            default:
+                setVisible(false);
         }
     }
 }

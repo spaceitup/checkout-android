@@ -32,7 +32,7 @@ public class PaymentInputType {
     public final static String BIC = "bic";
     public final static String RECURRENCE = "allowRecurrence";
     public final static String REGISTRATION = "autoRegistration";
-    
+
     /**
      * Check if the given type is a valid payment input type
      *
@@ -72,7 +72,7 @@ public class PaymentInputType {
         IBAN,
         BIC,
         RECURRENCE,
-        REGISTRATION    
+        REGISTRATION
     })
     public @interface Definition { }
 }

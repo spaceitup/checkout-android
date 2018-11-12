@@ -25,7 +25,7 @@ public class CheckoutResult {
     public PaymentResult paymentResult;
 
     /**
-     * Construct a new CheckoutResult 
+     * Construct a new CheckoutResult
      *
      * @param success indicating the payment was successful or failed
      * @param paymentResult optional result containing PaymentResult details

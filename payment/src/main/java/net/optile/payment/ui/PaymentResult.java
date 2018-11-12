@@ -64,7 +64,7 @@ public final class PaymentResult implements Parcelable {
         this.interaction = operationResult.getInteraction();
         this.operationResult = operationResult;
     }
-    
+
     /**
      * Construct a new PaymentResult with the interaction values and the optional operationResult
      *

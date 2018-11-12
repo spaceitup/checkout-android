@@ -45,7 +45,7 @@ public class CheckBoxInputWidget extends FormWidget {
         this.labelDisabled.setText(label);
         this.labelEnabled.setText(label);
     }
-    
+
     public void putValue(Charge charge) throws PaymentException {
         charge.putValue(name, value.isChecked());
     }
@@ -53,7 +53,7 @@ public class CheckBoxInputWidget extends FormWidget {
     public boolean isChecked() {
         return value.isChecked();
     }
-    
+
     void initCheckBox(boolean clickable, boolean checked) {
         value.setClickable(clickable);
         value.setChecked(checked);

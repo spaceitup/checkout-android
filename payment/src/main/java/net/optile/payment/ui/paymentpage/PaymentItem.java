@@ -59,7 +59,7 @@ final class PaymentItem {
     String getRegistration() {
         return network.getRegistration();
     }
-    
+
     boolean isSelected() {
         return PaymentUtils.isTrue(network.getSelected());
     }

@@ -61,7 +61,7 @@ public abstract class FormWidget {
 
     public void setLabel(String label) {
     }
-    
+
     public void setIconResource(int resId) {
 
         if (icon != null) {

@@ -58,7 +58,7 @@
     <style name="PaymentText.Medium.Disabled">
         <item name="android:textColor">@color/text_disabled</item>
     </style>
-    
+
     <style name="PaymentText.Medium.Bold.Gray">
         <item name="android:textColor">@color/text_dark_second</item>
         <item name="android:textStyle">bold</item>
@@ -99,11 +99,11 @@
         <item name="colorControlActivated">@color/color_primary</item>
     </style>
 
-    <style name="PaymentWidgetCheckBox" parent="Widget.AppCompat.CompoundButton.CheckBox">  
+    <style name="PaymentWidgetCheckBox" parent="Widget.AppCompat.CompoundButton.CheckBox">
         <item name="colorControlNormal">@color/color_underline</item>
         <item name="colorControlActivated">@color/validation_ok</item>
-    </style>  
-    
+    </style>
+
     <style name="PaymentTextInputEditText" parent="Widget.AppCompat.EditText">
         <item name="android:textColor">@color/text_dark_primary</item>
         <item name="android:textSize">16sp</item>

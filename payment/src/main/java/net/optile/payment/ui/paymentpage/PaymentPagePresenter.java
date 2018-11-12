@@ -20,7 +20,6 @@ import java.util.Properties;
 import java.util.concurrent.Callable;
 
 import android.text.TextUtils;
-import android.util.Log;
 import net.optile.payment.R;
 import net.optile.payment.core.PaymentError;
 import net.optile.payment.core.PaymentException;
@@ -30,12 +29,12 @@ import net.optile.payment.core.WorkerTask;
 import net.optile.payment.core.Workers;
 import net.optile.payment.form.Charge;
 import net.optile.payment.model.ApplicableNetwork;
+import net.optile.payment.model.ErrorInfo;
 import net.optile.payment.model.InputElement;
 import net.optile.payment.model.Interaction;
 import net.optile.payment.model.InteractionCode;
 import net.optile.payment.model.InteractionReason;
 import net.optile.payment.model.ListResult;
-import net.optile.payment.model.ErrorInfo;
 import net.optile.payment.model.Networks;
 import net.optile.payment.model.OperationResult;
 import net.optile.payment.network.ChargeConnection;
@@ -147,7 +146,7 @@ final class PaymentPagePresenter {
                 handleLoadInteractionProceed(session);
                 break;
             default:
-                PaymentResult result = new PaymentResult(session.listResult.getResultInfo(), interaction);        
+                PaymentResult result = new PaymentResult(session.listResult.getResultInfo(), interaction);
                 closeSessionWithError(result);
         }
     }
@@ -176,7 +175,7 @@ final class PaymentPagePresenter {
         PaymentError error = cause.error;
         ErrorInfo info = error.errorInfo;
         PaymentResult result;
-        
+
         if (info != null) {
             result = new PaymentResult(info.getResultInfo(), info.getInteraction());
             closeSessionWithError(result);
@@ -184,11 +183,11 @@ final class PaymentPagePresenter {
             result = new PaymentResult(cause.getMessage(), error);
             int msgResId;
             switch (error.errorType) {
-            case PaymentError.CONN_ERROR:
-                msgResId = R.string.paymentpage_error_connection;
-                break;
-            default:
-                msgResId = R.string.paymentpage_error_unknown;
+                case PaymentError.CONN_ERROR:
+                    msgResId = R.string.paymentpage_error_connection;
+                    break;
+                default:
+                    msgResId = R.string.paymentpage_error_unknown;
             }
             closeSessionWithError(msgResId, result);
         }
@@ -227,7 +226,7 @@ final class PaymentPagePresenter {
         PaymentError error = cause.error;
         ErrorInfo info = error.errorInfo;
         PaymentResult result;
-        
+
         if (info != null) {
             result = new PaymentResult(info.getResultInfo(), info.getInteraction());
             handleChargeInteractionError(result);
@@ -242,7 +241,7 @@ final class PaymentPagePresenter {
             }
         }
     }
-    
+
     private void handleChargeInteractionError(PaymentResult result) {
         Interaction interaction = result.getInteraction();
 
@@ -277,7 +276,7 @@ final class PaymentPagePresenter {
 
     private void showInteractionMessage(Interaction interaction) {
         String msg = translateInteraction(interaction, null);
-        
+
         if (!TextUtils.isEmpty(msg)) {
             view.showMessage(msg);
         }
@@ -506,10 +505,10 @@ final class PaymentPagePresenter {
 
     private PaymentResult createPaymentResult(Throwable cause) {
         String resultInfo = cause.toString();
-        PaymentError error = new PaymentError("PaymentPage", PaymentError.INTERNAL_ERROR, resultInfo);        
+        PaymentError error = new PaymentError("PaymentPage", PaymentError.INTERNAL_ERROR, resultInfo);
         return new PaymentResult(resultInfo, error);
     }
-    
+
     private PaymentException createPaymentException(String message, Throwable cause) {
         final PaymentError error = new PaymentError("PaymentPage", PaymentError.INTERNAL_ERROR, message);
         return new PaymentException(error, message, cause);

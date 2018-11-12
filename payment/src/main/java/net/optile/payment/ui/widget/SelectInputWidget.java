@@ -52,7 +52,7 @@ public final class SelectInputWidget extends FormWidget {
     public void setLabel(String label) {
         this.label.setText(label);
     }
-    
+
     public void putValue(Charge charge) throws PaymentException {
         SpinnerItem selected = (SpinnerItem) spinner.getSelectedItem();
 
@@ -87,7 +87,7 @@ public final class SelectInputWidget extends FormWidget {
                 validate();
             }
 
-                @Override
+            @Override
             public void onNothingSelected(AdapterView<?> parentView) {
             }
         });

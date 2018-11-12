@@ -71,7 +71,7 @@ final class PaymentGroup {
     String getRegistration() {
         return item.getRegistration();
     }
-    
+
     boolean hasExpiryDate() {
         return this.hasExpiryDate;
     }

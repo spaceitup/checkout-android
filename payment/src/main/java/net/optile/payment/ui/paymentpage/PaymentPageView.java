@@ -70,9 +70,9 @@ interface PaymentPageView {
      */
     void closePageWithMessage(String message);
 
-    /** 
-     * Set the current activity payment result 
-     * 
+    /**
+     * Set the current activity payment result
+     *
      * @param success true when the charge request was successful, false otherwise
      * @param result containing the Payment result state
      */

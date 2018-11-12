@@ -60,7 +60,7 @@ public final class DateWidget extends InputLayoutWidget implements DateDialogFra
     public void setButton(String button) {
         this.button = button;
     }
-    
+
     public void setMonthInputElement(InputElement monthElement) {
         this.monthElement = monthElement;
     }

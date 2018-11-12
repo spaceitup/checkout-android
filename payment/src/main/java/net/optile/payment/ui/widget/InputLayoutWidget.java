@@ -34,7 +34,7 @@ abstract class InputLayoutWidget extends FormWidget {
     final TextInputLayout layout;
 
     String label;
-    
+
     /**
      * Construct a new TextInputWidget
      *
@@ -60,7 +60,7 @@ abstract class InputLayoutWidget extends FormWidget {
         layout.setHint(label);
         layout.setHintAnimationEnabled(true);
     }
-    
+
     public boolean setLastImeOptionsWidget() {
         input.setImeOptions(EditorInfo.IME_ACTION_DONE);
         return true;

@@ -18,9 +18,9 @@ import java.util.concurrent.Callable;
 import android.content.Context;
 import android.util.Log;
 import net.optile.example.R;
+import net.optile.payment.core.PaymentException;
 import net.optile.payment.model.ListResult;
 import net.optile.payment.network.ListConnection;
-import net.optile.payment.core.PaymentException;
 import net.optile.payment.util.PaymentUtils;
 import rx.Single;
 import rx.SingleSubscriber;
@@ -61,7 +61,7 @@ final class CheckoutPresenter {
         }
     }
 
-    /** 
+    /**
      * Handle the received checkout result from the optile Payment SDK.
      *
      * @param result the result received from the SDK
@@ -76,7 +76,7 @@ final class CheckoutPresenter {
             Log.i(TAG, "CheckoutError[unknown]");
         }
     }
-    
+
     /**
      * Check if the presenter is creating a new payment session.
      *
@@ -96,7 +96,7 @@ final class CheckoutPresenter {
         view.showPaymentError(error.toString());
         Log.wtf(TAG, error);
     }
-    
+
     /**
      * Start the payment session
      *
