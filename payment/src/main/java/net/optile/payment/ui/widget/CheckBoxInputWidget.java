@@ -14,6 +14,7 @@ package net.optile.payment.ui.widget;
 import android.view.View;
 import android.widget.CheckBox;
 import android.widget.TextView;
+import android.widget.CompoundButton;
 import net.optile.payment.R;
 import net.optile.payment.core.PaymentException;
 import net.optile.payment.form.Charge;
@@ -39,6 +40,12 @@ public class CheckBoxInputWidget extends FormWidget {
         labelDisabled = rootView.findViewById(R.id.label_value_disabled);
         labelEnabled = rootView.findViewById(R.id.label_value_enabled);
         value = rootView.findViewById(R.id.checkbox_value);
+        value.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                @Override
+                public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                    handleOnCheckedChanged(isChecked);                    
+                }
+            });
     }
 
     public void setLabel(String label) {
@@ -57,5 +64,10 @@ public class CheckBoxInputWidget extends FormWidget {
     void initCheckBox(boolean clickable, boolean checked) {
         value.setClickable(clickable);
         value.setChecked(checked);
+    }
+
+    void handleOnCheckedChanged(boolean isChecked) {
+        labelDisabled.setVisibility(isChecked ? View.GONE : View.VISIBLE);
+        labelEnabled.setVisibility(isChecked ? View.VISIBLE : View.GONE);
     }
 }
