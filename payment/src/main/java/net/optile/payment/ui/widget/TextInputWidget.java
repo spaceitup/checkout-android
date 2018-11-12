@@ -40,7 +40,7 @@ public final class TextInputWidget extends InputLayoutWidget {
      * @param element the InputElement this widget is displaying
      */
     public TextInputWidget(String name, View rootView, InputElement element) {
-        super(name, rootView, element.getLabel());
+        super(name, rootView);
         this.element = element;
 
         input.setOnEditorActionListener(new TextView.OnEditorActionListener() {
@@ -86,7 +86,7 @@ public final class TextInputWidget extends InputLayoutWidget {
         String val = getNormalizedValue();
 
         if (!TextUtils.isEmpty(val)) {
-            charge.putValue(element.getName(), val);
+            charge.putValue(name, val);
         }
     }
 

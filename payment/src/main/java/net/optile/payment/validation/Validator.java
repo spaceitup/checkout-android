@@ -126,7 +126,7 @@ public class Validator {
 
     private ValidationResult validateVerificationCode(String verificationCode) {
         String error = null;
-        Log.i("pay_Validator", "verificationcode: " + verificationCode);
+
         if (TextUtils.isEmpty(verificationCode)) {
             error = ValidationResult.MISSING_VERIFICATION_CODE;
         } else if (!verificationCode.matches(REGEX_VERIFICATION_CODE)) {

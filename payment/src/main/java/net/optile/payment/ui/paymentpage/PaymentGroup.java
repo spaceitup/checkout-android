@@ -26,8 +26,6 @@ final class PaymentGroup {
     final List<InputElement> elements;
 
     private boolean hasExpiryDate;
-    private String expiryDateLabel;
-    private String expiryDateButton;
 
     /**
      * Construct a new PaymentGroup
@@ -66,6 +64,14 @@ final class PaymentGroup {
         return item.getButton();
     }
 
+    String getRecurrence() {
+        return item.getRecurrence();
+    }
+
+    String getRegistration() {
+        return item.getRegistration();
+    }
+
     boolean hasExpiryDate() {
         return this.hasExpiryDate;
     }
@@ -73,21 +79,4 @@ final class PaymentGroup {
     void setHasExpiryDate(boolean hasExpiryDate) {
         this.hasExpiryDate = hasExpiryDate;
     }
-
-    String getExpiryDateLabel() {
-        return expiryDateLabel;
-    }
-
-    void setExpiryDateLabel(String expiryDateLabel) {
-        this.expiryDateLabel = expiryDateLabel;
-    }
-
-    public String getExpiryDateButton() {
-        return this.expiryDateButton;
-    }
-
-    public void setExpiryDateButton(String expiryDateButton) {
-        this.expiryDateButton = expiryDateButton;
-    }
-
 }

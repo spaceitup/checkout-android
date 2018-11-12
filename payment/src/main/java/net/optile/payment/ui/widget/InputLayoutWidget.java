@@ -32,24 +32,19 @@ abstract class InputLayoutWidget extends FormWidget {
 
     final TextInputEditText input;
     final TextInputLayout layout;
-    final String label;
+
+    String label;
 
     /**
      * Construct a new TextInputWidget
      *
      * @param name name identifying this widget
      * @param rootView the root view of this input
-     * @param label the hint / label of the input layout
      */
-    InputLayoutWidget(String name, View rootView, String label) {
+    InputLayoutWidget(String name, View rootView) {
         super(name, rootView);
         this.layout = rootView.findViewById(R.id.layout_value);
         this.input = rootView.findViewById(R.id.input_value);
-        this.label = label;
-
-        layout.setHintAnimationEnabled(false);
-        layout.setHint(label);
-        layout.setHintAnimationEnabled(true);
 
         input.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
@@ -57,6 +52,13 @@ abstract class InputLayoutWidget extends FormWidget {
                 handleOnFocusChange(hasFocus);
             }
         });
+    }
+
+    public void setLabel(String label) {
+        this.label = label;
+        layout.setHintAnimationEnabled(false);
+        layout.setHint(label);
+        layout.setHintAnimationEnabled(true);
     }
 
     public boolean setLastImeOptionsWidget() {

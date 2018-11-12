@@ -13,6 +13,7 @@
         android:id="@+id/image_icon"
         android:layout_width="@dimen/widget_icon_size"
         android:layout_height="@dimen/widget_icon_size"
+        android:layout_marginStart="@dimen/border_small"
         android:layout_marginEnd="@dimen/border_xxsmall"
         android:src="@drawable/ic_date"
         android:contentDescription="@string/widget_input_icon"/>

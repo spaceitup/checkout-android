@@ -31,17 +31,11 @@ import net.optile.payment.validation.ValidationResult;
 class PaymentListViewHolder extends RecyclerView.ViewHolder {
 
     final TextView title;
-
     final ImageView logo;
-
     final ViewGroup formLayout;
-
     final PaymentListAdapter adapter;
-
     final FormWidget.WidgetPresenter presenter;
-
     final Map<String, FormWidget> widgets;
-
 
     PaymentListViewHolder(PaymentListAdapter adapter, View parent) {
         super(parent);
