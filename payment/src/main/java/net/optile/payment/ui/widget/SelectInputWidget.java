@@ -46,20 +46,24 @@ public final class SelectInputWidget extends FormWidget {
         this.element = element;
         spinner = rootView.findViewById(R.id.input_spinner);
         label = rootView.findViewById(R.id.input_label);
-        label.setText(element.getLabel());
         initSpinner();
+    }
+
+    public void setLabel(String label) {
+        this.label.setText(label);
     }
 
     public void putValue(Charge charge) throws PaymentException {
         SpinnerItem selected = (SpinnerItem) spinner.getSelectedItem();
+
         if (selected != null) {
-            charge.putValue(element.getName(), selected.value);
+            charge.putValue(name, selected.value);
         }
     }
 
     private void initSpinner() {
-
         List<SelectOption> options = element.getOptions();
+
         if (options == null || options.size() == 0) {
             return;
         }

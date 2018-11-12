@@ -243,7 +243,7 @@ public final class PaymentPageActivity extends AppCompatActivity implements Paym
         int activityResult = success ? Activity.RESULT_OK : Activity.RESULT_CANCELED;
         setResult(activityResult, intent);
     }
-    
+
     void makeChargeRequest(PaymentGroup group, Map<String, FormWidget> widgets) {
         paymentList.hideKeyboard();
         presenter.charge(widgets, group);

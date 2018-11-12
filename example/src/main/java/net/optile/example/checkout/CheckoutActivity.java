@@ -11,23 +11,20 @@
 
 package net.optile.example.checkout;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
-import android.app.Activity;
 import android.os.Bundle;
 import android.os.Handler;
-import android.widget.Toast;
+import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import net.optile.example.R;
-import net.optile.payment.ui.PaymentUI;
 import net.optile.payment.ui.PaymentResult;
-import net.optile.payment.model.Interaction;
+import net.optile.payment.ui.PaymentUI;
 import net.optile.payment.ui.dialog.MessageDialogFragment;
-import android.support.design.widget.Snackbar;
 
 /**
  * Activity for performing a checkout payment
@@ -42,7 +39,7 @@ public final class CheckoutActivity extends AppCompatActivity implements Checkou
     private boolean active;
 
     private CheckoutResult checkoutResult;
-    
+
     /**
      * Create an Intent to launch this activity
      *
@@ -62,7 +59,7 @@ public final class CheckoutActivity extends AppCompatActivity implements Checkou
 
         setContentView(R.layout.activity_checkout);
 
-        final Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        final Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
         final Button button = findViewById(R.id.button_checkout);
@@ -106,11 +103,11 @@ public final class CheckoutActivity extends AppCompatActivity implements Checkou
 
         final Handler handler = new Handler();
         handler.postDelayed(new Runnable() {
-                @Override
-                public void run() {
-                    showSnackbar(R.string.payment_success);
-                }
-            }, 500);
+            @Override
+            public void run() {
+                showSnackbar(R.string.payment_success);
+            }
+        }, 500);
     }
 
     /**
@@ -124,13 +121,13 @@ public final class CheckoutActivity extends AppCompatActivity implements Checkou
         dialog.setNeutralButton(getString(R.string.dialog_error_button));
         dialog.show(getSupportFragmentManager(), "checkout_dialog");
     }
-    
+
     /**
      * {@inheritDoc}
      */
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        
+
         if (requestCode != PAYMENT_REQUEST_CODE) {
             return;
         }
@@ -147,7 +144,7 @@ public final class CheckoutActivity extends AppCompatActivity implements Checkou
         }
         this.checkoutResult = new CheckoutResult(success, result);
     }
-    
+
     /**
      * {@inheritDoc}
      */
@@ -168,10 +165,10 @@ public final class CheckoutActivity extends AppCompatActivity implements Checkou
 
     private void showSnackbar(int resId) {
         Snackbar snackbar = Snackbar.make(findViewById(R.id.layout_activity),
-                                          getString(resId), Snackbar.LENGTH_LONG);
+            getString(resId), Snackbar.LENGTH_LONG);
         snackbar.show();
     }
-    
+
     private void onButtonClicked() {
         presenter.createPaymentSession(this);
     }

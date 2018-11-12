@@ -30,14 +30,14 @@ public interface CheckoutView {
      */
     void openPaymentPage(String listUrl);
 
-    /** 
+    /**
      * Show an error to the user
-     * 
+     *
      * @param error to be shown to the user
      */
     void showPaymentError(String error);
 
-    /** 
+    /**
      * Show that the payment was successful
      */
     void showPaymentSuccess();

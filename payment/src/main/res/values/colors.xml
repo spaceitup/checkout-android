@@ -5,11 +5,12 @@
     <color name="color_primary_disabled">#66299928</color>
     <color name="color_ascent">#207a20</color>
     <color name="color_list_background">#F2F2F2</color>
-    <color name="color_disabled">#AEABAB</color>
+    <color name="color_underline">#8F8F8F</color>
 
     <color name="text_dark_primary">#FF424242</color>
     <color name="text_dark_second">#8A000000</color>
     <color name="text_light_primary">#FFFFFF</color>
+    <color name="text_disabled">#66424242</color>
     <color name="text_error">#e66666</color>
 
     <color name="validation_unknown">#E0E0E0</color>

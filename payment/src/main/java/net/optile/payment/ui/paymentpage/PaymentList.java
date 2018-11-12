@@ -29,15 +29,10 @@ import net.optile.payment.validation.ValidationResult;
 final class PaymentList {
 
     private final PaymentPageActivity activity;
-
     private final PaymentListAdapter adapter;
-
     private final RecyclerView recyclerView;
-
     private final TextView emptyMessage;
-
     private PaymentSession session;
-
     private int selIndex;
 
     PaymentList(PaymentPageActivity activity, RecyclerView recyclerView, TextView emptyMessage) {
