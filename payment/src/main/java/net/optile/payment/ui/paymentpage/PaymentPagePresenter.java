@@ -431,16 +431,6 @@ final class PaymentPagePresenter {
             }
         }
         group.setHasExpiryDate(hasExpiryYear && hasExpiryYear);
-        //if (!TextUtils.isEmpty(expiryDateLabel) && hasExpiryMonth && hasExpiryYear) {
-
-        //if (TextUtils.isEmpty(item.translateAccountLabel(PaymentInputType.EXPIRY_DATE))) {
-        //    return;
-        //}
-
-        //    group.setHasExpiryDate(true);
-        //    group.setExpiryDateLabel(expiryDateLabel);
-        //    group.setExpiryDateButton(view.getStringRes(R.string.widget_date_button));
-        //}
     }
 
     /**
