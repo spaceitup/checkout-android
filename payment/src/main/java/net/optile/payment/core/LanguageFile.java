@@ -1,0 +1,52 @@
+/*
+ * Copyright(c) 2012-2018 optile GmbH. All Rights Reserved.
+ * https://www.optile.net
+ *
+ * This software is the property of optile GmbH. Distribution  of  this
+ * software without agreement in writing is strictly prohibited.
+ *
+ * This software may not be copied, used or distributed unless agreement
+ * has been received in full.
+ */
+
+package net.optile.payment.core;
+
+import net.optile.payment.model.Interaction;
+import java.util.Properties;
+
+/**
+ * Class holding the language entries for the payment page, ApplicableNetwork or AccountRegistration
+ */
+public final class LanguageFile {
+
+    private final Properties lang;
+
+    /**
+     * Construct an empty LanguageFile
+     */
+    public LanguageFile() {
+        this.lang = new Properties();
+    }
+
+    public String translate(String key, String defValue) {
+        return key != null ? lang.getProperty(key, defValue) : defValue;
+    }
+
+    public String translateError(String error) {
+        return translate("error.".concat(error), null);
+    }
+
+    public String translateAccountLabel(String type) {
+        return translate("account.".concat(type).concat(".label"), null);
+    }
+
+    public String translateInteraction(Interaction interaction) {
+        StringBuilder sb = new StringBuilder("interaction.");
+        sb.append(interaction.getCode()).append(".").append(interaction.getReason());
+        return translate(sb.toString(), null);
+    }
+    
+    public Properties getProperties() {
+        return lang;
+    }
+}

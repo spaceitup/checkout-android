@@ -26,6 +26,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import net.optile.payment.R;
 import net.optile.payment.core.PaymentInputType;
+import net.optile.payment.core.LanguageFile;
 import net.optile.payment.model.InputElement;
 import net.optile.payment.model.InputElementType;
 import net.optile.payment.ui.PaymentTheme;
@@ -51,7 +52,7 @@ class PaymentListAdapter extends RecyclerView.Adapter<PaymentListViewHolder> {
     private final static String PAGEKEY_AUTO_REGISTRATION = "autoRegistrationLabel";
     private final static String PAGEKEY_ALLOW_RECURRENCE = "allowRecurrenceLabel";
 
-    private final List<PaymentGroup> items;
+    private final List<ListElement> items;
     private final PaymentList list;
 
     PaymentListAdapter(PaymentList list) {
@@ -69,7 +70,7 @@ class PaymentListAdapter extends RecyclerView.Adapter<PaymentListViewHolder> {
         View view = inflater.inflate(R.layout.list_item_paymentpage, parent, false);
 
         PaymentListViewHolder holder = new PaymentListViewHolder(this, view);
-        PaymentGroup group = getGroupWithViewType(viewType);
+        NetworkGroup group = getGroupWithViewType(viewType);
 
         if (group != null) {
             addWidgetsToHolder(holder, group, inflater, parent);
@@ -82,41 +83,39 @@ class PaymentListAdapter extends RecyclerView.Adapter<PaymentListViewHolder> {
      */
     @Override
     public void onBindViewHolder(@NonNull PaymentListViewHolder holder, int position) {
-        PaymentGroup group = items.get(position);
-        URL logoUrl = group.getLink("logo");
-        holder.title.setText(group.getLabel());
+        NetworkGroup group = items.get(position);
+        NetworkItem item = group.getActiveNetworkItem();
+
+        URL logoUrl = item.getLogoLink();
+        holder.title.setText(item.getLabel());
 
         if (logoUrl != null) {
             Glide.with(list.getContext()).asBitmap().load(logoUrl.toString()).into(holder.logo);
         }
-        bindRegistrationWidget(group, holder);
-        bindRecurrenceWidget(group, holder);
-        bindButtonWidget(group, holder);
+        bindRegistrationWidget(item, holder);
+        bindRecurrenceWidget(item, holder);
+        bindButtonWidget(item, holder);
         holder.expand(position == list.getSelected());
     }
 
-    private void bindRegistrationWidget(PaymentGroup group, PaymentListViewHolder holder) {
+    private void bindRegistrationWidget(NetworkItem item, PaymentListViewHolder holder) {
         RegisterWidget widget = (RegisterWidget) holder.getFormWidget(PaymentInputType.AUTO_REGISTRATION);
         widget.setLabel(translate(PAGEKEY_AUTO_REGISTRATION));
-        widget.setRegistrationType(group.getRegistration());
+        widget.setRegistrationType(item.getRegistration());
     }
 
-    private void bindRecurrenceWidget(PaymentGroup group, PaymentListViewHolder holder) {
+    private void bindRecurrenceWidget(NetworkItem item, PaymentListViewHolder holder) {
         RegisterWidget widget = (RegisterWidget) holder.getFormWidget(PaymentInputType.ALLOW_RECURRENCE);
         widget.setLabel(translate(PAGEKEY_ALLOW_RECURRENCE));
-        widget.setRegistrationType(group.getRecurrence());
+        widget.setRegistrationType(item.getRecurrence());
     }
 
-    private void bindButtonWidget(PaymentGroup group, PaymentListViewHolder holder) {
+    private void bindButtonWidget(NetworkItem item, PaymentListViewHolder holder) {
         ButtonWidget widget = (ButtonWidget) holder.getFormWidget(WIDGET_BUTTON);
-        String buttonLabel = translate(group.getButton());
+        String buttonLabel = translate(item.getButton());
 
-        if (TextUtils.isEmpty(buttonLabel)) {
-            widget.setVisible(false);
-        } else {
-            widget.setLabel(buttonLabel);
-            widget.setVisible(true);
-        }
+        widget.setLabel(buttonLabel);
+        widget.setVisible(true);
     }
 
     /**
@@ -146,9 +145,9 @@ class PaymentListAdapter extends RecyclerView.Adapter<PaymentListViewHolder> {
     /**
      * Set the payment groups in this adapter
      *
-     * @param groups the list of PaymentGroup objects
+     * @param groups the list of NetworkGroup objects
      */
-    public void setPaymentGroups(List<PaymentGroup> groups) {
+    public void setPaymentGroups(List<AccountItem> accounts, List<NetworkGroup> networks) {
         items.clear();
         items.addAll(groups);
         notifyDataSetChanged();
@@ -158,7 +157,7 @@ class PaymentListAdapter extends RecyclerView.Adapter<PaymentListViewHolder> {
         if (!isValidPosition(position)) {
             return;
         }
-        PaymentGroup item = items.get(position);
+        NetworkGroup item = items.get(position);
         list.onItemClicked(item, position);
     }
 
@@ -187,25 +186,25 @@ class PaymentListAdapter extends RecyclerView.Adapter<PaymentListViewHolder> {
         if (!isValidPosition(position)) {
             return;
         }
-        PaymentGroup item = items.get(position);
-        list.onActionClicked(item, position);
+        NetworkGroup item = items.get(position);
+        list.onActionClicked(item.getActiveNetworkItem(), position);
     }
 
     ValidationResult validate(int position, String type, String value1, String value2) {
         if (!isValidPosition(position)) {
             return null;
         }
-        PaymentGroup item = items.get(position);
-        return list.validate(item, type, value1, value2);
+        NetworkGroup item = items.get(position);
+        return list.validate(item.getActiveNetworkItem(), type, value1, value2);
     }
 
     /**
-     * Get the PaymentGroup at the given index
+     * Get the NetworkGroup at the given index
      *
-     * @param index index of the PaymentGroup
-     * @return PaymentGroup given the index or null if not found
+     * @param index index of the NetworkGroup
+     * @return NetworkGroup given the index or null if not found
      */
-    PaymentGroup getItemFromIndex(int index) {
+    NetworkGroup getItemFromIndex(int index) {
         return index >= 0 && index < items.size() ? items.get(index) : null;
     }
 
@@ -213,11 +212,11 @@ class PaymentListAdapter extends RecyclerView.Adapter<PaymentListViewHolder> {
      * Get the group with its type matching the viewType
      *
      * @param type type of the view
-     * @return PaymentGroup with the same type or null if not found
+     * @return NetworkGroup with the same type or null if not found
      */
-    private PaymentGroup getGroupWithViewType(int type) {
+    private NetworkGroup getGroupWithViewType(int type) {
 
-        for (PaymentGroup group : items) {
+        for (NetworkGroup group : items) {
             if (group.type == type) {
                 return group;
             }
@@ -226,18 +225,20 @@ class PaymentListAdapter extends RecyclerView.Adapter<PaymentListViewHolder> {
     }
 
     private String translate(String key) {
-        return list.getPaymentSession().translate(key, null);
+        LanguageFile lang = list.getPaymentSession().getLang();
+        return lang.translate(key, key);
     }
 
-    private List<FormWidget> createWidgets(PaymentGroup group, LayoutInflater inflater, ViewGroup parent) {
+    private List<FormWidget> createWidgets(NetworkGroup group, LayoutInflater inflater, ViewGroup parent) {
         PaymentTheme theme = PaymentUI.getInstance().getPaymentTheme();
-        PaymentItem item = group.getActivePaymentItem();
+        NetworkItem item = group.getActiveNetworkItem();
+
         List<FormWidget> widgets = new ArrayList<>();
         DateWidget dateWidget = null;
 
         for (InputElement element : group.elements) {
 
-            if (!group.hasExpiryDate()) {
+            if (!item.hasExpiryDate()) {
                 widgets.add(createInputWidget(theme, element, inflater, parent));
                 continue;
             }
@@ -273,13 +274,14 @@ class PaymentListAdapter extends RecyclerView.Adapter<PaymentListViewHolder> {
         return new RegisterWidget(name, view);
     }
 
-    private DateWidget createDateWidget(PaymentTheme theme, PaymentItem item, LayoutInflater inflater, ViewGroup parent,
-        PaymentGroup group) {
+    private DateWidget createDateWidget(PaymentTheme theme, PaymentItem item, LayoutInflater inflater, ViewGroup parent, NetworkGroup group) {
         View view = inflater.inflate(R.layout.widget_input_date, parent, false);
         DateWidget widget = new DateWidget(PaymentInputType.EXPIRY_DATE, view);
-        widget.setIconResource(theme.getWidgetIconRes(PaymentInputType.EXPIRY_DATE));
-        widget.setLabel(item.translateAccountLabel(PaymentInputType.EXPIRY_DATE));
+        String label = item.getLang().translateAccountLabel(PaymentInputType.EXPIRY_DATE);
+
+        widget.setLabel(label);
         widget.setButton(translate(PAGEKEY_BUTTON_DATE));
+        widget.setIconResource(theme.getWidgetIconRes(PaymentInputType.EXPIRY_DATE));
         return widget;
     }
 
@@ -305,7 +307,7 @@ class PaymentListAdapter extends RecyclerView.Adapter<PaymentListViewHolder> {
         return widget;
     }
 
-    private void addWidgetsToHolder(PaymentListViewHolder holder, PaymentGroup group, LayoutInflater inflater, ViewGroup parent) {
+    private void addWidgetsToHolder(PaymentListViewHolder holder, NetworkGroup group, LayoutInflater inflater, ViewGroup parent) {
         List<FormWidget> widgets = createWidgets(group, inflater, parent);
         FormWidget widget;
 

@@ -15,81 +15,72 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-import java.util.Properties;
-
-import net.optile.payment.model.ApplicableNetwork;
-import net.optile.payment.model.InputElement;
-import net.optile.payment.util.PaymentUtils;
+import net.optile.payment.core.LanguageFile;
 
 /**
- * Class for holding the ApplicableNetwork with its localized language file
+ * Base class for payment items like account and network
  */
-final class PaymentItem {
+abstract class PaymentItem {
 
-    final ApplicableNetwork network;
+    private LanguageFile lang;
 
-    private Properties language;
+    private boolean hasExpiryDate;
+    
+    /** 
+     * Ge the operation link, this link can be used to make i.e. a charge request
+     * 
+     * @return the operation link or null if it does not exist 
+     */
+    URL getOperationLink() {
+        return getLink("operation");
+    }
+
+    /** 
+     * Get the logo link, this link points to the logo image of this payment item
+     * 
+     * @return the operation link or null if it does not exist
+     */
+    URL getLogoLink() {
+        return getLink("logo");
+    }
+
+    /** 
+     * Get the link from the PaymentItem given the name
+     * 
+     * @return link or null if not found
+     */
+    abstract URL getLink(String name);
 
     /**
-     * Construct a new PaymentItem object
-     *
-     * @param network ApplicableNetwork used in this PaymentItem
+     * Get the paymentMethod of this PaymentItem 
+     * 
+     * @return paymentMethod 
      */
-    PaymentItem(ApplicableNetwork network) {
-        this.network = network;
+    abstract String getPaymentMethod();
+
+    /**
+     * Get the language file of this PaymentItem
+     * 
+     * @return language file  
+     */
+    LanguageFile getLang() {
+        return lang;
     }
 
-    URL getLink(String name) {
-        Map<String, URL> links = network.getLinks();
-        return links != null ? links.get(name) : null;
+    /** 
+     * Set the language file in this PaymentItem
+     * 
+     * @param lang the language file to be set
+     */
+    void setLang(LanguageFile lang) {
+        this.lang = lang;
     }
 
-    String getCode() {
-        return network.getCode();
+    boolean hasExpiryDate() {
+        return this.hasExpiryDate;
     }
 
-    String getLabel() {
-        return network.getLabel();
-    }
-
-    String getRecurrence() {
-        return network.getRecurrence();
-    }
-
-    String getRegistration() {
-        return network.getRegistration();
-    }
-
-    boolean isSelected() {
-        return PaymentUtils.isTrue(network.getSelected());
-    }
-
-    List<InputElement> getInputElements() {
-        List<InputElement> elements = network.getLocalizedInputElements();
-        return elements == null ? new ArrayList<>() : elements;
-    }
-
-    void setLanguage(Properties language) {
-        this.language = language;
-    }
-
-    String translate(String key, String defValue) {
-        return language != null && key != null ? language.getProperty(key, defValue) : defValue;
-    }
-
-    String translateError(String error) {
-        return translate("error.".concat(error), null);
-    }
-
-    String translateAccountLabel(String type) {
-        return translate("account.".concat(type).concat(".label"), null);
-    }
-
-    String getButton() {
-        return network.getButton();
-    }
-
-    String getPaymentMethod() {
-        return network.getMethod();
+    void setHasExpiryDate(boolean hasExpiryDate) {
+        this.hasExpiryDate = hasExpiryDate;
     }
 }

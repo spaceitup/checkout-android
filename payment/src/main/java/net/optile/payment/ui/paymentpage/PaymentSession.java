@@ -20,6 +20,8 @@ import net.optile.payment.model.ApplicableNetwork;
 import net.optile.payment.model.Interaction;
 import net.optile.payment.model.ListResult;
 import net.optile.payment.model.Networks;
+import net.optile.payment.core.LanguageFile;
+
 
 /**
  * Class for storing the ListResult and the list of supported PaymentMethods
@@ -28,11 +30,13 @@ final class PaymentSession {
 
     final ListResult listResult;
 
-    final List<PaymentGroup> groups;
+    final List<NetworkGroup> groups;
 
+    final List<AccountItem> accounts;
+    
     private int selIndex;
 
-    private Properties language;
+    private LanguageFile lang;
 
     private String emptyMessage;
 
@@ -42,8 +46,9 @@ final class PaymentSession {
      * @param listResult Object holding the current list session data
      * @param groups list of PaymentGroups supported by this PaymentSession
      */
-    PaymentSession(ListResult listResult, List<PaymentGroup> groups) {
+    PaymentSession(ListResult listResult, List<AccountItem> accounts, List<NetworkGroup> groups) {
         this.listResult = listResult;
+        this.accounts = accounts;
         this.groups = groups;
     }
 
@@ -65,26 +70,20 @@ final class PaymentSession {
         this.selIndex = selIndex;
     }
 
-    void setLanguage(Properties language) {
-        this.language = language;
+    void setLang(LanguageFile lang) {
+        this.lang = lang;
     }
 
+    LanguageFile getLang() {
+        return lang;
+    }
+    
     String getEmptyMessage() {
         return emptyMessage;
     }
 
     void setEmptyMessage(String emptyMessage) {
         this.emptyMessage = emptyMessage;
-    }
-
-    String translate(String key, String defValue) {
-        return language != null ? language.getProperty(key, defValue) : defValue;
-    }
-
-    String translateInteraction(Interaction interaction) {
-        StringBuilder sb = new StringBuilder("interaction.");
-        sb.append(interaction.getCode()).append(".").append(interaction.getReason());
-        return translate(sb.toString(), null);
     }
 
     int getApplicableNetworkSize() {

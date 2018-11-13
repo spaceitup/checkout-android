@@ -113,14 +113,14 @@ final class PaymentList {
         dialog.show(activity.getSupportFragmentManager(), tag);
     }
 
-    void onActionClicked(PaymentGroup item, int position) {
+    void onActionClicked(PaymentItem item, int position) {
         PaymentListViewHolder holder = (PaymentListViewHolder) recyclerView.findViewHolderForAdapterPosition(position);
         if (holder != null) {
             activity.makeChargeRequest(item, holder.widgets);
         }
     }
 
-    void onItemClicked(PaymentGroup item, int position) {
+    void onItemClicked(NetworkGroup item, int position) {
         hideKeyboard();
 
         if (position == this.selIndex) {
@@ -134,7 +134,7 @@ final class PaymentList {
         }
     }
 
-    ValidationResult validate(PaymentGroup item, String type, String value1, String value2) {
+    ValidationResult validate(PaymentItem item, String type, String value1, String value2) {
         return activity.validate(item, type, value1, value2);
     }
 
@@ -167,4 +167,22 @@ final class PaymentList {
         smoothScroller.setTargetPosition(position);
         recyclerView.getLayoutManager().startSmoothScroll(smoothScroller);
     }
+
+    class ListAdapterItem {
+
+        final static int HEADER = 0x00;
+        final static int NETWORK = 0x01;
+        final static int ACCOUNT = 0x02;
+
+        int type;
+        String headerLabel;
+        NetworkGroup network;
+        AccountItem account;
+
+        static createHeader(String label) {
+            ListAdapterItem item = new ListAdapterItem(HEADER);
+            item.headerLabel = label;
+        }
+    }
+
 }

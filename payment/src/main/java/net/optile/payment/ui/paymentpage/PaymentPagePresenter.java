@@ -16,13 +16,13 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-import java.util.Properties;
 import java.util.concurrent.Callable;
 
 import android.text.TextUtils;
 import net.optile.payment.R;
 import net.optile.payment.core.PaymentError;
 import net.optile.payment.core.PaymentException;
+import net.optile.payment.core.LanguageFile;
 import net.optile.payment.core.PaymentInputType;
 import net.optile.payment.core.WorkerSubscriber;
 import net.optile.payment.core.WorkerTask;
@@ -104,17 +104,17 @@ final class PaymentPagePresenter {
     }
 
     /**
-     * Make a charge request for the selected PaymentGroup with widgets
+     * Make a charge request for the selected PaymentItem with widgets
      *
+     * @param item the PaymentItem containing the operation URL
      * @param widgets containing the user input data
-     * @param group selected group of payment methods
      */
-    void charge(Map<String, FormWidget> widgets, PaymentGroup group) {
+    void charge(PaymentItem item, Map<String, FormWidget> widgets) {
 
         if (chargeTask != null) {
             return;
         }
-        URL url = group.getLink("operation");
+        URL url = item.getOperationLink();
         Charge charge = new Charge();
 
         try {
@@ -315,7 +315,7 @@ final class PaymentPagePresenter {
         if (session == null || interaction == null) {
             return defMessage;
         }
-        String msg = session.translateInteraction(interaction);
+        String msg = session.getLang().translateInteraction(interaction);
         return TextUtils.isEmpty(msg) ? defMessage : msg;
     }
 
@@ -349,14 +349,14 @@ final class PaymentPagePresenter {
 
     private PaymentSession asyncLoadPaymentSession(String listUrl) throws PaymentException {
         ListResult listResult = listConnection.getListResult(listUrl);
-        List<PaymentItem> items = loadPaymentItems(listResult);
-        List<PaymentGroup> groups = new ArrayList<>();
+        List<NetworkItem> items = loadNetworkItems(listResult);
+        List<NetworkGroup> groups = new ArrayList<>();
 
         int selIndex = -1;
         int index = 0;
-        for (PaymentItem item : items) {
-            PaymentGroup group = createPaymentGroup(item);
-            if (selIndex == -1 && group.isSelected()) {
+        for (NetworkItem item : items) {
+            NetworkGroup group = createNetworkGroup(item);
+            if (selIndex == -1 && item.isSelected()) {
                 selIndex = index;
             }
             groups.add(group);
@@ -364,7 +364,7 @@ final class PaymentPagePresenter {
         }
         PaymentSession session = new PaymentSession(listResult, groups);
         session.setSelIndex(selIndex);
-        session.setLanguage(loadPageLanguage(items));
+        session.setLang(loadPaymentPageLanguageFile(items));
 
         if (session.getApplicableNetworkSize() == 0) {
             session.setEmptyMessage(view.getStringRes(R.string.paymentpage_error_empty));
@@ -374,8 +374,8 @@ final class PaymentPagePresenter {
         return session;
     }
 
-    private List<PaymentItem> loadPaymentItems(ListResult listResult) throws PaymentException {
-        List<PaymentItem> items = new ArrayList<>();
+    private List<NetworkItem> loadNetworkItems(ListResult listResult) throws PaymentException {
+        List<NetworkItem> items = new ArrayList<>();
         Networks nw = listResult.getNetworks();
 
         if (nw == null) {
@@ -394,34 +394,28 @@ final class PaymentPagePresenter {
         return items;
     }
 
-    private PaymentItem loadPaymentItem(ApplicableNetwork network) throws PaymentException {
-        PaymentItem item = new PaymentItem(network);
+    private NetworkItem loadPaymentItem(ApplicableNetwork network) throws PaymentException {
+        NetworkItem item = new NetworkItem(network);
         URL langUrl = item.getLink("lang");
         if (langUrl == null) {
             throw createPaymentException("Missing 'lang' link in ApplicableNetwork", null);
         }
-        item.setLanguage(listConnection.getLanguage(langUrl, new Properties()));
+        item.setLang(listConnection.loadLanguageFile(langUrl, new LanguageFile()));
         return item;
     }
 
-    private PaymentGroup createPaymentGroup(PaymentItem item) {
-        PaymentGroup group = new PaymentGroup(nextGroupType(), item, item.getInputElements());
-        setExpiryDateSupport(group);
+    private NetworkGroup createNetworkGroup(NetworkItem item) {
+        List<InputElement> elements = item.getInputElements();
+        NetworkGroup group = new NetworkGroup(nextGroupType(), item, elements);
+        item.setHasExpiryDate(containsExpiryDate(elements));
         return group;
     }
 
-    /**
-     * Determine if this PaymentGroup should combine the expiryMonth and expiryYear InputElements.
-     * Only when the PaymentGroup has expiryMonth, expiryYear and valid expiryDate label the month and year may be combined in one input widget.
-     *
-     * @param group to set the expiryDate support
-     */
-    private void setExpiryDateSupport(PaymentGroup group) {
-        PaymentItem item = group.getActivePaymentItem();
+    private boolean containsExpiryDate(List<InputElement> elements) {
         boolean hasExpiryMonth = false;
         boolean hasExpiryYear = false;
 
-        for (InputElement element : item.getInputElements()) {
+        for (InputElement element : elements) {
             switch (element.getName()) {
                 case PaymentInputType.EXPIRY_MONTH:
                     hasExpiryMonth = true;
@@ -430,23 +424,23 @@ final class PaymentPagePresenter {
                     hasExpiryYear = true;
             }
         }
-        group.setHasExpiryDate(hasExpiryMonth && hasExpiryYear);
+        return hasExpiryYear && hasExpiryMonth;
     }
 
     /**
      * This method loads the payment page language file.
      * The URL for the paymentpage language file is constructed from the URL of one of the ApplicableNetwork entries.
      *
-     * @param items contains the list of PaymentItem elements
+     * @param items contains the list of NetworkItem elements
      * @return the properties object containing the language entries
      */
-    private Properties loadPageLanguage(List<PaymentItem> items) throws PaymentException {
-        Properties prop = new Properties();
-
+    private LanguageFile loadPaymentPageLanguageFile(List<NetworkItem> items) throws PaymentException {
+        LanguageFile file = new LanguageFile();
+        
         if (items.size() == 0) {
-            return prop;
+            return file;
         }
-        PaymentItem item = items.get(0);
+        NetworkItem item = items.get(0);
         URL langUrl = item.getLink("lang");
 
         if (langUrl == null) {
@@ -454,8 +448,7 @@ final class PaymentPagePresenter {
         }
         try {
             String newUrl = langUrl.toString().replaceAll(item.getCode(), "paymentpage");
-            langUrl = new URL(newUrl);
-            return listConnection.getLanguage(langUrl, prop);
+            return listConnection.loadLanguageFile(new URL(newUrl), file);
         } catch (MalformedURLException e) {
             throw createPaymentException("Malformed language URL", e);
         }
