@@ -23,23 +23,17 @@ import net.optile.payment.util.PaymentUtils;
 import net.optile.payment.core.LanguageFile;
 
 /**
- * Class for holding the ApplicableNetwork
+ * Class for representing an AccountCard in the PaymentPage list
  */
-final class AccountItem extends PaymentItem {
+final class AccountCard implements PaymentCard {
 
-    final int type;    
     private final AccountRegistration account;
     private final ApplicableNetwork network;
+
+    private boolean hasExpiryDate;
+    private LanguageFile lang;
     
-    /** 
-     * Construct a new AccountItem 
-     * 
-     * @param type 
-     * @param account 
-     * @param network 
-     */
-    AccountItem(int type, AccountRegistration account, ApplicableNetwork network) {
-        this.type = type;
+    AccountCard(AccountRegistration account, ApplicableNetwork network) {
         this.account = account;
         this.network = network;
     }
@@ -48,25 +42,57 @@ final class AccountItem extends PaymentItem {
      * {@inheritDoc}
      */
     @Override
-    URL getLink(String name) {
-        Map<String, URL> links = account.getLinks();
-        return links != null ? links.get(name) : null;
+    public URL getOperationLink() {
+        getLink("operation");
     }
 
     /**
      * {@inheritDoc}
      */
     @Override
-    String getPaymentMethod() {
+    public String getPaymentMethod() {
         return network.getMethod();
     }
-    
-    boolean isSelected() {
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public LanguageFile getLang() {
+        return lang;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public boolean hasExpiryDate() {
+        return hasExpiryDate;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public boolean isPreselected() {
         return PaymentUtils.isTrue(account.getSelected());
+    }
+    
+    URL getLink(String name) {
+        Map<String, URL> links = account.getLinks();
+        return links != null ? links.get(name) : null;
     }
 
     List<InputElement> getInputElements() {
         List<InputElement> elements = account.getLocalizedInputElements();
         return elements == null ? new ArrayList<>() : elements;
+    }
+
+    void setExpiryDate(boolean hasExpiryDate) {
+        this.hasExpiryDate = hasExpiryDate;
+    }
+
+    void setLang(LanguageFile lang) {
+        this.lang = lang;
     }
 }

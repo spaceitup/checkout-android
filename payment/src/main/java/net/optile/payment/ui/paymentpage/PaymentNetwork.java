@@ -15,7 +15,6 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-import java.util.Properties;
 
 import net.optile.payment.model.ApplicableNetwork;
 import net.optile.payment.model.InputElement;
@@ -25,32 +24,26 @@ import net.optile.payment.core.LanguageFile;
 /**
  * Class for holding the ApplicableNetwork with its localized language file
  */
-class NetworkItem extends PaymentItem {
+class PaymentNetwork {
 
     private final ApplicableNetwork network;
     
+    private LanguageFile lang;
+    
     /**
-     * Construct a new NetworkItem object
+     * Construct a new PaymentNetwork object
      *
-     * @param network ApplicableNetwork used in this NetworkItem
+     * @param network ApplicableNetwork used in this PaymentNetwork
      */
-    NetworkItem(ApplicableNetwork network) {
+    PaymentNetwork(ApplicableNetwork network) {
         this.network = network;
     }
 
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public URL getLink(String name) {
+    URL getLink(String name) {
         Map<String, URL> links = network.getLinks();
         return links != null ? links.get(name) : null;
     }
 
-    /**
-     * {@inheritDoc}
-     */
-    @Override
     String getPaymentMethod() {
         return network.getMethod();
     }
@@ -84,4 +77,11 @@ class NetworkItem extends PaymentItem {
         return network.getButton();
     }
 
+    LanguageFile getLang() {
+        return lang;
+    }
+
+    void setLang(LanguageFile lang) {
+        this.lang = lang;
+    }
 }

@@ -14,13 +14,11 @@ package net.optile.payment.ui.paymentpage;
 import java.net.URL;
 import java.util.List;
 import java.util.Map;
-import java.util.Properties;
 
+import net.optile.payment.core.LanguageFile;
 import net.optile.payment.model.ApplicableNetwork;
-import net.optile.payment.model.Interaction;
 import net.optile.payment.model.ListResult;
 import net.optile.payment.model.Networks;
-import net.optile.payment.core.LanguageFile;
 
 
 /**
@@ -30,12 +28,10 @@ final class PaymentSession {
 
     final ListResult listResult;
 
-    final List<NetworkGroup> groups;
+    final List<AccountCard> accounts;
 
-    final List<AccountItem> accounts;
+    final List<NetworkCard> networks;
     
-    private int selIndex;
-
     private LanguageFile lang;
 
     private String emptyMessage;
@@ -44,12 +40,13 @@ final class PaymentSession {
      * Construct a new PaymentSession object
      *
      * @param listResult Object holding the current list session data
-     * @param groups list of PaymentGroups supported by this PaymentSession
+     * @param accounts list of AccountCards supported by this PaymentSession
+     * @param networks list of NetworkCards supported by this PaymentSession
      */
-    PaymentSession(ListResult listResult, List<AccountItem> accounts, List<NetworkGroup> groups) {
+    PaymentSession(ListResult listResult, List<AccountCard> accounts, List<NetworkCard> networks) {
         this.listResult = listResult;
         this.accounts = accounts;
-        this.groups = groups;
+        this.networks = networks;
     }
 
     URL getLink(String name) {
@@ -60,14 +57,6 @@ final class PaymentSession {
     boolean isListUrl(String listUrl) {
         URL url = getLink("self");
         return url != null && url.toString().equals(listUrl);
-    }
-
-    int getSelIndex() {
-        return this.selIndex;
-    }
-
-    void setSelIndex(int selIndex) {
-        this.selIndex = selIndex;
     }
 
     void setLang(LanguageFile lang) {

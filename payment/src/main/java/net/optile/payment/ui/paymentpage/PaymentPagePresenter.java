@@ -20,9 +20,9 @@ import java.util.concurrent.Callable;
 
 import android.text.TextUtils;
 import net.optile.payment.R;
+import net.optile.payment.core.LanguageFile;
 import net.optile.payment.core.PaymentError;
 import net.optile.payment.core.PaymentException;
-import net.optile.payment.core.LanguageFile;
 import net.optile.payment.core.PaymentInputType;
 import net.optile.payment.core.WorkerSubscriber;
 import net.optile.payment.core.WorkerTask;
@@ -104,12 +104,12 @@ final class PaymentPagePresenter {
     }
 
     /**
-     * Make a charge request for the selected PaymentItem with widgets
+     * Make a charge request for the selected PaymentCard with widgets
      *
-     * @param item the PaymentItem containing the operation URL
+     * @param item the PaymentCard containing the operation URL
      * @param widgets containing the user input data
      */
-    void charge(PaymentItem item, Map<String, FormWidget> widgets) {
+    void charge(PaymentCard item, Map<String, FormWidget> widgets) {
 
         if (chargeTask != null) {
             return;
@@ -349,18 +349,12 @@ final class PaymentPagePresenter {
 
     private PaymentSession asyncLoadPaymentSession(String listUrl) throws PaymentException {
         ListResult listResult = listConnection.getListResult(listUrl);
-        List<NetworkItem> items = loadNetworkItems(listResult);
-        List<NetworkGroup> groups = new ArrayList<>();
+        List<PaymentNetwork> networks = loadNetworkPayments(listResult);
+        List<NetworkCard> networkCards = new ArrayList<>();
 
-        int selIndex = -1;
-        int index = 0;
-        for (NetworkItem item : items) {
-            NetworkGroup group = createNetworkGroup(item);
-            if (selIndex == -1 && item.isSelected()) {
-                selIndex = index;
-            }
-            groups.add(group);
-            index++;
+        for (PaymentNetwork network : networks) {
+            NetworkCard card = createNetworkCard();
+            networkCards.add(group);
         }
         PaymentSession session = new PaymentSession(listResult, groups);
         session.setSelIndex(selIndex);
@@ -374,8 +368,8 @@ final class PaymentPagePresenter {
         return session;
     }
 
-    private List<NetworkItem> loadNetworkItems(ListResult listResult) throws PaymentException {
-        List<NetworkItem> items = new ArrayList<>();
+    private List<PaymentNetwork> loadPaymentNetworks(ListResult listResult) throws PaymentException {
+        List<PaymentNetwork> items = new ArrayList<>();
         Networks nw = listResult.getNetworks();
 
         if (nw == null) {
@@ -388,27 +382,27 @@ final class PaymentPagePresenter {
         }
         for (ApplicableNetwork network : an) {
             if (isSupported(network)) {
-                items.add(loadPaymentItem(network));
+                items.add(loadPaymentNetwork(network));
             }
         }
         return items;
     }
 
-    private NetworkItem loadPaymentItem(ApplicableNetwork network) throws PaymentException {
-        NetworkItem item = new NetworkItem(network);
-        URL langUrl = item.getLink("lang");
+    private PaymentNetwork loadPaymentItem(ApplicableNetwork network) throws PaymentException {
+        PaymentNetwork network = new PaymentNetwork(network);
+        URL langUrl = network.getLink("lang");
         if (langUrl == null) {
             throw createPaymentException("Missing 'lang' link in ApplicableNetwork", null);
         }
-        item.setLang(listConnection.loadLanguageFile(langUrl, new LanguageFile()));
-        return item;
+        network.setLang(listConnection.loadLanguageFile(langUrl, new LanguageFile()));
+        return network;
     }
 
-    private NetworkGroup createNetworkGroup(NetworkItem item) {
-        List<InputElement> elements = item.getInputElements();
-        NetworkGroup group = new NetworkGroup(nextGroupType(), item, elements);
-        item.setHasExpiryDate(containsExpiryDate(elements));
-        return group;
+    private NetworkCard createNetworkCard(PaymentNetwork network) {
+        List<InputElement> elements = network.getInputElements();
+        NetworkCard card = new NetworkCard(network, elements);
+        network.setHasExpiryDate(containsExpiryDate(elements));
+        return card;
     }
 
     private boolean containsExpiryDate(List<InputElement> elements) {
@@ -431,16 +425,16 @@ final class PaymentPagePresenter {
      * This method loads the payment page language file.
      * The URL for the paymentpage language file is constructed from the URL of one of the ApplicableNetwork entries.
      *
-     * @param items contains the list of NetworkItem elements
+     * @param items contains the list of PaymentNetwork elements
      * @return the properties object containing the language entries
      */
-    private LanguageFile loadPaymentPageLanguageFile(List<NetworkItem> items) throws PaymentException {
+    private LanguageFile loadPaymentPageLanguageFile(List<PaymentNetwork> items) throws PaymentException {
         LanguageFile file = new LanguageFile();
         
         if (items.size() == 0) {
             return file;
         }
-        NetworkItem item = items.get(0);
+        PaymentNetwork item = items.get(0);
         URL langUrl = item.getLink("lang");
 
         if (langUrl == null) {

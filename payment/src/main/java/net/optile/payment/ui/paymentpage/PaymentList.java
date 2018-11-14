@@ -11,6 +11,8 @@
 
 package net.optile.payment.ui.paymentpage;
 
+import java.util.List;
+import java.util.ArrayList;
 import android.content.Context;
 import android.os.IBinder;
 import android.support.v4.app.DialogFragment;
@@ -34,10 +36,13 @@ final class PaymentList {
     private final TextView emptyMessage;
     private PaymentSession session;
     private int selIndex;
-
+    private int viewType;
+    private List<PaymentListItem> items;
+    
     PaymentList(PaymentPageActivity activity, RecyclerView recyclerView, TextView emptyMessage) {
         this.activity = activity;
-        this.adapter = new PaymentListAdapter(this);
+        this.items = new ArrayList<>();
+        this.adapter = new PaymentListAdapter(this, items);
         this.emptyMessage = emptyMessage;
         this.recyclerView = recyclerView;
         this.recyclerView.setAdapter(adapter);
@@ -72,23 +77,54 @@ final class PaymentList {
             setVisible(true);
             return;
         }
+        clear();
         this.session = session;
-        this.selIndex = session.getSelIndex();
-
-        if (session.groups.size() == 0) {
+        setPaymentListItems(session);
+        
+        if (items.size() == 0) {
             emptyMessage.setText(session.getEmptyMessage());
         } else {
-            adapter.setPaymentGroups(session.groups);
             recyclerView.scrollToPosition(selIndex);
         }
         setVisible(true);
     }
 
+    private int nextViewType() {
+        return viewType++;
+    }
+    
+    private void setPaymentListItems(PaymentSession session) {
+        int index = 0;
+        if (session.accounts.size() > 0) {
+            items.add(new PaymentListItem(nextViewType(), "Account Header"));
+            index++;
+        }
+        for (AccountCard card : sessions.accounts) {
+            items.add(new PaymentListItem(nextViewType(), card));
+            if (this.selIndex == -1 && card.isPreselected()) {
+                this.selIndex = index;
+            }
+            index++;
+        }
+        if (session.networks.size() > 0) {
+            items.add(new PaymentListItem(nextViewType(), "network Header"));
+        }
+        for (NetworkCard card : sessions.networks) {
+            items.add(new PaymentListItem(nextViewType(), card));
+            if (this.selIndex == -1 && card.isPreselected()) {
+                this.selIndex = index;
+            }
+            index++;
+        }
+        adapter.notifyDataSetChanged();
+    }
+    
     void clear() {
-        this.selIndex = -1;
         this.session = null;
+        this.selIndex = -1;
+        this.items.clear();
         emptyMessage.setText("");
-        adapter.clear();
+        adapter.notifyDataSetChanged();
     }
 
     void hideKeyboard() {
@@ -113,14 +149,14 @@ final class PaymentList {
         dialog.show(activity.getSupportFragmentManager(), tag);
     }
 
-    void onActionClicked(PaymentItem item, int position) {
+    void onActionClicked(PaymentCard item, int position) {
         PaymentListViewHolder holder = (PaymentListViewHolder) recyclerView.findViewHolderForAdapterPosition(position);
         if (holder != null) {
             activity.makeChargeRequest(item, holder.widgets);
         }
     }
 
-    void onItemClicked(NetworkGroup item, int position) {
+    void onItemClicked(NetworkCard item, int position) {
         hideKeyboard();
 
         if (position == this.selIndex) {
@@ -134,7 +170,7 @@ final class PaymentList {
         }
     }
 
-    ValidationResult validate(PaymentItem item, String type, String value1, String value2) {
+    ValidationResult validate(PaymentCard item, String type, String value1, String value2) {
         return activity.validate(item, type, value1, value2);
     }
 
@@ -167,22 +203,4 @@ final class PaymentList {
         smoothScroller.setTargetPosition(position);
         recyclerView.getLayoutManager().startSmoothScroll(smoothScroller);
     }
-
-    class ListAdapterItem {
-
-        final static int HEADER = 0x00;
-        final static int NETWORK = 0x01;
-        final static int ACCOUNT = 0x02;
-
-        int type;
-        String headerLabel;
-        NetworkGroup network;
-        AccountItem account;
-
-        static createHeader(String label) {
-            ListAdapterItem item = new ListAdapterItem(HEADER);
-            item.headerLabel = label;
-        }
-    }
-
 }

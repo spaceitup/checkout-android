@@ -244,12 +244,12 @@ public final class PaymentPageActivity extends AppCompatActivity implements Paym
         setResult(activityResult, intent);
     }
 
-    void makeChargeRequest(PaymentItem item, Map<String, FormWidget> widgets) {
+    void makeChargeRequest(PaymentCard item, Map<String, FormWidget> widgets) {
         paymentList.hideKeyboard();
         presenter.charge(item, widgets);
     }
 
-    ValidationResult validate(PaymentItem item, String type, String value1, String value2) {
+    ValidationResult validate(PaymentCard item, String type, String value1, String value2) {
         Validator validator = PaymentUI.getInstance().getValidator();
         ValidationResult result = validator.validate(item.getPaymentMethod(), type, value1, value2);
 

@@ -1,0 +1,102 @@
+/*
+ * Copyright(c) 2012-2018 optile GmbH. All Rights Reserved.
+ * https://www.optile.net
+ *
+ * This software is the property of optile GmbH. Distribution  of  this
+ * software without agreement in writing is strictly prohibited.
+ *
+ * This software may not be copied, used or distributed unless agreement
+ * has been received in full.
+ */
+
+package net.optile.payment.ui.paymentpage;
+
+
+import java.net.URL;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+
+import net.optile.payment.model.AccountRegistration;
+import net.optile.payment.model.ApplicableNetwork;
+import net.optile.payment.model.InputElement;
+import net.optile.payment.util.PaymentUtils;
+import net.optile.payment.core.LanguageFile;
+import java.util.List;
+
+import net.optile.payment.model.InputElement;
+import net.optile.payment.core.LanguageFile;
+
+/**
+ * NetworkCard representing one network method in the PaymentPage list
+ */
+final class NetworkCard implements PaymentCard {
+
+    final PaymentNetwork network;
+    final List<InputElement> elements;
+    private boolean hasExpiryDate;
+
+    /**
+     * Construct a new NetworkCard
+     *
+     * @param network the network payment shown in this NetworkCard
+     * @param elements containing the ordered list of InputElements
+     */
+    NetworkCard(PaymentNetwork network, List<InputElement> elements) {
+        this.network = network;
+        this.elements = elements;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public URL getOperationLink() {
+        network.getLink("operation");
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public String getPaymentMethod() {
+        network.getPaymentMethod();
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public LanguageFile getLang() {
+        network.getLang();
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public boolean hasExpiryDate() {
+        return hasExpiryDate;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public boolean isPreselected() {
+        return PaymentUtils.isTrue(network.getSelected());
+    }
+    
+    void setExpiryDate(boolean hasExpiryDate) {
+        this.hasExpiryDate = hasExpiryDate;
+    }
+    
+    /** 
+     * Get the active PaymentNetwork that is selected in the NetworkCard
+     * 
+     * @return active PaymentNetwork
+     */    
+    PaymentNetwork getActivePaymentNetwork() {
+        return network;
+    }
+}
