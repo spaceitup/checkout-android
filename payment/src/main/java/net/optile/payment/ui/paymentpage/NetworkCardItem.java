@@ -11,22 +11,15 @@
 
 package net.optile.payment.ui.paymentpage;
 
-import java.util.List;
-
 /**
- * Class containing PaymentCards that belong to one section 
+ * Class representing a network in the PaymentList
  */
-class PaymentListSection {
+class NetworkCardItem extends ListItem {
 
-    final List<PaymentCard> items;
-    final String label;
-    
-    PaymentListSection(String label, List<PaymentCard> items) {
-        this.label = label;
-        this.items = items;
-    }
+    NetworkCard network;
 
-    int getSize() {
-        items.size() + 1;
+    NetworkCardItem(int viewType, NetworkCard network) {
+        super(viewType);
+        this.network = network;
     }
 }

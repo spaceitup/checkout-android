@@ -172,12 +172,8 @@ public final class PaymentPageActivity extends AppCompatActivity implements Paym
             return;
         }
         progressBar.setVisibility(View.GONE);
-
-        if (this.cachedListIndex != -1) {
-            session.setSelIndex(this.cachedListIndex);
-            this.cachedListIndex = -1;
-        }
-        paymentList.showPaymentSession(session);
+        paymentList.showPaymentSession(session, cachedListIndex);
+        this.cachedListIndex = -1;
     }
 
     /**

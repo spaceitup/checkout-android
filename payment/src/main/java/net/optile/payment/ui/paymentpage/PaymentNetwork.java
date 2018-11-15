@@ -64,7 +64,7 @@ class PaymentNetwork {
         return network.getRegistration();
     }
 
-    boolean isSelected() {
+    boolean isPreselected() {
         return PaymentUtils.isTrue(network.getSelected());
     }
 

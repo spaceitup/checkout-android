@@ -349,20 +349,19 @@ final class PaymentPagePresenter {
 
     private PaymentSession asyncLoadPaymentSession(String listUrl) throws PaymentException {
         ListResult listResult = listConnection.getListResult(listUrl);
-        List<PaymentNetwork> networks = loadNetworkPayments(listResult);
+        List<PaymentNetwork> networks = loadPaymentNetworks(listResult);
+        List<AccountCard> accountCards = new ArrayList<>();
         List<NetworkCard> networkCards = new ArrayList<>();
 
         for (PaymentNetwork network : networks) {
-            NetworkCard card = createNetworkCard();
-            networkCards.add(group);
+            networkCards.add(createNetworkCard(network));
         }
-        PaymentSession session = new PaymentSession(listResult, groups);
-        session.setSelIndex(selIndex);
-        session.setLang(loadPaymentPageLanguageFile(items));
+        PaymentSession session = new PaymentSession(listResult, accountCards, networkCards);
+        session.setLang(loadPaymentPageLanguageFile(networks));
 
         if (session.getApplicableNetworkSize() == 0) {
             session.setEmptyMessage(view.getStringRes(R.string.paymentpage_error_empty));
-        } else if (groups.size() == 0) {
+        } else if (networks.size() == 0) {
             session.setEmptyMessage(view.getStringRes(R.string.paymentpage_error_notsupported));
         }
         return session;
@@ -388,20 +387,21 @@ final class PaymentPagePresenter {
         return items;
     }
 
-    private PaymentNetwork loadPaymentItem(ApplicableNetwork network) throws PaymentException {
-        PaymentNetwork network = new PaymentNetwork(network);
-        URL langUrl = network.getLink("lang");
+    private PaymentNetwork loadPaymentNetwork(ApplicableNetwork network) throws PaymentException {
+        PaymentNetwork paymentNetwork = new PaymentNetwork(network);
+        URL langUrl = paymentNetwork.getLink("lang");
+
         if (langUrl == null) {
             throw createPaymentException("Missing 'lang' link in ApplicableNetwork", null);
         }
-        network.setLang(listConnection.loadLanguageFile(langUrl, new LanguageFile()));
-        return network;
+        paymentNetwork.setLang(listConnection.loadLanguageFile(langUrl, new LanguageFile()));
+        return paymentNetwork;
     }
 
-    private NetworkCard createNetworkCard(PaymentNetwork network) {
-        List<InputElement> elements = network.getInputElements();
-        NetworkCard card = new NetworkCard(network, elements);
-        network.setHasExpiryDate(containsExpiryDate(elements));
+    private NetworkCard createNetworkCard(PaymentNetwork paymentNetwork) {
+        List<InputElement> elements = paymentNetwork.getInputElements();
+        NetworkCard card = new NetworkCard(paymentNetwork, elements);
+        card.setExpiryDate(containsExpiryDate(elements));
         return card;
     }
 
@@ -428,20 +428,20 @@ final class PaymentPagePresenter {
      * @param items contains the list of PaymentNetwork elements
      * @return the properties object containing the language entries
      */
-    private LanguageFile loadPaymentPageLanguageFile(List<PaymentNetwork> items) throws PaymentException {
+    private LanguageFile loadPaymentPageLanguageFile(List<PaymentNetwork> networks) throws PaymentException {
         LanguageFile file = new LanguageFile();
         
-        if (items.size() == 0) {
+        if (networks.size() == 0) {
             return file;
         }
-        PaymentNetwork item = items.get(0);
-        URL langUrl = item.getLink("lang");
+        PaymentNetwork network = networks.get(0);
+        URL langUrl = network.getLink("lang");
 
         if (langUrl == null) {
             throw createPaymentException("Missing 'lang' link in ApplicableNetwork", null);
         }
         try {
-            String newUrl = langUrl.toString().replaceAll(item.getCode(), "paymentpage");
+            String newUrl = langUrl.toString().replaceAll(network.getCode(), "paymentpage");
             return listConnection.loadLanguageFile(new URL(newUrl), file);
         } catch (MalformedURLException e) {
             throw createPaymentException("Malformed language URL", e);

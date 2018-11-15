@@ -43,7 +43,7 @@ final class AccountCard implements PaymentCard {
      */
     @Override
     public URL getOperationLink() {
-        getLink("operation");
+        return getLink("operation");
     }
 
     /**

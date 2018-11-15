@@ -28,7 +28,7 @@ import net.optile.payment.model.InputElement;
 import net.optile.payment.core.LanguageFile;
 
 /**
- * NetworkCard representing one network method in the PaymentPage list
+ * NetworkCard 
  */
 final class NetworkCard implements PaymentCard {
 
@@ -52,7 +52,7 @@ final class NetworkCard implements PaymentCard {
      */
     @Override
     public URL getOperationLink() {
-        network.getLink("operation");
+        return network.getLink("operation");
     }
 
     /**
@@ -60,7 +60,7 @@ final class NetworkCard implements PaymentCard {
      */
     @Override
     public String getPaymentMethod() {
-        network.getPaymentMethod();
+        return network.getPaymentMethod();
     }
 
     /**
@@ -68,7 +68,7 @@ final class NetworkCard implements PaymentCard {
      */
     @Override
     public LanguageFile getLang() {
-        network.getLang();
+        return network.getLang();
     }
 
     /**
@@ -84,7 +84,7 @@ final class NetworkCard implements PaymentCard {
      */
     @Override
     public boolean isPreselected() {
-        return PaymentUtils.isTrue(network.getSelected());
+        return PaymentUtils.isTrue(network.isPreselected());
     }
     
     void setExpiryDate(boolean hasExpiryDate) {

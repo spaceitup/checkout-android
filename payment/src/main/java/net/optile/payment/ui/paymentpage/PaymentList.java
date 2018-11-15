@@ -30,6 +30,8 @@ import net.optile.payment.validation.ValidationResult;
  */
 final class PaymentList {
 
+    final static int VIEWTYPE_HEADER = -1;
+    
     private final PaymentPageActivity activity;
     private final PaymentListAdapter adapter;
     private final RecyclerView recyclerView;
@@ -37,7 +39,7 @@ final class PaymentList {
     private PaymentSession session;
     private int selIndex;
     private int viewType;
-    private List<PaymentListItem> items;
+    private List<ListItem> items;
     
     PaymentList(PaymentPageActivity activity, RecyclerView recyclerView, TextView emptyMessage) {
         this.activity = activity;
@@ -71,21 +73,22 @@ final class PaymentList {
         return this.session;
     }
 
-    void showPaymentSession(PaymentSession session) {
+    void showPaymentSession(PaymentSession session, int cachedListIndex) {
 
         if (this.session == session) {
             setVisible(true);
             return;
         }
-        clear();
         this.session = session;
-        setPaymentListItems(session);
+        setPaymentListItems(session, cachedListIndex);
         
         if (items.size() == 0) {
             emptyMessage.setText(session.getEmptyMessage());
         } else {
+            emptyMessage.setText("");          
             recyclerView.scrollToPosition(selIndex);
         }
+        adapter.notifyDataSetChanged();
         setVisible(true);
     }
 
@@ -93,36 +96,40 @@ final class PaymentList {
         return viewType++;
     }
     
-    private void setPaymentListItems(PaymentSession session) {
+    private void setPaymentListItems(PaymentSession session, int cachedListIndex) {
+        items.clear();
+
         int index = 0;
+        int selIndex = cachedListIndex;
+        
         if (session.accounts.size() > 0) {
-            items.add(new PaymentListItem(nextViewType(), "Account Header"));
+            items.add(new HeaderItem(VIEWTYPE_HEADER, "Account Header"));
             index++;
         }
-        for (AccountCard card : sessions.accounts) {
-            items.add(new PaymentListItem(nextViewType(), card));
+        for (AccountCard card : session.accounts) {
+            items.add(new AccountCardItem(nextViewType(), card));
             if (this.selIndex == -1 && card.isPreselected()) {
                 this.selIndex = index;
             }
             index++;
         }
         if (session.networks.size() > 0) {
-            items.add(new PaymentListItem(nextViewType(), "network Header"));
+            items.add(new HeaderItem(VIEWTYPE_HEADER, "network Header"));
         }
-        for (NetworkCard card : sessions.networks) {
-            items.add(new PaymentListItem(nextViewType(), card));
+        for (NetworkCard card : session.networks) {
+            items.add(new NetworkCardItem(nextViewType(), card));
             if (this.selIndex == -1 && card.isPreselected()) {
                 this.selIndex = index;
             }
             index++;
         }
-        adapter.notifyDataSetChanged();
     }
     
     void clear() {
         this.session = null;
         this.selIndex = -1;
         this.items.clear();
+
         emptyMessage.setText("");
         adapter.notifyDataSetChanged();
     }

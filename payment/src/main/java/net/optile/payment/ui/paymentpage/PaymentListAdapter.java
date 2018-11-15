@@ -11,7 +11,6 @@
 
 package net.optile.payment.ui.paymentpage;
 
-import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -20,6 +19,7 @@ import com.bumptech.glide.Glide;
 import android.support.annotation.NonNull;
 import android.support.v4.app.DialogFragment;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.RecyclerView.ViewHolder;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -42,7 +42,7 @@ import net.optile.payment.validation.ValidationResult;
 /**
  * The PaymentListAdapter containing the list of items
  */
-class PaymentListAdapter extends RecyclerView.Adapter<PaymentListViewHolder> {
+class PaymentListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     private final static String TAG = "pay_PaymentListAdapter";
     private final static String WIDGET_BUTTON = "widgetButton";
@@ -51,12 +51,12 @@ class PaymentListAdapter extends RecyclerView.Adapter<PaymentListViewHolder> {
     private final static String PAGEKEY_AUTO_REGISTRATION = "autoRegistrationLabel";
     private final static String PAGEKEY_ALLOW_RECURRENCE = "allowRecurrenceLabel";
 
-    private final List<PaymentListSection> sections;
+    private final List<ListItem> items;
     private final PaymentList list;
 
-    PaymentListAdapter(PaymentList list, List<PaymentListSection> sections) {
+    PaymentListAdapter(PaymentList list, List<ListItem> items) {
         this.list = list;
-        this.sections = sections;
+        this.items = items;
     }
 
     /**
@@ -64,16 +64,38 @@ class PaymentListAdapter extends RecyclerView.Adapter<PaymentListViewHolder> {
      */
     @Override
     public @NonNull
-    PaymentListViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         LayoutInflater inflater = LayoutInflater.from(parent.getContext());
-        PaymentListItem item = getItemWithViewType(viewType);
+        ListItem item = getItemWithViewType(viewType);
+        ViewHolder holder = null;
 
+        if (item instanceof NetworkCardItem) {
+            holder = createNetworkViewHolder(parent, inflater, (NetworkCardItem)item);
+        } else if (item instanceof AccountCardItem) {
+            holder = createAccountViewHolder(parent, inflater, (AccountCardItem)item);            
+        } else if (item instanceof HeaderItem) {
+            holder = createHeaderViewHolder(parent, inflater, (HeaderItem)item);
+        }
+        return holder;
+    }
+
+    private ViewHolder createNetworkViewHolder(ViewGroup parent, LayoutInflater inflater, NetworkCardItem item) {
         View view = inflater.inflate(R.layout.list_item_paymentpage, parent, false);
-        PaymentListViewHolder holder = new PaymentListViewHolder(this, view);
+        PaymentCardViewHolder holder = new NetworkCardViewHolder(this, view);
+        addWidgetsToHolder(holder, item.network, inflater, parent);            
+        
+        if (item instanceof HeaderItem) {
+            
 
-        //if (item != null) {
-        //  addWidgetsToHolder(holder, group, inflater, parent);
-        //}
+            View view = inflater.inflate(R.layout.list_item_paymentpage, parent, false);
+            HeaderViewHolder holder = new HeaderViewHolder(view);
+        } else if (item instanceof NetworkCardItem) {
+
+        } else if (item instanceof AccountCardItem) {
+            View view = inflater.inflate(R.layout.list_item_paymentpage, parent, false);
+            PaymentCardViewHolder holder = new AccountCardViewHolder(this, view);
+            addWidgetsToHolder(holder, group, inflater, parent);
+        }
         return holder;
     }
 
@@ -81,8 +103,16 @@ class PaymentListAdapter extends RecyclerView.Adapter<PaymentListViewHolder> {
      * {@inheritDoc}
      */
     @Override
-    public void onBindViewHolder(@NonNull PaymentListViewHolder holder, int position) {
-        PaymentListItem item = items.get(position);
+    public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
+        ListItem item = items.get(position);
+        
+        if (holder instanceof HeaderViewHolder) {
+            (HeaderViewHolder).onBind((HeaderItem)item);    
+        } else if (holder instanceof AccountCardViewHolder) {
+            (AccountCardViewHolder).onBind((AccountCardItem)item);
+        } else if (holder instanceof NetworkCardViewHolder) {
+            (NetworkCardViewHolder).onBind((NetworkCardItem)item);
+        }
         //PaymentNetwork item = group.getActiveNetworkItem();
 
         //URL logoUrl = item.getLogoLink();
@@ -166,7 +196,7 @@ class PaymentListAdapter extends RecyclerView.Adapter<PaymentListViewHolder> {
         if (!isValidPosition(position)) {
             return;
         }
-        PaymentListItem item = items.get(position);
+        ListItem item = items.get(position);
         //list.onActionClicked(, position);
     }
 
@@ -180,12 +210,12 @@ class PaymentListAdapter extends RecyclerView.Adapter<PaymentListViewHolder> {
     }
 
     /**
-     * Get the PaymentListItem at the given index
+     * Get the ListItem at the given index
      *
      * @param index index of the NetworkCard
-     * @return PaymentListItem given the index or null if not found
+     * @return ListItem given the index or null if not found
      */
-    PaymentListItem getItemFromIndex(int index) {
+    ListItem getItemFromIndex(int index) {
         return index >= 0 && index < items.size() ? items.get(index) : null;
     }
 
@@ -193,11 +223,11 @@ class PaymentListAdapter extends RecyclerView.Adapter<PaymentListViewHolder> {
      * Get the list item with its type matching the viewType
      *
      * @param type type of the view
-     * @return PaymentListItem with the same type or null if not found
+     * @return ListItem with the same type or null if not found
      */
-    private PaymentListItem getItemWithViewType(int viewType) {
+    private ListItem getItemWithViewType(int viewType) {
 
-        for (PaymentListItem item : items) {
+        for (ListItem item : items) {
             if (item.viewType == viewType) {
                 return item;
             }
@@ -253,7 +283,7 @@ class PaymentListAdapter extends RecyclerView.Adapter<PaymentListViewHolder> {
         return new RegisterWidget(name, view);
     }
 
-    private DateWidget createDateWidget(PaymentTheme theme, NetworkCard card, LayoutInflater inflater, ViewGroup parent) {
+    private DateWidget createDateWidget(PaymentTheme theme, PaymentCard card, LayoutInflater inflater, ViewGroup parent) {
         View view = inflater.inflate(R.layout.widget_input_date, parent, false);
         DateWidget widget = new DateWidget(PaymentInputType.EXPIRY_DATE, view);
         String label = card.getLang().translateAccountLabel(PaymentInputType.EXPIRY_DATE);
