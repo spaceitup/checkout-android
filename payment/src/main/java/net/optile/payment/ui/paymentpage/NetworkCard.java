@@ -86,6 +86,14 @@ final class NetworkCard implements PaymentCard {
     public boolean isPreselected() {
         return PaymentUtils.isTrue(network.isPreselected());
     }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public List<InputElement> getInputElements() {
+        return elements;
+    }
     
     void setExpiryDate(boolean hasExpiryDate) {
         this.hasExpiryDate = hasExpiryDate;

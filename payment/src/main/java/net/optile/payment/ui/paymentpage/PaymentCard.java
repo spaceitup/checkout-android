@@ -12,7 +12,8 @@
 package net.optile.payment.ui.paymentpage;
 
 import java.net.URL;
-
+import java.util.List;
+import net.optile.payment.model.InputElement;
 import net.optile.payment.core.LanguageFile;
 
 /**
@@ -54,4 +55,18 @@ interface PaymentCard {
      * @return true when preselected, false otherwise 
      */
     boolean isPreselected();
+
+    /** 
+     * Get the action button label
+     * 
+     * @return the action button label or null if not found 
+     */
+    String getButton();
+    
+    /** 
+     * Get the list of input elements supported by this  payment card
+     * 
+     * @return list of InputElements 
+     */
+    List<InputElement> getInputElements();
 }

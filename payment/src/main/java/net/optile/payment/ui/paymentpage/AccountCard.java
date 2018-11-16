@@ -77,15 +77,27 @@ final class AccountCard implements PaymentCard {
     public boolean isPreselected() {
         return PaymentUtils.isTrue(account.getSelected());
     }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public List<InputElement> getInputElements() {
+        List<InputElement> elements = account.getLocalizedInputElements();
+        return elements == null ? new ArrayList<>() : elements;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public String getButton() {
+        
+    }
     
     URL getLink(String name) {
         Map<String, URL> links = account.getLinks();
         return links != null ? links.get(name) : null;
-    }
-
-    List<InputElement> getInputElements() {
-        List<InputElement> elements = account.getLocalizedInputElements();
-        return elements == null ? new ArrayList<>() : elements;
     }
 
     void setExpiryDate(boolean hasExpiryDate) {

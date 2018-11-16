@@ -22,4 +22,7 @@ class NetworkCardItem extends ListItem {
         super(viewType);
         this.network = network;
     }
+
+    void populateHolder(NetworkCardViewHolder holder) {
+    }
 }

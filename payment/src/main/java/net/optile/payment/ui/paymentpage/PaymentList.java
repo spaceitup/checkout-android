@@ -30,8 +30,6 @@ import net.optile.payment.validation.ValidationResult;
  */
 final class PaymentList {
 
-    final static int VIEWTYPE_HEADER = -1;
-    
     private final PaymentPageActivity activity;
     private final PaymentListAdapter adapter;
     private final RecyclerView recyclerView;
@@ -103,7 +101,7 @@ final class PaymentList {
         int selIndex = cachedListIndex;
         
         if (session.accounts.size() > 0) {
-            items.add(new HeaderItem(VIEWTYPE_HEADER, "Account Header"));
+            items.add(new HeaderItem(nextViewType(), "Account Header"));
             index++;
         }
         for (AccountCard card : session.accounts) {
@@ -114,7 +112,7 @@ final class PaymentList {
             index++;
         }
         if (session.networks.size() > 0) {
-            items.add(new HeaderItem(VIEWTYPE_HEADER, "network Header"));
+            items.add(new HeaderItem(nextViewType(), "network Header"));
         }
         for (NetworkCard card : session.networks) {
             items.add(new NetworkCardItem(nextViewType(), card));

@@ -36,4 +36,8 @@ class HeaderViewHolder extends RecyclerView.ViewHolder {
         super(parent);
         this.title = parent.findViewById(R.id.text_title);
     }
+
+    void onBind(HeaderItem item) {
+        title.setText(item.title);
+    }
 }

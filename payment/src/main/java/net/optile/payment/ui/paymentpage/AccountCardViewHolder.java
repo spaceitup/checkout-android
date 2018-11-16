@@ -38,4 +38,7 @@ class AccountCardViewHolder extends PaymentCardViewHolder {
         this.title = parent.findViewById(R.id.text_title);
         this.logo = parent.findViewById(R.id.image_logo);
     }
+
+    void onBind(boolean selected, AccountCardItem item) {
+    }
 }

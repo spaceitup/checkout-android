@@ -24,6 +24,7 @@ import android.widget.TextView;
 import net.optile.payment.R;
 import net.optile.payment.ui.widget.FormWidget;
 import net.optile.payment.validation.ValidationResult;
+import net.optile.payment.core.PaymentInputType;
 
 /**
  * The PaymentCardViewHolder holding the widgets for a PaymentCard like Account or Network 
@@ -93,5 +94,21 @@ class PaymentCardViewHolder extends RecyclerView.ViewHolder {
 
     FormWidget getFormWidget(String name) {
         return widgets.get(name);
+    }
+
+    void bindRegistrationWidget(PaymentNetwork network) {
+        RegisterWidget widget = (RegisterWidget) holder.getFormWidget(PaymentInputType.AUTO_REGISTRATION);
+        widget.setRegistrationType(item.getRegistration());
+    }
+
+    void bindRecurrenceWidget(PaymentNetwork network) {
+        RegisterWidget widget = (RegisterWidget) holder.getFormWidget(PaymentInputType.ALLOW_RECURRENCE);
+        widget.setRegistrationType(item.getRecurrence());
+    }
+
+    void bindButtonWidget(PaymentNetwork network) {
+        ButtonWidget widget = (ButtonWidget) holder.getFormWidget(PaymentListAdapter.WIDGET_BUTTON);
+        String buttonLabel = adapter.translate(network.getButton());
+        widget.setLabel(buttonLabel);
     }
 }

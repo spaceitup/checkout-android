@@ -22,4 +22,7 @@ class HeaderItem extends ListItem {
         super(viewType);
         this.title = title;
     }
+
+    void populateHolder(HeaderViewHolder holder) {
+    }
 }
