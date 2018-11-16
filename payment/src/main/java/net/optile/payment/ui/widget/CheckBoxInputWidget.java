@@ -13,8 +13,8 @@ package net.optile.payment.ui.widget;
 
 import android.view.View;
 import android.widget.CheckBox;
-import android.widget.TextView;
 import android.widget.CompoundButton;
+import android.widget.TextView;
 import net.optile.payment.R;
 import net.optile.payment.core.PaymentException;
 import net.optile.payment.form.Charge;
@@ -41,11 +41,11 @@ public class CheckBoxInputWidget extends FormWidget {
         labelEnabled = rootView.findViewById(R.id.label_value_enabled);
         value = rootView.findViewById(R.id.checkbox_value);
         value.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-                @Override
-                public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                    handleOnCheckedChanged(isChecked);                    
-                }
-            });
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                handleOnCheckedChanged(isChecked);
+            }
+        });
     }
 
     public void setLabel(String label) {

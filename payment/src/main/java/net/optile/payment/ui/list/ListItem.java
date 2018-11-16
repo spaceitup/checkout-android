@@ -9,17 +9,16 @@
  * has been received in full.
  */
 
-package net.optile.payment.ui.paymentpage;
+package net.optile.payment.ui.list;
 
 /**
- * Class representing a network in the PaymentList
+ * Class representing an item in the PaymentList
  */
-class NetworkCardItem extends ListItem {
+class ListItem {
 
-    NetworkCard networkCard;
+    int viewType;
 
-    NetworkCardItem(int viewType, NetworkCard networkCard) {
-        super(viewType);
-        this.networkCard = networkCard;
+    ListItem(int viewType) {
+        this.viewType = viewType;
     }
 }

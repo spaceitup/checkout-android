@@ -9,7 +9,7 @@
  * has been received in full.
  */
 
-package net.optile.payment.ui.paymentpage;
+package net.optile.payment.ui.page;
 
 import java.util.Map;
 
@@ -29,6 +29,9 @@ import net.optile.payment.R;
 import net.optile.payment.ui.PaymentResult;
 import net.optile.payment.ui.PaymentUI;
 import net.optile.payment.ui.dialog.MessageDialogFragment;
+import net.optile.payment.ui.list.PaymentList;
+import net.optile.payment.ui.model.PaymentCard;
+import net.optile.payment.ui.model.PaymentSession;
 import net.optile.payment.ui.widget.FormWidget;
 import net.optile.payment.validation.ValidationResult;
 import net.optile.payment.validation.Validator;
@@ -240,12 +243,12 @@ public final class PaymentPageActivity extends AppCompatActivity implements Paym
         setResult(activityResult, intent);
     }
 
-    void makeChargeRequest(PaymentCard item, Map<String, FormWidget> widgets) {
+    public void makeChargeRequest(PaymentCard item, Map<String, FormWidget> widgets) {
         paymentList.hideKeyboard();
         presenter.charge(item, widgets);
     }
 
-    ValidationResult validate(PaymentCard item, String type, String value1, String value2) {
+    public ValidationResult validate(PaymentCard item, String type, String value1, String value2) {
         Validator validator = PaymentUI.getInstance().getValidator();
         ValidationResult result = validator.validate(item.getPaymentMethod(), type, value1, value2);
 

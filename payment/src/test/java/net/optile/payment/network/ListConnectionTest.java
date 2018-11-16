@@ -77,10 +77,9 @@ public class ListConnectionTest {
     /**
      * Gets language Properties invalid url
      *
-     * @throws PaymentException the network exception
      */
     @Test(expected = IllegalArgumentException.class)
-    public void getLanguage_invalidURL_IllegalArgumentException() throws PaymentException {
+    public void getLanguage_invalidURL_IllegalArgumentException() {
         ListConnection conn = new ListConnection();
         Properties lang = conn.getLanguage(null, new Properties());
     }
@@ -88,10 +87,9 @@ public class ListConnectionTest {
     /**
      * Gets language Properties invalid properties
      *
-     * @throws PaymentException the network exception
      */
     @Test(expected = IllegalArgumentException.class)
-    public void getLanguage_invalidProperties_IllegalArgumentException() throws PaymentException {
+    public void getLanguage_invalidProperties_IllegalArgumentException() {
         ListConnection conn = new ListConnection();
         URL url = null;
         try {

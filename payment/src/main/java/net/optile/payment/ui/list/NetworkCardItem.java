@@ -9,21 +9,19 @@
  * has been received in full.
  */
 
-package net.optile.payment.ui.paymentpage;
+package net.optile.payment.ui.list;
 
-import android.support.v7.widget.RecyclerView.ViewHolder;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
+import net.optile.payment.ui.model.NetworkCard;
 
 /**
- * Class representing an item in the PaymentList
+ * Class representing a network in the PaymentList
  */
-class ListItem {
+class NetworkCardItem extends ListItem {
 
-    int viewType;
+    NetworkCard networkCard;
 
-    ListItem(int viewType) {
-        this.viewType = viewType;
+    NetworkCardItem(int viewType, NetworkCard networkCard) {
+        super(viewType);
+        this.networkCard = networkCard;
     }
 }

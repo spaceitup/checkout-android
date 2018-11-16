@@ -9,73 +9,73 @@
  * has been received in full.
  */
 
-package net.optile.payment.ui.paymentpage;
+package net.optile.payment.ui.model;
 
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import net.optile.payment.core.LanguageFile;
 import net.optile.payment.model.ApplicableNetwork;
 import net.optile.payment.model.InputElement;
 import net.optile.payment.util.PaymentUtils;
-import net.optile.payment.core.LanguageFile;
 
 /**
  * Class for holding the ApplicableNetwork with its localized language file
  */
-class PaymentNetwork {
+public class PaymentNetwork {
 
-    private final ApplicableNetwork network;
+    public final ApplicableNetwork network;
     private LanguageFile lang;
-    
-    PaymentNetwork(ApplicableNetwork network) {
+
+    public PaymentNetwork(ApplicableNetwork network) {
         this.network = network;
     }
 
-    URL getLink(String name) {
+    public URL getLink(String name) {
         Map<String, URL> links = network.getLinks();
         return links != null ? links.get(name) : null;
     }
 
-    String getPaymentMethod() {
+    public String getPaymentMethod() {
         return network.getMethod();
     }
-    
-    String getCode() {
+
+    public String getCode() {
         return network.getCode();
     }
 
-    String getLabel() {
+    public String getLabel() {
         return network.getLabel();
     }
 
-    String getRecurrence() {
+    public String getRecurrence() {
         return network.getRecurrence();
     }
 
-    String getRegistration() {
+    public String getRegistration() {
         return network.getRegistration();
     }
 
-    boolean isPreselected() {
+    public boolean isPreselected() {
         return PaymentUtils.isTrue(network.getSelected());
     }
 
-    List<InputElement> getInputElements() {
+    public List<InputElement> getInputElements() {
         List<InputElement> elements = network.getLocalizedInputElements();
         return elements == null ? new ArrayList<>() : elements;
     }
 
-    String getButton() {
+    public String getButton() {
         return network.getButton();
     }
 
-    LanguageFile getLang() {
+    public LanguageFile getLang() {
         return lang;
     }
 
-    void setLang(LanguageFile lang) {
+    public void setLang(LanguageFile lang) {
         this.lang = lang;
     }
 }

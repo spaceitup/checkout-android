@@ -9,7 +9,7 @@
  * has been received in full.
  */
 
-package net.optile.payment.ui.paymentpage;
+package net.optile.payment.ui.list;
 
 /**
  * Class representing a header in the PaymentList

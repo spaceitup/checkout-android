@@ -9,7 +9,7 @@
  * has been received in full.
  */
 
-package net.optile.payment.ui.paymentpage;
+package net.optile.payment.ui.model;
 
 import java.net.URL;
 import java.util.List;
@@ -20,20 +20,16 @@ import net.optile.payment.model.ApplicableNetwork;
 import net.optile.payment.model.ListResult;
 import net.optile.payment.model.Networks;
 
-
 /**
  * Class for storing the ListResult and the list of supported PaymentMethods
  */
-final class PaymentSession {
+public final class PaymentSession {
 
-    final ListResult listResult;
+    public final ListResult listResult;
+    public final List<AccountCard> accounts;
+    public final List<NetworkCard> networks;
 
-    final List<AccountCard> accounts;
-
-    final List<NetworkCard> networks;
-    
     private LanguageFile lang;
-
     private String emptyMessage;
 
     /**
@@ -43,39 +39,39 @@ final class PaymentSession {
      * @param accounts list of AccountCards supported by this PaymentSession
      * @param networks list of NetworkCards supported by this PaymentSession
      */
-    PaymentSession(ListResult listResult, List<AccountCard> accounts, List<NetworkCard> networks) {
+    public PaymentSession(ListResult listResult, List<AccountCard> accounts, List<NetworkCard> networks) {
         this.listResult = listResult;
         this.accounts = accounts;
         this.networks = networks;
     }
 
-    URL getLink(String name) {
+    public URL getLink(String name) {
         Map<String, URL> links = listResult.getLinks();
         return links != null ? links.get(name) : null;
     }
 
-    boolean isListUrl(String listUrl) {
+    public boolean isListUrl(String listUrl) {
         URL url = getLink("self");
         return url != null && url.toString().equals(listUrl);
     }
 
-    void setLang(LanguageFile lang) {
+    public LanguageFile getLang() {
+        return lang;
+    }
+
+    public void setLang(LanguageFile lang) {
         this.lang = lang;
     }
 
-    LanguageFile getLang() {
-        return lang;
-    }
-    
-    String getEmptyMessage() {
+    public String getEmptyMessage() {
         return emptyMessage;
     }
 
-    void setEmptyMessage(String emptyMessage) {
+    public void setEmptyMessage(String emptyMessage) {
         this.emptyMessage = emptyMessage;
     }
 
-    int getApplicableNetworkSize() {
+    public int getApplicableNetworkSize() {
         Networks nw = listResult.getNetworks();
         if (nw == null) {
             return 0;

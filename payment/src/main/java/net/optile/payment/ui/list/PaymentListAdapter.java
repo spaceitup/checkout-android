@@ -9,34 +9,19 @@
  * has been received in full.
  */
 
-package net.optile.payment.ui.paymentpage;
+package net.optile.payment.ui.list;
 
-import java.util.ArrayList;
 import java.util.List;
-
-import com.bumptech.glide.Glide;
 
 import android.support.annotation.NonNull;
 import android.support.v4.app.DialogFragment;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.RecyclerView.ViewHolder;
 import android.view.LayoutInflater;
-import android.view.View;
 import android.view.ViewGroup;
-import net.optile.payment.R;
 import net.optile.payment.core.LanguageFile;
-import net.optile.payment.core.PaymentInputType;
-import net.optile.payment.model.InputElement;
-import net.optile.payment.model.InputElementType;
 import net.optile.payment.ui.PaymentTheme;
 import net.optile.payment.ui.PaymentUI;
-import net.optile.payment.ui.widget.ButtonWidget;
-import net.optile.payment.ui.widget.CheckBoxInputWidget;
-import net.optile.payment.ui.widget.DateWidget;
-import net.optile.payment.ui.widget.FormWidget;
-import net.optile.payment.ui.widget.RegisterWidget;
-import net.optile.payment.ui.widget.SelectInputWidget;
-import net.optile.payment.ui.widget.TextInputWidget;
 import net.optile.payment.validation.ValidationResult;
 
 /**
@@ -63,12 +48,10 @@ class PaymentListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         ViewHolder holder = null;
 
         if (item instanceof NetworkCardItem) {
-            holder = NetworkCardViewHolder.createInstance(this, (NetworkCardItem)item, inflater, parent);
-        }
-        else if (item instanceof AccountCardItem) {
-            holder = AccountCardViewHolder.createInstance(this, (AccountCardItem)item, inflater, parent);            
-        }
-        else if (item instanceof HeaderItem) {
+            holder = NetworkCardViewHolder.createInstance(this, (NetworkCardItem) item, inflater, parent);
+        } else if (item instanceof AccountCardItem) {
+            holder = AccountCardViewHolder.createInstance(this, (AccountCardItem) item, inflater, parent);
+        } else if (item instanceof HeaderItem) {
             holder = HeaderViewHolder.createInstance(inflater, parent);
         }
         return holder;
@@ -80,18 +63,16 @@ class PaymentListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         ListItem item = items.get(position);
-        
+
         if (holder instanceof HeaderViewHolder) {
-            ((HeaderViewHolder)holder).onBind((HeaderItem)item);    
-        }
-        else if (holder instanceof AccountCardViewHolder) {
-            AccountCardViewHolder ah = (AccountCardViewHolder)holder;
-            ah.onBind((AccountCardItem)item);
+            ((HeaderViewHolder) holder).onBind((HeaderItem) item);
+        } else if (holder instanceof AccountCardViewHolder) {
+            AccountCardViewHolder ah = (AccountCardViewHolder) holder;
+            ah.onBind((AccountCardItem) item);
             ah.expand(list.getSelected() == position);
-        }
-        else if (holder instanceof NetworkCardViewHolder) {
-            NetworkCardViewHolder nh = (NetworkCardViewHolder)holder;
-            nh.onBind((NetworkCardItem)item);
+        } else if (holder instanceof NetworkCardViewHolder) {
+            NetworkCardViewHolder nh = (NetworkCardViewHolder) holder;
+            nh.onBind((NetworkCardItem) item);
             nh.expand(list.getSelected() == position);
         }
     }
@@ -116,8 +97,7 @@ class PaymentListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         if (!isValidPosition(position)) {
             return;
         }
-        //NetworkCard item = items.get(position);
-        //list.onItemClicked(item, position);
+        list.onItemClicked(items.get(position), position);
     }
 
     void hideKeyboard(int position) {

@@ -11,8 +11,9 @@
 
 package net.optile.payment.core;
 
-import net.optile.payment.model.Interaction;
 import java.util.Properties;
+
+import net.optile.payment.model.Interaction;
 
 /**
  * Class holding the language entries for the payment page, ApplicableNetwork or AccountRegistration
@@ -22,7 +23,7 @@ public final class LanguageFile {
     public final static String KEY_BUTTON_DATE = "button.update.label";
     public final static String KEY_AUTO_REGISTRATION = "autoRegistrationLabel";
     public final static String KEY_ALLOW_RECURRENCE = "allowRecurrenceLabel";
-    
+
     private final Properties lang;
 
     /**
@@ -49,7 +50,7 @@ public final class LanguageFile {
         sb.append(interaction.getCode()).append(".").append(interaction.getReason());
         return translate(sb.toString(), null);
     }
-    
+
     public Properties getProperties() {
         return lang;
     }

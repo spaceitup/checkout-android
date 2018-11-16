@@ -13,6 +13,7 @@ package net.optile.payment.form;
 
 import org.json.JSONException;
 import org.json.JSONObject;
+
 import android.text.TextUtils;
 import net.optile.payment.core.PaymentError;
 import net.optile.payment.core.PaymentException;
@@ -59,7 +60,7 @@ public class Charge {
         }
     }
 
-    public String toJson() throws JSONException { 
+    public String toJson() throws JSONException {
         charge.put("account", account);
         return charge.toString();
     }

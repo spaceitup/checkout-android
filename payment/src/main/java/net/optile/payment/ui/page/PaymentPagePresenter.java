@@ -9,7 +9,7 @@
  * has been received in full.
  */
 
-package net.optile.payment.ui.paymentpage;
+package net.optile.payment.ui.page;
 
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -40,6 +40,11 @@ import net.optile.payment.model.OperationResult;
 import net.optile.payment.network.ChargeConnection;
 import net.optile.payment.network.ListConnection;
 import net.optile.payment.ui.PaymentResult;
+import net.optile.payment.ui.model.AccountCard;
+import net.optile.payment.ui.model.NetworkCard;
+import net.optile.payment.ui.model.PaymentCard;
+import net.optile.payment.ui.model.PaymentNetwork;
+import net.optile.payment.ui.model.PaymentSession;
 import net.optile.payment.ui.widget.FormWidget;
 
 /**
@@ -430,7 +435,7 @@ final class PaymentPagePresenter {
      */
     private LanguageFile loadPaymentPageLanguageFile(List<PaymentNetwork> networks) throws PaymentException {
         LanguageFile file = new LanguageFile();
-        
+
         if (networks.size() == 0) {
             return file;
         }

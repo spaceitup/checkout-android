@@ -9,33 +9,33 @@
  * has been received in full.
  */
 
-package net.optile.payment.ui.paymentpage;
+package net.optile.payment.ui.model;
 
 import java.net.URL;
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
-import net.optile.payment.model.AccountRegistration;
-import net.optile.payment.model.ApplicableNetwork;
+import net.optile.payment.core.LanguageFile;
 import net.optile.payment.model.InputElement;
 import net.optile.payment.util.PaymentUtils;
-import net.optile.payment.core.LanguageFile;
 
 /**
- * Class for representing an AccountCard in the PaymentPage list
+ * NetworkCard
  */
-final class AccountCard implements PaymentCard {
+public final class NetworkCard implements PaymentCard {
 
-    private final AccountRegistration account;
-    private final ApplicableNetwork network;
-
+    public final PaymentNetwork network;
+    public final List<InputElement> elements;
     private boolean hasExpiryDate;
-    private LanguageFile lang;
-    
-    AccountCard(AccountRegistration account, ApplicableNetwork network) {
-        this.account = account;
+
+    /**
+     * Construct a new NetworkCard
+     *
+     * @param network the network payment shown in this NetworkCard
+     * @param elements containing the ordered list of InputElements
+     */
+    public NetworkCard(PaymentNetwork network, List<InputElement> elements) {
         this.network = network;
+        this.elements = elements;
     }
 
     /**
@@ -43,7 +43,7 @@ final class AccountCard implements PaymentCard {
      */
     @Override
     public URL getOperationLink() {
-        return getLink("operation");
+        return network.getLink("operation");
     }
 
     /**
@@ -51,7 +51,7 @@ final class AccountCard implements PaymentCard {
      */
     @Override
     public String getPaymentMethod() {
-        return network.getMethod();
+        return network.getPaymentMethod();
     }
 
     /**
@@ -59,7 +59,7 @@ final class AccountCard implements PaymentCard {
      */
     @Override
     public LanguageFile getLang() {
-        return lang;
+        return network.getLang();
     }
 
     /**
@@ -75,7 +75,7 @@ final class AccountCard implements PaymentCard {
      */
     @Override
     public boolean isPreselected() {
-        return PaymentUtils.isTrue(account.getSelected());
+        return PaymentUtils.isTrue(network.isPreselected());
     }
 
     /**
@@ -83,8 +83,7 @@ final class AccountCard implements PaymentCard {
      */
     @Override
     public List<InputElement> getInputElements() {
-        List<InputElement> elements = account.getLocalizedInputElements();
-        return elements == null ? new ArrayList<>() : elements;
+        return elements;
     }
 
     /**
@@ -94,17 +93,17 @@ final class AccountCard implements PaymentCard {
     public String getButton() {
         return network.getButton();
     }
-    
-    URL getLink(String name) {
-        Map<String, URL> links = account.getLinks();
-        return links != null ? links.get(name) : null;
-    }
 
-    void setExpiryDate(boolean hasExpiryDate) {
+    public void setExpiryDate(boolean hasExpiryDate) {
         this.hasExpiryDate = hasExpiryDate;
     }
 
-    void setLang(LanguageFile lang) {
-        this.lang = lang;
+    /**
+     * Get the active PaymentNetwork that is selected in the NetworkCard
+     *
+     * @return active PaymentNetwork
+     */
+    public PaymentNetwork getActivePaymentNetwork() {
+        return network;
     }
 }
