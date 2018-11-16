@@ -142,7 +142,7 @@ class PaymentListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         return PaymentUI.getInstance().getPaymentTheme();
     }
 
-    LanguageFile getLanguageFile() {
+    LanguageFile getPageLanguageFile() {
         return list.getPaymentSession().getLang();
     }
 

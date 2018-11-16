@@ -33,22 +33,26 @@ public final class LanguageFile {
         this.lang = new Properties();
     }
 
+    public String translate(String key) {
+        return translate(key, null);
+    }
+
     public String translate(String key, String defValue) {
         return key != null ? lang.getProperty(key, defValue) : defValue;
     }
 
     public String translateError(String error) {
-        return translate("error.".concat(error), null);
+        return translate("error.".concat(error));
     }
 
-    public String translateAccountLabel(String type) {
-        return translate("account.".concat(type).concat(".label"), null);
+    public String translateAccount(String account) {
+        return translate("account.".concat(account).concat(".label"));
     }
 
     public String translateInteraction(Interaction interaction) {
         StringBuilder sb = new StringBuilder("interaction.");
         sb.append(interaction.getCode()).append(".").append(interaction.getReason());
-        return translate(sb.toString(), null);
+        return translate(sb.toString());
     }
 
     public Properties getProperties() {

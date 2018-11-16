@@ -21,6 +21,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import net.optile.payment.R;
 import net.optile.payment.core.PaymentInputType;
+import net.optile.payment.core.LanguageFile;
+import net.optile.payment.ui.PaymentTheme;
 import net.optile.payment.model.InputElement;
 import net.optile.payment.model.InputElementType;
 import net.optile.payment.ui.model.PaymentCard;
@@ -31,7 +33,6 @@ import net.optile.payment.ui.widget.FormWidget;
 import net.optile.payment.ui.widget.SelectInputWidget;
 import net.optile.payment.ui.widget.TextInputWidget;
 import net.optile.payment.validation.ValidationResult;
-
 
 /**
  * The PaymentCardViewHolder holding the header and input widgets
@@ -168,10 +169,17 @@ class PaymentCardViewHolder extends RecyclerView.ViewHolder {
     }
 
     void bindDateWidget(PaymentCard card) {
-        //String label = card.getLang().translateAccountLabel(PaymentInputType.EXPIRY_DATE);
-        //widget.setLabel(label);
-        //widget.setButton(translate(PAGEKEY_BUTTON_DATE));
-        //widget.setIconResource(theme.getWidgetIconRes(PaymentInputType.EXPIRY_DATE));
+        DateWidget widget = (DateWidget) getFormWidget(PaymentInputType.EXPIRY_DATE);
+        if (widget == null) {
+            return;
+        }
+        String label = card.getLang().translateAccount(PaymentInputType.EXPIRY_DATE);
+        LanguageFile lang = adapter.getPageLanguageFile();
+        PaymentTheme theme = adapter.getPaymentTheme();
+
+        widget.setLabel(label);
+        widget.setButton(lang.translate(LanguageFile.KEY_BUTTON_DATE));
+        widget.setIconResource(theme.getWidgetIconRes(PaymentInputType.EXPIRY_DATE));
     }
 
     void bindButtonWidget(PaymentCard card) {
@@ -180,8 +188,8 @@ class PaymentCardViewHolder extends RecyclerView.ViewHolder {
         if (widget == null) {
             return;
         }
-        //String buttonLabel = adapter.translate(card.getButton());
-        //widget.setLabel(buttonLabel);
+        LanguageFile lang = adapter.getPageLanguageFile();
+        widget.setLabel(lang.translate(card.getButton()));
     }
 
     void setLastImeOptions() {

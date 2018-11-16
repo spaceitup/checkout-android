@@ -23,6 +23,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import net.optile.payment.R;
 import net.optile.payment.core.PaymentInputType;
+import net.optile.payment.core.LanguageFile;
 import net.optile.payment.ui.model.PaymentNetwork;
 import net.optile.payment.ui.widget.RegisterWidget;
 
@@ -66,18 +67,24 @@ final class NetworkCardViewHolder extends PaymentCardViewHolder {
         if (logoUrl != null) {
             Glide.with(logo.getContext()).asBitmap().load(logoUrl.toString()).into(logo);
         }
-        bindButtonWidget(item.networkCard);
         bindRegistrationWidget(network);
         bindRecurrenceWidget(network);
+        bindButtonWidget(item.networkCard);
     }
 
     private void bindRegistrationWidget(PaymentNetwork network) {
         RegisterWidget widget = (RegisterWidget) getFormWidget(PaymentInputType.AUTO_REGISTRATION);
         widget.setRegistrationType(network.getRegistration());
+
+        LanguageFile lang = adapter.getPageLanguageFile();
+        widget.setLabel(lang.translate(LanguageFile.KEY_AUTO_REGISTRATION, null));
     }
 
     private void bindRecurrenceWidget(PaymentNetwork network) {
         RegisterWidget widget = (RegisterWidget) getFormWidget(PaymentInputType.ALLOW_RECURRENCE);
         widget.setRegistrationType(network.getRecurrence());
+
+        LanguageFile lang = adapter.getPageLanguageFile();
+        widget.setLabel(lang.translate(LanguageFile.KEY_ALLOW_RECURRENCE, null));
     }
 }

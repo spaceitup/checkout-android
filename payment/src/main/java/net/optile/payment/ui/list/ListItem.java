@@ -21,4 +21,8 @@ class ListItem {
     ListItem(int viewType) {
         this.viewType = viewType;
     }
+
+    PaymentCard getPaymentCard() {
+        return null;
+    }
 }
