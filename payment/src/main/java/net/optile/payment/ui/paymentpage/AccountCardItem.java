@@ -16,10 +16,10 @@ package net.optile.payment.ui.paymentpage;
  */
 class AccountCardItem extends ListItem {
 
-    AccountCard account;
+    AccountCard accountCard;
 
-    AccountCardItem(int viewType, AccountCard account) {
+    AccountCardItem(int viewType, AccountCard accountCard) {
         super(viewType);
-        this.account = account;
+        this.accountCard = accountCard;
     }
 }

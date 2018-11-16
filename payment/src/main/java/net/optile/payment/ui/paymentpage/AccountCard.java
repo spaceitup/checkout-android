@@ -92,7 +92,7 @@ final class AccountCard implements PaymentCard {
      */
     @Override
     public String getButton() {
-        
+        return network.getButton();
     }
     
     URL getLink(String name) {

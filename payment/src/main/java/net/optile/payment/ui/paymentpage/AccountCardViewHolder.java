@@ -24,11 +24,38 @@ import android.widget.TextView;
 import net.optile.payment.R;
 import net.optile.payment.ui.widget.FormWidget;
 import net.optile.payment.validation.ValidationResult;
+import java.util.ArrayList;
+import java.util.List;
+
+import com.bumptech.glide.Glide;
+
+import android.support.annotation.NonNull;
+import android.support.v4.app.DialogFragment;
+import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.RecyclerView.ViewHolder;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import net.optile.payment.R;
+import net.optile.payment.core.LanguageFile;
+import net.optile.payment.core.PaymentInputType;
+import net.optile.payment.model.InputElement;
+import net.optile.payment.model.InputElementType;
+import net.optile.payment.ui.PaymentTheme;
+import net.optile.payment.ui.PaymentUI;
+import net.optile.payment.ui.widget.ButtonWidget;
+import net.optile.payment.ui.widget.CheckBoxInputWidget;
+import net.optile.payment.ui.widget.DateWidget;
+import net.optile.payment.ui.widget.FormWidget;
+import net.optile.payment.ui.widget.RegisterWidget;
+import net.optile.payment.ui.widget.SelectInputWidget;
+import net.optile.payment.ui.widget.TextInputWidget;
+import net.optile.payment.validation.ValidationResult;
 
 /**
  * The AccountCardViewHolder
  */
-class AccountCardViewHolder extends PaymentCardViewHolder {
+final class AccountCardViewHolder extends PaymentCardViewHolder {
 
     final TextView title;
     final ImageView logo;
@@ -39,6 +66,12 @@ class AccountCardViewHolder extends PaymentCardViewHolder {
         this.logo = parent.findViewById(R.id.image_logo);
     }
 
-    void onBind(boolean selected, AccountCardItem item) {
+    void onBind(AccountCardItem item) {
     }
+
+    static ViewHolder createInstance(PaymentListAdapter adapter, AccountCardItem item, LayoutInflater inflater, ViewGroup parent) {
+        View view = inflater.inflate(R.layout.list_item_account, parent, false);
+        AccountCardViewHolder holder = new AccountCardViewHolder(adapter, view);
+        return holder;
+    }            
 }

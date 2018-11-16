@@ -57,7 +57,7 @@ import net.optile.payment.validation.ValidationResult;
 /**
  * The NetworkCardViewHolder
  */
-class NetworkCardViewHolder extends PaymentCardViewHolder {
+final class NetworkCardViewHolder extends PaymentCardViewHolder {
 
     final TextView title;
     final ImageView logo;
@@ -68,18 +68,44 @@ class NetworkCardViewHolder extends PaymentCardViewHolder {
         this.logo = parent.findViewById(R.id.image_logo);
     }
 
-    void onBind(boolean selected, NetworkCardItem item) {
-        PaymentNetwork network = item.network.getActivePaymentNetwork();
-
+    void onBind(NetworkCardItem item) {
+        PaymentNetwork network = item.networkCard.getActivePaymentNetwork();
         URL logoUrl = network.getLink("logo");
         title.setText(network.getLabel());
 
         if (logoUrl != null) {
             Glide.with(logo.getContext()).asBitmap().load(logoUrl.toString()).into(logo);
-        }
-        //bindRegistrationWidget(item, holder);
-        //bindRecurrenceWidget(item, holder);
-        //bindButtonWidget(item, holder);
-        expand(selected);
+         }
+        bindButtonWidget(item.networkCard);
+        bindRegistrationWidget(network);
+        bindRecurrenceWidget(network);
+    }
+
+    private void bindRegistrationWidget(PaymentNetwork network) {
+        RegisterWidget widget = (RegisterWidget) getFormWidget(PaymentInputType.AUTO_REGISTRATION);
+        widget.setRegistrationType(network.getRegistration());
+    }
+
+    private void bindRecurrenceWidget(PaymentNetwork network) {
+        RegisterWidget widget = (RegisterWidget) getFormWidget(PaymentInputType.ALLOW_RECURRENCE);
+        widget.setRegistrationType(network.getRecurrence());
+    }
+
+    static ViewHolder createInstance(PaymentListAdapter adapter, NetworkCardItem item, LayoutInflater inflater, ViewGroup parent) {
+        View view = inflater.inflate(R.layout.list_item_network, parent, false);
+        NetworkCardViewHolder holder = new NetworkCardViewHolder(adapter, view);
+
+        addInputWidgets(holder, inflater, parent, item.networkCard);
+        addRegisterWidget(holder, PaymentInputType.AUTO_REGISTRATION, inflater, parent);
+        addRegisterWidget(holder, PaymentInputType.ALLOW_RECURRENCE, inflater, parent);       
+        addButtonWidget(holder, inflater, parent);
+        return holder;        
+    }
+
+    static RegisterWidget addRegisterWidget(NetworkCardViewHolder holder, String name, LayoutInflater inflater, ViewGroup parent) {
+        View view = inflater.inflate(R.layout.widget_input_checkbox, parent, false);
+        RegisterWidget widget = new RegisterWidget(name, view);
+        holder.addWidget(widget);
+        return widget;
     }
 }

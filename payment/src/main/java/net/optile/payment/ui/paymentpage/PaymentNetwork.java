@@ -27,14 +27,8 @@ import net.optile.payment.core.LanguageFile;
 class PaymentNetwork {
 
     private final ApplicableNetwork network;
-    
     private LanguageFile lang;
     
-    /**
-     * Construct a new PaymentNetwork object
-     *
-     * @param network ApplicableNetwork used in this PaymentNetwork
-     */
     PaymentNetwork(ApplicableNetwork network) {
         this.network = network;
     }

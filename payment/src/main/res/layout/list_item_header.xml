@@ -3,8 +3,10 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:paddingLeft="@dimen/border_xsmall"
-    android:paddingRight="@dimen/border_xsmall">
+    android:paddingTop="@dimen/border_medium"
+    android:paddingBottom="@dimen/border_medium"    
+    android:paddingStart="@dimen/border_medium"
+    android:paddingEnd="@dimen/border_medium">
 
     <TextView
         android:id="@+id/text_title"

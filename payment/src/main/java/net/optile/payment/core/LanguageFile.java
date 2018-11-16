@@ -19,6 +19,10 @@ import java.util.Properties;
  */
 public final class LanguageFile {
 
+    public final static String KEY_BUTTON_DATE = "button.update.label";
+    public final static String KEY_AUTO_REGISTRATION = "autoRegistrationLabel";
+    public final static String KEY_ALLOW_RECURRENCE = "allowRecurrenceLabel";
+    
     private final Properties lang;
 
     /**

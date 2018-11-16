@@ -16,13 +16,10 @@ package net.optile.payment.ui.paymentpage;
  */
 class NetworkCardItem extends ListItem {
 
-    NetworkCard network;
+    NetworkCard networkCard;
 
-    NetworkCardItem(int viewType, NetworkCard network) {
+    NetworkCardItem(int viewType, NetworkCard networkCard) {
         super(viewType);
-        this.network = network;
-    }
-
-    void populateHolder(NetworkCardViewHolder holder) {
+        this.networkCard = networkCard;
     }
 }

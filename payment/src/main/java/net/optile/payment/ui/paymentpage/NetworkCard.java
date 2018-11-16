@@ -94,6 +94,14 @@ final class NetworkCard implements PaymentCard {
     public List<InputElement> getInputElements() {
         return elements;
     }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public String getButton() {
+        return network.getButton();
+    }
     
     void setExpiryDate(boolean hasExpiryDate) {
         this.hasExpiryDate = hasExpiryDate;

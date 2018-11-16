@@ -44,13 +44,6 @@ import net.optile.payment.validation.ValidationResult;
  */
 class PaymentListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
-    private final static String TAG = "pay_PaymentListAdapter";
-    private final static String WIDGET_BUTTON = "widgetButton";
-
-    private final static String PAGEKEY_BUTTON_DATE = "button.update.label";
-    private final static String PAGEKEY_AUTO_REGISTRATION = "autoRegistrationLabel";
-    private final static String PAGEKEY_ALLOW_RECURRENCE = "allowRecurrenceLabel";
-
     private final List<ListItem> items;
     private final PaymentList list;
 
@@ -70,33 +63,16 @@ class PaymentListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         ViewHolder holder = null;
 
         if (item instanceof NetworkCardItem) {
-            holder = createNetworkViewHolder(parent, inflater, (NetworkCardItem)item);
-        } else if (item instanceof AccountCardItem) {
-            holder = createAccountViewHolder(parent, inflater, (AccountCardItem)item);            
-        } else if (item instanceof HeaderItem) {
-            holder = createHeaderViewHolder(parent, inflater, (HeaderItem)item);
+            holder = NetworkCardViewHolder.createInstance(this, (NetworkCardItem)item, inflater, parent);
+        }
+        else if (item instanceof AccountCardItem) {
+            holder = AccountCardViewHolder.createInstance(this, (AccountCardItem)item, inflater, parent);            
+        }
+        else if (item instanceof HeaderItem) {
+            holder = HeaderViewHolder.createInstance(inflater, parent);
         }
         return holder;
     }
-
-    private ViewHolder createNetworkViewHolder(ViewGroup parent, LayoutInflater inflater, NetworkCardItem item) {
-        View view = inflater.inflate(R.layout.list_item_network, parent, false);
-        NetworkCardViewHolder holder = new NetworkCardViewHolder(this, view);
-        addWidgetsToHolder(holder, item.network, inflater, parent);            
-        return holder;
-    }            
-
-    private ViewHolder createAccountViewHolder(ViewGroup parent, LayoutInflater inflater, AccountCardItem item) {
-        View view = inflater.inflate(R.layout.list_item_account, parent, false);
-        AccountCardViewHolder holder = new AccountCardViewHolder(this, view);
-        addWidgetsToHolder(holder, item.account, inflater, parent);
-        return holder;
-    }            
-
-    private ViewHolder createHeaderViewHolder(ViewGroup parent, LayoutInflater inflater, HeaderItem item) {
-        View view = inflater.inflate(R.layout.list_item_header, parent, false);
-        return new HeaderViewHolder(view);
-    }            
 
     /**
      * {@inheritDoc}
@@ -104,14 +80,19 @@ class PaymentListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         ListItem item = items.get(position);
-        boolean selected = list.getSelected() == position;
         
         if (holder instanceof HeaderViewHolder) {
             ((HeaderViewHolder)holder).onBind((HeaderItem)item);    
-        } else if (holder instanceof AccountCardViewHolder) {
-            ((AccountCardViewHolder)holder).onBind(selected, (AccountCardItem)item);
-        } else if (holder instanceof NetworkCardViewHolder) {
-            ((NetworkCardViewHolder)holder).onBind(selected, (NetworkCardItem)item);
+        }
+        else if (holder instanceof AccountCardViewHolder) {
+            AccountCardViewHolder ah = (AccountCardViewHolder)holder;
+            ah.onBind((AccountCardItem)item);
+            ah.expand(list.getSelected() == position);
+        }
+        else if (holder instanceof NetworkCardViewHolder) {
+            NetworkCardViewHolder nh = (NetworkCardViewHolder)holder;
+            nh.onBind((NetworkCardItem)item);
+            nh.expand(list.getSelected() == position);
         }
     }
 
@@ -177,9 +158,12 @@ class PaymentListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         return null;
     }
 
-    String translate(String key) {
-        LanguageFile lang = list.getPaymentSession().getLang();
-        return lang.translate(key, key);
+    PaymentTheme getPaymentTheme() {
+        return PaymentUI.getInstance().getPaymentTheme();
+    }
+
+    LanguageFile getLanguageFile() {
+        return list.getPaymentSession().getLang();
     }
 
     /**
@@ -206,100 +190,6 @@ class PaymentListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
             }
         }
         return null;
-    }
-
-    private void addWidgetsToHolder(PaymentCardViewHolder holder, PaymentCard card, LayoutInflater inflater, ViewGroup parent) {
-        List<FormWidget> widgets = createWidgets(card, inflater, parent);
-        FormWidget widget;
-
-        for (int i = widgets.size(); i > 0; ) {
-            widget = widgets.get(--i);
-            if (widget.setLastImeOptionsWidget()) {
-                break;
-            }
-        }
-        holder.addWidgets(widgets);
-    }
-
-    private List<FormWidget> createWidgets(PaymentCard card, LayoutInflater inflater, ViewGroup parent) {
-        PaymentTheme theme = PaymentUI.getInstance().getPaymentTheme();
-        List<FormWidget> widgets = new ArrayList<>();
-        DateWidget dateWidget = null;
-
-        for (InputElement element : card.getInputElements()) {
-
-            if (!card.hasExpiryDate()) {
-                widgets.add(createInputWidget(theme, element, inflater, parent));
-                continue;
-            }
-            switch (element.getName()) {
-                case PaymentInputType.EXPIRY_MONTH:
-                    if (dateWidget == null) {
-                        dateWidget = createDateWidget(theme, card, inflater, parent);
-                        widgets.add(dateWidget);
-                    }
-                    dateWidget.setMonthInputElement(element);
-                    break;
-                case PaymentInputType.EXPIRY_YEAR:
-                    if (dateWidget == null) {
-                        dateWidget = createDateWidget(theme, card, inflater, parent);
-                        widgets.add(dateWidget);
-                    }
-                    dateWidget.setYearInputElement(element);
-                    break;
-                default:
-                    widgets.add(createInputWidget(theme, element, inflater, parent));
-            }
-        }
-        widgets.add(createRegisterWidget(inflater, parent, PaymentInputType.AUTO_REGISTRATION, PAGEKEY_AUTO_REGISTRATION));
-        widgets.add(createRegisterWidget(inflater, parent, PaymentInputType.ALLOW_RECURRENCE, PAGEKEY_ALLOW_RECURRENCE));
-        widgets.add(createButtonWidget(inflater, parent));
-        return widgets;
-    }
-
-    private ButtonWidget createButtonWidget(LayoutInflater inflater, ViewGroup parent) {
-        View view = inflater.inflate(R.layout.widget_button, parent, false);
-        return new ButtonWidget(WIDGET_BUTTON, view);
-    }
-            
-    private RegisterWidget createRegisterWidget(LayoutInflater inflater, ViewGroup parent, String name, String label) {
-        View view = inflater.inflate(R.layout.widget_input_checkbox, parent, false);
-        RegisterWidget widget = new RegisterWidget(name, view);
-        widget.setLabel(translate(label));
-        return widget;
-    }
-
-    private DateWidget createDateWidget(PaymentTheme theme, PaymentCard card, LayoutInflater inflater, ViewGroup parent) {
-        View view = inflater.inflate(R.layout.widget_input_date, parent, false);
-        DateWidget widget = new DateWidget(PaymentInputType.EXPIRY_DATE, view);
-        String label = card.getLang().translateAccountLabel(PaymentInputType.EXPIRY_DATE);
-
-        widget.setLabel(label);
-        widget.setButton(translate(PAGEKEY_BUTTON_DATE));
-        widget.setIconResource(theme.getWidgetIconRes(PaymentInputType.EXPIRY_DATE));
-        return widget;
-    }
-
-    private FormWidget createInputWidget(PaymentTheme theme, InputElement element, LayoutInflater inflater, ViewGroup parent) {
-        FormWidget widget;
-        String name = element.getName();
-
-        switch (element.getType()) {
-            case InputElementType.SELECT:
-                View view = inflater.inflate(R.layout.widget_input_select, parent, false);
-                widget = new SelectInputWidget(name, view, element);
-                break;
-            case InputElementType.CHECKBOX:
-                view = inflater.inflate(R.layout.widget_input_checkbox, parent, false);
-                widget = new CheckBoxInputWidget(name, view);
-                break;
-            default:
-                view = inflater.inflate(R.layout.widget_input_text, parent, false);
-                widget = new TextInputWidget(name, view, element);
-        }
-        widget.setIconResource(theme.getWidgetIconRes(name));
-        widget.setLabel(element.getLabel());
-        return widget;
     }
 
     private boolean isValidPosition(int position) {
