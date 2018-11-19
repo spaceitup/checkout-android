@@ -42,6 +42,7 @@ import net.optile.payment.network.ListConnection;
 import net.optile.payment.ui.PaymentResult;
 import net.optile.payment.ui.model.AccountCard;
 import net.optile.payment.ui.model.NetworkCard;
+import net.optile.payment.model.AccountRegistration;
 import net.optile.payment.ui.model.PaymentCard;
 import net.optile.payment.ui.model.PaymentNetwork;
 import net.optile.payment.ui.model.PaymentSession;
@@ -355,12 +356,9 @@ final class PaymentPagePresenter {
     private PaymentSession asyncLoadPaymentSession(String listUrl) throws PaymentException {
         ListResult listResult = listConnection.getListResult(listUrl);
         List<PaymentNetwork> networks = loadPaymentNetworks(listResult);
-        List<AccountCard> accountCards = new ArrayList<>();
-        List<NetworkCard> networkCards = new ArrayList<>();
+        List<NetworkCard> networkCards = loadNetworkCards(networks);
+        List<AccountCard> accountCards = loadAccountCards(listResult, networks);
 
-        for (PaymentNetwork network : networks) {
-            networkCards.add(createNetworkCard(network));
-        }
         PaymentSession session = new PaymentSession(listResult, accountCards, networkCards);
         session.setLang(loadPaymentPageLanguageFile(networks));
 
@@ -372,6 +370,42 @@ final class PaymentPagePresenter {
         return session;
     }
 
+    private List<NetworkCard> loadNetworkCards(List<PaymentNetwork> networks) throws PaymentException {
+        List<NetworkCard> cards = new ArrayList<>();
+
+        for (PaymentNetwork network : networks) {
+            cards.add(createNetworkCard(network));
+        }
+        return cards;
+    }
+
+    private List<AccountCard> loadAccountCards(ListResult listResult, List<PaymentNetwork> networks) throws PaymentException {
+        List<AccountCard> cards = new ArrayList<>();
+        List<AccountRegistration> accounts = listResult.getAccounts();
+
+        if (accounts == null || accounts.size() == 0) {
+            return cards;
+        }
+        for (AccountRegistration account : accounts) {
+            PaymentNetwork pn = findPaymentNetwork(networks, account.getCode());
+
+            if (pn == null) {
+                continue;
+            }
+            cards.add(createAccountCard(account, pn));
+        }
+        return cards;    
+    }
+
+    private PaymentNetwork findPaymentNetwork(List<PaymentNetwork> networks, String code) {
+        for (PaymentNetwork pn : networks) {
+            if (pn.network.getCode().equals(code)) {
+                return pn;
+            }
+        }
+        return null;
+    }
+        
     private List<PaymentNetwork> loadPaymentNetworks(ListResult listResult) throws PaymentException {
         List<PaymentNetwork> items = new ArrayList<>();
         Networks nw = listResult.getNetworks();
@@ -403,6 +437,13 @@ final class PaymentPagePresenter {
         return paymentNetwork;
     }
 
+    private AccountCard createAccountCard(AccountRegistration registration, PaymentNetwork paymentNetwork) {
+        AccountCard card = new AccountCard(registration, paymentNetwork.network);
+        card.setExpiryDate(containsExpiryDate(card.getInputElements()));
+        card.setLang(paymentNetwork.getLang());
+        return card;
+    }
+    
     private NetworkCard createNetworkCard(PaymentNetwork paymentNetwork) {
         List<InputElement> elements = paymentNetwork.getInputElements();
         NetworkCard card = new NetworkCard(paymentNetwork, elements);
