@@ -55,10 +55,10 @@ public final class DateDialogFragment extends DialogFragment {
     /**
      * Set the button label and action
      *
-     * @param label the Label of the button
+     * @param buttonLabel the Label of the button
      */
-    public void setButton(String label) {
-        this.buttonLabel = label;
+    public void setButtonLabel(String buttonLabel) {
+        this.buttonLabel = buttonLabel;
     }
 
     /**

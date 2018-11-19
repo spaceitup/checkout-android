@@ -22,9 +22,12 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 import net.optile.payment.R;
+import net.optile.payment.ui.PaymentTheme;
 import net.optile.payment.core.PaymentInputType;
 import net.optile.payment.core.LanguageFile;
 import net.optile.payment.ui.model.PaymentNetwork;
+import net.optile.payment.ui.model.NetworkCard;
+import net.optile.payment.ui.model.PaymentCard;
 import net.optile.payment.ui.widget.RegisterWidget;
 
 /**
@@ -41,26 +44,32 @@ final class NetworkCardViewHolder extends PaymentCardViewHolder {
         this.logo = parent.findViewById(R.id.image_logo);
     }
 
-    static ViewHolder createInstance(PaymentListAdapter adapter, NetworkCardItem item, LayoutInflater inflater, ViewGroup parent) {
+    static ViewHolder createInstance(PaymentListAdapter adapter, NetworkCard networkCard, LayoutInflater inflater, ViewGroup parent) {
         View view = inflater.inflate(R.layout.list_item_network, parent, false);
         NetworkCardViewHolder holder = new NetworkCardViewHolder(adapter, view);
 
-        addInputWidgets(holder, inflater, parent, item.networkCard);
-        addRegisterWidget(holder, PaymentInputType.AUTO_REGISTRATION, inflater, parent);
-        addRegisterWidget(holder, PaymentInputType.ALLOW_RECURRENCE, inflater, parent);
-        addButtonWidget(holder, inflater, parent);
+        addInputWidgets(holder, inflater, parent, networkCard);
+        holder.addWidget(createRegisterWidget(PaymentInputType.AUTO_REGISTRATION, inflater, parent));
+        holder.addWidget(createRegisterWidget(PaymentInputType.ALLOW_RECURRENCE, inflater, parent));
+        holder.addWidget(createButtonWidget(inflater, parent));
+        holder.setLastImeOptions();
         return holder;
     }
 
-    static RegisterWidget addRegisterWidget(NetworkCardViewHolder holder, String name, LayoutInflater inflater, ViewGroup parent) {
+    static RegisterWidget createRegisterWidget(String name, LayoutInflater inflater, ViewGroup parent) {
         View view = inflater.inflate(R.layout.widget_input_checkbox, parent, false);
-        RegisterWidget widget = new RegisterWidget(name, view);
-        holder.addWidget(widget);
-        return widget;
+        return new RegisterWidget(name, view);
     }
+    
+    void onBind(PaymentCard paymentCard) {
 
-    void onBind(NetworkCardItem item) {
-        PaymentNetwork network = item.networkCard.getActivePaymentNetwork();
+        if (!(paymentCard instanceof NetworkCard)) {
+            throw new IllegalArgumentException("Expected Networkcard in onBind");
+        }
+        super.onBind(paymentCard);
+
+        NetworkCard networkCard = (NetworkCard)paymentCard;
+        PaymentNetwork network = networkCard.getActivePaymentNetwork();
         URL logoUrl = network.getLink("logo");
         title.setText(network.getLabel());
 
@@ -69,7 +78,6 @@ final class NetworkCardViewHolder extends PaymentCardViewHolder {
         }
         bindRegistrationWidget(network);
         bindRecurrenceWidget(network);
-        bindButtonWidget(item.networkCard);
     }
 
     private void bindRegistrationWidget(PaymentNetwork network) {

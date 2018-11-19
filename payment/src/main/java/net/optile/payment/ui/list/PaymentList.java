@@ -129,20 +129,21 @@ public final class PaymentList {
         dialog.show(activity.getSupportFragmentManager(), tag);
     }
 
-    void onActionClicked(PaymentCard card, int position) {
+    void onActionClicked(int position) {
+        ListItem item = items.get(position);
         PaymentCardViewHolder holder = (PaymentCardViewHolder) recyclerView.findViewHolderForAdapterPosition(position);
-        if (holder != null) {
-            activity.makeChargeRequest(card, holder.widgets);
+
+        if (holder != null && item.hasPaymentCard()) {
+            activity.makeChargeRequest(item.getPaymentCard(), holder.widgets);
         }
     }
 
-    void onItemClicked(ListItem item, int position) {
-
-        if (item instanceof HeaderItem) {
+    void onItemClicked(int position) {
+        ListItem item = items.get(position);
+        if (!item.hasPaymentCard()) {
             return;
         }
         hideKeyboard();
-        
         if (position == this.selIndex) {
             this.selIndex = -1;
             collapseViewHolder(position);
@@ -154,8 +155,12 @@ public final class PaymentList {
         }
     }
 
-    ValidationResult validate(PaymentCard item, String type, String value1, String value2) {
-        return activity.validate(item, type, value1, value2);
+    ValidationResult validate(int position, String type, String value1, String value2) {
+        ListItem item = items.get(position);
+        if (!item.hasPaymentCard()) {
+            return null;
+        }
+        return activity.validate(item.getPaymentCard(), type, value1, value2);
     }
 
     private int nextViewType() {
@@ -173,7 +178,7 @@ public final class PaymentList {
             index++;
         }
         for (AccountCard card : session.accounts) {
-            items.add(new AccountCardItem(nextViewType(), card));
+            items.add(new PaymentCardItem(nextViewType(), card));
             if (this.selIndex == -1 && card.isPreselected()) {
                 this.selIndex = index;
             }
@@ -183,7 +188,7 @@ public final class PaymentList {
             items.add(new HeaderItem(nextViewType(), "network Header"));
         }
         for (NetworkCard card : session.networks) {
-            items.add(new NetworkCardItem(nextViewType(), card));
+            items.add(new PaymentCardItem(nextViewType(), card));
             if (this.selIndex == -1 && card.isPreselected()) {
                 this.selIndex = index;
             }

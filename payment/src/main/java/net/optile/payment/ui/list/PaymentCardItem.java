@@ -11,17 +11,25 @@
 
 package net.optile.payment.ui.list;
 
-import net.optile.payment.ui.model.AccountCard;
+import net.optile.payment.ui.model.PaymentCard;
 
 /**
- * Class representing an account in the PaymentList
+ * Class representing an payment in the PaymentList
  */
-class AccountCardItem extends ListItem {
+class PaymentCardItem extends ListItem {
 
-    AccountCard accountCard;
+    PaymentCard paymentCard;
 
-    AccountCardItem(int viewType, AccountCard accountCard) {
+    PaymentCardItem(int viewType, PaymentCard paymentCard) {
         super(viewType);
-        this.accountCard = accountCard;
+        this.paymentCard = paymentCard;
+    }
+
+    PaymentCard getPaymentCard() {
+        return paymentCard;
+    }
+
+    boolean hasPaymentCard() {
+        return true;
     }
 }

@@ -18,6 +18,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 import net.optile.payment.R;
+import net.optile.payment.ui.model.AccountCard;
 
 /**
  * The AccountCardViewHolder
@@ -33,12 +34,12 @@ final class AccountCardViewHolder extends PaymentCardViewHolder {
         this.logo = parent.findViewById(R.id.image_logo);
     }
 
-    static ViewHolder createInstance(PaymentListAdapter adapter, AccountCardItem item, LayoutInflater inflater, ViewGroup parent) {
+    static ViewHolder createInstance(PaymentListAdapter adapter, AccountCard accountCard, LayoutInflater inflater, ViewGroup parent) {
         View view = inflater.inflate(R.layout.list_item_account, parent, false);
         AccountCardViewHolder holder = new AccountCardViewHolder(adapter, view);
         return holder;
     }
 
-    void onBind(AccountCardItem item) {
+    void onBind(AccountCard accountCard) {
     }
 }

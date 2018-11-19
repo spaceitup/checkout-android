@@ -23,6 +23,9 @@ import net.optile.payment.core.LanguageFile;
 import net.optile.payment.ui.PaymentTheme;
 import net.optile.payment.ui.PaymentUI;
 import net.optile.payment.validation.ValidationResult;
+import net.optile.payment.ui.model.AccountCard;
+import net.optile.payment.ui.model.PaymentCard;
+import net.optile.payment.ui.model.NetworkCard;
 
 /**
  * The PaymentListAdapter containing the list of items
@@ -44,17 +47,15 @@ class PaymentListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     public @NonNull
     ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         LayoutInflater inflater = LayoutInflater.from(parent.getContext());
-        ListItem item = getItemWithViewType(viewType);
-        ViewHolder holder = null;
+        PaymentCard card = getItemWithViewType(viewType).getPaymentCard();
 
-        if (item instanceof NetworkCardItem) {
-            holder = NetworkCardViewHolder.createInstance(this, (NetworkCardItem) item, inflater, parent);
-        } else if (item instanceof AccountCardItem) {
-            holder = AccountCardViewHolder.createInstance(this, (AccountCardItem) item, inflater, parent);
-        } else if (item instanceof HeaderItem) {
-            holder = HeaderViewHolder.createInstance(inflater, parent);
+        if (card == null) {
+            return HeaderViewHolder.createInstance(inflater, parent);
+        } else if (card instanceof NetworkCard) {
+            return NetworkCardViewHolder.createInstance(this, (NetworkCard)card, inflater, parent);
+        } else {
+            return AccountCardViewHolder.createInstance(this, (AccountCard)card, inflater, parent);
         }
-        return holder;
     }
 
     /**
@@ -63,17 +64,14 @@ class PaymentListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         ListItem item = items.get(position);
-
-        if (holder instanceof HeaderViewHolder) {
+        PaymentCard card = item.getPaymentCard();
+        
+        if (card == null) {
             ((HeaderViewHolder) holder).onBind((HeaderItem) item);
-        } else if (holder instanceof AccountCardViewHolder) {
-            AccountCardViewHolder ah = (AccountCardViewHolder) holder;
-            ah.onBind((AccountCardItem) item);
-            ah.expand(list.getSelected() == position);
-        } else if (holder instanceof NetworkCardViewHolder) {
-            NetworkCardViewHolder nh = (NetworkCardViewHolder) holder;
-            nh.onBind((NetworkCardItem) item);
-            nh.expand(list.getSelected() == position);
+        } else {
+            PaymentCardViewHolder ph = (PaymentCardViewHolder)holder;
+            ph.onBind(card);
+            ph.expand(list.getSelected() == position);
         }
     }
 
@@ -97,7 +95,7 @@ class PaymentListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         if (!isValidPosition(position)) {
             return;
         }
-        list.onItemClicked(items.get(position), position);
+        list.onItemClicked(position);
     }
 
     void hideKeyboard(int position) {
@@ -125,17 +123,14 @@ class PaymentListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         if (!isValidPosition(position)) {
             return;
         }
-        ListItem item = items.get(position);
-        //list.onActionClicked(, position);
+        list.onActionClicked(position);
     }
 
     ValidationResult validate(int position, String type, String value1, String value2) {
         if (!isValidPosition(position)) {
             return null;
         }
-        //NetworkCard item = items.get(position);
-        //return list.validate(item.getActiveNetworkItem(), type, value1, value2);
-        return null;
+        return list.validate(position, type, value1, value2);
     }
 
     PaymentTheme getPaymentTheme() {

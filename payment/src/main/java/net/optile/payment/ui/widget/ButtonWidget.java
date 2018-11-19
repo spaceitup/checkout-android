@@ -39,7 +39,7 @@ public final class ButtonWidget extends FormWidget {
         });
     }
 
-    public void setLabel(String label) {
+    public void setButtonLabel(String label) {
         button.setText(label);
     }
 

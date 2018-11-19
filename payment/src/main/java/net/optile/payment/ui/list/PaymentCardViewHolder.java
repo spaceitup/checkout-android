@@ -13,6 +13,9 @@ package net.optile.payment.ui.list;
 
 import java.util.LinkedHashMap;
 import java.util.Map;
+import java.util.List;
+import java.util.ArrayList;
+import java.util.Collections;
 
 import android.support.v4.app.DialogFragment;
 import android.support.v7.widget.RecyclerView;
@@ -38,8 +41,6 @@ import net.optile.payment.validation.ValidationResult;
  * The PaymentCardViewHolder holding the header and input widgets
  */
 class PaymentCardViewHolder extends RecyclerView.ViewHolder {
-
-    final static String ACTION_BUTTON = "actionbutton";
 
     final ViewGroup formLayout;
     final PaymentListAdapter adapter;
@@ -91,67 +92,58 @@ class PaymentCardViewHolder extends RecyclerView.ViewHolder {
 
     static void addInputWidgets(PaymentCardViewHolder holder, LayoutInflater inflater, ViewGroup parent, PaymentCard card) {
         DateWidget dateWidget = null;
-
+        
         for (InputElement element : card.getInputElements()) {
             if (!card.hasExpiryDate()) {
-                addInputWidget(holder, element, inflater, parent);
+                holder.addWidget(createInputWidget(element, inflater, parent));
                 continue;
             }
             switch (element.getName()) {
                 case PaymentInputType.EXPIRY_MONTH:
                     if (dateWidget == null) {
-                        dateWidget = addDateWidget(holder, inflater, parent);
+                        dateWidget = createDateWidget(inflater, parent);
+                        holder.addWidget(dateWidget);
                     }
                     dateWidget.setMonthInputElement(element);
                     break;
                 case PaymentInputType.EXPIRY_YEAR:
                     if (dateWidget == null) {
-                        dateWidget = addDateWidget(holder, inflater, parent);
+                        dateWidget = createDateWidget(inflater, parent);
+                        holder.addWidget(dateWidget);
                     }
                     dateWidget.setYearInputElement(element);
                     break;
                 default:
-                    addInputWidget(holder, element, inflater, parent);
+                    holder.addWidget(createInputWidget(element, inflater, parent));
             }
         }
     }
 
-    static ButtonWidget addButtonWidget(PaymentCardViewHolder holder, LayoutInflater inflater, ViewGroup parent) {
-        View view = inflater.inflate(R.layout.widget_button, parent, false);
-        ButtonWidget widget = new ButtonWidget(ACTION_BUTTON, view);
-        holder.addWidget(widget);
-        return widget;
-    }
-
-    static DateWidget addDateWidget(PaymentCardViewHolder holder, LayoutInflater inflater, ViewGroup parent) {
-        View view = inflater.inflate(R.layout.widget_input_date, parent, false);
-        DateWidget widget = new DateWidget(PaymentInputType.EXPIRY_DATE, view);
-        holder.addWidget(widget);
-        return widget;
-    }
-
-    //widget.setIconResource(theme.getWidgetIconRes(name));
-    //widget.setLabel(element.getLabel());
-
-    static FormWidget addInputWidget(PaymentCardViewHolder holder, InputElement element, LayoutInflater inflater, ViewGroup parent) {
+    static FormWidget createInputWidget(InputElement element, LayoutInflater inflater, ViewGroup parent) {
         FormWidget widget;
         String name = element.getName();
 
         switch (element.getType()) {
             case InputElementType.SELECT:
                 View view = inflater.inflate(R.layout.widget_input_select, parent, false);
-                widget = new SelectInputWidget(name, view, element);
-                break;
+                return new SelectInputWidget(name, view);
             case InputElementType.CHECKBOX:
                 view = inflater.inflate(R.layout.widget_input_checkbox, parent, false);
-                widget = new CheckBoxInputWidget(name, view);
-                break;
+                return new CheckBoxInputWidget(name, view);
             default:
                 view = inflater.inflate(R.layout.widget_input_text, parent, false);
-                widget = new TextInputWidget(name, view, element);
+                return new TextInputWidget(name, view);
         }
-        holder.addWidget(widget);
-        return widget;
+    }
+    
+    static ButtonWidget createButtonWidget(LayoutInflater inflater, ViewGroup parent) {
+        View view = inflater.inflate(R.layout.widget_button, parent, false);
+        return new ButtonWidget(PaymentInputType.ACTION_BUTTON, view);
+    }
+
+    static DateWidget createDateWidget(LayoutInflater inflater, ViewGroup parent) {
+        View view = inflater.inflate(R.layout.widget_input_date, parent, false);
+        return new DateWidget(PaymentInputType.EXPIRY_DATE, view);
     }
 
     void expand(boolean expand) {
@@ -159,8 +151,13 @@ class PaymentCardViewHolder extends RecyclerView.ViewHolder {
     }
 
     void addWidget(FormWidget widget) {
+        String name = widget.getName();
+
+        if (widgets.containsKey(name)) {
+            return;
+        }
         widget.setPresenter(presenter);
-        widgets.put(widget.getName(), widget);
+        widgets.put(name, widget);
         formLayout.addView(widget.getRootView());
     }
 
@@ -168,42 +165,73 @@ class PaymentCardViewHolder extends RecyclerView.ViewHolder {
         return widgets.get(name);
     }
 
-    void bindDateWidget(PaymentCard card) {
-        DateWidget widget = (DateWidget) getFormWidget(PaymentInputType.EXPIRY_DATE);
-        if (widget == null) {
-            return;
-        }
-        String label = card.getLang().translateAccount(PaymentInputType.EXPIRY_DATE);
-        LanguageFile lang = adapter.getPageLanguageFile();
-        PaymentTheme theme = adapter.getPaymentTheme();
+    void onBind(PaymentCard paymentCard) {
+        bindInputWidgets(paymentCard);
+        bindDateWidget(paymentCard);
+        bindButtonWidget(paymentCard);
+    }
+    
+    void bindInputWidgets(PaymentCard card) {
 
-        widget.setLabel(label);
-        widget.setButton(lang.translate(LanguageFile.KEY_BUTTON_DATE));
-        widget.setIconResource(theme.getWidgetIconRes(PaymentInputType.EXPIRY_DATE));
+        FormWidget widget;
+        for (InputElement element : card.getInputElements()) {
+            widget = getFormWidget(element.getName());
+            if (widget == null) {
+                continue;
+            }
+            bindInputWidget(widget, element);
+        }
     }
 
-    void bindButtonWidget(PaymentCard card) {
-        ButtonWidget widget = (ButtonWidget) getFormWidget(ACTION_BUTTON);
+    private void bindInputWidget(FormWidget widget, InputElement element) {
+        bindIconResource(widget);            
+        widget.setLabel(element.getLabel());
+
+        if (widget instanceof SelectInputWidget) {
+            ((SelectInputWidget)widget).setSelectOptions(element.getOptions());
+        } else if (widget instanceof TextInputWidget) {
+            ((TextInputWidget)widget).setInputType(element.getType());
+        }
+    }
+
+    void bindIconResource(FormWidget widget) {
+        PaymentTheme theme = adapter.getPaymentTheme();
+        widget.setIconResource(theme.getWidgetIconRes(widget.getName()));
+    }
+    
+    void bindDateWidget(PaymentCard card) {
+        String name = PaymentInputType.EXPIRY_DATE;
+        DateWidget widget = (DateWidget) getFormWidget(name);
 
         if (widget == null) {
             return;
         }
-        LanguageFile lang = adapter.getPageLanguageFile();
-        widget.setLabel(lang.translate(card.getButton()));
+        LanguageFile pageLang = adapter.getPageLanguageFile();
+        bindIconResource(widget);
+        widget.setLabel(card.getLang().translateAccount(name));
+        widget.setDialogButtonLabel(pageLang.translate(LanguageFile.KEY_BUTTON_DATE));
+    }
+    
+    void bindButtonWidget(PaymentCard card) {
+        String name = PaymentInputType.ACTION_BUTTON;
+        ButtonWidget widget = (ButtonWidget) getFormWidget(name);
+
+        if (widget == null) {
+            return;
+        }
+        LanguageFile pageLang = adapter.getPageLanguageFile();
+        widget.setButtonLabel(pageLang.translate(card.getButton()));
     }
 
     void setLastImeOptions() {
-        //List<FormWidget> widgets = createWidgets(card, inflater, parent);
-        //FormWidget widget;
+        List<String> keys = new ArrayList<String>(widgets.keySet());
+        Collections.reverse(keys);
 
-        //for (int i = widgets.size(); i > 0; ) {
-        //    widget = widgets.get(--i);
-        //    if (widget.setLastImeOptionsWidget()) {
-        //        break;
-        //    }
-        // }
-        //holder.addWidgets(widgets);
+        for (String key : keys) {
+            FormWidget widget = widgets.get(key);
+            if (widget.setLastImeOptionsWidget()) {
+                break;
+            }            
+        }        
     }
-
-
 }

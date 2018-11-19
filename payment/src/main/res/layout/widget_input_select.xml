@@ -6,7 +6,7 @@
     android:layout_height="wrap_content"
     android:orientation="horizontal"
     android:gravity="center"
-    android:paddingTop="@dimen/widget_padding"
+    android:paddingTop="@dimen/border_small"
     android:paddingBottom="@dimen/widget_padding">
 
     <ImageView

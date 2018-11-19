@@ -11,6 +11,8 @@
 
 package net.optile.payment.ui.list;
 
+import net.optile.payment.ui.model.PaymentCard;
+
 /**
  * Class representing an item in the PaymentList
  */
@@ -22,6 +24,10 @@ class ListItem {
         this.viewType = viewType;
     }
 
+    boolean hasPaymentCard() {
+        return false;
+    }
+    
     PaymentCard getPaymentCard() {
         return null;
     }

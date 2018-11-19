@@ -30,19 +30,15 @@ public final class TextInputWidget extends InputLayoutWidget {
 
     private final static String NUMERIC_DIGITS = "0123456789 -";
     private final static int INTEGER_MAXLENGTH = 4;
-    private final InputElement element;
 
     /**
      * Construct a new TextInputWidget
      *
      * @param name name identifying this widget
      * @param rootView the root view of this input
-     * @param element the InputElement this widget is displaying
      */
-    public TextInputWidget(String name, View rootView, InputElement element) {
+    public TextInputWidget(String name, View rootView) {
         super(name, rootView);
-        this.element = element;
-
         input.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override
             public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
@@ -52,7 +48,10 @@ public final class TextInputWidget extends InputLayoutWidget {
                 return false;
             }
         });
-        switch (element.getType()) {
+    }
+
+    public void setInputType(String type) {
+        switch (type) {
             case InputElementType.NUMERIC:
                 setInputType(InputType.TYPE_CLASS_NUMBER, NUMERIC_DIGITS);
                 break;
@@ -62,7 +61,7 @@ public final class TextInputWidget extends InputLayoutWidget {
                 setLayoutWidth(WEIGHT_REDUCED);
         }
     }
-
+    
     public boolean validate() {
         ValidationResult result = presenter.validate(name, getNormalizedValue(), null);
 
