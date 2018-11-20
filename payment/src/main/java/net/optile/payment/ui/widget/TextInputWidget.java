@@ -19,7 +19,6 @@ import android.view.inputmethod.EditorInfo;
 import android.widget.TextView;
 import net.optile.payment.core.PaymentException;
 import net.optile.payment.form.Charge;
-import net.optile.payment.model.InputElement;
 import net.optile.payment.model.InputElementType;
 import net.optile.payment.validation.ValidationResult;
 
@@ -61,7 +60,7 @@ public final class TextInputWidget extends InputLayoutWidget {
                 setLayoutWidth(WEIGHT_REDUCED);
         }
     }
-    
+
     public boolean validate() {
         ValidationResult result = presenter.validate(name, getNormalizedValue(), null);
 

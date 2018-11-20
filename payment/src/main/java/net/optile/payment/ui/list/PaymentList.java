@@ -24,9 +24,9 @@ import android.support.v7.widget.SimpleItemAnimator;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.TextView;
+import net.optile.payment.R;
 import net.optile.payment.ui.model.AccountCard;
 import net.optile.payment.ui.model.NetworkCard;
-import net.optile.payment.ui.model.PaymentCard;
 import net.optile.payment.ui.model.PaymentSession;
 import net.optile.payment.ui.page.PaymentPageActivity;
 import net.optile.payment.validation.ValidationResult;
@@ -82,13 +82,16 @@ public final class PaymentList {
         }
         this.session = session;
         setPaymentListItems(session, cachedListIndex);
+        String msg = "";
 
-        if (items.size() == 0) {
-            emptyMessage.setText(session.getEmptyMessage());
+        if (session.getApplicableNetworkSize() == 0) {
+            msg = activity.getString(R.string.paymentpage_error_empty);
+        } else if (session.networks.size() == 0) {
+            msg = activity.getString(R.string.paymentpage_error_notsupported);
         } else {
-            emptyMessage.setText("");
             recyclerView.scrollToPosition(selIndex);
         }
+        emptyMessage.setText(msg);
         adapter.notifyDataSetChanged();
         setVisible(true);
     }

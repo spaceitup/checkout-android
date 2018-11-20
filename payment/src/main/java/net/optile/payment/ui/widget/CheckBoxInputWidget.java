@@ -18,7 +18,6 @@ import android.widget.TextView;
 import net.optile.payment.R;
 import net.optile.payment.core.PaymentException;
 import net.optile.payment.form.Charge;
-import net.optile.payment.model.InputElement;
 
 /**
  * Class for handling the CheckBox input type

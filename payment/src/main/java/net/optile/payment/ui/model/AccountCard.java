@@ -104,6 +104,10 @@ public final class AccountCard implements PaymentCard {
         return links != null ? links.get(name) : null;
     }
 
+    public String getLabel() {
+        return account.getLabel();
+    }
+
     public void setExpiryDate(boolean hasExpiryDate) {
         this.hasExpiryDate = hasExpiryDate;
     }

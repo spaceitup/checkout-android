@@ -22,12 +22,11 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 import net.optile.payment.R;
-import net.optile.payment.ui.PaymentTheme;
-import net.optile.payment.core.PaymentInputType;
 import net.optile.payment.core.LanguageFile;
-import net.optile.payment.ui.model.PaymentNetwork;
+import net.optile.payment.core.PaymentInputType;
 import net.optile.payment.ui.model.NetworkCard;
 import net.optile.payment.ui.model.PaymentCard;
+import net.optile.payment.ui.model.PaymentNetwork;
 import net.optile.payment.ui.widget.RegisterWidget;
 
 /**
@@ -60,7 +59,7 @@ final class NetworkCardViewHolder extends PaymentCardViewHolder {
         View view = inflater.inflate(R.layout.widget_input_checkbox, parent, false);
         return new RegisterWidget(name, view);
     }
-    
+
     void onBind(PaymentCard paymentCard) {
 
         if (!(paymentCard instanceof NetworkCard)) {
@@ -68,7 +67,7 @@ final class NetworkCardViewHolder extends PaymentCardViewHolder {
         }
         super.onBind(paymentCard);
 
-        NetworkCard networkCard = (NetworkCard)paymentCard;
+        NetworkCard networkCard = (NetworkCard) paymentCard;
         PaymentNetwork network = networkCard.getActivePaymentNetwork();
         URL logoUrl = network.getLink("logo");
         title.setText(network.getLabel());

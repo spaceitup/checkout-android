@@ -27,7 +27,7 @@ class ListItem {
     boolean hasPaymentCard() {
         return false;
     }
-    
+
     PaymentCard getPaymentCard() {
         return null;
     }

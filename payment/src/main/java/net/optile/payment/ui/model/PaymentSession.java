@@ -28,9 +28,7 @@ public final class PaymentSession {
     public final ListResult listResult;
     public final List<AccountCard> accounts;
     public final List<NetworkCard> networks;
-
     private LanguageFile lang;
-    private String emptyMessage;
 
     /**
      * Construct a new PaymentSession object
@@ -61,14 +59,6 @@ public final class PaymentSession {
 
     public void setLang(LanguageFile lang) {
         this.lang = lang;
-    }
-
-    public String getEmptyMessage() {
-        return emptyMessage;
-    }
-
-    public void setEmptyMessage(String emptyMessage) {
-        this.emptyMessage = emptyMessage;
     }
 
     public int getApplicableNetworkSize() {

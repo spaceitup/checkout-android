@@ -11,6 +11,10 @@
 
 package net.optile.payment.ui.list;
 
+import java.net.URL;
+
+import com.bumptech.glide.Glide;
+
 import android.support.v7.widget.RecyclerView.ViewHolder;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -19,6 +23,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import net.optile.payment.R;
 import net.optile.payment.ui.model.AccountCard;
+import net.optile.payment.ui.model.PaymentCard;
 
 /**
  * The AccountCardViewHolder
@@ -37,9 +42,26 @@ final class AccountCardViewHolder extends PaymentCardViewHolder {
     static ViewHolder createInstance(PaymentListAdapter adapter, AccountCard accountCard, LayoutInflater inflater, ViewGroup parent) {
         View view = inflater.inflate(R.layout.list_item_account, parent, false);
         AccountCardViewHolder holder = new AccountCardViewHolder(adapter, view);
+
+        addInputWidgets(holder, inflater, parent, accountCard);
+        holder.addWidget(createButtonWidget(inflater, parent));
+        holder.setLastImeOptions();
         return holder;
     }
 
-    void onBind(AccountCard accountCard) {
+    void onBind(PaymentCard paymentCard) {
+
+        if (!(paymentCard instanceof AccountCard)) {
+            throw new IllegalArgumentException("Expected AccountCard in onBind");
+        }
+        super.onBind(paymentCard);
+
+        AccountCard card = (AccountCard) paymentCard;
+        URL logoUrl = card.getLink("logo");
+        title.setText(card.getLabel());
+
+        if (logoUrl != null) {
+            Glide.with(logo.getContext()).asBitmap().load(logoUrl.toString()).into(logo);
+        }
     }
 }

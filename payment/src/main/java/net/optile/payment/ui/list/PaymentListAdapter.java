@@ -22,10 +22,10 @@ import android.view.ViewGroup;
 import net.optile.payment.core.LanguageFile;
 import net.optile.payment.ui.PaymentTheme;
 import net.optile.payment.ui.PaymentUI;
-import net.optile.payment.validation.ValidationResult;
 import net.optile.payment.ui.model.AccountCard;
-import net.optile.payment.ui.model.PaymentCard;
 import net.optile.payment.ui.model.NetworkCard;
+import net.optile.payment.ui.model.PaymentCard;
+import net.optile.payment.validation.ValidationResult;
 
 /**
  * The PaymentListAdapter containing the list of items
@@ -52,9 +52,9 @@ class PaymentListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         if (card == null) {
             return HeaderViewHolder.createInstance(inflater, parent);
         } else if (card instanceof NetworkCard) {
-            return NetworkCardViewHolder.createInstance(this, (NetworkCard)card, inflater, parent);
+            return NetworkCardViewHolder.createInstance(this, (NetworkCard) card, inflater, parent);
         } else {
-            return AccountCardViewHolder.createInstance(this, (AccountCard)card, inflater, parent);
+            return AccountCardViewHolder.createInstance(this, (AccountCard) card, inflater, parent);
         }
     }
 
@@ -65,11 +65,11 @@ class PaymentListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         ListItem item = items.get(position);
         PaymentCard card = item.getPaymentCard();
-        
+
         if (card == null) {
             ((HeaderViewHolder) holder).onBind((HeaderItem) item);
         } else {
-            PaymentCardViewHolder ph = (PaymentCardViewHolder)holder;
+            PaymentCardViewHolder ph = (PaymentCardViewHolder) holder;
             ph.onBind(card);
             ph.expand(list.getSelected() == position);
         }

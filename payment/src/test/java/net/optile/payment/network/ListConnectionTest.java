@@ -76,7 +76,6 @@ public class ListConnectionTest {
 
     /**
      * Gets language Properties invalid url
-     *
      */
     @Test(expected = IllegalArgumentException.class)
     public void getLanguage_invalidURL_IllegalArgumentException() {
@@ -86,7 +85,6 @@ public class ListConnectionTest {
 
     /**
      * Gets language Properties invalid properties
-     *
      */
     @Test(expected = IllegalArgumentException.class)
     public void getLanguage_invalidProperties_IllegalArgumentException() {

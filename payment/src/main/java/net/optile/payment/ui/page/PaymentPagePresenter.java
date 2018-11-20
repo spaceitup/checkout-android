@@ -11,40 +11,25 @@
 
 package net.optile.payment.ui.page;
 
-import java.net.MalformedURLException;
 import java.net.URL;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Map;
 import java.util.concurrent.Callable;
 
 import android.text.TextUtils;
 import net.optile.payment.R;
-import net.optile.payment.core.LanguageFile;
 import net.optile.payment.core.PaymentError;
 import net.optile.payment.core.PaymentException;
-import net.optile.payment.core.PaymentInputType;
 import net.optile.payment.core.WorkerSubscriber;
 import net.optile.payment.core.WorkerTask;
 import net.optile.payment.core.Workers;
 import net.optile.payment.form.Charge;
-import net.optile.payment.model.ApplicableNetwork;
 import net.optile.payment.model.ErrorInfo;
-import net.optile.payment.model.InputElement;
 import net.optile.payment.model.Interaction;
 import net.optile.payment.model.InteractionCode;
 import net.optile.payment.model.InteractionReason;
-import net.optile.payment.model.ListResult;
-import net.optile.payment.model.Networks;
 import net.optile.payment.model.OperationResult;
-import net.optile.payment.network.ChargeConnection;
-import net.optile.payment.network.ListConnection;
 import net.optile.payment.ui.PaymentResult;
-import net.optile.payment.ui.model.AccountCard;
-import net.optile.payment.ui.model.NetworkCard;
-import net.optile.payment.model.AccountRegistration;
 import net.optile.payment.ui.model.PaymentCard;
-import net.optile.payment.ui.model.PaymentNetwork;
 import net.optile.payment.ui.model.PaymentSession;
 import net.optile.payment.ui.widget.FormWidget;
 
@@ -55,9 +40,8 @@ final class PaymentPagePresenter {
 
     private final static String TAG = "pay_PayPresenter";
 
-    private final ListConnection listConnection;
-    private final ChargeConnection chargeConnection;
     private final PaymentPageView view;
+    private final PaymentPageService service;
 
     private PaymentSession session;
     private int groupType;
@@ -73,8 +57,7 @@ final class PaymentPagePresenter {
      */
     PaymentPagePresenter(PaymentPageView view) {
         this.view = view;
-        this.listConnection = new ListConnection();
-        this.chargeConnection = new ChargeConnection();
+        this.service = new PaymentPageService();
     }
 
     void onStop() {
@@ -336,7 +319,7 @@ final class PaymentPagePresenter {
         loadTask = WorkerTask.fromCallable(new Callable<PaymentSession>() {
             @Override
             public PaymentSession call() throws PaymentException {
-                return asyncLoadPaymentSession(listUrl);
+                return service.loadPaymentSession(listUrl);
             }
         });
         loadTask.subscribe(new WorkerSubscriber<PaymentSession>() {
@@ -353,159 +336,13 @@ final class PaymentPagePresenter {
         Workers.getInstance().forNetworkTasks().execute(loadTask);
     }
 
-    private PaymentSession asyncLoadPaymentSession(String listUrl) throws PaymentException {
-        ListResult listResult = listConnection.getListResult(listUrl);
-        List<PaymentNetwork> networks = loadPaymentNetworks(listResult);
-        List<NetworkCard> networkCards = loadNetworkCards(networks);
-        List<AccountCard> accountCards = loadAccountCards(listResult, networks);
-
-        PaymentSession session = new PaymentSession(listResult, accountCards, networkCards);
-        session.setLang(loadPaymentPageLanguageFile(networks));
-
-        if (session.getApplicableNetworkSize() == 0) {
-            session.setEmptyMessage(view.getStringRes(R.string.paymentpage_error_empty));
-        } else if (networks.size() == 0) {
-            session.setEmptyMessage(view.getStringRes(R.string.paymentpage_error_notsupported));
-        }
-        return session;
-    }
-
-    private List<NetworkCard> loadNetworkCards(List<PaymentNetwork> networks) throws PaymentException {
-        List<NetworkCard> cards = new ArrayList<>();
-
-        for (PaymentNetwork network : networks) {
-            cards.add(createNetworkCard(network));
-        }
-        return cards;
-    }
-
-    private List<AccountCard> loadAccountCards(ListResult listResult, List<PaymentNetwork> networks) throws PaymentException {
-        List<AccountCard> cards = new ArrayList<>();
-        List<AccountRegistration> accounts = listResult.getAccounts();
-
-        if (accounts == null || accounts.size() == 0) {
-            return cards;
-        }
-        for (AccountRegistration account : accounts) {
-            PaymentNetwork pn = findPaymentNetwork(networks, account.getCode());
-
-            if (pn == null) {
-                continue;
-            }
-            cards.add(createAccountCard(account, pn));
-        }
-        return cards;    
-    }
-
-    private PaymentNetwork findPaymentNetwork(List<PaymentNetwork> networks, String code) {
-        for (PaymentNetwork pn : networks) {
-            if (pn.network.getCode().equals(code)) {
-                return pn;
-            }
-        }
-        return null;
-    }
-        
-    private List<PaymentNetwork> loadPaymentNetworks(ListResult listResult) throws PaymentException {
-        List<PaymentNetwork> items = new ArrayList<>();
-        Networks nw = listResult.getNetworks();
-
-        if (nw == null) {
-            return items;
-        }
-        List<ApplicableNetwork> an = nw.getApplicable();
-
-        if (an == null || an.size() == 0) {
-            return items;
-        }
-        for (ApplicableNetwork network : an) {
-            if (isSupported(network)) {
-                items.add(loadPaymentNetwork(network));
-            }
-        }
-        return items;
-    }
-
-    private PaymentNetwork loadPaymentNetwork(ApplicableNetwork network) throws PaymentException {
-        PaymentNetwork paymentNetwork = new PaymentNetwork(network);
-        URL langUrl = paymentNetwork.getLink("lang");
-
-        if (langUrl == null) {
-            throw createPaymentException("Missing 'lang' link in ApplicableNetwork", null);
-        }
-        paymentNetwork.setLang(listConnection.loadLanguageFile(langUrl, new LanguageFile()));
-        return paymentNetwork;
-    }
-
-    private AccountCard createAccountCard(AccountRegistration registration, PaymentNetwork paymentNetwork) {
-        AccountCard card = new AccountCard(registration, paymentNetwork.network);
-        card.setExpiryDate(containsExpiryDate(card.getInputElements()));
-        card.setLang(paymentNetwork.getLang());
-        return card;
-    }
-    
-    private NetworkCard createNetworkCard(PaymentNetwork paymentNetwork) {
-        List<InputElement> elements = paymentNetwork.getInputElements();
-        NetworkCard card = new NetworkCard(paymentNetwork, elements);
-        card.setExpiryDate(containsExpiryDate(elements));
-        return card;
-    }
-
-    private boolean containsExpiryDate(List<InputElement> elements) {
-        boolean hasExpiryMonth = false;
-        boolean hasExpiryYear = false;
-
-        for (InputElement element : elements) {
-            switch (element.getName()) {
-                case PaymentInputType.EXPIRY_MONTH:
-                    hasExpiryMonth = true;
-                    break;
-                case PaymentInputType.EXPIRY_YEAR:
-                    hasExpiryYear = true;
-            }
-        }
-        return hasExpiryYear && hasExpiryMonth;
-    }
-
-    /**
-     * This method loads the payment page language file.
-     * The URL for the paymentpage language file is constructed from the URL of one of the ApplicableNetwork entries.
-     *
-     * @param items contains the list of PaymentNetwork elements
-     * @return the properties object containing the language entries
-     */
-    private LanguageFile loadPaymentPageLanguageFile(List<PaymentNetwork> networks) throws PaymentException {
-        LanguageFile file = new LanguageFile();
-
-        if (networks.size() == 0) {
-            return file;
-        }
-        PaymentNetwork network = networks.get(0);
-        URL langUrl = network.getLink("lang");
-
-        if (langUrl == null) {
-            throw createPaymentException("Missing 'lang' link in ApplicableNetwork", null);
-        }
-        try {
-            String newUrl = langUrl.toString().replaceAll(network.getCode(), "paymentpage");
-            return listConnection.loadLanguageFile(new URL(newUrl), file);
-        } catch (MalformedURLException e) {
-            throw createPaymentException("Malformed language URL", e);
-        }
-    }
-
-    private boolean isSupported(ApplicableNetwork network) {
-        String button = network.getButton();
-        return (TextUtils.isEmpty(button) || !button.contains("activate")) && !network.getRedirect();
-    }
-
     private void postChargeRequest(final URL url, final Charge charge) {
         view.showLoading(true);
 
         chargeTask = WorkerTask.fromCallable(new Callable<OperationResult>() {
             @Override
             public OperationResult call() throws PaymentException {
-                return asyncPostChargeRequest(url, charge);
+                return service.postChargeRequest(url, charge);
             }
         });
         chargeTask.subscribe(new WorkerSubscriber<OperationResult>() {
@@ -522,18 +359,9 @@ final class PaymentPagePresenter {
         Workers.getInstance().forNetworkTasks().execute(chargeTask);
     }
 
-    private OperationResult asyncPostChargeRequest(URL url, Charge charge) throws PaymentException {
-        return chargeConnection.createCharge(url, charge);
-    }
-
     private PaymentResult createPaymentResult(Throwable cause) {
         String resultInfo = cause.toString();
         PaymentError error = new PaymentError("PaymentPage", PaymentError.INTERNAL_ERROR, resultInfo);
         return new PaymentResult(resultInfo, error);
-    }
-
-    private PaymentException createPaymentException(String message, Throwable cause) {
-        final PaymentError error = new PaymentError("PaymentPage", PaymentError.INTERNAL_ERROR, message);
-        return new PaymentException(error, message, cause);
     }
 }

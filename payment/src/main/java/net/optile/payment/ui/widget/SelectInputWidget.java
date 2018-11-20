@@ -21,7 +21,6 @@ import android.widget.TextView;
 import net.optile.payment.R;
 import net.optile.payment.core.PaymentException;
 import net.optile.payment.form.Charge;
-import net.optile.payment.model.InputElement;
 import net.optile.payment.model.SelectOption;
 import net.optile.payment.util.PaymentUtils;
 
@@ -52,6 +51,7 @@ public final class SelectInputWidget extends FormWidget {
             public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id) {
                 validate();
             }
+
             @Override
             public void onNothingSelected(AdapterView<?> parentView) {
             }

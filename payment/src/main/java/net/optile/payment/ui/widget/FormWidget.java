@@ -73,7 +73,7 @@ public abstract class FormWidget {
 
     public void setLabel(String label) {
     }
-    
+
     public boolean isValid() {
         return this.state == VALIDATION_OK;
     }
