@@ -55,7 +55,7 @@ final class PaymentPagePresenter {
     /**
      * Create a new PaymentPagePresenter
      *
-     * @param view The PaymentPageView displaying the payment items
+     * @param view The PaymentPageView displaying the payment list
      */
     PaymentPagePresenter(PaymentPageView view) {
         this.view = view;
@@ -95,28 +95,28 @@ final class PaymentPagePresenter {
     }
 
     /**
-     * Make a charge request for the selected PaymentCard with widgets
+     * Perform the operation specified in the paymentSession for the selected PaymentCard and widgets
      *
-     * @param item the PaymentCard containing the operation URL
+     * @param card the PaymentCard containing the operation URL
      * @param widgets containing the user input data
      */
-    void performOperation(PaymentCard item, Map<String, FormWidget> widgets) {
+    void performOperation(PaymentCard card, Map<String, FormWidget> widgets) {
 
         switch (session.getOperationType()) {
         case OperationType.CHARGE:
-            performChargeOperation(item, widgets);
+            performChargeOperation(card, widgets);
             break;
         default:
             Log.w(TAG, "OperationType not supported");
         }
     }
 
-    private void performChargeOperation(PaymentCard item, Map<String, FormWidget> widgets) {
+    private void performChargeOperation(PaymentCard card, Map<String, FormWidget> widgets) {
         
         if (chargeTask != null) {
             return;
         }
-        URL url = item.getOperationLink();
+        URL url = card.getOperationLink();
         Charge charge = new Charge();
         try {
             boolean error = false;

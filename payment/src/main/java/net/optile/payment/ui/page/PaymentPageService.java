@@ -39,8 +39,6 @@ import net.optile.payment.ui.model.PaymentSession;
  */
 final class PaymentPageService {
 
-    private final static String TAG = "pay_PayService";
-
     private final ListConnection listConnection;
     private final ChargeConnection chargeConnection;
 
