@@ -9,7 +9,7 @@
  * has been received in full.
  */
 
-package net.optile.payment.ui.paymentpage;
+package net.optile.payment.ui.page;
 
 import java.util.Map;
 
@@ -29,6 +29,9 @@ import net.optile.payment.R;
 import net.optile.payment.ui.PaymentResult;
 import net.optile.payment.ui.PaymentUI;
 import net.optile.payment.ui.dialog.MessageDialogFragment;
+import net.optile.payment.ui.list.PaymentList;
+import net.optile.payment.ui.model.PaymentCard;
+import net.optile.payment.ui.model.PaymentSession;
 import net.optile.payment.ui.widget.FormWidget;
 import net.optile.payment.validation.ValidationResult;
 import net.optile.payment.validation.Validator;
@@ -172,12 +175,8 @@ public final class PaymentPageActivity extends AppCompatActivity implements Paym
             return;
         }
         progressBar.setVisibility(View.GONE);
-
-        if (this.cachedListIndex != -1) {
-            session.setSelIndex(this.cachedListIndex);
-            this.cachedListIndex = -1;
-        }
-        paymentList.showPaymentSession(session);
+        paymentList.showPaymentSession(session, cachedListIndex);
+        this.cachedListIndex = -1;
     }
 
     /**
@@ -244,20 +243,19 @@ public final class PaymentPageActivity extends AppCompatActivity implements Paym
         setResult(activityResult, intent);
     }
 
-    void makeChargeRequest(PaymentGroup group, Map<String, FormWidget> widgets) {
+    public void onActionClicked(PaymentCard item, Map<String, FormWidget> widgets) {
         paymentList.hideKeyboard();
-        presenter.charge(widgets, group);
+        presenter.performOperation(item, widgets);
     }
 
-    ValidationResult validate(PaymentGroup group, String type, String value1, String value2) {
-        PaymentItem item = group.getActivePaymentItem();
+    public ValidationResult validate(PaymentCard card, String type, String value1, String value2) {
         Validator validator = PaymentUI.getInstance().getValidator();
-        ValidationResult result = validator.validate(item.getPaymentMethod(), type, value1, value2);
+        ValidationResult result = validator.validate(card.getPaymentMethod(), type, value1, value2);
 
         if (!result.isError()) {
             return result;
         }
-        String msg = item.translateError(result.getError());
+        String msg = card.getLang().translateError(result.getError());
 
         if (TextUtils.isEmpty(msg)) {
             msg = getString(R.string.paymentpage_error_validation);

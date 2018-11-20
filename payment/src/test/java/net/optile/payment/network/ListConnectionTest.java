@@ -22,6 +22,7 @@ import org.junit.runner.RunWith;
 import org.robolectric.RobolectricTestRunner;
 
 import net.optile.payment.core.PaymentException;
+import net.optile.payment.core.LanguageFile;
 import net.optile.payment.model.ListResult;
 
 /**
@@ -76,22 +77,18 @@ public class ListConnectionTest {
 
     /**
      * Gets language Properties invalid url
-     *
-     * @throws PaymentException the network exception
      */
     @Test(expected = IllegalArgumentException.class)
-    public void getLanguage_invalidURL_IllegalArgumentException() throws PaymentException {
+    public void loadLanguageFile_invalidURL_IllegalArgumentException() throws PaymentException {
         ListConnection conn = new ListConnection();
-        Properties lang = conn.getLanguage(null, new Properties());
+        LanguageFile lang = conn.loadLanguageFile(null, new LanguageFile());
     }
 
     /**
      * Gets language Properties invalid properties
-     *
-     * @throws PaymentException the network exception
      */
     @Test(expected = IllegalArgumentException.class)
-    public void getLanguage_invalidProperties_IllegalArgumentException() throws PaymentException {
+    public void loadLanguageFile_invalidProperties_IllegalArgumentException() throws PaymentException {
         ListConnection conn = new ListConnection();
         URL url = null;
         try {
@@ -100,6 +97,6 @@ public class ListConnectionTest {
             e.printStackTrace();
         }
         assertNotNull(url);
-        Properties lang = conn.getLanguage(url, null);
+        LanguageFile lang = conn.loadLanguageFile(null, new LanguageFile());
     }
 }

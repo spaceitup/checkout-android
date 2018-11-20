@@ -9,37 +9,30 @@
  * has been received in full.
  */
 
-package net.optile.payment.ui.paymentpage;
+package net.optile.payment.ui.page;
 
-import java.net.MalformedURLException;
+import android.util.Log;
 import java.net.URL;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Map;
-import java.util.Properties;
 import java.util.concurrent.Callable;
 
 import android.text.TextUtils;
 import net.optile.payment.R;
 import net.optile.payment.core.PaymentError;
 import net.optile.payment.core.PaymentException;
-import net.optile.payment.core.PaymentInputType;
 import net.optile.payment.core.WorkerSubscriber;
 import net.optile.payment.core.WorkerTask;
 import net.optile.payment.core.Workers;
 import net.optile.payment.form.Charge;
-import net.optile.payment.model.ApplicableNetwork;
 import net.optile.payment.model.ErrorInfo;
-import net.optile.payment.model.InputElement;
 import net.optile.payment.model.Interaction;
 import net.optile.payment.model.InteractionCode;
 import net.optile.payment.model.InteractionReason;
-import net.optile.payment.model.ListResult;
-import net.optile.payment.model.Networks;
 import net.optile.payment.model.OperationResult;
-import net.optile.payment.network.ChargeConnection;
-import net.optile.payment.network.ListConnection;
+import net.optile.payment.model.OperationType;
 import net.optile.payment.ui.PaymentResult;
+import net.optile.payment.ui.model.PaymentCard;
+import net.optile.payment.ui.model.PaymentSession;
 import net.optile.payment.ui.widget.FormWidget;
 
 /**
@@ -49,9 +42,8 @@ final class PaymentPagePresenter {
 
     private final static String TAG = "pay_PayPresenter";
 
-    private final ListConnection listConnection;
-    private final ChargeConnection chargeConnection;
     private final PaymentPageView view;
+    private final PaymentPageService service;
 
     private PaymentSession session;
     private int groupType;
@@ -63,12 +55,11 @@ final class PaymentPagePresenter {
     /**
      * Create a new PaymentPagePresenter
      *
-     * @param view The PaymentPageView displaying the payment items
+     * @param view The PaymentPageView displaying the payment list
      */
     PaymentPagePresenter(PaymentPageView view) {
         this.view = view;
-        this.listConnection = new ListConnection();
-        this.chargeConnection = new ChargeConnection();
+        this.service = new PaymentPageService();
     }
 
     void onStop() {
@@ -104,19 +95,29 @@ final class PaymentPagePresenter {
     }
 
     /**
-     * Make a charge request for the selected PaymentGroup with widgets
+     * Perform the operation specified in the paymentSession for the selected PaymentCard and widgets
      *
+     * @param card the PaymentCard containing the operation URL
      * @param widgets containing the user input data
-     * @param group selected group of payment methods
      */
-    void charge(Map<String, FormWidget> widgets, PaymentGroup group) {
+    void performOperation(PaymentCard card, Map<String, FormWidget> widgets) {
 
+        switch (session.getOperationType()) {
+        case OperationType.CHARGE:
+            performChargeOperation(card, widgets);
+            break;
+        default:
+            Log.w(TAG, "OperationType not supported");
+        }
+    }
+
+    private void performChargeOperation(PaymentCard card, Map<String, FormWidget> widgets) {
+        
         if (chargeTask != null) {
             return;
         }
-        URL url = group.getLink("operation");
+        URL url = card.getOperationLink();
         Charge charge = new Charge();
-
         try {
             boolean error = false;
             for (FormWidget widget : widgets.values()) {
@@ -315,7 +316,7 @@ final class PaymentPagePresenter {
         if (session == null || interaction == null) {
             return defMessage;
         }
-        String msg = session.translateInteraction(interaction);
+        String msg = session.getLang().translateInteraction(interaction);
         return TextUtils.isEmpty(msg) ? defMessage : msg;
     }
 
@@ -330,7 +331,7 @@ final class PaymentPagePresenter {
         loadTask = WorkerTask.fromCallable(new Callable<PaymentSession>() {
             @Override
             public PaymentSession call() throws PaymentException {
-                return asyncLoadPaymentSession(listUrl);
+                return service.loadPaymentSession(listUrl);
             }
         });
         loadTask.subscribe(new WorkerSubscriber<PaymentSession>() {
@@ -347,132 +348,13 @@ final class PaymentPagePresenter {
         Workers.getInstance().forNetworkTasks().execute(loadTask);
     }
 
-    private PaymentSession asyncLoadPaymentSession(String listUrl) throws PaymentException {
-        ListResult listResult = listConnection.getListResult(listUrl);
-        List<PaymentItem> items = loadPaymentItems(listResult);
-        List<PaymentGroup> groups = new ArrayList<>();
-
-        int selIndex = -1;
-        int index = 0;
-        for (PaymentItem item : items) {
-            PaymentGroup group = createPaymentGroup(item);
-            if (selIndex == -1 && group.isSelected()) {
-                selIndex = index;
-            }
-            groups.add(group);
-            index++;
-        }
-        PaymentSession session = new PaymentSession(listResult, groups);
-        session.setSelIndex(selIndex);
-        session.setLanguage(loadPageLanguage(items));
-
-        if (session.getApplicableNetworkSize() == 0) {
-            session.setEmptyMessage(view.getStringRes(R.string.paymentpage_error_empty));
-        } else if (groups.size() == 0) {
-            session.setEmptyMessage(view.getStringRes(R.string.paymentpage_error_notsupported));
-        }
-        return session;
-    }
-
-    private List<PaymentItem> loadPaymentItems(ListResult listResult) throws PaymentException {
-        List<PaymentItem> items = new ArrayList<>();
-        Networks nw = listResult.getNetworks();
-
-        if (nw == null) {
-            return items;
-        }
-        List<ApplicableNetwork> an = nw.getApplicable();
-
-        if (an == null || an.size() == 0) {
-            return items;
-        }
-        for (ApplicableNetwork network : an) {
-            if (isSupported(network)) {
-                items.add(loadPaymentItem(network));
-            }
-        }
-        return items;
-    }
-
-    private PaymentItem loadPaymentItem(ApplicableNetwork network) throws PaymentException {
-        PaymentItem item = new PaymentItem(network);
-        URL langUrl = item.getLink("lang");
-        if (langUrl == null) {
-            throw createPaymentException("Missing 'lang' link in ApplicableNetwork", null);
-        }
-        item.setLanguage(listConnection.getLanguage(langUrl, new Properties()));
-        return item;
-    }
-
-    private PaymentGroup createPaymentGroup(PaymentItem item) {
-        PaymentGroup group = new PaymentGroup(nextGroupType(), item, item.getInputElements());
-        setExpiryDateSupport(group);
-        return group;
-    }
-
-    /**
-     * Determine if this PaymentGroup should combine the expiryMonth and expiryYear InputElements.
-     * Only when the PaymentGroup has expiryMonth, expiryYear and valid expiryDate label the month and year may be combined in one input widget.
-     *
-     * @param group to set the expiryDate support
-     */
-    private void setExpiryDateSupport(PaymentGroup group) {
-        PaymentItem item = group.getActivePaymentItem();
-        boolean hasExpiryMonth = false;
-        boolean hasExpiryYear = false;
-
-        for (InputElement element : item.getInputElements()) {
-            switch (element.getName()) {
-                case PaymentInputType.EXPIRY_MONTH:
-                    hasExpiryMonth = true;
-                    break;
-                case PaymentInputType.EXPIRY_YEAR:
-                    hasExpiryYear = true;
-            }
-        }
-        group.setHasExpiryDate(hasExpiryMonth && hasExpiryYear);
-    }
-
-    /**
-     * This method loads the payment page language file.
-     * The URL for the paymentpage language file is constructed from the URL of one of the ApplicableNetwork entries.
-     *
-     * @param items contains the list of PaymentItem elements
-     * @return the properties object containing the language entries
-     */
-    private Properties loadPageLanguage(List<PaymentItem> items) throws PaymentException {
-        Properties prop = new Properties();
-
-        if (items.size() == 0) {
-            return prop;
-        }
-        PaymentItem item = items.get(0);
-        URL langUrl = item.getLink("lang");
-
-        if (langUrl == null) {
-            throw createPaymentException("Missing 'lang' link in ApplicableNetwork", null);
-        }
-        try {
-            String newUrl = langUrl.toString().replaceAll(item.getCode(), "paymentpage");
-            langUrl = new URL(newUrl);
-            return listConnection.getLanguage(langUrl, prop);
-        } catch (MalformedURLException e) {
-            throw createPaymentException("Malformed language URL", e);
-        }
-    }
-
-    private boolean isSupported(ApplicableNetwork network) {
-        String button = network.getButton();
-        return (TextUtils.isEmpty(button) || !button.contains("activate")) && !network.getRedirect();
-    }
-
     private void postChargeRequest(final URL url, final Charge charge) {
         view.showLoading(true);
 
         chargeTask = WorkerTask.fromCallable(new Callable<OperationResult>() {
             @Override
             public OperationResult call() throws PaymentException {
-                return asyncPostChargeRequest(url, charge);
+                return service.postChargeRequest(url, charge);
             }
         });
         chargeTask.subscribe(new WorkerSubscriber<OperationResult>() {
@@ -489,18 +371,9 @@ final class PaymentPagePresenter {
         Workers.getInstance().forNetworkTasks().execute(chargeTask);
     }
 
-    private OperationResult asyncPostChargeRequest(URL url, Charge charge) throws PaymentException {
-        return chargeConnection.createCharge(url, charge);
-    }
-
     private PaymentResult createPaymentResult(Throwable cause) {
         String resultInfo = cause.toString();
         PaymentError error = new PaymentError("PaymentPage", PaymentError.INTERNAL_ERROR, resultInfo);
         return new PaymentResult(resultInfo, error);
-    }
-
-    private PaymentException createPaymentException(String message, Throwable cause) {
-        final PaymentError error = new PaymentError("PaymentPage", PaymentError.INTERNAL_ERROR, message);
-        return new PaymentException(error, message, cause);
     }
 }

@@ -21,32 +21,41 @@ import android.widget.TextView;
 import net.optile.payment.R;
 import net.optile.payment.core.PaymentException;
 import net.optile.payment.form.Charge;
-import net.optile.payment.model.InputElement;
 import net.optile.payment.model.SelectOption;
 import net.optile.payment.util.PaymentUtils;
 
 /**
- * Class for handling the Select input type
+ * Widget for handling the Select input type
  */
 public final class SelectInputWidget extends FormWidget {
 
-    private final InputElement element;
     private final Spinner spinner;
     private final TextView label;
+    private ArrayAdapter<SpinnerItem> adapter;
 
     /**
      * Construct a new SelectInputWidget
      *
      * @param name identifying this widget
      * @param rootView the root view of this input
-     * @param element the InputElement this widget is displaying
      */
-    public SelectInputWidget(String name, View rootView, InputElement element) {
+    public SelectInputWidget(String name, View rootView) {
         super(name, rootView);
-        this.element = element;
-        spinner = rootView.findViewById(R.id.input_spinner);
         label = rootView.findViewById(R.id.input_label);
-        initSpinner();
+        adapter = new ArrayAdapter<>(rootView.getContext(), R.layout.spinner_item);
+
+        spinner = rootView.findViewById(R.id.input_spinner);
+        spinner.setAdapter(adapter);
+        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id) {
+                validate();
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parentView) {
+            }
+        });
     }
 
     public void setLabel(String label) {
@@ -61,13 +70,12 @@ public final class SelectInputWidget extends FormWidget {
         }
     }
 
-    private void initSpinner() {
-        List<SelectOption> options = element.getOptions();
+    public void setSelectOptions(List<SelectOption> options) {
+        adapter.clear();
 
         if (options == null || options.size() == 0) {
             return;
         }
-        ArrayAdapter<SpinnerItem> adapter = new ArrayAdapter<>(rootView.getContext(), R.layout.spinner_item);
         int selIndex = 0;
         SelectOption option;
 
@@ -79,18 +87,7 @@ public final class SelectInputWidget extends FormWidget {
                 selIndex = i;
             }
         }
-        spinner.setAdapter(adapter);
         spinner.setSelection(selIndex);
-        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id) {
-                validate();
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> parentView) {
-            }
-        });
     }
 
     class SpinnerItem {

@@ -23,12 +23,12 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
-import java.util.Properties;
 
 import com.google.gson.JsonParseException;
 
 import android.net.Uri;
 import android.text.TextUtils;
+import net.optile.payment.core.LanguageFile;
 import net.optile.payment.core.PaymentException;
 import net.optile.payment.model.ListResult;
 
@@ -148,25 +148,22 @@ public final class ListConnection extends BaseConnection {
     }
 
     /**
-     * Load the language file given the URL into the Properties object
+     * Load the language file given the URL
      *
      * @param url the pointing to the language entries
-     * @param prop in which the language properties should be stored
-     * @return Properties object containing the language entries
+     * @param file store the loaded language entries in this LanguageFile
+     * @return LanguageFile object containing the language entries
      */
-    public Properties getLanguage(final URL url, Properties prop) throws PaymentException {
-        final String source = "ListConnection[getLanguage]";
+    public LanguageFile loadLanguageFile(final URL url, LanguageFile file) throws PaymentException {
+        final String source = "ListConnection[loadLanguageFile]";
 
         if (url == null) {
             throw new IllegalArgumentException(source + " - url cannot be null");
         }
-        if (prop == null) {
-            throw new IllegalArgumentException(source + " - properties cannot be null");
-        }
         try (InputStream in = url.openStream();
             InputStreamReader ir = new InputStreamReader(in)) {
-            prop.load(ir);
-            return prop;
+            file.getProperties().load(ir);
+            return file;
         } catch (IOException e) {
             throw createPaymentException(source, CONN_ERROR, e);
         }

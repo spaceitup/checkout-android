@@ -26,11 +26,11 @@ import net.optile.payment.util.PaymentUtils;
 import net.optile.payment.validation.ValidationResult;
 
 /**
- * Class for handling date input
+ * Widget for handling the date input
  */
 public final class DateWidget extends InputLayoutWidget implements DateDialogFragment.DateDialogListener {
 
-    private String button;
+    private String dialogButtonLabel;
     private InputElement monthElement;
     private InputElement yearElement;
     private String expiryMonth;
@@ -42,8 +42,6 @@ public final class DateWidget extends InputLayoutWidget implements DateDialogFra
      *
      * @param name name identifying this widget
      * @param rootView the root view of this input
-     * @param label localized label for this date widget
-     * @param button localized button label
      */
     public DateWidget(String name, View rootView) {
         super(name, rootView);
@@ -57,8 +55,8 @@ public final class DateWidget extends InputLayoutWidget implements DateDialogFra
         setLayoutWidth(WEIGHT_REDUCED);
     }
 
-    public void setButton(String button) {
-        this.button = button;
+    public void setDialogButtonLabel(String dialogButtonLabel) {
+        this.dialogButtonLabel = dialogButtonLabel;
     }
 
     public void setMonthInputElement(InputElement monthElement) {
@@ -101,7 +99,7 @@ public final class DateWidget extends InputLayoutWidget implements DateDialogFra
         if (hasFocus) {
             setValidation(VALIDATION_UNKNOWN, false, null);
             showDateDialogFragment();
-        } else if (state == VALIDATION_UNKNOWN) {
+        } else if (state == VALIDATION_UNKNOWN && !(TextUtils.isEmpty(expiryMonth) || TextUtils.isEmpty(expiryYear))) {
             validate();
         }
     }
@@ -150,7 +148,7 @@ public final class DateWidget extends InputLayoutWidget implements DateDialogFra
         DateDialogFragment dialog = new DateDialogFragment();
         dialog.setTitle(label);
         dialog.setValues(selMonthIndex, monthLabels, selYearIndex, yearLabels);
-        dialog.setButton(button);
+        dialog.setButtonLabel(dialogButtonLabel);
         dialog.setListener(this);
         return dialog;
     }
@@ -162,7 +160,9 @@ public final class DateWidget extends InputLayoutWidget implements DateDialogFra
     public void onDateChanged(int monthIndex, String monthLabel, int yearIndex, String yearLabel) {
         this.expiryMonth = monthElement.getOptions().get(monthIndex).getValue();
         this.expiryYear = yearElement.getOptions().get(yearIndex).getValue();
-        input.setText(String.format(getString(R.string.widget_date_format), monthLabel, yearLabel));
+
+        String format = rootView.getContext().getString(R.string.paymentlist_date);
+        input.setText(String.format(format, monthLabel, yearLabel));
 
         View nextField = input.focusSearch(View.FOCUS_DOWN);
         if (nextField instanceof TextInputEditText) {

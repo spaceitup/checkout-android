@@ -9,9 +9,10 @@
  * has been received in full.
  */
 
-package net.optile.payment.ui.paymentpage;
+package net.optile.payment.ui.page;
 
 import net.optile.payment.ui.PaymentResult;
+import net.optile.payment.ui.model.PaymentSession;
 
 /**
  * The PaymentPageView interface is the View part of the MVP, this is implemented by the PaymentPageActivity

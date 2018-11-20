@@ -21,7 +21,7 @@ import net.optile.payment.form.Charge;
 import net.optile.payment.validation.ValidationResult;
 
 /**
- * The base InputWidget
+ * The base class for all widgets
  */
 public abstract class FormWidget {
 
@@ -55,13 +55,6 @@ public abstract class FormWidget {
         return name;
     }
 
-    public String getString(int resId) {
-        return rootView.getContext().getString(resId);
-    }
-
-    public void setLabel(String label) {
-    }
-
     public void setIconResource(int resId) {
 
         if (icon != null) {
@@ -70,16 +63,19 @@ public abstract class FormWidget {
         }
     }
 
-    public boolean isValid() {
-        return this.state == VALIDATION_OK;
-    }
-
     public void setVisible(boolean visible) {
         rootView.setVisibility(visible ? View.VISIBLE : View.GONE);
     }
 
     public boolean setLastImeOptionsWidget() {
         return false;
+    }
+
+    public void setLabel(String label) {
+    }
+
+    public boolean isValid() {
+        return this.state == VALIDATION_OK;
     }
 
     public void putValue(Charge charge) throws PaymentException {

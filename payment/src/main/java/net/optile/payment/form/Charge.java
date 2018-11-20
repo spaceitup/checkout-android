@@ -13,6 +13,7 @@ package net.optile.payment.form;
 
 import org.json.JSONException;
 import org.json.JSONObject;
+
 import android.text.TextUtils;
 import net.optile.payment.core.PaymentError;
 import net.optile.payment.core.PaymentException;
@@ -31,6 +32,13 @@ public class Charge {
         account = new JSONObject();
     }
 
+    /** 
+     * Put a value for a Charge request into this Charge object. 
+     * Depending on the name of the value it will be added to the correct place in the Charge Json Object.
+     * 
+     * @param name the name of the value  
+     * @param value containing the value
+     */
     public void putValue(String name, Object value) throws PaymentException {
 
         if (TextUtils.isEmpty(name)) {
@@ -59,7 +67,7 @@ public class Charge {
         }
     }
 
-    public String toJson() throws JSONException { 
+    public String toJson() throws JSONException {
         charge.put("account", account);
         return charge.toString();
     }

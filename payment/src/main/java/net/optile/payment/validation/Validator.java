@@ -66,11 +66,11 @@ public class Validator {
     }
 
     private ValidationResult validateAccountNumber(String method, String accountNumber) {
-        String error = null;
 
         if (TextUtils.isEmpty(accountNumber)) {
-            error = ValidationResult.MISSING_ACCOUNT_NUMBER;
+            return new ValidationResult(ValidationResult.MISSING_ACCOUNT_NUMBER);
         }
+        String error = null;
         switch (method) {
             case PaymentMethod.CREDIT_CARD:
             case PaymentMethod.DEBIT_CARD:

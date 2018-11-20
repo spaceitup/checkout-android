@@ -16,7 +16,7 @@ import android.widget.Button;
 import net.optile.payment.R;
 
 /**
- * Class for showing the submit button
+ * Widget for showing the Submit (pay) button
  */
 public final class ButtonWidget extends FormWidget {
 
@@ -25,7 +25,7 @@ public final class ButtonWidget extends FormWidget {
     /**
      * Construct a new ButtonWidget
      *
-     * @param name name
+     * @param name the name of this widget
      * @param rootView the root view of this button
      */
     public ButtonWidget(String name, View rootView) {
@@ -39,7 +39,7 @@ public final class ButtonWidget extends FormWidget {
         });
     }
 
-    public void setLabel(String label) {
+    public void setButtonLabel(String label) {
         button.setText(label);
     }
 

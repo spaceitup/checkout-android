@@ -17,7 +17,7 @@ import net.optile.payment.form.Charge;
 import net.optile.payment.model.RegistrationType;
 
 /**
- * Class for handling the Register input type
+ * Widget for handling the Register input
  */
 public final class RegisterWidget extends CheckBoxInputWidget {
 
@@ -28,7 +28,6 @@ public final class RegisterWidget extends CheckBoxInputWidget {
      *
      * @param name name identifying this widget
      * @param rootView the root view of this input
-     * @param element the InputElement this widget is displaying
      */
     public RegisterWidget(String name, View rootView) {
         super(name, rootView);
