@@ -155,7 +155,7 @@ public final class ListConnection extends BaseConnection {
      * @return LanguageFile object containing the language entries
      */
     public LanguageFile loadLanguageFile(final URL url, LanguageFile file) throws PaymentException {
-        final String source = "ListConnection[getLanguageFile]";
+        final String source = "ListConnection[loadLanguageFile]";
 
         if (url == null) {
             throw new IllegalArgumentException(source + " - url cannot be null");
