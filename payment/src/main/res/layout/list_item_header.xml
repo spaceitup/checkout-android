@@ -4,12 +4,12 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:paddingTop="@dimen/border_medium"
-    android:paddingBottom="@dimen/border_medium"
+    android:paddingBottom="@dimen/border_xxsmall"
     android:paddingStart="@dimen/border_medium"
     android:paddingEnd="@dimen/border_medium">
 
     <TextView
         android:id="@+id/text_title"
-        style="@style/PaymentText.Medium"/>
+        style="@style/PaymentText.Medium.Bold"/>
 
 </LinearLayout>

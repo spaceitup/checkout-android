@@ -33,7 +33,6 @@ public class CheckBoxInputWidget extends FormWidget {
      *
      * @param name name identifying this widget
      * @param rootView the root view of this input
-     * @param element the InputElement this widget is displaying
      */
     public CheckBoxInputWidget(String name, View rootView) {
         super(name, rootView);

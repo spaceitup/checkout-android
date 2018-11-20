@@ -17,6 +17,7 @@ import java.util.List;
 import java.util.Map;
 
 import net.optile.payment.core.LanguageFile;
+import net.optile.payment.model.AccountMask;
 import net.optile.payment.model.AccountRegistration;
 import net.optile.payment.model.ApplicableNetwork;
 import net.optile.payment.model.InputElement;
@@ -29,8 +30,6 @@ public final class AccountCard implements PaymentCard {
 
     public final AccountRegistration account;
     public final ApplicableNetwork network;
-
-    private boolean hasExpiryDate;
     private LanguageFile lang;
 
     public AccountCard(AccountRegistration account, ApplicableNetwork network) {
@@ -70,8 +69,9 @@ public final class AccountCard implements PaymentCard {
      * {@inheritDoc}
      */
     @Override
-    public boolean hasExpiryDate() {
-        return hasExpiryDate;
+    public List<InputElement> getInputElements() {
+        List<InputElement> elements = account.getLocalizedInputElements();
+        return elements == null ? new ArrayList<>() : elements;
     }
 
     /**
@@ -80,15 +80,6 @@ public final class AccountCard implements PaymentCard {
     @Override
     public boolean isPreselected() {
         return PaymentUtils.isTrue(account.getSelected());
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public List<InputElement> getInputElements() {
-        List<InputElement> elements = account.getLocalizedInputElements();
-        return elements == null ? new ArrayList<>() : elements;
     }
 
     /**
@@ -104,11 +95,7 @@ public final class AccountCard implements PaymentCard {
         return links != null ? links.get(name) : null;
     }
 
-    public String getLabel() {
-        return account.getLabel();
-    }
-
-    public void setExpiryDate(boolean hasExpiryDate) {
-        this.hasExpiryDate = hasExpiryDate;
+    public AccountMask getMaskedAccount() {
+        return account.getMaskedAccount();
     }
 }

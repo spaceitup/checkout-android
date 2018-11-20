@@ -91,7 +91,7 @@ public final class TextInputWidget extends InputLayoutWidget {
     void handleOnFocusChange(boolean hasFocus) {
         if (hasFocus) {
             setValidation(VALIDATION_UNKNOWN, false, null);
-        } else if (state == VALIDATION_UNKNOWN) {
+        } else if (state == VALIDATION_UNKNOWN && !TextUtils.isEmpty(getNormalizedValue())) {
             validate();
         }
     }

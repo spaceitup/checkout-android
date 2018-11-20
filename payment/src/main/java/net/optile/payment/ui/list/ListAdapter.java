@@ -28,14 +28,14 @@ import net.optile.payment.ui.model.PaymentCard;
 import net.optile.payment.validation.ValidationResult;
 
 /**
- * The PaymentListAdapter containing the list of items
+ * The ListAdapter containing the list of items
  */
-class PaymentListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
+class ListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     private final List<ListItem> items;
     private final PaymentList list;
 
-    PaymentListAdapter(PaymentList list, List<ListItem> items) {
+    ListAdapter(PaymentList list, List<ListItem> items) {
         this.list = list;
         this.items = items;
     }
@@ -154,7 +154,7 @@ class PaymentListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     /**
      * Get the list item with its type matching the viewType
      *
-     * @param type type of the view
+     * @param viewType type of the view
      * @return ListItem with the same type or null if not found
      */
     private ListItem getItemWithViewType(int viewType) {

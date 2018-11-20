@@ -44,13 +44,6 @@ public interface PaymentCard {
     LanguageFile getLang();
 
     /**
-     * Does this PaymentCard has the ExpiryDate input elements
-     *
-     * @return true when having the expiry date, false otherwise
-     */
-    boolean hasExpiryDate();
-
-    /**
      * Is this card preselected by the Payment API
      *
      * @return true when preselected, false otherwise

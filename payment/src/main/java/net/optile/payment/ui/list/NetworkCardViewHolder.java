@@ -37,13 +37,13 @@ final class NetworkCardViewHolder extends PaymentCardViewHolder {
     final TextView title;
     final ImageView logo;
 
-    NetworkCardViewHolder(PaymentListAdapter adapter, View parent) {
+    NetworkCardViewHolder(ListAdapter adapter, View parent) {
         super(adapter, parent);
         this.title = parent.findViewById(R.id.text_title);
         this.logo = parent.findViewById(R.id.image_logo);
     }
 
-    static ViewHolder createInstance(PaymentListAdapter adapter, NetworkCard networkCard, LayoutInflater inflater, ViewGroup parent) {
+    static ViewHolder createInstance(ListAdapter adapter, NetworkCard networkCard, LayoutInflater inflater, ViewGroup parent) {
         View view = inflater.inflate(R.layout.list_item_network, parent, false);
         NetworkCardViewHolder holder = new NetworkCardViewHolder(adapter, view);
 

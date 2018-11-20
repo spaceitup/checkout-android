@@ -20,7 +20,6 @@ import android.text.TextUtils;
 import net.optile.payment.core.LanguageFile;
 import net.optile.payment.core.PaymentError;
 import net.optile.payment.core.PaymentException;
-import net.optile.payment.core.PaymentInputType;
 import net.optile.payment.form.Charge;
 import net.optile.payment.model.AccountRegistration;
 import net.optile.payment.model.ApplicableNetwork;
@@ -36,7 +35,7 @@ import net.optile.payment.ui.model.PaymentNetwork;
 import net.optile.payment.ui.model.PaymentSession;
 
 /**
- * The PaymentPagePresenter implementing the presenter part of the MVP
+ * The PaymentPageService implementing the communication with the Payment API
  */
 final class PaymentPageService {
 
@@ -54,10 +53,10 @@ final class PaymentPageService {
     }
 
     /**
-     * Load the current payment session from the Payment API
+     * Load the list PaymentSession from the Payment API
      *
      * @param listUrl unique list url of the payment session
-     * @return the payment session loaded from the Payment API
+     * @return the payment session obtained from the Payment API
      */
     PaymentSession loadPaymentSession(String listUrl) throws PaymentException {
         ListResult listResult = listConnection.getListResult(listUrl);
@@ -71,7 +70,7 @@ final class PaymentPageService {
     }
 
     /**
-     * Post a charge request to the Payment API
+     * Post a ChargeRequest to the Payment API
      *
      * @param url the url of the charge request
      * @param charge the object containing the charge details
@@ -100,10 +99,9 @@ final class PaymentPageService {
         for (AccountRegistration account : accounts) {
             PaymentNetwork pn = findPaymentNetwork(networks, account.getCode());
 
-            if (pn == null) {
-                continue;
+            if (pn != null) {
+                cards.add(createAccountCard(account, pn));
             }
-            cards.add(createAccountCard(account, pn));
         }
         return cards;
     }
@@ -150,39 +148,20 @@ final class PaymentPageService {
 
     private AccountCard createAccountCard(AccountRegistration registration, PaymentNetwork paymentNetwork) {
         AccountCard card = new AccountCard(registration, paymentNetwork.network);
-        card.setExpiryDate(containsExpiryDate(card.getInputElements()));
         card.setLang(paymentNetwork.getLang());
         return card;
     }
 
     private NetworkCard createNetworkCard(PaymentNetwork paymentNetwork) {
         List<InputElement> elements = paymentNetwork.getInputElements();
-        NetworkCard card = new NetworkCard(paymentNetwork, elements);
-        card.setExpiryDate(containsExpiryDate(elements));
-        return card;
-    }
-
-    private boolean containsExpiryDate(List<InputElement> elements) {
-        boolean hasExpiryMonth = false;
-        boolean hasExpiryYear = false;
-
-        for (InputElement element : elements) {
-            switch (element.getName()) {
-                case PaymentInputType.EXPIRY_MONTH:
-                    hasExpiryMonth = true;
-                    break;
-                case PaymentInputType.EXPIRY_YEAR:
-                    hasExpiryYear = true;
-            }
-        }
-        return hasExpiryYear && hasExpiryMonth;
+        return new NetworkCard(paymentNetwork, elements);
     }
 
     /**
      * This method loads the payment page language file.
      * The URL for the paymentpage language file is constructed from the URL of one of the ApplicableNetwork entries.
      *
-     * @param items contains the list of PaymentNetwork elements
+     * @param networks contains the list of PaymentNetwork elements
      * @return the properties object containing the language entries
      */
     private LanguageFile loadPaymentPageLanguageFile(List<PaymentNetwork> networks) throws PaymentException {

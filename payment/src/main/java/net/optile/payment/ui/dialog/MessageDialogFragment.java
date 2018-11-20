@@ -54,7 +54,6 @@ public final class MessageDialogFragment extends DialogFragment {
      * Set the neutral button label
      *
      * @param label the Label of the button
-     * @param action the action of the button
      */
     public void setNeutralButton(String label) {
         this.neutralButtonLabel = label;

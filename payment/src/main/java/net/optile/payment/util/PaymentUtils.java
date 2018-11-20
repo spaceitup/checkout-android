@@ -15,9 +15,12 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.util.List;
 
 import android.content.res.Resources;
 import android.util.Log;
+import net.optile.payment.core.PaymentInputType;
+import net.optile.payment.model.InputElement;
 
 /**
  * The PaymentUtils class containing helper methods
@@ -44,6 +47,39 @@ public final class PaymentUtils {
      */
     public static String trimToEmpty(String value) {
         return value == null ? "" : value.trim();
+    }
+
+    /**
+     * Get the base integer value given the Integer object.
+     * If the object is null then return the 0 value.
+     *
+     * @param value to convert to an integer
+     * @return the value as an integer or 0 if the value is null
+     */
+    public static int toInt(Integer value) {
+        return value == null ? 0 : value;
+    }
+
+    /**
+     * Does the list of InputElements contain both the expiry month and year fields.
+     *
+     * @param elements list of input elements to check
+     * @return true when there are both an expiry month and year
+     */
+    public static boolean containsExpiryDate(List<InputElement> elements) {
+        boolean hasExpiryMonth = false;
+        boolean hasExpiryYear = false;
+
+        for (InputElement element : elements) {
+            switch (element.getName()) {
+                case PaymentInputType.EXPIRY_MONTH:
+                    hasExpiryMonth = true;
+                    break;
+                case PaymentInputType.EXPIRY_YEAR:
+                    hasExpiryYear = true;
+            }
+        }
+        return hasExpiryYear && hasExpiryMonth;
     }
 
     /**

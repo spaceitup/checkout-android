@@ -11,6 +11,7 @@
 
 package net.optile.payment.ui.page;
 
+import android.util.Log;
 import java.net.URL;
 import java.util.Map;
 import java.util.concurrent.Callable;
@@ -28,6 +29,7 @@ import net.optile.payment.model.Interaction;
 import net.optile.payment.model.InteractionCode;
 import net.optile.payment.model.InteractionReason;
 import net.optile.payment.model.OperationResult;
+import net.optile.payment.model.OperationType;
 import net.optile.payment.ui.PaymentResult;
 import net.optile.payment.ui.model.PaymentCard;
 import net.optile.payment.ui.model.PaymentSession;
@@ -98,14 +100,24 @@ final class PaymentPagePresenter {
      * @param item the PaymentCard containing the operation URL
      * @param widgets containing the user input data
      */
-    void charge(PaymentCard item, Map<String, FormWidget> widgets) {
+    void performOperation(PaymentCard item, Map<String, FormWidget> widgets) {
 
+        switch (session.getOperationType()) {
+        case OperationType.CHARGE:
+            performChargeOperation(item, widgets);
+            break;
+        default:
+            Log.w(TAG, "OperationType not supported");
+        }
+    }
+
+    private void performChargeOperation(PaymentCard item, Map<String, FormWidget> widgets) {
+        
         if (chargeTask != null) {
             return;
         }
         URL url = item.getOperationLink();
         Charge charge = new Charge();
-
         try {
             boolean error = false;
             for (FormWidget widget : widgets.values()) {

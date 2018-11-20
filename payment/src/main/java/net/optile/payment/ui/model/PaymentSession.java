@@ -61,6 +61,10 @@ public final class PaymentSession {
         this.lang = lang;
     }
 
+    public String getOperationType() {
+        return listResult.getOperationType();
+    }
+    
     public int getApplicableNetworkSize() {
         Networks nw = listResult.getNetworks();
         if (nw == null) {

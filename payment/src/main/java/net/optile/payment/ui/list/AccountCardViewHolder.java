@@ -12,6 +12,7 @@
 package net.optile.payment.ui.list;
 
 import java.net.URL;
+import java.util.List;
 
 import com.bumptech.glide.Glide;
 
@@ -22,24 +23,30 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 import net.optile.payment.R;
+import net.optile.payment.model.AccountMask;
+import net.optile.payment.model.InputElement;
+import net.optile.payment.model.PaymentMethod;
 import net.optile.payment.ui.model.AccountCard;
 import net.optile.payment.ui.model.PaymentCard;
+import net.optile.payment.util.PaymentUtils;
 
 /**
- * The AccountCardViewHolder
+ * The AccountCardViewHolder class holding the views for an AccountCard
  */
 final class AccountCardViewHolder extends PaymentCardViewHolder {
 
     final TextView title;
+    final TextView subTitle;
     final ImageView logo;
 
-    AccountCardViewHolder(PaymentListAdapter adapter, View parent) {
+    AccountCardViewHolder(ListAdapter adapter, View parent) {
         super(adapter, parent);
         this.title = parent.findViewById(R.id.text_title);
+        this.subTitle = parent.findViewById(R.id.text_subtitle);
         this.logo = parent.findViewById(R.id.image_logo);
     }
 
-    static ViewHolder createInstance(PaymentListAdapter adapter, AccountCard accountCard, LayoutInflater inflater, ViewGroup parent) {
+    static ViewHolder createInstance(ListAdapter adapter, AccountCard accountCard, LayoutInflater inflater, ViewGroup parent) {
         View view = inflater.inflate(R.layout.list_item_account, parent, false);
         AccountCardViewHolder holder = new AccountCardViewHolder(adapter, view);
 
@@ -57,11 +64,40 @@ final class AccountCardViewHolder extends PaymentCardViewHolder {
         super.onBind(paymentCard);
 
         AccountCard card = (AccountCard) paymentCard;
+        AccountMask mask = card.getMaskedAccount();
+        bindTitle(mask, card.getPaymentMethod());
+        bindSubTitle(mask, card.getInputElements());
         URL logoUrl = card.getLink("logo");
-        title.setText(card.getLabel());
 
         if (logoUrl != null) {
             Glide.with(logo.getContext()).asBitmap().load(logoUrl.toString()).into(logo);
         }
     }
+
+    private void bindTitle(AccountMask mask, String method) {
+        switch (method) {
+            case PaymentMethod.CREDIT_CARD:
+            case PaymentMethod.DEBIT_CARD:
+                title.setText(mask.getNumber());
+                break;
+            default:
+                title.setText(mask.getDisplayLabel());
+        }
+    }
+
+    private void bindSubTitle(AccountMask mask, List<InputElement> elements) {
+        int expiryMonth = PaymentUtils.toInt(mask.getExpiryMonth());
+        int expiryYear = PaymentUtils.toInt(mask.getExpiryYear());
+
+        if (expiryMonth > 0 && expiryYear > 0) {
+            String format = subTitle.getContext().getString(R.string.paymentlist_date);
+            String monthLabel = String.format("%02d", expiryMonth);
+            String yearLabel = Integer.toString(expiryYear);
+            subTitle.setText(String.format(format, monthLabel, yearLabel));
+            subTitle.setVisibility(View.VISIBLE);
+        } else {
+            subTitle.setVisibility(View.GONE);
+        }
+    }
+
 }

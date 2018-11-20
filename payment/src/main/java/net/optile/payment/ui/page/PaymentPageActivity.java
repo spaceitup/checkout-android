@@ -243,19 +243,19 @@ public final class PaymentPageActivity extends AppCompatActivity implements Paym
         setResult(activityResult, intent);
     }
 
-    public void makeChargeRequest(PaymentCard item, Map<String, FormWidget> widgets) {
+    public void onActionClicked(PaymentCard item, Map<String, FormWidget> widgets) {
         paymentList.hideKeyboard();
-        presenter.charge(item, widgets);
+        presenter.performOperation(item, widgets);
     }
 
-    public ValidationResult validate(PaymentCard item, String type, String value1, String value2) {
+    public ValidationResult validate(PaymentCard card, String type, String value1, String value2) {
         Validator validator = PaymentUI.getInstance().getValidator();
-        ValidationResult result = validator.validate(item.getPaymentMethod(), type, value1, value2);
+        ValidationResult result = validator.validate(card.getPaymentMethod(), type, value1, value2);
 
         if (!result.isError()) {
             return result;
         }
-        String msg = item.getLang().translateError(result.getError());
+        String msg = card.getLang().translateError(result.getError());
 
         if (TextUtils.isEmpty(msg)) {
             msg = getString(R.string.paymentpage_error_validation);

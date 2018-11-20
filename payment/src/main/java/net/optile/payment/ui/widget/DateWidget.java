@@ -42,8 +42,6 @@ public final class DateWidget extends InputLayoutWidget implements DateDialogFra
      *
      * @param name name identifying this widget
      * @param rootView the root view of this input
-     * @param label localized label for this date widget
-     * @param button localized button label
      */
     public DateWidget(String name, View rootView) {
         super(name, rootView);
@@ -101,7 +99,7 @@ public final class DateWidget extends InputLayoutWidget implements DateDialogFra
         if (hasFocus) {
             setValidation(VALIDATION_UNKNOWN, false, null);
             showDateDialogFragment();
-        } else if (state == VALIDATION_UNKNOWN) {
+        } else if (state == VALIDATION_UNKNOWN && !(TextUtils.isEmpty(expiryMonth) || TextUtils.isEmpty(expiryYear))) {
             validate();
         }
     }
@@ -163,7 +161,7 @@ public final class DateWidget extends InputLayoutWidget implements DateDialogFra
         this.expiryMonth = monthElement.getOptions().get(monthIndex).getValue();
         this.expiryYear = yearElement.getOptions().get(yearIndex).getValue();
 
-        String format = rootView.getContext().getString(R.string.widget_date_format);
+        String format = rootView.getContext().getString(R.string.paymentlist_date);
         input.setText(String.format(format, monthLabel, yearLabel));
 
         View nextField = input.focusSearch(View.FOCUS_DOWN);

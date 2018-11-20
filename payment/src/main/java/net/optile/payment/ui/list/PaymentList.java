@@ -37,7 +37,7 @@ import net.optile.payment.validation.ValidationResult;
 public final class PaymentList {
 
     private final PaymentPageActivity activity;
-    private final PaymentListAdapter adapter;
+    private final ListAdapter adapter;
     private final RecyclerView recyclerView;
     private final TextView emptyMessage;
 
@@ -49,7 +49,7 @@ public final class PaymentList {
     public PaymentList(PaymentPageActivity activity, RecyclerView recyclerView, TextView emptyMessage) {
         this.activity = activity;
         this.items = new ArrayList<>();
-        this.adapter = new PaymentListAdapter(this, items);
+        this.adapter = new ListAdapter(this, items);
         this.emptyMessage = emptyMessage;
         this.recyclerView = recyclerView;
         this.recyclerView.setAdapter(adapter);
@@ -123,7 +123,6 @@ public final class PaymentList {
         return activity;
     }
 
-
     PaymentSession getPaymentSession() {
         return this.session;
     }
@@ -137,7 +136,7 @@ public final class PaymentList {
         PaymentCardViewHolder holder = (PaymentCardViewHolder) recyclerView.findViewHolderForAdapterPosition(position);
 
         if (holder != null && item.hasPaymentCard()) {
-            activity.makeChargeRequest(item.getPaymentCard(), holder.widgets);
+            activity.onActionClicked(item.getPaymentCard(), holder.widgets);
         }
     }
 
@@ -172,12 +171,14 @@ public final class PaymentList {
 
     private void setPaymentListItems(PaymentSession session, int cachedListIndex) {
         items.clear();
+        this.selIndex = cachedListIndex;
 
         int index = 0;
-        int selIndex = cachedListIndex;
+        int accountSize = session.accounts.size();
+        int networkSize = session.networks.size();
 
-        if (session.accounts.size() > 0) {
-            items.add(new HeaderItem(nextViewType(), "Account Header"));
+        if (accountSize > 0) {
+            items.add(new HeaderItem(nextViewType(), activity.getString(R.string.paymentlist_account)));
             index++;
         }
         for (AccountCard card : session.accounts) {
@@ -187,8 +188,9 @@ public final class PaymentList {
             }
             index++;
         }
-        if (session.networks.size() > 0) {
-            items.add(new HeaderItem(nextViewType(), "network Header"));
+        if (networkSize > 0) {
+            int resId = accountSize == 0 ? R.string.paymentlist_network_only : R.string.paymentlist_network;
+            items.add(new HeaderItem(nextViewType(), activity.getString(resId)));
         }
         for (NetworkCard card : session.networks) {
             items.add(new PaymentCardItem(nextViewType(), card));

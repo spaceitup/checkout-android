@@ -35,6 +35,7 @@ import net.optile.payment.ui.widget.DateWidget;
 import net.optile.payment.ui.widget.FormWidget;
 import net.optile.payment.ui.widget.SelectInputWidget;
 import net.optile.payment.ui.widget.TextInputWidget;
+import net.optile.payment.util.PaymentUtils;
 import net.optile.payment.validation.ValidationResult;
 
 /**
@@ -43,11 +44,11 @@ import net.optile.payment.validation.ValidationResult;
 class PaymentCardViewHolder extends RecyclerView.ViewHolder {
 
     final ViewGroup formLayout;
-    final PaymentListAdapter adapter;
+    final ListAdapter adapter;
     final FormWidget.WidgetPresenter presenter;
     final Map<String, FormWidget> widgets;
 
-    PaymentCardViewHolder(PaymentListAdapter adapter, View parent) {
+    PaymentCardViewHolder(ListAdapter adapter, View parent) {
         super(parent);
 
         this.adapter = adapter;
@@ -92,9 +93,11 @@ class PaymentCardViewHolder extends RecyclerView.ViewHolder {
 
     static void addInputWidgets(PaymentCardViewHolder holder, LayoutInflater inflater, ViewGroup parent, PaymentCard card) {
         DateWidget dateWidget = null;
+        List<InputElement> elements = card.getInputElements();
+        boolean containsExpiryDate = PaymentUtils.containsExpiryDate(elements);
 
-        for (InputElement element : card.getInputElements()) {
-            if (!card.hasExpiryDate()) {
+        for (InputElement element : elements) {
+            if (!containsExpiryDate) {
                 holder.addWidget(createInputWidget(element, inflater, parent));
                 continue;
             }

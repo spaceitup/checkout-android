@@ -37,7 +37,7 @@
                     android:layout_height="@dimen/cardview_logo_height"
                     android:layout_marginEnd="@dimen/border_small"
                     android:adjustViewBounds="true"
-                    android:contentDescription="@string/paymentpage_method_logo"/>
+                    android:contentDescription=""/>
 
                 <TextView
                     android:id="@+id/text_title"

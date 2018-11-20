@@ -25,7 +25,6 @@ public final class NetworkCard implements PaymentCard {
 
     public final PaymentNetwork network;
     public final List<InputElement> elements;
-    private boolean hasExpiryDate;
 
     /**
      * Construct a new NetworkCard
@@ -66,8 +65,8 @@ public final class NetworkCard implements PaymentCard {
      * {@inheritDoc}
      */
     @Override
-    public boolean hasExpiryDate() {
-        return hasExpiryDate;
+    public List<InputElement> getInputElements() {
+        return elements;
     }
 
     /**
@@ -82,20 +81,8 @@ public final class NetworkCard implements PaymentCard {
      * {@inheritDoc}
      */
     @Override
-    public List<InputElement> getInputElements() {
-        return elements;
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
     public String getButton() {
         return network.getButton();
-    }
-
-    public void setExpiryDate(boolean hasExpiryDate) {
-        this.hasExpiryDate = hasExpiryDate;
     }
 
     /**
