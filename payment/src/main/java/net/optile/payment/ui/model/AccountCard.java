@@ -24,7 +24,7 @@ import net.optile.payment.model.InputElement;
 import net.optile.payment.util.PaymentUtils;
 
 /**
- * Class for representing an AccountCard in the PaymentPage list
+ * Class for holding the data of a AccountCard in the list
  */
 public final class AccountCard implements PaymentCard {
 

@@ -28,9 +28,9 @@ import net.optile.payment.ui.model.PaymentCard;
 import net.optile.payment.validation.ValidationResult;
 
 /**
- * The ListAdapter containing the list of items
+ * The ListAdapter handling the items in this RecyclerView list
  */
-class ListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
+final class ListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     private final List<ListItem> items;
     private final PaymentList list;
@@ -141,22 +141,10 @@ class ListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         return list.getPaymentSession().getLang();
     }
 
-    /**
-     * Get the ListItem at the given index
-     *
-     * @param index index of the NetworkCard
-     * @return ListItem given the index or null if not found
-     */
     ListItem getItemFromIndex(int index) {
         return index >= 0 && index < items.size() ? items.get(index) : null;
     }
 
-    /**
-     * Get the list item with its type matching the viewType
-     *
-     * @param viewType type of the view
-     * @return ListItem with the same type or null if not found
-     */
     private ListItem getItemWithViewType(int viewType) {
 
         for (ListItem item : items) {

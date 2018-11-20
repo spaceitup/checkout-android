@@ -14,9 +14,9 @@ package net.optile.payment.ui.list;
 import net.optile.payment.ui.model.PaymentCard;
 
 /**
- * Class representing an payment in the PaymentList
+ * Class representing a PaymentCard item in the RecyclerView
  */
-class PaymentCardItem extends ListItem {
+final class PaymentCardItem extends ListItem {
 
     PaymentCard paymentCard;
 

@@ -20,7 +20,7 @@ import net.optile.payment.core.PaymentException;
 import net.optile.payment.form.Charge;
 
 /**
- * Class for handling the CheckBox input type
+ * Widget for showing the CheckBox input element
  */
 public class CheckBoxInputWidget extends FormWidget {
 
@@ -38,8 +38,8 @@ public class CheckBoxInputWidget extends FormWidget {
         super(name, rootView);
         labelDisabled = rootView.findViewById(R.id.label_value_disabled);
         labelEnabled = rootView.findViewById(R.id.label_value_enabled);
-
         value = rootView.findViewById(R.id.checkbox_value);
+
         value.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {

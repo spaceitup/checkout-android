@@ -32,7 +32,7 @@ import net.optile.payment.ui.page.PaymentPageActivity;
 import net.optile.payment.validation.ValidationResult;
 
 /**
- * The PaymentList showing available payment methods in a list
+ * The PaymentList showing available payment methods and accounts in a list
  */
 public final class PaymentList {
 

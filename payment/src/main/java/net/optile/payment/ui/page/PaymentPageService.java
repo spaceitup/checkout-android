@@ -53,7 +53,7 @@ final class PaymentPageService {
     }
 
     /**
-     * Load the list PaymentSession from the Payment API
+     * Load the PaymentSession from the Payment API
      *
      * @param listUrl unique list url of the payment session
      * @return the payment session obtained from the Payment API

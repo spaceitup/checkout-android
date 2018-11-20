@@ -14,7 +14,7 @@ package net.optile.payment.ui.list;
 /**
  * Class representing a header in the PaymentList
  */
-class HeaderItem extends ListItem {
+final class HeaderItem extends ListItem {
 
     String title;
 

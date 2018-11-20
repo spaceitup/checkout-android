@@ -21,7 +21,7 @@ import net.optile.payment.form.Charge;
 import net.optile.payment.validation.ValidationResult;
 
 /**
- * The base InputWidget
+ * The base class for all widgets
  */
 public abstract class FormWidget {
 

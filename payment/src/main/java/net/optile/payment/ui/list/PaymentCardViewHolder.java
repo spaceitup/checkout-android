@@ -41,7 +41,7 @@ import net.optile.payment.validation.ValidationResult;
 /**
  * The PaymentCardViewHolder holding the header and input widgets
  */
-class PaymentCardViewHolder extends RecyclerView.ViewHolder {
+abstract class PaymentCardViewHolder extends RecyclerView.ViewHolder {
 
     final ViewGroup formLayout;
     final ListAdapter adapter;
@@ -186,7 +186,7 @@ class PaymentCardViewHolder extends RecyclerView.ViewHolder {
         }
     }
 
-    private void bindInputWidget(FormWidget widget, InputElement element) {
+    void bindInputWidget(FormWidget widget, InputElement element) {
         bindIconResource(widget);
         widget.setLabel(element.getLabel());
 

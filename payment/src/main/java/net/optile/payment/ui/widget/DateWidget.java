@@ -26,7 +26,7 @@ import net.optile.payment.util.PaymentUtils;
 import net.optile.payment.validation.ValidationResult;
 
 /**
- * Class for handling date input
+ * Widget for handling the date input
  */
 public final class DateWidget extends InputLayoutWidget implements DateDialogFragment.DateDialogListener {
 

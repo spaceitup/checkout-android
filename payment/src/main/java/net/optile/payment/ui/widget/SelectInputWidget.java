@@ -25,7 +25,7 @@ import net.optile.payment.model.SelectOption;
 import net.optile.payment.util.PaymentUtils;
 
 /**
- * Class for handling the Select input type
+ * Widget for handling the Select input type
  */
 public final class SelectInputWidget extends FormWidget {
 

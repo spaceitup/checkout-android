@@ -20,7 +20,7 @@ import android.widget.TextView;
 import net.optile.payment.R;
 
 /**
- * The HeaderViewHolder holding all Views for a header
+ * The HeaderViewHolder holding Views for a header in the RecyclerView
  */
 final class HeaderViewHolder extends RecyclerView.ViewHolder {
 

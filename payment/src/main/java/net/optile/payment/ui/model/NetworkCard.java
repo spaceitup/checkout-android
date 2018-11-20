@@ -19,7 +19,7 @@ import net.optile.payment.model.InputElement;
 import net.optile.payment.util.PaymentUtils;
 
 /**
- * NetworkCard
+ * Class for holding the data of a NetworkCard in the list
  */
 public final class NetworkCard implements PaymentCard {
 

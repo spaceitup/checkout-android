@@ -16,7 +16,7 @@ import net.optile.payment.ui.model.PaymentCard;
 /**
  * Class representing an item in the PaymentList
  */
-class ListItem {
+abstract class ListItem {
 
     int viewType;
 
