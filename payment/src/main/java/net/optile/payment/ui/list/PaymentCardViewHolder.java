@@ -35,6 +35,7 @@ import net.optile.payment.ui.widget.DateWidget;
 import net.optile.payment.ui.widget.FormWidget;
 import net.optile.payment.ui.widget.SelectInputWidget;
 import net.optile.payment.ui.widget.TextInputWidget;
+import net.optile.payment.ui.widget.WidgetPresenter;
 import net.optile.payment.util.PaymentUtils;
 import net.optile.payment.validation.ValidationResult;
 
@@ -45,7 +46,7 @@ abstract class PaymentCardViewHolder extends RecyclerView.ViewHolder {
 
     final ViewGroup formLayout;
     final ListAdapter adapter;
-    final FormWidget.WidgetPresenter presenter;
+    final WidgetPresenter presenter;
     final Map<String, FormWidget> widgets;
 
     PaymentCardViewHolder(ListAdapter adapter, View parent) {
@@ -63,7 +64,7 @@ abstract class PaymentCardViewHolder extends RecyclerView.ViewHolder {
             }
         });
 
-        this.presenter = new FormWidget.WidgetPresenter() {
+        this.presenter = new WidgetPresenter() {
             @Override
             public void onActionClicked() {
                 adapter.onActionClicked(getAdapterPosition());

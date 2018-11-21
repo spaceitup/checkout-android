@@ -15,14 +15,13 @@ import static org.junit.Assert.assertNotNull;
 
 import java.net.MalformedURLException;
 import java.net.URL;
-import java.util.Properties;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.robolectric.RobolectricTestRunner;
 
-import net.optile.payment.core.PaymentException;
 import net.optile.payment.core.LanguageFile;
+import net.optile.payment.core.PaymentException;
 import net.optile.payment.model.ListResult;
 
 /**
