@@ -19,7 +19,7 @@ import java.util.concurrent.Executors;
  */
 public final class Workers {
 
-    private ExecutorService networkService;
+    private final ExecutorService networkService;
 
     private Workers() {
         this.networkService = Executors.newCachedThreadPool();

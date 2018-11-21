@@ -228,7 +228,7 @@ abstract class PaymentCardViewHolder extends RecyclerView.ViewHolder {
     }
 
     void setLastImeOptions() {
-        List<String> keys = new ArrayList<String>(widgets.keySet());
+        List<String> keys = new ArrayList<>(widgets.keySet());
         Collections.reverse(keys);
 
         for (String key : keys) {

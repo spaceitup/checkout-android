@@ -94,7 +94,7 @@ public abstract class FormWidget {
         if (icon == null) {
             return;
         }
-        int colorResId = R.color.validation_ok;
+        int colorResId;
         switch (state) {
             case VALIDATION_OK:
                 colorResId = R.color.validation_ok;

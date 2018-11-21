@@ -7,7 +7,9 @@
         <item name="titleTextColor">@android:color/white</item>
     </style>
 
-    <style name="PaymentThemeToolbar" parent="ThemeOverlay.AppCompat.Dark.ActionBar"></style>
+    <style name="PaymentThemeToolbar" parent="ThemeOverlay.AppCompat.Dark.ActionBar">
+        <item name="android:background">@color/color_primary</item>
+    </style>
 
     <style name="PaymentTheme.NoActionBar">
         <item name="windowActionBar">false</item>

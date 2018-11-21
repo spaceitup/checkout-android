@@ -40,11 +40,11 @@ public final class PaymentList {
     private final ListAdapter adapter;
     private final RecyclerView recyclerView;
     private final TextView emptyMessage;
+    private final List<ListItem> items;
 
     private PaymentSession session;
     private int selIndex;
     private int viewType;
-    private List<ListItem> items;
 
     public PaymentList(PaymentPageActivity activity, RecyclerView recyclerView, TextView emptyMessage) {
         this.activity = activity;

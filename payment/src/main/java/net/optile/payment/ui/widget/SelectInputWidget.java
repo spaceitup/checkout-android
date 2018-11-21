@@ -31,7 +31,7 @@ public final class SelectInputWidget extends FormWidget {
 
     private final Spinner spinner;
     private final TextView label;
-    private ArrayAdapter<SpinnerItem> adapter;
+    private final ArrayAdapter<SpinnerItem> adapter;
 
     /**
      * Construct a new SelectInputWidget
