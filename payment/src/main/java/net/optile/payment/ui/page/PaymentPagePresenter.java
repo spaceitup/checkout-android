@@ -11,12 +11,12 @@
 
 package net.optile.payment.ui.page;
 
-import android.util.Log;
 import java.net.URL;
 import java.util.Map;
 import java.util.concurrent.Callable;
 
 import android.text.TextUtils;
+import android.util.Log;
 import net.optile.payment.R;
 import net.optile.payment.core.PaymentError;
 import net.optile.payment.core.PaymentException;
@@ -103,16 +103,16 @@ final class PaymentPagePresenter {
     void performOperation(PaymentCard card, Map<String, FormWidget> widgets) {
 
         switch (session.getOperationType()) {
-        case OperationType.CHARGE:
-            performChargeOperation(card, widgets);
-            break;
-        default:
-            Log.w(TAG, "OperationType not supported");
+            case OperationType.CHARGE:
+                performChargeOperation(card, widgets);
+                break;
+            default:
+                Log.w(TAG, "OperationType not supported");
         }
     }
 
     private void performChargeOperation(PaymentCard card, Map<String, FormWidget> widgets) {
-        
+
         if (chargeTask != null) {
             return;
         }

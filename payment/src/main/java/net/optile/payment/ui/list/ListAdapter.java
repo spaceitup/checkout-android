@@ -64,14 +64,13 @@ final class ListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         ListItem item = items.get(position);
-        PaymentCard card = item.getPaymentCard();
 
-        if (card == null) {
-            ((HeaderViewHolder) holder).onBind((HeaderItem) item);
-        } else {
+        if (item.hasPaymentCard()) {
             PaymentCardViewHolder ph = (PaymentCardViewHolder) holder;
-            ph.onBind(card);
+            ph.onBind(item.getPaymentCard());
             ph.expand(list.getSelected() == position);
+        } else {
+            ((HeaderViewHolder) holder).onBind((HeaderItem) item);
         }
     }
 

@@ -24,7 +24,7 @@ import net.optile.payment.model.Networks;
  * Class for storing the ListResult and the list of supported PaymentMethods
  */
 public final class PaymentSession {
-    
+
     public final ListResult listResult;
     public final List<AccountCard> accounts;
     public final List<NetworkCard> networks;
@@ -64,7 +64,7 @@ public final class PaymentSession {
     public String getOperationType() {
         return listResult.getOperationType();
     }
-    
+
     public int getApplicableNetworkSize() {
         Networks nw = listResult.getNetworks();
         if (nw == null) {

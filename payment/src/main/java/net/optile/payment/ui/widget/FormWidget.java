@@ -11,14 +11,12 @@
 
 package net.optile.payment.ui.widget;
 
-import android.support.v4.app.DialogFragment;
 import android.support.v4.content.ContextCompat;
 import android.view.View;
 import android.widget.ImageView;
 import net.optile.payment.R;
 import net.optile.payment.core.PaymentException;
 import net.optile.payment.form.Charge;
-import net.optile.payment.validation.ValidationResult;
 
 /**
  * The base class for all widgets
@@ -108,45 +106,5 @@ public abstract class FormWidget {
                 colorResId = R.color.validation_unknown;
         }
         icon.setColorFilter(ContextCompat.getColor(rootView.getContext(), colorResId));
-    }
-
-    /**
-     * The presenter which is controlling each widget
-     */
-    public interface WidgetPresenter {
-
-        /**
-         * Inform the presenter that the Pay Button has been clicked
-         */
-        void onActionClicked();
-
-        /**
-         * Ask the presenter to hide the keyboard
-         */
-        void hideKeyboard();
-
-        /**
-         * Ask the presenter to show the keyboard
-         */
-        void showKeyboard();
-
-        /**
-         * Ask the presenter to show the DialogFragment
-         *
-         * @param dialog to be shown to the user
-         * @param tag to identify the DialogFragment
-         */
-        void showDialogFragment(DialogFragment dialog, String tag);
-
-        /**
-         * Widgets call this method to validate their input values. The first value is mandatory, the second is optional.
-         * I.e. A Date widget may use both values to validate the month and year values at the same time.
-         *
-         * @param type type of the value to be validated
-         * @param value1 mandatory first value to validate
-         * @param value2 optional second value to validate
-         * @return ValidationResult holding the result of the validation
-         */
-        ValidationResult validate(String type, String value1, String value2);
     }
 }
