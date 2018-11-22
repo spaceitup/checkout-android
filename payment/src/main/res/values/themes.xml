@@ -1,0 +1,35 @@
+<resources>
+
+    <style name="PaymentTheme" parent="Theme.AppCompat.Light">
+        <item name="colorPrimary">#ff0000</item>
+        <item name="colorPrimaryDark">#ff00ff</item>
+        <item name="colorAccent">#00FF00</item>
+        <item name="android:textColorPrimary">@color/text_dark_primary</item>
+    </style>
+
+    <style name="PaymentTheme.PaymentPage">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+        <item name="android:windowBackground">@color/color_background</item>
+    </style>
+    
+    <style name="PaymentThemeToolbar" parent="ThemeOverlay.AppCompat.Dark.ActionBar">
+        <item name="android:background">?attr/colorPrimary</item>
+    </style>
+
+    <style name="PaymentThemeCheckBox" parent="Widget.AppCompat.CompoundButton.CheckBox">
+        <item name="colorControlNormal">@color/color_underline</item>
+        <item name="colorControlActivated">@color/validation_ok</item>
+    </style>
+
+    <style name="PaymentThemeTextInput" parent="Widget.Design.TextInputLayout">
+        <!-- hint text color inside EditText -->
+        <item name="android:textColorHint">@color/text_disabled</item>
+        <!-- This color of the area of text selected -->
+        <item name="android:textColorHighlight">?attr/colorPrimary</item>
+        <!-- underline color disabled -->
+        <item name="colorControlNormal">@color/color_underline</item>
+        <!-- underline color enabled -->
+        <item name="colorControlActivated">?attr/colorPrimary</item>
+    </style>
+</resources>

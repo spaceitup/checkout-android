@@ -25,7 +25,7 @@
 
         <android.support.design.widget.TextInputLayout
             android:id="@+id/layout_value"
-            android:theme="@style/PaymentTextInputLayout"
+            android:theme="@style/PaymentThemeTextInput"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:errorTextAppearance="@style/PaymentTextInputLayoutError"
@@ -35,7 +35,7 @@
                 android:id="@+id/input_value"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                style="@style/PaymentTextInputEditText"
+                android:textAppearance="@style/PaymentTextInputEditText"
                 android:singleLine="true"
                 android:imeOptions="actionNext"/>
         </android.support.design.widget.TextInputLayout>

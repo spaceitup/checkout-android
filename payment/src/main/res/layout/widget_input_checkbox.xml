@@ -16,7 +16,7 @@
 
         <CheckBox
             android:id="@+id/checkbox_value"
-            android:theme="@style/PaymentWidgetCheckBox"
+            android:theme="@style/PaymentThemeCheckBox"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"/>
     </LinearLayout>

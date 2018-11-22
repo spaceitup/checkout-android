@@ -4,7 +4,7 @@
     <color name="color_primary_dark">#298226</color>
     <color name="color_primary_disabled">#66299928</color>
     <color name="color_ascent">#207a20</color>
-    <color name="color_list_background">#F2F2F2</color>
+    <color name="color_background">#F2F2F2</color>
     <color name="color_underline">#8F8F8F</color>
 
     <color name="text_dark_primary">#FF424242</color>

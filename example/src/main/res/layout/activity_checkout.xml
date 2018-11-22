@@ -5,16 +5,19 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
 
-    <android.support.v7.widget.Toolbar
-        xmlns:app="http://schemas.android.com/apk/res-auto"
-        android:id="@+id/toolbar"
+    <android.support.design.widget.AppBarLayout
+        android:id="@+id/layout_toolbar"
         android:layout_width="match_parent"
-        android:layout_height="?attr/actionBarSize"
-        android:background="?attr/colorPrimary"
-        android:layout_alignParentTop="true"
-        android:elevation="@dimen/toolbar_elevation"
-        app:title="@string/title_checkout"/>
-
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true">
+    
+        <android.support.v7.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:theme="@style/AppThemeToolbar" />
+    </android.support.design.widget.AppBarLayout>
+    
     <Button
         android:id="@+id/button_checkout"
         style="@style/PaymentWidgetButton"

@@ -82,6 +82,7 @@ public final class PaymentPageActivity extends AppCompatActivity implements Paym
         this.progressBar = findViewById(R.id.progressbar);
 
         final Toolbar toolbar = findViewById(R.id.toolbar);
+        toolbar.setTitle(getString(R.string.paymentpage_title));
         setSupportActionBar(toolbar);
         ActionBar actionBar = getSupportActionBar();
 
