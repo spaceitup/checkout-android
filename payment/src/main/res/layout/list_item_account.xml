@@ -10,11 +10,7 @@
         xmlns:cardview="http://schemas.android.com/apk/res-auto"
         android:id="@+id/cardview"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:foreground="?android:attr/selectableItemBackground"
-        cardview:cardBackgroundColor="@android:color/white"
-        cardview:cardUseCompatPadding="true"
-        cardview:cardCornerRadius="@dimen/cardview_radius">
+        android:layout_height="wrap_content">
 
         <RelativeLayout
             android:layout_width="match_parent"
@@ -46,10 +42,14 @@
 
                     <TextView
                         android:id="@+id/text_title"
-                        style="@style/PaymentText.Medium.Bold"/>
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textAppearance="@style/PaymentText.Medium.Bold"/>
                     <TextView
                         android:id="@+id/text_subtitle"
-                        style="@style/PaymentText.Tiny"/>
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textAppearance="@style/PaymentText.Tiny"/>
                 </LinearLayout>
             </LinearLayout>
 

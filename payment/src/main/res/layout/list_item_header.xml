@@ -10,6 +10,7 @@
 
     <TextView
         android:id="@+id/text_title"
-        style="@style/PaymentText.Medium.Bold"/>
-
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="@style/PaymentText.Medium.Bold"/>
 </LinearLayout>

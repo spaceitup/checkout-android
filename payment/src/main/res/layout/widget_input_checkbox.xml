@@ -24,14 +24,16 @@
     <TextView
         android:id="@+id/label_value_disabled"
         android:layout_marginStart="@dimen/widget_padding"
-        style="@style/PaymentText.Medium.Disabled"
-        android:singleLine="false"/>
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="@style/PaymentText.Medium.Hint" />
 
     <TextView
         android:id="@+id/label_value_enabled"
-        style="@style/PaymentText.Medium"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="@style/PaymentText.Medium"
         android:layout_marginStart="@dimen/widget_padding"
-        android:visibility="gone"
-        android:singleLine="false"/>
+        android:visibility="gone" />
 
 </LinearLayout>

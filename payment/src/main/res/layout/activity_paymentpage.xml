@@ -33,12 +33,13 @@
 
     <TextView
         android:id="@+id/label_empty"
-        style="@style/PaymentText.Medium.Gray"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="@style/PaymentText.Medium.Gray"
         android:layout_centerInParent="true"
         android:layout_marginLeft="@dimen/border_xlarge"
         android:layout_marginRight="@dimen/border_xlarge"
         android:gravity="center"
-        android:singleLine="false"
         android:visibility="gone"/>
 
     <ProgressBar

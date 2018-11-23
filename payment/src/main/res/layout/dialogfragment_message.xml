@@ -10,29 +10,32 @@
     <TextView
         android:id="@+id/text_title"
         android:visibility="gone"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_marginLeft="@dimen/border_large"
         android:layout_marginRight="@dimen/border_large"
         android:layout_marginBottom="@dimen/border_medium"
-        android:singleLine="false"
-        style="@style/PaymentText.Large.Bold"/>
+        android:textAppearance="@style/PaymentText.Large.Bold"/>
 
     <TextView
         android:id="@+id/text_message_notitle"
         android:visibility="gone"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_marginLeft="@dimen/border_large"
         android:layout_marginRight="@dimen/border_large"
         android:layout_marginBottom="@dimen/border_large"
-        android:singleLine="false"
-        style="@style/PaymentText.Medium.Bold.Gray"/>
+        android:textAppearance="@style/PaymentText.Medium.Bold.Gray"/>
 
     <TextView
         android:id="@+id/text_message_title"
         android:visibility="gone"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_marginLeft="@dimen/border_large"
         android:layout_marginRight="@dimen/border_large"
         android:layout_marginBottom="@dimen/border_large"
-        android:singleLine="false"
-        style="@style/PaymentText.Medium.Gray"/>
+        android:textAppearance="@style/PaymentText.Medium.Gray"/>
 
     <LinearLayout
         android:id="@+id/layout_button"
@@ -46,6 +49,8 @@
 
         <TextView
             android:id="@+id/text_button"
-            style="@style/PaymentText.Small.Bold.Primary"/>
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="@style/PaymentText.Small.Bold.Primary"/>
     </LinearLayout>
 </LinearLayout>
