@@ -4,7 +4,7 @@
     android:id="@+id/layout"
     android:layout_width="fill_parent"
     android:layout_height="wrap_content"
-    android:paddingTop="@dimen/border_large"
+    android:paddingTop="@dimen/pm_large"
     android:orientation="vertical">
 
     <TextView
@@ -12,9 +12,9 @@
         android:visibility="gone"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="@dimen/border_large"
-        android:layout_marginRight="@dimen/border_large"
-        android:layout_marginBottom="@dimen/border_medium"
+        android:layout_marginLeft="@dimen/pm_large"
+        android:layout_marginRight="@dimen/pm_large"
+        android:layout_marginBottom="@dimen/pm_medium"
         android:textAppearance="@style/PaymentText.Large.Bold"/>
 
     <TextView
@@ -22,9 +22,9 @@
         android:visibility="gone"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="@dimen/border_large"
-        android:layout_marginRight="@dimen/border_large"
-        android:layout_marginBottom="@dimen/border_large"
+        android:layout_marginLeft="@dimen/pm_large"
+        android:layout_marginRight="@dimen/pm_large"
+        android:layout_marginBottom="@dimen/pm_large"
         android:textAppearance="@style/PaymentText.Medium.Bold.Gray"/>
 
     <TextView
@@ -32,16 +32,16 @@
         android:visibility="gone"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="@dimen/border_large"
-        android:layout_marginRight="@dimen/border_large"
-        android:layout_marginBottom="@dimen/border_large"
+        android:layout_marginLeft="@dimen/pmborder_large"
+        android:layout_marginRight="@dimen/pmborder_large"
+        android:layout_marginBottom="@dimen/pmborder_large"
         android:textAppearance="@style/PaymentText.Medium.Gray"/>
 
     <LinearLayout
         android:id="@+id/layout_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:padding="@dimen/border_medium"
+        android:padding="@dimen/pmborder_medium"
         android:clickable="true"
         android:visibility="gone"
         android:layout_gravity="end"

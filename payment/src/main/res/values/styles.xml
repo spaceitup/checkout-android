@@ -1,7 +1,7 @@
 <resources>
 
     <style name="PaymentText" parent="TextAppearance.AppCompat">
-        <item name="android:textColorPrimary">@color/text_dark_primary</item>
+        <item name="android:textColorPrimary">@color/pmtext_dark</item>
     </style>
 
     <style name="PaymentText.Tiny">
@@ -34,20 +34,20 @@
     </style>
 
     <style name="PaymentText.Medium.Gray">
-        <item name="android:textColor">@color/text_dark_second</item>
+        <item name="android:textColor">@color/pmtext_gray</item>
     </style>
 
     <style name="PaymentText.Medium.Hint">
-        <item name="android:textColor">@color/text_hint</item>
+        <item name="android:textColor">@color/pmtext_hint</item>
     </style>
 
     <style name="PaymentText.Medium.Bold.Gray">
-        <item name="android:textColor">@color/text_dark_second</item>
+        <item name="android:textColor">@color/pmtext_gray</item>
         <item name="android:textStyle">bold</item>
     </style>
 
     <style name="PaymentText.Medium.Bold.Light">
-        <item name="android:textColor">@color/text_light_primary</item>
+        <item name="android:textColor">@color/pmtext_light</item>
     </style>
     
     <style name="PaymentText.Large">
@@ -60,17 +60,17 @@
     </style>
 
     <style name="PaymentTextInputLayoutError" parent="TextAppearance.Design.Error">
-        <item name="android:textColor">@color/text_error</item>
+        <item name="android:textColor">@color/pmtext_error</item>
         <item name="android:textSize">12sp</item>
     </style>
 
     <style name="PaymentTextInputLayoutHint" parent="TextAppearance.Design.Hint">
-        <item name="android:textColor">@color/text_dark_primary</item>
+        <item name="android:textColor">@color/pmtext_dark</item>
         <item name="android:textSize">12sp</item>
     </style>
 
     <style name="PaymentTextInputEditText" parent="Widget.AppCompat.EditText">
-        <item name="android:textColor">@color/text_dark_primary</item>
+        <item name="android:textColor">@color/pmtext_dark</item>
         <item name="android:textSize">16sp</item>
     </style>
 </resources>

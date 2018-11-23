@@ -24,6 +24,8 @@ import android.widget.Button;
 import net.optile.example.R;
 import net.optile.payment.ui.PaymentResult;
 import net.optile.payment.ui.PaymentUI;
+import net.optile.payment.ui.PaymentTheme;
+import net.optile.payment.ui.PaymentTheme.PaymentThemeBuilder;
 import net.optile.payment.ui.dialog.MessageDialogFragment;
 
 /**
@@ -160,9 +162,18 @@ public final class CheckoutActivity extends AppCompatActivity implements Checkou
     public void openPaymentPage(String listUrl) {
         PaymentUI paymentUI = PaymentUI.getInstance();
         paymentUI.setListUrl(listUrl);
+        paymentUI.setPaymentTheme(createPaymentTheme());
         paymentUI.showPaymentPage(this, PAYMENT_REQUEST_CODE);
     }
 
+    private PaymentTheme createPaymentTheme() {
+
+        PaymentThemeBuilder builder = PaymentTheme.createPaymentThemeBuilder();
+        builder.setPaymentPageTheme(R.style.AppTheme_PaymentPage);
+        return builder.build();
+    }
+
+    
     private void showSnackbar(int resId) {
         Snackbar snackbar = Snackbar.make(findViewById(R.id.layout_activity),
             getString(resId), Snackbar.LENGTH_LONG);

@@ -4,7 +4,7 @@
     android:id="@+id/layout"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:paddingTop="@dimen/border_large"
+    android:paddingTop="@dimen/pmborder_large"
     android:orientation="vertical">
 
     <TextView
@@ -13,16 +13,16 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="@style/PaymentText.Large.Bold"
-        android:layout_marginLeft="@dimen/border_large"
-        android:layout_marginRight="@dimen/border_large"
-        android:layout_marginBottom="@dimen/border_medium" />
+        android:layout_marginLeft="@dimen/pmborder_large"
+        android:layout_marginRight="@dimen/pmborder_large"
+        android:layout_marginBottom="@dimen/pmborder_medium" />
 
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/border_large"
-        android:layout_marginEnd="@dimen/border_large"
-        android:layout_marginBottom="@dimen/border_medium"
+        android:layout_marginStart="@dimen/pmborder_large"
+        android:layout_marginEnd="@dimen/pmborder_large"
+        android:layout_marginBottom="@dimen/pmborder_medium"
         android:layout_gravity="center"
         android:orientation="horizontal">
 
@@ -36,7 +36,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:descendantFocusability="blocksDescendants"
-                android:layout_marginEnd="@dimen/border_medium"
+                android:layout_marginEnd="@dimen/pmborder_medium"
             />
         </LinearLayout>
 
@@ -50,7 +50,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:descendantFocusability="blocksDescendants"
-                android:layout_marginStart="@dimen/border_medium"
+                android:layout_marginStart="@dimen/pmborder_medium"
             />
         </LinearLayout>
 
@@ -60,7 +60,7 @@
         android:id="@+id/layout_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:padding="@dimen/border_medium"
+        android:padding="@dimen/pmborder_medium"
         android:clickable="true"
         android:visibility="gone"
         android:layout_gravity="end"

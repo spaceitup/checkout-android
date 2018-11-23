@@ -1,6 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#299928</color>
-    <color name="colorPrimaryDark">#298226</color>
-    <color name="colorAccent">#299928</color>
+    <color name="lightColorPrimary">#039BE5</color>
+    <color name="lightColorPrimaryDark">#0277BD</color>
+    <color name="lightColorAccent">#00B0FF</color>
+
+    <color name="darkColorPrimary">#000000</color>
+    <color name="darkColorPrimaryDark">#000000</color>
+    <color name="darkColorAccent">#000000</color>
+
+    <color name="light_paymentpage_list">#FFFFFF</color>
+    
 </resources>

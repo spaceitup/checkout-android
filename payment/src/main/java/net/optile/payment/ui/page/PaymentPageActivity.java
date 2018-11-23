@@ -26,6 +26,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.ProgressBar;
 import net.optile.payment.R;
+import net.optile.payment.ui.PaymentTheme;
 import net.optile.payment.ui.PaymentResult;
 import net.optile.payment.ui.PaymentUI;
 import net.optile.payment.ui.dialog.MessageDialogFragment;
@@ -78,7 +79,9 @@ public final class PaymentPageActivity extends AppCompatActivity implements Paym
             Intent intent = getIntent();
             this.listUrl = intent.getStringExtra(EXTRA_LISTURL);
         }
-        //setTheme(R.style.PaymentTheme_PaymentPage2);
+        PaymentTheme theme = PaymentUI.getInstance().getPaymentTheme();
+        setTheme(theme.getPaymentPageTheme());
+
         setContentView(R.layout.activity_paymentpage);
         this.progressBar = findViewById(R.id.progressbar);
 
@@ -272,7 +275,7 @@ public final class PaymentPageActivity extends AppCompatActivity implements Paym
         }
         MessageDialogFragment dialog = new MessageDialogFragment();
         dialog.setMessage(message);
-        dialog.setNeutralButton(getString(R.string.dialog_close_button));
+        dialog.setNeutralButton(getString(R.string.paymentdialog_close_button));
         dialog.setListener(new MessageDialogFragment.MessageDialogListener() {
             @Override
             public void onNeutralButtonClick() {

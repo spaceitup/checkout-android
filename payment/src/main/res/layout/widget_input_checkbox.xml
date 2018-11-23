@@ -6,11 +6,11 @@
     android:layout_height="wrap_content"
     android:orientation="horizontal"
     android:gravity="center_vertical"
-    android:paddingTop="@dimen/border_medium"
-    android:paddingBottom="@dimen/widget_padding">
+    android:paddingTop="@dimen/pmborder_medium"
+    android:paddingBottom="@dimen/pmwidget_padding">
 
     <LinearLayout
-        android:layout_width="@dimen/widget_checkbox_width"
+        android:layout_width="@dimen/pmwidget_checkbox_width"
         android:layout_height="wrap_content"
         android:gravity="end">
 
@@ -23,7 +23,7 @@
 
     <TextView
         android:id="@+id/label_value_disabled"
-        android:layout_marginStart="@dimen/widget_padding"
+        android:layout_marginStart="@dimen/pmwidget_padding"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="@style/PaymentText.Medium.Hint" />
@@ -33,7 +33,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="@style/PaymentText.Medium"
-        android:layout_marginStart="@dimen/widget_padding"
+        android:layout_marginStart="@dimen/pmwidget_padding"
         android:visibility="gone" />
 
 </LinearLayout>

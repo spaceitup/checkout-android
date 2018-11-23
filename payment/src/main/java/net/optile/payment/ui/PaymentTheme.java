@@ -18,20 +18,42 @@ import net.optile.payment.core.PaymentInputType;
 /**
  * Class to hold the theme settings of the Payment screens in the Android SDK
  */
-public class PaymentTheme {
+public final class PaymentTheme {
 
+    private int paymentPageTheme;
+    private int buttonTheme;
+    private int checkBoxTheme;
+    private int toolbarTheme;
+    private int textInputTheme;
+    
     private PaymentTheme() {
+        this.paymentPageTheme = R.style.PaymentTheme_PaymentPage;
+        this.toolbarTheme = R.style.PaymentThemeToolbar;
+        this.buttonTheme = R.style.PaymentThemeButton;
+        this.checkBoxTheme = R.style.PaymentThemeCheckBox;
+        this.textInputTheme = R.style.PaymentThemeTextInput;
     }
 
-    /**
-     * Create a new PaymentThemeBuilder, this builder can be used to build a new PaymentTheme
-     *
-     * @return the newly created PaymentThemeBuilder
-     */
-    public static PaymentThemeBuilder createPaymentThemeBuilder() {
-        return new PaymentThemeBuilder();
+    public int getPaymentPageTheme() {
+        return paymentPageTheme;
     }
 
+    public int getButtonTheme() {
+        return buttonTheme;
+    }
+
+    public int getToolbarTheme() {
+        return toolbarTheme;
+    }
+
+    public int getCheckBoxTheme() {
+        return checkBoxTheme;
+    }
+
+    public int getTextInputTheme() {
+        return textInputTheme;
+    }
+    
     public int getWidgetIconRes(String name) {
 
         if (TextUtils.isEmpty(name)) {
@@ -57,15 +79,66 @@ public class PaymentTheme {
     }
 
     /**
+     * Create a new PaymentThemeBuilder, this builder can be used to build a new PaymentTheme
+     *
+     * @return the newly created PaymentThemeBuilder
+     */
+    public static PaymentThemeBuilder createPaymentThemeBuilder() {
+        return new PaymentThemeBuilder();
+    }
+
+    /**
      * Class PaymentThemeBuilder for building PaymentTheme
      */
     public static class PaymentThemeBuilder {
 
+        private int paymentPageTheme;
+        private int buttonTheme;
+        private int checkBoxTheme;
+        private int toolbarTheme;
+        private int textInputTheme;
+        
         private PaymentThemeBuilder() {
+            this.paymentPageTheme = R.style.PaymentTheme_PaymentPage;
+            this.buttonTheme = R.style.PaymentThemeButton;
+            this.toolbarTheme = R.style.PaymentThemeToolbar;
+            this.checkBoxTheme = R.style.PaymentThemeCheckBox;
+            this.textInputTheme = R.style.PaymentThemeTextInput;
         }
 
+        public PaymentThemeBuilder setPaymentPageTheme(int paymentPageTheme) {
+            this.paymentPageTheme = paymentPageTheme;
+            return this;
+        }
+
+        public PaymentThemeBuilder setButtonTheme(int buttonTheme) {
+            this.buttonTheme = buttonTheme;
+            return this;
+        }
+
+        public PaymentThemeBuilder setToolbarTheme(int toolbarTheme) {
+            this.toolbarTheme = toolbarTheme;
+            return this;
+        }
+
+        public PaymentThemeBuilder setCheckBoxTheme(int checkBoxTheme) {
+            this.checkBoxTheme = checkBoxTheme;
+            return this;
+        }
+
+        public PaymentThemeBuilder setTextInputTheme(int textInputTheme) {
+            this.textInputTheme = textInputTheme;
+            return this;
+        }
+        
         public PaymentTheme build() {
-            return new PaymentTheme();
+            PaymentTheme theme = new PaymentTheme();
+            theme.paymentPageTheme = this.paymentPageTheme;
+            theme.buttonTheme = this.buttonTheme;
+            theme.toolbarTheme = this.toolbarTheme;
+            theme.checkBoxTheme = this.checkBoxTheme;
+            theme.textInputTheme = this.textInputTheme;
+            return theme;
         }
     }
 }

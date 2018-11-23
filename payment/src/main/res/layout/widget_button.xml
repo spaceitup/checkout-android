@@ -3,8 +3,8 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginStart="@dimen/border_small"
-    android:layout_marginTop="@dimen/border_large">
+    android:layout_marginStart="@dimen/pmborder_small"
+    android:layout_marginTop="@dimen/pmborder_large">
 
     <Button
         android:id="@+id/button"
