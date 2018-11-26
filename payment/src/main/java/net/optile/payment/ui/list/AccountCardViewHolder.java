@@ -89,7 +89,7 @@ final class AccountCardViewHolder extends PaymentCardViewHolder {
         int expiryYear = PaymentUtils.toInt(mask.getExpiryYear());
 
         if (expiryMonth > 0 && expiryYear > 0) {
-            String format = subTitle.getContext().getString(R.string.paymentlist_date);
+            String format = subTitle.getContext().getString(R.string.pmlist_date);
             String monthLabel = String.format("%02d", expiryMonth);
             String yearLabel = Integer.toString(expiryYear);
             subTitle.setText(String.format(format, monthLabel, yearLabel));

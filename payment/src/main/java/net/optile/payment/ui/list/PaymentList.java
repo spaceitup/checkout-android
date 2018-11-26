@@ -85,9 +85,9 @@ public final class PaymentList {
         String msg = "";
 
         if (session.getApplicableNetworkSize() == 0) {
-            msg = activity.getString(R.string.paymentpage_error_empty);
+            msg = activity.getString(R.string.pmpage_error_empty);
         } else if (session.networks.size() == 0) {
-            msg = activity.getString(R.string.paymentpage_error_notsupported);
+            msg = activity.getString(R.string.pmpage_error_notsupported);
         } else {
             recyclerView.scrollToPosition(selIndex);
         }
@@ -178,7 +178,7 @@ public final class PaymentList {
         int networkSize = session.networks.size();
 
         if (accountSize > 0) {
-            items.add(new HeaderItem(nextViewType(), activity.getString(R.string.paymentlist_account)));
+            items.add(new HeaderItem(nextViewType(), activity.getString(R.string.pmlist_account)));
             index++;
         }
         for (AccountCard card : session.accounts) {
@@ -189,7 +189,7 @@ public final class PaymentList {
             index++;
         }
         if (networkSize > 0) {
-            int resId = accountSize == 0 ? R.string.paymentlist_network_only : R.string.paymentlist_network;
+            int resId = accountSize == 0 ? R.string.pmlist_network_only : R.string.pmlist_network;
             items.add(new HeaderItem(nextViewType(), activity.getString(resId)));
         }
         for (NetworkCard card : session.networks) {

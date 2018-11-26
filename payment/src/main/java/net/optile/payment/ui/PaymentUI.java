@@ -94,6 +94,10 @@ public final class PaymentUI {
         this.theme = theme;
     }
 
+    public final static PaymentTheme.Builder createPaymentThemeBuilder() {
+        return new PaymentTheme.Builder();
+    }
+    
     /**
      * Get the Validator set in this PaymentUI. This method is not Thread safe and must be called from the Main UI Thread.
      *

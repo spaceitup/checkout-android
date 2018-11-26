@@ -6,15 +6,15 @@
     android:layout_height="wrap_content"
     android:orientation="horizontal"
     android:gravity="center"
-    android:layout_marginTop="@dimen/pm_widget_padding"
-    android:layout_marginBottom="@dimen/pm_widget_padding">
+    android:layout_marginTop="@dimen/pmwidget_padding"
+    android:layout_marginBottom="@dimen/pmwidget_padding">
 
     <ImageView
         android:id="@+id/image_icon"
-        android:layout_width="@dimen/pm_widget_icon_size"
-        android:layout_height="@dimen/pm_widget_icon_size"
-        android:layout_marginStart="@dimen/pm_small"
-        android:layout_marginEnd="@dimen/pm_xxsmall"
+        android:layout_width="@dimen/pmwidget_iconsize"
+        android:layout_height="@dimen/pmwidget_iconsize"
+        android:layout_marginStart="@dimen/pmborder_small"
+        android:layout_marginEnd="@dimen/pmborder_xxsmall"
         android:src="@drawable/ic_default"
         android:contentDescription="Icon"/>
 

@@ -9,7 +9,7 @@
  * has been received in full.
  */
 
-package net.optile.payment.ui;
+package net.optile.payment.ui.theme;
 
 import android.text.TextUtils;
 import net.optile.payment.R;
@@ -24,6 +24,9 @@ public final class PaymentTheme {
     private TextAppearanceParameters textAppearanceParameters;
     private IconParameters iconParameters;
     private ColorParameters colorParameters;
+
+    private PaymentTheme() {
+    }
 
     public ThemeParameters getThemeParameters() {
         return themeParameters;
@@ -42,7 +45,6 @@ public final class PaymentTheme {
     }
 
     public class Builder {
-
         ThemeParameters themeParameters;
         TextAppearanceParameters textAppearanceParameters;
         IconParameters iconParameters;
@@ -51,24 +53,48 @@ public final class PaymentTheme {
         Builder() {
         }
         
-        public void setThemeParameters(ThemeParameters themeParameters) {
+        public PaymentTheme.Builder setThemeParameters(ThemeParameters themeParameters) {
             this.themeParameters = themeParameters;
         }
 
-        public void setTextAppearanceParameters(textAppearanceParameters textAppearanceParameters) {
+        public PaymentTheme.Builder setTextAppearanceParameters(textAppearanceParameters textAppearanceParameters) {
             this.textAppearanceParameters = textAppearanceParameters;
         }
 
-        public void setThemeParameters(ThemeParameters themeParameters) {
-            this.themeParameters = themeParameters;
+        public PaymentTheme.Builder setIconParameters(IconParameters iconParameters) {
+            this.iconParameters = iconParameters;
         }
 
-                public void setThemeParameters(ThemeParameters themeParameters) {
-            this.themeParameters = themeParameters;
+        public PaymentTheme.Builder setColorParameters(ColorParameters colorParameters) {
+            this.colorParameters = colorParameters;
         }
 
-        
+        public PaymentTheme build() {
+            PaymentTheme theme = new PaymentTheme();
+
+            if (themeParameters == null) {
+                themeParameters = new ThemeParameters();
+            }
+            theme.themeParameters = themeParameters;
+
+            if (textAppearanceParameters == null) {
+                textAppearanceParameters = new TextAppearanceParameters();
+            }
+            theme.textAppearanceParameters = textAppearanceParameters;
+
+            if (iconParameters == null) {
+                iconParameters = new IconParameters();
+            }
+            theme.iconParameters = iconParameters;
+            
+            if (colorParameters == null) {
+                colorParameters = new ColorParameters();
+            }
+            theme.colorParameters = colorParameters;
+            return theme;
+        }
     }
+}
 
 
     

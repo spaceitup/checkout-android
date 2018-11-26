@@ -10,7 +10,7 @@
     android:paddingBottom="@dimen/pmwidget_padding">
 
     <LinearLayout
-        android:layout_width="@dimen/pmwidget_checkbox_width"
+        android:layout_width="@dimen/pmwidget_checkboxwidth"
         android:layout_height="wrap_content"
         android:gravity="end">
 

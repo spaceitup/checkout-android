@@ -169,7 +169,7 @@ public final class CheckoutActivity extends AppCompatActivity implements Checkou
     private PaymentTheme createPaymentTheme() {
 
         PaymentThemeBuilder builder = PaymentTheme.createPaymentThemeBuilder();
-        builder.setPaymentPageTheme(R.style.AppTheme_PaymentPage);
+        //builder.setPaymentPageTheme(R.style.AppTheme_PaymentPage);
         return builder.build();
     }
 

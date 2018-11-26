@@ -86,7 +86,7 @@ public final class PaymentPageActivity extends AppCompatActivity implements Paym
         this.progressBar = findViewById(R.id.progressbar);
 
         final Toolbar toolbar = findViewById(R.id.toolbar);
-        toolbar.setTitle(getString(R.string.paymentpage_title));
+        toolbar.setTitle(getString(R.string.pmpage_title));
         setSupportActionBar(toolbar);
         ActionBar actionBar = getSupportActionBar();
 
@@ -263,7 +263,7 @@ public final class PaymentPageActivity extends AppCompatActivity implements Paym
         String msg = card.getLang().translateError(result.getError());
 
         if (TextUtils.isEmpty(msg)) {
-            msg = getString(R.string.paymentpage_error_validation);
+            msg = getString(R.string.pmpage_error_validation);
         }
         result.setMessage(msg);
         return result;
@@ -275,7 +275,7 @@ public final class PaymentPageActivity extends AppCompatActivity implements Paym
         }
         MessageDialogFragment dialog = new MessageDialogFragment();
         dialog.setMessage(message);
-        dialog.setNeutralButton(getString(R.string.paymentdialog_close_button));
+        dialog.setNeutralButton(getString(R.string.pmdialog_close_button));
         dialog.setListener(new MessageDialogFragment.MessageDialogListener() {
             @Override
             public void onNeutralButtonClick() {

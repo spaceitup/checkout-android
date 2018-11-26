@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="lightColorPrimary">#039BE5</color>
-    <color name="lightColorPrimaryDark">#0277BD</color>
-    <color name="lightColorAccent">#00B0FF</color>
+    <color name="colorPrimary">#039BE5</color>
+    <color name="colorPrimaryDark">#0277BD</color>
+    <color name="colorAccent">#00B0FF</color>
 
-    <color name="darkColorPrimary">#000000</color>
-    <color name="darkColorPrimaryDark">#000000</color>
-    <color name="darkColorAccent">#000000</color>
+    <color name="customColorPrimary">#000000</color>
+    <color name="customColorPrimaryDark">#000000</color>
+    <color name="customColorAccent">#000000</color>
 
-    <color name="light_paymentpage_list">#FFFFFF</color>
+    <color name="custom_pmpage_list">#FFFFFF</color>
     
 </resources>

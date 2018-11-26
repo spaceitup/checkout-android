@@ -11,7 +11,7 @@
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
         <item name="android:windowBackground">@color/pmcolor_list</item>
-        <item name="cardViewStyle">@style/PaymentThemeCardView</item>
+        <item name="materialCardViewStyle">@style/PaymentThemeCardView</item>
     </style>
 
     <style name="PaymentThemeToolbar" parent="ThemeOverlay.AppCompat.Dark.ActionBar">
@@ -20,12 +20,12 @@
 
     <style name="PaymentThemeCheckBox" parent="Widget.AppCompat.CompoundButton.CheckBox">
         <item name="colorControlNormal">@color/pmcolor_controlnormal</item>
-        <item name="colorControlActivated">@color/validation_ok</item>
+        <item name="colorControlActivated">@color/pmvalidation_ok</item>
     </style>
 
     <style name="PaymentThemeTextInput" parent="Widget.Design.TextInputLayout">
         <!-- hint text color inside EditText -->
-        <item name="android:textColorHint">@color/text_hint</item>
+        <item name="android:textColorHint">@color/pmtext_hint</item>
         <!-- This color of the area of text selected -->
         <item name="android:textColorHighlight">?attr/colorPrimary</item>
         <!-- underline color control normal -->
@@ -49,9 +49,10 @@
     </style>
 
     <style name="PaymentThemeCardView" parent="CardView.Light">
-        <item name="cardBackgroundColor">@color/color_background</item>
-        <item name="cardUseCompatPadding">true</item>
-        <item name="cardCornerRadius">@dimen/cardview_radius</item>
+        <item name="cardBackgroundColor">@color/pmcolor_background</item>
+        <item name="cardUseCompatPadding">false</item>
+        <item name="cardPreventCornerOverlap">true</item>
+        <item name="cardCornerRadius">@dimen/pmcard_radius</item>
     </style>
 
 </resources>

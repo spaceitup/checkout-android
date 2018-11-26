@@ -97,13 +97,13 @@ public abstract class FormWidget {
         int colorResId;
         switch (state) {
             case VALIDATION_OK:
-                colorResId = R.color.pm_validation_ok;
+                colorResId = R.color.pmvalidation_ok;
                 break;
             case VALIDATION_ERROR:
-                colorResId = R.color.pm_validation_error;
+                colorResId = R.color.pmvalidation_error;
                 break;
             default:
-                colorResId = R.color.pm_validation_unknown;
+                colorResId = R.color.pmvalidation_unknown;
         }
         icon.setColorFilter(ContextCompat.getColor(rootView.getContext(), colorResId));
     }
