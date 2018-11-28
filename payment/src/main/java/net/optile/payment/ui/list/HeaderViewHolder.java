@@ -25,13 +25,14 @@ import net.optile.payment.R;
 final class HeaderViewHolder extends RecyclerView.ViewHolder {
 
     final TextView title;
-
+    
     HeaderViewHolder(View parent) {
         super(parent);
         this.title = parent.findViewById(R.id.text_title);
     }
 
-    static ViewHolder createInstance(LayoutInflater inflater, ViewGroup parent) {
+    static ViewHolder createInstance(ListAdapter adapter, ViewGroup parent) {
+        LayoutInflater inflater = adapter.getLayoutInflater();
         View view = inflater.inflate(R.layout.list_item_header, parent, false);
         return new HeaderViewHolder(view);
     }

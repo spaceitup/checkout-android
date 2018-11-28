@@ -26,11 +26,13 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.ProgressBar;
 import net.optile.payment.R;
-import net.optile.payment.ui.PaymentTheme;
+import net.optile.payment.ui.theme.PaymentTheme;
+import net.optile.payment.ui.theme.ThemeParameters;
 import net.optile.payment.ui.PaymentResult;
 import net.optile.payment.ui.PaymentUI;
 import net.optile.payment.ui.dialog.MessageDialogFragment;
 import net.optile.payment.ui.list.PaymentList;
+
 import net.optile.payment.ui.model.PaymentCard;
 import net.optile.payment.ui.model.PaymentSession;
 import net.optile.payment.ui.widget.FormWidget;
@@ -79,8 +81,8 @@ public final class PaymentPageActivity extends AppCompatActivity implements Paym
             Intent intent = getIntent();
             this.listUrl = intent.getStringExtra(EXTRA_LISTURL);
         }
-        PaymentTheme theme = PaymentUI.getInstance().getPaymentTheme();
-        setTheme(theme.getPaymentPageTheme());
+        ThemeParameters params = PaymentUI.getInstance().getPaymentTheme().getThemeParameters();
+        setTheme(params.getPaymentPageTheme());
 
         setContentView(R.layout.activity_paymentpage);
         this.progressBar = findViewById(R.id.progressbar);

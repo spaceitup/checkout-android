@@ -12,10 +12,10 @@
 package net.optile.payment.ui.theme;
 
 /**
- * Class for holding the Color parameters for the PaymentTheme
+ * Class for holding the Validation parameters for the PaymentTheme
  */
-public class ColorParameters {
+public class ValidationParameters {
 
-    ColorParameters() {
+    ValidationParameters() {
     }
 }

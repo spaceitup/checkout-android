@@ -20,7 +20,7 @@ import android.support.v7.widget.RecyclerView.ViewHolder;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
 import net.optile.payment.core.LanguageFile;
-import net.optile.payment.ui.PaymentTheme;
+import net.optile.payment.ui.theme.PaymentTheme;
 import net.optile.payment.ui.PaymentUI;
 import net.optile.payment.ui.model.AccountCard;
 import net.optile.payment.ui.model.NetworkCard;
@@ -46,15 +46,14 @@ final class ListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     @Override
     public @NonNull
     ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        LayoutInflater inflater = LayoutInflater.from(parent.getContext());
         PaymentCard card = getItemWithViewType(viewType).getPaymentCard();
 
         if (card == null) {
-            return HeaderViewHolder.createInstance(inflater, parent);
+            return HeaderViewHolder.createInstance(this, parent);
         } else if (card instanceof NetworkCard) {
-            return NetworkCardViewHolder.createInstance(this, (NetworkCard) card, inflater, parent);
+            return NetworkCardViewHolder.createInstance(this, (NetworkCard) card, parent);
         } else {
-            return AccountCardViewHolder.createInstance(this, (AccountCard) card, inflater, parent);
+            return AccountCardViewHolder.createInstance(this, (AccountCard) card, parent);
         }
     }
 
@@ -140,6 +139,10 @@ final class ListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         return list.getPaymentSession().getLang();
     }
 
+    LayoutInflater getLayoutInflater() {
+        return list.getLayoutInflater();
+    }
+    
     ListItem getItemFromIndex(int index) {
         return index >= 0 && index < items.size() ? items.get(index) : null;
     }

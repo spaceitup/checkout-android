@@ -16,6 +16,7 @@ import android.content.Intent;
 import android.text.TextUtils;
 import android.util.Patterns;
 import net.optile.payment.ui.page.PaymentPageActivity;
+import net.optile.payment.ui.theme.PaymentTheme;
 import net.optile.payment.validation.Validator;
 
 /**
@@ -80,7 +81,7 @@ public final class PaymentUI {
     public PaymentTheme getPaymentTheme() {
 
         if (theme == null) {
-            theme = PaymentTheme.createPaymentThemeBuilder().build();
+            theme = PaymentTheme.createBuilder().build();
         }
         return theme;
     }
@@ -94,10 +95,6 @@ public final class PaymentUI {
         this.theme = theme;
     }
 
-    public final static PaymentTheme.Builder createPaymentThemeBuilder() {
-        return new PaymentTheme.Builder();
-    }
-    
     /**
      * Get the Validator set in this PaymentUI. This method is not Thread safe and must be called from the Main UI Thread.
      *

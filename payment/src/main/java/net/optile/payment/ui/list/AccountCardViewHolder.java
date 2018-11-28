@@ -46,7 +46,8 @@ final class AccountCardViewHolder extends PaymentCardViewHolder {
         this.logo = parent.findViewById(R.id.image_logo);
     }
 
-    static ViewHolder createInstance(ListAdapter adapter, AccountCard accountCard, LayoutInflater inflater, ViewGroup parent) {
+    static ViewHolder createInstance(ListAdapter adapter, AccountCard accountCard, ViewGroup parent) {
+        LayoutInflater inflater = adapter.getLayoutInflater();
         View view = inflater.inflate(R.layout.list_item_account, parent, false);
         AccountCardViewHolder holder = new AccountCardViewHolder(adapter, view);
         addInputWidgets(holder, inflater, parent, accountCard);

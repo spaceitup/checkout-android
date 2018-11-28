@@ -6,8 +6,9 @@
 
     <color name="customColorPrimary">#000000</color>
     <color name="customColorPrimaryDark">#000000</color>
-    <color name="customColorAccent">#000000</color>
+    <color name="customColorAccent">#FFFFFF</color>
 
-    <color name="custom_pmpage_list">#FFFFFF</color>
+    <color name="custom_background">#000000</color>    
+    <color name="custom_foreground">#FFFFFF</color>
     
 </resources>

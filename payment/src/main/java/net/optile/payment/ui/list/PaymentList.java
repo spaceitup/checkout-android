@@ -30,6 +30,7 @@ import net.optile.payment.ui.model.NetworkCard;
 import net.optile.payment.ui.model.PaymentSession;
 import net.optile.payment.ui.page.PaymentPageActivity;
 import net.optile.payment.validation.ValidationResult;
+import android.view.LayoutInflater;
 
 /**
  * The PaymentList showing available payment methods and accounts in a list
@@ -127,6 +128,10 @@ public final class PaymentList {
         return this.session;
     }
 
+    LayoutInflater getLayoutInflater() {
+        return activity.getLayoutInflater();
+    }
+    
     void showDialogFragment(DialogFragment dialog, String tag) {
         dialog.show(activity.getSupportFragmentManager(), tag);
     }

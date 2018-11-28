@@ -17,6 +17,7 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
+import android.content.Context;
 import android.support.v4.app.DialogFragment;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -27,7 +28,8 @@ import net.optile.payment.core.LanguageFile;
 import net.optile.payment.core.PaymentInputType;
 import net.optile.payment.model.InputElement;
 import net.optile.payment.model.InputElementType;
-import net.optile.payment.ui.PaymentTheme;
+import net.optile.payment.ui.theme.PaymentTheme;
+import net.optile.payment.ui.theme.IconParameters;
 import net.optile.payment.ui.model.PaymentCard;
 import net.optile.payment.ui.widget.ButtonWidget;
 import net.optile.payment.ui.widget.CheckBoxInputWidget;
@@ -38,6 +40,7 @@ import net.optile.payment.ui.widget.TextInputWidget;
 import net.optile.payment.ui.widget.WidgetPresenter;
 import net.optile.payment.util.PaymentUtils;
 import net.optile.payment.validation.ValidationResult;
+import android.view.ContextThemeWrapper;
 
 /**
  * The PaymentCardViewHolder holding the header and input widgets
@@ -132,7 +135,9 @@ abstract class PaymentCardViewHolder extends RecyclerView.ViewHolder {
                 View view = inflater.inflate(R.layout.widget_input_select, parent, false);
                 return new SelectInputWidget(name, view);
             case InputElementType.CHECKBOX:
-                view = inflater.inflate(R.layout.widget_input_checkbox, parent, false);
+                final Context contextThemeWrapper = new ContextThemeWrapper(parent.getContext(), R.style.PaymentThemeCheckBox);
+                LayoutInflater localInflater = inflater.cloneInContext(contextThemeWrapper);
+                view = localInflater.inflate(R.layout.widget_input_checkbox, null, false);
                 return new CheckBoxInputWidget(name, view);
             default:
                 view = inflater.inflate(R.layout.widget_input_text, parent, false);
@@ -199,8 +204,8 @@ abstract class PaymentCardViewHolder extends RecyclerView.ViewHolder {
     }
 
     void bindIconResource(FormWidget widget) {
-        PaymentTheme theme = adapter.getPaymentTheme();
-        widget.setIconResource(theme.getWidgetIconRes(widget.getName()));
+        IconParameters params = adapter.getPaymentTheme().getIconParameters();
+        widget.setIconResource(params.getInputTypeIcon(widget.getName()));
     }
 
     void bindDateWidget(PaymentCard card) {

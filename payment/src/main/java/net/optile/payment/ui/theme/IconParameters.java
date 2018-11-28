@@ -11,11 +11,77 @@
 
 package net.optile.payment.ui.theme;
 
+import java.util.HashMap;
+import java.util.Map;
+import android.text.TextUtils;
+import net.optile.payment.core.PaymentInputType;
+import net.optile.payment.R;
+
 /**
  * Class for holding the Icon parameters for the PaymentTheme
  */
-public class IconParameters {
+public final class IconParameters {
+
+    private final Map<String, Integer> mapping;
 
     IconParameters() {
+        this.mapping = new HashMap<>();
+    }
+    
+    IconParameters(Map<String, Integer> mapping) {
+        this.mapping = mapping;
+    }
+
+    public static Builder createBuilder() {
+        return new Builder();
+    }
+    
+    public int getInputTypeIcon(String inputType) {
+
+        if (mapping.containsKey(inputType)) {
+            return mapping.get(inputType);
+        }
+        return getDefaultIcon(inputType);
+    }
+
+    private int getDefaultIcon(String inputType) {
+
+        if (TextUtils.isEmpty(inputType)) {
+            return R.drawable.ic_default;
+        }
+        switch (inputType) {
+            case PaymentInputType.HOLDER_NAME:
+                return R.drawable.ic_name;
+            case PaymentInputType.EXPIRY_DATE:
+            case PaymentInputType.EXPIRY_MONTH:
+            case PaymentInputType.EXPIRY_YEAR:
+                return R.drawable.ic_date;
+            case PaymentInputType.BANK_CODE:
+            case PaymentInputType.ACCOUNT_NUMBER:
+            case PaymentInputType.IBAN:
+            case PaymentInputType.BIC:
+                return R.drawable.ic_card;
+            case PaymentInputType.VERIFICATION_CODE:
+                return R.drawable.ic_lock;
+            default:
+                return R.drawable.ic_default;
+        }
+    }
+    
+    public final static class Builder {
+        Map<String, Integer> mapping;
+        
+        public Builder() {
+            mapping = new HashMap<String, Integer>();
+        }
+
+        public Builder setInputTypeIcon(String inputType, int iconRes) {
+            mapping.put(inputType, iconRes);
+            return this;
+        }
+
+        public IconParameters build() {
+            return new IconParameters(this.mapping);
+        }
     }
 }

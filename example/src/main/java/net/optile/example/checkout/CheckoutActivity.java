@@ -24,8 +24,9 @@ import android.widget.Button;
 import net.optile.example.R;
 import net.optile.payment.ui.PaymentResult;
 import net.optile.payment.ui.PaymentUI;
-import net.optile.payment.ui.PaymentTheme;
-import net.optile.payment.ui.PaymentTheme.PaymentThemeBuilder;
+import net.optile.payment.ui.theme.PaymentTheme;
+import net.optile.payment.ui.theme.PaymentTheme.Builder;
+import net.optile.payment.ui.theme.ThemeParameters;
 import net.optile.payment.ui.dialog.MessageDialogFragment;
 
 /**
@@ -37,9 +38,7 @@ public final class CheckoutActivity extends AppCompatActivity implements Checkou
     private static int PAYMENT_REQUEST_CODE = 1;
 
     private CheckoutPresenter presenter;
-
     private boolean active;
-
     private CheckoutResult checkoutResult;
 
     /**
@@ -162,15 +161,18 @@ public final class CheckoutActivity extends AppCompatActivity implements Checkou
     public void openPaymentPage(String listUrl) {
         PaymentUI paymentUI = PaymentUI.getInstance();
         paymentUI.setListUrl(listUrl);
-        paymentUI.setPaymentTheme(createPaymentTheme());
+        paymentUI.setPaymentTheme(createCustomTheme());
         paymentUI.showPaymentPage(this, PAYMENT_REQUEST_CODE);
     }
 
-    private PaymentTheme createPaymentTheme() {
+    private PaymentTheme createCustomTheme() {
 
-        PaymentThemeBuilder builder = PaymentTheme.createPaymentThemeBuilder();
-        //builder.setPaymentPageTheme(R.style.AppTheme_PaymentPage);
-        return builder.build();
+        ThemeParameters.Builder themeBuilder = ThemeParameters.createBuilder();
+        themeBuilder.setPaymentPageTheme(R.style.CustomTheme_PaymentPage);
+        themeBuilder.setCheckBoxTheme(R.style.CustomThemeCheckBox);
+        
+        return PaymentTheme.createBuilder().
+            setThemeParameters(themeBuilder.build()).build();
     }
 
     
