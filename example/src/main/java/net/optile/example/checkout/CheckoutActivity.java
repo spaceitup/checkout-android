@@ -170,6 +170,7 @@ public final class CheckoutActivity extends AppCompatActivity implements Checkou
         ThemeParameters.Builder themeBuilder = ThemeParameters.createBuilder();
         themeBuilder.setPaymentPageTheme(R.style.CustomTheme_PaymentPage);
         themeBuilder.setCheckBoxTheme(R.style.CustomThemeCheckBox);
+        themeBuilder.setCardViewTheme(R.style.CustomThemeCardView);
         
         return PaymentTheme.createBuilder().
             setThemeParameters(themeBuilder.build()).build();

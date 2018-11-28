@@ -47,9 +47,12 @@ final class NetworkCardViewHolder extends PaymentCardViewHolder {
 
     static ViewHolder createInstance(ListAdapter adapter, NetworkCard networkCard, ViewGroup parent) {
         PaymentTheme theme = adapter.getPaymentTheme();
-        
-        
+        int themeId = theme.getThemeParameters().getCardViewTheme();
+
+        final Context contextThemeWrapper = new ContextThemeWrapper(parent.getContext(), themeId);
+
         LayoutInflater inflater = adapter.getLayoutInflater();
+        LayoutInflater localInflater = inflater.cloneInContext(contextThemeWrapper);
         View view = inflater.inflate(R.layout.list_item_network, null, false);
         NetworkCardViewHolder holder = new NetworkCardViewHolder(adapter, view);
 
