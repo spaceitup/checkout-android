@@ -6,8 +6,8 @@
     android:layout_height="wrap_content"
     android:orientation="horizontal"
     android:gravity="center"
-    android:layout_marginTop="@dimen/pmwidget_padding"
-    android:layout_marginBottom="@dimen/pmwidget_padding">
+    android:paddingTop="@dimen/pmwidget_padding"
+    android:paddingBottom="@dimen/pmwidget_padding">
 
     <ImageView
         android:id="@+id/image_icon"

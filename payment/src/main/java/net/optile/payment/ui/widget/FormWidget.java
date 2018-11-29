@@ -16,6 +16,8 @@ import android.view.View;
 import android.widget.ImageView;
 import net.optile.payment.R;
 import net.optile.payment.core.PaymentException;
+import net.optile.payment.ui.theme.PaymentTheme;
+import net.optile.payment.ui.theme.IconParameters;
 import net.optile.payment.form.Charge;
 
 /**
@@ -45,6 +47,9 @@ public abstract class FormWidget {
         this.presenter = presenter;
     }
 
+    public void applyTheme(PaymentTheme theme) {
+    }
+    
     public View getRootView() {
         return rootView;
     }
@@ -94,16 +99,14 @@ public abstract class FormWidget {
         if (icon == null) {
             return;
         }
-        int colorResId;
+        IconParameters params = presenter.getPaymentTheme().getIconParameters();
+        int colorResId = params.getUnknownColorResId();
         switch (state) {
             case VALIDATION_OK:
-                colorResId = R.color.pmvalidation_ok;
+                colorResId = params.getOkColorResId();
                 break;
             case VALIDATION_ERROR:
-                colorResId = R.color.pmvalidation_error;
-                break;
-            default:
-                colorResId = R.color.pmvalidation_unknown;
+                colorResId = params.getErrorColorResId();
         }
         icon.setColorFilter(ContextCompat.getColor(rootView.getContext(), colorResId));
     }

@@ -23,7 +23,6 @@ public final class PaymentTheme {
     private ThemeParameters themeParameters;
     private TextAppearanceParameters textAppearanceParameters;
     private IconParameters iconParameters;
-    private ValidationParameters validationParameters;
 
     private PaymentTheme() {
     }
@@ -44,15 +43,10 @@ public final class PaymentTheme {
         return iconParameters;
     }
 
-    public ValidationParameters getValidationParameters() {
-        return validationParameters;
-    }
-
     public static final class Builder {
         ThemeParameters themeParameters;
         TextAppearanceParameters textAppearanceParameters;
         IconParameters iconParameters;
-        ValidationParameters validationParameters;
         
         Builder() {
         }
@@ -72,33 +66,23 @@ public final class PaymentTheme {
             return this;
         }
 
-        public Builder setValidationParameters(ValidationParameters validationParameters) {
-            this.validationParameters = validationParameters;
-            return this;
-        }
-
         public PaymentTheme build() {
             PaymentTheme theme = new PaymentTheme();
 
             if (themeParameters == null) {
-                themeParameters = new ThemeParameters();
+                themeParameters = ThemeParameters.createBuilder().build();
             }
             theme.themeParameters = themeParameters;
 
             if (textAppearanceParameters == null) {
-                textAppearanceParameters = new TextAppearanceParameters();
+                textAppearanceParameters = TextAppearanceParameters.createBuilder().build();
             }
             theme.textAppearanceParameters = textAppearanceParameters;
 
             if (iconParameters == null) {
-                iconParameters = new IconParameters();
+                iconParameters = IconParameters.createBuilder().build();
             }
             theme.iconParameters = iconParameters;
-            
-            if (validationParameters == null) {
-                validationParameters = new ValidationParameters();
-            }
-            theme.validationParameters = validationParameters;
             return theme;
         }
     }

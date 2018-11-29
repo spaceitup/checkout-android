@@ -29,8 +29,8 @@
     </style>
 
     <style name="PaymentThemeButton" parent="Widget.AppCompat.Button.Borderless">
-        <item name="colorButtonNormal">?attr/colorPrimary</item>
-        <item name="colorControlHighlight">?attr/colorAccent</item>
+        <item name="colorButtonNormal">@color/pmcolor_primary</item>
+        <item name="colorControlHighlight">@color/pmcolor_accent</item>
         <item name="android:paddingLeft">@dimen/pmborder_large</item>
         <item name="android:paddingRight">@dimen/pmborder_large</item>
         <item name="android:paddingTop">@dimen/pmborder_medium</item>

@@ -16,7 +16,6 @@ import java.net.URL;
 import com.bumptech.glide.Glide;
 import android.content.Context;
 import android.support.v7.widget.RecyclerView.ViewHolder;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
@@ -30,6 +29,7 @@ import net.optile.payment.ui.theme.PaymentTheme;
 import net.optile.payment.ui.model.PaymentNetwork;
 import net.optile.payment.ui.widget.RegisterWidget;
 import android.view.ContextThemeWrapper;
+import android.util.Log;
 
 /**
  * The NetworkCardViewHolder
@@ -48,29 +48,24 @@ final class NetworkCardViewHolder extends PaymentCardViewHolder {
     static ViewHolder createInstance(ListAdapter adapter, NetworkCard networkCard, ViewGroup parent) {
         PaymentTheme theme = adapter.getPaymentTheme();
         int themeId = theme.getThemeParameters().getCardViewTheme();
-
-        final Context contextThemeWrapper = new ContextThemeWrapper(parent.getContext(), themeId);
-
-        LayoutInflater inflater = adapter.getLayoutInflater();
-        LayoutInflater localInflater = inflater.cloneInContext(contextThemeWrapper);
-        View view = inflater.inflate(R.layout.list_item_network, null, false);
+        View view = inflateWithTheme(adapter.getContext(), themeId, R.layout.list_item_network);
         NetworkCardViewHolder holder = new NetworkCardViewHolder(adapter, view);
 
-        addInputWidgets(holder, inflater, parent, networkCard);
-        holder.addWidget(createRegisterWidget(adapter, PaymentInputType.AUTO_REGISTRATION, inflater, parent));
-        holder.addWidget(createRegisterWidget(adapter, PaymentInputType.ALLOW_RECURRENCE, inflater, parent));
-        holder.addWidget(createButtonWidget(inflater, parent));
+        addInputWidgets(adapter, holder, networkCard);
+        holder.addWidget(createRegisterWidget(adapter, PaymentInputType.AUTO_REGISTRATION));
+        holder.addWidget(createRegisterWidget(adapter, PaymentInputType.ALLOW_RECURRENCE));
+        holder.addWidget(createButtonWidget(adapter));
         holder.setLastImeOptions();
         return holder;
     }
 
-    static RegisterWidget createRegisterWidget(ListAdapter adapter, String name, LayoutInflater inflater, ViewGroup parent) {
+    static RegisterWidget createRegisterWidget(ListAdapter adapter, String name) {
         PaymentTheme theme = adapter.getPaymentTheme();
         int themeId = theme.getThemeParameters().getCheckBoxTheme();
-        final Context contextThemeWrapper = new ContextThemeWrapper(parent.getContext(), themeId);
-        LayoutInflater localInflater = inflater.cloneInContext(contextThemeWrapper);
-        View view = localInflater.inflate(R.layout.widget_input_checkbox, null, false);
-        return new RegisterWidget(name, view);
+        View view = inflateWithTheme(adapter.getContext(), themeId, R.layout.widget_input_checkbox);
+        RegisterWidget widget = new RegisterWidget(name, view);
+        widget.applyTheme(theme);
+        return widget;
     }
 
     void onBind(PaymentCard paymentCard) {

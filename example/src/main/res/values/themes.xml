@@ -14,12 +14,13 @@
         <item name="android:background">?attr/colorPrimary</item>
     </style>
     
-    <style name="CustomTheme.PaymentPage" parent="Theme.AppCompat">
+    <style name="CustomThemePaymentPage" parent="Theme.AppCompat">
         <item name="colorPrimary">@color/customColorPrimary</item>
         <item name="colorPrimaryDark">@color/customColorPrimaryDark</item>
         <item name="colorAccent">@color/customColorAccent</item>
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
+        <item name="android:windowBackground">@color/custom_background</item>
         <item name="materialCardViewStyle">@style/CustomThemeCardView</item>
     </style>
 
@@ -27,18 +28,45 @@
         <item name="android:background">?attr/colorPrimary</item>
     </style>
 
-    <style name="CustomThemeCardView" parent="CardView.Light">
+    <style name="CustomThemeTextInput" parent="Widget.Design.TextInputLayout">
+        <!-- hint text color inside EditText -->
+        <item name="android:textColorHint">@color/custom_foreground</item>
+        <!-- This color of the area of text selected -->
+        <item name="android:textColorHighlight">?attr/colorPrimary</item>
+        <!-- underline color control normal -->
+        <item name="colorControlNormal">@color/custom_foreground</item>
+        <!-- underline color enabled -->
+        <item name="colorControlActivated">@color/custom_foreground</item>
+    </style>
+
+    <style name="CustomThemeButton" parent="Widget.AppCompat.Button.Borderless">
+        <item name="colorButtonNormal">@color/custom_middle</item>
+        <item name="colorControlHighlight">@color/custom_middle</item>
+        <item name="android:paddingLeft">@dimen/custom_bordermedium</item>
+        <item name="android:paddingRight">@dimen/custom_bordermedium</item>
+        <item name="android:paddingTop">@dimen/custom_bordermedium</item>
+        <item name="android:paddingBottom">@dimen/custom_bordermedium</item>
+        <item name="android:bottomLeftRadius">@dimen/custom_buttonradius</item>
+        <item name="android:bottomRightRadius">@dimen/custom_buttonradius</item>
+        <item name="android:topLeftRadius">@dimen/custom_buttonradius</item>
+        <item name="android:topRightRadius">@dimen/custom_buttonradius</item>
+        <item name="android:textAllCaps">false</item>
+    </style>
+    
+    <style name="CustomThemeCardView" parent="CardView.Dark">
         <item name="cardBackgroundColor">?attr/colorPrimary</item>
         <item name="cardUseCompatPadding">false</item>
         <item name="cardPreventCornerOverlap">true</item>
-        <item name="cardCornerRadius">10dp</item>
-        <item name="strokeWidth">4dp</item>
-        <item name="strokeColor">#0000FF</item>
+        <item name="cardElevation">0dp</item>
+        <item name="cardMaxElevation">0dp</item>
+        <item name="cardCornerRadius">@dimen/custom_cardradius</item>
+        <item name="strokeWidth">@dimen/custom_cardstrokewidth</item>
+        <item name="strokeColor">@color/custom_cardstrokecolor</item>
     </style>
 
     <style name="CustomThemeCheckBox" parent="Widget.AppCompat.CompoundButton.CheckBox">
-        <item name="colorControlNormal">?attr/colorPrimary</item>
-        <item name="colorControlActivated">#00ff00</item>
+        <item name="colorControlNormal">@color/custom_foreground</item>
+        <item name="colorControlActivated">@color/custom_validationok</item>
     </style>
 
 </resources>

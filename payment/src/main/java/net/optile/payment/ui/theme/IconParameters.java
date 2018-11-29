@@ -23,7 +23,10 @@ import net.optile.payment.R;
 public final class IconParameters {
 
     private final Map<String, Integer> mapping;
-
+    private int unknownColorResId;
+    private int okColorResId;
+    private int errorColorResId;
+    
     IconParameters() {
         this.mapping = new HashMap<>();
     }
@@ -34,6 +37,18 @@ public final class IconParameters {
 
     public static Builder createBuilder() {
         return new Builder();
+    }
+
+    public int getOkColorResId() {
+        return okColorResId;
+    }
+
+    public int getUnknownColorResId() {
+        return unknownColorResId;
+    }
+
+    public int getErrorColorResId() {
+        return errorColorResId;
     }
     
     public int getInputTypeIcon(String inputType) {
@@ -70,6 +85,9 @@ public final class IconParameters {
     
     public final static class Builder {
         Map<String, Integer> mapping;
+        int okColorResId = R.color.pmvalidation_ok;
+        int unknownColorResId = R.color.pmvalidation_unknown;
+        int errorColorResId = R.color.pmvalidation_error;
         
         public Builder() {
             mapping = new HashMap<String, Integer>();
@@ -80,8 +98,27 @@ public final class IconParameters {
             return this;
         }
 
+        public Builder setOkColorResId(int okColorResId) {
+            this.okColorResId = okColorResId;
+            return this;
+        }
+
+        public Builder setUnknownColorResId(int unknownColorResId) {
+            this.unknownColorResId = unknownColorResId;
+            return this;
+        }
+
+        public Builder setErrorColorResId(int errorColorResId) {
+            this.errorColorResId = errorColorResId;
+            return this;
+        }
+        
         public IconParameters build() {
-            return new IconParameters(this.mapping);
+            IconParameters params = new IconParameters(this.mapping);
+            params.okColorResId = this.okColorResId;
+            params.unknownColorResId = this.unknownColorResId;
+            params.errorColorResId = this.errorColorResId;
+            return params;
         }
     }
 }

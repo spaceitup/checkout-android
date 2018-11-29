@@ -32,8 +32,7 @@ final class HeaderViewHolder extends RecyclerView.ViewHolder {
     }
 
     static ViewHolder createInstance(ListAdapter adapter, ViewGroup parent) {
-        LayoutInflater inflater = adapter.getLayoutInflater();
-        View view = inflater.inflate(R.layout.list_item_header, parent, false);
+        View view = View.inflate(adapter.getContext(), R.layout.list_item_header, null);
         return new HeaderViewHolder(view);
     }
 

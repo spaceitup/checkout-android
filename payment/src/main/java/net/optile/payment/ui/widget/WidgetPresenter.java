@@ -13,6 +13,7 @@ package net.optile.payment.ui.widget;
 
 import android.support.v4.app.DialogFragment;
 import net.optile.payment.validation.ValidationResult;
+import net.optile.payment.ui.theme.PaymentTheme;
 
 /**
  * The presenter which is controlling each widget
@@ -34,6 +35,13 @@ public interface WidgetPresenter {
      */
     void showKeyboard();
 
+    /** 
+     * Get the PaymentTheme currently applied to the PaymentPage
+     *
+     * @return the currently applied PaymentTheme
+     */
+    PaymentTheme getPaymentTheme();
+    
     /**
      * Ask the presenter to show the DialogFragment
      *

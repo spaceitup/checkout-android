@@ -8,7 +8,13 @@
     <color name="customColorPrimaryDark">#000000</color>
     <color name="customColorAccent">#FFFFFF</color>
 
-    <color name="custom_background">#000000</color>    
+    <color name="custom_background">#000000</color>
+    <color name="custom_middle">#AAAAAA</color>    
     <color name="custom_foreground">#FFFFFF</color>
+    <color name="custom_cardstrokecolor">#FEFEFE</color>
+
+    <color name="custom_validationok">#00E676</color>
+    <color name="custom_validationerror">#FF1744</color>    
+    <color name="custom_validationunknown">#FFFFFF</color>
     
 </resources>

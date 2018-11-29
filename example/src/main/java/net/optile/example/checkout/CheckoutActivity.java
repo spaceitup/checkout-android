@@ -27,6 +27,7 @@ import net.optile.payment.ui.PaymentUI;
 import net.optile.payment.ui.theme.PaymentTheme;
 import net.optile.payment.ui.theme.PaymentTheme.Builder;
 import net.optile.payment.ui.theme.ThemeParameters;
+import net.optile.payment.ui.theme.IconParameters;
 import net.optile.payment.ui.dialog.MessageDialogFragment;
 
 /**
@@ -166,14 +167,21 @@ public final class CheckoutActivity extends AppCompatActivity implements Checkou
     }
 
     private PaymentTheme createCustomTheme() {
-
         ThemeParameters.Builder themeBuilder = ThemeParameters.createBuilder();
-        themeBuilder.setPaymentPageTheme(R.style.CustomTheme_PaymentPage);
+        themeBuilder.setPaymentPageTheme(R.style.CustomThemePaymentPage);
+        themeBuilder.setButtonTheme(R.style.CustomThemeButton);
+        themeBuilder.setTextInputTheme(R.style.CustomThemeTextInput);        
         themeBuilder.setCheckBoxTheme(R.style.CustomThemeCheckBox);
         themeBuilder.setCardViewTheme(R.style.CustomThemeCardView);
+
+        IconParameters.Builder iconBuilder = IconParameters.createBuilder();
+        iconBuilder.setOkColorResId(R.color.custom_validationok);
+        iconBuilder.setUnknownColorResId(R.color.custom_validationunknown);
+        iconBuilder.setErrorColorResId(R.color.custom_validationerror);
         
         return PaymentTheme.createBuilder().
-            setThemeParameters(themeBuilder.build()).build();
+            setThemeParameters(themeBuilder.build()).
+            setIconParameters(iconBuilder.build()).build();
     }
 
     

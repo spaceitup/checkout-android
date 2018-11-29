@@ -18,4 +18,19 @@ public class TextAppearanceParameters {
 
     TextAppearanceParameters() {
     }
+    
+    public static Builder createBuilder() {
+        return new Builder();
+    }
+
+    public final static class Builder {
+
+        public Builder() {
+        }
+
+        public TextAppearanceParameters build() {
+            return new TextAppearanceParameters();
+        }
+    }
 }
+

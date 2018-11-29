@@ -1,0 +1,6 @@
+<resources>
+    <dimen name="custom_bordermedium">16dp</dimen>
+    <dimen name="custom_buttonradius">5dp</dimen>
+    <dimen name="custom_cardradius">10dp</dimen>
+    <dimen name="custom_cardstrokewidth">2dp</dimen>
+</resources>

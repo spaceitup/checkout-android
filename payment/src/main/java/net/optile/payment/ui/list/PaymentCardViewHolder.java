@@ -30,6 +30,7 @@ import net.optile.payment.model.InputElement;
 import net.optile.payment.model.InputElementType;
 import net.optile.payment.ui.theme.PaymentTheme;
 import net.optile.payment.ui.theme.IconParameters;
+import net.optile.payment.ui.theme.ThemeParameters;
 import net.optile.payment.ui.model.PaymentCard;
 import net.optile.payment.ui.widget.ButtonWidget;
 import net.optile.payment.ui.widget.CheckBoxInputWidget;
@@ -92,69 +93,82 @@ abstract class PaymentCardViewHolder extends RecyclerView.ViewHolder {
             public ValidationResult validate(String type, String value1, String value2) {
                 return adapter.validate(getAdapterPosition(), type, value1, value2);
             }
+
+            @Override
+            public PaymentTheme getPaymentTheme() {
+                return adapter.getPaymentTheme();
+            }
         };
     }
 
-    static void addInputWidgets(PaymentCardViewHolder holder, LayoutInflater inflater, ViewGroup parent, PaymentCard card) {
+    static void addInputWidgets(ListAdapter adapter, PaymentCardViewHolder holder, PaymentCard card) {
         DateWidget dateWidget = null;
         List<InputElement> elements = card.getInputElements();
         boolean containsExpiryDate = PaymentUtils.containsExpiryDate(elements);
-
+        
         for (InputElement element : elements) {
             if (!containsExpiryDate) {
-                holder.addWidget(createInputWidget(element, inflater, parent));
+                holder.addWidget(createInputWidget(adapter, element));
                 continue;
             }
             switch (element.getName()) {
                 case PaymentInputType.EXPIRY_MONTH:
                     if (dateWidget == null) {
-                        dateWidget = createDateWidget(inflater, parent);
+                        dateWidget = createDateWidget(adapter);
                         holder.addWidget(dateWidget);
                     }
                     dateWidget.setMonthInputElement(element);
                     break;
                 case PaymentInputType.EXPIRY_YEAR:
                     if (dateWidget == null) {
-                        dateWidget = createDateWidget(inflater, parent);
+                        dateWidget = createDateWidget(adapter);
                         holder.addWidget(dateWidget);
                     }
                     dateWidget.setYearInputElement(element);
                     break;
                 default:
-                    holder.addWidget(createInputWidget(element, inflater, parent));
+                    holder.addWidget(createInputWidget(adapter, element));
             }
         }
     }
 
-    static FormWidget createInputWidget(InputElement element, LayoutInflater inflater, ViewGroup parent) {
+    static FormWidget createInputWidget(ListAdapter adapter, InputElement element) {
         FormWidget widget;
         String name = element.getName();
-
+        Context context = adapter.getContext();
+        ThemeParameters params = adapter.getPaymentTheme().getThemeParameters();
+        
         switch (element.getType()) {
             case InputElementType.SELECT:
-                View view = inflater.inflate(R.layout.widget_input_select, parent, false);
+                View view = View.inflate(context, R.layout.widget_input_select, null);
                 return new SelectInputWidget(name, view);
             case InputElementType.CHECKBOX:
-                final Context contextThemeWrapper = new ContextThemeWrapper(parent.getContext(), R.style.PaymentThemeCheckBox);
-                LayoutInflater localInflater = inflater.cloneInContext(contextThemeWrapper);
-                view = localInflater.inflate(R.layout.widget_input_checkbox, null, false);
+                view = inflateWithTheme(context, params.getCheckBoxTheme(), R.layout.widget_input_checkbox);
                 return new CheckBoxInputWidget(name, view);
             default:
-                view = inflater.inflate(R.layout.widget_input_text, parent, false);
+                view = View.inflate(context, R.layout.widget_input_text, null);
                 return new TextInputWidget(name, view);
         }
     }
 
-    static ButtonWidget createButtonWidget(LayoutInflater inflater, ViewGroup parent) {
-        View view = inflater.inflate(R.layout.widget_button, parent, false);
+    static ButtonWidget createButtonWidget(ListAdapter adapter) {
+        PaymentTheme theme = adapter.getPaymentTheme();
+        ThemeParameters params = theme.getThemeParameters();
+        View view = inflateWithTheme(adapter.getContext(), params.getButtonTheme(), R.layout.widget_button);
         return new ButtonWidget(PaymentInputType.ACTION_BUTTON, view);
     }
 
-    static DateWidget createDateWidget(LayoutInflater inflater, ViewGroup parent) {
-        View view = inflater.inflate(R.layout.widget_input_date, parent, false);
+    static DateWidget createDateWidget(ListAdapter adapter) {
+        Context context = adapter.getContext();
+        PaymentTheme theme = adapter.getPaymentTheme();
+        View view = View.inflate(context, R.layout.widget_input_date, null);
         return new DateWidget(PaymentInputType.EXPIRY_DATE, view);
     }
 
+    static View inflateWithTheme(Context context, int themeResId, int layoutResId) {
+        return View.inflate(new ContextThemeWrapper(context, themeResId), layoutResId, null);
+    }
+    
     void expand(boolean expand) {
         formLayout.setVisibility(expand ? View.VISIBLE : View.GONE);
     }

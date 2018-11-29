@@ -12,7 +12,7 @@
 package net.optile.payment.ui.list;
 
 import java.util.List;
-
+import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.v4.app.DialogFragment;
 import android.support.v7.widget.RecyclerView;
@@ -124,6 +124,10 @@ final class ListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         list.onActionClicked(position);
     }
 
+    Context getContext() {
+        return list.getContext();
+    }
+    
     ValidationResult validate(int position, String type, String value1, String value2) {
         if (!isValidPosition(position)) {
             return null;
@@ -139,10 +143,6 @@ final class ListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         return list.getPaymentSession().getLang();
     }
 
-    LayoutInflater getLayoutInflater() {
-        return list.getLayoutInflater();
-    }
-    
     ListItem getItemFromIndex(int index) {
         return index >= 0 && index < items.size() ? items.get(index) : null;
     }
