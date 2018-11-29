@@ -31,10 +31,6 @@
     <style name="PaymentThemeButton" parent="Widget.AppCompat.Button.Borderless">
         <item name="colorButtonNormal">@color/pmcolor_primary</item>
         <item name="colorControlHighlight">@color/pmcolor_accent</item>
-        <item name="android:paddingLeft">@dimen/pmborder_large</item>
-        <item name="android:paddingRight">@dimen/pmborder_large</item>
-        <item name="android:paddingTop">@dimen/pmborder_medium</item>
-        <item name="android:paddingBottom">@dimen/pmborder_medium</item>
         <item name="android:bottomLeftRadius">@dimen/pmbutton_radius</item>
         <item name="android:bottomRightRadius">@dimen/pmbutton_radius</item>
         <item name="android:topLeftRadius">@dimen/pmbutton_radius</item>

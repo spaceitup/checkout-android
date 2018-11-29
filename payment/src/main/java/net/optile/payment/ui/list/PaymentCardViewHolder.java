@@ -108,31 +108,31 @@ abstract class PaymentCardViewHolder extends RecyclerView.ViewHolder {
         
         for (InputElement element : elements) {
             if (!containsExpiryDate) {
-                holder.addWidget(createInputWidget(adapter, element));
+                holder.addWidget(createInputWidget(adapter, element, holder.formLayout));
                 continue;
             }
             switch (element.getName()) {
                 case PaymentInputType.EXPIRY_MONTH:
                     if (dateWidget == null) {
-                        dateWidget = createDateWidget(adapter);
+                        dateWidget = createDateWidget(adapter, holder.formLayout);
                         holder.addWidget(dateWidget);
                     }
                     dateWidget.setMonthInputElement(element);
                     break;
                 case PaymentInputType.EXPIRY_YEAR:
                     if (dateWidget == null) {
-                        dateWidget = createDateWidget(adapter);
+                        dateWidget = createDateWidget(adapter, holder.formLayout);
                         holder.addWidget(dateWidget);
                     }
                     dateWidget.setYearInputElement(element);
                     break;
                 default:
-                    holder.addWidget(createInputWidget(adapter, element));
+                    holder.addWidget(createInputWidget(adapter, element, holder.formLayout));
             }
         }
     }
 
-    static FormWidget createInputWidget(ListAdapter adapter, InputElement element) {
+    static FormWidget createInputWidget(ListAdapter adapter, InputElement element, ViewGroup parent) {
         FormWidget widget;
         String name = element.getName();
         Context context = adapter.getContext();
@@ -140,33 +140,33 @@ abstract class PaymentCardViewHolder extends RecyclerView.ViewHolder {
         
         switch (element.getType()) {
             case InputElementType.SELECT:
-                View view = View.inflate(context, R.layout.widget_input_select, null);
+                View view = View.inflate(context, R.layout.widget_input_select, parent);
                 return new SelectInputWidget(name, view);
             case InputElementType.CHECKBOX:
-                view = inflateWithTheme(context, params.getCheckBoxTheme(), R.layout.widget_input_checkbox);
+                view = inflateWithTheme(context, params.getCheckBoxTheme(), R.layout.widget_input_checkbox, parent);
                 return new CheckBoxInputWidget(name, view);
             default:
-                view = View.inflate(context, R.layout.widget_input_text, null);
+                view = View.inflate(context, R.layout.widget_input_text, parent);
                 return new TextInputWidget(name, view);
         }
     }
 
-    static ButtonWidget createButtonWidget(ListAdapter adapter) {
+    static ButtonWidget createButtonWidget(ListAdapter adapter, ViewGroup parent) {
         PaymentTheme theme = adapter.getPaymentTheme();
         ThemeParameters params = theme.getThemeParameters();
-        View view = inflateWithTheme(adapter.getContext(), params.getButtonTheme(), R.layout.widget_button);
+        View view = inflateWithTheme(adapter.getContext(), params.getButtonTheme(), R.layout.widget_button, parent);
         return new ButtonWidget(PaymentInputType.ACTION_BUTTON, view);
     }
 
-    static DateWidget createDateWidget(ListAdapter adapter) {
+    static DateWidget createDateWidget(ListAdapter adapter, ViewGroup parent) {
         Context context = adapter.getContext();
         PaymentTheme theme = adapter.getPaymentTheme();
-        View view = View.inflate(context, R.layout.widget_input_date, null);
+        View view = View.inflate(context, R.layout.widget_input_date, parent);
         return new DateWidget(PaymentInputType.EXPIRY_DATE, view);
     }
 
-    static View inflateWithTheme(Context context, int themeResId, int layoutResId) {
-        return View.inflate(new ContextThemeWrapper(context, themeResId), layoutResId, null);
+    static View inflateWithTheme(Context context, int themeResId, int layoutResId, ViewGroup parent) {
+        return View.inflate(new ContextThemeWrapper(context, themeResId), layoutResId, parent);
     }
     
     void expand(boolean expand) {
@@ -181,7 +181,7 @@ abstract class PaymentCardViewHolder extends RecyclerView.ViewHolder {
         }
         widget.setPresenter(presenter);
         widgets.put(name, widget);
-        formLayout.addView(widget.getRootView());
+        //formLayout.addView(widget.getRootView());
     }
 
     FormWidget getFormWidget(String name) {

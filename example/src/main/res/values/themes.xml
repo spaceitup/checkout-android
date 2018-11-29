@@ -42,10 +42,6 @@
     <style name="CustomThemeButton" parent="Widget.AppCompat.Button.Borderless">
         <item name="colorButtonNormal">@color/custom_middle</item>
         <item name="colorControlHighlight">@color/custom_middle</item>
-        <item name="android:paddingLeft">@dimen/custom_bordermedium</item>
-        <item name="android:paddingRight">@dimen/custom_bordermedium</item>
-        <item name="android:paddingTop">@dimen/custom_bordermedium</item>
-        <item name="android:paddingBottom">@dimen/custom_bordermedium</item>
         <item name="android:bottomLeftRadius">@dimen/custom_buttonradius</item>
         <item name="android:bottomRightRadius">@dimen/custom_buttonradius</item>
         <item name="android:topLeftRadius">@dimen/custom_buttonradius</item>

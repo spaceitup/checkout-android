@@ -50,11 +50,11 @@ final class AccountCardViewHolder extends PaymentCardViewHolder {
     static ViewHolder createInstance(ListAdapter adapter, AccountCard accountCard, ViewGroup parent) {
         PaymentTheme theme = adapter.getPaymentTheme();
         int themeId = theme.getThemeParameters().getCardViewTheme();
-        View view = inflateWithTheme(adapter.getContext(), themeId, R.layout.list_item_account);
+        View view = inflateWithTheme(adapter.getContext(), themeId, R.layout.list_item_account, null);
 
         AccountCardViewHolder holder = new AccountCardViewHolder(adapter, view);
         addInputWidgets(adapter, holder, accountCard);
-        holder.addWidget(createButtonWidget(adapter));
+        holder.addWidget(createButtonWidget(adapter, holder.formLayout));
         holder.setLastImeOptions();
         return holder;
     }
