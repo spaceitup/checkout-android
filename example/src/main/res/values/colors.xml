@@ -9,7 +9,7 @@
     <color name="customColorAccent">#FFFFFF</color>
 
     <color name="custom_background">#000000</color>
-    <color name="custom_middle">#AAAAAA</color>    
+    <color name="custom_middle">#FF0000</color>    
     <color name="custom_foreground">#FFFFFF</color>
     <color name="custom_cardstrokecolor">#FEFEFE</color>
 

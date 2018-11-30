@@ -16,11 +16,11 @@ import java.util.Collections;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import android.view.LayoutInflater;
 
 import android.content.Context;
 import android.support.v4.app.DialogFragment;
 import android.support.v7.widget.RecyclerView;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import net.optile.payment.R;
@@ -28,15 +28,17 @@ import net.optile.payment.core.LanguageFile;
 import net.optile.payment.core.PaymentInputType;
 import net.optile.payment.model.InputElement;
 import net.optile.payment.model.InputElementType;
+import net.optile.payment.util.InflaterUtils;
 import net.optile.payment.ui.theme.PaymentTheme;
 import net.optile.payment.ui.theme.IconParameters;
-import net.optile.payment.ui.theme.ThemeParameters;
+import net.optile.payment.ui.theme.ButtonWidgetParameters;
 import net.optile.payment.ui.model.PaymentCard;
+import net.optile.payment.ui.widget.WidgetInflater;
 import net.optile.payment.ui.widget.ButtonWidget;
-import net.optile.payment.ui.widget.CheckBoxInputWidget;
+import net.optile.payment.ui.widget.CheckBoxWidget;
 import net.optile.payment.ui.widget.DateWidget;
 import net.optile.payment.ui.widget.FormWidget;
-import net.optile.payment.ui.widget.SelectInputWidget;
+import net.optile.payment.ui.widget.SelectWidget;
 import net.optile.payment.ui.widget.TextInputWidget;
 import net.optile.payment.ui.widget.WidgetPresenter;
 import net.optile.payment.util.PaymentUtils;
@@ -47,7 +49,6 @@ import android.view.ContextThemeWrapper;
  * The PaymentCardViewHolder holding the header and input widgets
  */
 abstract class PaymentCardViewHolder extends RecyclerView.ViewHolder {
-
     final ViewGroup formLayout;
     final ListAdapter adapter;
     final WidgetPresenter presenter;
@@ -105,70 +106,34 @@ abstract class PaymentCardViewHolder extends RecyclerView.ViewHolder {
         DateWidget dateWidget = null;
         List<InputElement> elements = card.getInputElements();
         boolean containsExpiryDate = PaymentUtils.containsExpiryDate(elements);
-        
+        PaymentTheme theme = adapter.getPaymentTheme();
+
         for (InputElement element : elements) {
             if (!containsExpiryDate) {
-                holder.addWidget(createInputWidget(adapter, element, holder.formLayout));
+                holder.addWidget(WidgetInflater.inflateInputWidget(element, holder.formLayout, theme));
                 continue;
             }
             switch (element.getName()) {
                 case PaymentInputType.EXPIRY_MONTH:
                     if (dateWidget == null) {
-                        dateWidget = createDateWidget(adapter, holder.formLayout);
+                        dateWidget = WidgetInflater.inflateDateWidget(holder.formLayout, theme);
                         holder.addWidget(dateWidget);
                     }
                     dateWidget.setMonthInputElement(element);
                     break;
                 case PaymentInputType.EXPIRY_YEAR:
                     if (dateWidget == null) {
-                        dateWidget = createDateWidget(adapter, holder.formLayout);
+                        dateWidget = WidgetInflater.inflateDateWidget(holder.formLayout, theme);
                         holder.addWidget(dateWidget);
                     }
                     dateWidget.setYearInputElement(element);
                     break;
                 default:
-                    holder.addWidget(createInputWidget(adapter, element, holder.formLayout));
+                    holder.addWidget(WidgetInflater.inflateInputWidget(element, holder.formLayout, theme));
             }
         }
     }
 
-    static FormWidget createInputWidget(ListAdapter adapter, InputElement element, ViewGroup parent) {
-        FormWidget widget;
-        String name = element.getName();
-        Context context = adapter.getContext();
-        ThemeParameters params = adapter.getPaymentTheme().getThemeParameters();
-        
-        switch (element.getType()) {
-            case InputElementType.SELECT:
-                View view = View.inflate(context, R.layout.widget_input_select, parent);
-                return new SelectInputWidget(name, view);
-            case InputElementType.CHECKBOX:
-                view = inflateWithTheme(context, params.getCheckBoxTheme(), R.layout.widget_input_checkbox, parent);
-                return new CheckBoxInputWidget(name, view);
-            default:
-                view = View.inflate(context, R.layout.widget_input_text, parent);
-                return new TextInputWidget(name, view);
-        }
-    }
-
-    static ButtonWidget createButtonWidget(ListAdapter adapter, ViewGroup parent) {
-        PaymentTheme theme = adapter.getPaymentTheme();
-        ThemeParameters params = theme.getThemeParameters();
-        View view = inflateWithTheme(adapter.getContext(), params.getButtonTheme(), R.layout.widget_button, parent);
-        return new ButtonWidget(PaymentInputType.ACTION_BUTTON, view);
-    }
-
-    static DateWidget createDateWidget(ListAdapter adapter, ViewGroup parent) {
-        Context context = adapter.getContext();
-        PaymentTheme theme = adapter.getPaymentTheme();
-        View view = View.inflate(context, R.layout.widget_input_date, parent);
-        return new DateWidget(PaymentInputType.EXPIRY_DATE, view);
-    }
-
-    static View inflateWithTheme(Context context, int themeResId, int layoutResId, ViewGroup parent) {
-        return View.inflate(new ContextThemeWrapper(context, themeResId), layoutResId, parent);
-    }
-    
     void expand(boolean expand) {
         formLayout.setVisibility(expand ? View.VISIBLE : View.GONE);
     }
@@ -181,7 +146,7 @@ abstract class PaymentCardViewHolder extends RecyclerView.ViewHolder {
         }
         widget.setPresenter(presenter);
         widgets.put(name, widget);
-        //formLayout.addView(widget.getRootView());
+        formLayout.addView(widget.getRootView());
     }
 
     FormWidget getFormWidget(String name) {
@@ -210,8 +175,8 @@ abstract class PaymentCardViewHolder extends RecyclerView.ViewHolder {
         bindIconResource(widget);
         widget.setLabel(element.getLabel());
 
-        if (widget instanceof SelectInputWidget) {
-            ((SelectInputWidget) widget).setSelectOptions(element.getOptions());
+        if (widget instanceof SelectWidget) {
+            ((SelectWidget) widget).setSelectOptions(element.getOptions());
         } else if (widget instanceof TextInputWidget) {
             ((TextInputWidget) widget).setInputType(element.getType());
         }

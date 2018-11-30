@@ -26,7 +26,9 @@ import net.optile.payment.ui.PaymentResult;
 import net.optile.payment.ui.PaymentUI;
 import net.optile.payment.ui.theme.PaymentTheme;
 import net.optile.payment.ui.theme.PaymentTheme.Builder;
-import net.optile.payment.ui.theme.ThemeParameters;
+import net.optile.payment.ui.theme.PaymentPageParameters;
+import net.optile.payment.ui.theme.ButtonWidgetParameters;
+import net.optile.payment.ui.theme.CheckBoxWidgetParameters;
 import net.optile.payment.ui.theme.IconParameters;
 import net.optile.payment.ui.dialog.MessageDialogFragment;
 
@@ -162,26 +164,33 @@ public final class CheckoutActivity extends AppCompatActivity implements Checkou
     public void openPaymentPage(String listUrl) {
         PaymentUI paymentUI = PaymentUI.getInstance();
         paymentUI.setListUrl(listUrl);
-        paymentUI.setPaymentTheme(createCustomTheme());
+        //paymentUI.setPaymentTheme(createCustomTheme());
         paymentUI.showPaymentPage(this, PAYMENT_REQUEST_CODE);
     }
 
     private PaymentTheme createCustomTheme() {
-        ThemeParameters.Builder themeBuilder = ThemeParameters.createBuilder();
-        themeBuilder.setPaymentPageTheme(R.style.CustomThemePaymentPage);
-        themeBuilder.setButtonTheme(R.style.CustomThemeButton);
-        themeBuilder.setTextInputTheme(R.style.CustomThemeTextInput);        
-        themeBuilder.setCheckBoxTheme(R.style.CustomThemeCheckBox);
-        themeBuilder.setCardViewTheme(R.style.CustomThemeCardView);
+
+        PaymentPageParameters.Builder pageBuilder = PaymentPageParameters.createBuilder();
+        pageBuilder.setThemeResId(R.style.CustomThemePaymentPage);
 
         IconParameters.Builder iconBuilder = IconParameters.createBuilder();
         iconBuilder.setOkColorResId(R.color.custom_validationok);
         iconBuilder.setUnknownColorResId(R.color.custom_validationunknown);
         iconBuilder.setErrorColorResId(R.color.custom_validationerror);
+
+        ButtonWidgetParameters.Builder buttonBuilder = ButtonWidgetParameters.createBuilder();
+        buttonBuilder.setThemeResId(R.style.CustomThemeButton);
+
+        CheckBoxWidgetParameters.Builder checkBoxBuilder = CheckBoxWidgetParameters.createBuilder();
+        checkBoxBuilder.setThemeResId(R.style.CustomThemeCheckBox);
         
         return PaymentTheme.createBuilder().
-            setThemeParameters(themeBuilder.build()).
-            setIconParameters(iconBuilder.build()).build();
+            setPaymentPageParameters(pageBuilder.build()).
+            setIconParameters(iconBuilder.build()).
+            setButtonWidgetParameters(buttonBuilder.build()).
+            setCheckBoxWidgetParameters(checkBoxBuilder.build()).
+            build();            
+
     }
 
     

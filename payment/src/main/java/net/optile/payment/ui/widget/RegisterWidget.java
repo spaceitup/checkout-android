@@ -19,7 +19,7 @@ import net.optile.payment.model.RegistrationType;
 /**
  * Widget for handling the Register input
  */
-public final class RegisterWidget extends CheckBoxInputWidget {
+public final class RegisterWidget extends CheckBoxWidget {
 
     private String type;
 

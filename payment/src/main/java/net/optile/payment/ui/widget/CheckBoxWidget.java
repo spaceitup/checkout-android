@@ -22,19 +22,19 @@ import net.optile.payment.form.Charge;
 /**
  * Widget for showing the CheckBox input element
  */
-public class CheckBoxInputWidget extends FormWidget {
+public class CheckBoxWidget extends FormWidget {
 
     private final CheckBox value;
     private final TextView labelDisabled;
     private final TextView labelEnabled;
 
     /**
-     * Construct a new CheckBoxInputWidget
+     * Construct a new CheckBoxWidget
      *
      * @param name name identifying this widget
      * @param rootView the root view of this input
      */
-    public CheckBoxInputWidget(String name, View rootView) {
+    public CheckBoxWidget(String name, View rootView) {
         super(name, rootView);
         labelDisabled = rootView.findViewById(R.id.label_value_disabled);
         labelEnabled = rootView.findViewById(R.id.label_value_enabled);

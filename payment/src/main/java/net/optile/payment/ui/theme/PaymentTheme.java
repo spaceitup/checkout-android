@@ -20,69 +20,85 @@ import net.optile.payment.core.PaymentInputType;
  */
 public final class PaymentTheme {
 
-    private ThemeParameters themeParameters;
-    private TextAppearanceParameters textAppearanceParameters;
+    private PaymentPageParameters paymentPageParameters;
     private IconParameters iconParameters;
-
+    private ButtonWidgetParameters buttonWidgetParameters;
+    private CheckBoxWidgetParameters checkBoxWidgetParameters;
+    
     private PaymentTheme() {
     }
 
     public static Builder createBuilder() {
         return new Builder();
     }
-    
-    public ThemeParameters getThemeParameters() {
-        return themeParameters;
-    }
 
-    public TextAppearanceParameters getTextAppearanceParameters() {
-        return textAppearanceParameters;
+    public PaymentPageParameters getPaymentPageParameters() {
+        return paymentPageParameters;
     }
 
     public IconParameters getIconParameters() {
         return iconParameters;
     }
 
+    public ButtonWidgetParameters getButtonWidgetParameters() {
+        return buttonWidgetParameters;
+    }
+
+    public CheckBoxWidgetParameters getCheckBoxWidgetParameters() {
+        return checkBoxWidgetParameters;
+    }
+    
     public static final class Builder {
-        ThemeParameters themeParameters;
-        TextAppearanceParameters textAppearanceParameters;
+        PaymentPageParameters paymentPageParameters;
         IconParameters iconParameters;
+        ButtonWidgetParameters buttonWidgetParameters;
+        CheckBoxWidgetParameters checkBoxWidgetParameters;
         
         Builder() {
         }
+
+        public Builder setPaymentPageParameters(PaymentPageParameters paymentPageParameters) {
+            this.paymentPageParameters = paymentPageParameters;
+            return this;
+        }
         
-        public Builder setThemeParameters(ThemeParameters themeParameters) {
-            this.themeParameters = themeParameters;
-            return this;
-        }
-
-        public Builder setTextAppearanceParameters(TextAppearanceParameters textAppearanceParameters) {
-            this.textAppearanceParameters = textAppearanceParameters;
-            return this;
-        }
-
         public Builder setIconParameters(IconParameters iconParameters) {
             this.iconParameters = iconParameters;
+            return this;
+        }
+
+        public Builder setButtonWidgetParameters(ButtonWidgetParameters buttonWidgetParameters) {
+            this.buttonWidgetParameters = buttonWidgetParameters;
+            return this;
+        }
+
+        public Builder setCheckBoxWidgetParameters(CheckBoxWidgetParameters checkBoxWidgetParameters) {
+            this.checkBoxWidgetParameters = checkBoxWidgetParameters;
             return this;
         }
 
         public PaymentTheme build() {
             PaymentTheme theme = new PaymentTheme();
 
-            if (themeParameters == null) {
-                themeParameters = ThemeParameters.createBuilder().build();
+            if (paymentPageParameters == null) {
+                paymentPageParameters = PaymentPageParameters.createBuilder().build();
             }
-            theme.themeParameters = themeParameters;
-
-            if (textAppearanceParameters == null) {
-                textAppearanceParameters = TextAppearanceParameters.createBuilder().build();
-            }
-            theme.textAppearanceParameters = textAppearanceParameters;
-
+            theme.paymentPageParameters = paymentPageParameters;
+            
             if (iconParameters == null) {
                 iconParameters = IconParameters.createBuilder().build();
             }
             theme.iconParameters = iconParameters;
+
+            if (buttonWidgetParameters == null) {
+                buttonWidgetParameters = ButtonWidgetParameters.createBuilder().build();
+            }
+            theme.buttonWidgetParameters = buttonWidgetParameters;
+
+            if (checkBoxWidgetParameters == null) {
+                checkBoxWidgetParameters = CheckBoxWidgetParameters.createBuilder().build();
+            }
+            theme.checkBoxWidgetParameters = checkBoxWidgetParameters;
             return theme;
         }
     }

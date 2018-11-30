@@ -13,6 +13,7 @@ package net.optile.payment.ui.list;
 
 import java.net.URL;
 import java.util.List;
+import android.view.LayoutInflater;
 
 import com.bumptech.glide.Glide;
 import android.content.Context;
@@ -48,11 +49,9 @@ final class AccountCardViewHolder extends PaymentCardViewHolder {
     }
 
     static ViewHolder createInstance(ListAdapter adapter, AccountCard accountCard, ViewGroup parent) {
-        PaymentTheme theme = adapter.getPaymentTheme();
-        int themeId = theme.getThemeParameters().getCardViewTheme();
-        View view = inflateWithTheme(adapter.getContext(), themeId, R.layout.list_item_account, null);
-
+        View view = inflate(parent, R.layout.list_item_accountcard);
         AccountCardViewHolder holder = new AccountCardViewHolder(adapter, view);
+
         addInputWidgets(adapter, holder, accountCard);
         holder.addWidget(createButtonWidget(adapter, holder.formLayout));
         holder.setLastImeOptions();

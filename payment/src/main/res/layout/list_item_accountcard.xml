@@ -3,11 +3,10 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:paddingLeft="@dimen/pmborder_xsmall"
-    android:paddingRight="@dimen/pmborder_xsmall">
+    android:layout_marginLeft="@dimen/pmborder_xsmall"
+    android:layout_marginRight="@dimen/pmborder_xsmall">
 
     <android.support.design.card.MaterialCardView
-        android:id="@+id/cardview"
         android:layout_marginTop="@dimen/pmborder_xxsmall"
         android:layout_marginLeft="@dimen/pmborder_xsmall"
         android:layout_marginRight="@dimen/pmborder_xsmall"
@@ -68,6 +67,6 @@
                 android:orientation="vertical">
             </LinearLayout>
         </RelativeLayout>
-
     </android.support.design.card.MaterialCardView>
+
 </LinearLayout>

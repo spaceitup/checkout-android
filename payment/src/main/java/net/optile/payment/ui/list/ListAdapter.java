@@ -143,6 +143,10 @@ final class ListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         return list.getPaymentSession().getLang();
     }
 
+    LayoutInflater getLayoutInflater() {
+        return list.getLayoutInflater();
+    }
+    
     ListItem getItemFromIndex(int index) {
         return index >= 0 && index < items.size() ? items.get(index) : null;
     }

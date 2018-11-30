@@ -26,10 +26,12 @@ import net.optile.payment.core.PaymentInputType;
 import net.optile.payment.ui.model.NetworkCard;
 import net.optile.payment.ui.model.PaymentCard;
 import net.optile.payment.ui.theme.PaymentTheme;
+import net.optile.payment.ui.theme.CheckBoxWidgetParameters;
 import net.optile.payment.ui.model.PaymentNetwork;
 import net.optile.payment.ui.widget.RegisterWidget;
 import android.view.ContextThemeWrapper;
 import android.util.Log;
+import android.view.LayoutInflater;
 
 /**
  * The NetworkCardViewHolder
@@ -46,26 +48,15 @@ final class NetworkCardViewHolder extends PaymentCardViewHolder {
     }
 
     static ViewHolder createInstance(ListAdapter adapter, NetworkCard networkCard, ViewGroup parent) {
-        PaymentTheme theme = adapter.getPaymentTheme();
-        int themeId = theme.getThemeParameters().getCardViewTheme();
-        View view = inflateWithTheme(adapter.getContext(), themeId, R.layout.list_item_network, null);
+        View view = inflate(parent, R.layout.list_item_networkcard);
         NetworkCardViewHolder holder = new NetworkCardViewHolder(adapter, view);
 
         addInputWidgets(adapter, holder, networkCard);
-        holder.addWidget(createRegisterWidget(adapter, PaymentInputType.AUTO_REGISTRATION, holder.formLayout));
-        holder.addWidget(createRegisterWidget(adapter, PaymentInputType.ALLOW_RECURRENCE, holder.formLayout));
+        holder.addWidget(createRegisterWidget(adapter, holder.formLayout, PaymentInputType.AUTO_REGISTRATION));
+        holder.addWidget(createRegisterWidget(adapter, holder.formLayout, PaymentInputType.ALLOW_RECURRENCE));
         holder.addWidget(createButtonWidget(adapter, holder.formLayout));
         holder.setLastImeOptions();
         return holder;
-    }
-
-    static RegisterWidget createRegisterWidget(ListAdapter adapter, String name, ViewGroup parent) {
-        PaymentTheme theme = adapter.getPaymentTheme();
-        int themeId = theme.getThemeParameters().getCheckBoxTheme();
-        View view = inflateWithTheme(adapter.getContext(), themeId, R.layout.widget_input_checkbox, parent);
-        RegisterWidget widget = new RegisterWidget(name, view);
-        widget.applyTheme(theme);
-        return widget;
     }
 
     void onBind(PaymentCard paymentCard) {

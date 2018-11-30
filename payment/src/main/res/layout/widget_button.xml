@@ -1,21 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/layout_viewholder"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:paddingStart="@dimen/pmborder_small"
-    android:paddingTop="@dimen/pmborder_large">
-
-    <Button
-        android:id="@+id/button"
-        android:textAppearance="@style/PaymentText.Medium.Bold.Light"
-        android:stateListAnimator="@null"
-        android:paddingLeft="@dimen/pmborder_large"
-        android:paddingRight="@dimen/pmborder_large"
-        android:paddingTop="@dimen/pmborder_medium"
-        android:paddingBottom="@dimen/pmborder_medium"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
+    android:layout_marginStart="@dimen/pmborder_small"
+    android:layout_marginTop="@dimen/pmborder_large">
 </LinearLayout>
 
 
