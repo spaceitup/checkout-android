@@ -11,53 +11,32 @@
 
 package net.optile.payment.ui.widget;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.Map;
-import android.view.LayoutInflater;
-
 import android.content.Context;
-import android.support.v4.app.DialogFragment;
-import android.support.v7.widget.RecyclerView;
+import android.view.ContextThemeWrapper;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import net.optile.payment.R;
-import net.optile.payment.core.LanguageFile;
-import net.optile.payment.core.PaymentInputType;
 import net.optile.payment.model.InputElement;
 import net.optile.payment.model.InputElementType;
-import net.optile.payment.util.InflaterUtils;
-import net.optile.payment.ui.theme.PaymentTheme;
-import net.optile.payment.ui.theme.IconParameters;
 import net.optile.payment.ui.theme.ButtonWidgetParameters;
-import net.optile.payment.ui.model.PaymentCard;
-import net.optile.payment.ui.widget.ButtonWidget;
-import net.optile.payment.ui.widget.CheckBoxWidget;
-import net.optile.payment.ui.widget.DateWidget;
-import net.optile.payment.ui.widget.FormWidget;
-import net.optile.payment.ui.widget.SelectWidget;
-import net.optile.payment.ui.widget.TextInputWidget;
-import net.optile.payment.ui.widget.WidgetPresenter;
-import net.optile.payment.util.PaymentUtils;
-import net.optile.payment.validation.ValidationResult;
-import android.view.ContextThemeWrapper;
+import net.optile.payment.ui.theme.CheckBoxWidgetParameters;
+import net.optile.payment.ui.theme.PaymentTheme;
 
 /**
- * Class with helper methods to inflate the different widgets with the proper theming
+ * Class with helper methods to inflate widgets with proper theming
  */
 public final class WidgetInflater {
 
-    /** 
+    /**
      * Inflate an InputElement widget, this will either be a select, checkbox or textinput widget.
-     * 
+     *
      * @param element the InputElement from which the widget will be created
-     * @param parent ViewGroup in which the widget will be stored
-     * @param theme custom theming that will be applied to the widget
-     * @return the themed FormWidget 
+     * @param parent the parent ViewGroup in which this CheckBoxWidget will be placed
+     * @param theme used to style the CheckBox widget
+     * @return the inflated themed FormWidget
      */
-    public static FormWidget inflateInputElementWidget(InputElement element, ViewGroup parent, PaymentTheme theme) {
+    public static FormWidget inflateElementWidget(InputElement element, ViewGroup parent, PaymentTheme theme) {
         String name = element.getName();
         switch (element.getType()) {
             case InputElementType.SELECT:
@@ -69,52 +48,118 @@ public final class WidgetInflater {
         }
     }
 
-    /** 
-     * Inflate a RegisterWidget with the theming included 
-     * 
-     * @return inflated RegisterWidget
+    /**
+     * Inflate a CheckBoxWidget with the proper theming
+     *
+     * @param name unique name of the widget
+     * @param parent the parent ViewGroup in which this CheckBoxWidget will be placed
+     * @param theme used to style the CheckBox widget
+     * @return inflated and themed CheckBoxWidget
      */
-    public static RegisterWidget inflateRegisterWidget() {
-        
-    }
-    
-    public static ButtonWidget inflateButtonWidget() {
-    }
-
-    public static DateWidget inflateDateWidget() {
+    public static CheckBoxWidget inflateCheckBoxWidget(String name, ViewGroup parent, PaymentTheme theme) {
+        CheckBoxWidgetParameters params = theme.getCheckBoxWidgetParameters();
+        View view = inflateWithThemedView(parent, R.layout.widget_checkbox, R.layout.view_checkbox, params.getThemeResId());
+        CheckBoxWidget widget = new CheckBoxWidget(name, view);
+        return widget;
     }
 
-    static RegisterWidget inflateRegisterWidget(String name, ListAdapter adapter, ViewGroup parent, String name) {
-        CheckBoxWidgetParameters params = adapter.getPaymentTheme().getCheckBoxWidgetParameters();
-        View view = inflateWithView(parent, R.layout.widget_checkbox, R.layout.view_checkbox, params.getThemeResId());
+    /**
+     * Inflate a RegisterWidget with the proper theming
+     *
+     * @param name unique name of the widget
+     * @param parent the parent ViewGroup in which this RegisterWidget will be placed
+     * @param theme used to style the CheckBox widget
+     * @return inflated and themed RegisterWidget
+     */
+    public static RegisterWidget inflateRegisterWidget(String name, ViewGroup parent, PaymentTheme theme) {
+        CheckBoxWidgetParameters params = theme.getCheckBoxWidgetParameters();
+        View view = inflateWithThemedView(parent, R.layout.widget_checkbox, R.layout.view_checkbox, params.getThemeResId());
         RegisterWidget widget = new RegisterWidget(name, view);
         return widget;
     }
 
-    static TextInputWidget createTextInputWidget(String name, ListAdapter adapter, ViewGroup parent) {
-        View view = InflaterUtils.inflate(parent, R.layout.widget_textinput);        
+    /**
+     * Inflate a ButtonWidget with the proper theming
+     *
+     * @param name unique name of the widget
+     * @param parent the parent ViewGroup in which this ButtonWidget will be placed
+     * @param theme used to style the ButtonWidget
+     * @return inflated and themed ButtonWidget
+     */
+    public static ButtonWidget inflateButtonWidget(String name, ViewGroup parent, PaymentTheme theme) {
+        ButtonWidgetParameters params = theme.getButtonWidgetParameters();
+        View view = inflateWithThemedView(parent, R.layout.widget_button, R.layout.view_button, params.getThemeResId());
+        return new ButtonWidget(name, view);
+    }
+
+    /**
+     * Inflate a DateWidget with the proper theming
+     *
+     * @param name unique name of the widget
+     * @param parent the parent ViewGroup in which this DateWidget will be placed
+     * @param theme used to style the DateWidget
+     * @return inflated and themed DateWidget
+     */
+    public static DateWidget inflateDateWidget(String name, ViewGroup parent, PaymentTheme theme) {
+        View view = inflate(parent, R.layout.widget_date);
+        return new DateWidget(name, view);
+    }
+
+    /**
+     * Inflate a TextInputWidget with the proper theming
+     *
+     * @param name unique name of the widget
+     * @param parent the parent ViewGroup in which this TextInputWidget will be placed
+     * @param theme used to style the TextInputWidget
+     * @return inflated and themed TextInputWidget
+     */
+    public static TextInputWidget inflateTextInputWidget(String name, ViewGroup parent, PaymentTheme theme) {
+        View view = inflate(parent, R.layout.widget_textinput);
         return new TextInputWidget(name, view);
     }
-    
-    static CheckBoxWidget createCheckBoxWidget(String name, ListAdapter adapter, ViewGroup parent) {
-        View view = InflaterUtils.inflate(parent, R.layout.widget_checkbox);
-        return new CheckBoxWidget(name, view);
-    }
 
-    static SelectWidget createSelectWidget(String name, ListAdapter adapter, ViewGroup parent) {
-        View view = InflaterUtils.inflate(parent, R.layout.widget_select);
+    /**
+     * Inflate a SelectWidget with the proper theming
+     *
+     * @param name unique name of the widget
+     * @param parent the parent ViewGroup in which this SelectWidget will be placed
+     * @param theme used to style the SelectWidget
+     * @return inflated and themed SelectWidget
+     */
+    public static SelectWidget inflateSelectWidget(String name, ViewGroup parent, PaymentTheme theme) {
+        View view = inflate(parent, R.layout.widget_select);
         return new SelectWidget(name, view);
     }
-    
-    static ButtonWidget createButtonWidget(ListAdapter adapter, ViewGroup parent) {
-        ButtonWidgetParameters params = adapter.getPaymentTheme().getButtonWidgetParameters();
-        View view = inflateWithView(parent, R.layout.widget_button, R.layout.view_button, params.getThemeResId());
-        return new ButtonWidget(PaymentInputType.ACTION_BUTTON, view);
+
+    /**
+     * Inflate the layout given the parent ViewGroup
+     *
+     * @param parent ViewGroup in which this inflated view will be added
+     * @param layoutResId layout resource id of the view that should be inflated
+     * @return the inflated view
+     */
+    private static View inflate(ViewGroup parent, int layoutResId) {
+        LayoutInflater inflater = LayoutInflater.from(parent.getContext());
+        return inflater.inflate(layoutResId, parent, false);
     }
 
-    static DateWidget createDateWidget(ListAdapter adapter, ViewGroup parent) {
-        View view = inflate(parent, R.layout.widget_date);
-        return new DateWidget(PaymentInputType.EXPIRY_DATE, view);
+    /**
+     * Inflate the layout and attach the themed internal view
+     *
+     * @param parent ViewGroup in which this inflated view will be added
+     * @param layoutResId layout resource id of the view that should be inflated
+     * @param viewLayoutResId internal view resource id that should be inflated with the theme
+     * @param viewThemeResId theme used to inflate the internval view element
+     * @return the inflated view
+     */
+    private static View inflateWithThemedView(ViewGroup parent, int layoutResId, int viewLayoutResId, int viewThemeResId) {
+        Context context = parent.getContext();
+        LayoutInflater inflater = LayoutInflater.from(context);
+        View view = inflater.inflate(layoutResId, parent, false);
+        ViewGroup group = view.findViewById(R.id.layout_viewholder);
+        inflater = LayoutInflater.from(new ContextThemeWrapper(context, viewThemeResId));
+        inflater.inflate(viewLayoutResId, group, true);
+        return view;
     }
 
 

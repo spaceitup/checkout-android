@@ -49,7 +49,7 @@
     <style name="PaymentText.Medium.Bold.Light">
         <item name="android:textColor">@color/pmtext_light</item>
     </style>
-    
+
     <style name="PaymentText.Large">
         <item name="android:textSize">20sp</item>
     </style>

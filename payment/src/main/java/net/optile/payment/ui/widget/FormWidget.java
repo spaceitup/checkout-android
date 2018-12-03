@@ -16,9 +16,9 @@ import android.view.View;
 import android.widget.ImageView;
 import net.optile.payment.R;
 import net.optile.payment.core.PaymentException;
-import net.optile.payment.ui.theme.PaymentTheme;
-import net.optile.payment.ui.theme.IconParameters;
 import net.optile.payment.form.Charge;
+import net.optile.payment.ui.theme.IconParameters;
+import net.optile.payment.ui.theme.PaymentTheme;
 
 /**
  * The base class for all widgets
@@ -49,7 +49,7 @@ public abstract class FormWidget {
 
     public void applyTheme(PaymentTheme theme) {
     }
-    
+
     public View getRootView() {
         return rootView;
     }

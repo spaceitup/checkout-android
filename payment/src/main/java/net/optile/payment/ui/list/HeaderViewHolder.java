@@ -13,7 +13,6 @@ package net.optile.payment.ui.list;
 
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.RecyclerView.ViewHolder;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
@@ -25,7 +24,7 @@ import net.optile.payment.R;
 final class HeaderViewHolder extends RecyclerView.ViewHolder {
 
     final TextView title;
-    
+
     HeaderViewHolder(View parent) {
         super(parent);
         this.title = parent.findViewById(R.id.text_title);

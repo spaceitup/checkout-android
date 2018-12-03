@@ -26,15 +26,13 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.ProgressBar;
 import net.optile.payment.R;
-import net.optile.payment.ui.theme.PaymentTheme;
-import net.optile.payment.ui.theme.PaymentPageParameters;
 import net.optile.payment.ui.PaymentResult;
 import net.optile.payment.ui.PaymentUI;
 import net.optile.payment.ui.dialog.MessageDialogFragment;
 import net.optile.payment.ui.list.PaymentList;
-
 import net.optile.payment.ui.model.PaymentCard;
 import net.optile.payment.ui.model.PaymentSession;
+import net.optile.payment.ui.theme.PaymentPageParameters;
 import net.optile.payment.ui.widget.FormWidget;
 import net.optile.payment.validation.ValidationResult;
 import net.optile.payment.validation.Validator;

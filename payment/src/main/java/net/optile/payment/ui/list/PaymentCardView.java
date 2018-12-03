@@ -11,10 +11,10 @@
 
 package net.optile.payment.ui.list;
 
-import net.optile.payment.R;
-import android.support.v7.widget.CardView;
 import android.content.Context;
+import android.support.v7.widget.CardView;
 import android.util.AttributeSet;
+import net.optile.payment.R;
 
 /**
  * PaymentCardView class for providing dynamic theming

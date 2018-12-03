@@ -13,23 +13,22 @@ package net.optile.payment.ui.list;
 
 import java.net.URL;
 import java.util.List;
-import android.view.LayoutInflater;
 
 import com.bumptech.glide.Glide;
-import android.content.Context;
-import android.view.ContextThemeWrapper;
+
 import android.support.v7.widget.RecyclerView.ViewHolder;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 import net.optile.payment.R;
-import net.optile.payment.ui.theme.PaymentTheme;
 import net.optile.payment.model.AccountMask;
 import net.optile.payment.model.InputElement;
 import net.optile.payment.model.PaymentMethod;
 import net.optile.payment.ui.model.AccountCard;
 import net.optile.payment.ui.model.PaymentCard;
+import net.optile.payment.ui.theme.PaymentTheme;
 import net.optile.payment.util.PaymentUtils;
 
 /**
@@ -49,11 +48,13 @@ final class AccountCardViewHolder extends PaymentCardViewHolder {
     }
 
     static ViewHolder createInstance(ListAdapter adapter, AccountCard accountCard, ViewGroup parent) {
-        View view = inflate(parent, R.layout.list_item_accountcard);
+        LayoutInflater inflater = LayoutInflater.from(parent.getContext());
+        View view = inflater.inflate(R.layout.list_item_accountcard, parent, false);
         AccountCardViewHolder holder = new AccountCardViewHolder(adapter, view);
+        PaymentTheme theme = adapter.getPaymentTheme();
 
-        addInputWidgets(adapter, holder, accountCard);
-        holder.addWidget(createButtonWidget(adapter, holder.formLayout));
+        addElementWidgets(holder, accountCard.getInputElements(), theme);
+        addButtonWidget(holder, theme);
         holder.setLastImeOptions();
         return holder;
     }

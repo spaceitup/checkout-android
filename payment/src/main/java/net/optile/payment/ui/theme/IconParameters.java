@@ -13,9 +13,10 @@ package net.optile.payment.ui.theme;
 
 import java.util.HashMap;
 import java.util.Map;
+
 import android.text.TextUtils;
-import net.optile.payment.core.PaymentInputType;
 import net.optile.payment.R;
+import net.optile.payment.core.PaymentInputType;
 
 /**
  * Class for holding the Icon parameters for the PaymentTheme
@@ -26,11 +27,11 @@ public final class IconParameters {
     private int unknownColorResId;
     private int okColorResId;
     private int errorColorResId;
-    
+
     IconParameters() {
         this.mapping = new HashMap<>();
     }
-    
+
     IconParameters(Map<String, Integer> mapping) {
         this.mapping = mapping;
     }
@@ -50,7 +51,7 @@ public final class IconParameters {
     public int getErrorColorResId() {
         return errorColorResId;
     }
-    
+
     public int getInputTypeIcon(String inputType) {
 
         if (mapping.containsKey(inputType)) {
@@ -82,13 +83,13 @@ public final class IconParameters {
                 return R.drawable.ic_default;
         }
     }
-    
+
     public final static class Builder {
         Map<String, Integer> mapping;
         int okColorResId = R.color.pmvalidation_ok;
         int unknownColorResId = R.color.pmvalidation_unknown;
         int errorColorResId = R.color.pmvalidation_error;
-        
+
         public Builder() {
             mapping = new HashMap<String, Integer>();
         }
@@ -112,7 +113,7 @@ public final class IconParameters {
             this.errorColorResId = errorColorResId;
             return this;
         }
-        
+
         public IconParameters build() {
             IconParameters params = new IconParameters(this.mapping);
             params.okColorResId = this.okColorResId;

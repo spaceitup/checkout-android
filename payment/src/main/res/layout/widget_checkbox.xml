@@ -21,7 +21,7 @@
         android:layout_marginStart="@dimen/pmwidget_padding"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textAppearance="@style/PaymentText.Medium.Hint" />
+        android:textAppearance="@style/PaymentText.Medium.Hint"/>
 
     <TextView
         android:id="@+id/label_value_enabled"
@@ -29,6 +29,6 @@
         android:layout_height="wrap_content"
         android:textAppearance="@style/PaymentText.Medium"
         android:layout_marginStart="@dimen/pmwidget_padding"
-        android:visibility="gone" />
+        android:visibility="gone"/>
 
 </LinearLayout>

@@ -14,8 +14,9 @@ package net.optile.payment.ui.list;
 import java.net.URL;
 
 import com.bumptech.glide.Glide;
-import android.content.Context;
+
 import android.support.v7.widget.RecyclerView.ViewHolder;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
@@ -25,13 +26,11 @@ import net.optile.payment.core.LanguageFile;
 import net.optile.payment.core.PaymentInputType;
 import net.optile.payment.ui.model.NetworkCard;
 import net.optile.payment.ui.model.PaymentCard;
-import net.optile.payment.ui.theme.PaymentTheme;
-import net.optile.payment.ui.theme.CheckBoxWidgetParameters;
 import net.optile.payment.ui.model.PaymentNetwork;
+import net.optile.payment.ui.theme.PaymentTheme;
+import net.optile.payment.ui.widget.FormWidget;
 import net.optile.payment.ui.widget.RegisterWidget;
-import android.view.ContextThemeWrapper;
-import android.util.Log;
-import android.view.LayoutInflater;
+import net.optile.payment.ui.widget.WidgetInflater;
 
 /**
  * The NetworkCardViewHolder
@@ -48,13 +47,18 @@ final class NetworkCardViewHolder extends PaymentCardViewHolder {
     }
 
     static ViewHolder createInstance(ListAdapter adapter, NetworkCard networkCard, ViewGroup parent) {
-        View view = inflate(parent, R.layout.list_item_networkcard);
+        LayoutInflater inflater = LayoutInflater.from(parent.getContext());
+        View view = inflater.inflate(R.layout.list_item_accountcard, parent, false);
         NetworkCardViewHolder holder = new NetworkCardViewHolder(adapter, view);
+        PaymentTheme theme = adapter.getPaymentTheme();
 
-        addInputWidgets(adapter, holder, networkCard);
-        holder.addWidget(createRegisterWidget(adapter, holder.formLayout, PaymentInputType.AUTO_REGISTRATION));
-        holder.addWidget(createRegisterWidget(adapter, holder.formLayout, PaymentInputType.ALLOW_RECURRENCE));
-        holder.addWidget(createButtonWidget(adapter, holder.formLayout));
+        addElementWidgets(holder, networkCard.getInputElements(), theme);
+        FormWidget widget = WidgetInflater.inflateRegisterWidget(PaymentInputType.AUTO_REGISTRATION, holder.formLayout, theme);
+        holder.addWidget(widget);
+        widget = WidgetInflater.inflateRegisterWidget(PaymentInputType.ALLOW_RECURRENCE, holder.formLayout, theme);
+        holder.addWidget(widget);
+        addButtonWidget(holder, theme);
+
         holder.setLastImeOptions();
         return holder;
     }

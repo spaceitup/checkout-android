@@ -11,10 +11,6 @@
 
 package net.optile.payment.ui.theme;
 
-import android.text.TextUtils;
-import net.optile.payment.R;
-import net.optile.payment.core.PaymentInputType;
-
 /**
  * Class to hold the theme settings of the Payment screens in the Android SDK
  */
@@ -24,7 +20,7 @@ public final class PaymentTheme {
     private IconParameters iconParameters;
     private ButtonWidgetParameters buttonWidgetParameters;
     private CheckBoxWidgetParameters checkBoxWidgetParameters;
-    
+
     private PaymentTheme() {
     }
 
@@ -47,13 +43,13 @@ public final class PaymentTheme {
     public CheckBoxWidgetParameters getCheckBoxWidgetParameters() {
         return checkBoxWidgetParameters;
     }
-    
+
     public static final class Builder {
         PaymentPageParameters paymentPageParameters;
         IconParameters iconParameters;
         ButtonWidgetParameters buttonWidgetParameters;
         CheckBoxWidgetParameters checkBoxWidgetParameters;
-        
+
         Builder() {
         }
 
@@ -61,7 +57,7 @@ public final class PaymentTheme {
             this.paymentPageParameters = paymentPageParameters;
             return this;
         }
-        
+
         public Builder setIconParameters(IconParameters iconParameters) {
             this.iconParameters = iconParameters;
             return this;
@@ -84,7 +80,7 @@ public final class PaymentTheme {
                 paymentPageParameters = PaymentPageParameters.createBuilder().build();
             }
             theme.paymentPageParameters = paymentPageParameters;
-            
+
             if (iconParameters == null) {
                 iconParameters = IconParameters.createBuilder().build();
             }
