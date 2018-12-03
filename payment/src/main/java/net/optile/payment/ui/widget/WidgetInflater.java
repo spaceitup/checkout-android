@@ -59,7 +59,7 @@ public final class WidgetInflater {
      */
     public static CheckBoxWidget inflateCheckBoxWidget(String name, ViewGroup parent, PaymentTheme theme) {
         CheckBoxWidgetParameters params = theme.getCheckBoxWidgetParameters();
-        View view = inflateWithThemedView(parent, R.layout.widget_checkbox, R.layout.view_checkbox, params.getThemeResId());
+        View view = inflate(parent, R.layout.widget_checkbox);
         CheckBoxWidget widget = new CheckBoxWidget(name, view);
         widget.applyTheme(theme);
         return widget;

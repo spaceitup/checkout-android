@@ -59,9 +59,7 @@ abstract class InputLayoutWidget extends FormWidget {
     public void applyTheme(PaymentTheme theme) {
         super.applyTheme(theme);
         TextInputWidgetParameters params = theme.getTextInputWidgetParameters();
-        layout.setHintTextAppearance(params.getHintTextAppearance());
-        layout.setErrorTextAppearance(params.getErrorTextAppearance());
-        input.setTextAppearance(params.getEditTextAppearance());
+        //input.setTextAppearance(params.getEditTextAppearance());
     }
     
     public void setLabel(String label) {

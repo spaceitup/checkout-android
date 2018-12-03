@@ -69,7 +69,7 @@
     <style name="PaymentTextInputLayoutHint" parent="TextAppearance.Design.Hint">
         <item name="android:textColor">@color/pmtext_dark</item>
         <item name="android:textSize">12sp</item>
-        <item name="android:fontFamily">@font/roboto_light</item>        
+        <item name="android:fontFamily">@font/roboto_lightitalic</item>        
     </style>
 
     <style name="PaymentTextInputEditText" parent="Widget.AppCompat.EditText">

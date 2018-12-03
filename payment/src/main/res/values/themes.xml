@@ -11,6 +11,8 @@
         <item name="windowNoTitle">true</item>
         <item name="android:windowBackground">@color/pmcolor_list</item>
         <item name="materialCardViewStyle">@style/PaymentThemeCardView</item>
+        <item name="editTextStyle">@style/PaymentTextInputEditText</item>
+        <item name="textInputStyle">@style/PaymentThemeTextInput</item>
     </style>
 
     <style name="PaymentThemeToolbar" parent="ThemeOverlay.AppCompat.Dark.ActionBar">
@@ -26,6 +28,9 @@
         <item name="colorControlNormal">@color/pmcolor_controlnormal</item>
         <!-- underline color enabled -->
         <item name="colorControlActivated">?attr/colorPrimary</item>
+
+        <item name="hintTextAppearance">@style/PaymentTextInputLayoutHint</item>
+        <item name="errorTextAppearance">@style/PaymentTextInputLayoutError</item>
     </style>
 
     <style name="PaymentThemeButton" parent="Widget.AppCompat.Button.Borderless">
@@ -46,7 +51,7 @@
     </style>
 
     <style name="PaymentThemeCheckBox" parent="Widget.AppCompat.CompoundButton.CheckBox">
-        <item name="colorControlNormal">@color/pmcolor_controlnormal</item>
+        <item name="colorControlNormal">@color/pmvalidation_ok</item>
         <item name="colorControlActivated">@color/pmvalidation_ok</item>
     </style>
 
