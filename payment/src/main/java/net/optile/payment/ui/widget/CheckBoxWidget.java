@@ -17,7 +17,10 @@ import android.widget.CompoundButton;
 import android.widget.TextView;
 import net.optile.payment.R;
 import net.optile.payment.core.PaymentException;
+import net.optile.payment.ui.theme.PaymentTheme;
+import net.optile.payment.ui.theme.CheckBoxWidgetParameters;
 import net.optile.payment.form.Charge;
+import android.support.v4.widget.TextViewCompat;
 
 /**
  * Widget for showing the CheckBox input element
@@ -25,8 +28,8 @@ import net.optile.payment.form.Charge;
 public class CheckBoxWidget extends FormWidget {
 
     private final CheckBox value;
-    private final TextView labelDisabled;
-    private final TextView labelEnabled;
+    private final TextView labelUnchecked;
+    private final TextView labelChecked;
 
     /**
      * Construct a new CheckBoxWidget
@@ -36,8 +39,8 @@ public class CheckBoxWidget extends FormWidget {
      */
     public CheckBoxWidget(String name, View rootView) {
         super(name, rootView);
-        labelDisabled = rootView.findViewById(R.id.label_value_disabled);
-        labelEnabled = rootView.findViewById(R.id.label_value_enabled);
+        labelUnchecked = rootView.findViewById(R.id.label_value_unchecked);
+        labelChecked = rootView.findViewById(R.id.label_value_checked);
         value = rootView.findViewById(R.id.checkbox_value);
 
         value.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
@@ -48,9 +51,16 @@ public class CheckBoxWidget extends FormWidget {
         });
     }
 
+    public void applyTheme(PaymentTheme theme) {
+        super.applyTheme(theme);
+        CheckBoxWidgetParameters params = theme.getCheckBoxWidgetParameters();
+        TextViewCompat.setTextAppearance(labelUnchecked, params.getUncheckedTextAppearance());
+        TextViewCompat.setTextAppearance(labelChecked, params.getCheckedTextAppearance());        
+    }
+    
     public void setLabel(String label) {
-        this.labelDisabled.setText(label);
-        this.labelEnabled.setText(label);
+        this.labelUnchecked.setText(label);
+        this.labelChecked.setText(label);
     }
 
     public void putValue(Charge charge) throws PaymentException {
@@ -67,7 +77,7 @@ public class CheckBoxWidget extends FormWidget {
     }
 
     void handleOnCheckedChanged(boolean isChecked) {
-        labelDisabled.setVisibility(isChecked ? View.GONE : View.VISIBLE);
-        labelEnabled.setVisibility(isChecked ? View.VISIBLE : View.GONE);
+        labelUnchecked.setVisibility(isChecked ? View.GONE : View.VISIBLE);
+        labelChecked.setVisibility(isChecked ? View.VISIBLE : View.GONE);
     }
 }

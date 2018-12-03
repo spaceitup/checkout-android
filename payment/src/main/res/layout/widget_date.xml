@@ -19,30 +19,9 @@
         android:contentDescription="Icon"/>
 
     <LinearLayout
+        android:id="@+id/layout_viewholder"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:weightSum="1">
-
-        <android.support.design.widget.TextInputLayout
-            android:id="@+id/layout_value"
-            android:theme="@style/PaymentThemeTextInput"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:errorTextAppearance="@style/PaymentTextInputLayoutError"
-            app:hintTextAppearance="@style/PaymentTextInputLayoutHint">
-
-            <android.support.design.widget.TextInputEditText
-                android:id="@+id/input_value"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                style="@style/PaymentTextInputEditText"
-                android:clickable="false"
-                android:longClickable="false"
-                android:cursorVisible="false"
-                android:inputType="none"
-                android:focusable="true"
-                android:focusableInTouchMode="true"
-                android:singleLine="true"/>
-        </android.support.design.widget.TextInputLayout>
     </LinearLayout>
 </LinearLayout>

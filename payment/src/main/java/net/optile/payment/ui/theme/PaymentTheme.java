@@ -20,7 +20,8 @@ public final class PaymentTheme {
     private IconParameters iconParameters;
     private ButtonWidgetParameters buttonWidgetParameters;
     private CheckBoxWidgetParameters checkBoxWidgetParameters;
-
+    private TextInputWidgetParameters textInputWidgetParameters;
+    
     private PaymentTheme() {
     }
 
@@ -44,12 +45,17 @@ public final class PaymentTheme {
         return checkBoxWidgetParameters;
     }
 
+    public TextInputWidgetParameters getTextInputWidgetParameters() {
+        return textInputWidgetParameters;
+    }
+
     public static final class Builder {
         PaymentPageParameters paymentPageParameters;
         IconParameters iconParameters;
         ButtonWidgetParameters buttonWidgetParameters;
         CheckBoxWidgetParameters checkBoxWidgetParameters;
-
+        TextInputWidgetParameters textInputWidgetParameters;
+        
         Builder() {
         }
 
@@ -73,6 +79,11 @@ public final class PaymentTheme {
             return this;
         }
 
+        public Builder setTextInputWidgetParameters(TextInputWidgetParameters textInputWidgetParameters) {
+            this.textInputWidgetParameters = textInputWidgetParameters;
+            return this;
+        }
+        
         public PaymentTheme build() {
             PaymentTheme theme = new PaymentTheme();
 
@@ -95,6 +106,11 @@ public final class PaymentTheme {
                 checkBoxWidgetParameters = CheckBoxWidgetParameters.createBuilder().build();
             }
             theme.checkBoxWidgetParameters = checkBoxWidgetParameters;
+
+            if (textInputWidgetParameters == null) {
+                textInputWidgetParameters = TextInputWidgetParameters.createBuilder().build();
+            }
+            theme.textInputWidgetParameters = textInputWidgetParameters;
             return theme;
         }
     }

@@ -36,13 +36,6 @@ public interface WidgetPresenter {
     void showKeyboard();
 
     /**
-     * Get the PaymentTheme currently applied to the PaymentPage
-     *
-     * @return the currently applied PaymentTheme
-     */
-    PaymentTheme getPaymentTheme();
-
-    /**
      * Ask the presenter to show the DialogFragment
      *
      * @param dialog to be shown to the user

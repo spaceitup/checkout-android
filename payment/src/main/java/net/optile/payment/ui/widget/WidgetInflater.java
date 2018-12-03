@@ -19,6 +19,7 @@ import android.view.ViewGroup;
 import net.optile.payment.R;
 import net.optile.payment.model.InputElement;
 import net.optile.payment.model.InputElementType;
+import net.optile.payment.ui.theme.TextInputWidgetParameters;
 import net.optile.payment.ui.theme.ButtonWidgetParameters;
 import net.optile.payment.ui.theme.CheckBoxWidgetParameters;
 import net.optile.payment.ui.theme.PaymentTheme;
@@ -60,6 +61,7 @@ public final class WidgetInflater {
         CheckBoxWidgetParameters params = theme.getCheckBoxWidgetParameters();
         View view = inflateWithThemedView(parent, R.layout.widget_checkbox, R.layout.view_checkbox, params.getThemeResId());
         CheckBoxWidget widget = new CheckBoxWidget(name, view);
+        widget.applyTheme(theme);
         return widget;
     }
 
@@ -75,6 +77,7 @@ public final class WidgetInflater {
         CheckBoxWidgetParameters params = theme.getCheckBoxWidgetParameters();
         View view = inflateWithThemedView(parent, R.layout.widget_checkbox, R.layout.view_checkbox, params.getThemeResId());
         RegisterWidget widget = new RegisterWidget(name, view);
+        widget.applyTheme(theme);
         return widget;
     }
 
@@ -89,7 +92,9 @@ public final class WidgetInflater {
     public static ButtonWidget inflateButtonWidget(String name, ViewGroup parent, PaymentTheme theme) {
         ButtonWidgetParameters params = theme.getButtonWidgetParameters();
         View view = inflateWithThemedView(parent, R.layout.widget_button, R.layout.view_button, params.getThemeResId());
-        return new ButtonWidget(name, view);
+        ButtonWidget widget = new ButtonWidget(name, view);
+        widget.applyTheme(theme);
+        return widget;
     }
 
     /**
@@ -101,8 +106,11 @@ public final class WidgetInflater {
      * @return inflated and themed DateWidget
      */
     public static DateWidget inflateDateWidget(String name, ViewGroup parent, PaymentTheme theme) {
-        View view = inflate(parent, R.layout.widget_date);
-        return new DateWidget(name, view);
+        TextInputWidgetParameters params = theme.getTextInputWidgetParameters();
+        View view = inflateWithThemedView(parent, R.layout.widget_date, R.layout.view_date, params.getThemeResId());
+        DateWidget widget = new DateWidget(name, view);
+        widget.applyTheme(theme);
+        return widget;
     }
 
     /**
@@ -114,8 +122,11 @@ public final class WidgetInflater {
      * @return inflated and themed TextInputWidget
      */
     public static TextInputWidget inflateTextInputWidget(String name, ViewGroup parent, PaymentTheme theme) {
-        View view = inflate(parent, R.layout.widget_textinput);
-        return new TextInputWidget(name, view);
+        TextInputWidgetParameters params = theme.getTextInputWidgetParameters();
+        View view = inflateWithThemedView(parent, R.layout.widget_textinput, R.layout.view_textinput, params.getThemeResId());
+        TextInputWidget widget = new TextInputWidget(name, view);
+        widget.applyTheme(theme);
+        return widget;
     }
 
     /**
@@ -128,7 +139,9 @@ public final class WidgetInflater {
      */
     public static SelectWidget inflateSelectWidget(String name, ViewGroup parent, PaymentTheme theme) {
         View view = inflate(parent, R.layout.widget_select);
-        return new SelectWidget(name, view);
+        SelectWidget widget = new SelectWidget(name, view);
+        widget.applyTheme(theme);
+        return widget;
     }
 
     /**

@@ -9,17 +9,19 @@
   * has been received in full.
   */
 
- package net.optile.payment.ui.theme;
+package net.optile.payment.ui.theme;
 
- import net.optile.payment.R;
+import net.optile.payment.R;
 
- /**
+/**
   * Class for holding the ButtonWidgetParameters for the PaymentTheme
   */
  public final class ButtonWidgetParameters {
 
      private int themeResId;
 
+     private int labelTextStyle;
+     
      ButtonWidgetParameters() {
      }
 
@@ -31,9 +33,14 @@
          return themeResId;
      }
 
+     public int getLabelTextStyle() {
+         return labelTextStyle;
+     }
+     
      public final static class Builder {
          int themeResId = R.style.PaymentThemeButton;
-
+         int labelTextStyle = R.style.PaymentText_Medium_Bold_Light;
+             
          public Builder() {
          }
 
@@ -42,9 +49,15 @@
              return this;
          }
 
+         public Builder setLabelTextStyle(int labelTextStyle) {
+             this.labelTextStyle = labelTextStyle;
+             return this;
+         }
+
          public ButtonWidgetParameters build() {
              ButtonWidgetParameters params = new ButtonWidgetParameters();
              params.themeResId = this.themeResId;
+             params.labelTextStyle = this.labelTextStyle;
              return params;
          }
      }

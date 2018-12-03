@@ -2,6 +2,7 @@
 
     <style name="PaymentText" parent="TextAppearance.AppCompat">
         <item name="android:textColor">@color/pmtext_dark</item>
+        <item name="android:fontFamily">@font/roboto_light</item>
     </style>
 
     <style name="PaymentText.Tiny">
@@ -9,7 +10,7 @@
     </style>
 
     <style name="PaymentText.Tiny.Bold">
-        <item name="android:textStyle">bold</item>
+        <item name="android:fontFamily">@font/roboto_medium</item>
     </style>
 
     <style name="PaymentText.Small">
@@ -17,12 +18,12 @@
     </style>
 
     <style name="PaymentText.Small.Bold">
-        <item name="android:textStyle">bold</item>
+        <item name="android:fontFamily">@font/roboto_medium</item>
     </style>
 
     <style name="PaymentText.Small.Bold.Primary">
         <item name="android:textColor">?attr/colorPrimary</item>
-        <item name="android:textStyle">bold</item>
+        <item name="android:fontFamily">@font/roboto_medium</item>
     </style>
 
     <style name="PaymentText.Medium">
@@ -30,7 +31,7 @@
     </style>
 
     <style name="PaymentText.Medium.Bold">
-        <item name="android:textStyle">bold</item>
+        <item name="android:fontFamily">@font/roboto_medium</item>        
     </style>
 
     <style name="PaymentText.Medium.Gray">
@@ -43,7 +44,7 @@
 
     <style name="PaymentText.Medium.Bold.Gray">
         <item name="android:textColor">@color/pmtext_gray</item>
-        <item name="android:textStyle">bold</item>
+        <item name="android:fontFamily">@font/roboto_medium</item>
     </style>
 
     <style name="PaymentText.Medium.Bold.Light">
@@ -56,23 +57,25 @@
 
     <style name="PaymentText.Large.Bold">
         <item name="android:textSize">20sp</item>
-        <item name="android:textStyle">bold</item>
+        <item name="android:fontFamily">@font/roboto_medium</item>        
     </style>
 
     <style name="PaymentTextInputLayoutError" parent="TextAppearance.Design.Error">
         <item name="android:textColor">@color/pmtext_error</item>
         <item name="android:textSize">12sp</item>
+        <item name="android:fontFamily">@font/roboto_light</item>        
     </style>
 
     <style name="PaymentTextInputLayoutHint" parent="TextAppearance.Design.Hint">
         <item name="android:textColor">@color/pmtext_dark</item>
         <item name="android:textSize">12sp</item>
+        <item name="android:fontFamily">@font/roboto_light</item>        
     </style>
 
     <style name="PaymentTextInputEditText" parent="Widget.AppCompat.EditText">
         <item name="android:textColor">@color/pmtext_dark</item>
         <item name="android:textSize">16sp</item>
-        <item name="android:fontFamily">RobotoLight</item>
+        <item name="android:fontFamily">@font/roboto_light</item>    
     </style>
 
 </resources>

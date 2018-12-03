@@ -24,13 +24,12 @@ import android.widget.Button;
 import net.optile.example.R;
 import net.optile.payment.ui.PaymentResult;
 import net.optile.payment.ui.PaymentUI;
-import net.optile.payment.ui.theme.PaymentTheme;
-import net.optile.payment.ui.theme.PaymentTheme.Builder;
-import net.optile.payment.ui.theme.PaymentPageParameters;
+import net.optile.payment.ui.dialog.MessageDialogFragment;
 import net.optile.payment.ui.theme.ButtonWidgetParameters;
 import net.optile.payment.ui.theme.CheckBoxWidgetParameters;
 import net.optile.payment.ui.theme.IconParameters;
-import net.optile.payment.ui.dialog.MessageDialogFragment;
+import net.optile.payment.ui.theme.PaymentPageParameters;
+import net.optile.payment.ui.theme.PaymentTheme;
 
 /**
  * Activity for performing a checkout payment
@@ -183,17 +182,17 @@ public final class CheckoutActivity extends AppCompatActivity implements Checkou
 
         CheckBoxWidgetParameters.Builder checkBoxBuilder = CheckBoxWidgetParameters.createBuilder();
         checkBoxBuilder.setThemeResId(R.style.CustomThemeCheckBox);
-        
+
         return PaymentTheme.createBuilder().
             setPaymentPageParameters(pageBuilder.build()).
             setIconParameters(iconBuilder.build()).
             setButtonWidgetParameters(buttonBuilder.build()).
             setCheckBoxWidgetParameters(checkBoxBuilder.build()).
-            build();            
+            build();
 
     }
 
-    
+
     private void showSnackbar(int resId) {
         Snackbar snackbar = Snackbar.make(findViewById(R.id.layout_activity),
             getString(resId), Snackbar.LENGTH_LONG);

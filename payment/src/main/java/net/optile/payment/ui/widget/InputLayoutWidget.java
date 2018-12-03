@@ -21,6 +21,8 @@ import android.view.inputmethod.EditorInfo;
 import android.widget.LinearLayout;
 import net.optile.payment.R;
 import net.optile.payment.core.PaymentInputType;
+import net.optile.payment.ui.theme.PaymentTheme;
+import net.optile.payment.ui.theme.TextInputWidgetParameters;
 
 /**
  * Base class for widgets using the TextInputLayout and TextInputEditText
@@ -43,8 +45,8 @@ abstract class InputLayoutWidget extends FormWidget {
      */
     InputLayoutWidget(String name, View rootView) {
         super(name, rootView);
-        this.layout = rootView.findViewById(R.id.layout_value);
-        this.input = rootView.findViewById(R.id.input_value);
+        this.layout = rootView.findViewById(R.id.textinputlayout);
+        this.input = rootView.findViewById(R.id.textinputedittext);
 
         input.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
@@ -54,6 +56,14 @@ abstract class InputLayoutWidget extends FormWidget {
         });
     }
 
+    public void applyTheme(PaymentTheme theme) {
+        super.applyTheme(theme);
+        TextInputWidgetParameters params = theme.getTextInputWidgetParameters();
+        layout.setHintTextAppearance(params.getHintTextAppearance());
+        layout.setErrorTextAppearance(params.getErrorTextAppearance());
+        input.setTextAppearance(params.getEditTextAppearance());
+    }
+    
     public void setLabel(String label) {
         this.label = label;
         layout.setHintAnimationEnabled(false);

@@ -17,17 +17,15 @@
     </LinearLayout>
 
     <TextView
-        android:id="@+id/label_value_disabled"
+        android:id="@+id/label_value_unchecked"
         android:layout_marginStart="@dimen/pmwidget_padding"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="@style/PaymentText.Medium.Hint"/>
+        android:layout_height="wrap_content" />
 
     <TextView
-        android:id="@+id/label_value_enabled"
+        android:id="@+id/label_value_checked"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textAppearance="@style/PaymentText.Medium"
         android:layout_marginStart="@dimen/pmwidget_padding"
         android:visibility="gone"/>
 

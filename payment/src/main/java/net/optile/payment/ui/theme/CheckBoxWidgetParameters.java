@@ -19,7 +19,9 @@
  public final class CheckBoxWidgetParameters {
 
      private int themeResId;
-
+     private int checkedTextAppearance;
+     private int uncheckedTextAppearance;
+     
      CheckBoxWidgetParameters() {
      }
 
@@ -31,9 +33,19 @@
          return themeResId;
      }
 
+     public int getCheckedTextAppearance() {
+         return checkedTextAppearance;
+     }
+
+     public int getUncheckedTextAppearance() {
+         return uncheckedTextAppearance;
+     }
+     
      public final static class Builder {
          int themeResId = R.style.PaymentThemeCheckBox;
-
+         int uncheckedTextAppearance = R.style.PaymentText_Medium_Hint;
+         int checkedTextAppearance = R.style.PaymentText_Medium;
+             
          public Builder() {
          }
 
@@ -42,9 +54,21 @@
              return this;
          }
 
+         public Builder setCheckedTextAppearance(int checkedTextAppearance) {
+             this.checkedTextAppearance = checkedTextAppearance;
+             return this;
+         }
+
+         public Builder setUncheckedTextAppearance(int uncheckedTextAppearance) {
+             this.uncheckedTextAppearance = uncheckedTextAppearance;
+             return this;
+         }
+         
          public CheckBoxWidgetParameters build() {
              CheckBoxWidgetParameters params = new CheckBoxWidgetParameters();
              params.themeResId = this.themeResId;
+             params.checkedTextAppearance = this.checkedTextAppearance;
+             params.uncheckedTextAppearance = this.uncheckedTextAppearance;
              return params;
          }
      }

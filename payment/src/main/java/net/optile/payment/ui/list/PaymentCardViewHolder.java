@@ -87,11 +87,6 @@ abstract class PaymentCardViewHolder extends RecyclerView.ViewHolder {
             public ValidationResult validate(String type, String value1, String value2) {
                 return adapter.validate(getAdapterPosition(), type, value1, value2);
             }
-
-            @Override
-            public PaymentTheme getPaymentTheme() {
-                return adapter.getPaymentTheme();
-            }
         };
     }
 

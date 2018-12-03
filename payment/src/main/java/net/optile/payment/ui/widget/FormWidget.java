@@ -21,7 +21,7 @@ import net.optile.payment.ui.theme.IconParameters;
 import net.optile.payment.ui.theme.PaymentTheme;
 
 /**
- * The base class for all widgets
+ * The base class for all widgets, i.e. Button, CheckBox, TextInput etc.
  */
 public abstract class FormWidget {
 
@@ -36,7 +36,8 @@ public abstract class FormWidget {
     WidgetPresenter presenter;
     int state;
     String error;
-
+    IconParameters iconParams;
+    
     FormWidget(String name, View rootView) {
         this.name = name;
         this.rootView = rootView;
@@ -48,6 +49,7 @@ public abstract class FormWidget {
     }
 
     public void applyTheme(PaymentTheme theme) {
+        this.iconParams = theme.getIconParameters();
     }
 
     public View getRootView() {
@@ -99,14 +101,14 @@ public abstract class FormWidget {
         if (icon == null) {
             return;
         }
-        IconParameters params = presenter.getPaymentTheme().getIconParameters();
-        int colorResId = params.getUnknownColorResId();
+        int colorResId = iconParams.getUnknownColorResId();
+
         switch (state) {
             case VALIDATION_OK:
-                colorResId = params.getOkColorResId();
+                colorResId = iconParams.getOkColorResId();
                 break;
             case VALIDATION_ERROR:
-                colorResId = params.getErrorColorResId();
+                colorResId = iconParams.getErrorColorResId();
         }
         icon.setColorFilter(ContextCompat.getColor(rootView.getContext(), colorResId));
     }
