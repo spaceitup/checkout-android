@@ -85,8 +85,17 @@ public final class PaymentPageActivity extends AppCompatActivity implements Paym
         setContentView(R.layout.activity_paymentpage);
         this.progressBar = findViewById(R.id.progressbar);
 
+        initToolbar(params);
+
+        this.presenter = new PaymentPagePresenter(this);
+        this.paymentList = new PaymentList(this, findViewById(R.id.recyclerview_paymentlist),
+            findViewById(R.id.label_empty));
+    }
+
+    private void initToolbar(PaymentPageParameters params) {
         final Toolbar toolbar = findViewById(R.id.toolbar);
         toolbar.setTitle(getString(R.string.pmpage_title));
+        toolbar.setTitleTextAppearance(this, params.getTitleTextAppearance());
         setSupportActionBar(toolbar);
         ActionBar actionBar = getSupportActionBar();
 
@@ -94,11 +103,8 @@ public final class PaymentPageActivity extends AppCompatActivity implements Paym
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
             getSupportActionBar().setDisplayShowHomeEnabled(true);
         }
-        this.presenter = new PaymentPagePresenter(this);
-        this.paymentList = new PaymentList(this, findViewById(R.id.recyclerview_paymentlist),
-            findViewById(R.id.label_empty));
     }
-
+        
     /**
      * {@inheritDoc}
      */

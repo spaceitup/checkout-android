@@ -36,7 +36,7 @@ public abstract class FormWidget {
     WidgetPresenter presenter;
     int state;
     String error;
-    IconParameters iconParams;
+    PaymentTheme theme;
     
     FormWidget(String name, View rootView) {
         this.name = name;
@@ -49,7 +49,7 @@ public abstract class FormWidget {
     }
 
     public void applyTheme(PaymentTheme theme) {
-        this.iconParams = theme.getIconParameters();
+        this.theme = theme;
     }
 
     public View getRootView() {
@@ -101,14 +101,15 @@ public abstract class FormWidget {
         if (icon == null) {
             return;
         }
-        int colorResId = iconParams.getUnknownColorResId();
+        IconParameters params = theme.getIconParameters();
+        int colorResId = params.getUnknownColorResId();
 
         switch (state) {
             case VALIDATION_OK:
-                colorResId = iconParams.getOkColorResId();
+                colorResId = params.getOkColorResId();
                 break;
             case VALIDATION_ERROR:
-                colorResId = iconParams.getErrorColorResId();
+                colorResId = params.getErrorColorResId();
         }
         icon.setColorFilter(ContextCompat.getColor(rootView.getContext(), colorResId));
     }

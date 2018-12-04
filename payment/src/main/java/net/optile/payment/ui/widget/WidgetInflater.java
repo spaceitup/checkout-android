@@ -19,9 +19,8 @@ import android.view.ViewGroup;
 import net.optile.payment.R;
 import net.optile.payment.model.InputElement;
 import net.optile.payment.model.InputElementType;
-import net.optile.payment.ui.theme.TextInputWidgetParameters;
-import net.optile.payment.ui.theme.ButtonWidgetParameters;
-import net.optile.payment.ui.theme.CheckBoxWidgetParameters;
+import net.optile.payment.ui.theme.ButtonParameters;
+import net.optile.payment.ui.theme.CheckBoxParameters;
 import net.optile.payment.ui.theme.PaymentTheme;
 
 /**
@@ -58,7 +57,7 @@ public final class WidgetInflater {
      * @return inflated and themed CheckBoxWidget
      */
     public static CheckBoxWidget inflateCheckBoxWidget(String name, ViewGroup parent, PaymentTheme theme) {
-        CheckBoxWidgetParameters params = theme.getCheckBoxWidgetParameters();
+        CheckBoxParameters params = theme.getCheckBoxParameters();
         View view = inflate(parent, R.layout.widget_checkbox);
         CheckBoxWidget widget = new CheckBoxWidget(name, view);
         widget.applyTheme(theme);
@@ -74,7 +73,7 @@ public final class WidgetInflater {
      * @return inflated and themed RegisterWidget
      */
     public static RegisterWidget inflateRegisterWidget(String name, ViewGroup parent, PaymentTheme theme) {
-        CheckBoxWidgetParameters params = theme.getCheckBoxWidgetParameters();
+        CheckBoxParameters params = theme.getCheckBoxParameters();
         View view = inflateWithThemedView(parent, R.layout.widget_checkbox, R.layout.view_checkbox, params.getThemeResId());
         RegisterWidget widget = new RegisterWidget(name, view);
         widget.applyTheme(theme);
@@ -90,7 +89,7 @@ public final class WidgetInflater {
      * @return inflated and themed ButtonWidget
      */
     public static ButtonWidget inflateButtonWidget(String name, ViewGroup parent, PaymentTheme theme) {
-        ButtonWidgetParameters params = theme.getButtonWidgetParameters();
+        ButtonParameters params = theme.getButtonParameters();
         View view = inflateWithThemedView(parent, R.layout.widget_button, R.layout.view_button, params.getThemeResId());
         ButtonWidget widget = new ButtonWidget(name, view);
         widget.applyTheme(theme);
@@ -106,8 +105,8 @@ public final class WidgetInflater {
      * @return inflated and themed DateWidget
      */
     public static DateWidget inflateDateWidget(String name, ViewGroup parent, PaymentTheme theme) {
-        TextInputWidgetParameters params = theme.getTextInputWidgetParameters();
-        View view = inflateWithThemedView(parent, R.layout.widget_date, R.layout.view_date, params.getThemeResId());
+        //DateParameters params = theme.getDateParameters();
+        View view = inflate(parent, R.layout.widget_date);
         DateWidget widget = new DateWidget(name, view);
         widget.applyTheme(theme);
         return widget;
@@ -122,8 +121,7 @@ public final class WidgetInflater {
      * @return inflated and themed TextInputWidget
      */
     public static TextInputWidget inflateTextInputWidget(String name, ViewGroup parent, PaymentTheme theme) {
-        TextInputWidgetParameters params = theme.getTextInputWidgetParameters();
-        View view = inflateWithThemedView(parent, R.layout.widget_textinput, R.layout.view_textinput, params.getThemeResId());
+        View view = inflate(parent, R.layout.widget_textinput);
         TextInputWidget widget = new TextInputWidget(name, view);
         widget.applyTheme(theme);
         return widget;

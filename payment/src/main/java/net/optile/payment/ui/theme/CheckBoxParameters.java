@@ -14,15 +14,15 @@
  import net.optile.payment.R;
 
  /**
-  * Class for holding the CheckBoxWidgetParameters for the PaymentTheme
+  * Class for holding the CheckBoxParameters for the PaymentTheme
   */
- public final class CheckBoxWidgetParameters {
+ public final class CheckBoxParameters {
 
      private int themeResId;
      private int checkedTextAppearance;
      private int uncheckedTextAppearance;
      
-     CheckBoxWidgetParameters() {
+     CheckBoxParameters() {
      }
 
      public static Builder createBuilder() {
@@ -64,8 +64,8 @@
              return this;
          }
          
-         public CheckBoxWidgetParameters build() {
-             CheckBoxWidgetParameters params = new CheckBoxWidgetParameters();
+         public CheckBoxParameters build() {
+             CheckBoxParameters params = new CheckBoxParameters();
              params.themeResId = this.themeResId;
              params.checkedTextAppearance = this.checkedTextAppearance;
              params.uncheckedTextAppearance = this.uncheckedTextAppearance;

@@ -14,15 +14,15 @@ package net.optile.payment.ui.theme;
 import net.optile.payment.R;
 
 /**
-  * Class for holding the ButtonWidgetParameters for the PaymentTheme
+  * Class for holding the ButtonParameters for the PaymentTheme
   */
- public final class ButtonWidgetParameters {
+ public final class ButtonParameters {
 
      private int themeResId;
 
-     private int labelTextStyle;
+     private int labelTextAppearance;
      
-     ButtonWidgetParameters() {
+     ButtonParameters() {
      }
 
      public static Builder createBuilder() {
@@ -33,13 +33,13 @@ import net.optile.payment.R;
          return themeResId;
      }
 
-     public int getLabelTextStyle() {
-         return labelTextStyle;
+     public int getLabelTextAppearance() {
+         return labelTextAppearance;
      }
      
      public final static class Builder {
          int themeResId = R.style.PaymentThemeButton;
-         int labelTextStyle = R.style.PaymentText_Medium_Bold_Light;
+         int labelTextAppearance = R.style.PaymentText_Medium_Bold_Light;
              
          public Builder() {
          }
@@ -49,15 +49,15 @@ import net.optile.payment.R;
              return this;
          }
 
-         public Builder setLabelTextStyle(int labelTextStyle) {
-             this.labelTextStyle = labelTextStyle;
+         public Builder setLabelTextAppearance(int labelTextAppearance) {
+             this.labelTextAppearance = labelTextAppearance;
              return this;
          }
 
-         public ButtonWidgetParameters build() {
-             ButtonWidgetParameters params = new ButtonWidgetParameters();
+         public ButtonParameters build() {
+             ButtonParameters params = new ButtonParameters();
              params.themeResId = this.themeResId;
-             params.labelTextStyle = this.labelTextStyle;
+             params.labelTextAppearance = this.labelTextAppearance;
              return params;
          }
      }

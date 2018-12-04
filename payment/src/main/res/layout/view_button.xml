@@ -2,7 +2,6 @@
 <Button
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/button"
-    android:textAppearance="@style/PaymentText.Medium.Bold.Light"
     android:stateListAnimator="@null"
     android:paddingLeft="@dimen/pmborder_large"
     android:paddingRight="@dimen/pmborder_large"

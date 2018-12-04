@@ -25,8 +25,8 @@ import net.optile.example.R;
 import net.optile.payment.ui.PaymentResult;
 import net.optile.payment.ui.PaymentUI;
 import net.optile.payment.ui.dialog.MessageDialogFragment;
-import net.optile.payment.ui.theme.ButtonWidgetParameters;
-import net.optile.payment.ui.theme.CheckBoxWidgetParameters;
+import net.optile.payment.ui.theme.ButtonParameters;
+import net.optile.payment.ui.theme.CheckBoxParameters;
 import net.optile.payment.ui.theme.IconParameters;
 import net.optile.payment.ui.theme.PaymentPageParameters;
 import net.optile.payment.ui.theme.PaymentTheme;
@@ -177,17 +177,17 @@ public final class CheckoutActivity extends AppCompatActivity implements Checkou
         iconBuilder.setUnknownColorResId(R.color.custom_validationunknown);
         iconBuilder.setErrorColorResId(R.color.custom_validationerror);
 
-        ButtonWidgetParameters.Builder buttonBuilder = ButtonWidgetParameters.createBuilder();
+        ButtonParameters.Builder buttonBuilder = ButtonParameters.createBuilder();
         buttonBuilder.setThemeResId(R.style.CustomThemeButton);
 
-        CheckBoxWidgetParameters.Builder checkBoxBuilder = CheckBoxWidgetParameters.createBuilder();
+        CheckBoxParameters.Builder checkBoxBuilder = CheckBoxParameters.createBuilder();
         checkBoxBuilder.setThemeResId(R.style.CustomThemeCheckBox);
 
         return PaymentTheme.createBuilder().
             setPaymentPageParameters(pageBuilder.build()).
             setIconParameters(iconBuilder.build()).
-            setButtonWidgetParameters(buttonBuilder.build()).
-            setCheckBoxWidgetParameters(checkBoxBuilder.build()).
+            setButtonParameters(buttonBuilder.build()).
+            setCheckBoxParameters(checkBoxBuilder.build()).
             build();
 
     }

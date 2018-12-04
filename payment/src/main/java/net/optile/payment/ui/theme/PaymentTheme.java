@@ -18,9 +18,9 @@ public final class PaymentTheme {
 
     private PaymentPageParameters paymentPageParameters;
     private IconParameters iconParameters;
-    private ButtonWidgetParameters buttonWidgetParameters;
-    private CheckBoxWidgetParameters checkBoxWidgetParameters;
-    private TextInputWidgetParameters textInputWidgetParameters;
+    private ButtonParameters buttonParameters;
+    private CheckBoxParameters checkBoxParameters;
+    private DateParameters dateParameters;
     
     private PaymentTheme() {
     }
@@ -37,24 +37,24 @@ public final class PaymentTheme {
         return iconParameters;
     }
 
-    public ButtonWidgetParameters getButtonWidgetParameters() {
-        return buttonWidgetParameters;
+    public ButtonParameters getButtonParameters() {
+        return buttonParameters;
     }
 
-    public CheckBoxWidgetParameters getCheckBoxWidgetParameters() {
-        return checkBoxWidgetParameters;
+    public CheckBoxParameters getCheckBoxParameters() {
+        return checkBoxParameters;
     }
 
-    public TextInputWidgetParameters getTextInputWidgetParameters() {
-        return textInputWidgetParameters;
+    public DateParameters getDateParameters() {
+        return dateParameters;
     }
-
+    
     public static final class Builder {
         PaymentPageParameters paymentPageParameters;
         IconParameters iconParameters;
-        ButtonWidgetParameters buttonWidgetParameters;
-        CheckBoxWidgetParameters checkBoxWidgetParameters;
-        TextInputWidgetParameters textInputWidgetParameters;
+        ButtonParameters buttonParameters;
+        CheckBoxParameters checkBoxParameters;
+        DateParameters dateParameters;
         
         Builder() {
         }
@@ -69,18 +69,18 @@ public final class PaymentTheme {
             return this;
         }
 
-        public Builder setButtonWidgetParameters(ButtonWidgetParameters buttonWidgetParameters) {
-            this.buttonWidgetParameters = buttonWidgetParameters;
+        public Builder setButtonParameters(ButtonParameters buttonParameters) {
+            this.buttonParameters = buttonParameters;
             return this;
         }
 
-        public Builder setCheckBoxWidgetParameters(CheckBoxWidgetParameters checkBoxWidgetParameters) {
-            this.checkBoxWidgetParameters = checkBoxWidgetParameters;
+        public Builder setCheckBoxParameters(CheckBoxParameters checkBoxParameters) {
+            this.checkBoxParameters = checkBoxParameters;
             return this;
         }
 
-        public Builder setTextInputWidgetParameters(TextInputWidgetParameters textInputWidgetParameters) {
-            this.textInputWidgetParameters = textInputWidgetParameters;
+        public Builder setDateParameters(DateParameters dateParameters) {
+            this.dateParameters = dateParameters;
             return this;
         }
         
@@ -97,20 +97,21 @@ public final class PaymentTheme {
             }
             theme.iconParameters = iconParameters;
 
-            if (buttonWidgetParameters == null) {
-                buttonWidgetParameters = ButtonWidgetParameters.createBuilder().build();
+            if (buttonParameters == null) {
+                buttonParameters = ButtonParameters.createBuilder().build();
             }
-            theme.buttonWidgetParameters = buttonWidgetParameters;
+            theme.buttonParameters = buttonParameters;
 
-            if (checkBoxWidgetParameters == null) {
-                checkBoxWidgetParameters = CheckBoxWidgetParameters.createBuilder().build();
+            if (checkBoxParameters == null) {
+                checkBoxParameters = CheckBoxParameters.createBuilder().build();
             }
-            theme.checkBoxWidgetParameters = checkBoxWidgetParameters;
+            theme.checkBoxParameters = checkBoxParameters;
 
-            if (textInputWidgetParameters == null) {
-                textInputWidgetParameters = TextInputWidgetParameters.createBuilder().build();
+            if (dateParameters == null) {
+                dateParameters = DateParameters.createBuilder().build();
             }
-            theme.textInputWidgetParameters = textInputWidgetParameters;
+            theme.dateParameters = dateParameters;
+
             return theme;
         }
     }

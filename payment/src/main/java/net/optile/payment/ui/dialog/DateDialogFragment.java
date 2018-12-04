@@ -24,6 +24,10 @@ import android.view.Window;
 import android.widget.NumberPicker;
 import android.widget.TextView;
 import net.optile.payment.R;
+import net.optile.payment.ui.PaymentUI;
+import net.optile.payment.ui.theme.PaymentTheme;
+import net.optile.payment.ui.theme.DateParameters;
+import android.support.v4.widget.TextViewCompat;
 
 /**
  * Date Dialog Fragment for allowing the user to select month and year
@@ -42,7 +46,8 @@ public final class DateDialogFragment extends DialogFragment {
     private String[] monthLabels;
 
     private DateDialogListener listener;
-
+    private PaymentTheme theme;
+    
     /**
      * Set the title in this date dialog
      *
@@ -82,10 +87,11 @@ public final class DateDialogFragment extends DialogFragment {
      */
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        DateParameters params = PaymentUI.getInstance().getPaymentTheme().getDateParameters();
         View v = inflater.inflate(R.layout.dialogfragment_date, container, false);
-        initTitle(v);
+        initTitle(v, params);
         initNumberPickers(v);
-        initButton(v);
+        initButton(v, params);
         return v;
     }
 
@@ -103,22 +109,24 @@ public final class DateDialogFragment extends DialogFragment {
         yearPicker.setValue(yearIndex);
     }
 
-    private void initTitle(View rootView) {
+    private void initTitle(View rootView, DateParameters params) {
         TextView tv = rootView.findViewById(R.id.text_title);
 
         if (TextUtils.isEmpty(title)) {
             tv.setVisibility(View.GONE);
             return;
         }
+        TextViewCompat.setTextAppearance(tv, params.getDialogTitleTextAppearance());        
         tv.setVisibility(View.VISIBLE);
         tv.setText(title);
     }
 
-    private void initButton(View rootView) {
+    private void initButton(View rootView, DateParameters params) {
         View layout = rootView.findViewById(R.id.layout_button);
         layout.setVisibility(View.VISIBLE);
         TextView tv = rootView.findViewById(R.id.text_button);
         tv.setText(buttonLabel);
+        TextViewCompat.setTextAppearance(tv, params.getDialogButtonTextAppearance());
 
         layout.setOnClickListener(new View.OnClickListener() {
             @Override

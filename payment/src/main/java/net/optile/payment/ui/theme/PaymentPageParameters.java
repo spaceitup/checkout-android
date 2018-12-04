@@ -20,6 +20,8 @@
 
      private int themeResId;
 
+     private int titleTextAppearance;
+     
      PaymentPageParameters() {
      }
 
@@ -31,9 +33,14 @@
          return themeResId;
      }
 
+     public int getTitleTextAppearance() {
+         return titleTextAppearance;
+     }
+     
      public final static class Builder {
          int themeResId = R.style.PaymentTheme_PaymentPage;
-
+         int titleTextAppearance = R.style.PaymentText_Medium_Bold_Light;
+         
          public Builder() {
          }
 
@@ -42,9 +49,15 @@
              return this;
          }
 
+         public Builder setTitleTextAppearance(int titleTextAppearance) {
+             this.titleTextAppearance = titleTextAppearance;
+             return this;
+         }
+         
          public PaymentPageParameters build() {
              PaymentPageParameters params = new PaymentPageParameters();
              params.themeResId = this.themeResId;
+             params.titleTextAppearance = this.titleTextAppearance;
              return params;
          }
      }

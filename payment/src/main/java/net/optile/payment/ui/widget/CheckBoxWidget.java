@@ -17,8 +17,8 @@ import android.widget.CompoundButton;
 import android.widget.TextView;
 import net.optile.payment.R;
 import net.optile.payment.core.PaymentException;
+import net.optile.payment.ui.theme.CheckBoxParameters;
 import net.optile.payment.ui.theme.PaymentTheme;
-import net.optile.payment.ui.theme.CheckBoxWidgetParameters;
 import net.optile.payment.form.Charge;
 import android.support.v4.widget.TextViewCompat;
 
@@ -53,7 +53,7 @@ public class CheckBoxWidget extends FormWidget {
 
     public void applyTheme(PaymentTheme theme) {
         super.applyTheme(theme);
-        CheckBoxWidgetParameters params = theme.getCheckBoxWidgetParameters();
+        CheckBoxParameters params = theme.getCheckBoxParameters();
         TextViewCompat.setTextAppearance(labelUnchecked, params.getUncheckedTextAppearance());
         TextViewCompat.setTextAppearance(labelChecked, params.getCheckedTextAppearance());        
     }
