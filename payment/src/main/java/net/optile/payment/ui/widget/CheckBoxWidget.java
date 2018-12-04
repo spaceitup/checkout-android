@@ -36,26 +36,24 @@ public class CheckBoxWidget extends FormWidget {
      *
      * @param name name identifying this widget
      * @param rootView the root view of this input
+     * @param theme PaymentTheme to apply
      */
-    public CheckBoxWidget(String name, View rootView) {
-        super(name, rootView);
+    public CheckBoxWidget(String name, View rootView, PaymentTheme theme) {
+        super(name, rootView, theme);
         labelUnchecked = rootView.findViewById(R.id.label_value_unchecked);
         labelChecked = rootView.findViewById(R.id.label_value_checked);
-        value = rootView.findViewById(R.id.checkbox_value);
 
+        CheckBoxParameters params = theme.getCheckBoxParameters();
+        TextViewCompat.setTextAppearance(labelUnchecked, params.getUncheckedTextAppearance());
+        TextViewCompat.setTextAppearance(labelChecked, params.getCheckedTextAppearance());
+
+        value = rootView.findViewById(R.id.checkbox_value);
         value.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 handleOnCheckedChanged(isChecked);
             }
         });
-    }
-
-    public void applyTheme(PaymentTheme theme) {
-        super.applyTheme(theme);
-        CheckBoxParameters params = theme.getCheckBoxParameters();
-        TextViewCompat.setTextAppearance(labelUnchecked, params.getUncheckedTextAppearance());
-        TextViewCompat.setTextAppearance(labelChecked, params.getCheckedTextAppearance());
     }
 
     public void setLabel(String label) {

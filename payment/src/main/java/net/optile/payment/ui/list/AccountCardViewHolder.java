@@ -57,6 +57,7 @@ final class AccountCardViewHolder extends PaymentCardViewHolder {
 
         addElementWidgets(holder, accountCard.getInputElements(), theme);
         addButtonWidget(holder, theme);
+
         holder.applyTheme(theme);
         holder.setLastImeOptions();
         return holder;
@@ -75,7 +76,6 @@ final class AccountCardViewHolder extends PaymentCardViewHolder {
             throw new IllegalArgumentException("Expected AccountCard in onBind");
         }
         super.onBind(paymentCard);
-
         AccountCard card = (AccountCard) paymentCard;
         AccountMask mask = card.getMaskedAccount();
         bindTitle(mask, card.getPaymentMethod());

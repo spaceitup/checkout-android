@@ -24,6 +24,7 @@ import net.optile.payment.model.SelectOption;
 import net.optile.payment.ui.dialog.DateDialogFragment;
 import net.optile.payment.util.PaymentUtils;
 import net.optile.payment.validation.ValidationResult;
+import net.optile.payment.ui.theme.PaymentTheme;
 
 /**
  * Widget for handling the date input
@@ -42,9 +43,11 @@ public final class DateWidget extends InputLayoutWidget implements DateDialogFra
      *
      * @param name name identifying this widget
      * @param rootView the root view of this input
+     * @param theme the PaymentTheme to apply
      */
-    public DateWidget(String name, View rootView) {
-        super(name, rootView);
+    public DateWidget(String name, View rootView, PaymentTheme theme) {
+        super(name, rootView, theme);
+
         input.setKeyListener(null);
         input.setOnClickListener(new View.OnClickListener() {
             @Override

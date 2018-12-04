@@ -21,6 +21,7 @@ import android.view.inputmethod.EditorInfo;
 import android.widget.LinearLayout;
 import net.optile.payment.R;
 import net.optile.payment.core.PaymentInputType;
+import net.optile.payment.ui.theme.PaymentTheme;
 
 /**
  * Base class for widgets using the TextInputLayout and TextInputEditText
@@ -40,9 +41,10 @@ abstract class InputLayoutWidget extends FormWidget {
      *
      * @param name name identifying this widget
      * @param rootView the root view of this input
+     * @param theme PaymentTheme to apply
      */
-    InputLayoutWidget(String name, View rootView) {
-        super(name, rootView);
+    InputLayoutWidget(String name, View rootView, PaymentTheme theme) {
+        super(name, rootView, theme);
         this.layout = rootView.findViewById(R.id.textinputlayout);
         this.input = rootView.findViewById(R.id.textinputedittext);
 

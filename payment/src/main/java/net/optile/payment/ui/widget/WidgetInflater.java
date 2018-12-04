@@ -59,9 +59,7 @@ public final class WidgetInflater {
     public static CheckBoxWidget inflateCheckBoxWidget(String name, ViewGroup parent, PaymentTheme theme) {
         CheckBoxParameters params = theme.getCheckBoxParameters();
         View view = inflate(parent, R.layout.widget_checkbox);
-        CheckBoxWidget widget = new CheckBoxWidget(name, view);
-        widget.applyTheme(theme);
-        return widget;
+        return new CheckBoxWidget(name, view, theme);
     }
 
     /**
@@ -75,9 +73,7 @@ public final class WidgetInflater {
     public static RegisterWidget inflateRegisterWidget(String name, ViewGroup parent, PaymentTheme theme) {
         CheckBoxParameters params = theme.getCheckBoxParameters();
         View view = inflateWithThemedView(parent, R.layout.widget_checkbox, R.layout.view_checkbox, params.getThemeResId());
-        RegisterWidget widget = new RegisterWidget(name, view);
-        widget.applyTheme(theme);
-        return widget;
+        return new RegisterWidget(name, view, theme);
     }
 
     /**
@@ -91,9 +87,7 @@ public final class WidgetInflater {
     public static ButtonWidget inflateButtonWidget(String name, ViewGroup parent, PaymentTheme theme) {
         ButtonParameters params = theme.getButtonParameters();
         View view = inflateWithThemedView(parent, R.layout.widget_button, R.layout.view_button, params.getThemeResId());
-        ButtonWidget widget = new ButtonWidget(name, view);
-        widget.applyTheme(theme);
-        return widget;
+        return new ButtonWidget(name, view, theme);
     }
 
     /**
@@ -106,9 +100,7 @@ public final class WidgetInflater {
      */
     public static DateWidget inflateDateWidget(String name, ViewGroup parent, PaymentTheme theme) {
         View view = inflate(parent, R.layout.widget_date);
-        DateWidget widget = new DateWidget(name, view);
-        widget.applyTheme(theme);
-        return widget;
+        return new DateWidget(name, view, theme);
     }
 
     /**
@@ -121,9 +113,7 @@ public final class WidgetInflater {
      */
     public static TextInputWidget inflateTextInputWidget(String name, ViewGroup parent, PaymentTheme theme) {
         View view = inflate(parent, R.layout.widget_textinput);
-        TextInputWidget widget = new TextInputWidget(name, view);
-        widget.applyTheme(theme);
-        return widget;
+        return new TextInputWidget(name, view, theme);
     }
 
     /**
@@ -136,9 +126,7 @@ public final class WidgetInflater {
      */
     public static SelectWidget inflateSelectWidget(String name, ViewGroup parent, PaymentTheme theme) {
         View view = inflate(parent, R.layout.widget_select);
-        SelectWidget widget = new SelectWidget(name, view);
-        widget.applyTheme(theme);
-        return widget;
+        return new SelectWidget(name, view, theme);
     }
 
     /**

@@ -30,10 +30,14 @@ public final class ButtonWidget extends FormWidget {
      *
      * @param name the name of this widget
      * @param rootView the root view of this button
+     * @param theme PaymentTheme used for this widget
      */
-    public ButtonWidget(String name, View rootView) {
-        super(name, rootView);
+    public ButtonWidget(String name, View rootView, PaymentTheme theme) {
+        super(name, rootView, theme);
         button = rootView.findViewById(R.id.button);
+        ButtonParameters params = theme.getButtonParameters();
+        TextViewCompat.setTextAppearance(button, params.getLabelTextAppearance());
+
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -44,12 +48,6 @@ public final class ButtonWidget extends FormWidget {
 
     public void setButtonLabel(String label) {
         button.setText(label);
-    }
-
-    public void applyTheme(PaymentTheme theme) {
-        super.applyTheme(theme);
-        ButtonParameters params = theme.getButtonParameters();
-        TextViewCompat.setTextAppearance(button, params.getLabelTextAppearance());
     }
 
     private void handleOnClick() {

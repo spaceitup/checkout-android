@@ -38,18 +38,15 @@ public abstract class FormWidget {
     String error;
     PaymentTheme theme;
 
-    FormWidget(String name, View rootView) {
+    FormWidget(String name, View rootView, PaymentTheme theme) {
         this.name = name;
         this.rootView = rootView;
+        this.theme = theme;
         this.icon = rootView.findViewById(R.id.image_icon);
     }
 
     public void setPresenter(WidgetPresenter presenter) {
         this.presenter = presenter;
-    }
-
-    public void applyTheme(PaymentTheme theme) {
-        this.theme = theme;
     }
 
     public View getRootView() {

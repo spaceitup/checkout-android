@@ -224,7 +224,6 @@ public final class CheckoutActivity extends AppCompatActivity implements Checkou
             setListParameters(listBuilder.build()).
             setMessageParameters(messageBuilder.build()).
             build();
-
     }
 
     private void showSnackbar(int resId) {

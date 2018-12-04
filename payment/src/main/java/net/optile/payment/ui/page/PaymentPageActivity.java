@@ -84,14 +84,10 @@ public final class PaymentPageActivity extends AppCompatActivity implements Paym
         PageParameters params = PaymentUI.getInstance().getPaymentTheme().getPageParameters();
         setTheme(params.getThemeResId());
         setContentView(R.layout.activity_paymentpage);
-
         initToolbar(params);
         initList(params);
-
         this.progressBar = findViewById(R.id.progressbar);
         this.presenter = new PaymentPagePresenter(this);
-        this.paymentList = new PaymentList(this, findViewById(R.id.recyclerview_paymentlist),
-            findViewById(R.id.label_empty));
     }
 
     private void initList(PageParameters params) {

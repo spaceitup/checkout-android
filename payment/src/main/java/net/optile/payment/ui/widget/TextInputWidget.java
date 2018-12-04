@@ -21,6 +21,7 @@ import net.optile.payment.core.PaymentException;
 import net.optile.payment.form.Charge;
 import net.optile.payment.model.InputElementType;
 import net.optile.payment.validation.ValidationResult;
+import net.optile.payment.ui.theme.PaymentTheme;
 
 /**
  * Widget for handling text input
@@ -35,9 +36,10 @@ public final class TextInputWidget extends InputLayoutWidget {
      *
      * @param name name identifying this widget
      * @param rootView the root view of this input
+     * @param theme PaymentTheme to apply to this widget
      */
-    public TextInputWidget(String name, View rootView) {
-        super(name, rootView);
+    public TextInputWidget(String name, View rootView, PaymentTheme theme) {
+        super(name, rootView, theme);
         input.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override
             public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {

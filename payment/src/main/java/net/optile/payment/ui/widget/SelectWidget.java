@@ -23,6 +23,7 @@ import net.optile.payment.core.PaymentException;
 import net.optile.payment.form.Charge;
 import net.optile.payment.model.SelectOption;
 import net.optile.payment.util.PaymentUtils;
+import net.optile.payment.ui.theme.PaymentTheme;
 
 /**
  * Widget for handling the Select input type
@@ -38,9 +39,10 @@ public final class SelectWidget extends FormWidget {
      *
      * @param name identifying this widget
      * @param rootView the root view of this input
+     * @param theme PaymentTheme to apply
      */
-    public SelectWidget(String name, View rootView) {
-        super(name, rootView);
+    public SelectWidget(String name, View rootView, PaymentTheme theme) {
+        super(name, rootView, theme);
         label = rootView.findViewById(R.id.input_label);
         adapter = new ArrayAdapter<>(rootView.getContext(), R.layout.spinner_item);
 
