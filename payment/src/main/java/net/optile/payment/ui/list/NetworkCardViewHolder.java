@@ -69,6 +69,7 @@ final class NetworkCardViewHolder extends PaymentCardViewHolder {
     void applyTheme(PaymentTheme theme) {
         ListParameters params = theme.getListParameters();
         TextViewCompat.setTextAppearance(title, params.getNetworkTitleTextAppearance());
+        logo.setBackgroundResource(params.getLogoBackgroundResId());
     }
 
     void onBind(PaymentCard paymentCard) {

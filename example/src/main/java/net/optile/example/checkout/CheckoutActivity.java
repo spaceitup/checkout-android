@@ -28,7 +28,10 @@ import net.optile.payment.ui.dialog.MessageDialogFragment;
 import net.optile.payment.ui.theme.ButtonParameters;
 import net.optile.payment.ui.theme.CheckBoxParameters;
 import net.optile.payment.ui.theme.IconParameters;
-import net.optile.payment.ui.theme.PaymentPageParameters;
+import net.optile.payment.ui.theme.PageParameters;
+import net.optile.payment.ui.theme.DateParameters;
+import net.optile.payment.ui.theme.ListParameters;
+import net.optile.payment.ui.theme.MessageParameters;
 import net.optile.payment.ui.theme.PaymentTheme;
 
 /**
@@ -42,7 +45,8 @@ public final class CheckoutActivity extends AppCompatActivity implements Checkou
     private CheckoutPresenter presenter;
     private boolean active;
     private CheckoutResult checkoutResult;
-
+    private boolean customTheme;
+    
     /**
      * Create an Intent to launch this activity
      *
@@ -65,10 +69,17 @@ public final class CheckoutActivity extends AppCompatActivity implements Checkou
         final Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        final Button button = findViewById(R.id.button_checkout);
+        Button button = findViewById(R.id.button_default);
         button.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                onButtonClicked();
+                onButtonClicked(false);
+            }
+        });
+
+        button = findViewById(R.id.button_custom);
+        button.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                onButtonClicked(true);
             }
         });
         this.presenter = new CheckoutPresenter(this);
@@ -163,15 +174,16 @@ public final class CheckoutActivity extends AppCompatActivity implements Checkou
     public void openPaymentPage(String listUrl) {
         PaymentUI paymentUI = PaymentUI.getInstance();
         paymentUI.setListUrl(listUrl);
-        //paymentUI.setPaymentTheme(createCustomTheme());
+        paymentUI.setPaymentTheme(customTheme ? createCustomTheme() : null);
         paymentUI.showPaymentPage(this, PAYMENT_REQUEST_CODE);
     }
 
     private PaymentTheme createCustomTheme() {
 
-        PaymentPageParameters.Builder pageBuilder = PaymentPageParameters.createBuilder();
+        PageParameters.Builder pageBuilder = PageParameters.createBuilder();
         pageBuilder.setThemeResId(R.style.CustomThemePaymentPage);
-
+        pageBuilder.setTitleTextAppearance(R.style.CustomText_Medium_Bold);
+        
         IconParameters.Builder iconBuilder = IconParameters.createBuilder();
         iconBuilder.setOkColorResId(R.color.custom_validationok);
         iconBuilder.setUnknownColorResId(R.color.custom_validationunknown);
@@ -179,19 +191,40 @@ public final class CheckoutActivity extends AppCompatActivity implements Checkou
 
         ButtonParameters.Builder buttonBuilder = ButtonParameters.createBuilder();
         buttonBuilder.setThemeResId(R.style.CustomThemeButton);
-
+        buttonBuilder.setLabelTextAppearance(R.style.CustomText_Medium_Bold);
+        
         CheckBoxParameters.Builder checkBoxBuilder = CheckBoxParameters.createBuilder();
         checkBoxBuilder.setThemeResId(R.style.CustomThemeCheckBox);
+        checkBoxBuilder.setCheckedTextAppearance(R.style.CustomText_Medium);
+        checkBoxBuilder.setUncheckedTextAppearance(R.style.CustomText_Medium_Middle);
 
+        DateParameters.Builder dateBuilder = DateParameters.createBuilder();
+        dateBuilder.setDialogTitleTextAppearance(R.style.CustomText_Medium);
+        dateBuilder.setDialogButtonTextAppearance(R.style.CustomText_Small_Bold);
+
+        ListParameters.Builder listBuilder = ListParameters.createBuilder();
+        listBuilder.setHeaderTextAppearance(R.style.CustomText_Medium_Bold);
+        listBuilder.setNetworkTitleTextAppearance(R.style.CustomText_Medium);
+        listBuilder.setAccountTitleTextAppearance(R.style.CustomText_Medium_Bold);
+        listBuilder.setAccountSubtitleTextAppearance(R.style.CustomText_Small);        
+
+        MessageParameters.Builder messageBuilder = MessageParameters.createBuilder();
+        messageBuilder.setTitleTextAppearance(R.style.CustomText_Large_Bold);
+        messageBuilder.setMessageTextAppearance(R.style.CustomText_Medium);
+        messageBuilder.setMessageNoTitleTextAppearance(R.style.CustomText_Medium_Bold);
+        messageBuilder.setButtonTextAppearance(R.style.CustomText_Small_Bold);        
+        
         return PaymentTheme.createBuilder().
-            setPaymentPageParameters(pageBuilder.build()).
+            setPageParameters(pageBuilder.build()).
             setIconParameters(iconBuilder.build()).
             setButtonParameters(buttonBuilder.build()).
             setCheckBoxParameters(checkBoxBuilder.build()).
+            setDateParameters(dateBuilder.build()).
+            setListParameters(listBuilder.build()).
+            setMessageParameters(messageBuilder.build()).
             build();
 
     }
-
 
     private void showSnackbar(int resId) {
         Snackbar snackbar = Snackbar.make(findViewById(R.id.layout_activity),
@@ -199,7 +232,8 @@ public final class CheckoutActivity extends AppCompatActivity implements Checkou
         snackbar.show();
     }
 
-    private void onButtonClicked() {
+    private void onButtonClicked(boolean customTheme) {
+        this.customTheme = customTheme;
         presenter.createPaymentSession(this);
     }
 }

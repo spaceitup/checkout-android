@@ -57,7 +57,6 @@ final class AccountCardViewHolder extends PaymentCardViewHolder {
 
         addElementWidgets(holder, accountCard.getInputElements(), theme);
         addButtonWidget(holder, theme);
-
         holder.applyTheme(theme);
         holder.setLastImeOptions();
         return holder;
@@ -67,6 +66,7 @@ final class AccountCardViewHolder extends PaymentCardViewHolder {
         ListParameters params = theme.getListParameters();
         TextViewCompat.setTextAppearance(title, params.getAccountTitleTextAppearance());
         TextViewCompat.setTextAppearance(subTitle, params.getAccountSubtitleTextAppearance());
+        logo.setBackgroundResource(params.getLogoBackgroundResId());
     }
     
     void onBind(PaymentCard paymentCard) {

@@ -41,7 +41,7 @@ import net.optile.payment.R;
          int themeResId = R.style.PaymentThemeButton;
          int labelTextAppearance = R.style.PaymentText_Medium_Bold_Light;
              
-         public Builder() {
+         Builder() {
          }
 
          public Builder setThemeResId(int themeResId) {

@@ -21,6 +21,10 @@ import android.view.ViewGroup;
 import android.view.Window;
 import android.widget.TextView;
 import net.optile.payment.R;
+import net.optile.payment.ui.PaymentUI;
+import net.optile.payment.ui.theme.PaymentTheme;
+import net.optile.payment.ui.theme.MessageParameters;
+import android.support.v4.widget.TextViewCompat;
 
 /**
  * Message Dialog Fragment for showing a message to the user with an action button
@@ -88,15 +92,17 @@ public final class MessageDialogFragment extends DialogFragment {
      */
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        MessageParameters params = PaymentUI.getInstance().getPaymentTheme().getMessageParameters();
         View v = inflater.inflate(R.layout.dialogfragment_message, container, false);
-        initTitle(v);
-        initMessage(v);
-        initButtons(v);
+        initTitle(v, params);
+        initMessage(v, params);
+        initButtons(v, params);
         return v;
     }
 
-    private void initTitle(View rootView) {
+    private void initTitle(View rootView, MessageParameters params) {
         TextView tv = rootView.findViewById(R.id.text_title);
+        TextViewCompat.setTextAppearance(tv, params.getTitleAppearance());        
 
         if (TextUtils.isEmpty(title)) {
             tv.setVisibility(View.GONE);
@@ -106,9 +112,12 @@ public final class MessageDialogFragment extends DialogFragment {
         tv.setText(title);
     }
 
-    private void initMessage(View rootView) {
+    private void initMessage(View rootView, MessageParameters params) {
         TextView tvTitle = rootView.findViewById(R.id.text_message_title);
         TextView tvNoTitle = rootView.findViewById(R.id.text_message_notitle);
+
+        TextViewCompat.setTextAppearance(tvTitle, params.getMessageTextAppearance());
+        TextViewCompat.setTextAppearance(tvNoTitle, params.getMessageNoTitleTextAppearance());        
 
         if (TextUtils.isEmpty(title)) {
             tvTitle.setVisibility(View.GONE);
@@ -129,7 +138,7 @@ public final class MessageDialogFragment extends DialogFragment {
         textView.setText(message);
     }
 
-    private void initButtons(View rootView) {
+    private void initButtons(View rootView, MessageParameters params) {
         View layout = rootView.findViewById(R.id.layout_button);
 
         if (TextUtils.isEmpty(neutralButtonLabel)) {
@@ -139,7 +148,8 @@ public final class MessageDialogFragment extends DialogFragment {
         layout.setVisibility(View.VISIBLE);
         TextView tv = rootView.findViewById(R.id.text_button);
         tv.setText(neutralButtonLabel);
-
+        TextViewCompat.setTextAppearance(tv, params.getButtonTextAppearance());
+        
         layout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

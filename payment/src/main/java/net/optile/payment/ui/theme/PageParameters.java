@@ -16,7 +16,7 @@
  /**
   * Class for holding the PaymentPage theme parameters
   */
- public final class PaymentPageParameters {
+ public final class PageParameters {
 
      private int themeResId;
 
@@ -24,7 +24,7 @@
 
      private int emptyTextAppearance;
      
-     PaymentPageParameters() {
+     PageParameters() {
      }
 
      public static Builder createBuilder() {
@@ -46,8 +46,9 @@
      public final static class Builder {
          int themeResId = R.style.PaymentTheme_PaymentPage;
          int titleTextAppearance = R.style.PaymentText_Medium_Bold_Light;
-         
-         public Builder() {
+         int emptyTextAppearance = R.style.PaymentText_Medium_Gray;
+
+         Builder() {
          }
 
          public Builder setThemeResId(int themeResId) {
@@ -59,11 +60,17 @@
              this.titleTextAppearance = titleTextAppearance;
              return this;
          }
+
+         Builder setEmptyTextAppearance(int emptyTextAppearance) {
+             this.emptyTextAppearance = emptyTextAppearance;
+             return this;
+         }
          
-         public PaymentPageParameters build() {
-             PaymentPageParameters params = new PaymentPageParameters();
+         public PageParameters build() {
+             PageParameters params = new PageParameters();
              params.themeResId = this.themeResId;
              params.titleTextAppearance = this.titleTextAppearance;
+             params.emptyTextAppearance = this.emptyTextAppearance;
              return params;
          }
      }

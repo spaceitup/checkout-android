@@ -90,7 +90,7 @@ public final class IconParameters {
         int unknownColorResId = R.color.pmvalidation_unknown;
         int errorColorResId = R.color.pmvalidation_error;
 
-        public Builder() {
+        Builder() {
             mapping = new HashMap<String, Integer>();
         }
 

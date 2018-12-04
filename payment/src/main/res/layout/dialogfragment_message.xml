@@ -14,8 +14,7 @@
         android:layout_height="wrap_content"
         android:layout_marginLeft="@dimen/pmborder_large"
         android:layout_marginRight="@dimen/pmborder_large"
-        android:layout_marginBottom="@dimen/pmborder_medium"
-        android:textAppearance="@style/PaymentText.Large.Bold"/>
+        android:layout_marginBottom="@dimen/pmborder_medium"/>
 
     <TextView
         android:id="@+id/text_message_notitle"
@@ -24,8 +23,7 @@
         android:layout_height="wrap_content"
         android:layout_marginLeft="@dimen/pmborder_large"
         android:layout_marginRight="@dimen/pmborder_large"
-        android:layout_marginBottom="@dimen/pmborder_large"
-        android:textAppearance="@style/PaymentText.Medium.Bold.Gray"/>
+        android:layout_marginBottom="@dimen/pmborder_large"/>
 
     <TextView
         android:id="@+id/text_message_title"
@@ -34,8 +32,7 @@
         android:layout_height="wrap_content"
         android:layout_marginLeft="@dimen/pmborder_large"
         android:layout_marginRight="@dimen/pmborder_large"
-        android:layout_marginBottom="@dimen/pmborder_large"
-        android:textAppearance="@style/PaymentText.Medium.Gray"/>
+        android:layout_marginBottom="@dimen/pmborder_large"/>
 
     <LinearLayout
         android:id="@+id/layout_button"
@@ -50,7 +47,7 @@
         <TextView
             android:id="@+id/text_button"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textAppearance="@style/PaymentText.Small.Bold.Primary"/>
+            android:layout_height="wrap_content"/>
+
     </LinearLayout>
 </LinearLayout>

@@ -17,13 +17,31 @@
             android:theme="@style/AppThemeToolbar"/>
     </android.support.design.widget.AppBarLayout>
 
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:gravity="center"
+        android:orientation="vertical">
+    
     <Button
-        android:id="@+id/button_checkout"
+        android:id="@+id/button_default"
         android:theme="@style/PaymentThemeButton"
         android:textAppearance="@style/PaymentText.Medium.Bold.Light"
         android:stateListAnimator="@null"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/button_checkout"
-        android:layout_centerInParent="true"/>
+        android:text="@string/button_default"
+        android:padding="@dimen/custom_borderlarge" />
+
+    <Button
+        android:id="@+id/button_custom"
+        android:theme="@style/CustomThemeButton"
+        android:textAppearance="@style/CustomText.Medium.Bold"
+        android:stateListAnimator="@null"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/button_custom"
+        android:padding="@dimen/custom_borderlarge" />
+    </LinearLayout>
 </RelativeLayout>

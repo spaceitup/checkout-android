@@ -40,15 +40,15 @@
          int dialogTitleTextAppearance = R.style.PaymentText_Medium_Bold;
          int dialogButtonTextAppearance = R.style.PaymentText_Small_Bold_Primary;
              
-         public Builder() {
+         Builder() {
          }
 
-         Builder setDialogTitleTextAppearance(int dialogTitleTextAppearance) {
+         public Builder setDialogTitleTextAppearance(int dialogTitleTextAppearance) {
              this.dialogTitleTextAppearance = dialogTitleTextAppearance;
              return this;
          }
 
-         Builder setDialogButtonTextAppearance(int dialogButtonTextAppearance) {
+         public Builder setDialogButtonTextAppearance(int dialogButtonTextAppearance) {
              this.dialogButtonTextAppearance = dialogButtonTextAppearance;
              return this;
          }

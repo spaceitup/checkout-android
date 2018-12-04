@@ -22,7 +22,6 @@
      private int networkTitleTextAppearance;
      private int accountTitleTextAppearance;
      private int accountSubtitleTextAppearance;
-     private int emptyTextAppearance;
      private int logoBackgroundResId;
      
      ListParameters() {
@@ -45,7 +44,7 @@
      }
 
      public int getLogoBackgroundResId() {
-         return logoBackgroundResId();
+         return logoBackgroundResId;
      }
      
      public static Builder createBuilder() {
@@ -57,37 +56,32 @@
          int accountTitleTextAppearance = R.style.PaymentText_Medium_Bold;
          int accountSubtitleTextAppearance = R.style.PaymentText_Tiny;
          int networkTitleTextAppearance = R.style.PaymentText_Medium;
-         int emptyTextAppearance = R.style.PaymentText_Medium_Gray;         
-             
-         public Builder() {
+         int logoBackgroundResId = R.color.pmcolor_background;
+         
+         Builder() {
          }
 
-         Builder setHeaderTextAppearance(int headerTextAppearance) {
+         public Builder setHeaderTextAppearance(int headerTextAppearance) {
              this.headerTextAppearance = headerTextAppearance;
              return this;
          }
 
-         Builder setNetworkTitleTextAppearance(int networkTitleTextAppearance) {
+         public Builder setNetworkTitleTextAppearance(int networkTitleTextAppearance) {
              this.networkTitleTextAppearance = networkTitleTextAppearance;
              return this;
          }
 
-         Builder setAccountTitleTextAppearance(int accountTitleTextAppearance) {
+         public Builder setAccountTitleTextAppearance(int accountTitleTextAppearance) {
              this.accountTitleTextAppearance = accountTitleTextAppearance;
              return this;
          }
 
-         Builder setAccountSubtitleTextAppearance(int accountSubtitleTextAppearance) {
+         public Builder setAccountSubtitleTextAppearance(int accountSubtitleTextAppearance) {
              this.accountSubtitleTextAppearance = accountSubtitleTextAppearance;
              return this;
          }
 
-         Builder setEmptyTextAppearance(int emptyTextAppearance) {
-             this.emptyTextAppearance = emptyTextAppearance;
-             return this;
-         }
-         
-         Builder setLogoBackgroundResId(int logoBackgroundResId) {
+         public Builder setLogoBackgroundResId(int logoBackgroundResId) {
              this.logoBackgroundResId = logoBackgroundResId;
              return this;
          }
@@ -98,7 +92,6 @@
              params.accountTitleTextAppearance = this.accountTitleTextAppearance;
              params.accountSubtitleTextAppearance = this.accountSubtitleTextAppearance;
              params.networkTitleTextAppearance = this.networkTitleTextAppearance;
-             params.emptyTextAppearance = this.emptyTextAppearance;
              params.logoBackgroundResId = this.logoBackgroundResId;
              return params;
          }

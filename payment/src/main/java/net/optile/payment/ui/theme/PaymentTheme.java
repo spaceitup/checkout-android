@@ -16,12 +16,13 @@ package net.optile.payment.ui.theme;
  */
 public final class PaymentTheme {
 
-    private PaymentPageParameters paymentPageParameters;
+    private PageParameters pageParameters;
     private IconParameters iconParameters;
     private ButtonParameters buttonParameters;
     private CheckBoxParameters checkBoxParameters;
     private DateParameters dateParameters;
     private ListParameters listParameters;
+    private MessageParameters messageParameters;
     
     private PaymentTheme() {
     }
@@ -30,8 +31,8 @@ public final class PaymentTheme {
         return new Builder();
     }
 
-    public PaymentPageParameters getPaymentPageParameters() {
-        return paymentPageParameters;
+    public PageParameters getPageParameters() {
+        return pageParameters;
     }
 
     public IconParameters getIconParameters() {
@@ -53,20 +54,25 @@ public final class PaymentTheme {
     public ListParameters getListParameters() {
         return listParameters;
     }
+
+    public MessageParameters getMessageParameters() {
+        return messageParameters;
+    }
     
     public static final class Builder {
-        PaymentPageParameters paymentPageParameters;
+        PageParameters pageParameters;
         IconParameters iconParameters;
         ButtonParameters buttonParameters;
         CheckBoxParameters checkBoxParameters;
         DateParameters dateParameters;
         ListParameters listParameters;
+        MessageParameters messageParameters;
         
         Builder() {
         }
 
-        public Builder setPaymentPageParameters(PaymentPageParameters paymentPageParameters) {
-            this.paymentPageParameters = paymentPageParameters;
+        public Builder setPageParameters(PageParameters pageParameters) {
+            this.pageParameters = pageParameters;
             return this;
         }
 
@@ -94,14 +100,19 @@ public final class PaymentTheme {
             this.listParameters = listParameters;
             return this;
         }
+
+        public Builder setMessageParameters(MessageParameters messageParameters) {
+            this.messageParameters = messageParameters;
+            return this;
+        }
         
         public PaymentTheme build() {
             PaymentTheme theme = new PaymentTheme();
 
-            if (paymentPageParameters == null) {
-                paymentPageParameters = PaymentPageParameters.createBuilder().build();
+            if (pageParameters == null) {
+                pageParameters = PageParameters.createBuilder().build();
             }
-            theme.paymentPageParameters = paymentPageParameters;
+            theme.pageParameters = pageParameters;
 
             if (iconParameters == null) {
                 iconParameters = IconParameters.createBuilder().build();
@@ -127,6 +138,11 @@ public final class PaymentTheme {
                 listParameters = ListParameters.createBuilder().build();
             }
             theme.listParameters = listParameters;
+
+            if (messageParameters == null) {
+                messageParameters = MessageParameters.createBuilder().build();
+            }
+            theme.messageParameters = messageParameters;
             return theme;
         }
     }

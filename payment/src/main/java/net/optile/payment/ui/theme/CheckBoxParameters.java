@@ -46,7 +46,7 @@
          int uncheckedTextAppearance = R.style.PaymentText_Medium_Hint;
          int checkedTextAppearance = R.style.PaymentText_Medium;
              
-         public Builder() {
+         Builder() {
          }
 
          public Builder setThemeResId(int themeResId) {

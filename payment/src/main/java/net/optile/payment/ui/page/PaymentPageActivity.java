@@ -25,6 +25,7 @@ import android.text.TextUtils;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 import net.optile.payment.R;
 import net.optile.payment.ui.PaymentResult;
 import net.optile.payment.ui.PaymentUI;
@@ -32,10 +33,11 @@ import net.optile.payment.ui.dialog.MessageDialogFragment;
 import net.optile.payment.ui.list.PaymentList;
 import net.optile.payment.ui.model.PaymentCard;
 import net.optile.payment.ui.model.PaymentSession;
-import net.optile.payment.ui.theme.PaymentPageParameters;
+import net.optile.payment.ui.theme.PageParameters;
 import net.optile.payment.ui.widget.FormWidget;
 import net.optile.payment.validation.ValidationResult;
 import net.optile.payment.validation.Validator;
+import android.support.v4.widget.TextViewCompat;
 
 /**
  * The PaymentPageActivity showing available payment methods
@@ -79,30 +81,26 @@ public final class PaymentPageActivity extends AppCompatActivity implements Paym
             Intent intent = getIntent();
             this.listUrl = intent.getStringExtra(EXTRA_LISTURL);
         }
-        PaymentPageParameters params = PaymentUI.getInstance().getPaymentTheme().getPaymentPageParameters();
+        PageParameters params = PaymentUI.getInstance().getPaymentTheme().getPageParameters();
         setTheme(params.getThemeResId());
-
         setContentView(R.layout.activity_paymentpage);
-        this.progressBar = findViewById(R.id.progressbar);
 
         initToolbar(params);
         initList(params);
-        
+
+        this.progressBar = findViewById(R.id.progressbar);
         this.presenter = new PaymentPagePresenter(this);
         this.paymentList = new PaymentList(this, findViewById(R.id.recyclerview_paymentlist),
             findViewById(R.id.label_empty));
     }
 
-    private void initList(PaymentPageParameters params) {
-        TextView emptyMessage = findViewById(R.id.label_empty);
-        
-
-        this.paymentList = new PaymentList(this, findViewById(R.id.recyclerview_paymentlist),
-            findViewById(R.id.label_empty));
-
+    private void initList(PageParameters params) {
+        TextView empty = findViewById(R.id.label_empty);
+        TextViewCompat.setTextAppearance(empty, params.getEmptyTextAppearance());        
+        this.paymentList = new PaymentList(this, findViewById(R.id.recyclerview_paymentlist), empty);
     }
     
-    private void initToolbar(PaymentPageParameters params) {
+    private void initToolbar(PageParameters params) {
         final Toolbar toolbar = findViewById(R.id.toolbar);
         toolbar.setTitle(getString(R.string.pmpage_title));
         toolbar.setTitleTextAppearance(this, params.getTitleTextAppearance());
