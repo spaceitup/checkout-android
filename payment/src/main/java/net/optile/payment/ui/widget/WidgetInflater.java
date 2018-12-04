@@ -105,7 +105,6 @@ public final class WidgetInflater {
      * @return inflated and themed DateWidget
      */
     public static DateWidget inflateDateWidget(String name, ViewGroup parent, PaymentTheme theme) {
-        //DateParameters params = theme.getDateParameters();
         View view = inflate(parent, R.layout.widget_date);
         DateWidget widget = new DateWidget(name, view);
         widget.applyTheme(theme);

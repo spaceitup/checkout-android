@@ -49,7 +49,6 @@ abstract class PaymentCardViewHolder extends RecyclerView.ViewHolder {
 
     PaymentCardViewHolder(ListAdapter adapter, View parent) {
         super(parent);
-
         this.adapter = adapter;
         this.formLayout = parent.findViewById(R.id.layout_form);
         this.widgets = new LinkedHashMap<>();

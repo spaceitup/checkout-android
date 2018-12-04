@@ -29,7 +29,9 @@ import net.optile.payment.model.PaymentMethod;
 import net.optile.payment.ui.model.AccountCard;
 import net.optile.payment.ui.model.PaymentCard;
 import net.optile.payment.ui.theme.PaymentTheme;
+import net.optile.payment.ui.theme.ListParameters;
 import net.optile.payment.util.PaymentUtils;
+import android.support.v4.widget.TextViewCompat;
 
 /**
  * The AccountCardViewHolder class holding the views for an AccountCard
@@ -55,10 +57,18 @@ final class AccountCardViewHolder extends PaymentCardViewHolder {
 
         addElementWidgets(holder, accountCard.getInputElements(), theme);
         addButtonWidget(holder, theme);
+
+        holder.applyTheme(theme);
         holder.setLastImeOptions();
         return holder;
     }
 
+    void applyTheme(PaymentTheme theme) {
+        ListParameters params = theme.getListParameters();
+        TextViewCompat.setTextAppearance(title, params.getAccountTitleTextAppearance());
+        TextViewCompat.setTextAppearance(subTitle, params.getAccountSubtitleTextAppearance());
+    }
+    
     void onBind(PaymentCard paymentCard) {
 
         if (!(paymentCard instanceof AccountCard)) {

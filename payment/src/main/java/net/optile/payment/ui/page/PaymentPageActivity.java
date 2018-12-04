@@ -86,12 +86,22 @@ public final class PaymentPageActivity extends AppCompatActivity implements Paym
         this.progressBar = findViewById(R.id.progressbar);
 
         initToolbar(params);
-
+        initList(params);
+        
         this.presenter = new PaymentPagePresenter(this);
         this.paymentList = new PaymentList(this, findViewById(R.id.recyclerview_paymentlist),
             findViewById(R.id.label_empty));
     }
 
+    private void initList(PaymentPageParameters params) {
+        TextView emptyMessage = findViewById(R.id.label_empty);
+        
+
+        this.paymentList = new PaymentList(this, findViewById(R.id.recyclerview_paymentlist),
+            findViewById(R.id.label_empty));
+
+    }
+    
     private void initToolbar(PaymentPageParameters params) {
         final Toolbar toolbar = findViewById(R.id.toolbar);
         toolbar.setTitle(getString(R.string.pmpage_title));

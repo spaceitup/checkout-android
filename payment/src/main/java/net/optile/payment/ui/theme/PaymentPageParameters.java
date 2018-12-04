@@ -21,6 +21,8 @@
      private int themeResId;
 
      private int titleTextAppearance;
+
+     private int emptyTextAppearance;
      
      PaymentPageParameters() {
      }
@@ -35,6 +37,10 @@
 
      public int getTitleTextAppearance() {
          return titleTextAppearance;
+     }
+
+     public int getEmptyTextAppearance() {
+         return emptyTextAppearance;
      }
      
      public final static class Builder {

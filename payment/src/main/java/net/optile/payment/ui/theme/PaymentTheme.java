@@ -21,6 +21,7 @@ public final class PaymentTheme {
     private ButtonParameters buttonParameters;
     private CheckBoxParameters checkBoxParameters;
     private DateParameters dateParameters;
+    private ListParameters listParameters;
     
     private PaymentTheme() {
     }
@@ -48,6 +49,10 @@ public final class PaymentTheme {
     public DateParameters getDateParameters() {
         return dateParameters;
     }
+
+    public ListParameters getListParameters() {
+        return listParameters;
+    }
     
     public static final class Builder {
         PaymentPageParameters paymentPageParameters;
@@ -55,6 +60,7 @@ public final class PaymentTheme {
         ButtonParameters buttonParameters;
         CheckBoxParameters checkBoxParameters;
         DateParameters dateParameters;
+        ListParameters listParameters;
         
         Builder() {
         }
@@ -81,6 +87,11 @@ public final class PaymentTheme {
 
         public Builder setDateParameters(DateParameters dateParameters) {
             this.dateParameters = dateParameters;
+            return this;
+        }
+
+        public Builder setListParameters(ListParameters listParameters) {
+            this.listParameters = listParameters;
             return this;
         }
         
@@ -112,6 +123,10 @@ public final class PaymentTheme {
             }
             theme.dateParameters = dateParameters;
 
+            if (listParameters == null) {
+                listParameters = ListParameters.createBuilder().build();
+            }
+            theme.listParameters = listParameters;
             return theme;
         }
     }
