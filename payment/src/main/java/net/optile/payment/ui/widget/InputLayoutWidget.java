@@ -21,7 +21,6 @@ import android.view.inputmethod.EditorInfo;
 import android.widget.LinearLayout;
 import net.optile.payment.R;
 import net.optile.payment.core.PaymentInputType;
-import net.optile.payment.ui.theme.PaymentTheme;
 
 /**
  * Base class for widgets using the TextInputLayout and TextInputEditText

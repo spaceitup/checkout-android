@@ -1,6 +1,6 @@
 <resources>
 
-        <style name="CustomText" parent="TextAppearance.AppCompat">
+    <style name="CustomText" parent="TextAppearance.AppCompat">
         <item name="android:textColor">@color/custom_foreground</item>
     </style>
 
@@ -27,9 +27,9 @@
     <style name="CustomText.Medium.Middle">
         <item name="android:textColor">@color/custom_middle</item>
     </style>
-    
+
     <style name="CustomText.Medium.Bold">
-        <item name="android:textStyle">bold</item>        
+        <item name="android:textStyle">bold</item>
     </style>
 
     <style name="CustomText.Large">

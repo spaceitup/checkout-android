@@ -15,6 +15,7 @@ import java.net.URL;
 
 import com.bumptech.glide.Glide;
 
+import android.support.v4.widget.TextViewCompat;
 import android.support.v7.widget.RecyclerView.ViewHolder;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -27,12 +28,11 @@ import net.optile.payment.core.PaymentInputType;
 import net.optile.payment.ui.model.NetworkCard;
 import net.optile.payment.ui.model.PaymentCard;
 import net.optile.payment.ui.model.PaymentNetwork;
-import net.optile.payment.ui.theme.PaymentTheme;
 import net.optile.payment.ui.theme.ListParameters;
+import net.optile.payment.ui.theme.PaymentTheme;
 import net.optile.payment.ui.widget.FormWidget;
 import net.optile.payment.ui.widget.RegisterWidget;
 import net.optile.payment.ui.widget.WidgetInflater;
-import android.support.v4.widget.TextViewCompat;
 
 /**
  * The NetworkCardViewHolder

@@ -14,6 +14,7 @@ package net.optile.payment.ui.dialog;
 import android.app.Dialog;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
+import android.support.v4.widget.TextViewCompat;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -22,9 +23,7 @@ import android.view.Window;
 import android.widget.TextView;
 import net.optile.payment.R;
 import net.optile.payment.ui.PaymentUI;
-import net.optile.payment.ui.theme.PaymentTheme;
 import net.optile.payment.ui.theme.MessageParameters;
-import android.support.v4.widget.TextViewCompat;
 
 /**
  * Message Dialog Fragment for showing a message to the user with an action button
@@ -102,7 +101,7 @@ public final class MessageDialogFragment extends DialogFragment {
 
     private void initTitle(View rootView, MessageParameters params) {
         TextView tv = rootView.findViewById(R.id.text_title);
-        TextViewCompat.setTextAppearance(tv, params.getTitleAppearance());        
+        TextViewCompat.setTextAppearance(tv, params.getTitleAppearance());
 
         if (TextUtils.isEmpty(title)) {
             tv.setVisibility(View.GONE);
@@ -117,7 +116,7 @@ public final class MessageDialogFragment extends DialogFragment {
         TextView tvNoTitle = rootView.findViewById(R.id.text_message_notitle);
 
         TextViewCompat.setTextAppearance(tvTitle, params.getMessageTextAppearance());
-        TextViewCompat.setTextAppearance(tvNoTitle, params.getMessageNoTitleTextAppearance());        
+        TextViewCompat.setTextAppearance(tvNoTitle, params.getMessageNoTitleTextAppearance());
 
         if (TextUtils.isEmpty(title)) {
             tvTitle.setVisibility(View.GONE);
@@ -149,7 +148,7 @@ public final class MessageDialogFragment extends DialogFragment {
         TextView tv = rootView.findViewById(R.id.text_button);
         tv.setText(neutralButtonLabel);
         TextViewCompat.setTextAppearance(tv, params.getButtonTextAppearance());
-        
+
         layout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

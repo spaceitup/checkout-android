@@ -11,12 +11,12 @@
 
 package net.optile.payment.ui.widget;
 
+import android.support.v4.widget.TextViewCompat;
 import android.view.View;
 import android.widget.Button;
 import net.optile.payment.R;
 import net.optile.payment.ui.theme.ButtonParameters;
 import net.optile.payment.ui.theme.PaymentTheme;
-import android.support.v4.widget.TextViewCompat;
 
 /**
  * Widget for showing the Submit (pay) button
@@ -51,7 +51,7 @@ public final class ButtonWidget extends FormWidget {
         ButtonParameters params = theme.getButtonParameters();
         TextViewCompat.setTextAppearance(button, params.getLabelTextAppearance());
     }
-    
+
     private void handleOnClick() {
         presenter.onActionClicked();
     }

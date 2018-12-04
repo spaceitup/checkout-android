@@ -21,7 +21,7 @@
      private int themeResId;
      private int checkedTextAppearance;
      private int uncheckedTextAppearance;
-     
+
      CheckBoxParameters() {
      }
 
@@ -40,12 +40,12 @@
      public int getUncheckedTextAppearance() {
          return uncheckedTextAppearance;
      }
-     
+
      public final static class Builder {
          int themeResId = R.style.PaymentThemeCheckBox;
          int uncheckedTextAppearance = R.style.PaymentText_Medium_Hint;
          int checkedTextAppearance = R.style.PaymentText_Medium;
-             
+
          Builder() {
          }
 
@@ -63,7 +63,7 @@
              this.uncheckedTextAppearance = uncheckedTextAppearance;
              return this;
          }
-         
+
          public CheckBoxParameters build() {
              CheckBoxParameters params = new CheckBoxParameters();
              params.themeResId = this.themeResId;

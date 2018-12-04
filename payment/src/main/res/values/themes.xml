@@ -21,7 +21,7 @@
         <item name="cardPreventCornerOverlap">true</item>
         <item name="cardCornerRadius">@dimen/pmcard_radius</item>
     </style>
-    
+
     <style name="PaymentThemeTextInput" parent="Widget.Design.TextInputLayout">
         <!-- hint text color inside EditText -->
         <item name="android:textColorHint">@color/pmtext_hint</item>

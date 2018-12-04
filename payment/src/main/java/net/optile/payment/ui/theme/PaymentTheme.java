@@ -23,7 +23,7 @@ public final class PaymentTheme {
     private DateParameters dateParameters;
     private ListParameters listParameters;
     private MessageParameters messageParameters;
-    
+
     private PaymentTheme() {
     }
 
@@ -58,7 +58,7 @@ public final class PaymentTheme {
     public MessageParameters getMessageParameters() {
         return messageParameters;
     }
-    
+
     public static final class Builder {
         PageParameters pageParameters;
         IconParameters iconParameters;
@@ -67,7 +67,7 @@ public final class PaymentTheme {
         DateParameters dateParameters;
         ListParameters listParameters;
         MessageParameters messageParameters;
-        
+
         Builder() {
         }
 
@@ -105,7 +105,7 @@ public final class PaymentTheme {
             this.messageParameters = messageParameters;
             return this;
         }
-        
+
         public PaymentTheme build() {
             PaymentTheme theme = new PaymentTheme();
 

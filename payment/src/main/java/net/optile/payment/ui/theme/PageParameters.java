@@ -23,7 +23,7 @@
      private int titleTextAppearance;
 
      private int emptyTextAppearance;
-     
+
      PageParameters() {
      }
 
@@ -42,7 +42,7 @@
      public int getEmptyTextAppearance() {
          return emptyTextAppearance;
      }
-     
+
      public final static class Builder {
          int themeResId = R.style.PaymentTheme_PaymentPage;
          int titleTextAppearance = R.style.PaymentText_Medium_Bold_Light;
@@ -65,7 +65,7 @@
              this.emptyTextAppearance = emptyTextAppearance;
              return this;
          }
-         
+
          public PageParameters build() {
              PageParameters params = new PageParameters();
              params.themeResId = this.themeResId;

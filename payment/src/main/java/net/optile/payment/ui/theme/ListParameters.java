@@ -12,7 +12,7 @@
  package net.optile.payment.ui.theme;
 
  import net.optile.payment.R;
- 
+
  /**
   * Class for holding the ListParameters for the PaymentTheme
   */
@@ -23,8 +23,12 @@
      private int accountTitleTextAppearance;
      private int accountSubtitleTextAppearance;
      private int logoBackgroundResId;
-     
+
      ListParameters() {
+     }
+
+     public static Builder createBuilder() {
+         return new Builder();
      }
 
      public int getHeaderTextAppearance() {
@@ -46,10 +50,6 @@
      public int getLogoBackgroundResId() {
          return logoBackgroundResId;
      }
-     
-     public static Builder createBuilder() {
-         return new Builder();
-     }
 
      public final static class Builder {
          int headerTextAppearance = R.style.PaymentText_Medium_Bold;
@@ -57,7 +57,7 @@
          int accountSubtitleTextAppearance = R.style.PaymentText_Tiny;
          int networkTitleTextAppearance = R.style.PaymentText_Medium;
          int logoBackgroundResId = R.color.pmcolor_background;
-         
+
          Builder() {
          }
 
@@ -85,7 +85,7 @@
              this.logoBackgroundResId = logoBackgroundResId;
              return this;
          }
-         
+
          public ListParameters build() {
              ListParameters params = new ListParameters();
              params.headerTextAppearance = this.headerTextAppearance;

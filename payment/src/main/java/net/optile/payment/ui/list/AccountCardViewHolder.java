@@ -16,6 +16,7 @@ import java.util.List;
 
 import com.bumptech.glide.Glide;
 
+import android.support.v4.widget.TextViewCompat;
 import android.support.v7.widget.RecyclerView.ViewHolder;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -28,10 +29,9 @@ import net.optile.payment.model.InputElement;
 import net.optile.payment.model.PaymentMethod;
 import net.optile.payment.ui.model.AccountCard;
 import net.optile.payment.ui.model.PaymentCard;
-import net.optile.payment.ui.theme.PaymentTheme;
 import net.optile.payment.ui.theme.ListParameters;
+import net.optile.payment.ui.theme.PaymentTheme;
 import net.optile.payment.util.PaymentUtils;
-import android.support.v4.widget.TextViewCompat;
 
 /**
  * The AccountCardViewHolder class holding the views for an AccountCard
@@ -68,7 +68,7 @@ final class AccountCardViewHolder extends PaymentCardViewHolder {
         TextViewCompat.setTextAppearance(subTitle, params.getAccountSubtitleTextAppearance());
         logo.setBackgroundResource(params.getLogoBackgroundResId());
     }
-    
+
     void onBind(PaymentCard paymentCard) {
 
         if (!(paymentCard instanceof AccountCard)) {

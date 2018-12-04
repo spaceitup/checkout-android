@@ -37,7 +37,7 @@ public abstract class FormWidget {
     int state;
     String error;
     PaymentTheme theme;
-    
+
     FormWidget(String name, View rootView) {
         this.name = name;
         this.rootView = rootView;

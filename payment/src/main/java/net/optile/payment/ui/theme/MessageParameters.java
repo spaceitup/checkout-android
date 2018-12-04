@@ -12,7 +12,7 @@
  package net.optile.payment.ui.theme;
 
  import net.optile.payment.R;
- 
+
  /**
   * Class for holding the MessageParameters for the PaymentTheme
   */
@@ -21,8 +21,12 @@
      private int messageTextAppearance;
      private int messageNoTitleTextAppearance;
      private int buttonTextAppearance;
-     
+
      MessageParameters() {
+     }
+
+     public static Builder createBuilder() {
+         return new Builder();
      }
 
      public int getTitleAppearance() {
@@ -40,17 +44,13 @@
      public int getButtonTextAppearance() {
          return buttonTextAppearance;
      }
-     
-     public static Builder createBuilder() {
-         return new Builder();
-     }
 
      public final static class Builder {
          int titleTextAppearance = R.style.PaymentText_Large_Bold;
          int messageTextAppearance = R.style.PaymentText_Medium_Gray;
          int messageNoTitleTextAppearance = R.style.PaymentText_Medium_Bold_Gray;
          int buttonTextAppearance = R.style.PaymentText_Small_Bold_Primary;
-         
+
          Builder() {
          }
 
@@ -73,7 +73,7 @@
              this.buttonTextAppearance = buttonTextAppearance;
              return this;
          }
-         
+
          public MessageParameters build() {
              MessageParameters params = new MessageParameters();
              params.titleTextAppearance = this.titleTextAppearance;

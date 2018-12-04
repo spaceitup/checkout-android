@@ -9,11 +9,11 @@
   * has been received in full.
   */
 
-package net.optile.payment.ui.theme;
+ package net.optile.payment.ui.theme;
 
-import net.optile.payment.R;
+ import net.optile.payment.R;
 
-/**
+ /**
   * Class for holding the ButtonParameters for the PaymentTheme
   */
  public final class ButtonParameters {
@@ -21,7 +21,7 @@ import net.optile.payment.R;
      private int themeResId;
 
      private int labelTextAppearance;
-     
+
      ButtonParameters() {
      }
 
@@ -36,11 +36,11 @@ import net.optile.payment.R;
      public int getLabelTextAppearance() {
          return labelTextAppearance;
      }
-     
+
      public final static class Builder {
          int themeResId = R.style.PaymentThemeButton;
          int labelTextAppearance = R.style.PaymentText_Medium_Bold_Light;
-             
+
          Builder() {
          }
 

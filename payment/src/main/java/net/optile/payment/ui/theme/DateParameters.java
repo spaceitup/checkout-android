@@ -12,7 +12,7 @@
  package net.optile.payment.ui.theme;
 
  import net.optile.payment.R;
- 
+
  /**
   * Class for holding the DateParameters for the PaymentTheme
   */
@@ -20,8 +20,12 @@
 
      private int dialogTitleTextAppearance;
      private int dialogButtonTextAppearance;
-     
+
      DateParameters() {
+     }
+
+     public static Builder createBuilder() {
+         return new Builder();
      }
 
      public int getDialogTitleTextAppearance() {
@@ -31,15 +35,11 @@
      public int getDialogButtonTextAppearance() {
          return dialogButtonTextAppearance;
      }
-     
-     public static Builder createBuilder() {
-         return new Builder();
-     }
 
      public final static class Builder {
          int dialogTitleTextAppearance = R.style.PaymentText_Medium_Bold;
          int dialogButtonTextAppearance = R.style.PaymentText_Small_Bold_Primary;
-             
+
          Builder() {
          }
 
