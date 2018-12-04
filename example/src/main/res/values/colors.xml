@@ -13,6 +13,7 @@
     <color name="custom_foreground">#FFFFFF</color>
     <color name="custom_cardstrokecolor">#FEFEFE</color>
     <color name="custom_button">#607D8B</color>
+    <color name="custom_logo">#FEFEFE</color>
 
     <color name="custom_validationok">#00E676</color>
     <color name="custom_validationerror">#FF1744</color>

@@ -1,4 +1,6 @@
 <resources>
+    <dimen name="custom_logopadding">4dp</dimen>
+    <dimen name="custom_logoradius">4dp</dimen>
     <dimen name="custom_bordermedium">16dp</dimen>
     <dimen name="custom_borderlarge">20dp</dimen>
     <dimen name="custom_buttonradius">5dp</dimen>

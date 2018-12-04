@@ -207,7 +207,8 @@ public final class CheckoutActivity extends AppCompatActivity implements Checkou
         listBuilder.setNetworkTitleTextAppearance(R.style.CustomText_Medium);
         listBuilder.setAccountTitleTextAppearance(R.style.CustomText_Medium_Bold);
         listBuilder.setAccountSubtitleTextAppearance(R.style.CustomText_Small);        
-
+        listBuilder.setLogoBackgroundResId(R.drawable.logo_background);
+        
         MessageParameters.Builder messageBuilder = MessageParameters.createBuilder();
         messageBuilder.setTitleTextAppearance(R.style.CustomText_Large_Bold);
         messageBuilder.setMessageTextAppearance(R.style.CustomText_Medium);
