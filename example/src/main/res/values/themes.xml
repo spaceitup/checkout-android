@@ -5,22 +5,22 @@
         <item name="colorAccent">@color/colorAccent</item>
     </style>
 
-    <style name="AppThemeToolbar" parent="ThemeOverlay.AppCompat.Dark.ActionBar">
-        <item name="android:background">?attr/colorPrimary</item>
-    </style>
-
-    <style name="CustomThemePaymentPage" parent="Theme.AppCompat">
+    <style name="CustomThemePaymentPage" parent="Theme.AppCompat.NoActionBar">
+        <item name="toolbarStyle">@style/CustomThemeToolbar</item>
         <item name="colorPrimary">@color/customColorPrimary</item>
         <item name="colorPrimaryDark">@color/customColorPrimaryDark</item>
         <item name="colorAccent">@color/customColorAccent</item>
-        <item name="windowActionBar">false</item>
-        <item name="windowNoTitle">true</item>
-        <item name="android:windowBackground">@color/custom_background</item>
         <item name="materialCardViewStyle">@style/CustomThemeCardView</item>
         <item name="editTextStyle">@style/CustomTextInputEditText</item>
         <item name="textInputStyle">@style/CustomThemeTextInput</item>
+        <item name="android:windowBackground">@color/custom_background</item>
     </style>
 
+    <style name="CustomThemeToolbar" parent="Widget.AppCompat.Toolbar">
+        <item name="titleTextAppearance">@style/CustomText.Medium.Bold</item>
+    </style>
+
+    
     <style name="CustomThemeCardView" parent="CardView.Dark">
         <item name="cardBackgroundColor">?attr/colorPrimary</item>
         <item name="cardUseCompatPadding">false</item>

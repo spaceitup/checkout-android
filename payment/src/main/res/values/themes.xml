@@ -34,9 +34,6 @@
         <item name="colorControlNormal">@color/pmcolor_controlnormal</item>
         <!-- underline color enabled -->
         <item name="colorControlActivated">?attr/colorPrimary</item>
-
-        <item name="hintTextAppearance">@style/PaymentTextInputLayoutHint</item>
-        <item name="errorTextAppearance">@style/PaymentTextInputLayoutError</item>
     </style>
 
     <style name="PaymentThemeButton" parent="Widget.AppCompat.Button.Borderless">
