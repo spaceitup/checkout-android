@@ -41,10 +41,18 @@
          return uncheckedTextAppearance;
      }
 
+     public final static CheckBoxParameters createDefault() {
+         return createBuilder().
+             setThemeResId(R.style.PaymentThemeCheckBox).
+             setCheckedTextAppearance(R.style.PaymentText_Medium).
+             setUncheckedTextAppearance(R.style.PaymentText_Medium_Hint).
+             build();
+     }
+     
      public final static class Builder {
-         int themeResId = R.style.PaymentThemeCheckBox;
-         int uncheckedTextAppearance = R.style.PaymentText_Medium_Hint;
-         int checkedTextAppearance = R.style.PaymentText_Medium;
+         int themeResId;
+         int uncheckedTextAppearance;
+         int checkedTextAppearance;
 
          Builder() {
          }

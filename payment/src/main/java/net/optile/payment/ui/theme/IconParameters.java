@@ -57,44 +57,42 @@ public final class IconParameters {
         if (mapping.containsKey(inputType)) {
             return mapping.get(inputType);
         }
-        return getDefaultIcon(inputType);
+        return R.drawable.ic_default;
     }
 
-    private int getDefaultIcon(String inputType) {
-
-        if (TextUtils.isEmpty(inputType)) {
-            return R.drawable.ic_default;
-        }
-        switch (inputType) {
-            case PaymentInputType.HOLDER_NAME:
-                return R.drawable.ic_name;
-            case PaymentInputType.EXPIRY_DATE:
-            case PaymentInputType.EXPIRY_MONTH:
-            case PaymentInputType.EXPIRY_YEAR:
-                return R.drawable.ic_date;
-            case PaymentInputType.BANK_CODE:
-            case PaymentInputType.ACCOUNT_NUMBER:
-            case PaymentInputType.IBAN:
-            case PaymentInputType.BIC:
-                return R.drawable.ic_card;
-            case PaymentInputType.VERIFICATION_CODE:
-                return R.drawable.ic_lock;
-            default:
-                return R.drawable.ic_default;
-        }
+    public final static IconParameters createDefault() {
+        return createBuilder().
+            setDefaultIconMapping().
+            setOkColorResId(R.color.pmvalidation_ok).
+            setUnknownColorResId(R.color.pmvalidation_unknown).
+            setErrorColorResId(R.color.pmvalidation_error).
+            build();
     }
-
+    
     public final static class Builder {
         Map<String, Integer> mapping;
-        int okColorResId = R.color.pmvalidation_ok;
-        int unknownColorResId = R.color.pmvalidation_unknown;
-        int errorColorResId = R.color.pmvalidation_error;
+        int okColorResId;
+        int unknownColorResId;
+        int errorColorResId;
 
         Builder() {
             mapping = new HashMap<String, Integer>();
         }
 
-        public Builder setInputTypeIcon(String inputType, int iconRes) {
+        public Builder setDefaultIconMapping() {
+            mapping.put(PaymentInputType.HOLDER_NAME, R.drawable.ic_name);
+            mapping.put(PaymentInputType.EXPIRY_DATE, R.drawable.ic_date);
+            mapping.put(PaymentInputType.EXPIRY_MONTH, R.drawable.ic_date);
+            mapping.put(PaymentInputType.EXPIRY_YEAR, R.drawable.ic_date);
+            mapping.put(PaymentInputType.BANK_CODE, R.drawable.ic_card);
+            mapping.put(PaymentInputType.ACCOUNT_NUMBER, R.drawable.ic_card);
+            mapping.put(PaymentInputType.IBAN, R.drawable.ic_card);
+            mapping.put(PaymentInputType.BIC, R.drawable.ic_card);
+            mapping.put(PaymentInputType.VERIFICATION_CODE, R.drawable.ic_lock);
+            return this;
+        }
+        
+        public Builder putInputTypeIcon(String inputType, int iconRes) {
             mapping.put(inputType, iconRes);
             return this;
         }

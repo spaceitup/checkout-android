@@ -100,7 +100,6 @@ public abstract class FormWidget {
         }
         IconParameters params = theme.getIconParameters();
         int colorResId = params.getUnknownColorResId();
-
         switch (state) {
             case VALIDATION_OK:
                 colorResId = params.getOkColorResId();
@@ -108,6 +107,8 @@ public abstract class FormWidget {
             case VALIDATION_ERROR:
                 colorResId = params.getErrorColorResId();
         }
-        icon.setColorFilter(ContextCompat.getColor(rootView.getContext(), colorResId));
+        if (colorResId != 0) {
+            icon.setColorFilter(ContextCompat.getColor(rootView.getContext(), colorResId));
+        }
     }
 }

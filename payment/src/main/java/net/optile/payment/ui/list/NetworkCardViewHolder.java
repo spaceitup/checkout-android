@@ -15,7 +15,6 @@ import java.net.URL;
 
 import com.bumptech.glide.Glide;
 
-import android.support.v4.widget.TextViewCompat;
 import android.support.v7.widget.RecyclerView.ViewHolder;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -33,6 +32,7 @@ import net.optile.payment.ui.theme.PaymentTheme;
 import net.optile.payment.ui.widget.FormWidget;
 import net.optile.payment.ui.widget.RegisterWidget;
 import net.optile.payment.ui.widget.WidgetInflater;
+import net.optile.payment.util.PaymentUtils;
 
 /**
  * The NetworkCardViewHolder
@@ -68,8 +68,8 @@ final class NetworkCardViewHolder extends PaymentCardViewHolder {
 
     void applyTheme(PaymentTheme theme) {
         ListParameters params = theme.getListParameters();
-        TextViewCompat.setTextAppearance(title, params.getNetworkTitleTextAppearance());
-        logo.setBackgroundResource(params.getLogoBackgroundResId());
+        PaymentUtils.setTextAppearance(title, params.getNetworkTitleTextAppearance());
+        PaymentUtils.setImageBackground(logo, params.getLogoBackgroundResId());
     }
 
     void onBind(PaymentCard paymentCard) {

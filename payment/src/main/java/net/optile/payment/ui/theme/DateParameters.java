@@ -36,9 +36,16 @@
          return dialogButtonTextAppearance;
      }
 
+     public final static DateParameters createDefault() {
+         return createBuilder().
+             setDialogTitleTextAppearance(R.style.PaymentText_Medium_Bold).
+             setDialogButtonTextAppearance(R.style.PaymentText_Small_Bold_Primary).
+             build();
+     }
+     
      public final static class Builder {
-         int dialogTitleTextAppearance = R.style.PaymentText_Medium_Bold;
-         int dialogButtonTextAppearance = R.style.PaymentText_Small_Bold_Primary;
+         int dialogTitleTextAppearance;
+         int dialogButtonTextAppearance;
 
          Builder() {
          }

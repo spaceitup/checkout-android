@@ -37,9 +37,16 @@
          return labelTextAppearance;
      }
 
+     public final static ButtonParameters createDefault() {
+         return createBuilder().
+             setThemeResId(R.style.PaymentThemeButton).
+             setLabelTextAppearance(R.style.PaymentText_Medium_Bold_Light).
+             build();
+     }
+     
      public final static class Builder {
-         int themeResId = R.style.PaymentThemeButton;
-         int labelTextAppearance = R.style.PaymentText_Medium_Bold_Light;
+         int themeResId;
+         int labelTextAppearance;
 
          Builder() {
          }

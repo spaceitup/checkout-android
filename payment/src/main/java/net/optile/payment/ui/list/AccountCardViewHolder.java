@@ -15,8 +15,6 @@ import java.net.URL;
 import java.util.List;
 
 import com.bumptech.glide.Glide;
-
-import android.support.v4.widget.TextViewCompat;
 import android.support.v7.widget.RecyclerView.ViewHolder;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -65,9 +63,9 @@ final class AccountCardViewHolder extends PaymentCardViewHolder {
 
     void applyTheme(PaymentTheme theme) {
         ListParameters params = theme.getListParameters();
-        TextViewCompat.setTextAppearance(title, params.getAccountTitleTextAppearance());
-        TextViewCompat.setTextAppearance(subTitle, params.getAccountSubtitleTextAppearance());
-        logo.setBackgroundResource(params.getLogoBackgroundResId());
+        PaymentUtils.setTextAppearance(title, params.getAccountTitleTextAppearance());
+        PaymentUtils.setTextAppearance(subTitle, params.getAccountSubtitleTextAppearance());
+        PaymentUtils.setImageBackground(logo, params.getLogoBackgroundResId());
     }
 
     void onBind(PaymentCard paymentCard) {

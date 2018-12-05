@@ -18,7 +18,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
-import android.support.v4.widget.TextViewCompat;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -28,6 +27,7 @@ import android.view.View;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import net.optile.payment.R;
+import net.optile.payment.util.PaymentUtils;
 import net.optile.payment.ui.PaymentResult;
 import net.optile.payment.ui.PaymentUI;
 import net.optile.payment.ui.dialog.MessageDialogFragment;
@@ -82,7 +82,10 @@ public final class PaymentPageActivity extends AppCompatActivity implements Paym
             this.listUrl = intent.getStringExtra(EXTRA_LISTURL);
         }
         PageParameters params = PaymentUI.getInstance().getPaymentTheme().getPageParameters();
-        setTheme(params.getThemeResId());
+        int themeResId = params.getThemeResId();
+        if (themeResId != 0) {
+            setTheme(params.getThemeResId());
+        }
         setContentView(R.layout.activity_paymentpage);
         initToolbar(params);
         initList(params);
@@ -92,14 +95,13 @@ public final class PaymentPageActivity extends AppCompatActivity implements Paym
 
     private void initList(PageParameters params) {
         TextView empty = findViewById(R.id.label_empty);
-        TextViewCompat.setTextAppearance(empty, params.getEmptyTextAppearance());
+        PaymentUtils.setTextAppearance(empty, params.getEmptyTextAppearance());
         this.paymentList = new PaymentList(this, findViewById(R.id.recyclerview_paymentlist), empty);
     }
 
     private void initToolbar(PageParameters params) {
         final Toolbar toolbar = findViewById(R.id.toolbar);
         toolbar.setTitle(getString(R.string.pmpage_title));
-        toolbar.setTitleTextAppearance(this, params.getTitleTextAppearance());
         setSupportActionBar(toolbar);
         ActionBar actionBar = getSupportActionBar();
 

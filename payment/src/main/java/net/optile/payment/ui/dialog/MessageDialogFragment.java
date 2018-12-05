@@ -22,6 +22,7 @@ import android.view.ViewGroup;
 import android.view.Window;
 import android.widget.TextView;
 import net.optile.payment.R;
+import net.optile.payment.util.PaymentUtils;
 import net.optile.payment.ui.PaymentUI;
 import net.optile.payment.ui.theme.MessageParameters;
 
@@ -101,7 +102,7 @@ public final class MessageDialogFragment extends DialogFragment {
 
     private void initTitle(View rootView, MessageParameters params) {
         TextView tv = rootView.findViewById(R.id.text_title);
-        TextViewCompat.setTextAppearance(tv, params.getTitleAppearance());
+        PaymentUtils.setTextAppearance(tv, params.getTitleAppearance());
 
         if (TextUtils.isEmpty(title)) {
             tv.setVisibility(View.GONE);
@@ -115,8 +116,8 @@ public final class MessageDialogFragment extends DialogFragment {
         TextView tvTitle = rootView.findViewById(R.id.text_message_title);
         TextView tvNoTitle = rootView.findViewById(R.id.text_message_notitle);
 
-        TextViewCompat.setTextAppearance(tvTitle, params.getMessageTextAppearance());
-        TextViewCompat.setTextAppearance(tvNoTitle, params.getMessageNoTitleTextAppearance());
+        PaymentUtils.setTextAppearance(tvTitle, params.getMessageTextAppearance());
+        PaymentUtils.setTextAppearance(tvNoTitle, params.getMessageNoTitleTextAppearance());
 
         if (TextUtils.isEmpty(title)) {
             tvTitle.setVisibility(View.GONE);
@@ -147,7 +148,7 @@ public final class MessageDialogFragment extends DialogFragment {
         layout.setVisibility(View.VISIBLE);
         TextView tv = rootView.findViewById(R.id.text_button);
         tv.setText(neutralButtonLabel);
-        TextViewCompat.setTextAppearance(tv, params.getButtonTextAppearance());
+        PaymentUtils.setTextAppearance(tv, params.getButtonTextAppearance());
 
         layout.setOnClickListener(new View.OnClickListener() {
             @Override

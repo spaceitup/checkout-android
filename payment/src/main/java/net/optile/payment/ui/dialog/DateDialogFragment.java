@@ -25,6 +25,7 @@ import android.view.Window;
 import android.widget.NumberPicker;
 import android.widget.TextView;
 import net.optile.payment.R;
+import net.optile.payment.util.PaymentUtils;
 import net.optile.payment.ui.PaymentUI;
 import net.optile.payment.ui.theme.DateParameters;
 import net.optile.payment.ui.theme.PaymentTheme;
@@ -116,7 +117,7 @@ public final class DateDialogFragment extends DialogFragment {
             tv.setVisibility(View.GONE);
             return;
         }
-        TextViewCompat.setTextAppearance(tv, params.getDialogTitleTextAppearance());
+        PaymentUtils.setTextAppearance(tv, params.getDialogTitleTextAppearance());
         tv.setVisibility(View.VISIBLE);
         tv.setText(title);
     }
@@ -126,7 +127,7 @@ public final class DateDialogFragment extends DialogFragment {
         layout.setVisibility(View.VISIBLE);
         TextView tv = rootView.findViewById(R.id.text_button);
         tv.setText(buttonLabel);
-        TextViewCompat.setTextAppearance(tv, params.getDialogButtonTextAppearance());
+        PaymentUtils.setTextAppearance(tv, params.getDialogButtonTextAppearance());
 
         layout.setOnClickListener(new View.OnClickListener() {
             @Override

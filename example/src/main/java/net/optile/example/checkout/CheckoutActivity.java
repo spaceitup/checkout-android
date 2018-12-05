@@ -174,56 +174,15 @@ public final class CheckoutActivity extends AppCompatActivity implements Checkou
     public void openPaymentPage(String listUrl) {
         PaymentUI paymentUI = PaymentUI.getInstance();
         paymentUI.setListUrl(listUrl);
-        paymentUI.setPaymentTheme(customTheme ? createCustomTheme() : null);
+
+        PaymentTheme theme = null;
+        if (customTheme) {
+            theme = CheckoutTheme.createTheme();
+        } else {
+            theme = PaymentTheme.createDefault();
+        }
+        paymentUI.setPaymentTheme(theme);
         paymentUI.showPaymentPage(this, PAYMENT_REQUEST_CODE);
-    }
-
-    private PaymentTheme createCustomTheme() {
-
-        PageParameters.Builder pageBuilder = PageParameters.createBuilder();
-        pageBuilder.setThemeResId(R.style.CustomThemePaymentPage);
-        pageBuilder.setTitleTextAppearance(R.style.CustomText_Medium_Bold);
-        
-        IconParameters.Builder iconBuilder = IconParameters.createBuilder();
-        iconBuilder.setOkColorResId(R.color.custom_validationok);
-        iconBuilder.setUnknownColorResId(R.color.custom_validationunknown);
-        iconBuilder.setErrorColorResId(R.color.custom_validationerror);
-
-        ButtonParameters.Builder buttonBuilder = ButtonParameters.createBuilder();
-        buttonBuilder.setThemeResId(R.style.CustomThemeButton);
-        buttonBuilder.setLabelTextAppearance(R.style.CustomText_Medium_Bold);
-        
-        CheckBoxParameters.Builder checkBoxBuilder = CheckBoxParameters.createBuilder();
-        checkBoxBuilder.setThemeResId(R.style.CustomThemeCheckBox);
-        checkBoxBuilder.setCheckedTextAppearance(R.style.CustomText_Medium);
-        checkBoxBuilder.setUncheckedTextAppearance(R.style.CustomText_Medium_Middle);
-
-        DateParameters.Builder dateBuilder = DateParameters.createBuilder();
-        dateBuilder.setDialogTitleTextAppearance(R.style.CustomText_Medium);
-        dateBuilder.setDialogButtonTextAppearance(R.style.CustomText_Small_Bold);
-
-        ListParameters.Builder listBuilder = ListParameters.createBuilder();
-        listBuilder.setHeaderTextAppearance(R.style.CustomText_Medium_Bold);
-        listBuilder.setNetworkTitleTextAppearance(R.style.CustomText_Medium);
-        listBuilder.setAccountTitleTextAppearance(R.style.CustomText_Medium_Bold);
-        listBuilder.setAccountSubtitleTextAppearance(R.style.CustomText_Small);        
-        listBuilder.setLogoBackgroundResId(R.drawable.logo_background);
-        
-        MessageParameters.Builder messageBuilder = MessageParameters.createBuilder();
-        messageBuilder.setTitleTextAppearance(R.style.CustomText_Large_Bold);
-        messageBuilder.setMessageTextAppearance(R.style.CustomText_Medium);
-        messageBuilder.setMessageNoTitleTextAppearance(R.style.CustomText_Medium_Bold);
-        messageBuilder.setButtonTextAppearance(R.style.CustomText_Small_Bold);        
-        
-        return PaymentTheme.createBuilder().
-            setPageParameters(pageBuilder.build()).
-            setIconParameters(iconBuilder.build()).
-            setButtonParameters(buttonBuilder.build()).
-            setCheckBoxParameters(checkBoxBuilder.build()).
-            setDateParameters(dateBuilder.build()).
-            setListParameters(listBuilder.build()).
-            setMessageParameters(messageBuilder.build()).
-            build();
     }
 
     private void showSnackbar(int resId) {

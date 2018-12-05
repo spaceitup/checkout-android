@@ -11,10 +11,10 @@
 
 package net.optile.payment.ui.widget;
 
-import android.support.v4.widget.TextViewCompat;
 import android.view.View;
 import android.widget.Button;
 import net.optile.payment.R;
+import net.optile.payment.util.PaymentUtils;
 import net.optile.payment.ui.theme.ButtonParameters;
 import net.optile.payment.ui.theme.PaymentTheme;
 
@@ -36,7 +36,7 @@ public final class ButtonWidget extends FormWidget {
         super(name, rootView, theme);
         button = rootView.findViewById(R.id.button);
         ButtonParameters params = theme.getButtonParameters();
-        TextViewCompat.setTextAppearance(button, params.getLabelTextAppearance());
+        PaymentUtils.setTextAppearance(button, params.getLabelTextAppearance());
 
         button.setOnClickListener(new View.OnClickListener() {
             @Override

@@ -1,20 +1,23 @@
 <resources>
 
-    <style name="PaymentTheme" parent="Theme.AppCompat.Light">
+    <style name="PaymentTheme" parent="Theme.AppCompat.Light.NoActionBar">
         <item name="colorPrimary">@color/pmcolor_primary</item>
         <item name="colorPrimaryDark">@color/pmcolor_primarydark</item>
         <item name="colorAccent">@color/pmcolor_accent</item>
     </style>
 
     <style name="PaymentTheme.PaymentPage">
-        <item name="windowActionBar">false</item>
-        <item name="windowNoTitle">true</item>
+        <item name="toolbarStyle">@style/PaymentThemeToolbar</item>
         <item name="android:windowBackground">@color/pmcolor_list</item>
         <item name="materialCardViewStyle">@style/PaymentThemeCardView</item>
         <item name="editTextStyle">@style/PaymentTextInputEditText</item>
         <item name="textInputStyle">@style/PaymentThemeTextInput</item>
     </style>
 
+    <style name="PaymentThemeToolbar" parent="Widget.AppCompat.Toolbar">
+        <item name="titleTextAppearance">@style/PaymentText.Medium.Bold.Light</item>
+    </style>
+    
     <style name="PaymentThemeCardView" parent="CardView.Light">
         <item name="cardBackgroundColor">@color/pmcolor_background</item>
         <item name="cardUseCompatPadding">false</item>

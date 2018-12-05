@@ -59,6 +59,18 @@ public final class PaymentTheme {
         return messageParameters;
     }
 
+    public static final PaymentTheme createDefault() {
+        return createBuilder().
+            setPageParameters(PageParameters.createDefault()).
+            setIconParameters(IconParameters.createDefault()).
+            setButtonParameters(ButtonParameters.createDefault()).
+            setCheckBoxParameters(CheckBoxParameters.createDefault()).
+            setDateParameters(DateParameters.createDefault()).
+            setListParameters(ListParameters.createDefault()).
+            setMessageParameters(MessageParameters.createDefault()).
+            build();
+    }
+    
     public static final class Builder {
         PageParameters pageParameters;
         IconParameters iconParameters;
