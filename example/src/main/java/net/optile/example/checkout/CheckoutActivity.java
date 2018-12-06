@@ -181,7 +181,6 @@ public final class CheckoutActivity extends AppCompatActivity implements Checkou
         } else {
             theme = PaymentTheme.createDefault();
         }
-        theme = null;
         paymentUI.setPaymentTheme(theme);
         paymentUI.showPaymentPage(this, PAYMENT_REQUEST_CODE);
     }

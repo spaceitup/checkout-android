@@ -28,7 +28,7 @@ import net.optile.example.R;
 public final class CheckoutTheme {
 
     /** 
-     * Construct a new PaymentTheme with the custom skin for the Android SDK payment page
+     * Construct a new PaymentTheme with the custom dark skin for the Android SDK payment page
      * 
      * @return PaymentTheme containing the custom skin 
      */

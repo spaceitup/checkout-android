@@ -15,6 +15,7 @@
 
  /**
   * Class for holding the DateParameters for the PaymentTheme
+  * The parameters may be used to theme the Date PopupDialog title and button.
   */
  public final class DateParameters {
 

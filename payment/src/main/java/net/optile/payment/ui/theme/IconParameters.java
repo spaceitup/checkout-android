@@ -19,7 +19,8 @@ import net.optile.payment.R;
 import net.optile.payment.core.PaymentInputType;
 
 /**
- * Class for holding the Icon parameters for the PaymentTheme
+ * Class for holding the Icon parameters for the PaymentTheme.
+ * The parameters may be used to set validation colors of the icons and also which icons should be shown for which PaymentInputTypes.
  */
 public final class IconParameters {
 

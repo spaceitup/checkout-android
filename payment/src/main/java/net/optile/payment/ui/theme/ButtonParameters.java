@@ -14,7 +14,8 @@
  import net.optile.payment.R;
 
  /**
-  * Class for holding the ButtonParameters for the PaymentTheme
+  * Class for holding the ButtonParameters for the PaymentTheme. 
+  * The parameters may be used to theme the bottom action button in a network or account card.
   */
  public final class ButtonParameters {
 

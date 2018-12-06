@@ -14,7 +14,7 @@ package net.optile.payment.ui.theme;
 import net.optile.payment.R;
 
 /**
- * Class for holding the InputTextParameters for the PaymentTheme
+ * Class for holding the InputTextParameters for the PaymentTheme.
  */
 public final class TextInputParameters {
     private int themeResId;

@@ -14,7 +14,8 @@ package net.optile.payment.ui.theme;
 import net.optile.payment.R;
 
 /**
- * Class for holding the ListParameters for the PaymentTheme
+ * Class for holding the ListParameters for the PaymentTheme.
+ * The parameters may be used to theme text appearances of the network and account cards including the background of logos.
  */
 public final class ListParameters {
 

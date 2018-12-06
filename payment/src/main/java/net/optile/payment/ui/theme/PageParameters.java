@@ -20,8 +20,6 @@ public final class PageParameters {
 
     private int themeResId;
 
-    private int titleTextAppearance;
-
     private int emptyTextAppearance;
 
     PageParameters() {

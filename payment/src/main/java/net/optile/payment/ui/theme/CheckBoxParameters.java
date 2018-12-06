@@ -14,7 +14,8 @@
  import net.optile.payment.R;
 
  /**
-  * Class for holding the CheckBoxParameters for the PaymentTheme
+  * Class for holding the CheckBoxParameters for the PaymentTheme.
+  * The parameters may be used to theme the CheckBox UI element and label shown after the CheckBox.
   */
  public final class CheckBoxParameters {
 

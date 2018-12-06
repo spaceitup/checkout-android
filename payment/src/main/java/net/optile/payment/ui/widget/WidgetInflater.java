@@ -101,7 +101,7 @@ public final class WidgetInflater {
      */
     public static DateWidget inflateDateWidget(String name, ViewGroup parent, PaymentTheme theme) {
         TextInputParameters params = theme.getTextInputParameters();
-        View layout = inflateWithThemedChild(parent, R.layout.widget_textinput, R.layout.view_dateinput, params.getThemeResId());
+        View layout = inflateWithThemedChild(parent, R.layout.widget_textinput, R.layout.view_date, params.getThemeResId());
         return new DateWidget(name, layout, theme);
     }
 
