@@ -22,7 +22,6 @@ import android.widget.LinearLayout;
 import net.optile.payment.R;
 import net.optile.payment.core.PaymentInputType;
 import net.optile.payment.ui.theme.PaymentTheme;
-import net.optile.payment.util.PaymentUtils;
 
 /**
  * Base class for widgets using the TextInputLayout and TextInputEditText
@@ -48,7 +47,7 @@ abstract class InputLayoutWidget extends FormWidget {
         super(name, rootView, theme);
         this.layout = rootView.findViewById(R.id.textinputlayout);
         this.input = rootView.findViewById(R.id.textinputedittext);
-        
+
         input.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
             public void onFocusChange(View v, boolean hasFocus) {
@@ -68,7 +67,7 @@ abstract class InputLayoutWidget extends FormWidget {
         input.setImeOptions(EditorInfo.IME_ACTION_DONE);
         return true;
     }
-    
+
     void handleOnFocusChange(boolean hasFocus) {
     }
 
