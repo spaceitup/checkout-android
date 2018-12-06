@@ -11,16 +11,15 @@
 
 package net.optile.payment.ui.list;
 
-import android.support.v4.widget.TextViewCompat;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.RecyclerView.ViewHolder;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 import net.optile.payment.R;
-import net.optile.payment.util.PaymentUtils;
 import net.optile.payment.ui.theme.ListParameters;
 import net.optile.payment.ui.theme.PaymentTheme;
+import net.optile.payment.util.PaymentUtils;
 
 /**
  * The HeaderViewHolder holding Views for a header in the RecyclerView

@@ -14,7 +14,7 @@
  import net.optile.payment.R;
 
  /**
-  * Class for holding the ButtonParameters for the PaymentTheme. 
+  * Class for holding the ButtonParameters for the PaymentTheme.
   * The parameters may be used to theme the bottom action button in a network or account card.
   */
  public final class ButtonParameters {
@@ -30,6 +30,13 @@
          return new Builder();
      }
 
+     public final static ButtonParameters createDefault() {
+         return createBuilder().
+             setThemeResId(R.style.PaymentThemeButton).
+             setLabelTextAppearance(R.style.PaymentText_Medium_Bold_Light).
+             build();
+     }
+
      public int getThemeResId() {
          return themeResId;
      }
@@ -38,13 +45,6 @@
          return labelTextAppearance;
      }
 
-     public final static ButtonParameters createDefault() {
-         return createBuilder().
-             setThemeResId(R.style.PaymentThemeButton).
-             setLabelTextAppearance(R.style.PaymentText_Medium_Bold_Light).
-             build();
-     }
-     
      public final static class Builder {
          int themeResId;
          int labelTextAppearance;

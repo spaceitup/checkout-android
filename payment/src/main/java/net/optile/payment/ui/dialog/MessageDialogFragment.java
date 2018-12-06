@@ -14,7 +14,6 @@ package net.optile.payment.ui.dialog;
 import android.app.Dialog;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
-import android.support.v4.widget.TextViewCompat;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -22,9 +21,9 @@ import android.view.ViewGroup;
 import android.view.Window;
 import android.widget.TextView;
 import net.optile.payment.R;
-import net.optile.payment.util.PaymentUtils;
 import net.optile.payment.ui.PaymentUI;
 import net.optile.payment.ui.theme.MessageParameters;
+import net.optile.payment.util.PaymentUtils;
 
 /**
  * Message Dialog Fragment for showing a message to the user with an action button

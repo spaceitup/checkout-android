@@ -22,9 +22,9 @@ import net.optile.payment.form.Charge;
 import net.optile.payment.model.InputElement;
 import net.optile.payment.model.SelectOption;
 import net.optile.payment.ui.dialog.DateDialogFragment;
+import net.optile.payment.ui.theme.PaymentTheme;
 import net.optile.payment.util.PaymentUtils;
 import net.optile.payment.validation.ValidationResult;
-import net.optile.payment.ui.theme.PaymentTheme;
 
 /**
  * Widget for handling the date input

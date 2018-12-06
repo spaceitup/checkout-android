@@ -20,8 +20,8 @@ import android.widget.TextView;
 import net.optile.payment.core.PaymentException;
 import net.optile.payment.form.Charge;
 import net.optile.payment.model.InputElementType;
-import net.optile.payment.validation.ValidationResult;
 import net.optile.payment.ui.theme.PaymentTheme;
+import net.optile.payment.validation.ValidationResult;
 
 /**
  * Widget for handling text input

@@ -29,19 +29,19 @@ public final class PageParameters {
         return new Builder();
     }
 
+    public static final PageParameters createDefault() {
+        return createBuilder().
+            setThemeResId(R.style.PaymentTheme_PaymentPage).
+            setEmptyTextAppearance(R.style.PaymentText_Medium_Gray).
+            build();
+    }
+
     public int getThemeResId() {
         return themeResId;
     }
 
     public int getEmptyTextAppearance() {
         return emptyTextAppearance;
-    }
-
-    public static final PageParameters createDefault() {
-        return createBuilder().
-            setThemeResId(R.style.PaymentTheme_PaymentPage).
-            setEmptyTextAppearance(R.style.PaymentText_Medium_Gray).
-            build();
     }
 
     public final static class Builder {

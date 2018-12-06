@@ -17,11 +17,11 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.List;
 
-import android.support.v4.widget.TextViewCompat;
-import android.widget.TextView;
-import android.widget.ImageView;
 import android.content.res.Resources;
+import android.support.v4.widget.TextViewCompat;
 import android.util.Log;
+import android.widget.ImageView;
+import android.widget.TextView;
 import net.optile.payment.core.PaymentInputType;
 import net.optile.payment.model.InputElement;
 
@@ -85,10 +85,10 @@ public final class PaymentUtils {
         return hasExpiryYear && hasExpiryMonth;
     }
 
-    /** 
+    /**
      * Set the TextAppearance in the TextView
-     * 
-     * @param textView for which the textAppearance should be changed 
+     *
+     * @param textView for which the textAppearance should be changed
      * @param textAppearanceResId the resource id of the textAppearance to be set
      */
     public static void setTextAppearance(TextView textView, int textAppearanceResId) {
@@ -97,10 +97,10 @@ public final class PaymentUtils {
         }
     }
 
-    /** 
+    /**
      * Set the background resource for the ImageView
-     * 
-     * @param imageView for which the background resource should be set 
+     *
+     * @param imageView for which the background resource should be set
      * @param backgroundResId the resource id of the background
      */
     public static void setImageBackground(ImageView imageView, int backgroundResId) {
@@ -108,7 +108,7 @@ public final class PaymentUtils {
             imageView.setBackgroundResource(backgroundResId);
         }
     }
-    
+
     /**
      * Read the contents of the raw resource
      *

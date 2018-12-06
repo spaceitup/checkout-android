@@ -27,7 +27,6 @@ import android.view.View;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import net.optile.payment.R;
-import net.optile.payment.util.PaymentUtils;
 import net.optile.payment.ui.PaymentResult;
 import net.optile.payment.ui.PaymentUI;
 import net.optile.payment.ui.dialog.MessageDialogFragment;
@@ -36,6 +35,7 @@ import net.optile.payment.ui.model.PaymentCard;
 import net.optile.payment.ui.model.PaymentSession;
 import net.optile.payment.ui.theme.PageParameters;
 import net.optile.payment.ui.widget.FormWidget;
+import net.optile.payment.util.PaymentUtils;
 import net.optile.payment.validation.ValidationResult;
 import net.optile.payment.validation.Validator;
 

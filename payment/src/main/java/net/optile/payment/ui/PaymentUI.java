@@ -15,16 +15,8 @@ import android.app.Activity;
 import android.content.Intent;
 import android.text.TextUtils;
 import android.util.Patterns;
-import net.optile.payment.R;
 import net.optile.payment.ui.page.PaymentPageActivity;
 import net.optile.payment.ui.theme.PaymentTheme;
-import net.optile.payment.ui.theme.PageParameters;
-import net.optile.payment.ui.theme.IconParameters;
-import net.optile.payment.ui.theme.ButtonParameters;
-import net.optile.payment.ui.theme.CheckBoxParameters;
-import net.optile.payment.ui.theme.ListParameters;
-import net.optile.payment.ui.theme.DateParameters;
-import net.optile.payment.ui.theme.MessageParameters;
 import net.optile.payment.validation.Validator;
 
 /**

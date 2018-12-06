@@ -26,14 +26,14 @@ public final class TextInputParameters {
         return new Builder();
     }
 
-    public int getThemeResId() {
-        return themeResId;
-    }
-
     public final static TextInputParameters createDefault() {
         return createBuilder().
             setThemeResId(R.style.PaymentThemeTextInput).
             build();
+    }
+
+    public int getThemeResId() {
+        return themeResId;
     }
 
     public final static class Builder {

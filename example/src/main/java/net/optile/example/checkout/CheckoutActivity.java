@@ -25,13 +25,6 @@ import net.optile.example.R;
 import net.optile.payment.ui.PaymentResult;
 import net.optile.payment.ui.PaymentUI;
 import net.optile.payment.ui.dialog.MessageDialogFragment;
-import net.optile.payment.ui.theme.ButtonParameters;
-import net.optile.payment.ui.theme.CheckBoxParameters;
-import net.optile.payment.ui.theme.IconParameters;
-import net.optile.payment.ui.theme.PageParameters;
-import net.optile.payment.ui.theme.DateParameters;
-import net.optile.payment.ui.theme.ListParameters;
-import net.optile.payment.ui.theme.MessageParameters;
 import net.optile.payment.ui.theme.PaymentTheme;
 
 /**

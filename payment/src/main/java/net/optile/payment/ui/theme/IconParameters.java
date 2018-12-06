@@ -14,7 +14,6 @@ package net.optile.payment.ui.theme;
 import java.util.HashMap;
 import java.util.Map;
 
-import android.text.TextUtils;
 import net.optile.payment.R;
 import net.optile.payment.core.PaymentInputType;
 
@@ -41,6 +40,15 @@ public final class IconParameters {
         return new Builder();
     }
 
+    public final static IconParameters createDefault() {
+        return createBuilder().
+            setDefaultIconMapping().
+            setOkColorResId(R.color.pmvalidation_ok).
+            setUnknownColorResId(R.color.pmvalidation_unknown).
+            setErrorColorResId(R.color.pmvalidation_error).
+            build();
+    }
+
     public int getOkColorResId() {
         return okColorResId;
     }
@@ -61,15 +69,6 @@ public final class IconParameters {
         return R.drawable.ic_default;
     }
 
-    public final static IconParameters createDefault() {
-        return createBuilder().
-            setDefaultIconMapping().
-            setOkColorResId(R.color.pmvalidation_ok).
-            setUnknownColorResId(R.color.pmvalidation_unknown).
-            setErrorColorResId(R.color.pmvalidation_error).
-            build();
-    }
-    
     public final static class Builder {
         Map<String, Integer> mapping;
         int okColorResId;
@@ -92,7 +91,7 @@ public final class IconParameters {
             mapping.put(PaymentInputType.VERIFICATION_CODE, R.drawable.ic_lock);
             return this;
         }
-        
+
         public Builder putInputTypeIcon(String inputType, int iconRes) {
             mapping.put(inputType, iconRes);
             return this;

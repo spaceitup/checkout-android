@@ -15,6 +15,7 @@ import java.net.URL;
 import java.util.List;
 
 import com.bumptech.glide.Glide;
+
 import android.support.v7.widget.RecyclerView.ViewHolder;
 import android.view.LayoutInflater;
 import android.view.View;

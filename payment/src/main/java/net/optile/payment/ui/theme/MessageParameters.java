@@ -29,6 +29,15 @@ public final class MessageParameters {
         return new Builder();
     }
 
+    public final static MessageParameters createDefault() {
+        return createBuilder().
+            setTitleTextAppearance(R.style.PaymentText_Large_Bold).
+            setMessageTextAppearance(R.style.PaymentText_Medium_Gray).
+            setMessageNoTitleTextAppearance(R.style.PaymentText_Medium_Bold_Gray).
+            setButtonTextAppearance(R.style.PaymentText_Small_Bold_Primary).
+            build();
+    }
+
     public int getTitleAppearance() {
         return titleTextAppearance;
     }
@@ -43,15 +52,6 @@ public final class MessageParameters {
 
     public int getButtonTextAppearance() {
         return buttonTextAppearance;
-    }
-
-    public final static MessageParameters createDefault() {
-        return createBuilder().
-            setTitleTextAppearance(R.style.PaymentText_Large_Bold).
-            setMessageTextAppearance(R.style.PaymentText_Medium_Gray).
-            setMessageNoTitleTextAppearance(R.style.PaymentText_Medium_Bold_Gray).
-            setButtonTextAppearance(R.style.PaymentText_Small_Bold_Primary).  
-            build();
     }
 
     public final static class Builder {

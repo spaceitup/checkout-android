@@ -11,16 +11,16 @@
 
 package net.optile.example.checkout;
 
+import net.optile.example.R;
 import net.optile.payment.ui.theme.ButtonParameters;
 import net.optile.payment.ui.theme.CheckBoxParameters;
-import net.optile.payment.ui.theme.IconParameters;
-import net.optile.payment.ui.theme.PageParameters;
 import net.optile.payment.ui.theme.DateParameters;
+import net.optile.payment.ui.theme.IconParameters;
 import net.optile.payment.ui.theme.ListParameters;
 import net.optile.payment.ui.theme.MessageParameters;
-import net.optile.payment.ui.theme.TextInputParameters;
+import net.optile.payment.ui.theme.PageParameters;
 import net.optile.payment.ui.theme.PaymentTheme;
-import net.optile.example.R;
+import net.optile.payment.ui.theme.TextInputParameters;
 
 /**
  * Class used to create a custom PaymentTheme for skinning the Android SDK Payment page

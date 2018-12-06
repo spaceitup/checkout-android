@@ -18,9 +18,9 @@ import android.widget.TextView;
 import net.optile.payment.R;
 import net.optile.payment.core.PaymentException;
 import net.optile.payment.form.Charge;
-import net.optile.payment.util.PaymentUtils;
 import net.optile.payment.ui.theme.CheckBoxParameters;
 import net.optile.payment.ui.theme.PaymentTheme;
+import net.optile.payment.util.PaymentUtils;
 
 /**
  * Widget for showing the CheckBox input element

@@ -24,12 +24,25 @@ public final class PaymentTheme {
     private ListParameters listParameters;
     private MessageParameters messageParameters;
     private TextInputParameters textInputParameters;
-    
+
     private PaymentTheme() {
     }
 
     public static Builder createBuilder() {
         return new Builder();
+    }
+
+    public static final PaymentTheme createDefault() {
+        return createBuilder().
+            setPageParameters(PageParameters.createDefault()).
+            setIconParameters(IconParameters.createDefault()).
+            setButtonParameters(ButtonParameters.createDefault()).
+            setCheckBoxParameters(CheckBoxParameters.createDefault()).
+            setDateParameters(DateParameters.createDefault()).
+            setListParameters(ListParameters.createDefault()).
+            setMessageParameters(MessageParameters.createDefault()).
+            setTextInputParameters(TextInputParameters.createDefault()).
+            build();
     }
 
     public PageParameters getPageParameters() {
@@ -64,19 +77,6 @@ public final class PaymentTheme {
         return textInputParameters;
     }
 
-    public static final PaymentTheme createDefault() {
-        return createBuilder().
-            setPageParameters(PageParameters.createDefault()).
-            setIconParameters(IconParameters.createDefault()).
-            setButtonParameters(ButtonParameters.createDefault()).
-            setCheckBoxParameters(CheckBoxParameters.createDefault()).
-            setDateParameters(DateParameters.createDefault()).
-            setListParameters(ListParameters.createDefault()).
-            setMessageParameters(MessageParameters.createDefault()).
-            setTextInputParameters(TextInputParameters.createDefault()).
-            build();
-    }
-    
     public static final class Builder {
         PageParameters pageParameters;
         IconParameters iconParameters;
@@ -129,7 +129,7 @@ public final class PaymentTheme {
             this.textInputParameters = textInputParameters;
             return this;
         }
-        
+
         public PaymentTheme build() {
             PaymentTheme theme = new PaymentTheme();
 

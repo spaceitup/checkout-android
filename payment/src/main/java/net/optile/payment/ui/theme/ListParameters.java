@@ -32,6 +32,15 @@ public final class ListParameters {
         return new Builder();
     }
 
+    public final static ListParameters createDefault() {
+        return createBuilder().
+            setHeaderTextAppearance(R.style.PaymentText_Medium_Bold).
+            setAccountTitleTextAppearance(R.style.PaymentText_Medium_Bold).
+            setAccountSubtitleTextAppearance(R.style.PaymentText_Tiny).
+            setNetworkTitleTextAppearance(R.style.PaymentText_Medium).
+            build();
+    }
+
     public int getHeaderTextAppearance() {
         return headerTextAppearance;
     }
@@ -50,15 +59,6 @@ public final class ListParameters {
 
     public int getLogoBackgroundResId() {
         return logoBackgroundResId;
-    }
-
-    public final static ListParameters createDefault() {
-        return createBuilder().
-            setHeaderTextAppearance(R.style.PaymentText_Medium_Bold).
-            setAccountTitleTextAppearance(R.style.PaymentText_Medium_Bold).
-            setAccountSubtitleTextAppearance(R.style.PaymentText_Tiny).    
-            setNetworkTitleTextAppearance(R.style.PaymentText_Medium).
-            build();
     }
 
     public final static class Builder {

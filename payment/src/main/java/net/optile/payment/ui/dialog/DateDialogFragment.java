@@ -16,7 +16,6 @@ import java.util.Objects;
 import android.app.Dialog;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
-import android.support.v4.widget.TextViewCompat;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -25,10 +24,10 @@ import android.view.Window;
 import android.widget.NumberPicker;
 import android.widget.TextView;
 import net.optile.payment.R;
-import net.optile.payment.util.PaymentUtils;
 import net.optile.payment.ui.PaymentUI;
 import net.optile.payment.ui.theme.DateParameters;
 import net.optile.payment.ui.theme.PaymentTheme;
+import net.optile.payment.util.PaymentUtils;
 
 /**
  * Date Dialog Fragment for allowing the user to select month and year
