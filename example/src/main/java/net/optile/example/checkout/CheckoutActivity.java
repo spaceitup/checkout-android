@@ -177,10 +177,11 @@ public final class CheckoutActivity extends AppCompatActivity implements Checkou
 
         PaymentTheme theme = null;
         if (customTheme) {
-            theme = CheckoutTheme.createTheme();
+            theme = CheckoutTheme.createCustomTheme();
         } else {
             theme = PaymentTheme.createDefault();
         }
+        theme = null;
         paymentUI.setPaymentTheme(theme);
         paymentUI.showPaymentPage(this, PAYMENT_REQUEST_CODE);
     }

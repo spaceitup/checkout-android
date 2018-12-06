@@ -6,20 +6,19 @@
     </style>
 
     <style name="CustomThemePaymentPage" parent="Theme.AppCompat.NoActionBar">
-        <item name="toolbarStyle">@style/CustomThemeToolbar</item>
         <item name="colorPrimary">@color/customColorPrimary</item>
         <item name="colorPrimaryDark">@color/customColorPrimaryDark</item>
         <item name="colorAccent">@color/customColorAccent</item>
+        <item name="toolbarStyle">@style/CustomThemeToolbar</item>
         <item name="materialCardViewStyle">@style/CustomThemeCardView</item>
-        <item name="editTextStyle">@style/CustomTextInputEditText</item>
         <item name="textInputStyle">@style/CustomThemeTextInput</item>
+        <item name="editTextStyle">@style/CustomTextInputEditText</item>
         <item name="android:windowBackground">@color/custom_background</item>
     </style>
 
     <style name="CustomThemeToolbar" parent="Widget.AppCompat.Toolbar">
         <item name="titleTextAppearance">@style/CustomText.Medium.Bold</item>
     </style>
-
     
     <style name="CustomThemeCardView" parent="CardView.Dark">
         <item name="cardBackgroundColor">?attr/colorPrimary</item>
@@ -41,11 +40,16 @@
         <item name="colorControlNormal">@color/custom_foreground</item>
         <!-- underline color enabled -->
         <item name="colorControlActivated">@color/custom_foreground</item>
-
+        <!-- floating hint text appearance -->
         <item name="hintTextAppearance">@style/CustomTextInputLayoutHint</item>
+        <!-- error text appearance -->
         <item name="errorTextAppearance">@style/CustomTextInputLayoutError</item>
     </style>
 
+    <style name="CustomThemeEditText" parent="Widget.AppCompat.EditText">
+        <item name="android:textAppearance">@style/CustomTextInputEditText</item>
+    </style>
+    
     <style name="CustomThemeButton" parent="Widget.AppCompat.Button.Borderless">
         <item name="colorButtonNormal">@color/custom_button</item>
         <item name="colorControlHighlight">@color/custom_button</item>

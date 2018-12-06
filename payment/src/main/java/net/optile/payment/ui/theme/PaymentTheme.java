@@ -23,7 +23,8 @@ public final class PaymentTheme {
     private DateParameters dateParameters;
     private ListParameters listParameters;
     private MessageParameters messageParameters;
-
+    private TextInputParameters textInputParameters;
+    
     private PaymentTheme() {
     }
 
@@ -59,6 +60,10 @@ public final class PaymentTheme {
         return messageParameters;
     }
 
+    public TextInputParameters getTextInputParameters() {
+        return textInputParameters;
+    }
+
     public static final PaymentTheme createDefault() {
         return createBuilder().
             setPageParameters(PageParameters.createDefault()).
@@ -68,6 +73,7 @@ public final class PaymentTheme {
             setDateParameters(DateParameters.createDefault()).
             setListParameters(ListParameters.createDefault()).
             setMessageParameters(MessageParameters.createDefault()).
+            setTextInputParameters(TextInputParameters.createDefault()).
             build();
     }
     
@@ -79,6 +85,7 @@ public final class PaymentTheme {
         DateParameters dateParameters;
         ListParameters listParameters;
         MessageParameters messageParameters;
+        TextInputParameters textInputParameters;
 
         Builder() {
         }
@@ -118,6 +125,11 @@ public final class PaymentTheme {
             return this;
         }
 
+        public Builder setTextInputParameters(TextInputParameters textInputParameters) {
+            this.textInputParameters = textInputParameters;
+            return this;
+        }
+        
         public PaymentTheme build() {
             PaymentTheme theme = new PaymentTheme();
 
@@ -155,6 +167,11 @@ public final class PaymentTheme {
                 messageParameters = MessageParameters.createBuilder().build();
             }
             theme.messageParameters = messageParameters;
+
+            if (textInputParameters == null) {
+                textInputParameters = TextInputParameters.createBuilder().build();
+            }
+            theme.textInputParameters = textInputParameters;
             return theme;
         }
     }

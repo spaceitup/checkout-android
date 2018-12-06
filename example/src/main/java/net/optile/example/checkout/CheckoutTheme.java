@@ -18,6 +18,7 @@ import net.optile.payment.ui.theme.PageParameters;
 import net.optile.payment.ui.theme.DateParameters;
 import net.optile.payment.ui.theme.ListParameters;
 import net.optile.payment.ui.theme.MessageParameters;
+import net.optile.payment.ui.theme.TextInputParameters;
 import net.optile.payment.ui.theme.PaymentTheme;
 import net.optile.example.R;
 
@@ -31,7 +32,7 @@ public final class CheckoutTheme {
      * 
      * @return PaymentTheme containing the custom skin 
      */
-    public static PaymentTheme createTheme() {
+    public static PaymentTheme createCustomTheme() {
         PaymentTheme.Builder builder = PaymentTheme.createBuilder();
 
         PageParameters pageParams = PageParameters.createBuilder().
@@ -84,6 +85,11 @@ public final class CheckoutTheme {
             build();
         builder.setMessageParameters(messageParams);
 
+        TextInputParameters textInputParams = TextInputParameters.createBuilder().
+            setThemeResId(R.style.CustomThemeTextInput).
+            build();
+        builder.setTextInputParameters(textInputParams);
+        
         return builder.build();
     }
 }

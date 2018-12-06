@@ -5,13 +5,16 @@
         <item name="colorPrimaryDark">@color/pmcolor_primarydark</item>
         <item name="colorAccent">@color/pmcolor_accent</item>
     </style>
-
+    
     <style name="PaymentTheme.PaymentPage">
+        <item name="colorPrimary">@color/pmcolor_primary</item>
+        <item name="colorPrimaryDark">@color/pmcolor_primarydark</item>
+        <item name="colorAccent">@color/pmcolor_accent</item>
         <item name="toolbarStyle">@style/PaymentThemeToolbar</item>
-        <item name="android:windowBackground">@color/pmcolor_list</item>
         <item name="materialCardViewStyle">@style/PaymentThemeCardView</item>
-        <item name="editTextStyle">@style/PaymentTextInputEditText</item>
         <item name="textInputStyle">@style/PaymentThemeTextInput</item>
+        <item name="editTextStyle">@style/PaymentThemeEditText</item>
+        <item name="android:windowBackground">@color/pmcolor_list</item>
     </style>
 
     <style name="PaymentThemeToolbar" parent="Widget.AppCompat.Toolbar">
@@ -34,8 +37,16 @@
         <item name="colorControlNormal">@color/pmcolor_controlnormal</item>
         <!-- underline color enabled -->
         <item name="colorControlActivated">?attr/colorPrimary</item>
+        <!-- floating hint text appearance -->
+        <item name="hintTextAppearance">@style/PaymentTextInputLayoutHint</item>
+        <!-- error text appearance -->
+        <item name="errorTextAppearance">@style/PaymentTextInputLayoutError</item>
     </style>
 
+    <style name="PaymentThemeEditText" parent="Widget.AppCompat.EditText">
+        <item name="android:textAppearance">@style/PaymentTextInputEditText</item>
+    </style>
+    
     <style name="PaymentThemeButton" parent="Widget.AppCompat.Button.Borderless">
         <item name="colorButtonNormal">@color/pmcolor_primary</item>
         <item name="colorControlHighlight">@color/pmcolor_accent</item>

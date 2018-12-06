@@ -22,6 +22,7 @@ import net.optile.payment.model.InputElementType;
 import net.optile.payment.ui.theme.ButtonParameters;
 import net.optile.payment.ui.theme.CheckBoxParameters;
 import net.optile.payment.ui.theme.PaymentTheme;
+import net.optile.payment.ui.theme.TextInputParameters;
 
 /**
  * Class with helper methods to inflate widgets with proper theming
@@ -72,8 +73,8 @@ public final class WidgetInflater {
      */
     public static RegisterWidget inflateRegisterWidget(String name, ViewGroup parent, PaymentTheme theme) {
         CheckBoxParameters params = theme.getCheckBoxParameters();
-        View view = inflateWithThemedView(parent, R.layout.widget_checkbox, R.layout.view_checkbox, params.getThemeResId());
-        return new RegisterWidget(name, view, theme);
+        View layout = inflateWithThemedChild(parent, R.layout.widget_checkbox, R.layout.view_checkbox, params.getThemeResId());
+        return new RegisterWidget(name, layout, theme);
     }
 
     /**
@@ -86,8 +87,8 @@ public final class WidgetInflater {
      */
     public static ButtonWidget inflateButtonWidget(String name, ViewGroup parent, PaymentTheme theme) {
         ButtonParameters params = theme.getButtonParameters();
-        View view = inflateWithThemedView(parent, R.layout.widget_button, R.layout.view_button, params.getThemeResId());
-        return new ButtonWidget(name, view, theme);
+        View layout = inflateWithThemedChild(parent, R.layout.widget_button, R.layout.view_button, params.getThemeResId());
+        return new ButtonWidget(name, layout, theme);
     }
 
     /**
@@ -99,8 +100,9 @@ public final class WidgetInflater {
      * @return inflated and themed DateWidget
      */
     public static DateWidget inflateDateWidget(String name, ViewGroup parent, PaymentTheme theme) {
-        View view = inflate(parent, R.layout.widget_date);
-        return new DateWidget(name, view, theme);
+        TextInputParameters params = theme.getTextInputParameters();
+        View layout = inflateWithThemedChild(parent, R.layout.widget_textinput, R.layout.view_dateinput, params.getThemeResId());
+        return new DateWidget(name, layout, theme);
     }
 
     /**
@@ -112,8 +114,9 @@ public final class WidgetInflater {
      * @return inflated and themed TextInputWidget
      */
     public static TextInputWidget inflateTextInputWidget(String name, ViewGroup parent, PaymentTheme theme) {
-        View view = inflate(parent, R.layout.widget_textinput);
-        return new TextInputWidget(name, view, theme);
+        TextInputParameters params = theme.getTextInputParameters();
+        View layout = inflateWithThemedChild(parent, R.layout.widget_textinput, R.layout.view_textinput, params.getThemeResId());
+        return new TextInputWidget(name, layout, theme);
     }
 
     /**
@@ -146,20 +149,21 @@ public final class WidgetInflater {
      *
      * @param parent ViewGroup in which this inflated view will be added
      * @param layoutResId layout resource id of the view that should be inflated
-     * @param viewLayoutResId internal view resource id that should be inflated with the theme
-     * @param viewThemeResId theme used to inflate the internval view element
+     * @param viewResId internal view resource id that should be inflated with the theme
+     * @param themeResId theme used to inflate the internval view element
      * @return the inflated view
      */
-    private static View inflateWithThemedView(ViewGroup parent, int layoutResId, int viewLayoutResId, int viewThemeResId) {
+    private static View inflateWithThemedChild(ViewGroup parent, int layoutResId, int childResId, int themeResId) {
         Context context = parent.getContext();
         LayoutInflater inflater = LayoutInflater.from(context);
         View view = inflater.inflate(layoutResId, parent, false);
         ViewGroup group = view.findViewById(R.id.layout_viewholder);
-        inflater = LayoutInflater.from(new ContextThemeWrapper(context, viewThemeResId));
-        inflater.inflate(viewLayoutResId, group, true);
+
+        if (group != null) {
+            inflater = LayoutInflater.from(new ContextThemeWrapper(context, themeResId));
+            inflater.inflate(childResId, group, true);
+        }
         return view;
     }
-
-
 }
 
