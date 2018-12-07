@@ -15,6 +15,7 @@ import java.util.Objects;
 
 import android.app.Dialog;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v4.app.DialogFragment;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
@@ -139,6 +140,7 @@ public final class DateDialogFragment extends DialogFragment {
     /**
      * {@inheritDoc}
      */
+    @NonNull
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         Dialog dialog = super.onCreateDialog(savedInstanceState);

@@ -22,14 +22,14 @@
      private int dialogTitleTextAppearance;
      private int dialogButtonTextAppearance;
 
-     DateParameters() {
+     private DateParameters() {
      }
 
      public static Builder createBuilder() {
          return new Builder();
      }
 
-     public final static DateParameters createDefault() {
+     public static DateParameters createDefault() {
          return createBuilder().
              setDialogTitleTextAppearance(R.style.PaymentText_Medium_Bold).
              setDialogButtonTextAppearance(R.style.PaymentText_Small_Bold_Primary).

@@ -13,6 +13,7 @@ package net.optile.payment.ui.list;
 
 import java.net.URL;
 import java.util.List;
+import java.util.Locale;
 
 import com.bumptech.glide.Glide;
 
@@ -37,11 +38,11 @@ import net.optile.payment.util.PaymentUtils;
  */
 final class AccountCardViewHolder extends PaymentCardViewHolder {
 
-    final TextView title;
-    final TextView subTitle;
-    final ImageView logo;
+    private final TextView title;
+    private final TextView subTitle;
+    private final ImageView logo;
 
-    AccountCardViewHolder(ListAdapter adapter, View parent) {
+    private AccountCardViewHolder(ListAdapter adapter, View parent) {
         super(adapter, parent);
         this.title = parent.findViewById(R.id.text_title);
         this.subTitle = parent.findViewById(R.id.text_subtitle);
@@ -62,7 +63,7 @@ final class AccountCardViewHolder extends PaymentCardViewHolder {
         return holder;
     }
 
-    void applyTheme(PaymentTheme theme) {
+    private void applyTheme(PaymentTheme theme) {
         ListParameters params = theme.getListParameters();
         PaymentUtils.setTextAppearance(title, params.getAccountTitleTextAppearance());
         PaymentUtils.setTextAppearance(subTitle, params.getAccountSubtitleTextAppearance());
@@ -78,7 +79,7 @@ final class AccountCardViewHolder extends PaymentCardViewHolder {
         AccountCard card = (AccountCard) paymentCard;
         AccountMask mask = card.getMaskedAccount();
         bindTitle(mask, card.getPaymentMethod());
-        bindSubTitle(mask, card.getInputElements());
+        bindSubTitle(mask);
         URL logoUrl = card.getLink("logo");
 
         if (logoUrl != null) {
@@ -97,13 +98,13 @@ final class AccountCardViewHolder extends PaymentCardViewHolder {
         }
     }
 
-    private void bindSubTitle(AccountMask mask, List<InputElement> elements) {
+    private void bindSubTitle(AccountMask mask) {
         int expiryMonth = PaymentUtils.toInt(mask.getExpiryMonth());
         int expiryYear = PaymentUtils.toInt(mask.getExpiryYear());
 
         if (expiryMonth > 0 && expiryYear > 0) {
             String format = subTitle.getContext().getString(R.string.pmlist_date);
-            String monthLabel = String.format("%02d", expiryMonth);
+            String monthLabel = String.format(Locale.getDefault(), "%02d", expiryMonth);
             String yearLabel = Integer.toString(expiryYear);
             subTitle.setText(String.format(format, monthLabel, yearLabel));
             subTitle.setVisibility(View.VISIBLE);

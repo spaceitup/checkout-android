@@ -28,8 +28,8 @@ import net.optile.payment.util.PaymentUtils;
  */
 public final class AccountCard implements PaymentCard {
 
-    public final AccountRegistration account;
-    public final ApplicableNetwork network;
+    private final AccountRegistration account;
+    private final ApplicableNetwork network;
     private LanguageFile lang;
 
     public AccountCard(AccountRegistration account, ApplicableNetwork network) {

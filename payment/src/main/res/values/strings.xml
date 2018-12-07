@@ -5,6 +5,7 @@
     <string name="pmpage_error_connection">Please check your internet connection.</string>
     <string name="pmpage_error_unknown">An error occurred while handling your payment.</string>
     <string name="pmpage_error_validation">Invalid input value</string>
+    <string name="pmpage_contentdescription">PaymentImage</string>    
 
     <string name="pmlist_account">Saved accounts</string>
     <string name="pmlist_network">Choose another account</string>

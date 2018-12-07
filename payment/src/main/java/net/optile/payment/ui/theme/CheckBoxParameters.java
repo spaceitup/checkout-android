@@ -23,14 +23,14 @@
      private int checkedTextAppearance;
      private int uncheckedTextAppearance;
 
-     CheckBoxParameters() {
+     private CheckBoxParameters() {
      }
 
      public static Builder createBuilder() {
          return new Builder();
      }
 
-     public final static CheckBoxParameters createDefault() {
+     public static CheckBoxParameters createDefault() {
          return createBuilder().
              setThemeResId(R.style.PaymentThemeCheckBox).
              setCheckedTextAppearance(R.style.PaymentText_Medium).

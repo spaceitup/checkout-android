@@ -14,7 +14,7 @@ package net.optile.payment.validation;
 /**
  * Class with helper methods to validate card numbers
  */
-public final class CardNumberValidator {
+final class CardNumberValidator {
 
     /**
      * Checks validity of credit card based on "Luhn algorithm". This code is taken from <a

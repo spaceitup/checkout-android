@@ -82,7 +82,7 @@ final class CheckoutPresenter {
      *
      * @return true when creating a payment session, false otherwise
      */
-    boolean isCreatePaymentSessionActive() {
+    private boolean isCreatePaymentSessionActive() {
         return subscription != null && !subscription.isUnsubscribed();
     }
 
@@ -137,9 +137,9 @@ final class CheckoutPresenter {
      * REMIND, this code must be removed later. It is only used for testing the
      * SDK during development
      *
-     * @param url
-     * @param authorization
-     * @param listData
+     * @param url containing the address to the Payment API
+     * @param authorization authorization header value
+     * @param listData list request data for creating a payment session
      */
     private String asyncCreatePaymentSession(String url, String authorization, String listData) throws CheckoutException {
         ListConnection conn = new ListConnection();

@@ -35,7 +35,7 @@
                     android:layout_height="@dimen/pmcard_logoheight"
                     android:layout_marginEnd="@dimen/pmborder_small"
                     android:adjustViewBounds="true"
-                    android:contentDescription="logo"/>
+                    android:contentDescription="@string/pmpage_contentdescription"/>
 
                 <TextView
                     android:id="@+id/text_title"

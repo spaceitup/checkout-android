@@ -23,14 +23,14 @@
 
      private int labelTextAppearance;
 
-     ButtonParameters() {
+     private ButtonParameters() {
      }
 
      public static Builder createBuilder() {
          return new Builder();
      }
 
-     public final static ButtonParameters createDefault() {
+     public static ButtonParameters createDefault() {
          return createBuilder().
              setThemeResId(R.style.PaymentThemeButton).
              setLabelTextAppearance(R.style.PaymentText_Medium_Bold_Light).

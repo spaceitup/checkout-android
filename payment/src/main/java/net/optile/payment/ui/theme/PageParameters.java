@@ -22,14 +22,14 @@ public final class PageParameters {
 
     private int emptyTextAppearance;
 
-    PageParameters() {
+    private PageParameters() {
     }
 
     public static Builder createBuilder() {
         return new Builder();
     }
 
-    public static final PageParameters createDefault() {
+    public static PageParameters createDefault() {
         return createBuilder().
             setThemeResId(R.style.PaymentTheme_PaymentPage).
             setEmptyTextAppearance(R.style.PaymentText_Medium_Gray).

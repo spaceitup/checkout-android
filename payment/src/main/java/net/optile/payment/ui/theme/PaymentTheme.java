@@ -32,7 +32,7 @@ public final class PaymentTheme {
         return new Builder();
     }
 
-    public static final PaymentTheme createDefault() {
+    public static PaymentTheme createDefault() {
         return createBuilder().
             setPageParameters(PageParameters.createDefault()).
             setIconParameters(IconParameters.createDefault()).

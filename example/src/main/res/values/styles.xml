@@ -4,14 +4,6 @@
         <item name="android:textColor">@color/custom_foreground</item>
     </style>
 
-    <style name="CustomText.Tiny">
-        <item name="android:textSize">12sp</item>
-    </style>
-
-    <style name="CustomText.Tiny.Bold">
-        <item name="android:textStyle">bold</item>
-    </style>
-
     <style name="CustomText.Small">
         <item name="android:textSize">14sp</item>
     </style>

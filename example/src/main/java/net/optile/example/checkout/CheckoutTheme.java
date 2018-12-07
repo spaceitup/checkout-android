@@ -25,7 +25,7 @@ import net.optile.payment.ui.theme.TextInputParameters;
 /**
  * Class used to create a custom PaymentTheme for skinning the Android SDK Payment page
  */
-public final class CheckoutTheme {
+final class CheckoutTheme {
 
     /** 
      * Construct a new PaymentTheme with the custom dark skin for the Android SDK payment page

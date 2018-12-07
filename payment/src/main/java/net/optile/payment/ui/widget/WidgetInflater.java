@@ -59,8 +59,8 @@ public final class WidgetInflater {
      */
     public static CheckBoxWidget inflateCheckBoxWidget(String name, ViewGroup parent, PaymentTheme theme) {
         CheckBoxParameters params = theme.getCheckBoxParameters();
-        View view = inflate(parent, R.layout.widget_checkbox);
-        return new CheckBoxWidget(name, view, theme);
+        View layout = inflateWithThemedChild(parent, R.layout.widget_checkbox, R.layout.view_checkbox, params.getThemeResId());
+        return new CheckBoxWidget(name, layout, theme);
     }
 
     /**
@@ -149,7 +149,7 @@ public final class WidgetInflater {
      *
      * @param parent ViewGroup in which this inflated view will be added
      * @param layoutResId layout resource id of the view that should be inflated
-     * @param viewResId internal view resource id that should be inflated with the theme
+     * @param childResId internal view resource id that should be inflated with the theme
      * @param themeResId theme used to inflate the internval view element
      * @return the inflated view
      */

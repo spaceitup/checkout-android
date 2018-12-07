@@ -22,14 +22,14 @@ public final class MessageParameters {
     private int messageNoTitleTextAppearance;
     private int buttonTextAppearance;
 
-    MessageParameters() {
+    private MessageParameters() {
     }
 
     public static Builder createBuilder() {
         return new Builder();
     }
 
-    public final static MessageParameters createDefault() {
+    public static MessageParameters createDefault() {
         return createBuilder().
             setTitleTextAppearance(R.style.PaymentText_Large_Bold).
             setMessageTextAppearance(R.style.PaymentText_Medium_Gray).

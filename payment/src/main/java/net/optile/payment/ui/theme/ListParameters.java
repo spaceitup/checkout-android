@@ -25,14 +25,14 @@ public final class ListParameters {
     private int accountSubtitleTextAppearance;
     private int logoBackgroundResId;
 
-    ListParameters() {
+    private ListParameters() {
     }
 
     public static Builder createBuilder() {
         return new Builder();
     }
 
-    public final static ListParameters createDefault() {
+    public static ListParameters createDefault() {
         return createBuilder().
             setHeaderTextAppearance(R.style.PaymentText_Medium_Bold).
             setAccountTitleTextAppearance(R.style.PaymentText_Medium_Bold).

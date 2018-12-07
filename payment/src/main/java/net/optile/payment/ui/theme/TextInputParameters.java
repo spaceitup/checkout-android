@@ -19,14 +19,14 @@ import net.optile.payment.R;
 public final class TextInputParameters {
     private int themeResId;
 
-    TextInputParameters() {
+    private TextInputParameters() {
     }
 
     public static Builder createBuilder() {
         return new Builder();
     }
 
-    public final static TextInputParameters createDefault() {
+    public static TextInputParameters createDefault() {
         return createBuilder().
             setThemeResId(R.style.PaymentThemeTextInput).
             build();

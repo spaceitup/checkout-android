@@ -91,35 +91,35 @@ final class ListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     }
 
     void onItemClicked(int position) {
-        if (!isValidPosition(position)) {
+        if (isInvalidPosition(position)) {
             return;
         }
         list.onItemClicked(position);
     }
 
     void hideKeyboard(int position) {
-        if (!isValidPosition(position)) {
+        if (isInvalidPosition(position)) {
             return;
         }
         list.hideKeyboard();
     }
 
     void showKeyboard(int position) {
-        if (!isValidPosition(position)) {
+        if (isInvalidPosition(position)) {
             return;
         }
         list.showKeyboard();
     }
 
     void showDialogFragment(int position, DialogFragment dialog, String tag) {
-        if (!isValidPosition(position)) {
+        if (isInvalidPosition(position)) {
             return;
         }
         list.showDialogFragment(dialog, tag);
     }
 
     void onActionClicked(int position) {
-        if (!isValidPosition(position)) {
+        if (isInvalidPosition(position)) {
             return;
         }
         list.onActionClicked(position);
@@ -130,7 +130,7 @@ final class ListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     }
 
     ValidationResult validate(int position, String type, String value1, String value2) {
-        if (!isValidPosition(position)) {
+        if (isInvalidPosition(position)) {
             return null;
         }
         return list.validate(position, type, value1, value2);
@@ -162,7 +162,7 @@ final class ListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         return null;
     }
 
-    private boolean isValidPosition(int position) {
-        return position >= 0 && position < items.size();
+    private boolean isInvalidPosition(int position) {
+        return position < 0 || position >= items.size();
     }
 }

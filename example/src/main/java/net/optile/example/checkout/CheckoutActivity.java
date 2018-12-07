@@ -32,11 +32,9 @@ import net.optile.payment.ui.theme.PaymentTheme;
  */
 public final class CheckoutActivity extends AppCompatActivity implements CheckoutView {
 
-    private static String TAG = "payment_CheckoutActivity";
     private static int PAYMENT_REQUEST_CODE = 1;
 
     private CheckoutPresenter presenter;
-    private boolean active;
     private CheckoutResult checkoutResult;
     private boolean customTheme;
     
@@ -84,7 +82,6 @@ public final class CheckoutActivity extends AppCompatActivity implements Checkou
     @Override
     public void onPause() {
         super.onPause();
-        this.active = false;
         this.presenter.onStop();
     }
 
@@ -94,7 +91,6 @@ public final class CheckoutActivity extends AppCompatActivity implements Checkou
     @Override
     public void onResume() {
         super.onResume();
-        this.active = true;
 
         if (checkoutResult != null) {
             presenter.handleCheckoutResult(checkoutResult);
@@ -156,19 +152,11 @@ public final class CheckoutActivity extends AppCompatActivity implements Checkou
      * {@inheritDoc}
      */
     @Override
-    public boolean isActive() {
-        return this.active;
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
     public void openPaymentPage(String listUrl) {
         PaymentUI paymentUI = PaymentUI.getInstance();
         paymentUI.setListUrl(listUrl);
 
-        PaymentTheme theme = null;
+        PaymentTheme theme;
         if (customTheme) {
             theme = CheckoutTheme.createCustomTheme();
         } else {

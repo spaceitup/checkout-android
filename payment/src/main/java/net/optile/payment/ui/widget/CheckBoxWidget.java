@@ -65,7 +65,7 @@ public class CheckBoxWidget extends FormWidget {
         charge.putValue(name, value.isChecked());
     }
 
-    public boolean isChecked() {
+    boolean isChecked() {
         return value.isChecked();
     }
 
@@ -74,7 +74,7 @@ public class CheckBoxWidget extends FormWidget {
         value.setChecked(checked);
     }
 
-    void handleOnCheckedChanged(boolean isChecked) {
+    private void handleOnCheckedChanged(boolean isChecked) {
         labelUnchecked.setVisibility(isChecked ? View.GONE : View.VISIBLE);
         labelChecked.setVisibility(isChecked ? View.VISIBLE : View.GONE);
     }

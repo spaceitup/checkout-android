@@ -5,8 +5,8 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_marginStart="@dimen/pmborder_small"
-    android:layout_marginTop="@dimen/pmborder_large">
-</LinearLayout>
+    android:layout_marginTop="@dimen/pmborder_large"
+    android:orientation="horizontal"/>
 
 
 

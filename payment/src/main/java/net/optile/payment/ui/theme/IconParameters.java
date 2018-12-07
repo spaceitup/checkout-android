@@ -28,11 +28,11 @@ public final class IconParameters {
     private int okColorResId;
     private int errorColorResId;
 
-    IconParameters() {
+    private IconParameters() {
         this.mapping = new HashMap<>();
     }
 
-    IconParameters(Map<String, Integer> mapping) {
+    private IconParameters(Map<String, Integer> mapping) {
         this.mapping = mapping;
     }
 
@@ -40,7 +40,7 @@ public final class IconParameters {
         return new Builder();
     }
 
-    public final static IconParameters createDefault() {
+    public static IconParameters createDefault() {
         return createBuilder().
             setDefaultIconMapping().
             setOkColorResId(R.color.pmvalidation_ok).
@@ -76,7 +76,7 @@ public final class IconParameters {
         int errorColorResId;
 
         Builder() {
-            mapping = new HashMap<String, Integer>();
+            mapping = new HashMap<>();
         }
 
         public Builder setDefaultIconMapping() {

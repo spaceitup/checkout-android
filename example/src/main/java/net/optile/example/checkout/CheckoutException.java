@@ -14,13 +14,7 @@ package net.optile.example.checkout;
 /**
  * General CheckoutException
  */
-public class CheckoutException extends Exception {
-
-    /**
-     * {@inheritDoc}
-     */
-    public CheckoutException() {
-    }
+class CheckoutException extends Exception {
 
     /**
      * {@inheritDoc}

@@ -25,9 +25,9 @@ import net.optile.payment.ui.theme.PaymentTheme;
  */
 public abstract class FormWidget {
 
-    public final static int VALIDATION_UNKNOWN = 0x00;
-    public final static int VALIDATION_ERROR = 0x01;
-    public final static int VALIDATION_OK = 0x02;
+    final static int VALIDATION_UNKNOWN = 0x00;
+    final static int VALIDATION_ERROR = 0x01;
+    final static int VALIDATION_OK = 0x02;
 
     final View rootView;
     final String name;
@@ -65,7 +65,7 @@ public abstract class FormWidget {
         }
     }
 
-    public void setVisible(boolean visible) {
+    void setVisible(boolean visible) {
         rootView.setVisibility(visible ? View.VISIBLE : View.GONE);
     }
 

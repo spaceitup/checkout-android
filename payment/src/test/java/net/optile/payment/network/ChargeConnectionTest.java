@@ -39,7 +39,7 @@ public class ChargeConnectionTest {
     public void createCharge_invalidURL_exception() throws PaymentException {
         ChargeConnection conn = new ChargeConnection();
         Charge charge = new Charge();
-        OperationResult result = conn.createCharge(null, charge);
+        conn.createCharge(null, charge);
     }
 
     /**
@@ -57,6 +57,6 @@ public class ChargeConnectionTest {
             e.printStackTrace();
         }
         assertNotNull(url);
-        OperationResult result = conn.createCharge(url, null);
+        conn.createCharge(url, null);
     }
 }

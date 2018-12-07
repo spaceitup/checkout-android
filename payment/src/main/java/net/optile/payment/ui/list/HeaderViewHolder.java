@@ -26,7 +26,7 @@ import net.optile.payment.util.PaymentUtils;
  */
 final class HeaderViewHolder extends RecyclerView.ViewHolder {
 
-    final TextView title;
+    private final TextView title;
 
     HeaderViewHolder(View parent) {
         super(parent);
