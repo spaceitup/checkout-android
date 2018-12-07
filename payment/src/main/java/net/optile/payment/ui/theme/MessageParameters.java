@@ -39,7 +39,7 @@ public final class MessageParameters {
             build();
     }
 
-    public int getTitleAppearance() {
+    public int getTitleTextAppearance() {
         return titleTextAppearance;
     }
 

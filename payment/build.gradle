@@ -45,6 +45,7 @@ dependencies {
     implementation "com.google.code.gson:gson:${rootProject.gsonVersion}"
     implementation "com.github.bumptech.glide:glide:${rootProject.bumptechGlideVersion}"
 
+    testImplementation "io.github.json-snapshot:json-snapshot:${rootProject.jsonsnapshotVersion}"
     testImplementation "junit:junit:${rootProject.junitVersion}"
     testImplementation "org.mockito:mockito-core:${rootProject.mockitoCoreVersion}"
     testImplementation "org.robolectric:robolectric:${rootProject.robolectricVersion}"

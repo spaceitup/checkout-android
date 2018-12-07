@@ -22,7 +22,7 @@ import net.optile.payment.ui.theme.PaymentTheme;
 import net.optile.payment.util.PaymentUtils;
 
 /**
- * The HeaderViewHolder holding Views for a header in the RecyclerView
+ * The HeaderViewHolder holding and binding views for a header in the RecyclerView
  */
 final class HeaderViewHolder extends RecyclerView.ViewHolder {
 

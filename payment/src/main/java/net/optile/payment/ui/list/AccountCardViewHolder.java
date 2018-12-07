@@ -34,7 +34,7 @@ import net.optile.payment.ui.theme.PaymentTheme;
 import net.optile.payment.util.PaymentUtils;
 
 /**
- * The AccountCardViewHolder class holding the views for an AccountCard
+ * The AccountCardViewHolder class holding and binding views for an AccountCard
  */
 final class AccountCardViewHolder extends PaymentCardViewHolder {
 

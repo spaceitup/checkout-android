@@ -102,7 +102,7 @@ public final class MessageDialogFragment extends DialogFragment {
 
     private void initTitle(View rootView, MessageParameters params) {
         TextView tv = rootView.findViewById(R.id.text_title);
-        PaymentUtils.setTextAppearance(tv, params.getTitleAppearance());
+        PaymentUtils.setTextAppearance(tv, params.getTitleTextAppearance());
 
         if (TextUtils.isEmpty(title)) {
             tv.setVisibility(View.GONE);
