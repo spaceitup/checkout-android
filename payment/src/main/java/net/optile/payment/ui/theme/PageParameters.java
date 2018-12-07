@@ -14,7 +14,8 @@ package net.optile.payment.ui.theme;
 import net.optile.payment.R;
 
 /**
- * Class for holding the PaymentPage theme parameters
+ * Class for holding the PaymentPage theme parameters. 
+ * The parameters may be used to theme the PaymentPage and the text appearance of the message shown when the list is empty.
  */
 public final class PageParameters {
 

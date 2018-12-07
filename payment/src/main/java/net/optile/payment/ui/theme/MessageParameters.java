@@ -14,7 +14,8 @@ package net.optile.payment.ui.theme;
 import net.optile.payment.R;
 
 /**
- * Class for holding the MessageParameters for the PaymentTheme
+ * Class for holding the MessageParameters for the PaymentTheme.
+ * The parameters may be used to theme the PopupDialog for showing messages and errors to the user.
  */
 public final class MessageParameters {
     private int titleTextAppearance;

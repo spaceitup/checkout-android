@@ -159,10 +159,13 @@ public final class WidgetInflater {
         View view = inflater.inflate(layoutResId, parent, false);
         ViewGroup group = view.findViewById(R.id.layout_viewholder);
 
-        if (group != null) {
-            inflater = LayoutInflater.from(new ContextThemeWrapper(context, themeResId));
-            inflater.inflate(childResId, group, true);
+        if (group == null) {
+            return view;
         }
+        if (themeResId != 0) {
+            inflater = LayoutInflater.from(new ContextThemeWrapper(context, themeResId));
+        }
+        inflater.inflate(childResId, group, true);
         return view;
     }
 }

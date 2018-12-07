@@ -15,6 +15,7 @@ import net.optile.payment.R;
 
 /**
  * Class for holding the InputTextParameters for the PaymentTheme.
+ * The parameters may be used to theme the TextInputLayout.
  */
 public final class TextInputParameters {
     private int themeResId;
