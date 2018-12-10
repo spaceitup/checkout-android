@@ -12,7 +12,7 @@
 package net.optile.payment.ui.theme;
 
 /**
- * Class to hold the theme settings of the Payment screens in the Android SDK
+ * Class to hold the theme settings of the payment screens in the Android SDK
  */
 public final class PaymentTheme {
 

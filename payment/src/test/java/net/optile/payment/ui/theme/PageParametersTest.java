@@ -11,9 +11,12 @@
 
 package net.optile.payment.ui.theme;
 
-import static org.junit.Assert.*;
-import net.optile.payment.R;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+
 import org.junit.Test;
+
+import net.optile.payment.R;
 
 public class PageParametersTest {
 
@@ -33,9 +36,9 @@ public class PageParametersTest {
         assertEquals(params.getAccountCardTitleStyle(), R.style.PaymentText_Medium_Bold);
         assertEquals(params.getAccountCardSubtitleStyle(), R.style.PaymentText_Tiny);
         assertEquals(params.getNetworkCardTitleStyle(), R.style.PaymentText_Medium);
-        assertEquals(params.getPaymentLogoBackground(), 0);                        
+        assertEquals(params.getPaymentLogoBackground(), 0);
     }
-    
+
     @Test
     public void getPageTheme() {
         int value = 101;

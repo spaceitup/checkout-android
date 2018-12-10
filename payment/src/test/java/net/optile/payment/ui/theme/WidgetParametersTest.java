@@ -35,6 +35,7 @@ public class WidgetParametersTest {
         assertEquals(params.getCheckBoxTheme(), R.style.PaymentThemeCheckBox);
         assertEquals(params.getCheckBoxLabelCheckedStyle(), R.style.PaymentText_Medium);
         assertEquals(params.getCheckBoxLabelUncheckedStyle(), R.style.PaymentText_Medium_Hint);                
+        assertEquals(params.getSelectLabelStyle(), R.style.PaymentText_Small);
         
         assertEquals(params.getValidationColorOk(), R.color.pmvalidation_ok);
         assertEquals(params.getValidationColorUnknown(), R.color.pmvalidation_unknown);
@@ -101,8 +102,16 @@ public class WidgetParametersTest {
     }
 
     @Test
-    public void getInputTypeIcon() {
+    public void getSelectLabelStyle() {
         int value = 107;
+        WidgetParameters params = WidgetParameters.createBuilder().
+            setSelectLabelStyle(value).build();
+        assertEquals(params.getSelectLabelStyle(), value);
+    }
+    
+    @Test
+    public void getInputTypeIcon() {
+        int value = 108;
         String name = "test";
         WidgetParameters params = WidgetParameters.createBuilder().
             putInputTypeIcon(name, value).build();
@@ -111,7 +120,7 @@ public class WidgetParametersTest {
     
     @Test
     public void getValidationColorOk() {
-        int value = 108;
+        int value = 109;
         WidgetParameters params = WidgetParameters.createBuilder().
             setValidationColorOk(value).build();
         assertEquals(params.getValidationColorOk(), value);
@@ -119,7 +128,7 @@ public class WidgetParametersTest {
 
     @Test
     public void getValidationColorUnknown() {
-        int value = 109;
+        int value = 110;
         WidgetParameters params = WidgetParameters.createBuilder().
             setValidationColorUnknown(value).build();
         assertEquals(params.getValidationColorUnknown(), value);
@@ -127,7 +136,7 @@ public class WidgetParametersTest {
 
     @Test
     public void getValidationColorError() {
-        int value = 110;
+        int value = 111;
         WidgetParameters params = WidgetParameters.createBuilder().
             setValidationColorError(value).build();
         assertEquals(params.getValidationColorError(), value);

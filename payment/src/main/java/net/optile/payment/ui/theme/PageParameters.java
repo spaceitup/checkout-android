@@ -15,7 +15,7 @@ import net.optile.payment.R;
 
 /**
  * Class for holding the PaymentPage theme parameters.
- * These parameters may be used to theme the PaymentPage and text appearances including the payment cards.
+ * These parameters may be used to theme the PaymentPage UI elements and text appearances.
  */
 public final class PageParameters {
 

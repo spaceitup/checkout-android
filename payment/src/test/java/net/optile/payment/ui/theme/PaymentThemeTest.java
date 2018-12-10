@@ -11,8 +11,9 @@
 
 package net.optile.payment.ui.theme;
 
-import static org.junit.Assert.*;
-import net.optile.payment.R;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+
 import org.junit.Test;
 
 public class PaymentThemeTest {
@@ -32,7 +33,7 @@ public class PaymentThemeTest {
         assertNotNull(params.getPageParameters());
         assertNotNull(params.getDialogParameters());
     }
-    
+
     @Test
     public void getPageParameters() {
         PageParameters value = PageParameters.createDefault();

@@ -19,7 +19,7 @@ import net.optile.payment.core.PaymentInputType;
 
 /**
  * Class for holding the WidgetParameters for the PaymentTheme.
- * These parameters may be used to theme the widgets shown in the payment cards, i.e. textInput, button and checkbox widgets
+ * These parameters may be used to theme the widgets shown inside the payment cards, i.e. the textInput, button and checkbox widgets
  */
 public final class WidgetParameters {
 
@@ -30,6 +30,7 @@ public final class WidgetParameters {
     private int checkBoxTheme;
     private int checkBoxLabelCheckedStyle;
     private int checkBoxLabelUncheckedStyle;
+    private int selectLabelStyle;
     private int validationColorUnknown;
     private int validationColorOk;
     private int validationColorError;
@@ -51,7 +52,8 @@ public final class WidgetParameters {
             setCheckBoxTheme(R.style.PaymentThemeCheckBox).
             setCheckBoxLabelCheckedStyle(R.style.PaymentText_Medium).
             setCheckBoxLabelUncheckedStyle(R.style.PaymentText_Medium_Hint).
-
+            setSelectLabelStyle(R.style.PaymentText_Tiny).
+        
             setDefaultIconMapping().
             setValidationColorOk(R.color.pmvalidation_ok).
             setValidationColorUnknown(R.color.pmvalidation_unknown).
@@ -84,6 +86,10 @@ public final class WidgetParameters {
         return checkBoxLabelUncheckedStyle;
     }
 
+    public int getSelectLabelStyle() {
+        return selectLabelStyle;
+    }
+    
     public int getInputTypeIcon(String inputType) {
 
         if (iconMapping.containsKey(inputType)) {
@@ -112,7 +118,8 @@ public final class WidgetParameters {
         int checkBoxTheme;
         int checkBoxLabelCheckedStyle;
         int checkBoxLabelUncheckedStyle;
-
+        int selectLabelStyle;
+        
         Map<String, Integer> iconMapping;
         int validationColorUnknown;
         int validationColorOk;
@@ -152,6 +159,11 @@ public final class WidgetParameters {
             return this;
         }
 
+        public Builder setSelectLabelStyle(int selectLabelStyle) {
+            this.selectLabelStyle = selectLabelStyle;
+            return this;
+        }
+        
         public Builder putInputTypeIcon(String inputType, int iconRes) {
             iconMapping.put(inputType, iconRes);
             return this;
@@ -195,6 +207,7 @@ public final class WidgetParameters {
             params.checkBoxTheme = this.checkBoxTheme;
             params.checkBoxLabelCheckedStyle = this.checkBoxLabelCheckedStyle;
             params.checkBoxLabelUncheckedStyle = this.checkBoxLabelUncheckedStyle;
+            params.selectLabelStyle = this.selectLabelStyle;
             params.validationColorOk = this.validationColorOk;
             params.validationColorUnknown = this.validationColorUnknown;
             params.validationColorError = this.validationColorError;

@@ -23,6 +23,7 @@ import net.optile.payment.core.PaymentException;
 import net.optile.payment.form.Charge;
 import net.optile.payment.model.SelectOption;
 import net.optile.payment.ui.theme.PaymentTheme;
+import net.optile.payment.ui.theme.WidgetParameters;
 import net.optile.payment.util.PaymentUtils;
 
 /**
@@ -44,6 +45,8 @@ public final class SelectWidget extends FormWidget {
     public SelectWidget(String name, View rootView, PaymentTheme theme) {
         super(name, rootView, theme);
         label = rootView.findViewById(R.id.input_label);
+        WidgetParameters params = theme.getWidgetParameters();
+        PaymentUtils.setTextAppearance(label, params.getSelectLabelStyle());
         adapter = new ArrayAdapter<>(rootView.getContext(), R.layout.spinner_item);
 
         spinner = rootView.findViewById(R.id.input_spinner);

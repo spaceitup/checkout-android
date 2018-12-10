@@ -11,9 +11,12 @@
 
 package net.optile.payment.ui.theme;
 
-import static org.junit.Assert.*;
-import net.optile.payment.R;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+
 import org.junit.Test;
+
+import net.optile.payment.R;
 
 public class DialogParametersTest {
 
@@ -32,9 +35,9 @@ public class DialogParametersTest {
         assertEquals(params.getMessageTitleStyle(), R.style.PaymentText_Large_Bold);
         assertEquals(params.getMessageDetailsStyle(), R.style.PaymentText_Medium_Gray);
         assertEquals(params.getMessageDetailsNoTitleStyle(), R.style.PaymentText_Medium_Bold_Gray);
-        assertEquals(params.getButtonLabelStyle(), R.style.PaymentText_Small_Bold_Primary);        
+        assertEquals(params.getButtonLabelStyle(), R.style.PaymentText_Small_Bold_Primary);
     }
-    
+
     @Test
     public void getDateTitleStyle() {
         int value = 101;

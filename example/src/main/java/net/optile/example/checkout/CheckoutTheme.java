@@ -49,7 +49,8 @@ final class CheckoutTheme {
             setCheckBoxTheme(R.style.CustomThemeCheckBox).
             setCheckBoxLabelCheckedStyle(R.style.CustomText_Medium).
             setCheckBoxLabelUncheckedStyle(R.style.CustomText_Medium_Middle).
-            
+            setSelectLabelStyle(R.style.CustomText_Tiny).
+          
             setDefaultIconMapping().
             setValidationColorOk(R.color.custom_validationok).
             setValidationColorUnknown(R.color.custom_validationunknown).

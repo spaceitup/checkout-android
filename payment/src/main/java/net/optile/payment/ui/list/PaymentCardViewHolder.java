@@ -98,8 +98,7 @@ abstract class PaymentCardViewHolder extends RecyclerView.ViewHolder {
         DateWidget dateWidget = null;
         boolean containsExpiryDate = PaymentUtils.containsExpiryDate(elements);
         ViewGroup parent = holder.formLayout;
-        containsExpiryDate = false;
-        
+
         for (InputElement element : elements) {
             if (!containsExpiryDate) {
                 holder.addWidget(WidgetInflater.inflateElementWidget(element, parent, theme));
