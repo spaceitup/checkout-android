@@ -3,13 +3,13 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:paddingTop="@dimen/border_medium"
-    android:paddingBottom="@dimen/border_xxsmall"
-    android:paddingStart="@dimen/border_medium"
-    android:paddingEnd="@dimen/border_medium">
+    android:paddingTop="@dimen/pmborder_medium"
+    android:paddingBottom="@dimen/pmborder_xxsmall"
+    android:paddingStart="@dimen/pmborder_medium"
+    android:paddingEnd="@dimen/pmborder_medium">
 
     <TextView
         android:id="@+id/text_title"
-        style="@style/PaymentText.Medium.Bold"/>
-
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
 </LinearLayout>

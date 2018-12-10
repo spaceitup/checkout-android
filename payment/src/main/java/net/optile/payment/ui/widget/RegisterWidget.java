@@ -15,11 +15,12 @@ import android.view.View;
 import net.optile.payment.core.PaymentException;
 import net.optile.payment.form.Charge;
 import net.optile.payment.model.RegistrationType;
+import net.optile.payment.ui.theme.PaymentTheme;
 
 /**
  * Widget for handling the Register input
  */
-public final class RegisterWidget extends CheckBoxInputWidget {
+public final class RegisterWidget extends CheckBoxWidget {
 
     private String type;
 
@@ -28,9 +29,10 @@ public final class RegisterWidget extends CheckBoxInputWidget {
      *
      * @param name name identifying this widget
      * @param rootView the root view of this input
+     * @param theme PaymentTheme to be applied
      */
-    public RegisterWidget(String name, View rootView) {
-        super(name, rootView);
+    public RegisterWidget(String name, View rootView, PaymentTheme theme) {
+        super(name, rootView, theme);
     }
 
     public void putValue(Charge charge) throws PaymentException {

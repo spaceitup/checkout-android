@@ -22,26 +22,31 @@ import net.optile.payment.R;
 import net.optile.payment.core.PaymentException;
 import net.optile.payment.form.Charge;
 import net.optile.payment.model.SelectOption;
+import net.optile.payment.ui.theme.PaymentTheme;
+import net.optile.payment.ui.theme.WidgetParameters;
 import net.optile.payment.util.PaymentUtils;
 
 /**
  * Widget for handling the Select input type
  */
-public final class SelectInputWidget extends FormWidget {
+public final class SelectWidget extends FormWidget {
 
     private final Spinner spinner;
     private final TextView label;
-    private ArrayAdapter<SpinnerItem> adapter;
+    private final ArrayAdapter<SpinnerItem> adapter;
 
     /**
-     * Construct a new SelectInputWidget
+     * Construct a new SelectWidget
      *
      * @param name identifying this widget
      * @param rootView the root view of this input
+     * @param theme PaymentTheme to apply
      */
-    public SelectInputWidget(String name, View rootView) {
-        super(name, rootView);
+    public SelectWidget(String name, View rootView, PaymentTheme theme) {
+        super(name, rootView, theme);
         label = rootView.findViewById(R.id.input_label);
+        WidgetParameters params = theme.getWidgetParameters();
+        PaymentUtils.setTextAppearance(label, params.getSelectLabelStyle());
         adapter = new ArrayAdapter<>(rootView.getContext(), R.layout.spinner_item);
 
         spinner = rootView.findViewById(R.id.input_spinner);

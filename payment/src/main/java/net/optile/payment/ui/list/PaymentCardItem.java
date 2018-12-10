@@ -18,7 +18,7 @@ import net.optile.payment.ui.model.PaymentCard;
  */
 final class PaymentCardItem extends ListItem {
 
-    PaymentCard paymentCard;
+    final PaymentCard paymentCard;
 
     PaymentCardItem(int viewType, PaymentCard paymentCard) {
         super(viewType);

@@ -21,6 +21,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.LinearSmoothScroller;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SimpleItemAnimator;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.TextView;
@@ -40,11 +41,11 @@ public final class PaymentList {
     private final ListAdapter adapter;
     private final RecyclerView recyclerView;
     private final TextView emptyMessage;
+    private final List<ListItem> items;
 
     private PaymentSession session;
     private int selIndex;
     private int viewType;
-    private List<ListItem> items;
 
     public PaymentList(PaymentPageActivity activity, RecyclerView recyclerView, TextView emptyMessage) {
         this.activity = activity;
@@ -85,9 +86,9 @@ public final class PaymentList {
         String msg = "";
 
         if (session.getApplicableNetworkSize() == 0) {
-            msg = activity.getString(R.string.paymentpage_error_empty);
+            msg = activity.getString(R.string.pmpage_error_empty);
         } else if (session.networks.size() == 0) {
-            msg = activity.getString(R.string.paymentpage_error_notsupported);
+            msg = activity.getString(R.string.pmpage_error_notsupported);
         } else {
             recyclerView.scrollToPosition(selIndex);
         }
@@ -125,6 +126,10 @@ public final class PaymentList {
 
     PaymentSession getPaymentSession() {
         return this.session;
+    }
+
+    LayoutInflater getLayoutInflater() {
+        return activity.getLayoutInflater();
     }
 
     void showDialogFragment(DialogFragment dialog, String tag) {
@@ -178,7 +183,7 @@ public final class PaymentList {
         int networkSize = session.networks.size();
 
         if (accountSize > 0) {
-            items.add(new HeaderItem(nextViewType(), activity.getString(R.string.paymentlist_account)));
+            items.add(new HeaderItem(nextViewType(), activity.getString(R.string.pmlist_account)));
             index++;
         }
         for (AccountCard card : session.accounts) {
@@ -189,7 +194,7 @@ public final class PaymentList {
             index++;
         }
         if (networkSize > 0) {
-            int resId = accountSize == 0 ? R.string.paymentlist_network_only : R.string.paymentlist_network;
+            int resId = accountSize == 0 ? R.string.pmlist_network_only : R.string.pmlist_network;
             items.add(new HeaderItem(nextViewType(), activity.getString(resId)));
         }
         for (NetworkCard card : session.networks) {

@@ -1,17 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/layout_viewholder"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginStart="@dimen/border_small"
-    android:layout_marginTop="@dimen/border_large">
-
-    <Button
-        android:id="@+id/button"
-        style="@style/PaymentWidgetButton"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
-</LinearLayout>
+    android:layout_marginStart="@dimen/pmborder_small"
+    android:layout_marginTop="@dimen/pmborder_large"
+    android:orientation="horizontal"/>
 
 
 

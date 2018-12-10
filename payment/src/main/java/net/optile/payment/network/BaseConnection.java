@@ -37,27 +37,21 @@ import net.optile.payment.model.ErrorInfo;
  */
 abstract class BaseConnection {
 
-    final static int TIMEOUT_CONNECT = 5000;
-    final static int TIMEOUT_READ = 30000;
-
     final static String HEADER_AUTHORIZATION = "Authorization";
     final static String HEADER_ACCEPT = "Accept";
     final static String HEADER_CONTENT_TYPE = "Content-Type";
-    final static String HEADER_USER_AGENT = "User-Agent";
-
-    final static String UTF8 = "UTF-8";
-
-    final static String HTTP_GET = "GET";
-    final static String HTTP_POST = "POST";
-
     final static String URI_PATH_API = "api";
     final static String URI_PATH_LISTS = "lists";
     final static String URI_PARAM_VIEW = "view";
-
     final static String VALUE_VIEW = "jsonForms,-htmlForms";
     final static String VALUE_APP_JSON = "application/json;charset=UTF-8";
-
-    final static String CONTENTYPE_JSON = "application/json";
+    private final static int TIMEOUT_CONNECT = 5000;
+    private final static int TIMEOUT_READ = 30000;
+    private final static String HEADER_USER_AGENT = "User-Agent";
+    private final static String UTF8 = "UTF-8";
+    private final static String HTTP_GET = "GET";
+    private final static String HTTP_POST = "POST";
+    private final static String CONTENTYPE_JSON = "application/json";
 
     /**
      * The cached user agent value
@@ -148,7 +142,7 @@ abstract class BaseConnection {
      * @param url the Url pointing to the Payment API
      * @return HttpURLConnection a HttpURLConnection object
      */
-    HttpURLConnection createGetConnection(final URL url) throws IOException {
+    private HttpURLConnection createGetConnection(final URL url) throws IOException {
         final HttpURLConnection conn = (HttpURLConnection) url.openConnection();
         setConnProperties(conn);
         conn.setRequestMethod(HTTP_GET);
@@ -203,7 +197,7 @@ abstract class BaseConnection {
      * @param conn the HttpURLConnection to read from
      * @return the string representation read from the inputstream
      */
-    String readFromErrorStream(final HttpURLConnection conn) throws IOException {
+    private String readFromErrorStream(final HttpURLConnection conn) throws IOException {
 
         if (conn.getErrorStream() == null) {
             return null;

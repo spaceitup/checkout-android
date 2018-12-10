@@ -16,7 +16,7 @@ package net.optile.payment.ui.list;
  */
 final class HeaderItem extends ListItem {
 
-    String title;
+    final String title;
 
     HeaderItem(int viewType, String title) {
         super(viewType);

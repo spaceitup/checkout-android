@@ -25,21 +25,19 @@ import net.optile.example.R;
 import net.optile.payment.ui.PaymentResult;
 import net.optile.payment.ui.PaymentUI;
 import net.optile.payment.ui.dialog.MessageDialogFragment;
+import net.optile.payment.ui.theme.PaymentTheme;
 
 /**
  * Activity for performing a checkout payment
  */
 public final class CheckoutActivity extends AppCompatActivity implements CheckoutView {
 
-    private static String TAG = "payment_CheckoutActivity";
     private static int PAYMENT_REQUEST_CODE = 1;
 
     private CheckoutPresenter presenter;
-
-    private boolean active;
-
     private CheckoutResult checkoutResult;
-
+    private boolean customTheme;
+    
     /**
      * Create an Intent to launch this activity
      *
@@ -62,10 +60,17 @@ public final class CheckoutActivity extends AppCompatActivity implements Checkou
         final Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        final Button button = findViewById(R.id.button_checkout);
+        Button button = findViewById(R.id.button_default);
         button.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                onButtonClicked();
+                onButtonClicked(false);
+            }
+        });
+
+        button = findViewById(R.id.button_custom);
+        button.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                onButtonClicked(true);
             }
         });
         this.presenter = new CheckoutPresenter(this);
@@ -77,7 +82,6 @@ public final class CheckoutActivity extends AppCompatActivity implements Checkou
     @Override
     public void onPause() {
         super.onPause();
-        this.active = false;
         this.presenter.onStop();
     }
 
@@ -87,7 +91,6 @@ public final class CheckoutActivity extends AppCompatActivity implements Checkou
     @Override
     public void onResume() {
         super.onResume();
-        this.active = true;
 
         if (checkoutResult != null) {
             presenter.handleCheckoutResult(checkoutResult);
@@ -149,17 +152,17 @@ public final class CheckoutActivity extends AppCompatActivity implements Checkou
      * {@inheritDoc}
      */
     @Override
-    public boolean isActive() {
-        return this.active;
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
     public void openPaymentPage(String listUrl) {
         PaymentUI paymentUI = PaymentUI.getInstance();
         paymentUI.setListUrl(listUrl);
+
+        PaymentTheme theme;
+        if (customTheme) {
+            theme = CheckoutTheme.createCustomTheme();
+        } else {
+            theme = PaymentTheme.createDefault();
+        }
+        paymentUI.setPaymentTheme(theme);
         paymentUI.showPaymentPage(this, PAYMENT_REQUEST_CODE);
     }
 
@@ -169,7 +172,8 @@ public final class CheckoutActivity extends AppCompatActivity implements Checkou
         snackbar.show();
     }
 
-    private void onButtonClicked() {
+    private void onButtonClicked(boolean customTheme) {
+        this.customTheme = customTheme;
         presenter.createPaymentSession(this);
     }
 }

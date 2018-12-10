@@ -25,6 +25,7 @@ import android.text.TextUtils;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 import net.optile.payment.R;
 import net.optile.payment.ui.PaymentResult;
 import net.optile.payment.ui.PaymentUI;
@@ -32,7 +33,9 @@ import net.optile.payment.ui.dialog.MessageDialogFragment;
 import net.optile.payment.ui.list.PaymentList;
 import net.optile.payment.ui.model.PaymentCard;
 import net.optile.payment.ui.model.PaymentSession;
+import net.optile.payment.ui.theme.PageParameters;
 import net.optile.payment.ui.widget.FormWidget;
+import net.optile.payment.util.PaymentUtils;
 import net.optile.payment.validation.ValidationResult;
 import net.optile.payment.validation.Validator;
 
@@ -78,10 +81,27 @@ public final class PaymentPageActivity extends AppCompatActivity implements Paym
             Intent intent = getIntent();
             this.listUrl = intent.getStringExtra(EXTRA_LISTURL);
         }
+        PageParameters params = PaymentUI.getInstance().getPaymentTheme().getPageParameters();
+        int pageTheme = params.getPageTheme();
+        if (pageTheme != 0) {
+            setTheme(pageTheme);
+        }
         setContentView(R.layout.activity_paymentpage);
+        initToolbar(params);
+        initList(params);
         this.progressBar = findViewById(R.id.progressbar);
+        this.presenter = new PaymentPagePresenter(this);
+    }
 
+    private void initList(PageParameters params) {
+        TextView empty = findViewById(R.id.label_empty);
+        PaymentUtils.setTextAppearance(empty, params.getEmptyListLabelStyle());
+        this.paymentList = new PaymentList(this, findViewById(R.id.recyclerview_paymentlist), empty);
+    }
+
+    private void initToolbar(PageParameters params) {
         final Toolbar toolbar = findViewById(R.id.toolbar);
+        toolbar.setTitle(getString(R.string.pmpage_title));
         setSupportActionBar(toolbar);
         ActionBar actionBar = getSupportActionBar();
 
@@ -89,9 +109,6 @@ public final class PaymentPageActivity extends AppCompatActivity implements Paym
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
             getSupportActionBar().setDisplayShowHomeEnabled(true);
         }
-        this.presenter = new PaymentPagePresenter(this);
-        this.paymentList = new PaymentList(this, findViewById(R.id.recyclerview_paymentlist),
-            findViewById(R.id.label_empty));
     }
 
     /**
@@ -258,7 +275,7 @@ public final class PaymentPageActivity extends AppCompatActivity implements Paym
         String msg = card.getLang().translateError(result.getError());
 
         if (TextUtils.isEmpty(msg)) {
-            msg = getString(R.string.paymentpage_error_validation);
+            msg = getString(R.string.pmpage_error_validation);
         }
         result.setMessage(msg);
         return result;
@@ -270,7 +287,7 @@ public final class PaymentPageActivity extends AppCompatActivity implements Paym
         }
         MessageDialogFragment dialog = new MessageDialogFragment();
         dialog.setMessage(message);
-        dialog.setNeutralButton(getString(R.string.dialog_close_button));
+        dialog.setNeutralButton(getString(R.string.pmdialog_close_button));
         dialog.setListener(new MessageDialogFragment.MessageDialogListener() {
             @Override
             public void onNeutralButtonClick() {

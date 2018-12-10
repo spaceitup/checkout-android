@@ -1,3 +1,8 @@
 <resources>
-    <dimen name="toolbar_elevation">6dp</dimen>
+    <dimen name="custom_logopadding">4dp</dimen>
+    <dimen name="custom_logoradius">4dp</dimen>
+    <dimen name="custom_borderlarge">20dp</dimen>
+    <dimen name="custom_buttonradius">5dp</dimen>
+    <dimen name="custom_cardradius">10dp</dimen>
+    <dimen name="custom_cardstrokewidth">2dp</dimen>
 </resources>

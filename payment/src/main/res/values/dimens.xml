@@ -1,22 +1,20 @@
 <resources>
-    <dimen name="border_xxsmall">4dp</dimen>
-    <dimen name="border_xsmall">8dp</dimen>
-    <dimen name="border_small">12dp</dimen>
-    <dimen name="border_medium">16dp</dimen>
-    <dimen name="border_large">24dp</dimen>
-    <dimen name="border_xlarge">30dp</dimen>
+    <dimen name="pmborder_xxsmall">4dp</dimen>
+    <dimen name="pmborder_xsmall">8dp</dimen>
+    <dimen name="pmborder_small">12dp</dimen>
+    <dimen name="pmborder_medium">16dp</dimen>
+    <dimen name="pmborder_large">24dp</dimen>
+    <dimen name="pmborder_xlarge">30dp</dimen>
 
-    <dimen name="button_radius">5dp</dimen>
-    <dimen name="widget_padding">4dp</dimen>
-    <dimen name="widget_icon_size">24dp</dimen>
-    <dimen name="widget_checkbox_width">40dp</dimen>
+    <dimen name="pmbutton_radius">5dp</dimen>
+    <dimen name="pmwidget_padding">4dp</dimen>
+    <dimen name="pmwidget_iconsize">24dp</dimen>
+    <dimen name="pmwidget_checkboxwidth">40dp</dimen>
 
-    <dimen name="toolbar_elevation">6dp</dimen>
+    <dimen name="pmcard_radius">4dp</dimen>
+    <dimen name="pmcard_logowidth">60dp</dimen>
+    <dimen name="pmcard_logoheight">40dp</dimen>
 
-    <dimen name="cardview_radius">4dp</dimen>
-    <dimen name="cardview_logo_width">60dp</dimen>
-    <dimen name="cardview_logo_height">40dp</dimen>
-
-    <dimen name="progressbar_size">40dp</dimen>
+    <dimen name="pmprogress_size">40dp</dimen>
 
 </resources>

@@ -27,7 +27,12 @@ import net.optile.payment.core.PaymentInputType;
 import net.optile.payment.ui.model.NetworkCard;
 import net.optile.payment.ui.model.PaymentCard;
 import net.optile.payment.ui.model.PaymentNetwork;
+import net.optile.payment.ui.theme.PageParameters;
+import net.optile.payment.ui.theme.PaymentTheme;
+import net.optile.payment.ui.widget.FormWidget;
 import net.optile.payment.ui.widget.RegisterWidget;
+import net.optile.payment.ui.widget.WidgetInflater;
+import net.optile.payment.util.PaymentUtils;
 
 /**
  * The NetworkCardViewHolder
@@ -43,21 +48,28 @@ final class NetworkCardViewHolder extends PaymentCardViewHolder {
         this.logo = parent.findViewById(R.id.image_logo);
     }
 
-    static ViewHolder createInstance(ListAdapter adapter, NetworkCard networkCard, LayoutInflater inflater, ViewGroup parent) {
-        View view = inflater.inflate(R.layout.list_item_network, parent, false);
+    static ViewHolder createInstance(ListAdapter adapter, NetworkCard networkCard, ViewGroup parent) {
+        LayoutInflater inflater = LayoutInflater.from(parent.getContext());
+        View view = inflater.inflate(R.layout.list_item_networkcard, parent, false);
         NetworkCardViewHolder holder = new NetworkCardViewHolder(adapter, view);
+        PaymentTheme theme = adapter.getPaymentTheme();
 
-        addInputWidgets(holder, inflater, parent, networkCard);
-        holder.addWidget(createRegisterWidget(PaymentInputType.AUTO_REGISTRATION, inflater, parent));
-        holder.addWidget(createRegisterWidget(PaymentInputType.ALLOW_RECURRENCE, inflater, parent));
-        holder.addWidget(createButtonWidget(inflater, parent));
+        addElementWidgets(holder, networkCard.getInputElements(), theme);
+        FormWidget widget = WidgetInflater.inflateRegisterWidget(PaymentInputType.AUTO_REGISTRATION, holder.formLayout, theme);
+        holder.addWidget(widget);
+        widget = WidgetInflater.inflateRegisterWidget(PaymentInputType.ALLOW_RECURRENCE, holder.formLayout, theme);
+        holder.addWidget(widget);
+        addButtonWidget(holder, theme);
+
+        holder.applyTheme(theme);
         holder.setLastImeOptions();
         return holder;
     }
 
-    static RegisterWidget createRegisterWidget(String name, LayoutInflater inflater, ViewGroup parent) {
-        View view = inflater.inflate(R.layout.widget_input_checkbox, parent, false);
-        return new RegisterWidget(name, view);
+    void applyTheme(PaymentTheme theme) {
+        PageParameters params = theme.getPageParameters();
+        PaymentUtils.setTextAppearance(title, params.getNetworkCardTitleStyle());
+        PaymentUtils.setImageBackground(logo, params.getPaymentLogoBackground());
     }
 
     void onBind(PaymentCard paymentCard) {

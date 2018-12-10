@@ -74,6 +74,7 @@ public class Validator {
         switch (method) {
             case PaymentMethod.CREDIT_CARD:
             case PaymentMethod.DEBIT_CARD:
+
                 if (!CardNumberValidator.isValidLuhn(accountNumber)) {
                     error = ValidationResult.INVALID_ACCOUNT_NUMBER;
                 }
