@@ -14,14 +14,18 @@ package net.optile.payment.ui.theme;
 import net.optile.payment.R;
 
 /**
- * Class for holding the PaymentPage theme parameters. 
- * The parameters may be used to theme the PaymentPage and the text appearance of the message shown when the list is empty.
+ * Class for holding the PaymentPage theme parameters.
+ * These parameters may be used to theme the PaymentPage and text appearances including the payment cards.
  */
 public final class PageParameters {
 
-    private int themeResId;
-
-    private int emptyTextAppearance;
+    private int pageTheme;
+    private int emptyListLabelStyle;
+    private int sectionHeaderLabelStyle;
+    private int accountCardTitleStyle;
+    private int accountCardSubtitleStyle;
+    private int networkCardTitleStyle;
+    private int paymentLogoBackground;
 
     private PageParameters() {
     }
@@ -32,40 +36,99 @@ public final class PageParameters {
 
     public static PageParameters createDefault() {
         return createBuilder().
-            setThemeResId(R.style.PaymentTheme_PaymentPage).
-            setEmptyTextAppearance(R.style.PaymentText_Medium_Gray).
+            setPageTheme(R.style.PaymentTheme_PaymentPage).
+            setEmptyListLabelStyle(R.style.PaymentText_Medium_Gray).
+            setSectionHeaderLabelStyle(R.style.PaymentText_Medium_Bold).
+            setAccountCardTitleStyle(R.style.PaymentText_Medium_Bold).
+            setAccountCardSubtitleStyle(R.style.PaymentText_Tiny).
+            setNetworkCardTitleStyle(R.style.PaymentText_Medium).
             build();
     }
 
-    public int getThemeResId() {
-        return themeResId;
+    public int getPageTheme() {
+        return pageTheme;
     }
 
-    public int getEmptyTextAppearance() {
-        return emptyTextAppearance;
+    public int getEmptyListLabelStyle() {
+        return emptyListLabelStyle;
+    }
+
+    public int getSectionHeaderLabelStyle() {
+        return sectionHeaderLabelStyle;
+    }
+
+    public int getAccountCardTitleStyle() {
+        return accountCardTitleStyle;
+    }
+
+    public int getAccountCardSubtitleStyle() {
+        return accountCardSubtitleStyle;
+    }
+
+    public int getNetworkCardTitleStyle() {
+        return networkCardTitleStyle;
+    }
+
+    public int getPaymentLogoBackground() {
+        return paymentLogoBackground;
     }
 
     public final static class Builder {
-        int themeResId;
-        int emptyTextAppearance;
+        int pageTheme;
+        int emptyListLabelStyle;
+        int sectionHeaderLabelStyle;
+        int accountCardTitleStyle;
+        int accountCardSubtitleStyle;
+        int networkCardTitleStyle;
+        int paymentLogoBackground;
 
         Builder() {
         }
 
-        public Builder setThemeResId(int themeResId) {
-            this.themeResId = themeResId;
+        public Builder setPageTheme(int pageTheme) {
+            this.pageTheme = pageTheme;
             return this;
         }
 
-        public Builder setEmptyTextAppearance(int emptyTextAppearance) {
-            this.emptyTextAppearance = emptyTextAppearance;
+        public Builder setEmptyListLabelStyle(int emptyListLabelStyle) {
+            this.emptyListLabelStyle = emptyListLabelStyle;
+            return this;
+        }
+
+        public Builder setSectionHeaderLabelStyle(int sectionHeaderLabelStyle) {
+            this.sectionHeaderLabelStyle = sectionHeaderLabelStyle;
+            return this;
+        }
+
+        public Builder setAccountCardTitleStyle(int accountCardTitleStyle) {
+            this.accountCardTitleStyle = accountCardTitleStyle;
+            return this;
+        }
+
+        public Builder setAccountCardSubtitleStyle(int accountCardSubtitleStyle) {
+            this.accountCardSubtitleStyle = accountCardSubtitleStyle;
+            return this;
+        }
+
+        public Builder setNetworkCardTitleStyle(int networkCardTitleStyle) {
+            this.networkCardTitleStyle = networkCardTitleStyle;
+            return this;
+        }
+
+        public Builder setPaymentLogoBackground(int paymentLogoBackground) {
+            this.paymentLogoBackground = paymentLogoBackground;
             return this;
         }
 
         public PageParameters build() {
             PageParameters params = new PageParameters();
-            params.themeResId = this.themeResId;
-            params.emptyTextAppearance = this.emptyTextAppearance;
+            params.pageTheme = this.pageTheme;
+            params.emptyListLabelStyle = this.emptyListLabelStyle;
+            params.sectionHeaderLabelStyle = this.sectionHeaderLabelStyle;
+            params.accountCardTitleStyle = this.accountCardTitleStyle;
+            params.accountCardSubtitleStyle = this.accountCardSubtitleStyle;
+            params.networkCardTitleStyle = this.networkCardTitleStyle;
+            params.paymentLogoBackground = this.paymentLogoBackground;
             return params;
         }
     }

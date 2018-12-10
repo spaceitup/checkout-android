@@ -17,13 +17,8 @@ package net.optile.payment.ui.theme;
 public final class PaymentTheme {
 
     private PageParameters pageParameters;
-    private IconParameters iconParameters;
-    private ButtonParameters buttonParameters;
-    private CheckBoxParameters checkBoxParameters;
-    private DateParameters dateParameters;
-    private ListParameters listParameters;
-    private MessageParameters messageParameters;
-    private TextInputParameters textInputParameters;
+    private WidgetParameters widgetParameters;
+    private DialogParameters dialogParameters;
 
     private PaymentTheme() {
     }
@@ -35,13 +30,8 @@ public final class PaymentTheme {
     public static PaymentTheme createDefault() {
         return createBuilder().
             setPageParameters(PageParameters.createDefault()).
-            setIconParameters(IconParameters.createDefault()).
-            setButtonParameters(ButtonParameters.createDefault()).
-            setCheckBoxParameters(CheckBoxParameters.createDefault()).
-            setDateParameters(DateParameters.createDefault()).
-            setListParameters(ListParameters.createDefault()).
-            setMessageParameters(MessageParameters.createDefault()).
-            setTextInputParameters(TextInputParameters.createDefault()).
+            setWidgetParameters(WidgetParameters.createDefault()).
+            setDialogParameters(DialogParameters.createDefault()).
             build();
     }
 
@@ -49,43 +39,18 @@ public final class PaymentTheme {
         return pageParameters;
     }
 
-    public IconParameters getIconParameters() {
-        return iconParameters;
+    public WidgetParameters getWidgetParameters() {
+        return widgetParameters;
     }
 
-    public ButtonParameters getButtonParameters() {
-        return buttonParameters;
-    }
-
-    public CheckBoxParameters getCheckBoxParameters() {
-        return checkBoxParameters;
-    }
-
-    public DateParameters getDateParameters() {
-        return dateParameters;
-    }
-
-    public ListParameters getListParameters() {
-        return listParameters;
-    }
-
-    public MessageParameters getMessageParameters() {
-        return messageParameters;
-    }
-
-    public TextInputParameters getTextInputParameters() {
-        return textInputParameters;
+    public DialogParameters getDialogParameters() {
+        return dialogParameters;
     }
 
     public static final class Builder {
         PageParameters pageParameters;
-        IconParameters iconParameters;
-        ButtonParameters buttonParameters;
-        CheckBoxParameters checkBoxParameters;
-        DateParameters dateParameters;
-        ListParameters listParameters;
-        MessageParameters messageParameters;
-        TextInputParameters textInputParameters;
+        WidgetParameters widgetParameters;
+        DialogParameters dialogParameters;
 
         Builder() {
         }
@@ -95,38 +60,13 @@ public final class PaymentTheme {
             return this;
         }
 
-        public Builder setIconParameters(IconParameters iconParameters) {
-            this.iconParameters = iconParameters;
+        public Builder setWidgetParameters(WidgetParameters widgetParameters) {
+            this.widgetParameters = widgetParameters;
             return this;
         }
 
-        public Builder setButtonParameters(ButtonParameters buttonParameters) {
-            this.buttonParameters = buttonParameters;
-            return this;
-        }
-
-        public Builder setCheckBoxParameters(CheckBoxParameters checkBoxParameters) {
-            this.checkBoxParameters = checkBoxParameters;
-            return this;
-        }
-
-        public Builder setDateParameters(DateParameters dateParameters) {
-            this.dateParameters = dateParameters;
-            return this;
-        }
-
-        public Builder setListParameters(ListParameters listParameters) {
-            this.listParameters = listParameters;
-            return this;
-        }
-
-        public Builder setMessageParameters(MessageParameters messageParameters) {
-            this.messageParameters = messageParameters;
-            return this;
-        }
-
-        public Builder setTextInputParameters(TextInputParameters textInputParameters) {
-            this.textInputParameters = textInputParameters;
+        public Builder setDialogParameters(DialogParameters dialogParameters) {
+            this.dialogParameters = dialogParameters;
             return this;
         }
 
@@ -138,40 +78,15 @@ public final class PaymentTheme {
             }
             theme.pageParameters = pageParameters;
 
-            if (iconParameters == null) {
-                iconParameters = IconParameters.createBuilder().build();
+            if (widgetParameters == null) {
+                widgetParameters = WidgetParameters.createBuilder().build();
             }
-            theme.iconParameters = iconParameters;
+            theme.widgetParameters = widgetParameters;
 
-            if (buttonParameters == null) {
-                buttonParameters = ButtonParameters.createBuilder().build();
+            if (dialogParameters == null) {
+                dialogParameters = DialogParameters.createBuilder().build();
             }
-            theme.buttonParameters = buttonParameters;
-
-            if (checkBoxParameters == null) {
-                checkBoxParameters = CheckBoxParameters.createBuilder().build();
-            }
-            theme.checkBoxParameters = checkBoxParameters;
-
-            if (dateParameters == null) {
-                dateParameters = DateParameters.createBuilder().build();
-            }
-            theme.dateParameters = dateParameters;
-
-            if (listParameters == null) {
-                listParameters = ListParameters.createBuilder().build();
-            }
-            theme.listParameters = listParameters;
-
-            if (messageParameters == null) {
-                messageParameters = MessageParameters.createBuilder().build();
-            }
-            theme.messageParameters = messageParameters;
-
-            if (textInputParameters == null) {
-                textInputParameters = TextInputParameters.createBuilder().build();
-            }
-            theme.textInputParameters = textInputParameters;
+            theme.dialogParameters = dialogParameters;
             return theme;
         }
     }

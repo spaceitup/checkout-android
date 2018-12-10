@@ -17,8 +17,8 @@ import android.widget.ImageView;
 import net.optile.payment.R;
 import net.optile.payment.core.PaymentException;
 import net.optile.payment.form.Charge;
-import net.optile.payment.ui.theme.IconParameters;
 import net.optile.payment.ui.theme.PaymentTheme;
+import net.optile.payment.ui.theme.WidgetParameters;
 
 /**
  * The base class for all widgets, i.e. Button, CheckBox, TextInput etc.
@@ -98,14 +98,14 @@ public abstract class FormWidget {
         if (icon == null) {
             return;
         }
-        IconParameters params = theme.getIconParameters();
-        int colorResId = params.getUnknownColorResId();
+        WidgetParameters params = theme.getWidgetParameters();
+        int colorResId = params.getValidationColorUnknown();
         switch (state) {
             case VALIDATION_OK:
-                colorResId = params.getOkColorResId();
+                colorResId = params.getValidationColorOk();
                 break;
             case VALIDATION_ERROR:
-                colorResId = params.getErrorColorResId();
+                colorResId = params.getValidationColorError();
         }
         if (colorResId != 0) {
             icon.setColorFilter(ContextCompat.getColor(rootView.getContext(), colorResId));

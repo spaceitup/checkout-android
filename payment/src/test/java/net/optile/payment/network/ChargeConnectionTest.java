@@ -22,7 +22,6 @@ import org.robolectric.RobolectricTestRunner;
 
 import net.optile.payment.core.PaymentException;
 import net.optile.payment.form.Charge;
-import net.optile.payment.model.OperationResult;
 
 /**
  * The type Charge connection test.

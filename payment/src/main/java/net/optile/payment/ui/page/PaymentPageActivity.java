@@ -82,9 +82,9 @@ public final class PaymentPageActivity extends AppCompatActivity implements Paym
             this.listUrl = intent.getStringExtra(EXTRA_LISTURL);
         }
         PageParameters params = PaymentUI.getInstance().getPaymentTheme().getPageParameters();
-        int themeResId = params.getThemeResId();
-        if (themeResId != 0) {
-            setTheme(params.getThemeResId());
+        int pageTheme = params.getPageTheme();
+        if (pageTheme != 0) {
+            setTheme(pageTheme);
         }
         setContentView(R.layout.activity_paymentpage);
         initToolbar(params);
@@ -95,7 +95,7 @@ public final class PaymentPageActivity extends AppCompatActivity implements Paym
 
     private void initList(PageParameters params) {
         TextView empty = findViewById(R.id.label_empty);
-        PaymentUtils.setTextAppearance(empty, params.getEmptyTextAppearance());
+        PaymentUtils.setTextAppearance(empty, params.getEmptyListLabelStyle());
         this.paymentList = new PaymentList(this, findViewById(R.id.recyclerview_paymentlist), empty);
     }
 

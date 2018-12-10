@@ -26,8 +26,8 @@ import net.optile.payment.core.LanguageFile;
 import net.optile.payment.core.PaymentInputType;
 import net.optile.payment.model.InputElement;
 import net.optile.payment.ui.model.PaymentCard;
-import net.optile.payment.ui.theme.IconParameters;
 import net.optile.payment.ui.theme.PaymentTheme;
+import net.optile.payment.ui.theme.WidgetParameters;
 import net.optile.payment.ui.widget.ButtonWidget;
 import net.optile.payment.ui.widget.DateWidget;
 import net.optile.payment.ui.widget.FormWidget;
@@ -98,7 +98,8 @@ abstract class PaymentCardViewHolder extends RecyclerView.ViewHolder {
         DateWidget dateWidget = null;
         boolean containsExpiryDate = PaymentUtils.containsExpiryDate(elements);
         ViewGroup parent = holder.formLayout;
-
+        containsExpiryDate = false;
+        
         for (InputElement element : elements) {
             if (!containsExpiryDate) {
                 holder.addWidget(WidgetInflater.inflateElementWidget(element, parent, theme));
@@ -174,7 +175,7 @@ abstract class PaymentCardViewHolder extends RecyclerView.ViewHolder {
     }
 
     void bindIconResource(FormWidget widget) {
-        IconParameters params = adapter.getPaymentTheme().getIconParameters();
+        WidgetParameters params = adapter.getPaymentTheme().getWidgetParameters();
         widget.setIconResource(params.getInputTypeIcon(widget.getName()));
     }
 

@@ -12,7 +12,6 @@
 package net.optile.payment.ui.list;
 
 import java.net.URL;
-import java.util.List;
 import java.util.Locale;
 
 import com.bumptech.glide.Glide;
@@ -25,11 +24,10 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import net.optile.payment.R;
 import net.optile.payment.model.AccountMask;
-import net.optile.payment.model.InputElement;
 import net.optile.payment.model.PaymentMethod;
 import net.optile.payment.ui.model.AccountCard;
 import net.optile.payment.ui.model.PaymentCard;
-import net.optile.payment.ui.theme.ListParameters;
+import net.optile.payment.ui.theme.PageParameters;
 import net.optile.payment.ui.theme.PaymentTheme;
 import net.optile.payment.util.PaymentUtils;
 
@@ -64,10 +62,10 @@ final class AccountCardViewHolder extends PaymentCardViewHolder {
     }
 
     private void applyTheme(PaymentTheme theme) {
-        ListParameters params = theme.getListParameters();
-        PaymentUtils.setTextAppearance(title, params.getAccountTitleTextAppearance());
-        PaymentUtils.setTextAppearance(subTitle, params.getAccountSubtitleTextAppearance());
-        PaymentUtils.setImageBackground(logo, params.getLogoBackgroundResId());
+        PageParameters params = theme.getPageParameters();
+        PaymentUtils.setTextAppearance(title, params.getAccountCardTitleStyle());
+        PaymentUtils.setTextAppearance(subTitle, params.getAccountCardSubtitleStyle());
+        PaymentUtils.setImageBackground(logo, params.getPaymentLogoBackground());
     }
 
     void onBind(PaymentCard paymentCard) {

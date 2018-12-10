@@ -26,7 +26,7 @@ import android.widget.NumberPicker;
 import android.widget.TextView;
 import net.optile.payment.R;
 import net.optile.payment.ui.PaymentUI;
-import net.optile.payment.ui.theme.DateParameters;
+import net.optile.payment.ui.theme.DialogParameters;
 import net.optile.payment.ui.theme.PaymentTheme;
 import net.optile.payment.util.PaymentUtils;
 
@@ -88,7 +88,7 @@ public final class DateDialogFragment extends DialogFragment {
      */
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        DateParameters params = PaymentUI.getInstance().getPaymentTheme().getDateParameters();
+        DialogParameters params = PaymentUI.getInstance().getPaymentTheme().getDialogParameters();
         View v = inflater.inflate(R.layout.dialogfragment_date, container, false);
         initTitle(v, params);
         initNumberPickers(v);
@@ -110,24 +110,24 @@ public final class DateDialogFragment extends DialogFragment {
         yearPicker.setValue(yearIndex);
     }
 
-    private void initTitle(View rootView, DateParameters params) {
+    private void initTitle(View rootView, DialogParameters params) {
         TextView tv = rootView.findViewById(R.id.text_title);
 
         if (TextUtils.isEmpty(title)) {
             tv.setVisibility(View.GONE);
             return;
         }
-        PaymentUtils.setTextAppearance(tv, params.getDialogTitleTextAppearance());
+        PaymentUtils.setTextAppearance(tv, params.getDateTitleStyle());
         tv.setVisibility(View.VISIBLE);
         tv.setText(title);
     }
 
-    private void initButton(View rootView, DateParameters params) {
+    private void initButton(View rootView, DialogParameters params) {
         View layout = rootView.findViewById(R.id.layout_button);
         layout.setVisibility(View.VISIBLE);
         TextView tv = rootView.findViewById(R.id.text_button);
         tv.setText(buttonLabel);
-        PaymentUtils.setTextAppearance(tv, params.getDialogButtonTextAppearance());
+        PaymentUtils.setTextAppearance(tv, params.getButtonLabelStyle());
 
         layout.setOnClickListener(new View.OnClickListener() {
             @Override

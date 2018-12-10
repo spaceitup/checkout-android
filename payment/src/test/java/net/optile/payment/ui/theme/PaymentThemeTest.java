@@ -28,13 +28,9 @@ public class PaymentThemeTest {
         PaymentTheme params = PaymentTheme.createDefault();
         assertNotNull(params);
         assertNotNull(params.getPageParameters());
-        assertNotNull(params.getIconParameters());
-        assertNotNull(params.getButtonParameters());
-        assertNotNull(params.getCheckBoxParameters());
-        assertNotNull(params.getDateParameters());
-        assertNotNull(params.getListParameters());
-        assertNotNull(params.getMessageParameters());
-        assertNotNull(params.getTextInputParameters());
+        assertNotNull(params.getWidgetParameters());
+        assertNotNull(params.getPageParameters());
+        assertNotNull(params.getDialogParameters());
     }
     
     @Test
@@ -46,26 +42,18 @@ public class PaymentThemeTest {
     }
 
     @Test
-    public void getIconParameters() {
-        IconParameters value = IconParameters.createDefault();
+    public void getWidgetParameters() {
+        WidgetParameters value = WidgetParameters.createDefault();
         PaymentTheme params = PaymentTheme.createBuilder().
-            setIconParameters(value).build();
-        assertEquals(params.getIconParameters(), value);
+            setWidgetParameters(value).build();
+        assertEquals(params.getWidgetParameters(), value);
     }
 
     @Test
-    public void getButtonParameters() {
-        ButtonParameters value = ButtonParameters.createDefault();
+    public void getDialogParameters() {
+        DialogParameters value = DialogParameters.createDefault();
         PaymentTheme params = PaymentTheme.createBuilder().
-            setButtonParameters(value).build();
-        assertEquals(params.getButtonParameters(), value);
-    }
-
-    @Test
-    public void getCheckBoxParameters() {
-        CheckBoxParameters value = CheckBoxParameters.createDefault();
-        PaymentTheme params = PaymentTheme.createBuilder().
-            setCheckBoxParameters(value).build();
-        assertEquals(params.getCheckBoxParameters(), value);
+            setDialogParameters(value).build();
+        assertEquals(params.getDialogParameters(), value);
     }
 }

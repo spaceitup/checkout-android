@@ -12,15 +12,10 @@
 package net.optile.example.checkout;
 
 import net.optile.example.R;
-import net.optile.payment.ui.theme.ButtonParameters;
-import net.optile.payment.ui.theme.CheckBoxParameters;
-import net.optile.payment.ui.theme.DateParameters;
-import net.optile.payment.ui.theme.IconParameters;
-import net.optile.payment.ui.theme.ListParameters;
-import net.optile.payment.ui.theme.MessageParameters;
 import net.optile.payment.ui.theme.PageParameters;
+import net.optile.payment.ui.theme.DialogParameters;
+import net.optile.payment.ui.theme.WidgetParameters;
 import net.optile.payment.ui.theme.PaymentTheme;
-import net.optile.payment.ui.theme.TextInputParameters;
 
 /**
  * Class used to create a custom PaymentTheme for skinning the Android SDK Payment page
@@ -36,60 +31,42 @@ final class CheckoutTheme {
         PaymentTheme.Builder builder = PaymentTheme.createBuilder();
 
         PageParameters pageParams = PageParameters.createBuilder().
-            setThemeResId(R.style.CustomThemePaymentPage).
-            setEmptyTextAppearance(R.style.CustomText_Medium).
+            setPageTheme(R.style.CustomThemePaymentPage).
+            setEmptyListLabelStyle(R.style.CustomText_Medium).
+            setSectionHeaderLabelStyle(R.style.CustomText_Medium_Bold).
+            setNetworkCardTitleStyle(R.style.CustomText_Medium).
+            setAccountCardTitleStyle(R.style.CustomText_Medium_Bold).
+            setAccountCardSubtitleStyle(R.style.CustomText_Small).
+            setPaymentLogoBackground(R.drawable.logo_background).            
             build();
         builder.setPageParameters(pageParams);
 
-        IconParameters iconParams = IconParameters.createBuilder().
+        WidgetParameters widgetParams = WidgetParameters.createBuilder().
+            setTextInputTheme(R.style.CustomThemeTextInput).            
+            setButtonTheme(R.style.CustomThemeButton).
+            setButtonLabelStyle(R.style.CustomText_Medium_Bold).            
+
+            setCheckBoxTheme(R.style.CustomThemeCheckBox).
+            setCheckBoxLabelCheckedStyle(R.style.CustomText_Medium).
+            setCheckBoxLabelUncheckedStyle(R.style.CustomText_Medium_Middle).
+            
             setDefaultIconMapping().
-            setOkColorResId(R.color.custom_validationok).
-            setUnknownColorResId(R.color.custom_validationunknown).
-            setErrorColorResId(R.color.custom_validationerror).
+            setValidationColorOk(R.color.custom_validationok).
+            setValidationColorUnknown(R.color.custom_validationunknown).
+            setValidationColorError(R.color.custom_validationerror).
             build();
-        builder.setIconParameters(iconParams);
-
-        ButtonParameters buttonParams = ButtonParameters.createBuilder().
-            setThemeResId(R.style.CustomThemeButton).
-            setLabelTextAppearance(R.style.CustomText_Medium_Bold).
-            build();
-        builder.setButtonParameters(buttonParams);
-
-        CheckBoxParameters checkBoxParams = CheckBoxParameters.createBuilder().
-            setThemeResId(R.style.CustomThemeCheckBox).
-            setCheckedTextAppearance(R.style.CustomText_Medium).
-            setUncheckedTextAppearance(R.style.CustomText_Medium_Middle).
-            build();
-        builder.setCheckBoxParameters(checkBoxParams);
-
-        DateParameters dateParams = DateParameters.createBuilder().
-            setDialogTitleTextAppearance(R.style.CustomText_Medium).
-            setDialogButtonTextAppearance(R.style.CustomText_Small_Bold).
-            build();
-        builder.setDateParameters(dateParams);
-
-        ListParameters listParams = ListParameters.createBuilder().
-            setHeaderTextAppearance(R.style.CustomText_Medium_Bold).
-            setNetworkTitleTextAppearance(R.style.CustomText_Medium).
-            setAccountTitleTextAppearance(R.style.CustomText_Medium_Bold).
-            setAccountSubtitleTextAppearance(R.style.CustomText_Small).
-            setLogoBackgroundResId(R.drawable.logo_background).
-            build();
-        builder.setListParameters(listParams);
-
-        MessageParameters messageParams = MessageParameters.createBuilder().
-            setTitleTextAppearance(R.style.CustomText_Large_Bold).
-            setMessageTextAppearance(R.style.CustomText_Medium).
-            setMessageNoTitleTextAppearance(R.style.CustomText_Medium_Bold).
-            setButtonTextAppearance(R.style.CustomText_Small_Bold).
-            build();
-        builder.setMessageParameters(messageParams);
-
-        TextInputParameters textInputParams = TextInputParameters.createBuilder().
-            setThemeResId(R.style.CustomThemeTextInput).
-            build();
-        builder.setTextInputParameters(textInputParams);
+        builder.setWidgetParameters(widgetParams);
         
+        DialogParameters dialogParams = DialogParameters.createBuilder().
+            setDateTitleStyle(R.style.CustomText_Medium).
+            setDateSubtitleStyle(R.style.CustomText_Small_Bold).
+            setMessageTitleStyle(R.style.CustomText_Large_Bold).
+            setMessageDetailsStyle(R.style.CustomText_Medium).
+            setMessageDetailsNoTitleStyle(R.style.CustomText_Medium_Bold).
+            setButtonLabelStyle(R.style.CustomText_Small_Bold).
+            build();
+        builder.setDialogParameters(dialogParams);
+
         return builder.build();
     }
 }

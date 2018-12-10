@@ -13,7 +13,6 @@ package net.optile.payment.ui.dialog;
 
 import android.app.Dialog;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
 import android.support.v4.app.DialogFragment;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
@@ -23,7 +22,7 @@ import android.view.Window;
 import android.widget.TextView;
 import net.optile.payment.R;
 import net.optile.payment.ui.PaymentUI;
-import net.optile.payment.ui.theme.MessageParameters;
+import net.optile.payment.ui.theme.DialogParameters;
 import net.optile.payment.util.PaymentUtils;
 
 /**
@@ -92,7 +91,7 @@ public final class MessageDialogFragment extends DialogFragment {
      */
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        MessageParameters params = PaymentUI.getInstance().getPaymentTheme().getMessageParameters();
+        DialogParameters params = PaymentUI.getInstance().getPaymentTheme().getDialogParameters();
         View v = inflater.inflate(R.layout.dialogfragment_message, container, false);
         initTitle(v, params);
         initMessage(v, params);
@@ -100,9 +99,9 @@ public final class MessageDialogFragment extends DialogFragment {
         return v;
     }
 
-    private void initTitle(View rootView, MessageParameters params) {
+    private void initTitle(View rootView, DialogParameters params) {
         TextView tv = rootView.findViewById(R.id.text_title);
-        PaymentUtils.setTextAppearance(tv, params.getTitleTextAppearance());
+        PaymentUtils.setTextAppearance(tv, params.getMessageTitleStyle());
 
         if (TextUtils.isEmpty(title)) {
             tv.setVisibility(View.GONE);
@@ -112,12 +111,12 @@ public final class MessageDialogFragment extends DialogFragment {
         tv.setText(title);
     }
 
-    private void initMessage(View rootView, MessageParameters params) {
+    private void initMessage(View rootView, DialogParameters params) {
         TextView tvTitle = rootView.findViewById(R.id.text_message_title);
         TextView tvNoTitle = rootView.findViewById(R.id.text_message_notitle);
 
-        PaymentUtils.setTextAppearance(tvTitle, params.getMessageTextAppearance());
-        PaymentUtils.setTextAppearance(tvNoTitle, params.getMessageNoTitleTextAppearance());
+        PaymentUtils.setTextAppearance(tvTitle, params.getMessageDetailsStyle());
+        PaymentUtils.setTextAppearance(tvNoTitle, params.getMessageDetailsNoTitleStyle());
 
         if (TextUtils.isEmpty(title)) {
             tvTitle.setVisibility(View.GONE);
@@ -138,7 +137,7 @@ public final class MessageDialogFragment extends DialogFragment {
         textView.setText(message);
     }
 
-    private void initButtons(View rootView, MessageParameters params) {
+    private void initButtons(View rootView, DialogParameters params) {
         View layout = rootView.findViewById(R.id.layout_button);
 
         if (TextUtils.isEmpty(neutralButtonLabel)) {
@@ -148,7 +147,7 @@ public final class MessageDialogFragment extends DialogFragment {
         layout.setVisibility(View.VISIBLE);
         TextView tv = rootView.findViewById(R.id.text_button);
         tv.setText(neutralButtonLabel);
-        PaymentUtils.setTextAppearance(tv, params.getButtonTextAppearance());
+        PaymentUtils.setTextAppearance(tv, params.getButtonLabelStyle());
 
         layout.setOnClickListener(new View.OnClickListener() {
             @Override

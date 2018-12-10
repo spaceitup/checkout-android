@@ -27,7 +27,7 @@ import net.optile.payment.core.PaymentInputType;
 import net.optile.payment.ui.model.NetworkCard;
 import net.optile.payment.ui.model.PaymentCard;
 import net.optile.payment.ui.model.PaymentNetwork;
-import net.optile.payment.ui.theme.ListParameters;
+import net.optile.payment.ui.theme.PageParameters;
 import net.optile.payment.ui.theme.PaymentTheme;
 import net.optile.payment.ui.widget.FormWidget;
 import net.optile.payment.ui.widget.RegisterWidget;
@@ -67,9 +67,9 @@ final class NetworkCardViewHolder extends PaymentCardViewHolder {
     }
 
     void applyTheme(PaymentTheme theme) {
-        ListParameters params = theme.getListParameters();
-        PaymentUtils.setTextAppearance(title, params.getNetworkTitleTextAppearance());
-        PaymentUtils.setImageBackground(logo, params.getLogoBackgroundResId());
+        PageParameters params = theme.getPageParameters();
+        PaymentUtils.setTextAppearance(title, params.getNetworkCardTitleStyle());
+        PaymentUtils.setImageBackground(logo, params.getPaymentLogoBackground());
     }
 
     void onBind(PaymentCard paymentCard) {

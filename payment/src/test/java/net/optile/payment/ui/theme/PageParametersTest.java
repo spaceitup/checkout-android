@@ -27,23 +27,68 @@ public class PageParametersTest {
     public void createDefault() {
         PageParameters params = PageParameters.createDefault();
         assertNotNull(params);
-        assertEquals(params.getThemeResId(), R.style.PaymentTheme_PaymentPage);
-        assertEquals(params.getEmptyTextAppearance(), R.style.PaymentText_Medium_Gray);
+        assertEquals(params.getPageTheme(), R.style.PaymentTheme_PaymentPage);
+        assertEquals(params.getEmptyListLabelStyle(), R.style.PaymentText_Medium_Gray);
+        assertEquals(params.getSectionHeaderLabelStyle(), R.style.PaymentText_Medium_Bold);
+        assertEquals(params.getAccountCardTitleStyle(), R.style.PaymentText_Medium_Bold);
+        assertEquals(params.getAccountCardSubtitleStyle(), R.style.PaymentText_Tiny);
+        assertEquals(params.getNetworkCardTitleStyle(), R.style.PaymentText_Medium);
+        assertEquals(params.getPaymentLogoBackground(), 0);                        
     }
     
     @Test
-    public void getThemeResId() {
+    public void getPageTheme() {
         int value = 101;
         PageParameters params = PageParameters.createBuilder().
-            setThemeResId(value).build();
-        assertEquals(params.getThemeResId(), value);
+            setPageTheme(value).build();
+        assertEquals(params.getPageTheme(), value);
     }
 
     @Test
-    public void getEmptyTextAppearance() {
+    public void getEmptyListLabelStyle() {
         int value = 102;
         PageParameters params = PageParameters.createBuilder().
-            setEmptyTextAppearance(value).build();
-        assertEquals(params.getEmptyTextAppearance(), value);
+            setEmptyListLabelStyle(value).build();
+        assertEquals(params.getEmptyListLabelStyle(), value);
+    }
+
+    @Test
+    public void getSectionHeaderLabelStyle() {
+        int value = 101;
+        PageParameters params = PageParameters.createBuilder().
+            setSectionHeaderLabelStyle(value).build();
+        assertEquals(params.getSectionHeaderLabelStyle(), value);
+    }
+
+    @Test
+    public void getAccountCardTitleStyle() {
+        int value = 102;
+        PageParameters params = PageParameters.createBuilder().
+            setAccountCardTitleStyle(value).build();
+        assertEquals(params.getAccountCardTitleStyle(), value);
+    }
+
+    @Test
+    public void getAccountCardSubtitleStyle() {
+        int value = 103;
+        PageParameters params = PageParameters.createBuilder().
+            setAccountCardSubtitleStyle(value).build();
+        assertEquals(params.getAccountCardSubtitleStyle(), value);
+    }
+
+    @Test
+    public void getNetworkCardTitleStyle() {
+        int value = 104;
+        PageParameters params = PageParameters.createBuilder().
+            setNetworkCardTitleStyle(value).build();
+        assertEquals(params.getNetworkCardTitleStyle(), value);
+    }
+
+    @Test
+    public void getPaymentLogoBackground() {
+        int value = 105;
+        PageParameters params = PageParameters.createBuilder().
+            setPaymentLogoBackground(value).build();
+        assertEquals(params.getPaymentLogoBackground(), value);
     }
 }

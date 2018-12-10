@@ -11,15 +11,11 @@
 
 package net.optile.payment.form;
 
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.*;
+import static io.github.jsonSnapshot.SnapshotMatcher.expect;
+import static io.github.jsonSnapshot.SnapshotMatcher.start;
+import static io.github.jsonSnapshot.SnapshotMatcher.validateSnapshots;
 
-import org.junit.Test;
 import org.json.JSONException;
-
-import java.net.MalformedURLException;
-import java.net.URL;
-
 import org.junit.AfterClass;
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -28,12 +24,6 @@ import org.robolectric.RobolectricTestRunner;
 
 import net.optile.payment.core.PaymentException;
 import net.optile.payment.core.PaymentInputType;
-import net.optile.payment.form.Charge;
-import net.optile.payment.model.OperationResult;
-
-import static io.github.jsonSnapshot.SnapshotMatcher.*;
-import static io.github.jsonSnapshot.SnapshotUtils.*;
-import io.github.jsonSnapshot.SnapshotCaptor;
 
 @RunWith(RobolectricTestRunner.class)
 public class ChargeTest {
@@ -42,18 +32,18 @@ public class ChargeTest {
     public static void beforeAll() {
         start();
     }
-    
+
     @AfterClass
     public static void afterAll() {
         validateSnapshots();
     }
-    
+
     @Test(expected = IllegalArgumentException.class)
     public void putValue_invalidName_exception() throws PaymentException {
         Charge charge = new Charge();
         charge.putValue(null, "Foo");
     }
-    
+
     @Test
     public void putValue_success() throws PaymentException, JSONException {
         Charge charge = new Charge();
@@ -66,8 +56,8 @@ public class ChargeTest {
         charge.putValue(PaymentInputType.IBAN, "iban123");
         charge.putValue(PaymentInputType.BIC, "bic123");
         charge.putValue(PaymentInputType.ALLOW_RECURRENCE, "true");
-        charge.putValue(PaymentInputType.AUTO_REGISTRATION, "true");                                
-        expect(charge.toJson()).toMatchSnapshot();        
+        charge.putValue(PaymentInputType.AUTO_REGISTRATION, "true");
+        expect(charge.toJson()).toMatchSnapshot();
     }
 }
 

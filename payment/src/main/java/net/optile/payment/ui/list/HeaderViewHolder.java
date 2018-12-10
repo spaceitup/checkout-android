@@ -17,7 +17,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 import net.optile.payment.R;
-import net.optile.payment.ui.theme.ListParameters;
+import net.optile.payment.ui.theme.PageParameters;
 import net.optile.payment.ui.theme.PaymentTheme;
 import net.optile.payment.util.PaymentUtils;
 
@@ -41,8 +41,8 @@ final class HeaderViewHolder extends RecyclerView.ViewHolder {
     }
 
     void applyTheme(PaymentTheme theme) {
-        ListParameters params = theme.getListParameters();
-        PaymentUtils.setTextAppearance(title, params.getHeaderTextAppearance());
+        PageParameters params = theme.getPageParameters();
+        PaymentUtils.setTextAppearance(title, params.getSectionHeaderLabelStyle());
     }
 
     void onBind(HeaderItem item) {
