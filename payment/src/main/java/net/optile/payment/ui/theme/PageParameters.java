@@ -18,7 +18,6 @@ import net.optile.payment.R;
  * These parameters may be used to theme the PaymentPage UI elements and text appearances.
  */
 public final class PageParameters {
-
     private int pageTheme;
     private int emptyListLabelStyle;
     private int sectionHeaderLabelStyle;

@@ -11,10 +11,13 @@
 
 package net.optile.payment.ui.theme;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+
+import org.junit.Test;
+
 import net.optile.payment.R;
 import net.optile.payment.core.PaymentInputType;
-import org.junit.Test;
 
 public class WidgetParametersTest {
 
@@ -34,13 +37,13 @@ public class WidgetParametersTest {
 
         assertEquals(params.getCheckBoxTheme(), R.style.PaymentThemeCheckBox);
         assertEquals(params.getCheckBoxLabelCheckedStyle(), R.style.PaymentText_Medium);
-        assertEquals(params.getCheckBoxLabelUncheckedStyle(), R.style.PaymentText_Medium_Hint);                
+        assertEquals(params.getCheckBoxLabelUncheckedStyle(), R.style.PaymentText_Medium_Hint);
         assertEquals(params.getSelectLabelStyle(), R.style.PaymentText_Small);
-        
+
         assertEquals(params.getValidationColorOk(), R.color.pmvalidation_ok);
         assertEquals(params.getValidationColorUnknown(), R.color.pmvalidation_unknown);
         assertEquals(params.getValidationColorError(), R.color.pmvalidation_error);
-        
+
         assertEquals(params.getInputTypeIcon(PaymentInputType.HOLDER_NAME), R.drawable.ic_name);
         assertEquals(params.getInputTypeIcon(PaymentInputType.EXPIRY_DATE), R.drawable.ic_date);
         assertEquals(params.getInputTypeIcon(PaymentInputType.EXPIRY_MONTH), R.drawable.ic_date);
@@ -50,9 +53,9 @@ public class WidgetParametersTest {
         assertEquals(params.getInputTypeIcon(PaymentInputType.IBAN), R.drawable.ic_card);
         assertEquals(params.getInputTypeIcon(PaymentInputType.BIC), R.drawable.ic_card);
         assertEquals(params.getInputTypeIcon(PaymentInputType.VERIFICATION_CODE), R.drawable.ic_lock);
-        assertEquals(params.getInputTypeIcon("default"), R.drawable.ic_default);                        
+        assertEquals(params.getInputTypeIcon("default"), R.drawable.ic_default);
     }
-    
+
     @Test
     public void getTextInputTheme() {
         int value = 101;
@@ -108,7 +111,7 @@ public class WidgetParametersTest {
             setSelectLabelStyle(value).build();
         assertEquals(params.getSelectLabelStyle(), value);
     }
-    
+
     @Test
     public void getInputTypeIcon() {
         int value = 108;
@@ -117,7 +120,7 @@ public class WidgetParametersTest {
             putInputTypeIcon(name, value).build();
         assertEquals(params.getInputTypeIcon(name), value);
     }
-    
+
     @Test
     public void getValidationColorOk() {
         int value = 109;

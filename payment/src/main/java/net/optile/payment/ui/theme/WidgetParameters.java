@@ -48,12 +48,10 @@ public final class WidgetParameters {
             setTextInputTheme(R.style.PaymentThemeTextInput).
             setButtonTheme(R.style.PaymentThemeButton).
             setButtonLabelStyle(R.style.PaymentText_Medium_Bold_Light).
-
             setCheckBoxTheme(R.style.PaymentThemeCheckBox).
             setCheckBoxLabelCheckedStyle(R.style.PaymentText_Medium).
             setCheckBoxLabelUncheckedStyle(R.style.PaymentText_Medium_Hint).
             setSelectLabelStyle(R.style.PaymentText_Tiny).
-        
             setDefaultIconMapping().
             setValidationColorOk(R.color.pmvalidation_ok).
             setValidationColorUnknown(R.color.pmvalidation_unknown).
@@ -114,12 +112,10 @@ public final class WidgetParameters {
         int textInputTheme;
         int buttonTheme;
         int buttonLabelStyle;
-
         int checkBoxTheme;
         int checkBoxLabelCheckedStyle;
         int checkBoxLabelUncheckedStyle;
         int selectLabelStyle;
-        
         Map<String, Integer> iconMapping;
         int validationColorUnknown;
         int validationColorOk;
