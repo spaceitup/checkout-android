@@ -26,12 +26,8 @@ public class SettingsItem {
     public SettingsItem() {
     }
     
-    public String getCode() {
-        return code;
-    }
-
-    public String getMethod() {
-        return method;
+    public boolean matches(String method, String code) {
+        return (this.method.equals(method)) && (this.code.equals(code));
     }
 
     public Validation getValidation(String type) {

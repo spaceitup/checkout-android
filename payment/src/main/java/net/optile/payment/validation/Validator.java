@@ -15,6 +15,7 @@ import java.util.Calendar;
 
 import android.text.TextUtils;
 import android.util.Log;
+import android.content.Context;
 import net.optile.payment.core.PaymentInputType;
 import net.optile.payment.model.PaymentMethod;
 
@@ -28,6 +29,16 @@ public class Validator {
     public final static String REGEX_BIC = "([a-zA-Z]{4}[a-zA-Z]{2}[a-zA-Z0-9]{2}([a-zA-Z0-9]{3})?)";
     public final static String REGEX_VERIFICATION_CODE = "^[0-9]{3,4}$";
 
+    private final Settings settings;
+    
+    public Validator(Settings settings) {
+        this.settings = settings;
+    }
+    
+    public final static Validator createDefault(Context context) {
+        return new Validator(new Settings());
+    }
+    
     /**
      * Validate the given input values defined by its type
      *

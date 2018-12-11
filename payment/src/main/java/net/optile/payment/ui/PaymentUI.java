@@ -79,10 +79,6 @@ public final class PaymentUI {
      * @return the set PaymentTheme or the default PaymentTheme
      */
     public PaymentTheme getPaymentTheme() {
-
-        if (theme == null) {
-            theme = PaymentTheme.createDefault();
-        }
         return theme;
     }
 
@@ -101,10 +97,6 @@ public final class PaymentUI {
      * @return the set Validator or the default Validator
      */
     public Validator getValidator() {
-
-        if (validator == null) {
-            validator = new Validator();
-        }
         return validator;
     }
 
@@ -130,6 +122,13 @@ public final class PaymentUI {
         }
         if (activity == null) {
             throw new IllegalArgumentException("activity may not be null");
+        }
+        if (validator == null) {
+            setValidator(Validator.createDefault(activity));
+        }
+
+        if (theme == null) {
+            theme = PaymentTheme.createDefault();
         }
         activity.finishActivity(requestCode);
         Intent intent = PaymentPageActivity.createStartIntent(activity, listUrl);

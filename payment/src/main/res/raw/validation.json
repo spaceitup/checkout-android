@@ -1,27 +1,28 @@
-{
-    "settings": [
-	{
-	    "method": "CREDIT_CARD",
-	    "code": "VISA",
-	    "validation": {
-		"name": "number",
-		"regex": "^4(?:[0-9]{12}|[0-9]{15}|[0-9]{18})$"
-	    }
-	},
-	{
-	    "method": "CREDIT_CARD",
-	    "code": "MASTER",
-	    "validation": [
-		{
-		    "name": "number",
-		    "regex": "^4(?:[0-9]{12}|[0-9]{15}|[0-9]{18})$"
-		},
-		{
-		    "name": "number",
-		    "regex": "^4(?:[0-9]{12}|[0-9]{15}|[0-9]{18})$"
-		},
-		
-	    },
-	]
+[
+    {
+        "code": "VISA",
+        "validation": {
+            "name": "number",
+            "regex": "^4(?:[0-9]{12}|[0-9]{15}|[0-9]{18})$"
+        }, {
+            "name": "verificationCode",
+            "regex": ""
+        }
+
+    },
+    {
+        "method": "CREDIT_CARD",
+        "code": "MASTERCARD",
+        "validation": [
+            {
+                "name": "number",
+                "regex": "^4(?:[0-9]{12}|[0-9]{15}|[0-9]{18})$"
+            },
+            {
+                "name": "number",
+                "regex": "^4(?:[0-9]{12}|[0-9]{15}|[0-9]{18})$"
+            },
+
+        ]
     }
-}
+]

@@ -25,13 +25,13 @@ public class Settings {
     public Settings() {
         this.items = new ArrayList<>();
     }
-
-    public SettingsItem getItem(String method, String code) {
+    
+    public Validation getValidation(String method, String code, String type) {
 
         for (SettingsItem item : items) {
 
-            if (item.getMethod().equals(method) && item.getCode().equals(code)) {
-                return item;
+            if (item.matches(method, code)) {
+                return item.getValidation(type);
             }
         }
         return null;
