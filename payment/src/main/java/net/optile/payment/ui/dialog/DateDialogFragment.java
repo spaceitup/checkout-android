@@ -47,7 +47,6 @@ public final class DateDialogFragment extends DialogFragment {
     private String[] monthLabels;
 
     private DateDialogListener listener;
-    private PaymentTheme theme;
 
     /**
      * Set the title in this date dialog

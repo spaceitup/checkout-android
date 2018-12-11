@@ -89,38 +89,37 @@ abstract class PaymentCardViewHolder extends RecyclerView.ViewHolder {
         };
     }
 
-    static void addButtonWidget(PaymentCardViewHolder holder, PaymentTheme theme) {
-        FormWidget widget = WidgetInflater.inflateButtonWidget(PaymentInputType.ACTION_BUTTON, holder.formLayout, theme);
-        holder.addWidget(widget);
+    void addButtonWidget(PaymentTheme theme) {
+        FormWidget widget = WidgetInflater.inflateButtonWidget(PaymentInputType.ACTION_BUTTON, formLayout, theme);
+        addWidget(widget);
     }
 
-    static void addElementWidgets(PaymentCardViewHolder holder, List<InputElement> elements, PaymentTheme theme) {
+    void addElementWidgets(List<InputElement> elements, PaymentTheme theme) {
         DateWidget dateWidget = null;
         boolean containsExpiryDate = PaymentUtils.containsExpiryDate(elements);
-        ViewGroup parent = holder.formLayout;
 
         for (InputElement element : elements) {
             if (!containsExpiryDate) {
-                holder.addWidget(WidgetInflater.inflateElementWidget(element, parent, theme));
+                addWidget(WidgetInflater.inflateElementWidget(element, formLayout, theme));
                 continue;
             }
             switch (element.getName()) {
                 case PaymentInputType.EXPIRY_MONTH:
                     if (dateWidget == null) {
-                        dateWidget = WidgetInflater.inflateDateWidget(PaymentInputType.EXPIRY_DATE, parent, theme);
-                        holder.addWidget(dateWidget);
+                        dateWidget = WidgetInflater.inflateDateWidget(PaymentInputType.EXPIRY_DATE, formLayout, theme);
+                        addWidget(dateWidget);
                     }
                     dateWidget.setMonthInputElement(element);
                     break;
                 case PaymentInputType.EXPIRY_YEAR:
                     if (dateWidget == null) {
-                        dateWidget = WidgetInflater.inflateDateWidget(PaymentInputType.EXPIRY_DATE, parent, theme);
-                        holder.addWidget(dateWidget);
+                        dateWidget = WidgetInflater.inflateDateWidget(PaymentInputType.EXPIRY_DATE, formLayout, theme);
+                        addWidget(dateWidget);
                     }
                     dateWidget.setYearInputElement(element);
                     break;
                 default:
-                    holder.addWidget(WidgetInflater.inflateElementWidget(element, parent, theme));
+                    addWidget(WidgetInflater.inflateElementWidget(element, formLayout, theme));
             }
         }
     }

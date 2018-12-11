@@ -51,7 +51,7 @@ abstract class BaseConnection {
     private final static String UTF8 = "UTF-8";
     private final static String HTTP_GET = "GET";
     private final static String HTTP_POST = "POST";
-    private final static String CONTENTYPE_JSON = "application/json";
+    private final static String CONTENTTYPE_JSON = "application/json";
 
     /**
      * The cached user agent value
@@ -241,7 +241,7 @@ abstract class BaseConnection {
             data = readFromErrorStream(conn);
             String contentType = conn.getContentType();
 
-            if (!TextUtils.isEmpty(data) && !TextUtils.isEmpty(contentType) && contentType.contains(CONTENTYPE_JSON)) {
+            if (!TextUtils.isEmpty(data) && !TextUtils.isEmpty(contentType) && contentType.contains(CONTENTTYPE_JSON)) {
                 info = gson.fromJson(data, ErrorInfo.class);
             }
         } catch (IOException | JsonParseException e) {

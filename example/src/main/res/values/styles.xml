@@ -7,7 +7,7 @@
     <style name="CustomText.Tiny">
         <item name="android:textSize">12sp</item>
     </style>
-    
+
     <style name="CustomText.Small">
         <item name="android:textSize">14sp</item>
     </style>

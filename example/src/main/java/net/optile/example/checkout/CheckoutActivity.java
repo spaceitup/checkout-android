@@ -38,8 +38,8 @@ public final class CheckoutActivity extends AppCompatActivity implements Checkou
 
     private CheckoutPresenter presenter;
     private CheckoutResult checkoutResult;
-    private boolean customTheme;
-    
+    private boolean setCustomTheme;
+
     /**
      * Create an Intent to launch this activity
      *
@@ -56,23 +56,20 @@ public final class CheckoutActivity extends AppCompatActivity implements Checkou
     @Override
     public void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
         setContentView(R.layout.activity_checkout);
-
-        final Toolbar toolbar = findViewById(R.id.toolbar);
+        Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
         Button button = findViewById(R.id.button_default);
         button.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                onButtonClicked(false);
+                openDefaultThemePage();
             }
         });
-
         button = findViewById(R.id.button_custom);
         button.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                onButtonClicked(true);
+                openCustomThemePage();
             }
         });
         this.presenter = new CheckoutPresenter(this);
@@ -164,7 +161,7 @@ public final class CheckoutActivity extends AppCompatActivity implements Checkou
         paymentUI.setListUrl(listUrl);
 
         PaymentTheme theme;
-        if (customTheme) {
+        if (setCustomTheme) {
             theme = CheckoutTheme.createCustomTheme();
         } else {
             theme = PaymentTheme.createDefault();
@@ -179,8 +176,14 @@ public final class CheckoutActivity extends AppCompatActivity implements Checkou
         snackbar.show();
     }
 
-    private void onButtonClicked(boolean customTheme) {
-        this.customTheme = customTheme;
+    private void openDefaultThemePage() {
+        this.setCustomTheme = false;
         presenter.createPaymentSession(this);
     }
+
+    private void openCustomThemePage() {
+        this.setCustomTheme = true;
+        presenter.createPaymentSession(this);
+    }
+
 }

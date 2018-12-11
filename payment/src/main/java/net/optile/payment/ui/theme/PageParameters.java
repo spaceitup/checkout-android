@@ -18,15 +18,22 @@ import net.optile.payment.R;
  * These parameters may be used to theme the PaymentPage UI elements and text appearances.
  */
 public final class PageParameters {
-    private int pageTheme;
-    private int emptyListLabelStyle;
-    private int sectionHeaderLabelStyle;
-    private int accountCardTitleStyle;
-    private int accountCardSubtitleStyle;
-    private int networkCardTitleStyle;
-    private int paymentLogoBackground;
+    private final int pageTheme;
+    private final int emptyListLabelStyle;
+    private final int sectionHeaderLabelStyle;
+    private final int accountCardTitleStyle;
+    private final int accountCardSubtitleStyle;
+    private final int networkCardTitleStyle;
+    private final int paymentLogoBackground;
 
-    private PageParameters() {
+    private PageParameters(Builder builder) {
+        this.pageTheme = builder.pageTheme;
+        this.emptyListLabelStyle = builder.emptyListLabelStyle;
+        this.sectionHeaderLabelStyle = builder.sectionHeaderLabelStyle;
+        this.accountCardTitleStyle = builder.accountCardTitleStyle;
+        this.accountCardSubtitleStyle = builder.accountCardSubtitleStyle;
+        this.networkCardTitleStyle = builder.networkCardTitleStyle;
+        this.paymentLogoBackground = builder.paymentLogoBackground;
     }
 
     public static Builder createBuilder() {
@@ -120,15 +127,7 @@ public final class PageParameters {
         }
 
         public PageParameters build() {
-            PageParameters params = new PageParameters();
-            params.pageTheme = this.pageTheme;
-            params.emptyListLabelStyle = this.emptyListLabelStyle;
-            params.sectionHeaderLabelStyle = this.sectionHeaderLabelStyle;
-            params.accountCardTitleStyle = this.accountCardTitleStyle;
-            params.accountCardSubtitleStyle = this.accountCardSubtitleStyle;
-            params.networkCardTitleStyle = this.networkCardTitleStyle;
-            params.paymentLogoBackground = this.paymentLogoBackground;
-            return params;
+            return new PageParameters(this);
         }
     }
 }

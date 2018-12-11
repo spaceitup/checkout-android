@@ -40,25 +40,24 @@ final class AccountCardViewHolder extends PaymentCardViewHolder {
     private final TextView subTitle;
     private final ImageView logo;
 
-    private AccountCardViewHolder(ListAdapter adapter, View parent) {
+    private AccountCardViewHolder(ListAdapter adapter, View parent, AccountCard accountCard) {
         super(adapter, parent);
         this.title = parent.findViewById(R.id.text_title);
         this.subTitle = parent.findViewById(R.id.text_subtitle);
         this.logo = parent.findViewById(R.id.image_logo);
+        PaymentTheme theme = adapter.getPaymentTheme();
+
+        addElementWidgets(accountCard.getInputElements(), theme);
+        addButtonWidget(theme);
+
+        applyTheme(theme);
+        setLastImeOptions();
     }
 
     static ViewHolder createInstance(ListAdapter adapter, AccountCard accountCard, ViewGroup parent) {
         LayoutInflater inflater = LayoutInflater.from(parent.getContext());
         View view = inflater.inflate(R.layout.list_item_accountcard, parent, false);
-        AccountCardViewHolder holder = new AccountCardViewHolder(adapter, view);
-        PaymentTheme theme = adapter.getPaymentTheme();
-
-        addElementWidgets(holder, accountCard.getInputElements(), theme);
-        addButtonWidget(holder, theme);
-
-        holder.applyTheme(theme);
-        holder.setLastImeOptions();
-        return holder;
+        return new AccountCardViewHolder(adapter, view, accountCard);
     }
 
     private void applyTheme(PaymentTheme theme) {

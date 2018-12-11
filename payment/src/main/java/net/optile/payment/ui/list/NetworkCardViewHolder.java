@@ -42,34 +42,24 @@ final class NetworkCardViewHolder extends PaymentCardViewHolder {
     final TextView title;
     final ImageView logo;
 
-    NetworkCardViewHolder(ListAdapter adapter, View parent) {
+    NetworkCardViewHolder(ListAdapter adapter, View parent, NetworkCard networkCard) {
         super(adapter, parent);
         this.title = parent.findViewById(R.id.text_title);
         this.logo = parent.findViewById(R.id.image_logo);
+        PaymentTheme theme = adapter.getPaymentTheme();
+
+        addElementWidgets(networkCard.getInputElements(), theme);
+        addRegisterWidgets(theme);
+        addButtonWidget(theme);
+
+        applyTheme(theme);
+        setLastImeOptions();
     }
 
     static ViewHolder createInstance(ListAdapter adapter, NetworkCard networkCard, ViewGroup parent) {
         LayoutInflater inflater = LayoutInflater.from(parent.getContext());
         View view = inflater.inflate(R.layout.list_item_networkcard, parent, false);
-        NetworkCardViewHolder holder = new NetworkCardViewHolder(adapter, view);
-        PaymentTheme theme = adapter.getPaymentTheme();
-
-        addElementWidgets(holder, networkCard.getInputElements(), theme);
-        FormWidget widget = WidgetInflater.inflateRegisterWidget(PaymentInputType.AUTO_REGISTRATION, holder.formLayout, theme);
-        holder.addWidget(widget);
-        widget = WidgetInflater.inflateRegisterWidget(PaymentInputType.ALLOW_RECURRENCE, holder.formLayout, theme);
-        holder.addWidget(widget);
-        addButtonWidget(holder, theme);
-
-        holder.applyTheme(theme);
-        holder.setLastImeOptions();
-        return holder;
-    }
-
-    void applyTheme(PaymentTheme theme) {
-        PageParameters params = theme.getPageParameters();
-        PaymentUtils.setTextAppearance(title, params.getNetworkCardTitleStyle());
-        PaymentUtils.setImageBackground(logo, params.getPaymentLogoBackground());
+        return new NetworkCardViewHolder(adapter, view, networkCard);
     }
 
     void onBind(PaymentCard paymentCard) {
@@ -91,6 +81,19 @@ final class NetworkCardViewHolder extends PaymentCardViewHolder {
         bindRecurrenceWidget(network);
     }
 
+    private void addRegisterWidgets(PaymentTheme theme) {
+        FormWidget widget = WidgetInflater.inflateRegisterWidget(PaymentInputType.AUTO_REGISTRATION, formLayout, theme);
+        addWidget(widget);
+        widget = WidgetInflater.inflateRegisterWidget(PaymentInputType.ALLOW_RECURRENCE, formLayout, theme);
+        addWidget(widget);
+    }
+    
+    private void applyTheme(PaymentTheme theme) {
+        PageParameters params = theme.getPageParameters();
+        PaymentUtils.setTextAppearance(title, params.getNetworkCardTitleStyle());
+        PaymentUtils.setImageBackground(logo, params.getPaymentLogoBackground());
+    }
+    
     private void bindRegistrationWidget(PaymentNetwork network) {
         RegisterWidget widget = (RegisterWidget) getFormWidget(PaymentInputType.AUTO_REGISTRATION);
         widget.setRegistrationType(network.getRegistration());

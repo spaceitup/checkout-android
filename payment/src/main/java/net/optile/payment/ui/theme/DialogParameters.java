@@ -19,14 +19,20 @@ import net.optile.payment.R;
  */
 public final class DialogParameters {
 
-    private int dateTitleStyle;
-    private int dateSubtitleStyle;
-    private int messageTitleStyle;
-    private int messageDetailsStyle;
-    private int messageDetailsNoTitleStyle;
-    private int buttonLabelStyle;
+    private final int dateTitleStyle;
+    private final int dateSubtitleStyle;
+    private final int messageTitleStyle;
+    private final int messageDetailsStyle;
+    private final int messageDetailsNoTitleStyle;
+    private final int buttonLabelStyle;
 
-    private DialogParameters() {
+    private DialogParameters(Builder builder) {
+        this.dateTitleStyle = builder.dateTitleStyle;
+        this.dateSubtitleStyle = builder.dateSubtitleStyle;
+        this.messageTitleStyle = builder.messageTitleStyle;
+        this.messageDetailsStyle = builder.messageDetailsStyle;
+        this.messageDetailsNoTitleStyle = builder.messageDetailsNoTitleStyle;
+        this.buttonLabelStyle = builder.buttonLabelStyle;
     }
 
     public static Builder createBuilder() {
@@ -110,14 +116,7 @@ public final class DialogParameters {
         }
 
         public DialogParameters build() {
-            DialogParameters params = new DialogParameters();
-            params.dateTitleStyle = this.dateTitleStyle;
-            params.dateSubtitleStyle = this.dateSubtitleStyle;
-            params.messageTitleStyle = this.messageTitleStyle;
-            params.messageDetailsStyle = this.messageDetailsStyle;
-            params.messageDetailsNoTitleStyle = this.messageDetailsNoTitleStyle;
-            params.buttonLabelStyle = this.buttonLabelStyle;
-            return params;
+            return new DialogParameters(this);
         }
     }
 }
