@@ -7,7 +7,7 @@
         android:hardwareAccelerated="true">
         <activity
             android:name="net.optile.payment.ui.page.PaymentPageActivity"
-            android:theme="@style/PaymentTheme.NoActionBar">
+            android:theme="@style/PaymentTheme">
         </activity>
     </application>
 </manifest>

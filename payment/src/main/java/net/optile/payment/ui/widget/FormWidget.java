@@ -17,15 +17,17 @@ import android.widget.ImageView;
 import net.optile.payment.R;
 import net.optile.payment.core.PaymentException;
 import net.optile.payment.form.Charge;
+import net.optile.payment.ui.theme.PaymentTheme;
+import net.optile.payment.ui.theme.WidgetParameters;
 
 /**
- * The base class for all widgets
+ * The base class for all widgets, i.e. Button, CheckBox, TextInput etc.
  */
 public abstract class FormWidget {
 
-    public final static int VALIDATION_UNKNOWN = 0x00;
-    public final static int VALIDATION_ERROR = 0x01;
-    public final static int VALIDATION_OK = 0x02;
+    final static int VALIDATION_UNKNOWN = 0x00;
+    final static int VALIDATION_ERROR = 0x01;
+    final static int VALIDATION_OK = 0x02;
 
     final View rootView;
     final String name;
@@ -34,10 +36,12 @@ public abstract class FormWidget {
     WidgetPresenter presenter;
     int state;
     String error;
+    PaymentTheme theme;
 
-    FormWidget(String name, View rootView) {
+    FormWidget(String name, View rootView, PaymentTheme theme) {
         this.name = name;
         this.rootView = rootView;
+        this.theme = theme;
         this.icon = rootView.findViewById(R.id.image_icon);
     }
 
@@ -61,7 +65,7 @@ public abstract class FormWidget {
         }
     }
 
-    public void setVisible(boolean visible) {
+    void setVisible(boolean visible) {
         rootView.setVisibility(visible ? View.VISIBLE : View.GONE);
     }
 
@@ -94,17 +98,17 @@ public abstract class FormWidget {
         if (icon == null) {
             return;
         }
-        int colorResId = R.color.validation_ok;
+        WidgetParameters params = theme.getWidgetParameters();
+        int colorResId = params.getValidationColorUnknown();
         switch (state) {
             case VALIDATION_OK:
-                colorResId = R.color.validation_ok;
+                colorResId = params.getValidationColorOk();
                 break;
             case VALIDATION_ERROR:
-                colorResId = R.color.validation_error;
-                break;
-            default:
-                colorResId = R.color.validation_unknown;
+                colorResId = params.getValidationColorError();
         }
-        icon.setColorFilter(ContextCompat.getColor(rootView.getContext(), colorResId));
+        if (colorResId != 0) {
+            icon.setColorFilter(ContextCompat.getColor(rootView.getContext(), colorResId));
+        }
     }
 }

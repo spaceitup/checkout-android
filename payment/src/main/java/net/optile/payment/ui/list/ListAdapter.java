@@ -13,6 +13,7 @@ package net.optile.payment.ui.list;
 
 import java.util.List;
 
+import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.v4.app.DialogFragment;
 import android.support.v7.widget.RecyclerView;
@@ -20,11 +21,11 @@ import android.support.v7.widget.RecyclerView.ViewHolder;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
 import net.optile.payment.core.LanguageFile;
-import net.optile.payment.ui.PaymentTheme;
 import net.optile.payment.ui.PaymentUI;
 import net.optile.payment.ui.model.AccountCard;
 import net.optile.payment.ui.model.NetworkCard;
 import net.optile.payment.ui.model.PaymentCard;
+import net.optile.payment.ui.theme.PaymentTheme;
 import net.optile.payment.validation.ValidationResult;
 
 /**
@@ -46,15 +47,14 @@ final class ListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     @Override
     public @NonNull
     ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        LayoutInflater inflater = LayoutInflater.from(parent.getContext());
         PaymentCard card = getItemWithViewType(viewType).getPaymentCard();
 
         if (card == null) {
-            return HeaderViewHolder.createInstance(inflater, parent);
+            return HeaderViewHolder.createInstance(this, parent);
         } else if (card instanceof NetworkCard) {
-            return NetworkCardViewHolder.createInstance(this, (NetworkCard) card, inflater, parent);
+            return NetworkCardViewHolder.createInstance(this, (NetworkCard) card, parent);
         } else {
-            return AccountCardViewHolder.createInstance(this, (AccountCard) card, inflater, parent);
+            return AccountCardViewHolder.createInstance(this, (AccountCard) card, parent);
         }
     }
 
@@ -91,42 +91,46 @@ final class ListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     }
 
     void onItemClicked(int position) {
-        if (!isValidPosition(position)) {
+        if (isInvalidPosition(position)) {
             return;
         }
         list.onItemClicked(position);
     }
 
     void hideKeyboard(int position) {
-        if (!isValidPosition(position)) {
+        if (isInvalidPosition(position)) {
             return;
         }
         list.hideKeyboard();
     }
 
     void showKeyboard(int position) {
-        if (!isValidPosition(position)) {
+        if (isInvalidPosition(position)) {
             return;
         }
         list.showKeyboard();
     }
 
     void showDialogFragment(int position, DialogFragment dialog, String tag) {
-        if (!isValidPosition(position)) {
+        if (isInvalidPosition(position)) {
             return;
         }
         list.showDialogFragment(dialog, tag);
     }
 
     void onActionClicked(int position) {
-        if (!isValidPosition(position)) {
+        if (isInvalidPosition(position)) {
             return;
         }
         list.onActionClicked(position);
     }
 
+    Context getContext() {
+        return list.getContext();
+    }
+
     ValidationResult validate(int position, String type, String value1, String value2) {
-        if (!isValidPosition(position)) {
+        if (isInvalidPosition(position)) {
             return null;
         }
         return list.validate(position, type, value1, value2);
@@ -138,6 +142,10 @@ final class ListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     LanguageFile getPageLanguageFile() {
         return list.getPaymentSession().getLang();
+    }
+
+    LayoutInflater getLayoutInflater() {
+        return list.getLayoutInflater();
     }
 
     ListItem getItemFromIndex(int index) {
@@ -154,7 +162,7 @@ final class ListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         return null;
     }
 
-    private boolean isValidPosition(int position) {
-        return position >= 0 && position < items.size();
+    private boolean isInvalidPosition(int position) {
+        return (position < 0) || (position >= items.size());
     }
 }

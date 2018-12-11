@@ -50,9 +50,8 @@ public final class LanguageFile {
     }
 
     public String translateInteraction(Interaction interaction) {
-        StringBuilder sb = new StringBuilder("interaction.");
-        sb.append(interaction.getCode()).append(".").append(interaction.getReason());
-        return translate(sb.toString());
+        String key = "interaction.".concat(interaction.getCode()).concat(".").concat(interaction.getReason());
+        return translate(key);
     }
 
     public Properties getProperties() {

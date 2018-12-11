@@ -22,6 +22,7 @@ import net.optile.payment.form.Charge;
 import net.optile.payment.model.InputElement;
 import net.optile.payment.model.SelectOption;
 import net.optile.payment.ui.dialog.DateDialogFragment;
+import net.optile.payment.ui.theme.PaymentTheme;
 import net.optile.payment.util.PaymentUtils;
 import net.optile.payment.validation.ValidationResult;
 
@@ -42,9 +43,11 @@ public final class DateWidget extends InputLayoutWidget implements DateDialogFra
      *
      * @param name name identifying this widget
      * @param rootView the root view of this input
+     * @param theme the PaymentTheme to apply
      */
-    public DateWidget(String name, View rootView) {
-        super(name, rootView);
+    public DateWidget(String name, View rootView, PaymentTheme theme) {
+        super(name, rootView, theme);
+
         input.setKeyListener(null);
         input.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -161,7 +164,7 @@ public final class DateWidget extends InputLayoutWidget implements DateDialogFra
         this.expiryMonth = monthElement.getOptions().get(monthIndex).getValue();
         this.expiryYear = yearElement.getOptions().get(yearIndex).getValue();
 
-        String format = rootView.getContext().getString(R.string.paymentlist_date);
+        String format = rootView.getContext().getString(R.string.pmlist_date);
         input.setText(String.format(format, monthLabel, yearLabel));
 
         View nextField = input.focusSearch(View.FOCUS_DOWN);

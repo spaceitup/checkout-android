@@ -16,7 +16,7 @@ import net.optile.payment.ui.PaymentResult;
 /**
  * Class for holding the CheckoutResult data
  */
-public class CheckoutResult {
+class CheckoutResult {
 
     /** Indicating if the checkout was successful */
     public boolean success;

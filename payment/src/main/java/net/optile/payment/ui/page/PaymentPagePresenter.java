@@ -134,7 +134,7 @@ final class PaymentPagePresenter {
             }
         } catch (PaymentException e) {
             PaymentResult result = new PaymentResult(e.getMessage(), e.error);
-            closeSessionWithError(R.string.paymentpage_error_unknown, result);
+            closeSessionWithError(R.string.pmpage_error_unknown, result);
         }
     }
 
@@ -185,10 +185,10 @@ final class PaymentPagePresenter {
             int msgResId;
             switch (error.errorType) {
                 case PaymentError.CONN_ERROR:
-                    msgResId = R.string.paymentpage_error_connection;
+                    msgResId = R.string.pmpage_error_connection;
                     break;
                 default:
-                    msgResId = R.string.paymentpage_error_unknown;
+                    msgResId = R.string.pmpage_error_unknown;
             }
             closeSessionWithError(msgResId, result);
         }
@@ -235,10 +235,10 @@ final class PaymentPagePresenter {
             result = new PaymentResult(cause.getMessage(), error);
             switch (error.errorType) {
                 case PaymentError.CONN_ERROR:
-                    continueSessionWithWarning(R.string.paymentpage_error_connection, result);
+                    continueSessionWithWarning(R.string.pmpage_error_connection, result);
                     break;
                 default:
-                    closeSessionWithError(R.string.paymentpage_error_unknown, result);
+                    closeSessionWithError(R.string.pmpage_error_unknown, result);
             }
         }
     }
@@ -301,7 +301,7 @@ final class PaymentPagePresenter {
     }
 
     private void closeSessionWithError(PaymentResult result) {
-        String msg = translateInteraction(result.getInteraction(), view.getStringRes(R.string.paymentpage_error_unknown));
+        String msg = translateInteraction(result.getInteraction(), view.getStringRes(R.string.pmpage_error_unknown));
         view.setPaymentResult(false, result);
         view.closePageWithMessage(msg);
     }
