@@ -18,6 +18,7 @@ import android.util.Patterns;
 import net.optile.payment.ui.page.PaymentPageActivity;
 import net.optile.payment.ui.theme.PaymentTheme;
 import net.optile.payment.validation.Validator;
+import net.optile.payment.R;
 
 /**
  * The PaymentUI is the controller to initialize and launch the Payment Page.
@@ -124,11 +125,10 @@ public final class PaymentUI {
             throw new IllegalArgumentException("activity may not be null");
         }
         if (validator == null) {
-            setValidator(Validator.createDefault(activity));
+            setValidator(Validator.createInstance(activity, R.raw.validation));
         }
-
         if (theme == null) {
-            theme = PaymentTheme.createDefault();
+            setPaymentTheme(PaymentTheme.createDefault());
         }
         activity.finishActivity(requestCode);
         Intent intent = PaymentPageActivity.createStartIntent(activity, listUrl);

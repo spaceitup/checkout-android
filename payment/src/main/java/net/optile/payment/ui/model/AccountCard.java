@@ -57,6 +57,14 @@ public final class AccountCard implements PaymentCard {
      * {@inheritDoc}
      */
     @Override
+    public String getCode() {
+        return account.getCode();
+    }
+    
+    /**
+     * {@inheritDoc}
+     */
+    @Override
     public LanguageFile getLang() {
         return lang;
     }

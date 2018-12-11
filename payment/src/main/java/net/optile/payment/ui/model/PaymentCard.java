@@ -37,6 +37,13 @@ public interface PaymentCard {
     String getPaymentMethod();
 
     /**
+     * Get the code of this PaymentCard
+     *
+     * @return code
+     */
+    String getCode();
+    
+    /**
      * Get the language file of this PaymentCard
      *
      * @return language file
