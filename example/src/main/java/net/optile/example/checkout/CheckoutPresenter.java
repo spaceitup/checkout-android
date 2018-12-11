@@ -134,8 +134,8 @@ final class CheckoutPresenter {
     }
 
     /**
-     * REMIND, this code must be removed for production apps. Mobile apps using the Android Payment SDK should not create 
-     * PaymentSessions by themselves. Creating PaymentSessions must be performed by the backend of the merchant. 
+     * REMIND, this code must be removed for production apps. Mobile apps using the Android Payment SDK should not create
+     * PaymentSessions by themselves. Creating PaymentSessions must be performed by the backend of the merchant.
      *
      * @param url containing the address to the Payment API
      * @param authorization authorization header value

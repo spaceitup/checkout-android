@@ -163,6 +163,6 @@ final class ListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     }
 
     private boolean isInvalidPosition(int position) {
-        return position < 0 || position >= items.size();
+        return (position < 0) || (position >= items.size());
     }
 }

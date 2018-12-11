@@ -24,19 +24,29 @@ import net.optile.payment.core.PaymentInputType;
 public final class WidgetParameters {
 
     private final Map<String, Integer> iconMapping;
-    private int textInputTheme;
-    private int buttonTheme;
-    private int buttonLabelStyle;
-    private int checkBoxTheme;
-    private int checkBoxLabelCheckedStyle;
-    private int checkBoxLabelUncheckedStyle;
-    private int selectLabelStyle;
-    private int validationColorUnknown;
-    private int validationColorOk;
-    private int validationColorError;
+    private final int textInputTheme;
+    private final int buttonTheme;
+    private final int buttonLabelStyle;
+    private final int checkBoxTheme;
+    private final int checkBoxLabelCheckedStyle;
+    private final int checkBoxLabelUncheckedStyle;
+    private final int selectLabelStyle;
+    private final int validationColorUnknown;
+    private final int validationColorOk;
+    private final int validationColorError;
 
-    private WidgetParameters() {
-        this.iconMapping = new HashMap<>();
+    private WidgetParameters(Builder builder) {
+        this.iconMapping = new HashMap<>(builder.iconMapping);
+        this.textInputTheme = builder.textInputTheme;
+        this.buttonTheme = builder.buttonTheme;
+        this.buttonLabelStyle = builder.buttonLabelStyle;
+        this.checkBoxTheme = builder.checkBoxTheme;
+        this.checkBoxLabelCheckedStyle = builder.checkBoxLabelCheckedStyle;
+        this.checkBoxLabelUncheckedStyle = builder.checkBoxLabelUncheckedStyle;
+        this.selectLabelStyle = builder.selectLabelStyle;
+        this.validationColorOk = builder.validationColorOk;
+        this.validationColorUnknown = builder.validationColorUnknown;
+        this.validationColorError = builder.validationColorError;
     }
 
     public static Builder createBuilder() {
@@ -180,7 +190,6 @@ public final class WidgetParameters {
 
         public Builder setValidationColorOk(int validationColorOk) {
             this.validationColorOk = validationColorOk;
-            ;
             return this;
         }
 
@@ -195,19 +204,7 @@ public final class WidgetParameters {
         }
 
         public WidgetParameters build() {
-            WidgetParameters params = new WidgetParameters();
-            params.iconMapping.putAll(this.iconMapping);
-            params.textInputTheme = this.textInputTheme;
-            params.buttonTheme = this.buttonTheme;
-            params.buttonLabelStyle = this.buttonLabelStyle;
-            params.checkBoxTheme = this.checkBoxTheme;
-            params.checkBoxLabelCheckedStyle = this.checkBoxLabelCheckedStyle;
-            params.checkBoxLabelUncheckedStyle = this.checkBoxLabelUncheckedStyle;
-            params.selectLabelStyle = this.selectLabelStyle;
-            params.validationColorOk = this.validationColorOk;
-            params.validationColorUnknown = this.validationColorUnknown;
-            params.validationColorError = this.validationColorError;
-            return params;
+            return new WidgetParameters(this);
         }
     }
 }

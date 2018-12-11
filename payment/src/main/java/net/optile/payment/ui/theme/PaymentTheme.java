@@ -16,11 +16,14 @@ package net.optile.payment.ui.theme;
  */
 public final class PaymentTheme {
 
-    private PageParameters pageParameters;
-    private WidgetParameters widgetParameters;
-    private DialogParameters dialogParameters;
+    private final PageParameters pageParameters;
+    private final WidgetParameters widgetParameters;
+    private final DialogParameters dialogParameters;
 
-    private PaymentTheme() {
+    private PaymentTheme(Builder builder) {
+        this.pageParameters = builder.pageParameters;
+        this.widgetParameters = builder.widgetParameters;
+        this.dialogParameters = builder.dialogParameters;
     }
 
     public static Builder createBuilder() {
@@ -71,23 +74,17 @@ public final class PaymentTheme {
         }
 
         public PaymentTheme build() {
-            PaymentTheme theme = new PaymentTheme();
 
             if (pageParameters == null) {
                 pageParameters = PageParameters.createBuilder().build();
             }
-            theme.pageParameters = pageParameters;
-
             if (widgetParameters == null) {
                 widgetParameters = WidgetParameters.createBuilder().build();
             }
-            theme.widgetParameters = widgetParameters;
-
             if (dialogParameters == null) {
                 dialogParameters = DialogParameters.createBuilder().build();
             }
-            theme.dialogParameters = dialogParameters;
-            return theme;
+            return new PaymentTheme(this);
         }
     }
 }
