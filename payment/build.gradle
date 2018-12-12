@@ -49,6 +49,7 @@ dependencies {
     testImplementation "junit:junit:${rootProject.junitVersion}"
     testImplementation "org.mockito:mockito-core:${rootProject.mockitoCoreVersion}"
     testImplementation "org.robolectric:robolectric:${rootProject.robolectricVersion}"
+    testImplementation "androidx.test:core:${rootProject.androidxTestCoreVersion}"
 
     androidTestImplementation "com.android.support.test:runner:${rootProject.runnerVersion}"
     androidTestImplementation "com.android.support.test.espresso:espresso-core:${rootProject.espressoCoreVersion}"

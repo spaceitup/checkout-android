@@ -17,7 +17,7 @@ import android.text.TextUtils;
 import android.util.Patterns;
 import net.optile.payment.ui.page.PaymentPageActivity;
 import net.optile.payment.ui.theme.PaymentTheme;
-import net.optile.payment.validation.Validator;
+import net.optile.payment.validate.Validator;
 import net.optile.payment.R;
 
 /**
@@ -125,7 +125,7 @@ public final class PaymentUI {
             throw new IllegalArgumentException("activity may not be null");
         }
         if (validator == null) {
-            setValidator(Validator.createInstance(activity, R.raw.validation));
+            setValidator(Validator.createInstance(activity, R.raw.validations));
         }
         if (theme == null) {
             setPaymentTheme(PaymentTheme.createDefault());

@@ -9,7 +9,7 @@
  * has been received in full.
  */
 
-package net.optile.payment.validation;
+package net.optile.payment.validate;
 
 /**
  * Class with helper methods to validate card numbers

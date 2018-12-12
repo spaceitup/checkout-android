@@ -9,10 +9,10 @@
  * has been received in full.
  */
 
-package net.optile.payment.validation;
+package net.optile.payment.validate;
 
 /**
- * Class holding the validation regex for the PaymentInputType
+ * Class holding the validate regex for the PaymentInputType
  */
 public class Validation {
 

@@ -38,7 +38,7 @@ public class WidgetParametersTest {
         assertEquals(params.getCheckBoxTheme(), R.style.PaymentThemeCheckBox);
         assertEquals(params.getCheckBoxLabelCheckedStyle(), R.style.PaymentText_Medium);
         assertEquals(params.getCheckBoxLabelUncheckedStyle(), R.style.PaymentText_Medium_Hint);
-        assertEquals(params.getSelectLabelStyle(), R.style.PaymentText_Small);
+        assertEquals(params.getSelectLabelStyle(), R.style.PaymentText_Tiny);
 
         assertEquals(params.getValidationColorOk(), R.color.pmvalidation_ok);
         assertEquals(params.getValidationColorUnknown(), R.color.pmvalidation_unknown);

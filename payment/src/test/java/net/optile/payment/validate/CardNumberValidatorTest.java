@@ -9,7 +9,7 @@
  * has been received in full.
  */
 
-package net.optile.payment.validation;
+package net.optile.payment.validate;
 
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;

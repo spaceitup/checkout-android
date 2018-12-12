@@ -24,6 +24,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import net.optile.payment.core.PaymentInputType;
 import net.optile.payment.model.InputElement;
+import android.content.res.Resources;
 
 /**
  * The PaymentUtils class containing helper methods
@@ -116,7 +117,7 @@ public final class PaymentUtils {
      * @param resId The resource id
      * @return The String or an empty string if something went wrong
      */
-    public static String readRawResource(Resources res, int resId) {
+    public static String readRawResource(Resources res, int resId) throws IOException {
         StringBuilder sb = new StringBuilder();
         String line;
 
@@ -127,8 +128,8 @@ public final class PaymentUtils {
             while ((line = br.readLine()) != null) {
                 sb.append(line);
             }
-        } catch (IOException e) {
-            Log.wtf(TAG, e);
+        } catch (Resources.NotFoundException e) {
+            throw new IOException("Resource not found");
         }
         return sb.toString();
     }

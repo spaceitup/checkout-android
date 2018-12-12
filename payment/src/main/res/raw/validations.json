@@ -1,5 +1,5 @@
 {
-    "items": [
+    "groups": [
         {
 	    "method": "CREDIT_CARD",
 	    "code": "AMEX",
@@ -120,19 +120,6 @@
         },
         {
 	    "method": "DEBIT_CARD",
-	    "code": "4B",
-	    "validations": [
-		{
-		    "type": "number",
-		    "regex": "^[0-9]+$"
-		}, {
-		    "type": "verificationCode",
-		    "regex": "^[0-9]*$"
-		}
-	    ]
-        },
-        {
-	    "method": "DEBIT_CARD",
 	    "code": "CARTEBANCAIRE",
 	    "validations": [
 		{
@@ -151,19 +138,6 @@
 		{
 		    "type": "number",
 		    "regex": "^(50|59|6[0-9])[0-9]{10,17}"
-		}, {
-		    "type": "verificationCode",
-		    "regex": "^[0-9]*$"
-		}
-	    ]
-        },
-        {
-	    "method": "DEBIT_CARD",
-	    "code": "EURO6000",
-	    "validations": [
-		{
-		    "type": "number",
-		    "regex": "^[0-9]+$"
 		}, {
 		    "type": "verificationCode",
 		    "regex": "^[0-9]*$"
@@ -198,37 +172,11 @@
         },
         {
 	    "method": "DEBIT_CARD",
-	    "code": "MISTERCASH",
-	    "validations": [
-		{
-		    "type": "number",
-		    "regex": "^[0-9]+$"
-		}, {
-		    "type": "verificationCode",
-		    "regex": "^[0-9]*$"
-		}
-	    ]
-        },
-        {
-	    "method": "DEBIT_CARD",
 	    "code": "POSTEPAY",
 	    "validations": [
 		{
 		    "type": "number",
 		    "regex": "^(50|59|6[0-9])[0-9]{10,17}"
-		}, {
-		    "type": "verificationCode",
-		    "regex": "^[0-9]*$"
-		}
-	    ]
-        },
-        {
-	    "method": "DEBIT_CARD",
-	    "code": "SERVIRED",
-	    "validations": [
-		{
-		    "type": "number",
-		    "regex": "^[0-9]+$"
 		}, {
 		    "type": "verificationCode",
 		    "regex": "^[0-9]*$"

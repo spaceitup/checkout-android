@@ -11,6 +11,7 @@
 
 package net.optile.example.checkout;
 
+import java.io.IOException;
 import java.net.URL;
 import java.util.Map;
 import java.util.concurrent.Callable;
@@ -107,32 +108,39 @@ final class CheckoutPresenter {
         if (isCreatePaymentSessionActive()) {
             return;
         }
-        final String url = context.getString(R.string.url);
-        final String auth = context.getString(R.string.payment_authorization);
-        final String listData = PaymentUtils.readRawResource(context.getResources(), R.raw.list);
+        
+        try {
+            final String url = context.getString(R.string.url);
+            final String auth = context.getString(R.string.payment_authorization);
+            final String listData = PaymentUtils.readRawResource(context.getResources(), R.raw.list);
 
-        final Single<String> single = Single.fromCallable(new Callable<String>() {
-            @Override
-            public String call() throws CheckoutException {
-                return asyncCreatePaymentSession(url, auth, listData);
+            final Single<String> single = Single.fromCallable(new Callable<String>() {
+                    @Override
+                    public String call() throws CheckoutException {
+                        return asyncCreatePaymentSession(url, auth, listData);
 
-            }
-        });
-        this.subscription = single.subscribeOn(Schedulers.io())
-            .observeOn(AndroidSchedulers.mainThread())
-            .subscribe(new SingleSubscriber<String>() {
-                @Override
-                public void onSuccess(String listUrl) {
-                    callbackPaymentSessionSuccess(listUrl);
-                }
+                    }
+                });            
 
-                @Override
-                public void onError(Throwable error) {
-                    callbackPaymentSessionError(error);
-                }
-            });
+            this.subscription = single.subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new SingleSubscriber<String>() {
+                        @Override
+                        public void onSuccess(String listUrl) {
+                            callbackPaymentSessionSuccess(listUrl);
+                        }
+                        
+                        @Override
+                        public void onError(Throwable error) {
+                            callbackPaymentSessionError(error);
+                        }
+                    });
+        } catch (IOException e) {
+            Log.wtf(TAG, e);
+            view.showPaymentError(context.getString(R.string.dialog_error_list));
+        }        
     }
-
+        
     /**
      * REMIND, this code must be removed for production apps. Mobile apps using the Android Payment SDK should not create
      * PaymentSessions by themselves. Creating PaymentSessions must be performed by the backend of the merchant.

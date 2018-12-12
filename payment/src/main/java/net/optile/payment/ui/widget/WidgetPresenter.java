@@ -12,7 +12,7 @@
 package net.optile.payment.ui.widget;
 
 import android.support.v4.app.DialogFragment;
-import net.optile.payment.validation.ValidationResult;
+import net.optile.payment.validate.ValidationResult;
 
 /**
  * The presenter which is controlling each widget
@@ -49,7 +49,7 @@ public interface WidgetPresenter {
      * @param type type of the value to be validated
      * @param value1 mandatory first value to validate
      * @param value2 optional second value to validate
-     * @return ValidationResult holding the result of the validation
+     * @return ValidationResult holding the result of the validate
      */
     ValidationResult validate(String type, String value1, String value2);
 }

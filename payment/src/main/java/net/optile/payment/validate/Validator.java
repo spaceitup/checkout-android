@@ -9,10 +9,10 @@
  * has been received in full.
  */
 
-package net.optile.payment.validation;
+package net.optile.payment.validate;
 
 import java.util.Calendar;
-
+import java.io.IOException;
 import android.text.TextUtils;
 import android.util.Log;
 import android.content.Context;
@@ -20,7 +20,7 @@ import net.optile.payment.core.PaymentInputType;
 import net.optile.payment.model.PaymentMethod;
 import net.optile.payment.util.PaymentUtils;
 import net.optile.payment.util.GsonHelper;
-import net.optile.payment.R;
+
 import com.google.gson.JsonSyntaxException;
 
 /**
@@ -32,6 +32,8 @@ public class Validator {
     public final static String REGEX_MONTH = "(^0[1-9]|1[0-2]$)";
     public final static String REGEX_YEAR = "^(20)\\d{2}$";
     public final static String REGEX_BIC = "([a-zA-Z]{4}[a-zA-Z]{2}[a-zA-Z0-9]{2}([a-zA-Z0-9]{3})?)";
+    public final static String REGEX_ACCOUNT_NUMBER = "^[0-9]+$";
+    public final static String REGEX_VERIFICATION_CODE = "^[0-9]*$";
 
     private final Validations validations;
 
@@ -58,10 +60,12 @@ public class Validator {
         try {
             String val = PaymentUtils.readRawResource(context.getResources(), validationResId); 
             return new Validator(GsonHelper.getInstance().fromJson(val, Validations.class));
+        } catch (IOException e) {
+            Log.wtf(TAG, e);
         } catch (JsonSyntaxException e) {
             Log.wtf(TAG, e);
-            throw new IllegalArgumentException("Error creating validation settings");
         }
+        throw new IllegalArgumentException("Error loading validation resource, make sure it exist.");
     }
     
     /**
@@ -76,11 +80,16 @@ public class Validator {
     public ValidationResult validate(String method, String code, String type, String value1, String value2) {
 
         if (TextUtils.isEmpty(method)) {
-            throw new IllegalArgumentException("validation method may not be null or empty");
+            throw new IllegalArgumentException("validate method may not be null or empty");
+        }
+        if (TextUtils.isEmpty(code)) {
+            throw new IllegalArgumentException("validate code may not be null or empty");
         }
         if (TextUtils.isEmpty(type)) {
-            throw new IllegalArgumentException("validation type may not be null or empty");
+            throw new IllegalArgumentException("validate type may not be null or empty");
         }
+        value1 = value1 == null ? "" : value1;
+        value2 = value2 == null ? "" : value2;
         Validation val = validations.get(method, code, type);
         
         switch (type) {
@@ -114,22 +123,20 @@ public class Validator {
             case PaymentMethod.DEBIT_CARD:
                 return validateCardNumber(number, val);
             default:
-                if (TextUtils.isEmpty(number)) {
-                    return new ValidationResult(ValidationResult.MISSING_ACCOUNT_NUMBER);
+                if (!number.matches(REGEX_ACCOUNT_NUMBER)) {        
+                    if (TextUtils.isEmpty(number)) {
+                        return new ValidationResult(ValidationResult.MISSING_ACCOUNT_NUMBER);
+                    }
+                    return new ValidationResult(ValidationResult.INVALID_ACCOUNT_NUMBER);
                 }
-                return new ValidationResult(null);
         }
+        return new ValidationResult(null);
     }
 
     private ValidationResult validateCardNumber(String number, Validation val) {
-        
-        if (val == null) {
-            if (TextUtils.isEmpty(number)) {
-                return new ValidationResult(ValidationResult.MISSING_ACCOUNT_NUMBER);
-            }
-            return new ValidationResult(null);
-        }        
-        if (number == null || !number.matches(val.getRegex())) {        
+        String regex = val != null ? val.getRegex() : REGEX_ACCOUNT_NUMBER;
+
+        if (!number.matches(regex)) {        
             if (TextUtils.isEmpty(number)) {
                 return new ValidationResult(ValidationResult.MISSING_ACCOUNT_NUMBER);
             }
@@ -142,11 +149,9 @@ public class Validator {
     }
 
     private ValidationResult validateVerificationCode(String verificationCode, Validation val) {
+        String regex = val != null ? val.getRegex() : REGEX_VERIFICATION_CODE;
 
-        if (val == null) {
-            return new ValidationResult(null);
-        }
-        if (verificationCode == null || !verificationCode.matches(val.getRegex())) {
+        if (!verificationCode.matches(regex)) {
             if (TextUtils.isEmpty(verificationCode)) {
                 return new ValidationResult(ValidationResult.MISSING_VERIFICATION_CODE);                
             }

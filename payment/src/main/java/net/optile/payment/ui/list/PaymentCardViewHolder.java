@@ -36,7 +36,7 @@ import net.optile.payment.ui.widget.TextInputWidget;
 import net.optile.payment.ui.widget.WidgetInflater;
 import net.optile.payment.ui.widget.WidgetPresenter;
 import net.optile.payment.util.PaymentUtils;
-import net.optile.payment.validation.ValidationResult;
+import net.optile.payment.validate.ValidationResult;
 
 /**
  * The PaymentCardViewHolder holding the header and input widgets
