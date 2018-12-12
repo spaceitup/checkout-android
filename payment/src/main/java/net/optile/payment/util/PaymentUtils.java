@@ -127,7 +127,7 @@ public final class PaymentUtils {
                 sb.append(line);
             }
         } catch (Resources.NotFoundException e) {
-            throw new IOException("Resource not found");
+            throw new IOException("Resource not found: " + resId);
         }
         return sb.toString();
     }
