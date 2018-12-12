@@ -11,22 +11,19 @@
 
 package net.optile.payment.validate;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.assertEquals;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.robolectric.RobolectricTestRunner;
-import org.robolectric.Robolectric;
-import org.robolectric.RuntimeEnvironment;
 
+import androidx.test.core.app.ApplicationProvider;
+import net.optile.payment.R;
 import net.optile.payment.core.PaymentInputType;
 import net.optile.payment.model.PaymentMethod;
-import net.optile.payment.R;
-import androidx.test.core.app.ApplicationProvider;
 
 
 @RunWith(RobolectricTestRunner.class)
@@ -81,7 +78,7 @@ public class ValidatorTest {
 
         result = validator.validate(method, code, type, "12345ABC", null);
         assertEquals(ValidationResult.INVALID_ACCOUNT_NUMBER, result.getError());
-        
+
         result = validator.validate(method, code, type, "", null);
         assertEquals(ValidationResult.MISSING_ACCOUNT_NUMBER, result.getError());
 
@@ -104,14 +101,14 @@ public class ValidatorTest {
 
         result = validator.validate(method, code, type, "12345", null);
         assertEquals(ValidationResult.INVALID_ACCOUNT_NUMBER, result.getError());
-        
+
         result = validator.validate(method, code, type, "", null);
         assertEquals(ValidationResult.MISSING_ACCOUNT_NUMBER, result.getError());
 
         result = validator.validate(method, code, type, null, null);
         assertEquals(ValidationResult.MISSING_ACCOUNT_NUMBER, result.getError());
     }
-    
+
     @Test
     public void validate_verificationCode_missingValidation() {
         final Validator validator = Validator.createInstance(ApplicationProvider.getApplicationContext(), R.raw.validations);
@@ -173,7 +170,7 @@ public class ValidatorTest {
 
         result = validator.validate(method, code, type, "123a", null);
         assertEquals(ValidationResult.INVALID_VERIFICATION_CODE, result.getError());
-        
+
         result = validator.validate(method, code, type, "123", null);
         assertEquals(ValidationResult.INVALID_VERIFICATION_CODE, result.getError());
 
@@ -222,7 +219,7 @@ public class ValidatorTest {
 
         result = validator.validate(method, code, type, "123a", null);
         assertEquals(ValidationResult.INVALID_VERIFICATION_CODE, result.getError());
-        
+
         result = validator.validate(method, code, type, "123", null);
         assertEquals(ValidationResult.INVALID_VERIFICATION_CODE, result.getError());
 
@@ -271,7 +268,7 @@ public class ValidatorTest {
 
         result = validator.validate(method, code, type, "12a", null);
         assertEquals(ValidationResult.INVALID_VERIFICATION_CODE, result.getError());
-        
+
         result = validator.validate(method, code, type, "1234", null);
         assertEquals(ValidationResult.INVALID_VERIFICATION_CODE, result.getError());
 
@@ -281,7 +278,7 @@ public class ValidatorTest {
         result = validator.validate(method, code, type, null, null);
         assertEquals(ValidationResult.MISSING_VERIFICATION_CODE, result.getError());
     }
-    
+
     @Test
     public void validate_CREDIT_DISCOVER_accountNumber() {
         final Validator validator = Validator.createInstance(ApplicationProvider.getApplicationContext(), R.raw.validations);
@@ -320,7 +317,7 @@ public class ValidatorTest {
 
         result = validator.validate(method, code, type, "12a", null);
         assertEquals(ValidationResult.INVALID_VERIFICATION_CODE, result.getError());
-        
+
         result = validator.validate(method, code, type, "1234", null);
         assertEquals(ValidationResult.INVALID_VERIFICATION_CODE, result.getError());
 
@@ -330,14 +327,14 @@ public class ValidatorTest {
         result = validator.validate(method, code, type, null, null);
         assertEquals(ValidationResult.MISSING_VERIFICATION_CODE, result.getError());
     }
-    
+
     @Test
     public void validate_CREDIT_MASTERCARD_validation() {
         final Validator validator = Validator.createInstance(ApplicationProvider.getApplicationContext(), R.raw.validations);
         final String method = PaymentMethod.CREDIT_CARD;
         final String code = PaymentMethodCodes.MASTERCARD;
         final String type = PaymentInputType.ACCOUNT_NUMBER;
-        
+
         assertNotNull(validator.getValidation(method, code, type));
 
         ValidationResult result;
@@ -360,7 +357,7 @@ public class ValidatorTest {
         final String method = PaymentMethod.CREDIT_CARD;
         final String code = PaymentMethodCodes.MASTERCARD;
         final String type = PaymentInputType.VERIFICATION_CODE;
-        
+
         assertNotNull(validator.getValidation(method, code, type));
 
         ValidationResult result;
@@ -369,7 +366,7 @@ public class ValidatorTest {
 
         result = validator.validate(method, code, type, "12a", null);
         assertEquals(ValidationResult.INVALID_VERIFICATION_CODE, result.getError());
-        
+
         result = validator.validate(method, code, type, "1234", null);
         assertEquals(ValidationResult.INVALID_VERIFICATION_CODE, result.getError());
 
@@ -380,7 +377,7 @@ public class ValidatorTest {
         assertEquals(ValidationResult.MISSING_VERIFICATION_CODE, result.getError());
     }
 
-    
+
     @Test
     public void validate_CREDIT_UNIONPAY_accountNumber() {
         final Validator validator = Validator.createInstance(ApplicationProvider.getApplicationContext(), R.raw.validations);
@@ -419,17 +416,17 @@ public class ValidatorTest {
 
         result = validator.validate(method, code, type, "12a", null);
         assertEquals(ValidationResult.INVALID_VERIFICATION_CODE, result.getError());
-        
+
         result = validator.validate(method, code, type, "1234", null);
         assertEquals(ValidationResult.INVALID_VERIFICATION_CODE, result.getError());
 
         result = validator.validate(method, code, type, "", null);
         assertEquals(ValidationResult.MISSING_VERIFICATION_CODE, result.getError());
-        
+
         result = validator.validate(method, code, type, null, null);
         assertEquals(ValidationResult.MISSING_VERIFICATION_CODE, result.getError());
     }
-    
+
     @Test
     public void validate_CREDIT_VISA_accountNumber() {
         Validator validator = Validator.createInstance(ApplicationProvider.getApplicationContext(), R.raw.validations);
@@ -448,7 +445,7 @@ public class ValidatorTest {
 
         result = validator.validate(method, code, type, "", null);
         assertEquals(ValidationResult.MISSING_ACCOUNT_NUMBER, result.getError());
-        
+
         result = validator.validate(method, code, type, null, null);
         assertEquals(ValidationResult.MISSING_ACCOUNT_NUMBER, result.getError());
     }
@@ -468,7 +465,7 @@ public class ValidatorTest {
 
         result = validator.validate(method, code, type, "12a", null);
         assertEquals(ValidationResult.INVALID_VERIFICATION_CODE, result.getError());
-        
+
         result = validator.validate(method, code, type, "1234", null);
         assertEquals(ValidationResult.INVALID_VERIFICATION_CODE, result.getError());
 
@@ -497,7 +494,7 @@ public class ValidatorTest {
 
         result = validator.validate(method, code, type, "", null);
         assertEquals(ValidationResult.MISSING_ACCOUNT_NUMBER, result.getError());
-        
+
         result = validator.validate(method, code, type, null, null);
         assertEquals(ValidationResult.MISSING_ACCOUNT_NUMBER, result.getError());
     }
@@ -517,7 +514,7 @@ public class ValidatorTest {
 
         result = validator.validate(method, code, type, "12a", null);
         assertEquals(ValidationResult.INVALID_VERIFICATION_CODE, result.getError());
-        
+
         result = validator.validate(method, code, type, "1234", null);
         assertEquals(ValidationResult.INVALID_VERIFICATION_CODE, result.getError());
 
@@ -567,7 +564,7 @@ public class ValidatorTest {
 
         result = validator.validate(method, code, type, "12a", null);
         assertEquals(ValidationResult.INVALID_VERIFICATION_CODE, result.getError());
-        
+
         result = validator.validate(method, code, type, "1234", null);
         assertEquals(ValidationResult.INVALID_VERIFICATION_CODE, result.getError());
 
@@ -577,7 +574,7 @@ public class ValidatorTest {
         result = validator.validate(method, code, type, null, null);
         assertEquals(ValidationResult.MISSING_VERIFICATION_CODE, result.getError());
     }
-    
+
     @Test
     public void validate_DEBIT_CARTEBANCAIRE_accountNumber() {
         Validator validator = Validator.createInstance(ApplicationProvider.getApplicationContext(), R.raw.validations);
@@ -599,7 +596,7 @@ public class ValidatorTest {
 
         result = validator.validate(method, code, type, null, null);
         assertEquals(ValidationResult.MISSING_ACCOUNT_NUMBER, result.getError());
-    }    
+    }
 
     @Test
     public void validate_DEBIT_CARTEBANCAIRE_verificationCode() {
@@ -617,13 +614,13 @@ public class ValidatorTest {
 
         result = validator.validate(method, code, type, "123ABC", null);
         assertEquals(ValidationResult.INVALID_VERIFICATION_CODE, result.getError());
-        
+
         result = validator.validate(method, code, type, "", null);
         assertFalse(result.isError());
 
         result = validator.validate(method, code, type, null, null);
         assertFalse(result.isError());
-    }    
+    }
 
     @Test
     public void validate_DEBIT_MAESTRO_accountNumber() {
@@ -646,7 +643,7 @@ public class ValidatorTest {
 
         result = validator.validate(method, code, type, null, null);
         assertEquals(ValidationResult.MISSING_ACCOUNT_NUMBER, result.getError());
-    }    
+    }
 
     @Test
     public void validate_DEBIT_MAESTRO_verificationCode() {
@@ -663,14 +660,14 @@ public class ValidatorTest {
 
         result = validator.validate(method, code, type, "123ABC", null);
         assertEquals(ValidationResult.INVALID_VERIFICATION_CODE, result.getError());
-        
+
         result = validator.validate(method, code, type, "", null);
         assertFalse(result.isError());
 
         result = validator.validate(method, code, type, null, null);
         assertFalse(result.isError());
-    }    
-    
+    }
+
     @Test
     public void validate_DEBIT_MAESTROUK_accountNumber() {
         Validator validator = Validator.createInstance(ApplicationProvider.getApplicationContext(), R.raw.validations);
@@ -692,7 +689,7 @@ public class ValidatorTest {
 
         result = validator.validate(method, code, type, null, null);
         assertEquals(ValidationResult.MISSING_ACCOUNT_NUMBER, result.getError());
-    }    
+    }
 
     @Test
     public void validate_DEBIT_MAESTROUK_verificationCode() {
@@ -715,9 +712,9 @@ public class ValidatorTest {
 
         result = validator.validate(method, code, type, null, null);
         assertFalse(result.isError());
-    }    
+    }
 
-    
+
     @Test
     public void validate_DEBIT_POSTEPAY_accountNumber() {
         Validator validator = Validator.createInstance(ApplicationProvider.getApplicationContext(), R.raw.validations);
@@ -739,7 +736,7 @@ public class ValidatorTest {
 
         result = validator.validate(method, code, type, null, null);
         assertEquals(ValidationResult.MISSING_ACCOUNT_NUMBER, result.getError());
-    }    
+    }
 
     @Test
     public void validate_DEBIT_POSTEPAY_verificationCode() {
@@ -756,14 +753,14 @@ public class ValidatorTest {
 
         result = validator.validate(method, code, type, "123ABC", null);
         assertEquals(ValidationResult.INVALID_VERIFICATION_CODE, result.getError());
-        
+
         result = validator.validate(method, code, type, "", null);
         assertFalse(result.isError());
 
         result = validator.validate(method, code, type, null, null);
         assertFalse(result.isError());
-    }    
-    
+    }
+
     @Test
     public void validate_DEBIT_SOLO_accountNumber() {
         Validator validator = Validator.createInstance(ApplicationProvider.getApplicationContext(), R.raw.validations);
@@ -785,7 +782,7 @@ public class ValidatorTest {
 
         result = validator.validate(method, code, type, null, null);
         assertEquals(ValidationResult.MISSING_ACCOUNT_NUMBER, result.getError());
-    }        
+    }
 
     @Test
     public void validate_DEBIT_SOLO_verificationCode() {
@@ -802,15 +799,15 @@ public class ValidatorTest {
 
         result = validator.validate(method, code, type, "123ABC", null);
         assertEquals(ValidationResult.INVALID_VERIFICATION_CODE, result.getError());
-        
+
         result = validator.validate(method, code, type, "", null);
         assertFalse(result.isError());
 
         result = validator.validate(method, code, type, null, null);
         assertFalse(result.isError());
-    }        
+    }
 
-    
+
     @Test
     public void validate_HolderName() {
         Validator validator = Validator.createInstance(ApplicationProvider.getApplicationContext(), R.raw.validations);
@@ -842,7 +839,7 @@ public class ValidatorTest {
 
         result = validator.validate(method, code, type, "3", "2017");
         assertEquals(ValidationResult.INVALID_EXPIRY_DATE, result.getError());
-        
+
         result = validator.validate(method, code, type, "04", null);
         assertEquals(ValidationResult.MISSING_EXPIRY_DATE, result.getError());
 
@@ -863,13 +860,13 @@ public class ValidatorTest {
 
         result = validator.validate(method, code, type, "13", null);
         assertEquals(ValidationResult.INVALID_EXPIRY_MONTH, result.getError());
-        
+
         result = validator.validate(method, code, type, "January", null);
         assertEquals(ValidationResult.INVALID_EXPIRY_MONTH, result.getError());
-        
+
         result = validator.validate(method, code, type, "", null);
         assertEquals(ValidationResult.MISSING_EXPIRY_MONTH, result.getError());
-        
+
         result = validator.validate(method, code, type, null, null);
         assertEquals(ValidationResult.MISSING_EXPIRY_MONTH, result.getError());
 
@@ -894,7 +891,7 @@ public class ValidatorTest {
 
         result = validator.validate(method, code, type, "", null);
         assertEquals(ValidationResult.MISSING_EXPIRY_YEAR, result.getError());
-        
+
         result = validator.validate(method, code, type, null, null);
         assertEquals(ValidationResult.MISSING_EXPIRY_YEAR, result.getError());
     }
@@ -933,7 +930,7 @@ public class ValidatorTest {
 
         result = validator.validate(method, code, type, "", null);
         assertEquals(ValidationResult.MISSING_IBAN, result.getError());
-        
+
         result = validator.validate(method, code, type, null, null);
         assertEquals(ValidationResult.MISSING_IBAN, result.getError());
     }
@@ -954,7 +951,7 @@ public class ValidatorTest {
 
         result = validator.validate(method, code, type, "", null);
         assertEquals(ValidationResult.MISSING_BIC, result.getError());
-        
+
         result = validator.validate(method, code, type, null, null);
         assertEquals(ValidationResult.MISSING_BIC, result.getError());
     }

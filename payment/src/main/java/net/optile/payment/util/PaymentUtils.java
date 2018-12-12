@@ -19,12 +19,10 @@ import java.util.List;
 
 import android.content.res.Resources;
 import android.support.v4.widget.TextViewCompat;
-import android.util.Log;
 import android.widget.ImageView;
 import android.widget.TextView;
 import net.optile.payment.core.PaymentInputType;
 import net.optile.payment.model.InputElement;
-import android.content.res.Resources;
 
 /**
  * The PaymentUtils class containing helper methods

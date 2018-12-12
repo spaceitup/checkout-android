@@ -60,7 +60,7 @@ public final class AccountCard implements PaymentCard {
     public String getCode() {
         return account.getCode();
     }
-    
+
     /**
      * {@inheritDoc}
      */

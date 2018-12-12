@@ -15,10 +15,10 @@ import android.app.Activity;
 import android.content.Intent;
 import android.text.TextUtils;
 import android.util.Patterns;
+import net.optile.payment.R;
 import net.optile.payment.ui.page.PaymentPageActivity;
 import net.optile.payment.ui.theme.PaymentTheme;
 import net.optile.payment.validate.Validator;
-import net.optile.payment.R;
 
 /**
  * The PaymentUI is the controller to initialize and launch the Payment Page.

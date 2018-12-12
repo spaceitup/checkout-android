@@ -21,14 +21,14 @@ class ValidationGroup {
 
     private String method;
     private String code;
-    private List<Validation> validations; 
+    private List<Validation> validations;
 
     boolean matches(String method, String code) {
         return (this.method.equals(method)) && (this.code.equals(code));
     }
-    
+
     Validation getValidation(String type) {
-        
+
         for (Validation validation : validations) {
             if (validation.getType().equals(type)) {
                 return validation;

@@ -60,7 +60,7 @@ public final class NetworkCard implements PaymentCard {
     public String getCode() {
         return network.getCode();
     }
-    
+
     /**
      * {@inheritDoc}
      */

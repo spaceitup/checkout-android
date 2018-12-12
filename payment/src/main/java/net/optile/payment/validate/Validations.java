@@ -22,7 +22,7 @@ final class Validations {
 
     private Validations() {
     }
-    
+
     Validation get(String method, String code, String type) {
 
         if (groups == null) {

@@ -46,21 +46,21 @@ public class PaymentMethodCodes {
 
         if (type != null) {
             switch (type) {
-            case AMEX:
-            case CASTORAMA:
-            case DINERS:
-            case DISCOVER:
-            case MASTERCARD:
-            case UNIONPAY:
-            case VISA:
-            case VISA_DANKORT:
-            case VISAELECTRON:
-            case CARTEBANCAIRE:
-            case MAESTRO:
-            case MAESTROUK:
-            case POSTEPAY:
-            case SOLO:
-                return true;
+                case AMEX:
+                case CASTORAMA:
+                case DINERS:
+                case DISCOVER:
+                case MASTERCARD:
+                case UNIONPAY:
+                case VISA:
+                case VISA_DANKORT:
+                case VISAELECTRON:
+                case CARTEBANCAIRE:
+                case MAESTRO:
+                case MAESTROUK:
+                case POSTEPAY:
+                case SOLO:
+                    return true;
             }
         }
         return false;
@@ -68,20 +68,20 @@ public class PaymentMethodCodes {
 
     @Retention(RetentionPolicy.SOURCE)
     @StringDef({
-            AMEX,
-                CASTORAMA,
-                DINERS,
-                DISCOVER,
-                MASTERCARD,
-                UNIONPAY,
-                VISA,
-                VISA_DANKORT,
-                VISAELECTRON,
-                CARTEBANCAIRE,
-                MAESTRO,
-                MAESTROUK,
-                POSTEPAY,
-                SOLO
-                })
-                public @interface Definition { }
+        AMEX,
+        CASTORAMA,
+        DINERS,
+        DISCOVER,
+        MASTERCARD,
+        UNIONPAY,
+        VISA,
+        VISA_DANKORT,
+        VISAELECTRON,
+        CARTEBANCAIRE,
+        MAESTRO,
+        MAESTROUK,
+        POSTEPAY,
+        SOLO
+    })
+    public @interface Definition { }
 }

@@ -42,7 +42,7 @@ public interface PaymentCard {
      * @return code
      */
     String getCode();
-    
+
     /**
      * Get the language file of this PaymentCard
      *
