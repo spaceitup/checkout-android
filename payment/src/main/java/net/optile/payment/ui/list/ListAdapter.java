@@ -26,7 +26,7 @@ import net.optile.payment.ui.model.AccountCard;
 import net.optile.payment.ui.model.NetworkCard;
 import net.optile.payment.ui.model.PaymentCard;
 import net.optile.payment.ui.theme.PaymentTheme;
-import net.optile.payment.validate.ValidationResult;
+import net.optile.payment.validation.ValidationResult;
 
 /**
  * The ListAdapter handling the items in this RecyclerView list

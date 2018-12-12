@@ -18,7 +18,7 @@ import android.util.Patterns;
 import net.optile.payment.R;
 import net.optile.payment.ui.page.PaymentPageActivity;
 import net.optile.payment.ui.theme.PaymentTheme;
-import net.optile.payment.validate.Validator;
+import net.optile.payment.validation.Validator;
 
 /**
  * The PaymentUI is the controller to initialize and launch the Payment Page.

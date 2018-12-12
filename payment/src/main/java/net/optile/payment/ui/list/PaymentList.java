@@ -30,7 +30,7 @@ import net.optile.payment.ui.model.AccountCard;
 import net.optile.payment.ui.model.NetworkCard;
 import net.optile.payment.ui.model.PaymentSession;
 import net.optile.payment.ui.page.PaymentPageActivity;
-import net.optile.payment.validate.ValidationResult;
+import net.optile.payment.validation.ValidationResult;
 
 /**
  * The PaymentList showing available payment methods and accounts in a list

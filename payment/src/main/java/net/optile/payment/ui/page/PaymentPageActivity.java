@@ -36,8 +36,8 @@ import net.optile.payment.ui.model.PaymentSession;
 import net.optile.payment.ui.theme.PageParameters;
 import net.optile.payment.ui.widget.FormWidget;
 import net.optile.payment.util.PaymentUtils;
-import net.optile.payment.validate.ValidationResult;
-import net.optile.payment.validate.Validator;
+import net.optile.payment.validation.ValidationResult;
+import net.optile.payment.validation.Validator;
 
 /**
  * The PaymentPageActivity showing available payment methods

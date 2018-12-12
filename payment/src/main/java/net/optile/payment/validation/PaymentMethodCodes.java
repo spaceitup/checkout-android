@@ -9,7 +9,7 @@
  * has been received in full.
  */
 
-package net.optile.payment.validate;
+package net.optile.payment.validation;
 
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;

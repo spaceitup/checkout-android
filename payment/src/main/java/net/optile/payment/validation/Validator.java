@@ -9,7 +9,7 @@
  * has been received in full.
  */
 
-package net.optile.payment.validate;
+package net.optile.payment.validation;
 
 import java.io.IOException;
 import java.util.Calendar;
