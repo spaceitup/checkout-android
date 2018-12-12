@@ -49,7 +49,7 @@ public interface WidgetPresenter {
      * @param type type of the value to be validated
      * @param value1 mandatory first value to validate
      * @param value2 optional second value to validate
-     * @return ValidationResult holding the result of the validate
+     * @return ValidationResult holding the result of the validation
      */
     ValidationResult validate(String type, String value1, String value2);
 }

@@ -65,7 +65,7 @@ public class Validator {
         } catch (JsonSyntaxException e) {
             Log.wtf(TAG, e);
         }
-        throw new IllegalArgumentException("Error loading validation resource, make sure it exist.");
+        throw new IllegalArgumentException("Error loading validations resource file, make sure it exist and is valid json.");
     }
 
     /**

@@ -17,7 +17,7 @@ import java.lang.annotation.RetentionPolicy;
 import android.support.annotation.StringDef;
 
 /**
- * Class defining the PaymentMethodCodes used for validation in this Payment SDK.
+ * Class containing the PaymentMethodCodes supported for custom validation of accountNumber and verificationCodes.
  */
 public class PaymentMethodCodes {
 
