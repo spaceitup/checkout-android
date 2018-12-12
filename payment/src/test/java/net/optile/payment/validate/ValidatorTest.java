@@ -12,8 +12,10 @@
 package net.optile.payment.validate;
 
 import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.assertEquals;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -65,506 +67,895 @@ public class ValidatorTest {
     }
 
     @Test
-    public void validate_accountNumber_defaultValidation() {
-        Validator validator = Validator.createInstance(ApplicationProvider.getApplicationContext(), R.raw.validations);
-        ValidationResult result;
+    public void validate_accountNumber_missingValidation() {
+        final Validator validator = Validator.createInstance(ApplicationProvider.getApplicationContext(), R.raw.validations);
+        final String method = "method";
+        final String code = "code";
+        final String type = PaymentInputType.ACCOUNT_NUMBER;
 
-        result = validator.validate("method", "code", PaymentInputType.ACCOUNT_NUMBER, "12345", null);
+        assertNull(validator.getValidation(method, code, type));
+
+        ValidationResult result;
+        result = validator.validate(method, code, type, "12345", null);
         assertFalse(result.isError());
 
-        result = validator.validate("method", "code", PaymentInputType.ACCOUNT_NUMBER, "12345abcd", null);
-        assertTrue(result.isError());
+        result = validator.validate(method, code, type, "12345ABC", null);
+        assertEquals(ValidationResult.INVALID_ACCOUNT_NUMBER, result.getError());
         
-        result = validator.validate("method", "code", PaymentInputType.ACCOUNT_NUMBER, "", null);
-        assertTrue(result.isError());
+        result = validator.validate(method, code, type, "", null);
+        assertEquals(ValidationResult.MISSING_ACCOUNT_NUMBER, result.getError());
 
-        result = validator.validate("method", "code", PaymentInputType.ACCOUNT_NUMBER, null, null);
-        assertTrue(result.isError());
+        result = validator.validate(method, code, type, null, null);
+        assertEquals(ValidationResult.MISSING_ACCOUNT_NUMBER, result.getError());
     }
 
     @Test
-    public void validate_cardNumber_defaultValidation() {
-        Validator validator = Validator.createInstance(ApplicationProvider.getApplicationContext(), R.raw.validations);
-        ValidationResult result;
+    public void validate_cardNumber_missingValidation() {
+        final Validator validator = Validator.createInstance(ApplicationProvider.getApplicationContext(), R.raw.validations);
+        final String method = PaymentMethod.CREDIT_CARD;
+        final String code = "code";
+        final String type = PaymentInputType.ACCOUNT_NUMBER;
 
-        result = validator.validate(PaymentMethod.CREDIT_CARD, "code", PaymentInputType.ACCOUNT_NUMBER, "36699", null);
+        assertNull(validator.getValidation(method, code, type));
+
+        ValidationResult result;
+        result = validator.validate(method, code, type, "36699", null);
         assertFalse(result.isError());
 
-        result = validator.validate(PaymentMethod.CREDIT_CARD, "code", PaymentInputType.ACCOUNT_NUMBER, "12345", null);
-        assertTrue(result.isError());
+        result = validator.validate(method, code, type, "12345", null);
+        assertEquals(ValidationResult.INVALID_ACCOUNT_NUMBER, result.getError());
         
-        result = validator.validate(PaymentMethod.CREDIT_CARD, "code", PaymentInputType.ACCOUNT_NUMBER, "", null);
-        assertTrue(result.isError());
+        result = validator.validate(method, code, type, "", null);
+        assertEquals(ValidationResult.MISSING_ACCOUNT_NUMBER, result.getError());
 
-        result = validator.validate(PaymentMethod.CREDIT_CARD, "code", PaymentInputType.ACCOUNT_NUMBER, null, null);
-        assertTrue(result.isError());
+        result = validator.validate(method, code, type, null, null);
+        assertEquals(ValidationResult.MISSING_ACCOUNT_NUMBER, result.getError());
     }
     
     @Test
-    public void validate_VerificationCode_defaultValidation() {
-        Validator validator = Validator.createInstance(ApplicationProvider.getApplicationContext(), R.raw.validations);
+    public void validate_verificationCode_missingValidation() {
+        final Validator validator = Validator.createInstance(ApplicationProvider.getApplicationContext(), R.raw.validations);
+        final String method = "method";
+        final String code = "code";
+        final String type = PaymentInputType.VERIFICATION_CODE;
+
+        assertNull(validator.getValidation(method, code, type));
+
         ValidationResult result;
-        result = validator.validate("method", "code", PaymentInputType.VERIFICATION_CODE, "123456789", null);
+        result = validator.validate(method, code, type, "123456789", null);
         assertFalse(result.isError());
 
-        result = validator.validate("method", "code", PaymentInputType.VERIFICATION_CODE, "12a", null);
-        assertTrue(result.isError());
+        result = validator.validate(method, code, type, "12a", null);
+        assertEquals(ValidationResult.INVALID_VERIFICATION_CODE, result.getError());
 
-        result = validator.validate("method", "code", PaymentInputType.VERIFICATION_CODE, "", null);
+        result = validator.validate(method, code, type, "", null);
         assertFalse(result.isError());
-        
-        result = validator.validate("method", "code", PaymentInputType.VERIFICATION_CODE, null, null);
+
+        result = validator.validate(method, code, type, null, null);
         assertFalse(result.isError());
     }
 
     @Test
-    public void validate_CREDIT_AMEX_validation() {
-        Validator validator = Validator.createInstance(ApplicationProvider.getApplicationContext(), R.raw.validations);
+    public void validate_CREDIT_AMEX_accountNumber() {
+        final Validator validator = Validator.createInstance(ApplicationProvider.getApplicationContext(), R.raw.validations);
+        final String method = PaymentMethod.CREDIT_CARD;
+        final String code = PaymentMethodCodes.AMEX;
+        final String type = PaymentInputType.ACCOUNT_NUMBER;
+
+        assertNotNull(validator.getValidation(method, code, type));
+
         ValidationResult result;
-        result = validator.validate(PaymentMethod.CREDIT_CARD, PaymentMethodCodes.AMEX, PaymentInputType.ACCOUNT_NUMBER, "373051954985299", null);
+        result = validator.validate(method, code, type, "373051954985299", null);
         assertFalse(result.isError());
 
-        result = validator.validate(PaymentMethod.CREDIT_CARD, PaymentMethodCodes.AMEX, PaymentInputType.ACCOUNT_NUMBER, "36699", null);
-        assertTrue(result.isError());
+        result = validator.validate(method, code, type, "36699", null);
+        assertEquals(ValidationResult.INVALID_ACCOUNT_NUMBER, result.getError());
 
-        result = validator.validate(PaymentMethod.CREDIT_CARD, PaymentMethodCodes.AMEX, PaymentInputType.ACCOUNT_NUMBER, "", null);
-        assertTrue(result.isError());
+        result = validator.validate(method, code, type, "", null);
+        assertEquals(ValidationResult.MISSING_ACCOUNT_NUMBER, result.getError());
 
-        result = validator.validate(PaymentMethod.CREDIT_CARD, PaymentMethodCodes.AMEX, PaymentInputType.VERIFICATION_CODE, "1234", null);
-        assertFalse(result.isError());
-
-        result = validator.validate(PaymentMethod.CREDIT_CARD, PaymentMethodCodes.AMEX, PaymentInputType.VERIFICATION_CODE, "123a", null);
-        assertTrue(result.isError());
-        
-        result = validator.validate(PaymentMethod.CREDIT_CARD, PaymentMethodCodes.AMEX, PaymentInputType.VERIFICATION_CODE, "123", null);
-        assertTrue(result.isError());
-
-        result = validator.validate(PaymentMethod.CREDIT_CARD, PaymentMethodCodes.AMEX, PaymentInputType.VERIFICATION_CODE, "", null);
-        assertTrue(result.isError());
+        result = validator.validate(method, code, type, null, null);
+        assertEquals(ValidationResult.MISSING_ACCOUNT_NUMBER, result.getError());
     }
 
     @Test
-    public void validate_CREDIT_CASTORAMA_validation() {
-        Validator validator = Validator.createInstance(ApplicationProvider.getApplicationContext(), R.raw.validations);
+    public void validate_CREDIT_AMEX_verificationCode() {
+        final Validator validator = Validator.createInstance(ApplicationProvider.getApplicationContext(), R.raw.validations);
+        final String method = PaymentMethod.CREDIT_CARD;
+        final String code = PaymentMethodCodes.AMEX;
+        final String type = PaymentInputType.VERIFICATION_CODE;
+
+        assertNotNull(validator.getValidation(method, code, type));
+
         ValidationResult result;
-        result = validator.validate(PaymentMethod.CREDIT_CARD, PaymentMethodCodes.CASTORAMA, PaymentInputType.ACCOUNT_NUMBER, "4111111111111111", null);
+        result = validator.validate(method, code, type, "1234", null);
         assertFalse(result.isError());
 
-        result = validator.validate(PaymentMethod.CREDIT_CARD, PaymentMethodCodes.CASTORAMA, PaymentInputType.ACCOUNT_NUMBER, "36699", null);
-        assertTrue(result.isError());
-
-        result = validator.validate(PaymentMethod.CREDIT_CARD, PaymentMethodCodes.CASTORAMA, PaymentInputType.ACCOUNT_NUMBER, "", null);
-        assertTrue(result.isError());
+        result = validator.validate(method, code, type, "123a", null);
+        assertEquals(ValidationResult.INVALID_VERIFICATION_CODE, result.getError());
         
-        result = validator.validate(PaymentMethod.CREDIT_CARD, PaymentMethodCodes.CASTORAMA, PaymentInputType.VERIFICATION_CODE, "1234", null);
-        assertFalse(result.isError());
+        result = validator.validate(method, code, type, "123", null);
+        assertEquals(ValidationResult.INVALID_VERIFICATION_CODE, result.getError());
 
-        result = validator.validate(PaymentMethod.CREDIT_CARD, PaymentMethodCodes.CASTORAMA, PaymentInputType.VERIFICATION_CODE, "123a", null);
-        assertTrue(result.isError());
-        
-        result = validator.validate(PaymentMethod.CREDIT_CARD, PaymentMethodCodes.CASTORAMA, PaymentInputType.VERIFICATION_CODE, "123", null);
-        assertTrue(result.isError());
+        result = validator.validate(method, code, type, "", null);
+        assertEquals(ValidationResult.MISSING_VERIFICATION_CODE, result.getError());
 
-        result = validator.validate(PaymentMethod.CREDIT_CARD, PaymentMethodCodes.CASTORAMA, PaymentInputType.VERIFICATION_CODE, "", null);
-        assertTrue(result.isError());
+        result = validator.validate(method, code, type, null, null);
+        assertEquals(ValidationResult.MISSING_VERIFICATION_CODE, result.getError());
     }
 
     @Test
-    public void validate_CREDIT_DINERS_validation() {
-        Validator validator = Validator.createInstance(ApplicationProvider.getApplicationContext(), R.raw.validations);
+    public void validate_CREDIT_CASTORAMA_accountNumber() {
+        final Validator validator = Validator.createInstance(ApplicationProvider.getApplicationContext(), R.raw.validations);
+        final String method = PaymentMethod.CREDIT_CARD;
+        final String code = PaymentMethodCodes.CASTORAMA;
+        final String type = PaymentInputType.ACCOUNT_NUMBER;
+
+        assertNotNull(validator.getValidation(method, code, type));
+
         ValidationResult result;
-        result = validator.validate(PaymentMethod.CREDIT_CARD, PaymentMethodCodes.DINERS, PaymentInputType.ACCOUNT_NUMBER, "30282713214300", null);
+        result = validator.validate(method, code, type, "4111111111111111", null);
         assertFalse(result.isError());
 
-        result = validator.validate(PaymentMethod.CREDIT_CARD, PaymentMethodCodes.DINERS, PaymentInputType.ACCOUNT_NUMBER, "36699", null);
-        assertTrue(result.isError());
+        result = validator.validate(method, code, type, "36699", null);
+        assertEquals(ValidationResult.INVALID_ACCOUNT_NUMBER, result.getError());
 
-        result = validator.validate(PaymentMethod.CREDIT_CARD, PaymentMethodCodes.DINERS, PaymentInputType.ACCOUNT_NUMBER, "", null);
-        assertTrue(result.isError());
-        
-        result = validator.validate(PaymentMethod.CREDIT_CARD, PaymentMethodCodes.DINERS, PaymentInputType.VERIFICATION_CODE, "123", null);
-        assertFalse(result.isError());
+        result = validator.validate(method, code, type, "", null);
+        assertEquals(ValidationResult.MISSING_ACCOUNT_NUMBER, result.getError());
 
-        result = validator.validate(PaymentMethod.CREDIT_CARD, PaymentMethodCodes.DINERS, PaymentInputType.VERIFICATION_CODE, "12a", null);
-        assertTrue(result.isError());
-        
-        result = validator.validate(PaymentMethod.CREDIT_CARD, PaymentMethodCodes.DINERS, PaymentInputType.VERIFICATION_CODE, "1234", null);
-        assertTrue(result.isError());
-
-        result = validator.validate(PaymentMethod.CREDIT_CARD, PaymentMethodCodes.DINERS, PaymentInputType.VERIFICATION_CODE, "", null);
-        assertTrue(result.isError());
+        result = validator.validate(method, code, type, null, null);
+        assertEquals(ValidationResult.MISSING_ACCOUNT_NUMBER, result.getError());
     }
 
     @Test
-    public void validate_CREDIT_DISCOVER_validation() {
-        Validator validator = Validator.createInstance(ApplicationProvider.getApplicationContext(), R.raw.validations);
+    public void validate_CREDIT_CASTORAMA_verificationCode() {
+        final Validator validator = Validator.createInstance(ApplicationProvider.getApplicationContext(), R.raw.validations);
+        final String method = PaymentMethod.CREDIT_CARD;
+        final String code = PaymentMethodCodes.CASTORAMA;
+        final String type = PaymentInputType.VERIFICATION_CODE;
+
+        assertNotNull(validator.getValidation(method, code, type));
+
         ValidationResult result;
-        result = validator.validate(PaymentMethod.CREDIT_CARD, PaymentMethodCodes.DISCOVER, PaymentInputType.ACCOUNT_NUMBER, "6011548597185331", null);
+        result = validator.validate(method, code, type, "1234", null);
         assertFalse(result.isError());
 
-        result = validator.validate(PaymentMethod.CREDIT_CARD, PaymentMethodCodes.DISCOVER, PaymentInputType.ACCOUNT_NUMBER, "36699", null);
-        assertTrue(result.isError());
-
-        result = validator.validate(PaymentMethod.CREDIT_CARD, PaymentMethodCodes.DISCOVER, PaymentInputType.ACCOUNT_NUMBER, "", null);
-        assertTrue(result.isError());
+        result = validator.validate(method, code, type, "123a", null);
+        assertEquals(ValidationResult.INVALID_VERIFICATION_CODE, result.getError());
         
-        result = validator.validate(PaymentMethod.CREDIT_CARD, PaymentMethodCodes.DISCOVER, PaymentInputType.VERIFICATION_CODE, "123", null);
-        assertFalse(result.isError());
+        result = validator.validate(method, code, type, "123", null);
+        assertEquals(ValidationResult.INVALID_VERIFICATION_CODE, result.getError());
 
-        result = validator.validate(PaymentMethod.CREDIT_CARD, PaymentMethodCodes.DISCOVER, PaymentInputType.VERIFICATION_CODE, "12a", null);
-        assertTrue(result.isError());
-        
-        result = validator.validate(PaymentMethod.CREDIT_CARD, PaymentMethodCodes.DISCOVER, PaymentInputType.VERIFICATION_CODE, "1234", null);
-        assertTrue(result.isError());
+        result = validator.validate(method, code, type, "", null);
+        assertEquals(ValidationResult.MISSING_VERIFICATION_CODE, result.getError());
 
-        result = validator.validate(PaymentMethod.CREDIT_CARD, PaymentMethodCodes.DISCOVER, PaymentInputType.VERIFICATION_CODE, "", null);
-        assertTrue(result.isError());
+        result = validator.validate(method, code, type, null, null);
+        assertEquals(ValidationResult.MISSING_VERIFICATION_CODE, result.getError());
     }
 
+    @Test
+    public void validate_CREDIT_DINERS_accountNumber() {
+        final Validator validator = Validator.createInstance(ApplicationProvider.getApplicationContext(), R.raw.validations);
+        final String method = PaymentMethod.CREDIT_CARD;
+        final String code = PaymentMethodCodes.DINERS;
+        final String type = PaymentInputType.ACCOUNT_NUMBER;
+
+        assertNotNull(validator.getValidation(method, code, type));
+
+        ValidationResult result;
+        result = validator.validate(method, code, type, "30282713214300", null);
+        assertFalse(result.isError());
+
+        result = validator.validate(method, code, type, "36699", null);
+        assertEquals(ValidationResult.INVALID_ACCOUNT_NUMBER, result.getError());
+
+        result = validator.validate(method, code, type, "", null);
+        assertEquals(ValidationResult.MISSING_ACCOUNT_NUMBER, result.getError());
+
+        result = validator.validate(method, code, type, "", null);
+        assertEquals(ValidationResult.MISSING_ACCOUNT_NUMBER, result.getError());
+    }
+
+    @Test
+    public void validate_CREDIT_DINERS_verificationCode() {
+        final Validator validator = Validator.createInstance(ApplicationProvider.getApplicationContext(), R.raw.validations);
+        final String method = PaymentMethod.CREDIT_CARD;
+        final String code = PaymentMethodCodes.DINERS;
+        final String type = PaymentInputType.VERIFICATION_CODE;
+
+        assertNotNull(validator.getValidation(method, code, type));
+
+        ValidationResult result;
+        result = validator.validate(method, code, type, "123", null);
+        assertFalse(result.isError());
+
+        result = validator.validate(method, code, type, "12a", null);
+        assertEquals(ValidationResult.INVALID_VERIFICATION_CODE, result.getError());
+        
+        result = validator.validate(method, code, type, "1234", null);
+        assertEquals(ValidationResult.INVALID_VERIFICATION_CODE, result.getError());
+
+        result = validator.validate(method, code, type, "", null);
+        assertEquals(ValidationResult.MISSING_VERIFICATION_CODE, result.getError());
+
+        result = validator.validate(method, code, type, null, null);
+        assertEquals(ValidationResult.MISSING_VERIFICATION_CODE, result.getError());
+    }
+    
+    @Test
+    public void validate_CREDIT_DISCOVER_accountNumber() {
+        final Validator validator = Validator.createInstance(ApplicationProvider.getApplicationContext(), R.raw.validations);
+        final String method = PaymentMethod.CREDIT_CARD;
+        final String code = PaymentMethodCodes.DISCOVER;
+        final String type = PaymentInputType.ACCOUNT_NUMBER;
+
+        assertNotNull(validator.getValidation(method, code, type));
+
+        ValidationResult result;
+        result = validator.validate(method, code, type, "6011548597185331", null);
+        assertFalse(result.isError());
+
+        result = validator.validate(method, code, type, "36699", null);
+        assertEquals(ValidationResult.INVALID_ACCOUNT_NUMBER, result.getError());
+
+        result = validator.validate(method, code, type, "", null);
+        assertEquals(ValidationResult.MISSING_ACCOUNT_NUMBER, result.getError());
+
+        result = validator.validate(method, code, type, null, null);
+        assertEquals(ValidationResult.MISSING_ACCOUNT_NUMBER, result.getError());
+    }
+
+    @Test
+    public void validate_CREDIT_DISCOVER_verificationCode() {
+        final Validator validator = Validator.createInstance(ApplicationProvider.getApplicationContext(), R.raw.validations);
+        final String method = PaymentMethod.CREDIT_CARD;
+        final String code = PaymentMethodCodes.DISCOVER;
+        final String type = PaymentInputType.VERIFICATION_CODE;
+
+        assertNotNull(validator.getValidation(method, code, type));
+
+        ValidationResult result;
+        result = validator.validate(method, code, type, "123", null);
+        assertFalse(result.isError());
+
+        result = validator.validate(method, code, type, "12a", null);
+        assertEquals(ValidationResult.INVALID_VERIFICATION_CODE, result.getError());
+        
+        result = validator.validate(method, code, type, "1234", null);
+        assertEquals(ValidationResult.INVALID_VERIFICATION_CODE, result.getError());
+
+        result = validator.validate(method, code, type, "", null);
+        assertEquals(ValidationResult.MISSING_VERIFICATION_CODE, result.getError());
+
+        result = validator.validate(method, code, type, null, null);
+        assertEquals(ValidationResult.MISSING_VERIFICATION_CODE, result.getError());
+    }
+    
     @Test
     public void validate_CREDIT_MASTERCARD_validation() {
-        Validator validator = Validator.createInstance(ApplicationProvider.getApplicationContext(), R.raw.validations);
+        final Validator validator = Validator.createInstance(ApplicationProvider.getApplicationContext(), R.raw.validations);
+        final String method = PaymentMethod.CREDIT_CARD;
+        final String code = PaymentMethodCodes.MASTERCARD;
+        final String type = PaymentInputType.ACCOUNT_NUMBER;
+        
+        assertNotNull(validator.getValidation(method, code, type));
+
         ValidationResult result;
-        result = validator.validate(PaymentMethod.CREDIT_CARD, PaymentMethodCodes.MASTERCARD, PaymentInputType.ACCOUNT_NUMBER, "5290836048016633", null);
+        result = validator.validate(method, code, type, "5290836048016633", null);
         assertFalse(result.isError());
 
-        result = validator.validate(PaymentMethod.CREDIT_CARD, PaymentMethodCodes.MASTERCARD, PaymentInputType.ACCOUNT_NUMBER, "36699", null);
-        assertTrue(result.isError());
+        result = validator.validate(method, code, type, "36699", null);
+        assertEquals(ValidationResult.INVALID_ACCOUNT_NUMBER, result.getError());
 
-        result = validator.validate(PaymentMethod.CREDIT_CARD, PaymentMethodCodes.MASTERCARD, PaymentInputType.ACCOUNT_NUMBER, "", null);
-        assertTrue(result.isError());
-        
-        result = validator.validate(PaymentMethod.CREDIT_CARD, PaymentMethodCodes.MASTERCARD, PaymentInputType.VERIFICATION_CODE, "123", null);
-        assertFalse(result.isError());
+        result = validator.validate(method, code, type, "", null);
+        assertEquals(ValidationResult.MISSING_ACCOUNT_NUMBER, result.getError());
 
-        result = validator.validate(PaymentMethod.CREDIT_CARD, PaymentMethodCodes.MASTERCARD, PaymentInputType.VERIFICATION_CODE, "12a", null);
-        assertTrue(result.isError());
-        
-        result = validator.validate(PaymentMethod.CREDIT_CARD, PaymentMethodCodes.MASTERCARD, PaymentInputType.VERIFICATION_CODE, "1234", null);
-        assertTrue(result.isError());
-
-        result = validator.validate(PaymentMethod.CREDIT_CARD, PaymentMethodCodes.MASTERCARD, PaymentInputType.VERIFICATION_CODE, "", null);
-        assertTrue(result.isError());
+        result = validator.validate(method, code, type, null, null);
+        assertEquals(ValidationResult.MISSING_ACCOUNT_NUMBER, result.getError());
     }
 
     @Test
-    public void validate_CREDIT_UNIONPAY_validation() {
-        Validator validator = Validator.createInstance(ApplicationProvider.getApplicationContext(), R.raw.validations);
+    public void validate_CREDIT_MASTERCARD_verificationCode() {
+        final Validator validator = Validator.createInstance(ApplicationProvider.getApplicationContext(), R.raw.validations);
+        final String method = PaymentMethod.CREDIT_CARD;
+        final String code = PaymentMethodCodes.MASTERCARD;
+        final String type = PaymentInputType.VERIFICATION_CODE;
+        
+        assertNotNull(validator.getValidation(method, code, type));
+
         ValidationResult result;
-        result = validator.validate(PaymentMethod.CREDIT_CARD, PaymentMethodCodes.UNIONPAY, PaymentInputType.ACCOUNT_NUMBER, "62123456789000003", null);
+        result = validator.validate(method, code, type, "123", null);
         assertFalse(result.isError());
 
-        result = validator.validate(PaymentMethod.CREDIT_CARD, PaymentMethodCodes.UNIONPAY, PaymentInputType.ACCOUNT_NUMBER, "36699", null);
-        assertTrue(result.isError());
-
-        result = validator.validate(PaymentMethod.CREDIT_CARD, PaymentMethodCodes.UNIONPAY, PaymentInputType.ACCOUNT_NUMBER, "", null);
-        assertTrue(result.isError());
+        result = validator.validate(method, code, type, "12a", null);
+        assertEquals(ValidationResult.INVALID_VERIFICATION_CODE, result.getError());
         
-        result = validator.validate(PaymentMethod.CREDIT_CARD, PaymentMethodCodes.UNIONPAY, PaymentInputType.VERIFICATION_CODE, "123", null);
+        result = validator.validate(method, code, type, "1234", null);
+        assertEquals(ValidationResult.INVALID_VERIFICATION_CODE, result.getError());
+
+        result = validator.validate(method, code, type, "", null);
+        assertEquals(ValidationResult.MISSING_VERIFICATION_CODE, result.getError());
+
+        result = validator.validate(method, code, type, null, null);
+        assertEquals(ValidationResult.MISSING_VERIFICATION_CODE, result.getError());
+    }
+
+    
+    @Test
+    public void validate_CREDIT_UNIONPAY_accountNumber() {
+        final Validator validator = Validator.createInstance(ApplicationProvider.getApplicationContext(), R.raw.validations);
+        final String method = PaymentMethod.CREDIT_CARD;
+        final String code = PaymentMethodCodes.UNIONPAY;
+        final String type = PaymentInputType.ACCOUNT_NUMBER;
+
+        assertNotNull(validator.getValidation(method, code, type));
+
+        ValidationResult result;
+        result = validator.validate(method, code, type, "62123456789000003", null);
         assertFalse(result.isError());
 
-        result = validator.validate(PaymentMethod.CREDIT_CARD, PaymentMethodCodes.UNIONPAY, PaymentInputType.VERIFICATION_CODE, "12a", null);
-        assertTrue(result.isError());
-        
-        result = validator.validate(PaymentMethod.CREDIT_CARD, PaymentMethodCodes.UNIONPAY, PaymentInputType.VERIFICATION_CODE, "1234", null);
-        assertTrue(result.isError());
+        result = validator.validate(method, code, type, "36699", null);
+        assertEquals(ValidationResult.INVALID_ACCOUNT_NUMBER, result.getError());
 
-        result = validator.validate(PaymentMethod.CREDIT_CARD, PaymentMethodCodes.UNIONPAY, PaymentInputType.VERIFICATION_CODE, "", null);
-        assertTrue(result.isError());
+        result = validator.validate(method, code, type, "", null);
+        assertEquals(ValidationResult.MISSING_ACCOUNT_NUMBER, result.getError());
+
+        result = validator.validate(method, code, type, null, null);
+        assertEquals(ValidationResult.MISSING_ACCOUNT_NUMBER, result.getError());
+    }
+
+    @Test
+    public void validate_CREDIT_UNIONPAY_verificationCode() {
+        final Validator validator = Validator.createInstance(ApplicationProvider.getApplicationContext(), R.raw.validations);
+        final String method = PaymentMethod.CREDIT_CARD;
+        final String code = PaymentMethodCodes.UNIONPAY;
+        final String type = PaymentInputType.VERIFICATION_CODE;
+
+        assertNotNull(validator.getValidation(method, code, type));
+
+        ValidationResult result;
+        result = validator.validate(method, code, type, "123", null);
+        assertFalse(result.isError());
+
+        result = validator.validate(method, code, type, "12a", null);
+        assertEquals(ValidationResult.INVALID_VERIFICATION_CODE, result.getError());
+        
+        result = validator.validate(method, code, type, "1234", null);
+        assertEquals(ValidationResult.INVALID_VERIFICATION_CODE, result.getError());
+
+        result = validator.validate(method, code, type, "", null);
+        assertEquals(ValidationResult.MISSING_VERIFICATION_CODE, result.getError());
+        
+        result = validator.validate(method, code, type, null, null);
+        assertEquals(ValidationResult.MISSING_VERIFICATION_CODE, result.getError());
     }
     
     @Test
-    public void validate_CREDIT_VISA_validation() {
+    public void validate_CREDIT_VISA_accountNumber() {
         Validator validator = Validator.createInstance(ApplicationProvider.getApplicationContext(), R.raw.validations);
+        final String method = PaymentMethod.CREDIT_CARD;
+        final String code = PaymentMethodCodes.VISA;
+        final String type = PaymentInputType.ACCOUNT_NUMBER;
+
+        assertNotNull(validator.getValidation(method, code, type));
+
         ValidationResult result;
-        result = validator.validate(PaymentMethod.CREDIT_CARD, PaymentMethodCodes.VISA, PaymentInputType.ACCOUNT_NUMBER, "4556260657599841", null);
+        result = validator.validate(method, code, type, "4556260657599841", null);
         assertFalse(result.isError());
 
-        result = validator.validate(PaymentMethod.CREDIT_CARD, PaymentMethodCodes.VISA, PaymentInputType.ACCOUNT_NUMBER, "36699", null);
-        assertTrue(result.isError());
+        result = validator.validate(method, code, type, "36699", null);
+        assertEquals(ValidationResult.INVALID_ACCOUNT_NUMBER, result.getError());
 
-        result = validator.validate(PaymentMethod.CREDIT_CARD, PaymentMethodCodes.VISA, PaymentInputType.ACCOUNT_NUMBER, "", null);
-        assertTrue(result.isError());
+        result = validator.validate(method, code, type, "", null);
+        assertEquals(ValidationResult.MISSING_ACCOUNT_NUMBER, result.getError());
         
-        result = validator.validate(PaymentMethod.CREDIT_CARD, PaymentMethodCodes.VISA, PaymentInputType.VERIFICATION_CODE, "123", null);
-        assertFalse(result.isError());
-
-        result = validator.validate(PaymentMethod.CREDIT_CARD, PaymentMethodCodes.VISA, PaymentInputType.VERIFICATION_CODE, "12a", null);
-        assertTrue(result.isError());
-        
-        result = validator.validate(PaymentMethod.CREDIT_CARD, PaymentMethodCodes.VISA, PaymentInputType.VERIFICATION_CODE, "1234", null);
-        assertTrue(result.isError());
-
-        result = validator.validate(PaymentMethod.CREDIT_CARD, PaymentMethodCodes.VISA, PaymentInputType.VERIFICATION_CODE, "", null);
-        assertTrue(result.isError());
+        result = validator.validate(method, code, type, null, null);
+        assertEquals(ValidationResult.MISSING_ACCOUNT_NUMBER, result.getError());
     }
 
     @Test
-    public void validate_CREDIT_VISA_DANKORT_validation() {
+    public void validate_CREDIT_VISA_verificationCode() {
         Validator validator = Validator.createInstance(ApplicationProvider.getApplicationContext(), R.raw.validations);
+        final String method = PaymentMethod.CREDIT_CARD;
+        final String code = PaymentMethodCodes.VISA;
+        final String type = PaymentInputType.VERIFICATION_CODE;
+
+        assertNotNull(validator.getValidation(method, code, type));
+
         ValidationResult result;
-        result = validator.validate(PaymentMethod.CREDIT_CARD, PaymentMethodCodes.VISA_DANKORT, PaymentInputType.ACCOUNT_NUMBER, "4917300800000000", null);
+        result = validator.validate(method, code, type, "123", null);
         assertFalse(result.isError());
 
-        result = validator.validate(PaymentMethod.CREDIT_CARD, PaymentMethodCodes.VISA_DANKORT, PaymentInputType.ACCOUNT_NUMBER, "36699", null);
-        assertTrue(result.isError());
-
-        result = validator.validate(PaymentMethod.CREDIT_CARD, PaymentMethodCodes.VISA_DANKORT, PaymentInputType.ACCOUNT_NUMBER, "", null);
-        assertTrue(result.isError());
+        result = validator.validate(method, code, type, "12a", null);
+        assertEquals(ValidationResult.INVALID_VERIFICATION_CODE, result.getError());
         
-        result = validator.validate(PaymentMethod.CREDIT_CARD, PaymentMethodCodes.VISA_DANKORT, PaymentInputType.VERIFICATION_CODE, "123", null);
-        assertFalse(result.isError());
+        result = validator.validate(method, code, type, "1234", null);
+        assertEquals(ValidationResult.INVALID_VERIFICATION_CODE, result.getError());
 
-        result = validator.validate(PaymentMethod.CREDIT_CARD, PaymentMethodCodes.VISA_DANKORT, PaymentInputType.VERIFICATION_CODE, "12a", null);
-        assertTrue(result.isError());
-        
-        result = validator.validate(PaymentMethod.CREDIT_CARD, PaymentMethodCodes.VISA_DANKORT, PaymentInputType.VERIFICATION_CODE, "1234", null);
-        assertTrue(result.isError());
+        result = validator.validate(method, code, type, "", null);
+        assertEquals(ValidationResult.MISSING_VERIFICATION_CODE, result.getError());
 
-        result = validator.validate(PaymentMethod.CREDIT_CARD, PaymentMethodCodes.VISA_DANKORT, PaymentInputType.VERIFICATION_CODE, "", null);
-        assertTrue(result.isError());
+        result = validator.validate(method, code, type, null, null);
+        assertEquals(ValidationResult.MISSING_VERIFICATION_CODE, result.getError());
     }
 
     @Test
-    public void validate_DEBIT_VISAELECTRON_validation() {
+    public void validate_CREDIT_VISA_DANKORT_accountNumber() {
         Validator validator = Validator.createInstance(ApplicationProvider.getApplicationContext(), R.raw.validations);
+        final String method = PaymentMethod.CREDIT_CARD;
+        final String code = PaymentMethodCodes.VISA_DANKORT;
+        final String type = PaymentInputType.ACCOUNT_NUMBER;
+
+        assertNotNull(validator.getValidation(method, code, type));
+
         ValidationResult result;
-        result = validator.validate(PaymentMethod.DEBIT_CARD, PaymentMethodCodes.VISAELECTRON, PaymentInputType.ACCOUNT_NUMBER, "4917300800000000", null);
+        result = validator.validate(method, code, type, "4917300800000000", null);
         assertFalse(result.isError());
 
-        result = validator.validate(PaymentMethod.DEBIT_CARD, PaymentMethodCodes.VISAELECTRON, PaymentInputType.ACCOUNT_NUMBER, "36699", null);
-        assertTrue(result.isError());
+        result = validator.validate(method, code, type, "36699", null);
+        assertEquals(ValidationResult.INVALID_ACCOUNT_NUMBER, result.getError());
 
-        result = validator.validate(PaymentMethod.DEBIT_CARD, PaymentMethodCodes.VISAELECTRON, PaymentInputType.ACCOUNT_NUMBER, "", null);
-        assertTrue(result.isError());
+        result = validator.validate(method, code, type, "", null);
+        assertEquals(ValidationResult.MISSING_ACCOUNT_NUMBER, result.getError());
         
-        result = validator.validate(PaymentMethod.DEBIT_CARD, PaymentMethodCodes.VISAELECTRON, PaymentInputType.VERIFICATION_CODE, "123", null);
-        assertFalse(result.isError());
-
-        result = validator.validate(PaymentMethod.DEBIT_CARD, PaymentMethodCodes.VISAELECTRON, PaymentInputType.VERIFICATION_CODE, "12a", null);
-        assertTrue(result.isError());
-        
-        result = validator.validate(PaymentMethod.DEBIT_CARD, PaymentMethodCodes.VISAELECTRON, PaymentInputType.VERIFICATION_CODE, "1234", null);
-        assertTrue(result.isError());
-
-        result = validator.validate(PaymentMethod.DEBIT_CARD, PaymentMethodCodes.VISAELECTRON, PaymentInputType.VERIFICATION_CODE, "", null);
-        assertTrue(result.isError());
+        result = validator.validate(method, code, type, null, null);
+        assertEquals(ValidationResult.MISSING_ACCOUNT_NUMBER, result.getError());
     }
 
     @Test
-    public void validate_DEBIT_CARTEBANCAIRE_validation() {
+    public void validate_CREDIT_VISA_DANKORT_verificationCode() {
         Validator validator = Validator.createInstance(ApplicationProvider.getApplicationContext(), R.raw.validations);
+        final String method = PaymentMethod.CREDIT_CARD;
+        final String code = PaymentMethodCodes.VISA_DANKORT;
+        final String type = PaymentInputType.VERIFICATION_CODE;
+
+        assertNotNull(validator.getValidation(method, code, type));
+
         ValidationResult result;
-        result = validator.validate(PaymentMethod.DEBIT_CARD, PaymentMethodCodes.CARTEBANCAIRE, PaymentInputType.ACCOUNT_NUMBER, "4035501000000008", null);
+        result = validator.validate(method, code, type, "123", null);
         assertFalse(result.isError());
 
-        result = validator.validate(PaymentMethod.DEBIT_CARD, PaymentMethodCodes.CARTEBANCAIRE, PaymentInputType.ACCOUNT_NUMBER, "36699", null);
-        assertTrue(result.isError());
-
-        result = validator.validate(PaymentMethod.DEBIT_CARD, PaymentMethodCodes.CARTEBANCAIRE, PaymentInputType.ACCOUNT_NUMBER, "", null);
-        assertTrue(result.isError());
+        result = validator.validate(method, code, type, "12a", null);
+        assertEquals(ValidationResult.INVALID_VERIFICATION_CODE, result.getError());
         
-        result = validator.validate(PaymentMethod.DEBIT_CARD, PaymentMethodCodes.CARTEBANCAIRE, PaymentInputType.VERIFICATION_CODE, "123456", null);
+        result = validator.validate(method, code, type, "1234", null);
+        assertEquals(ValidationResult.INVALID_VERIFICATION_CODE, result.getError());
+
+        result = validator.validate(method, code, type, "", null);
+        assertEquals(ValidationResult.MISSING_VERIFICATION_CODE, result.getError());
+
+        result = validator.validate(method, code, type, null, null);
+        assertEquals(ValidationResult.MISSING_VERIFICATION_CODE, result.getError());
+    }
+
+    @Test
+    public void validate_DEBIT_VISAELECTRON_accountNumber() {
+        Validator validator = Validator.createInstance(ApplicationProvider.getApplicationContext(), R.raw.validations);
+        final String method = PaymentMethod.DEBIT_CARD;
+        final String code = PaymentMethodCodes.VISAELECTRON;
+        final String type = PaymentInputType.ACCOUNT_NUMBER;
+
+        assertNotNull(validator.getValidation(method, code, type));
+        assertNotNull(validator.getValidation(method, code, type));
+
+        ValidationResult result;
+        result = validator.validate(method, code, type, "4917300800000000", null);
         assertFalse(result.isError());
 
-        result = validator.validate(PaymentMethod.DEBIT_CARD, PaymentMethodCodes.CARTEBANCAIRE, PaymentInputType.VERIFICATION_CODE, "", null);
+        result = validator.validate(method, code, type, "36699", null);
+        assertEquals(ValidationResult.INVALID_ACCOUNT_NUMBER, result.getError());
+
+        result = validator.validate(method, code, type, "", null);
+        assertEquals(ValidationResult.MISSING_ACCOUNT_NUMBER, result.getError());
+
+        result = validator.validate(method, code, type, null, null);
+        assertEquals(ValidationResult.MISSING_ACCOUNT_NUMBER, result.getError());
+    }
+
+    @Test
+    public void validate_DEBIT_VISAELECTRON_verificationCode() {
+        Validator validator = Validator.createInstance(ApplicationProvider.getApplicationContext(), R.raw.validations);
+        final String method = PaymentMethod.DEBIT_CARD;
+        final String code = PaymentMethodCodes.VISAELECTRON;
+        final String type = PaymentInputType.VERIFICATION_CODE;
+
+        assertNotNull(validator.getValidation(method, code, type));
+
+        ValidationResult result;
+        result = validator.validate(method, code, type, "123", null);
+        assertFalse(result.isError());
+
+        result = validator.validate(method, code, type, "12a", null);
+        assertEquals(ValidationResult.INVALID_VERIFICATION_CODE, result.getError());
+        
+        result = validator.validate(method, code, type, "1234", null);
+        assertEquals(ValidationResult.INVALID_VERIFICATION_CODE, result.getError());
+
+        result = validator.validate(method, code, type, "", null);
+        assertEquals(ValidationResult.MISSING_VERIFICATION_CODE, result.getError());
+
+        result = validator.validate(method, code, type, null, null);
+        assertEquals(ValidationResult.MISSING_VERIFICATION_CODE, result.getError());
+    }
+    
+    @Test
+    public void validate_DEBIT_CARTEBANCAIRE_accountNumber() {
+        Validator validator = Validator.createInstance(ApplicationProvider.getApplicationContext(), R.raw.validations);
+        final String method = PaymentMethod.DEBIT_CARD;
+        final String code = PaymentMethodCodes.CARTEBANCAIRE;
+        final String type = PaymentInputType.ACCOUNT_NUMBER;
+
+        assertNotNull(validator.getValidation(method, code, type));
+
+        ValidationResult result;
+        result = validator.validate(method, code, type, "4035501000000008", null);
+        assertFalse(result.isError());
+
+        result = validator.validate(method, code, type, "36699", null);
+        assertEquals(ValidationResult.INVALID_ACCOUNT_NUMBER, result.getError());
+
+        result = validator.validate(method, code, type, "", null);
+        assertEquals(ValidationResult.MISSING_ACCOUNT_NUMBER, result.getError());
+
+        result = validator.validate(method, code, type, null, null);
+        assertEquals(ValidationResult.MISSING_ACCOUNT_NUMBER, result.getError());
+    }    
+
+    @Test
+    public void validate_DEBIT_CARTEBANCAIRE_verificationCode() {
+        Validator validator = Validator.createInstance(ApplicationProvider.getApplicationContext(), R.raw.validations);
+        final String method = PaymentMethod.DEBIT_CARD;
+        final String code = PaymentMethodCodes.CARTEBANCAIRE;
+        final String type = PaymentInputType.VERIFICATION_CODE;
+
+        assertNotNull(validator.getValidation(method, code, type));
+        assertNotNull(validator.getValidation(method, code, type));
+
+        ValidationResult result;
+        result = validator.validate(method, code, type, "123456", null);
+        assertFalse(result.isError());
+
+        result = validator.validate(method, code, type, "123ABC", null);
+        assertEquals(ValidationResult.INVALID_VERIFICATION_CODE, result.getError());
+        
+        result = validator.validate(method, code, type, "", null);
+        assertFalse(result.isError());
+
+        result = validator.validate(method, code, type, null, null);
         assertFalse(result.isError());
     }    
 
     @Test
-    public void validate_DEBIT_MAESTRO_validation() {
+    public void validate_DEBIT_MAESTRO_accountNumber() {
         Validator validator = Validator.createInstance(ApplicationProvider.getApplicationContext(), R.raw.validations);
+        final String method = PaymentMethod.DEBIT_CARD;
+        final String code = PaymentMethodCodes.MAESTRO;
+        final String type = PaymentInputType.ACCOUNT_NUMBER;
+
+        assertNotNull(validator.getValidation(method, code, type));
+
         ValidationResult result;
-        result = validator.validate(PaymentMethod.DEBIT_CARD, PaymentMethodCodes.MAESTRO, PaymentInputType.ACCOUNT_NUMBER, "6759649826438453", null);
+        result = validator.validate(method, code, type, "6759649826438453", null);
         assertFalse(result.isError());
 
-        result = validator.validate(PaymentMethod.DEBIT_CARD, PaymentMethodCodes.MAESTRO, PaymentInputType.ACCOUNT_NUMBER, "36699", null);
-        assertTrue(result.isError());
+        result = validator.validate(method, code, type, "36699", null);
+        assertEquals(ValidationResult.INVALID_ACCOUNT_NUMBER, result.getError());
 
-        result = validator.validate(PaymentMethod.DEBIT_CARD, PaymentMethodCodes.MAESTRO, PaymentInputType.ACCOUNT_NUMBER, "", null);
-        assertTrue(result.isError());
-        
-        result = validator.validate(PaymentMethod.DEBIT_CARD, PaymentMethodCodes.MAESTRO, PaymentInputType.VERIFICATION_CODE, "123456", null);
-        assertFalse(result.isError());
+        result = validator.validate(method, code, type, "", null);
+        assertEquals(ValidationResult.MISSING_ACCOUNT_NUMBER, result.getError());
 
-        result = validator.validate(PaymentMethod.DEBIT_CARD, PaymentMethodCodes.MAESTRO, PaymentInputType.VERIFICATION_CODE, "", null);
-        assertFalse(result.isError());
+        result = validator.validate(method, code, type, null, null);
+        assertEquals(ValidationResult.MISSING_ACCOUNT_NUMBER, result.getError());
     }    
 
     @Test
-    public void validate_DEBIT_MAESTROUK_validation() {
+    public void validate_DEBIT_MAESTRO_verificationCode() {
         Validator validator = Validator.createInstance(ApplicationProvider.getApplicationContext(), R.raw.validations);
+        final String method = PaymentMethod.DEBIT_CARD;
+        final String code = PaymentMethodCodes.MAESTRO;
+        final String type = PaymentInputType.VERIFICATION_CODE;
+
+        assertNotNull(validator.getValidation(method, code, type));
+
         ValidationResult result;
-        result = validator.validate(PaymentMethod.DEBIT_CARD, PaymentMethodCodes.MAESTROUK, PaymentInputType.ACCOUNT_NUMBER, "6759649826438453", null);
+        result = validator.validate(method, code, type, "123456", null);
         assertFalse(result.isError());
 
-        result = validator.validate(PaymentMethod.DEBIT_CARD, PaymentMethodCodes.MAESTROUK, PaymentInputType.ACCOUNT_NUMBER, "36699", null);
-        assertTrue(result.isError());
-
-        result = validator.validate(PaymentMethod.DEBIT_CARD, PaymentMethodCodes.MAESTROUK, PaymentInputType.ACCOUNT_NUMBER, "", null);
-        assertTrue(result.isError());
+        result = validator.validate(method, code, type, "123ABC", null);
+        assertEquals(ValidationResult.INVALID_VERIFICATION_CODE, result.getError());
         
-        result = validator.validate(PaymentMethod.DEBIT_CARD, PaymentMethodCodes.MAESTROUK, PaymentInputType.VERIFICATION_CODE, "123456", null);
+        result = validator.validate(method, code, type, "", null);
         assertFalse(result.isError());
 
-        result = validator.validate(PaymentMethod.DEBIT_CARD, PaymentMethodCodes.MAESTROUK, PaymentInputType.VERIFICATION_CODE, "", null);
+        result = validator.validate(method, code, type, null, null);
         assertFalse(result.isError());
+    }    
+    
+    @Test
+    public void validate_DEBIT_MAESTROUK_accountNumber() {
+        Validator validator = Validator.createInstance(ApplicationProvider.getApplicationContext(), R.raw.validations);
+        final String method = PaymentMethod.DEBIT_CARD;
+        final String code = PaymentMethodCodes.MAESTROUK;
+        final String type = PaymentInputType.ACCOUNT_NUMBER;
+
+        assertNotNull(validator.getValidation(method, code, type));
+
+        ValidationResult result;
+        result = validator.validate(method, code, type, "6759649826438453", null);
+        assertFalse(result.isError());
+
+        result = validator.validate(method, code, type, "36699", null);
+        assertEquals(ValidationResult.INVALID_ACCOUNT_NUMBER, result.getError());
+
+        result = validator.validate(method, code, type, "", null);
+        assertEquals(ValidationResult.MISSING_ACCOUNT_NUMBER, result.getError());
+
+        result = validator.validate(method, code, type, null, null);
+        assertEquals(ValidationResult.MISSING_ACCOUNT_NUMBER, result.getError());
     }    
 
     @Test
-    public void validate_DEBIT_POSTEPAY_validation() {
+    public void validate_DEBIT_MAESTROUK_verificationCode() {
         Validator validator = Validator.createInstance(ApplicationProvider.getApplicationContext(), R.raw.validations);
+        final String method = PaymentMethod.DEBIT_CARD;
+        final String code = PaymentMethodCodes.MAESTROUK;
+        final String type = PaymentInputType.VERIFICATION_CODE;
+
+        assertNotNull(validator.getValidation(method, code, type));
+
         ValidationResult result;
-        result = validator.validate(PaymentMethod.DEBIT_CARD, PaymentMethodCodes.POSTEPAY, PaymentInputType.ACCOUNT_NUMBER, "6759649826438453", null);
+        result = validator.validate(method, code, type, "123456", null);
         assertFalse(result.isError());
 
-        result = validator.validate(PaymentMethod.DEBIT_CARD, PaymentMethodCodes.POSTEPAY, PaymentInputType.ACCOUNT_NUMBER, "36699", null);
-        assertTrue(result.isError());
+        result = validator.validate(method, code, type, "123ABC", null);
+        assertEquals(ValidationResult.INVALID_VERIFICATION_CODE, result.getError());
 
-        result = validator.validate(PaymentMethod.DEBIT_CARD, PaymentMethodCodes.POSTEPAY, PaymentInputType.ACCOUNT_NUMBER, "", null);
-        assertTrue(result.isError());
-        
-        result = validator.validate(PaymentMethod.DEBIT_CARD, PaymentMethodCodes.POSTEPAY, PaymentInputType.VERIFICATION_CODE, "123456", null);
+        result = validator.validate(method, code, type, "", null);
         assertFalse(result.isError());
 
-        result = validator.validate(PaymentMethod.DEBIT_CARD, PaymentMethodCodes.POSTEPAY, PaymentInputType.VERIFICATION_CODE, "", null);
+        result = validator.validate(method, code, type, null, null);
         assertFalse(result.isError());
     }    
 
+    
     @Test
-    public void validate_DEBIT_SOLO_validation() {
+    public void validate_DEBIT_POSTEPAY_accountNumber() {
         Validator validator = Validator.createInstance(ApplicationProvider.getApplicationContext(), R.raw.validations);
+        final String method = PaymentMethod.DEBIT_CARD;
+        final String code = PaymentMethodCodes.POSTEPAY;
+        final String type = PaymentInputType.ACCOUNT_NUMBER;
+
+        assertNotNull(validator.getValidation(method, code, type));
+
         ValidationResult result;
-        result = validator.validate(PaymentMethod.DEBIT_CARD, PaymentMethodCodes.SOLO, PaymentInputType.ACCOUNT_NUMBER, "6759649826438453", null);
+        result = validator.validate(method, code, type, "6759649826438453", null);
         assertFalse(result.isError());
 
-        result = validator.validate(PaymentMethod.DEBIT_CARD, PaymentMethodCodes.SOLO, PaymentInputType.ACCOUNT_NUMBER, "36699", null);
-        assertTrue(result.isError());
+        result = validator.validate(method, code, type, "36699", null);
+        assertEquals(ValidationResult.INVALID_ACCOUNT_NUMBER, result.getError());
 
-        result = validator.validate(PaymentMethod.DEBIT_CARD, PaymentMethodCodes.SOLO, PaymentInputType.ACCOUNT_NUMBER, "", null);
-        assertTrue(result.isError());
+        result = validator.validate(method, code, type, "", null);
+        assertEquals(ValidationResult.MISSING_ACCOUNT_NUMBER, result.getError());
+
+        result = validator.validate(method, code, type, null, null);
+        assertEquals(ValidationResult.MISSING_ACCOUNT_NUMBER, result.getError());
+    }    
+
+    @Test
+    public void validate_DEBIT_POSTEPAY_verificationCode() {
+        Validator validator = Validator.createInstance(ApplicationProvider.getApplicationContext(), R.raw.validations);
+        final String method = PaymentMethod.DEBIT_CARD;
+        final String code = PaymentMethodCodes.POSTEPAY;
+        final String type = PaymentInputType.VERIFICATION_CODE;
+
+        assertNotNull(validator.getValidation(method, code, type));
+
+        ValidationResult result;
+        result = validator.validate(method, code, type, "123456", null);
+        assertFalse(result.isError());
+
+        result = validator.validate(method, code, type, "123ABC", null);
+        assertEquals(ValidationResult.INVALID_VERIFICATION_CODE, result.getError());
         
-        result = validator.validate(PaymentMethod.DEBIT_CARD, PaymentMethodCodes.SOLO, PaymentInputType.VERIFICATION_CODE, "123456", null);
+        result = validator.validate(method, code, type, "", null);
         assertFalse(result.isError());
 
-        result = validator.validate(PaymentMethod.DEBIT_CARD, PaymentMethodCodes.SOLO, PaymentInputType.VERIFICATION_CODE, "", null);
+        result = validator.validate(method, code, type, null, null);
+        assertFalse(result.isError());
+    }    
+    
+    @Test
+    public void validate_DEBIT_SOLO_accountNumber() {
+        Validator validator = Validator.createInstance(ApplicationProvider.getApplicationContext(), R.raw.validations);
+        final String method = PaymentMethod.DEBIT_CARD;
+        final String code = PaymentMethodCodes.SOLO;
+        final String type = PaymentInputType.ACCOUNT_NUMBER;
+
+        assertNotNull(validator.getValidation(method, code, type));
+
+        ValidationResult result;
+        result = validator.validate(method, code, type, "6759649826438453", null);
+        assertFalse(result.isError());
+
+        result = validator.validate(method, code, type, "36699", null);
+        assertEquals(ValidationResult.INVALID_ACCOUNT_NUMBER, result.getError());
+
+        result = validator.validate(method, code, type, "", null);
+        assertEquals(ValidationResult.MISSING_ACCOUNT_NUMBER, result.getError());
+
+        result = validator.validate(method, code, type, null, null);
+        assertEquals(ValidationResult.MISSING_ACCOUNT_NUMBER, result.getError());
+    }        
+
+    @Test
+    public void validate_DEBIT_SOLO_verificationCode() {
+        Validator validator = Validator.createInstance(ApplicationProvider.getApplicationContext(), R.raw.validations);
+        final String method = PaymentMethod.DEBIT_CARD;
+        final String code = PaymentMethodCodes.SOLO;
+        final String type = PaymentInputType.VERIFICATION_CODE;
+
+        assertNotNull(validator.getValidation(method, code, type));
+
+        ValidationResult result;
+        result = validator.validate(method, code, type, "123456", null);
+        assertFalse(result.isError());
+
+        result = validator.validate(method, code, type, "123ABC", null);
+        assertEquals(ValidationResult.INVALID_VERIFICATION_CODE, result.getError());
+        
+        result = validator.validate(method, code, type, "", null);
+        assertFalse(result.isError());
+
+        result = validator.validate(method, code, type, null, null);
         assertFalse(result.isError());
     }        
+
     
     @Test
     public void validate_HolderName() {
         Validator validator = Validator.createInstance(ApplicationProvider.getApplicationContext(), R.raw.validations);
+        final String method = "method";
+        final String code = "code";
+        final String type = PaymentInputType.HOLDER_NAME;
 
         ValidationResult result;
-        result = validator.validate("method", "code", PaymentInputType.HOLDER_NAME, "John Doe", null);
+        result = validator.validate(method, code, type, "John Doe", null);
         assertFalse(result.isError());
 
-        result = validator.validate("method", "code", PaymentInputType.HOLDER_NAME, "", null);
-        assertTrue(result.isError());
+        result = validator.validate(method, code, type, "", null);
+        assertEquals(ValidationResult.MISSING_HOLDER_NAME, result.getError());
 
-        result = validator.validate("method", "code", PaymentInputType.HOLDER_NAME, null, null);
-        assertTrue(result.isError());
+        result = validator.validate(method, code, type, null, null);
+        assertEquals(ValidationResult.MISSING_HOLDER_NAME, result.getError());
     }
 
     @Test
     public void validateExpiryDate() {
         Validator validator = Validator.createInstance(ApplicationProvider.getApplicationContext(), R.raw.validations);
+        final String method = "method";
+        final String code = "code";
+        final String type = PaymentInputType.EXPIRY_DATE;
 
         ValidationResult result;
-        result = validator.validate("method", "code", PaymentInputType.EXPIRY_DATE, "04", "2030");
+        result = validator.validate(method, code, type, "04", "2030");
         assertFalse(result.isError());
 
-        result = validator.validate("method", "code", PaymentInputType.EXPIRY_DATE, "04", null);
-        assertTrue(result.isError());
+        result = validator.validate(method, code, type, "3", "2017");
+        assertEquals(ValidationResult.INVALID_EXPIRY_DATE, result.getError());
+        
+        result = validator.validate(method, code, type, "04", null);
+        assertEquals(ValidationResult.MISSING_EXPIRY_DATE, result.getError());
 
-        result = validator.validate("method", "code", PaymentInputType.EXPIRY_DATE, null, "2020");
-        assertTrue(result.isError());
-
-        result = validator.validate("method", "code", PaymentInputType.EXPIRY_DATE, "03", "2017");
-        assertTrue(result.isError());
+        result = validator.validate(method, code, type, null, "2020");
+        assertEquals(ValidationResult.MISSING_EXPIRY_DATE, result.getError());
     }
 
     @Test
     public void validateExpiryMonth() {
         Validator validator = Validator.createInstance(ApplicationProvider.getApplicationContext(), R.raw.validations);
+        final String method = "method";
+        final String code = "code";
+        final String type = PaymentInputType.EXPIRY_MONTH;
 
         ValidationResult result;
-        result = validator.validate("method", "code", PaymentInputType.EXPIRY_MONTH, "01", null);
+        result = validator.validate(method, code, type, "01", null);
         assertFalse(result.isError());
 
-        result = validator.validate("method", "code", PaymentInputType.EXPIRY_MONTH, "13", null);
-        assertTrue(result.isError());
+        result = validator.validate(method, code, type, "13", null);
+        assertEquals(ValidationResult.INVALID_EXPIRY_MONTH, result.getError());
+        
+        result = validator.validate(method, code, type, "January", null);
+        assertEquals(ValidationResult.INVALID_EXPIRY_MONTH, result.getError());
+        
+        result = validator.validate(method, code, type, "", null);
+        assertEquals(ValidationResult.MISSING_EXPIRY_MONTH, result.getError());
+        
+        result = validator.validate(method, code, type, null, null);
+        assertEquals(ValidationResult.MISSING_EXPIRY_MONTH, result.getError());
 
-        result = validator.validate("method", "code", PaymentInputType.EXPIRY_MONTH, "January", null);
-        assertTrue(result.isError());
-
-        result = validator.validate("method", "code", PaymentInputType.EXPIRY_MONTH, null, null);
-        assertTrue(result.isError());
     }
 
     @Test
     public void validateExpiryYear() {
         Validator validator = Validator.createInstance(ApplicationProvider.getApplicationContext(), R.raw.validations);
+        final String method = "method";
+        final String code = "code";
+        final String type = PaymentInputType.EXPIRY_YEAR;
 
         ValidationResult result;
-        result = validator.validate("method", "code", PaymentInputType.EXPIRY_YEAR, "2018", null);
+        result = validator.validate(method, code, type, "2018", null);
         assertFalse(result.isError());
 
-        result = validator.validate("method", "code", PaymentInputType.EXPIRY_MONTH, "18", null);
-        assertTrue(result.isError());
+        result = validator.validate(method, code, type, "18", null);
+        assertEquals(ValidationResult.INVALID_EXPIRY_YEAR, result.getError());
 
-        result = validator.validate("method", "code", PaymentInputType.EXPIRY_MONTH, "abc", null);
-        assertTrue(result.isError());
+        result = validator.validate(method, code, type, "abc", null);
+        assertEquals(ValidationResult.INVALID_EXPIRY_YEAR, result.getError());
 
-        result = validator.validate("method", "code", PaymentInputType.EXPIRY_MONTH, null, null);
-        assertTrue(result.isError());
+        result = validator.validate(method, code, type, "", null);
+        assertEquals(ValidationResult.MISSING_EXPIRY_YEAR, result.getError());
+        
+        result = validator.validate(method, code, type, null, null);
+        assertEquals(ValidationResult.MISSING_EXPIRY_YEAR, result.getError());
     }
 
     @Test
     public void validateBankCode() {
         Validator validator = Validator.createInstance(ApplicationProvider.getApplicationContext(), R.raw.validations);
+        final String method = "method";
+        final String code = "code";
+        final String type = PaymentInputType.BANK_CODE;
+
         ValidationResult result;
-        result = validator.validate("method", "code", PaymentInputType.BANK_CODE, "abcd", null);
+        result = validator.validate(method, code, type, "abcd", null);
         assertFalse(result.isError());
 
-        result = validator.validate("method", "code", PaymentInputType.BANK_CODE, "", null);
-        assertTrue(result.isError());
+        result = validator.validate(method, code, type, "", null);
+        assertEquals(ValidationResult.MISSING_BANK_CODE, result.getError());
 
-        result = validator.validate("method", "code", PaymentInputType.BANK_CODE, null, null);
-        assertTrue(result.isError());
+        result = validator.validate(method, code, type, null, null);
+        assertEquals(ValidationResult.MISSING_BANK_CODE, result.getError());
     }
 
     @Test
     public void validateIban() {
         Validator validator = Validator.createInstance(ApplicationProvider.getApplicationContext(), R.raw.validations);
+        final String method = "method";
+        final String code = "code";
+        final String type = PaymentInputType.IBAN;
+
         ValidationResult result;
-        result = validator.validate("method", "code", PaymentInputType.IBAN, "AT022050302101023600", null);
+        result = validator.validate(method, code, type, "AT022050302101023600", null);
         assertFalse(result.isError());
 
-        result = validator.validate("method", "code", PaymentInputType.IBAN, "ABCD", null);
-        assertTrue(result.isError());
+        result = validator.validate(method, code, type, "ABCD", null);
+        assertEquals(ValidationResult.INVALID_IBAN, result.getError());
 
-        result = validator.validate("method", "code", PaymentInputType.IBAN, "", null);
-        assertTrue(result.isError());
-
-        result = validator.validate("method", "code", PaymentInputType.IBAN, null, null);
-        assertTrue(result.isError());
+        result = validator.validate(method, code, type, "", null);
+        assertEquals(ValidationResult.MISSING_IBAN, result.getError());
+        
+        result = validator.validate(method, code, type, null, null);
+        assertEquals(ValidationResult.MISSING_IBAN, result.getError());
     }
 
     @Test
     public void validateBic() {
         Validator validator = Validator.createInstance(ApplicationProvider.getApplicationContext(), R.raw.validations);
+        final String method = "method";
+        final String code = "code";
+        final String type = PaymentInputType.BIC;
+
         ValidationResult result;
-        result = validator.validate("method", "code", PaymentInputType.BIC, "AABSDE31XXX", null);
+        result = validator.validate(method, code, type, "AABSDE31XXX", null);
         assertFalse(result.isError());
 
-        result = validator.validate("method", "code", PaymentInputType.BIC, "ABCD", null);
-        assertTrue(result.isError());
+        result = validator.validate(method, code, type, "ABCD", null);
+        assertEquals(ValidationResult.INVALID_BIC, result.getError());
 
-        result = validator.validate("method", "code", PaymentInputType.BIC, "", null);
-        assertTrue(result.isError());
-
-        result = validator.validate("method", "code", PaymentInputType.BIC, null, null);
-        assertTrue(result.isError());
+        result = validator.validate(method, code, type, "", null);
+        assertEquals(ValidationResult.MISSING_BIC, result.getError());
+        
+        result = validator.validate(method, code, type, null, null);
+        assertEquals(ValidationResult.MISSING_BIC, result.getError());
     }
 }

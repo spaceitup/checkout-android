@@ -12,7 +12,7 @@
 package net.optile.payment.validate;
 
 /**
- * Class holding the validate regex for the PaymentInputType
+ * Model class holding the validation Regex for the PaymentInputType
  */
 public class Validation {
 

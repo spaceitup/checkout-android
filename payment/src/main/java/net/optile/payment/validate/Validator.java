@@ -67,6 +67,18 @@ public class Validator {
         }
         throw new IllegalArgumentException("Error loading validation resource, make sure it exist.");
     }
+
+    /** 
+     * Get the validation for the given method, code and type.
+     * 
+     * @param method Payment method like CREDIT_CARD
+     * @param code Payment code like VISA
+     * @param type payment input type like "number"
+     * @return Validation or null if not found 
+     */
+    public Validation getValidation(String method, String code, String type) {
+        return validations != null ? validations.get(method, code, type) : null;
+    }
     
     /**
      * Validate the given input values defined by its type

@@ -15,7 +15,7 @@ import java.util.List;
 
 /**
  * Model class holding the different validations per PaymentMethod.
- * This class is identified by the method and code of the PaymentMethod.
+ * This class is identified by the method and code of a PaymentMethod.
  */
 class ValidationGroup {
 
