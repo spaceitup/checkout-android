@@ -12,7 +12,7 @@
 package net.optile.payment.validation;
 
 /**
- * Class holding the result of the validate
+ * Class holding the result of the validation
  */
 public class ValidationResult {
 

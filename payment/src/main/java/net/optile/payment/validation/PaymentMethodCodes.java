@@ -17,7 +17,8 @@ import java.lang.annotation.RetentionPolicy;
 import android.support.annotation.StringDef;
 
 /**
- * Class containing the PaymentMethodCodes supported for custom validation of accountNumber and verificationCodes.
+ * Class containing PaymentMethodCodes for which the accountNumber and verificationCodes are custom validated.
+ * Custom validation settings are defined in the R.raw.validations file.
  */
 public class PaymentMethodCodes {
 
