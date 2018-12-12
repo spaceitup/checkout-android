@@ -30,7 +30,7 @@ import rx.schedulers.Schedulers;
 
 /**
  * CheckoutPresenter responsible for communicating with the
- * Payment SDK
+ * Payment SDK and informing the CheckoutView to show content to the user.
  */
 final class CheckoutPresenter {
 
@@ -98,9 +98,17 @@ final class CheckoutPresenter {
     }
 
     /**
-     * Start the payment session
+     * REMIND, this code must NOT be used in production apps. 
+     * Mobile apps using the Android Payment SDK should not create PaymentSessions themselves. 
+     * Creating PaymentSessions must only be performed by the backend of the merchant.
      *
-     * @param context The context needed to obtain system resources
+     * In order to inject the authorization value in this example app, a System Environment variable must be set.
+     * The build.gradle file will add this environment variable automatically into the strings.xml file during compilation.
+     * Add the following entry in your .bash_profile.
+     * 
+     * export PAYMENT_AUTHORIZATION='Basic ...Authorization Base64 value...'
+     *
+     * @param context needed to obtain string values from the strings.xml resources file
      */
     void createPaymentSession(final Context context) {
 
@@ -133,14 +141,6 @@ final class CheckoutPresenter {
             });
     }
 
-    /**
-     * REMIND, this code must be removed for production apps. Mobile apps using the Android Payment SDK should not create
-     * PaymentSessions by themselves. Creating PaymentSessions must be performed by the backend of the merchant.
-     *
-     * @param url containing the address to the Payment API
-     * @param authorization authorization header value
-     * @param listData list request data for creating a payment session
-     */
     private String asyncCreatePaymentSession(String url, String authorization, String listData) throws CheckoutException {
         ListConnection conn = new ListConnection();
         try {

@@ -1,5 +1,5 @@
 {
-    "transactionId": "tr102",
+    "transactionId": "tr200",
     "integration": "DISPLAY_NATIVE",
     "presetFirst": "false",
     "country": "DE",
@@ -13,7 +13,7 @@
     "payment": {
         "amount": 9.99,
         "currency": "EUR",
-        "reference": "Shop 101/20-03-2016"
+        "reference": "Shop optile/03-12-2018"
     },
     "style": {
         "hostedVersion": "v2",

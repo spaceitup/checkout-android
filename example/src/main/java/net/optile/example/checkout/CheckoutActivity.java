@@ -28,7 +28,9 @@ import net.optile.payment.ui.dialog.MessageDialogFragment;
 import net.optile.payment.ui.theme.PaymentTheme;
 
 /**
- * Activity for performing a checkout payment
+ * This is the main Activity of this Checkout example app. 
+ * There are two buttons visible, one button is used to launch the Android PaymentPage with the default optile theme,
+ * and one with a custom theme defined in this example app.
  */
 public final class CheckoutActivity extends AppCompatActivity implements CheckoutView {
 
@@ -39,7 +41,7 @@ public final class CheckoutActivity extends AppCompatActivity implements Checkou
     private boolean setCustomTheme;
 
     /**
-     * Create an Intent to launch this activity
+     * Create an Intent to launch this checkout activity
      *
      * @param context the context
      * @return the newly created intent
@@ -178,5 +180,4 @@ public final class CheckoutActivity extends AppCompatActivity implements Checkou
         this.setCustomTheme = true;
         presenter.createPaymentSession(this);
     }
-
 }
