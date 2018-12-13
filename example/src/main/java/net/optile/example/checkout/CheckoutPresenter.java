@@ -11,6 +11,7 @@
 
 package net.optile.example.checkout;
 
+import java.io.IOException;
 import java.net.URL;
 import java.util.Map;
 import java.util.concurrent.Callable;

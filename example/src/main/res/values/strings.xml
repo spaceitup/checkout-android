@@ -7,4 +7,6 @@
     <string name="dialog_error_title">Checkout Error</string>
     <string name="dialog_error_message">A Checkout error occurred: %1$s</string>
     <string name="dialog_error_button">Close</string>
+    <string name="dialog_error_list">Error loading list data for creating the PaymentSession</string>    
+
 </resources>

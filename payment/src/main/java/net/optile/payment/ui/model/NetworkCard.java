@@ -57,6 +57,14 @@ public final class NetworkCard implements PaymentCard {
      * {@inheritDoc}
      */
     @Override
+    public String getCode() {
+        return network.getCode();
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
     public LanguageFile getLang() {
         return network.getLang();
     }

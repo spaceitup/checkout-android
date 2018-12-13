@@ -97,7 +97,7 @@ public final class WidgetParameters {
     public int getSelectLabelStyle() {
         return selectLabelStyle;
     }
-    
+
     public int getInputTypeIcon(String inputType) {
 
         if (iconMapping.containsKey(inputType)) {
@@ -169,7 +169,7 @@ public final class WidgetParameters {
             this.selectLabelStyle = selectLabelStyle;
             return this;
         }
-        
+
         public Builder putInputTypeIcon(String inputType, int iconRes) {
             iconMapping.put(inputType, iconRes);
             return this;
