@@ -1,5 +1,4 @@
 <resources>
-    <string name="url">https://api.integration.oscato.com</string>
     <string name="app_name">PaymentExample</string>
     <string name="button_default">Default Theme</string>
     <string name="button_custom">Custom Theme</string>

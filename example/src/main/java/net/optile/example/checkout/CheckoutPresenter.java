@@ -53,7 +53,6 @@ final class CheckoutPresenter {
      * open the PaymentPage using the PaymentUI class.
      */
     void startPayment() {
-
         String listUrl = ""; // load the list url here
         view.openPaymentPage(listUrl);
     }
