@@ -14,7 +14,7 @@ package net.optile.payment.testapp;
 /**
  * The interface Checkout view.
  */
-interface CheckoutView {
+interface TestAppView {
 
     /**
      * Open the PaymentPage for the provided listUrl

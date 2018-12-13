@@ -11,7 +11,6 @@
 
 package net.optile.payment.testapp;
 
-import net.optile.example.R;
 import net.optile.payment.ui.theme.DialogParameters;
 import net.optile.payment.ui.theme.PageParameters;
 import net.optile.payment.ui.theme.PaymentTheme;
@@ -20,7 +19,7 @@ import net.optile.payment.ui.theme.WidgetParameters;
 /**
  * Class used to create a custom PaymentTheme for skinning the Android SDK Payment page
  */
-final class CheckoutTheme {
+final class TestAppTheme {
 
     /**
      * Construct a new PaymentTheme with the custom dark skin for the Android SDK payment page

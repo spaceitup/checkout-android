@@ -11,13 +11,13 @@
 
 package net.optile.payment.testapp;
 
+import java.io.IOException;
 import java.net.URL;
 import java.util.Map;
 import java.util.concurrent.Callable;
 
 import android.content.Context;
 import android.util.Log;
-import net.optile.example.R;
 import net.optile.payment.core.PaymentException;
 import net.optile.payment.model.ListResult;
 import net.optile.payment.network.ListConnection;
@@ -29,23 +29,23 @@ import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 
 /**
- * CheckoutPresenter responsible for communicating with the
- * Payment SDK and informing the CheckoutView to show content to the user.
+ * TestAppPresenter responsible for communicating with the
+ * Payment SDK and informing the TestAppView to show content to the user.
  */
-final class CheckoutPresenter {
+final class TestAppPresenter {
 
     private static String TAG = "payment_CheckoutPresenter";
 
-    private CheckoutView view;
+    private TestAppView view;
 
     private Subscription subscription;
 
     /**
-     * Construct a new CheckoutPresenter
+     * Construct a new TestAppPresenter
      *
      * @param view the view
      */
-    CheckoutPresenter(final CheckoutView view) {
+    TestAppPresenter(final TestAppView view) {
         this.view = view;
     }
 
@@ -66,7 +66,7 @@ final class CheckoutPresenter {
      *
      * @param result the result received from the SDK
      */
-    void handleCheckoutResult(CheckoutResult result) {
+    void handleCheckoutResult(TestAppResult result) {
 
         if (result.success) {
             view.showPaymentSuccess();
@@ -115,45 +115,49 @@ final class CheckoutPresenter {
         if (isCreatePaymentSessionActive()) {
             return;
         }
-        final String url = context.getString(R.string.url);
-        final String auth = context.getString(R.string.payment_authorization);
-        final String listData = PaymentUtils.readRawResource(context.getResources(), R.raw.list);
+        try {
+            final String url = context.getString(R.string.url);
+            final String auth = context.getString(R.string.payment_authorization);
+            final String listData = PaymentUtils.readRawResource(context.getResources(), R.raw.list);
 
-        final Single<String> single = Single.fromCallable(new Callable<String>() {
-            @Override
-            public String call() throws CheckoutException {
-                return asyncCreatePaymentSession(url, auth, listData);
+            final Single<String> single = Single.fromCallable(new Callable<String>() {
+                    @Override
+                    public String call() throws TestAppException {
+                        return asyncCreatePaymentSession(url, auth, listData);
 
-            }
-        });
-        this.subscription = single.subscribeOn(Schedulers.io())
-            .observeOn(AndroidSchedulers.mainThread())
-            .subscribe(new SingleSubscriber<String>() {
-                @Override
-                public void onSuccess(String listUrl) {
-                    callbackPaymentSessionSuccess(listUrl);
-                }
-
-                @Override
-                public void onError(Throwable error) {
-                    callbackPaymentSessionError(error);
-                }
-            });
+                    }
+                });
+            this.subscription = single.subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new SingleSubscriber<String>() {
+                        @Override
+                        public void onSuccess(String listUrl) {
+                            callbackPaymentSessionSuccess(listUrl);
+                        }
+                        
+                        @Override
+                        public void onError(Throwable error) {
+                            callbackPaymentSessionError(error);
+                        }
+                    });
+        } catch (IOException e) {
+            view.showPaymentError(context.getString(R.string.dialog_error_list));
+        }
     }
 
-    private String asyncCreatePaymentSession(String url, String authorization, String listData) throws CheckoutException {
+    private String asyncCreatePaymentSession(String url, String authorization, String listData) throws TestAppException {
         ListConnection conn = new ListConnection();
         try {
             ListResult result = conn.createPaymentSession(url, authorization, listData);
             URL selfUrl = getSelfUrl(result.getLinks());
             if (selfUrl == null) {
-                throw new CheckoutException("Error creating payment session, missing self url");
+                throw new TestAppException("Error creating payment session, missing self url");
             }
             return selfUrl.toString();
         } catch (PaymentException e) {
             Log.i(TAG, e.error.toString());
             Log.wtf(TAG, e);
-            throw new CheckoutException("Error creating payment session", e);
+            throw new TestAppException("Error creating payment session", e);
         }
     }
 

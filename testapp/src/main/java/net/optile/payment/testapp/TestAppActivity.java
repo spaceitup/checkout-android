@@ -21,10 +21,25 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.Button;
-import net.optile.example.R;
 import net.optile.payment.ui.PaymentResult;
 import net.optile.payment.ui.PaymentUI;
 import net.optile.payment.ui.dialog.MessageDialogFragment;
+import net.optile.payment.ui.theme.PaymentTheme;
+import android.text.TextUtils;
+import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.Context;
+import android.content.DialogInterface;
+import android.content.Intent;
+import android.os.Bundle;
+import android.os.Handler;
+import android.support.design.widget.Snackbar;
+import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
+import android.view.View;
+import android.widget.Button;
+import net.optile.payment.ui.PaymentResult;
+import net.optile.payment.ui.PaymentUI;
 import net.optile.payment.ui.theme.PaymentTheme;
 
 /**
@@ -32,12 +47,12 @@ import net.optile.payment.ui.theme.PaymentTheme;
  * There are two buttons visible, one button is used to launch the Android PaymentPage with the default optile theme,
  * and one with a custom theme defined in this example app.
  */
-public final class CheckoutActivity extends AppCompatActivity implements CheckoutView {
+public final class TestAppActivity extends AppCompatActivity implements TestAppView {
 
     private static int PAYMENT_REQUEST_CODE = 1;
 
-    private CheckoutPresenter presenter;
-    private CheckoutResult checkoutResult;
+    private TestAppPresenter presenter;
+    private TestAppResult testAppResult;
     private boolean setCustomTheme;
 
     /**
@@ -47,7 +62,7 @@ public final class CheckoutActivity extends AppCompatActivity implements Checkou
      * @return the newly created intent
      */
     public static Intent createStartIntent(final Context context) {
-        return new Intent(context, CheckoutActivity.class);
+        return new Intent(context, TestAppActivity.class);
     }
 
     /**
@@ -72,7 +87,7 @@ public final class CheckoutActivity extends AppCompatActivity implements Checkou
                 openCustomThemePage();
             }
         });
-        this.presenter = new CheckoutPresenter(this);
+        this.presenter = new TestAppPresenter(this);
     }
 
     /**
@@ -91,9 +106,9 @@ public final class CheckoutActivity extends AppCompatActivity implements Checkou
     public void onResume() {
         super.onResume();
 
-        if (checkoutResult != null) {
-            presenter.handleCheckoutResult(checkoutResult);
-            this.checkoutResult = null;
+        if (testAppResult != null) {
+            presenter.handleCheckoutResult(testAppResult);
+            this.testAppResult = null;
         }
     }
 
@@ -117,11 +132,16 @@ public final class CheckoutActivity extends AppCompatActivity implements Checkou
      */
     @Override
     public void showPaymentError(String message) {
-        MessageDialogFragment dialog = new MessageDialogFragment();
-        dialog.setTitle(getString(R.string.dialog_error_title));
-        dialog.setMessage(String.format(getString(R.string.dialog_error_message), message));
-        dialog.setNeutralButton(getString(R.string.dialog_error_button));
-        dialog.show(getSupportFragmentManager(), "checkout_dialog");
+        AlertDialog alertDialog = new AlertDialog.Builder(this).create();
+        alertDialog.setTitle(R.string.dialog_error_title);
+        alertDialog.setMessage(String.format(getString(R.string.dialog_error_message), message));
+        alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, getString(R.string.dialog_error_button),
+            new DialogInterface.OnClickListener() {
+                public void onClick(DialogInterface dialog, int which) {
+                    dialog.dismiss();
+                }
+            });
+        alertDialog.show();
     }
 
     /**
@@ -144,7 +164,7 @@ public final class CheckoutActivity extends AppCompatActivity implements Checkou
         if (resultCode == Activity.RESULT_OK) {
             success = true;
         }
-        this.checkoutResult = new CheckoutResult(success, result);
+        this.testAppResult = new TestAppResult(success, result);
     }
 
     /**
@@ -157,7 +177,7 @@ public final class CheckoutActivity extends AppCompatActivity implements Checkou
 
         PaymentTheme theme;
         if (setCustomTheme) {
-            theme = CheckoutTheme.createCustomTheme();
+            theme = TestAppTheme.createCustomTheme();
         } else {
             theme = PaymentTheme.createDefault();
         }

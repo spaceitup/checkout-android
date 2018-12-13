@@ -10,7 +10,7 @@
         android:supportsRtl="true">
 
         <activity
-            android:name=".CheckoutActivity"
+            android:name=".TestAppActivity"
             android:theme="@style/AppTheme">
 
             <intent-filter>

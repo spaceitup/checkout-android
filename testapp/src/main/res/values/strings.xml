@@ -1,10 +1,11 @@
 <resources>
     <string name="url">https://api.integration.oscato.com</string>
-    <string name="app_name">PaymentExample</string>
+    <string name="app_name">TestApp</string>
     <string name="button_default">Default Theme</string>
     <string name="button_custom">Custom Theme</string>
     <string name="payment_success">Great, you have made a successful charge with optile Payment SDK</string>
     <string name="dialog_error_title">Checkout Error</string>
     <string name="dialog_error_message">A Checkout error occurred: %1$s</string>
     <string name="dialog_error_button">Close</string>
+    <string name="dialog_error_list">Error loading list data for creating the PaymentSession</string>
 </resources>

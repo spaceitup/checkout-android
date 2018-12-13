@@ -14,9 +14,9 @@ package net.optile.payment.testapp;
 import net.optile.payment.ui.PaymentResult;
 
 /**
- * Class for holding the CheckoutResult data
+ * Class for holding the TestAppResult data
  */
-class CheckoutResult {
+class TestAppResult {
 
     /** Indicating if the checkout was successful */
     public boolean success;
@@ -25,12 +25,12 @@ class CheckoutResult {
     public PaymentResult paymentResult;
 
     /**
-     * Construct a new CheckoutResult
+     * Construct a new TestAppResult
      *
      * @param success indicating the payment was successful or failed
      * @param paymentResult optional result containing PaymentResult details
      */
-    public CheckoutResult(boolean success, PaymentResult paymentResult) {
+    public TestAppResult(boolean success, PaymentResult paymentResult) {
         this.success = success;
         this.paymentResult = paymentResult;
     }

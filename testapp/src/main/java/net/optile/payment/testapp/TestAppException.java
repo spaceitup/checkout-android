@@ -12,16 +12,16 @@
 package net.optile.payment.testapp;
 
 /**
- * General CheckoutException
+ * General TestAppException
  */
-class CheckoutException extends Exception {
+class TestAppException extends Exception {
 
     /**
      * {@inheritDoc}
      *
      * @param detailMessage the detail message
      */
-    public CheckoutException(final String detailMessage) {
+    public TestAppException(final String detailMessage) {
         super(detailMessage);
     }
 
@@ -31,7 +31,7 @@ class CheckoutException extends Exception {
      * @param detailMessage the detail message
      * @param cause the cause
      */
-    public CheckoutException(final String detailMessage, final Throwable cause) {
+    public TestAppException(final String detailMessage, final Throwable cause) {
         super(detailMessage, cause);
     }
 }

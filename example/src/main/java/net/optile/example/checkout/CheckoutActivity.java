@@ -11,6 +11,7 @@
 
 package net.optile.example.checkout;
 
+import android.text.TextUtils;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
@@ -81,7 +82,6 @@ public final class CheckoutActivity extends AppCompatActivity implements Checkou
     @Override
     public void onPause() {
         super.onPause();
-        this.presenter.onStop();
     }
 
     /**
@@ -157,6 +157,11 @@ public final class CheckoutActivity extends AppCompatActivity implements Checkou
      */
     @Override
     public void openPaymentPage(String listUrl) {
+
+        if (TextUtils.isEmpty(listUrl)) {
+            showPaymentError(getString(R.string.dialog_error_listurl_empty));
+            return;
+        }
         PaymentUI paymentUI = PaymentUI.getInstance();
         paymentUI.setListUrl(listUrl);
 
@@ -178,11 +183,11 @@ public final class CheckoutActivity extends AppCompatActivity implements Checkou
 
     private void openDefaultThemePage() {
         this.setCustomTheme = false;
-        presenter.createPaymentSession(this);
+        presenter.startPayment();
     }
 
     private void openCustomThemePage() {
         this.setCustomTheme = true;
-        presenter.createPaymentSession(this);
+        presenter.startPayment();
     }
 }

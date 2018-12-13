@@ -28,7 +28,7 @@ import net.optile.payment.util.PaymentUtils;
  * Once a new list URL has been loaded from the Merchant backend the optile PaymentPage can be opened.
  */
 final class CheckoutPresenter {
-
+    
     private static String TAG = "pay_CheckoutPresenter";
 
     private CheckoutView view;
@@ -40,13 +40,6 @@ final class CheckoutPresenter {
      */
     CheckoutPresenter(final CheckoutView view) {
         this.view = view;
-    }
-
-    /**
-     * Notify the presenter that it should be stopped.
-     * Check if there are any pending requests and close these
-     */
-    public void onStop() {
     }
 
     /**
@@ -69,7 +62,8 @@ final class CheckoutPresenter {
      * Load here the list URL from the Merchant backend and once loaded, instruct the CheckoutView to 
      * open the PaymentPage using the PaymentUI class.
      */
-    void initiatePayment() {
+    void startPayment() {
+
         String listUrl = ""; // load the list url here
         view.openPaymentPage(listUrl);
     }
