@@ -9,7 +9,7 @@
  * has been received in full.
  */
 
-package net.optile.example.checkout;
+package net.optile.payment.testapp;
 
 /**
  * General CheckoutException

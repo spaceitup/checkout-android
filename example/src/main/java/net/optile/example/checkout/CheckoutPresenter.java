@@ -17,28 +17,20 @@ import java.util.concurrent.Callable;
 
 import android.content.Context;
 import android.util.Log;
-import net.optile.example.R;
 import net.optile.payment.core.PaymentException;
 import net.optile.payment.model.ListResult;
 import net.optile.payment.network.ListConnection;
 import net.optile.payment.util.PaymentUtils;
-import rx.Single;
-import rx.SingleSubscriber;
-import rx.Subscription;
-import rx.android.schedulers.AndroidSchedulers;
-import rx.schedulers.Schedulers;
 
 /**
- * CheckoutPresenter responsible for communicating with the
- * Payment SDK and informing the CheckoutView to show content to the user.
+ * CheckoutPresenter responsible for communicating with the Merchant Backend to obtain a new list URL.
+ * Once a new list URL has been loaded from the Merchant backend the optile PaymentPage can be opened.
  */
 final class CheckoutPresenter {
 
-    private static String TAG = "payment_CheckoutPresenter";
+    private static String TAG = "pay_CheckoutPresenter";
 
     private CheckoutView view;
-
-    private Subscription subscription;
 
     /**
      * Construct a new CheckoutPresenter
@@ -51,14 +43,9 @@ final class CheckoutPresenter {
 
     /**
      * Notify the presenter that it should be stopped.
-     * Check if there are any pending subscriptions and unsubscribe if needed
+     * Check if there are any pending requests and close these
      */
     public void onStop() {
-
-        if (subscription != null) {
-            subscription.unsubscribe();
-            subscription = null;
-        }
     }
 
     /**
@@ -77,87 +64,12 @@ final class CheckoutPresenter {
         }
     }
 
-    /**
-     * Check if the presenter is creating a new payment session.
-     *
-     * @return true when creating a payment session, false otherwise
+    /** 
+     * Load here the list URL from the Merchant backend and once loaded, instruct the CheckoutView to 
+     * open the PaymentPage using the PaymentUI class.
      */
-    private boolean isCreatePaymentSessionActive() {
-        return subscription != null && !subscription.isUnsubscribed();
-    }
-
-    private void callbackPaymentSessionSuccess(String listUrl) {
-        this.subscription = null;
+    void initiatePayment() {
+        String listUrl = ""; // load the list url here
         view.openPaymentPage(listUrl);
-    }
-
-    private void callbackPaymentSessionError(Throwable error) {
-        this.subscription = null;
-        view.showPaymentError(error.toString());
-        Log.wtf(TAG, error);
-    }
-
-    /**
-     * REMIND, this code must NOT be used in production apps. 
-     * Mobile apps using the Android Payment SDK should not create PaymentSessions themselves. 
-     * Creating PaymentSessions must only be performed by the backend of the merchant.
-     *
-     * In order to inject the authorization value in this example app, a System Environment variable must be set.
-     * The build.gradle file will add this environment variable automatically into the strings.xml file during compilation.
-     * Add the following entry in your .bash_profile.
-     * 
-     * export PAYMENT_AUTHORIZATION='Basic ...Authorization Base64 value...'
-     *
-     * @param context needed to obtain string values from the strings.xml resources file
-     */
-    void createPaymentSession(final Context context) {
-
-        if (isCreatePaymentSessionActive()) {
-            return;
-        }
-        final String url = context.getString(R.string.url);
-        final String auth = context.getString(R.string.payment_authorization);
-        final String listData = PaymentUtils.readRawResource(context.getResources(), R.raw.list);
-
-        final Single<String> single = Single.fromCallable(new Callable<String>() {
-            @Override
-            public String call() throws CheckoutException {
-                return asyncCreatePaymentSession(url, auth, listData);
-
-            }
-        });
-        this.subscription = single.subscribeOn(Schedulers.io())
-            .observeOn(AndroidSchedulers.mainThread())
-            .subscribe(new SingleSubscriber<String>() {
-                @Override
-                public void onSuccess(String listUrl) {
-                    callbackPaymentSessionSuccess(listUrl);
-                }
-
-                @Override
-                public void onError(Throwable error) {
-                    callbackPaymentSessionError(error);
-                }
-            });
-    }
-
-    private String asyncCreatePaymentSession(String url, String authorization, String listData) throws CheckoutException {
-        ListConnection conn = new ListConnection();
-        try {
-            ListResult result = conn.createPaymentSession(url, authorization, listData);
-            URL selfUrl = getSelfUrl(result.getLinks());
-            if (selfUrl == null) {
-                throw new CheckoutException("Error creating payment session, missing self url");
-            }
-            return selfUrl.toString();
-        } catch (PaymentException e) {
-            Log.i(TAG, e.error.toString());
-            Log.wtf(TAG, e);
-            throw new CheckoutException("Error creating payment session", e);
-        }
-    }
-
-    private URL getSelfUrl(Map<String, URL> links) {
-        return links != null ? links.get("self") : null;
     }
 }

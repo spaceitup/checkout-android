@@ -9,8 +9,9 @@
  * has been received in full.
  */
 
-package net.optile.example.checkout;
+package net.optile.payment.testapp;
 
+import net.optile.example.R;
 import net.optile.payment.ui.theme.DialogParameters;
 import net.optile.payment.ui.theme.PageParameters;
 import net.optile.payment.ui.theme.PaymentTheme;

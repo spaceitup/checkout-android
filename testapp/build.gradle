@@ -11,7 +11,7 @@ android {
     buildToolsVersion '28.0.3'
 
     defaultConfig {
-        applicationId "net.optile.example.checkout"
+        applicationId "net.optile.payment.testapp"
         minSdkVersion rootProject.minSdkVersion
         targetSdkVersion rootProject.targetSdkVersion
         versionCode rootProject.versionCode

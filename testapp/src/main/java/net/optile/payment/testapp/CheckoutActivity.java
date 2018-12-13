@@ -9,7 +9,7 @@
  * has been received in full.
  */
 
-package net.optile.example.checkout;
+package net.optile.payment.testapp;
 
 import android.app.Activity;
 import android.content.Context;
@@ -21,6 +21,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.Button;
+import net.optile.example.R;
 import net.optile.payment.ui.PaymentResult;
 import net.optile.payment.ui.PaymentUI;
 import net.optile.payment.ui.dialog.MessageDialogFragment;
