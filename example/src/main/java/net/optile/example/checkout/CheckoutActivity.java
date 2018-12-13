@@ -21,15 +21,17 @@ import android.os.Handler;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
-import net.optile.example.R;
 import net.optile.payment.ui.PaymentResult;
 import net.optile.payment.ui.PaymentUI;
 import net.optile.payment.ui.theme.PaymentTheme;
 
 /**
- * Activity for performing a checkout payment
+ * This is the main Activity of this Checkout example app.
+ * There are two buttons visible, one button is used to launch the Android PaymentPage with the default optile theme,
+ * and one with a custom theme defined in this example app.
  */
 public final class CheckoutActivity extends AppCompatActivity implements CheckoutView {
 
@@ -40,7 +42,7 @@ public final class CheckoutActivity extends AppCompatActivity implements Checkou
     private boolean setCustomTheme;
 
     /**
-     * Create an Intent to launch this activity
+     * Create an Intent to launch this checkout activity
      *
      * @param context the context
      * @return the newly created intent
@@ -80,7 +82,6 @@ public final class CheckoutActivity extends AppCompatActivity implements Checkou
     @Override
     public void onPause() {
         super.onPause();
-        this.presenter.onStop();
     }
 
     /**
@@ -156,6 +157,11 @@ public final class CheckoutActivity extends AppCompatActivity implements Checkou
      */
     @Override
     public void openPaymentPage(String listUrl) {
+
+        if (TextUtils.isEmpty(listUrl)) {
+            showPaymentError(getString(R.string.dialog_error_listurl_empty));
+            return;
+        }
         PaymentUI paymentUI = PaymentUI.getInstance();
         paymentUI.setListUrl(listUrl);
 
@@ -177,12 +183,11 @@ public final class CheckoutActivity extends AppCompatActivity implements Checkou
 
     private void openDefaultThemePage() {
         this.setCustomTheme = false;
-        presenter.createPaymentSession(this);
+        presenter.startPayment();
     }
 
     private void openCustomThemePage() {
         this.setCustomTheme = true;
-        presenter.createPaymentSession(this);
+        presenter.startPayment();
     }
-
 }

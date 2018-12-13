@@ -11,7 +11,6 @@
 
 package net.optile.example.checkout;
 
-import net.optile.example.R;
 import net.optile.payment.ui.theme.DialogParameters;
 import net.optile.payment.ui.theme.PageParameters;
 import net.optile.payment.ui.theme.PaymentTheme;

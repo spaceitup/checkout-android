@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-          package="net.optile.example">
+          package="net.optile.example.checkout">
 
     <application
         android:allowBackup="true"
@@ -10,7 +10,7 @@
         android:supportsRtl="true">
 
         <activity
-            android:name=".checkout.CheckoutActivity"
+            android:name=".CheckoutActivity"
             android:theme="@style/AppTheme">
 
             <intent-filter>

@@ -11,14 +11,12 @@ android {
     buildToolsVersion '28.0.3'
 
     defaultConfig {
-        applicationId "net.optile.example"
+        applicationId "net.optile.example.checkout"
         minSdkVersion rootProject.minSdkVersion
         targetSdkVersion rootProject.targetSdkVersion
         versionCode rootProject.versionCode
         versionName rootProject.versionName
-
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
-        resValue "string", "payment_authorization", "$System.env.PAYMENT_AUTHORIZATION"
     }
 
     buildTypes {
@@ -37,9 +35,6 @@ dependencies {
     implementation "com.android.support:appcompat-v7:${rootProject.supportLibVersion}"
     implementation "com.android.support:design:${rootProject.supportLibVersion}"
     implementation "com.android.support.constraint:constraint-layout:${rootProject.supportConstraintLayoutVersion}"
-
-    implementation "io.reactivex:rxjava:${rootProject.rxjavaVersion}"
-    implementation "io.reactivex:rxandroid:${rootProject.rxandroidVersion}"
 
     implementation project(":payment")
 
