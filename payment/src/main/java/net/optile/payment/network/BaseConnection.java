@@ -20,8 +20,11 @@ import java.io.OutputStream;
 import java.net.CookieHandler;
 import java.net.CookieManager;
 import java.net.HttpURLConnection;
-import javax.net.ssl.HttpsURLConnection;
 import java.net.URL;
+import java.security.KeyManagementException;
+import java.security.NoSuchAlgorithmException;
+
+import javax.net.ssl.HttpsURLConnection;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -33,17 +36,6 @@ import android.util.Log;
 import net.optile.payment.core.PaymentError;
 import net.optile.payment.core.PaymentException;
 import net.optile.payment.model.ErrorInfo;
-
-import java.io.IOException;
-import java.net.InetAddress;
-import java.net.Socket;
-import java.net.UnknownHostException;
-import java.security.KeyManagementException;
-import java.security.NoSuchAlgorithmException;
-
-import javax.net.ssl.SSLContext;
-import javax.net.ssl.SSLSocket;
-import javax.net.ssl.SSLSocketFactory;
 
 /**
  * The base class for all Payment API implementations
@@ -69,7 +61,7 @@ abstract class BaseConnection {
     private static volatile String userAgent;
 
     private static volatile TLSSocketFactory socketFactory;
-    
+
     /**
      * For now we will use Gson to parse json content
      * This will be changed at a later stage as no external
@@ -88,10 +80,10 @@ abstract class BaseConnection {
         this.gson = new GsonBuilder().create();
     }
 
-    /** 
+    /**
      * Get the cached TLSSocketFactory
-     * 
-     * @return the factory or null if it could not be created 
+     *
+     * @return the factory or null if it could not be created
      */
     private static TLSSocketFactory getTLSSocketFactory() {
         if (socketFactory != null) {
@@ -112,7 +104,17 @@ abstract class BaseConnection {
         return socketFactory;
     }
 
-        
+    private void setTLSSocketFactory(final HttpURLConnection conn) {
+        TLSSocketFactory socketFactory = getTLSSocketFactory();
+
+        if (socketFactory == null) {
+            return;
+        }
+        if (conn instanceof HttpsURLConnection) {
+            ((HttpsURLConnection) conn).setSSLSocketFactory(socketFactory);
+        }
+    }
+
     /**
      * Get the user agent to be send with each request
      *
@@ -318,17 +320,6 @@ abstract class BaseConnection {
         conn.setRequestProperty(HEADER_USER_AGENT, getUserAgent());
     }
 
-    private void setTLSSocketFactory(final HttpURLConnection conn) {
-        TLSSocketFactory socketFactory = getTLSSocketFactory();
-
-        if (socketFactory == null) {
-            return;
-        }
-        if (conn instanceof HttpsURLConnection) {
-            ((HttpsURLConnection)conn).setSSLSocketFactory(socketFactory);
-        }
-    }
-    
     /**
      * Read all content as a String from the buffered reader
      *

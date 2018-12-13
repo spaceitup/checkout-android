@@ -30,7 +30,7 @@ public class TLSSocketFactory extends SSLSocketFactory {
     public String[] getSupportedCipherSuites() {
         return internalSSLSocketFactory.getSupportedCipherSuites();
     }
-    
+
     @Override
     public Socket createSocket() throws IOException {
         return enableTLSOnSocket(internalSSLSocketFactory.createSocket());
@@ -62,8 +62,8 @@ public class TLSSocketFactory extends SSLSocketFactory {
     }
 
     private Socket enableTLSOnSocket(Socket socket) {
-        if(socket != null && (socket instanceof SSLSocket)) {
-            ((SSLSocket)socket).setEnabledProtocols(new String[] {"TLSv1.2"});
+        if (socket != null && (socket instanceof SSLSocket)) {
+            ((SSLSocket) socket).setEnabledProtocols(new String[] { "TLSv1.2" });
         }
         return socket;
     }

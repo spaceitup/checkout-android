@@ -165,12 +165,12 @@ public final class ListConnection extends BaseConnection {
             conn = createGetConnection(url);
 
             try (InputStream in = conn.getInputStream();
-                 InputStreamReader ir = new InputStreamReader(in)) {
+                InputStreamReader ir = new InputStreamReader(in)) {
                 file.getProperties().load(ir);
-            } 
+            }
             return file;
         } catch (IOException e) {
-            throw createPaymentException(source, CONN_ERROR, e);            
+            throw createPaymentException(source, CONN_ERROR, e);
         } finally {
             close(conn);
         }
