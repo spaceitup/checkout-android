@@ -87,13 +87,13 @@ final class NetworkCardViewHolder extends PaymentCardViewHolder {
         widget = WidgetInflater.inflateRegisterWidget(PaymentInputType.ALLOW_RECURRENCE, formLayout, theme);
         addWidget(widget);
     }
-    
+
     private void applyTheme(PaymentTheme theme) {
         PageParameters params = theme.getPageParameters();
         PaymentUtils.setTextAppearance(title, params.getNetworkCardTitleStyle());
         PaymentUtils.setImageBackground(logo, params.getPaymentLogoBackground());
     }
-    
+
     private void bindRegistrationWidget(PaymentNetwork network) {
         RegisterWidget widget = (RegisterWidget) getFormWidget(PaymentInputType.AUTO_REGISTRATION);
         widget.setRegistrationType(network.getRegistration());

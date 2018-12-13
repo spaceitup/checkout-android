@@ -27,7 +27,6 @@ import android.widget.TextView;
 import net.optile.payment.R;
 import net.optile.payment.ui.PaymentUI;
 import net.optile.payment.ui.theme.DialogParameters;
-import net.optile.payment.ui.theme.PaymentTheme;
 import net.optile.payment.util.PaymentUtils;
 
 /**

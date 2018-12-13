@@ -16,7 +16,7 @@ package net.optile.payment.validation;
  */
 public class ValidationResult {
 
-    /** The validation error codes */
+    /** The validate error codes */
     public final static String INVALID_ACCOUNT_NUMBER = "INVALID_ACCOUNT_NUMBER";
     public final static String MISSING_ACCOUNT_NUMBER = "MISSING_ACCOUNT_NUMBER";
 

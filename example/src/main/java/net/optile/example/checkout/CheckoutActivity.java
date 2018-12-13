@@ -12,7 +12,9 @@
 package net.optile.example.checkout;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
@@ -24,7 +26,6 @@ import android.widget.Button;
 import net.optile.example.R;
 import net.optile.payment.ui.PaymentResult;
 import net.optile.payment.ui.PaymentUI;
-import net.optile.payment.ui.dialog.MessageDialogFragment;
 import net.optile.payment.ui.theme.PaymentTheme;
 
 /**
@@ -115,11 +116,16 @@ public final class CheckoutActivity extends AppCompatActivity implements Checkou
      */
     @Override
     public void showPaymentError(String message) {
-        MessageDialogFragment dialog = new MessageDialogFragment();
-        dialog.setTitle(getString(R.string.dialog_error_title));
-        dialog.setMessage(String.format(getString(R.string.dialog_error_message), message));
-        dialog.setNeutralButton(getString(R.string.dialog_error_button));
-        dialog.show(getSupportFragmentManager(), "checkout_dialog");
+        AlertDialog alertDialog = new AlertDialog.Builder(this).create();
+        alertDialog.setTitle(R.string.dialog_error_title);
+        alertDialog.setMessage(String.format(getString(R.string.dialog_error_message), message));
+        alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, getString(R.string.dialog_error_button),
+            new DialogInterface.OnClickListener() {
+                public void onClick(DialogInterface dialog, int which) {
+                    dialog.dismiss();
+                }
+            });
+        alertDialog.show();
     }
 
     /**

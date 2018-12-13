@@ -267,7 +267,7 @@ public final class PaymentPageActivity extends AppCompatActivity implements Paym
 
     public ValidationResult validate(PaymentCard card, String type, String value1, String value2) {
         Validator validator = PaymentUI.getInstance().getValidator();
-        ValidationResult result = validator.validate(card.getPaymentMethod(), type, value1, value2);
+        ValidationResult result = validator.validate(card.getPaymentMethod(), card.getCode(), type, value1, value2);
 
         if (!result.isError()) {
             return result;
