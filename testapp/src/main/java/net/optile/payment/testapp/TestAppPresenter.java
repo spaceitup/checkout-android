@@ -98,14 +98,14 @@ final class TestAppPresenter {
     }
 
     /**
-     * REMIND, this code must NOT be used in production apps. 
-     * Mobile apps using the Android Payment SDK should not create PaymentSessions themselves. 
+     * REMIND, this code must NOT be used in production apps.
+     * Mobile apps using the Android Payment SDK should not create PaymentSessions themselves.
      * Creating PaymentSessions must only be performed by the backend of the merchant.
      *
      * In order to inject the authorization value in this example app, a System Environment variable must be set.
      * The build.gradle file will add this environment variable automatically into the strings.xml file during compilation.
      * Add the following entry in your .bash_profile.
-     * 
+     *
      * export PAYMENT_AUTHORIZATION='Basic ...Authorization Base64 value...'
      *
      * @param context needed to obtain string values from the strings.xml resources file
@@ -121,25 +121,25 @@ final class TestAppPresenter {
             final String listData = PaymentUtils.readRawResource(context.getResources(), R.raw.list);
 
             final Single<String> single = Single.fromCallable(new Callable<String>() {
-                    @Override
-                    public String call() throws TestAppException {
-                        return asyncCreatePaymentSession(url, auth, listData);
+                @Override
+                public String call() throws TestAppException {
+                    return asyncCreatePaymentSession(url, auth, listData);
 
-                    }
-                });
+                }
+            });
             this.subscription = single.subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new SingleSubscriber<String>() {
-                        @Override
-                        public void onSuccess(String listUrl) {
-                            callbackPaymentSessionSuccess(listUrl);
-                        }
-                        
-                        @Override
-                        public void onError(Throwable error) {
-                            callbackPaymentSessionError(error);
-                        }
-                    });
+                    @Override
+                    public void onSuccess(String listUrl) {
+                        callbackPaymentSessionSuccess(listUrl);
+                    }
+
+                    @Override
+                    public void onError(Throwable error) {
+                        callbackPaymentSessionError(error);
+                    }
+                });
         } catch (IOException e) {
             view.showPaymentError(context.getString(R.string.dialog_error_list));
         }
