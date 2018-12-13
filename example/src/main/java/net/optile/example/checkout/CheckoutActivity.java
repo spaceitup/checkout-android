@@ -11,7 +11,6 @@
 
 package net.optile.example.checkout;
 
-import android.text.TextUtils;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
@@ -22,6 +21,7 @@ import android.os.Handler;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
 import net.optile.payment.ui.PaymentResult;
@@ -29,7 +29,7 @@ import net.optile.payment.ui.PaymentUI;
 import net.optile.payment.ui.theme.PaymentTheme;
 
 /**
- * This is the main Activity of this Checkout example app. 
+ * This is the main Activity of this Checkout example app.
  * There are two buttons visible, one button is used to launch the Android PaymentPage with the default optile theme,
  * and one with a custom theme defined in this example app.
  */

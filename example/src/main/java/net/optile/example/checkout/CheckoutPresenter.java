@@ -11,24 +11,14 @@
 
 package net.optile.example.checkout;
 
-import java.io.IOException;
-import java.net.URL;
-import java.util.Map;
-import java.util.concurrent.Callable;
-
-import android.content.Context;
 import android.util.Log;
-import net.optile.payment.core.PaymentException;
-import net.optile.payment.model.ListResult;
-import net.optile.payment.network.ListConnection;
-import net.optile.payment.util.PaymentUtils;
 
 /**
  * CheckoutPresenter responsible for communicating with the Merchant Backend to obtain a new list URL.
  * Once a new list URL has been loaded from the Merchant backend the optile PaymentPage can be opened.
  */
 final class CheckoutPresenter {
-    
+
     private static String TAG = "pay_CheckoutPresenter";
 
     private CheckoutView view;
@@ -58,8 +48,8 @@ final class CheckoutPresenter {
         }
     }
 
-    /** 
-     * Load here the list URL from the Merchant backend and once loaded, instruct the CheckoutView to 
+    /**
+     * Load here the list URL from the Merchant backend and once loaded, instruct the CheckoutView to
      * open the PaymentPage using the PaymentUI class.
      */
     void startPayment() {
