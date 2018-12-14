@@ -26,9 +26,8 @@
 
         <Button
             android:id="@+id/button_default"
-            android:theme="@style/DefaultThemeButton"
-            android:textAppearance="@style/CustomText.Medium.Bold"
-            android:stateListAnimator="@null"
+            style="@style/AppButton"
+            android:backgroundTint="@color/colorPrimary"            
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/button_default"
@@ -36,9 +35,8 @@
 
         <Button
             android:id="@+id/button_custom"
-            android:theme="@style/CustomThemeButton"
-            android:textAppearance="@style/CustomText.Medium.Bold"
-            android:stateListAnimator="@null"
+            style="@style/AppButton"
+            android:backgroundTint="@color/custom_button"            
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/button_custom"

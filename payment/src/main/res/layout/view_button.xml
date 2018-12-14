@@ -3,9 +3,10 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/button"
     android:stateListAnimator="@null"
+    android:foreground="?attr/selectableItemBackgroundBorderless"
     android:paddingLeft="@dimen/pmborder_large"
     android:paddingRight="@dimen/pmborder_large"
-    android:paddingTop="@dimen/pmborder_medium"
-    android:paddingBottom="@dimen/pmborder_medium"
+    android:paddingTop="@dimen/pmborder_small"
+    android:paddingBottom="@dimen/pmborder_small"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"/>
