@@ -48,6 +48,7 @@
     </style>
 
     <style name="PaymentThemeButton" parent="Widget.AppCompat.Button.Borderless">
+        <item name="android:foreground">?attr/selectableItemBackgroundBorderless</item>
         <item name="android:textAllCaps">false</item>
     </style>
 
