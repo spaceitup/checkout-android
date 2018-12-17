@@ -35,7 +35,7 @@ public final class ButtonWidget extends FormWidget {
     public ButtonWidget(String name, View rootView, PaymentTheme theme) {
         super(name, rootView, theme);
         button = rootView.findViewById(R.id.button);
-        WidgetParameters  params = theme.getWidgetParameters();
+        WidgetParameters params = theme.getWidgetParameters();
         PaymentUtils.setTextAppearance(button, params.getButtonLabelStyle());
 
         int resId = params.getButtonBackground();

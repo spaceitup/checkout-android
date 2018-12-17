@@ -88,7 +88,7 @@ public final class WidgetParameters {
     public int getButtonBackground() {
         return buttonBackground;
     }
-    
+
     public int getCheckBoxTheme() {
         return checkBoxTheme;
     }
@@ -162,7 +162,7 @@ public final class WidgetParameters {
             this.buttonBackground = buttonBackground;
             return this;
         }
-        
+
         public Builder setCheckBoxTheme(int checkBoxTheme) {
             this.checkBoxTheme = checkBoxTheme;
             return this;
