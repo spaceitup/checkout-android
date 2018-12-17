@@ -39,7 +39,6 @@ public final class CheckoutActivity extends AppCompatActivity implements Checkou
 
     private CheckoutPresenter presenter;
     private CheckoutResult checkoutResult;
-    private boolean setCustomTheme;
 
     /**
      * Create an Intent to launch this checkout activity
@@ -61,16 +60,10 @@ public final class CheckoutActivity extends AppCompatActivity implements Checkou
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        Button button = findViewById(R.id.button_default);
+        Button button = findViewById(R.id.button_checkout);
         button.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                openDefaultThemePage();
-            }
-        });
-        button = findViewById(R.id.button_custom);
-        button.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-                openCustomThemePage();
+                presenter.startPayment();
             }
         });
         this.presenter = new CheckoutPresenter(this);
@@ -165,12 +158,15 @@ public final class CheckoutActivity extends AppCompatActivity implements Checkou
         PaymentUI paymentUI = PaymentUI.getInstance();
         paymentUI.setListUrl(listUrl);
 
-        PaymentTheme theme;
-        if (setCustomTheme) {
-            theme = CheckoutTheme.createCustomTheme();
-        } else {
-            theme = PaymentTheme.createDefault();
-        }
+        // The default optile theme
+        PaymentTheme theme = PaymentTheme.createDefault();
+        
+        // The empty theme
+        //PaymentTheme theme = PaymentTheme.createBuilder().build();
+        
+        // The custom dark checkout theme
+        //PaymentTheme theme = CheckoutTheme.createCustomTheme();
+
         paymentUI.setPaymentTheme(theme);
         paymentUI.showPaymentPage(this, PAYMENT_REQUEST_CODE);
     }
@@ -179,15 +175,5 @@ public final class CheckoutActivity extends AppCompatActivity implements Checkou
         Snackbar snackbar = Snackbar.make(findViewById(R.id.layout_activity),
             getString(resId), Snackbar.LENGTH_LONG);
         snackbar.show();
-    }
-
-    private void openDefaultThemePage() {
-        this.setCustomTheme = false;
-        presenter.startPayment();
-    }
-
-    private void openCustomThemePage() {
-        this.setCustomTheme = true;
-        presenter.startPayment();
     }
 }

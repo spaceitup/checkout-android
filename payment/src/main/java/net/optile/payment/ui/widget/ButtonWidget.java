@@ -38,6 +38,10 @@ public final class ButtonWidget extends FormWidget {
         WidgetParameters params = theme.getWidgetParameters();
         PaymentUtils.setTextAppearance(button, params.getButtonLabelStyle());
 
+        int resId = params.getButtonBackground();
+        if (resId != 0) {
+            button.setBackgroundResource(params.getButtonBackground());
+        }
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

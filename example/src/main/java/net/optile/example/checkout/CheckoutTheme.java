@@ -36,7 +36,7 @@ final class CheckoutTheme {
             setNetworkCardTitleStyle(R.style.CustomText_Medium).
             setAccountCardTitleStyle(R.style.CustomText_Medium_Bold).
             setAccountCardSubtitleStyle(R.style.CustomText_Small).
-            setPaymentLogoBackground(R.drawable.logo_background).
+            setPaymentLogoBackground(R.drawable.custom_logobackground).
             build();
         builder.setPageParameters(pageParams);
 
@@ -44,6 +44,7 @@ final class CheckoutTheme {
             setTextInputTheme(R.style.CustomThemeTextInput).
             setButtonTheme(R.style.CustomThemeButton).
             setButtonLabelStyle(R.style.CustomText_Medium_Bold).
+            setButtonBackground(R.drawable.custom_buttonbackground).
             setCheckBoxTheme(R.style.CustomThemeCheckBox).
             setCheckBoxLabelCheckedStyle(R.style.CustomText_Medium).
             setCheckBoxLabelUncheckedStyle(R.style.CustomText_Medium_Middle).
