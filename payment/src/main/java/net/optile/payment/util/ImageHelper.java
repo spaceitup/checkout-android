@@ -89,7 +89,7 @@ public final class ImageHelper {
 
             @Override
             public void onError(Throwable cause) {
-                Log.wtf(TAG, cause);
+                Log.w(TAG, cause);
                 // we ignore image loading failures
             }
         });
@@ -111,7 +111,7 @@ public final class ImageHelper {
         try {
             view.setImageBitmap(bitmap);
         } catch (Exception e) {
-            Log.wtf(TAG, e);
+            Log.w(TAG, e);
             // we ignore image loading failures
         }
     }

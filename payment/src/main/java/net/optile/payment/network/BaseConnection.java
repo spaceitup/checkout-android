@@ -94,9 +94,9 @@ abstract class BaseConnection {
                 try {
                     socketFactory = new TLSSocketFactory();
                 } catch (KeyManagementException e) {
-                    Log.wtf("pay_BaseConnection", e);
+                    Log.w("pay_BaseConnection", e);
                 } catch (NoSuchAlgorithmException e) {
-                    Log.wtf("pay_BaseConnection", e);
+                    Log.w("pay_BaseConnection", e);
                 }
             }
         }
@@ -274,7 +274,7 @@ abstract class BaseConnection {
         } catch (IOException | JsonParseException e) {
             // Ignore the exceptions since the ErrorInfo is an optional field
             // and it is more important to not loose the status error code
-            Log.wtf(source, e);
+            Log.w(source, e);
         }
         final PaymentError error = new PaymentError(source, errorType, statusCode, data, info);
         return new PaymentException(error, source);
