@@ -89,7 +89,7 @@ public final class ImageHelper {
 
             @Override
             public void onError(Throwable cause) {
-                Log.wtf(TAG, e);
+                Log.wtf(TAG, cause);
                 // we ignore image loading failures
             }
         });
