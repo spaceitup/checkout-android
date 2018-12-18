@@ -40,7 +40,7 @@ public final class ButtonWidget extends FormWidget {
 
         int resId = params.getButtonBackground();
         if (resId != 0) {
-            button.setBackgroundResource(params.getButtonBackground());
+            button.setBackgroundResource(resId);
         }
         button.setOnClickListener(new View.OnClickListener() {
             @Override
