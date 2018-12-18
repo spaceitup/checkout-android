@@ -27,6 +27,7 @@ public final class WidgetParameters {
     private final int textInputTheme;
     private final int buttonTheme;
     private final int buttonLabelStyle;
+    private final int buttonBackground;
     private final int checkBoxTheme;
     private final int checkBoxLabelCheckedStyle;
     private final int checkBoxLabelUncheckedStyle;
@@ -40,6 +41,7 @@ public final class WidgetParameters {
         this.textInputTheme = builder.textInputTheme;
         this.buttonTheme = builder.buttonTheme;
         this.buttonLabelStyle = builder.buttonLabelStyle;
+        this.buttonBackground = builder.buttonBackground;
         this.checkBoxTheme = builder.checkBoxTheme;
         this.checkBoxLabelCheckedStyle = builder.checkBoxLabelCheckedStyle;
         this.checkBoxLabelUncheckedStyle = builder.checkBoxLabelUncheckedStyle;
@@ -58,6 +60,7 @@ public final class WidgetParameters {
             setTextInputTheme(R.style.PaymentThemeTextInput).
             setButtonTheme(R.style.PaymentThemeButton).
             setButtonLabelStyle(R.style.PaymentText_Medium_Bold_Light).
+            setButtonBackground(R.drawable.button_background).
             setCheckBoxTheme(R.style.PaymentThemeCheckBox).
             setCheckBoxLabelCheckedStyle(R.style.PaymentText_Medium).
             setCheckBoxLabelUncheckedStyle(R.style.PaymentText_Medium_Hint).
@@ -80,6 +83,10 @@ public final class WidgetParameters {
 
     public int getButtonLabelStyle() {
         return buttonLabelStyle;
+    }
+
+    public int getButtonBackground() {
+        return buttonBackground;
     }
 
     public int getCheckBoxTheme() {
@@ -122,6 +129,7 @@ public final class WidgetParameters {
         int textInputTheme;
         int buttonTheme;
         int buttonLabelStyle;
+        int buttonBackground;
         int checkBoxTheme;
         int checkBoxLabelCheckedStyle;
         int checkBoxLabelUncheckedStyle;
@@ -147,6 +155,11 @@ public final class WidgetParameters {
 
         public Builder setButtonLabelStyle(int buttonLabelStyle) {
             this.buttonLabelStyle = buttonLabelStyle;
+            return this;
+        }
+
+        public Builder setButtonBackground(int buttonBackground) {
+            this.buttonBackground = buttonBackground;
             return this;
         }
 
