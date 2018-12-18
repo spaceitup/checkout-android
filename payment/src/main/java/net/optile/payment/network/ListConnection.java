@@ -160,12 +160,19 @@ public final class ListConnection extends BaseConnection {
         if (url == null) {
             throw new IllegalArgumentException(source + " - url cannot be null");
         }
-        try (InputStream in = url.openStream();
-            InputStreamReader ir = new InputStreamReader(in)) {
-            file.getProperties().load(ir);
+        HttpURLConnection conn = null;
+        try {
+            conn = createGetConnection(url);
+
+            try (InputStream in = conn.getInputStream();
+                InputStreamReader ir = new InputStreamReader(in)) {
+                file.getProperties().load(ir);
+            }
             return file;
         } catch (IOException e) {
             throw createPaymentException(source, CONN_ERROR, e);
+        } finally {
+            close(conn);
         }
     }
 

@@ -160,10 +160,10 @@ public final class CheckoutActivity extends AppCompatActivity implements Checkou
 
         // The default optile theme
         PaymentTheme theme = PaymentTheme.createDefault();
-        
+
         // The empty theme
         //PaymentTheme theme = PaymentTheme.createBuilder().build();
-        
+
         // The custom dark checkout theme
         //PaymentTheme theme = CheckoutTheme.createCustomTheme();
 

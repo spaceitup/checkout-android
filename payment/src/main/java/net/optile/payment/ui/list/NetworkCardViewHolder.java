@@ -13,8 +13,6 @@ package net.optile.payment.ui.list;
 
 import java.net.URL;
 
-import com.bumptech.glide.Glide;
-
 import android.support.v7.widget.RecyclerView.ViewHolder;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -32,6 +30,7 @@ import net.optile.payment.ui.theme.PaymentTheme;
 import net.optile.payment.ui.widget.FormWidget;
 import net.optile.payment.ui.widget.RegisterWidget;
 import net.optile.payment.ui.widget.WidgetInflater;
+import net.optile.payment.util.ImageHelper;
 import net.optile.payment.util.PaymentUtils;
 
 /**
@@ -75,7 +74,7 @@ final class NetworkCardViewHolder extends PaymentCardViewHolder {
         title.setText(network.getLabel());
 
         if (logoUrl != null) {
-            Glide.with(logo.getContext()).asBitmap().load(logoUrl.toString()).into(logo);
+            ImageHelper.getInstance().loadImage(logo, logoUrl);
         }
         bindRegistrationWidget(network);
         bindRecurrenceWidget(network);

@@ -20,6 +20,10 @@ import java.net.CookieHandler;
 import java.net.CookieManager;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.security.KeyManagementException;
+import java.security.NoSuchAlgorithmException;
+
+import javax.net.ssl.HttpsURLConnection;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -53,10 +57,9 @@ abstract class BaseConnection {
     private final static String HTTP_POST = "POST";
     private final static String CONTENTTYPE_JSON = "application/json";
 
-    /**
-     * The cached user agent value
-     */
     private static volatile String userAgent;
+
+    private static volatile TLSSocketFactory socketFactory;
 
     /**
      * For now we will use Gson to parse json content
@@ -74,6 +77,30 @@ abstract class BaseConnection {
             CookieHandler.setDefault(new CookieManager());
         }
         this.gson = new GsonBuilder().create();
+    }
+
+    /**
+     * Get the cached TLSSocketFactory
+     *
+     * @return the factory or null if it could not be created
+     */
+    private static TLSSocketFactory getTLSSocketFactory() {
+        if (socketFactory != null) {
+            return socketFactory;
+        }
+        synchronized (BaseConnection.class) {
+            if (socketFactory == null) {
+
+                try {
+                    socketFactory = new TLSSocketFactory();
+                } catch (KeyManagementException e) {
+                    Log.wtf("pay_BaseConnection", e);
+                } catch (NoSuchAlgorithmException e) {
+                    Log.wtf("pay_BaseConnection", e);
+                }
+            }
+        }
+        return socketFactory;
     }
 
     /**
@@ -142,7 +169,7 @@ abstract class BaseConnection {
      * @param url the Url pointing to the Payment API
      * @return HttpURLConnection a HttpURLConnection object
      */
-    private HttpURLConnection createGetConnection(final URL url) throws IOException {
+    HttpURLConnection createGetConnection(final URL url) throws IOException {
         final HttpURLConnection conn = (HttpURLConnection) url.openConnection();
         setConnProperties(conn);
         conn.setRequestMethod(HTTP_GET);
@@ -272,9 +299,26 @@ abstract class BaseConnection {
      * @param conn the url connection
      */
     private void setConnProperties(final HttpURLConnection conn) {
+
+        if (Build.VERSION.SDK_INT == Build.VERSION_CODES.KITKAT) {
+            setTLSSocketFactory(conn);
+        }
         conn.setConnectTimeout(TIMEOUT_CONNECT);
         conn.setReadTimeout(TIMEOUT_READ);
         conn.setRequestProperty(HEADER_USER_AGENT, getUserAgent());
+    }
+
+    private void setTLSSocketFactory(final HttpURLConnection conn) {
+
+        if (!(conn instanceof HttpsURLConnection)) {
+            return;
+        }
+        TLSSocketFactory socketFactory = getTLSSocketFactory();
+
+        if (socketFactory == null) {
+            return;
+        }
+        ((HttpsURLConnection) conn).setSSLSocketFactory(socketFactory);
     }
 
     /**

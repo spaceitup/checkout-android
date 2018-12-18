@@ -14,8 +14,6 @@ package net.optile.payment.ui.list;
 import java.net.URL;
 import java.util.Locale;
 
-import com.bumptech.glide.Glide;
-
 import android.support.v7.widget.RecyclerView.ViewHolder;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -29,6 +27,7 @@ import net.optile.payment.ui.model.AccountCard;
 import net.optile.payment.ui.model.PaymentCard;
 import net.optile.payment.ui.theme.PageParameters;
 import net.optile.payment.ui.theme.PaymentTheme;
+import net.optile.payment.util.ImageHelper;
 import net.optile.payment.util.PaymentUtils;
 
 /**
@@ -80,7 +79,7 @@ final class AccountCardViewHolder extends PaymentCardViewHolder {
         URL logoUrl = card.getLink("logo");
 
         if (logoUrl != null) {
-            Glide.with(logo.getContext()).asBitmap().load(logoUrl.toString()).into(logo);
+            ImageHelper.getInstance().loadImage(logo, logoUrl);
         }
     }
 
