@@ -15,7 +15,7 @@ import java.net.URL;
 import java.util.concurrent.Callable;
 
 import com.bumptech.glide.Glide;
-
+import android.util.Log;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
@@ -35,6 +35,7 @@ import net.optile.payment.network.ImageConnection;
  */
 public final class ImageHelper {
 
+    private final static String TAG = "pay_ImageHelper";
     private final ImageConnection imageConnection;
 
     private ImageHelper() {
@@ -88,7 +89,8 @@ public final class ImageHelper {
 
             @Override
             public void onError(Throwable cause) {
-                // we ignore logo failures if they could not be loaded
+                Log.wtf(TAG, e);
+                // we ignore image loading failures
             }
         });
         Workers.getInstance().forImageTasks().execute(task);
@@ -109,8 +111,8 @@ public final class ImageHelper {
         try {
             view.setImageBitmap(bitmap);
         } catch (Exception e) {
-            // we ignore logo failures if they cannot be set since the ImageView
-            // may be not displayed anymore
+            Log.wtf(TAG, e);
+            // we ignore image loading failures
         }
     }
 
@@ -118,6 +120,3 @@ public final class ImageHelper {
         static final ImageHelper INSTANCE = new ImageHelper();
     }
 }
-
-
-
