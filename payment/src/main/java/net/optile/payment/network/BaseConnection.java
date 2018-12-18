@@ -103,17 +103,6 @@ abstract class BaseConnection {
         return socketFactory;
     }
 
-    private void setTLSSocketFactory(final HttpURLConnection conn) {
-        TLSSocketFactory socketFactory = getTLSSocketFactory();
-
-        if (socketFactory == null) {
-            return;
-        }
-        if (conn instanceof HttpsURLConnection) {
-            ((HttpsURLConnection) conn).setSSLSocketFactory(socketFactory);
-        }
-    }
-
     /**
      * Get the user agent to be send with each request
      *
@@ -317,6 +306,19 @@ abstract class BaseConnection {
         conn.setConnectTimeout(TIMEOUT_CONNECT);
         conn.setReadTimeout(TIMEOUT_READ);
         conn.setRequestProperty(HEADER_USER_AGENT, getUserAgent());
+    }
+
+    private void setTLSSocketFactory(final HttpURLConnection conn) {
+
+        if (!(conn instanceof HttpsURLConnection)) {
+            return;
+        }
+        TLSSocketFactory socketFactory = getTLSSocketFactory();
+
+        if (socketFactory == null) {
+            return;
+        }
+        ((HttpsURLConnection) conn).setSSLSocketFactory(socketFactory);
     }
 
     /**
