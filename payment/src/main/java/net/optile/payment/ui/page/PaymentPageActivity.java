@@ -72,7 +72,7 @@ public final class PaymentPageActivity extends AppCompatActivity implements Paym
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setResult(Activity.RESULT_CANCELED, null);
+        setResult(PaymentUI.RESULT_CODE_CANCELED, null);
         this.cachedListIndex = -1;
 
         if (savedInstanceState != null) {
@@ -250,14 +250,13 @@ public final class PaymentPageActivity extends AppCompatActivity implements Paym
      * {@inheritDoc}
      */
     @Override
-    public void setPaymentResult(boolean success, PaymentResult result) {
+    public void setPaymentResult(int resultCode, PaymentResult result) {
         if (!isActive()) {
             return;
         }
         Intent intent = new Intent();
         intent.putExtra(PaymentUI.EXTRA_PAYMENT_RESULT, result);
-        int activityResult = success ? Activity.RESULT_OK : Activity.RESULT_CANCELED;
-        setResult(activityResult, intent);
+        setResult(resultCode, intent);
     }
 
     public void onActionClicked(PaymentCard item, Map<String, FormWidget> widgets) {

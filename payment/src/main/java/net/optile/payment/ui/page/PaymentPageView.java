@@ -72,10 +72,11 @@ interface PaymentPageView {
     void closePageWithMessage(String message);
 
     /**
-     * Set the current activity payment result
+     * Set the current activity payment result, this is either PaymentUI.RESULT_CODE_OK, 
+     * PaymentUI.RESULT_CODE_CANCELED, PaymentUI.RESULT_CODE_ERROR  
      *
-     * @param success true when the charge request was successful, false otherwise
+     * @param resultCode the current resultCode 
      * @param result containing the Payment result state
      */
-    void setPaymentResult(boolean success, PaymentResult result);
+    void setPaymentResult(int resultCode, PaymentResult result);
 }

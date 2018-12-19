@@ -132,17 +132,13 @@ public final class CheckoutActivity extends AppCompatActivity implements Checkou
             return;
         }
         PaymentResult result = null;
-        boolean success = false;
 
         // The PaymentResult may be null if the user cancelled the PaymentPage without making any charge
         // request to be optile Payment API.
         if (data != null && data.hasExtra(PaymentUI.EXTRA_PAYMENT_RESULT)) {
             result = data.getParcelableExtra(PaymentUI.EXTRA_PAYMENT_RESULT);
         }
-        if (resultCode == Activity.RESULT_OK) {
-            success = true;
-        }
-        this.checkoutResult = new CheckoutResult(success, result);
+        this.checkoutResult = new CheckoutResult(resultCode, result);
     }
 
     /**

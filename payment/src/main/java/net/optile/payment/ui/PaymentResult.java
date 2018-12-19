@@ -12,6 +12,7 @@ package net.optile.payment.ui;
 
 import com.google.gson.JsonSyntaxException;
 
+import android.app.Activity;
 import android.os.Parcel;
 import android.os.Parcelable;
 import android.text.TextUtils;
