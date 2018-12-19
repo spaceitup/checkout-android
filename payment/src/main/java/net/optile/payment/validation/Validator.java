@@ -61,9 +61,9 @@ public class Validator {
             String val = PaymentUtils.readRawResource(context.getResources(), validationResId);
             return new Validator(GsonHelper.getInstance().fromJson(val, Validations.class));
         } catch (IOException e) {
-            Log.wtf(TAG, e);
+            Log.w(TAG, e);
         } catch (JsonSyntaxException e) {
-            Log.wtf(TAG, e);
+            Log.w(TAG, e);
         }
         throw new IllegalArgumentException("Error loading validations resource file, make sure it exist and is valid json.");
     }

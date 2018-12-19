@@ -99,7 +99,7 @@ public final class PaymentResult implements Parcelable {
         } catch (JsonSyntaxException e) {
             // this should never happen since we use the same GsonHelper
             // to produce these Json strings
-            Log.wtf(TAG, e);
+            Log.w(TAG, e);
         }
     }
 
