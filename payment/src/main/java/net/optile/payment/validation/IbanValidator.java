@@ -19,7 +19,7 @@ import net.optile.payment.util.PaymentUtils;
 /**
  * Class with helper methods to validate Iban numbers
  */
-public final class IbanValidator {
+final class IbanValidator {
     private static final Map<String, Integer> IBAN_ACCOUNT_POSITIONS = new HashMap<>();
 
     private static final long MAX = 999999999;

@@ -14,14 +14,7 @@ package net.optile.example.checkout;
 /**
  * The interface Checkout view.
  */
-public interface CheckoutView {
-
-    /**
-     * Is the CheckoutView active
-     *
-     * @return true when active, false otherwise
-     */
-    boolean isActive();
+interface CheckoutView {
 
     /**
      * Open the PaymentPage for the provided listUrl
@@ -30,14 +23,14 @@ public interface CheckoutView {
      */
     void openPaymentPage(String listUrl);
 
-    /** 
+    /**
      * Show an error to the user
-     * 
+     *
      * @param error to be shown to the user
      */
     void showPaymentError(String error);
 
-    /** 
+    /**
      * Show that the payment was successful
      */
     void showPaymentSuccess();

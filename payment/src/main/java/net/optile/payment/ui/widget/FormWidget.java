@@ -11,23 +11,23 @@
 
 package net.optile.payment.ui.widget;
 
-import android.support.v4.app.DialogFragment;
 import android.support.v4.content.ContextCompat;
 import android.view.View;
 import android.widget.ImageView;
 import net.optile.payment.R;
 import net.optile.payment.core.PaymentException;
 import net.optile.payment.form.Charge;
-import net.optile.payment.validation.ValidationResult;
+import net.optile.payment.ui.theme.PaymentTheme;
+import net.optile.payment.ui.theme.WidgetParameters;
 
 /**
- * The base InputWidget
+ * The base class for all widgets, i.e. Button, CheckBox, TextInput etc.
  */
 public abstract class FormWidget {
 
-    public final static int VALIDATION_UNKNOWN = 0x00;
-    public final static int VALIDATION_ERROR = 0x01;
-    public final static int VALIDATION_OK = 0x02;
+    final static int VALIDATION_UNKNOWN = 0x00;
+    final static int VALIDATION_ERROR = 0x01;
+    final static int VALIDATION_OK = 0x02;
 
     final View rootView;
     final String name;
@@ -36,10 +36,12 @@ public abstract class FormWidget {
     WidgetPresenter presenter;
     int state;
     String error;
+    PaymentTheme theme;
 
-    FormWidget(String name, View rootView) {
+    FormWidget(String name, View rootView, PaymentTheme theme) {
         this.name = name;
         this.rootView = rootView;
+        this.theme = theme;
         this.icon = rootView.findViewById(R.id.image_icon);
     }
 
@@ -55,10 +57,6 @@ public abstract class FormWidget {
         return name;
     }
 
-    public String getString(int resId) {
-        return rootView.getContext().getString(resId);
-    }
-
     public void setIconResource(int resId) {
 
         if (icon != null) {
@@ -67,16 +65,19 @@ public abstract class FormWidget {
         }
     }
 
-    public boolean isValid() {
-        return this.state == VALIDATION_OK;
-    }
-
-    public void setVisible(boolean visible) {
+    void setVisible(boolean visible) {
         rootView.setVisibility(visible ? View.VISIBLE : View.GONE);
     }
 
     public boolean setLastImeOptionsWidget() {
         return false;
+    }
+
+    public void setLabel(String label) {
+    }
+
+    public boolean isValid() {
+        return this.state == VALIDATION_OK;
     }
 
     public void putValue(Charge charge) throws PaymentException {
@@ -97,57 +98,17 @@ public abstract class FormWidget {
         if (icon == null) {
             return;
         }
-        int colorResId = R.color.validation_ok;
+        WidgetParameters params = theme.getWidgetParameters();
+        int colorResId = params.getValidationColorUnknown();
         switch (state) {
             case VALIDATION_OK:
-                colorResId = R.color.validation_ok;
+                colorResId = params.getValidationColorOk();
                 break;
             case VALIDATION_ERROR:
-                colorResId = R.color.validation_error;
-                break;
-            default:
-                colorResId = R.color.validation_unknown;
+                colorResId = params.getValidationColorError();
         }
-        icon.setColorFilter(ContextCompat.getColor(rootView.getContext(), colorResId));
-    }
-
-    /**
-     * The presenter which is controlling each widget
-     */
-    public interface WidgetPresenter {
-
-        /**
-         * Inform the presenter that the Pay Button has been clicked
-         */
-        void onActionClicked();
-
-        /**
-         * Ask the presenter to hide the keyboard
-         */
-        void hideKeyboard();
-
-        /**
-         * Ask the presenter to show the keyboard
-         */
-        void showKeyboard();
-
-        /**
-         * Ask the presenter to show the DialogFragment
-         *
-         * @param dialog to be shown to the user
-         * @param tag to identify the DialogFragment
-         */
-        void showDialogFragment(DialogFragment dialog, String tag);
-
-        /**
-         * Widgets call this method to validate their input values. The first value is mandatory, the second is optional.
-         * I.e. A Date widget may use both values to validate the month and year values at the same time.
-         *
-         * @param type type of the value to be validated
-         * @param value1 mandatory first value to validate
-         * @param value2 optional second value to validate
-         * @return ValidationResult holding the result of the validation
-         */
-        ValidationResult validate(String type, String value1, String value2);
+        if (colorResId != 0) {
+            icon.setColorFilter(ContextCompat.getColor(rootView.getContext(), colorResId));
+        }
     }
 }

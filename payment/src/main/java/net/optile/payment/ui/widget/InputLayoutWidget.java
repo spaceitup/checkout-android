@@ -21,6 +21,7 @@ import android.view.inputmethod.EditorInfo;
 import android.widget.LinearLayout;
 import net.optile.payment.R;
 import net.optile.payment.core.PaymentInputType;
+import net.optile.payment.ui.theme.PaymentTheme;
 
 /**
  * Base class for widgets using the TextInputLayout and TextInputEditText
@@ -31,25 +32,21 @@ abstract class InputLayoutWidget extends FormWidget {
     final static float WEIGHT_FULL = 1.0f;
 
     final TextInputEditText input;
-    final TextInputLayout layout;
-    final String label;
+    private final TextInputLayout layout;
+
+    String label;
 
     /**
      * Construct a new TextInputWidget
      *
      * @param name name identifying this widget
      * @param rootView the root view of this input
-     * @param label the hint / label of the input layout
+     * @param theme PaymentTheme to apply
      */
-    InputLayoutWidget(String name, View rootView, String label) {
-        super(name, rootView);
-        this.layout = rootView.findViewById(R.id.layout_value);
-        this.input = rootView.findViewById(R.id.input_value);
-        this.label = label;
-
-        layout.setHintAnimationEnabled(false);
-        layout.setHint(label);
-        layout.setHintAnimationEnabled(true);
+    InputLayoutWidget(String name, View rootView, PaymentTheme theme) {
+        super(name, rootView, theme);
+        this.layout = rootView.findViewById(R.id.textinputlayout);
+        this.input = rootView.findViewById(R.id.textinputedittext);
 
         input.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
@@ -57,6 +54,13 @@ abstract class InputLayoutWidget extends FormWidget {
                 handleOnFocusChange(hasFocus);
             }
         });
+    }
+
+    public void setLabel(String label) {
+        this.label = label;
+        layout.setHintAnimationEnabled(false);
+        layout.setHint(label);
+        layout.setHintAnimationEnabled(true);
     }
 
     public boolean setLastImeOptionsWidget() {

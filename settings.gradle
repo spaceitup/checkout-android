@@ -1,1 +1,1 @@
-include ':payment', ':example'
+include ':example', ':payment'

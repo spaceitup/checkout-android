@@ -11,40 +11,37 @@
 
 package net.optile.example.checkout;
 
-import android.content.Context;
-import android.content.Intent;
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.Context;
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
-import android.widget.Toast;
+import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
-import net.optile.example.R;
-import net.optile.payment.ui.PaymentUI;
 import net.optile.payment.ui.PaymentResult;
-import net.optile.payment.model.Interaction;
-import net.optile.payment.ui.dialog.MessageDialogFragment;
-import android.support.design.widget.Snackbar;
+import net.optile.payment.ui.PaymentUI;
+import net.optile.payment.ui.theme.PaymentTheme;
 
 /**
- * Activity for performing a checkout payment
+ * This is the main Activity of this Checkout example app.
+ * There are two buttons visible, one button is used to launch the Android PaymentPage with the default optile theme,
+ * and one with a custom theme defined in this example app.
  */
 public final class CheckoutActivity extends AppCompatActivity implements CheckoutView {
 
-    private static String TAG = "payment_CheckoutActivity";
     private static int PAYMENT_REQUEST_CODE = 1;
 
     private CheckoutPresenter presenter;
-
-    private boolean active;
-
     private CheckoutResult checkoutResult;
-    
+
     /**
-     * Create an Intent to launch this activity
+     * Create an Intent to launch this checkout activity
      *
      * @param context the context
      * @return the newly created intent
@@ -59,16 +56,14 @@ public final class CheckoutActivity extends AppCompatActivity implements Checkou
     @Override
     public void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
         setContentView(R.layout.activity_checkout);
-
-        final Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        final Button button = findViewById(R.id.button_checkout);
+        Button button = findViewById(R.id.button_checkout);
         button.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                onButtonClicked();
+                presenter.startPayment();
             }
         });
         this.presenter = new CheckoutPresenter(this);
@@ -80,8 +75,6 @@ public final class CheckoutActivity extends AppCompatActivity implements Checkou
     @Override
     public void onPause() {
         super.onPause();
-        this.active = false;
-        this.presenter.onStop();
     }
 
     /**
@@ -90,7 +83,6 @@ public final class CheckoutActivity extends AppCompatActivity implements Checkou
     @Override
     public void onResume() {
         super.onResume();
-        this.active = true;
 
         if (checkoutResult != null) {
             presenter.handleCheckoutResult(checkoutResult);
@@ -106,11 +98,11 @@ public final class CheckoutActivity extends AppCompatActivity implements Checkou
 
         final Handler handler = new Handler();
         handler.postDelayed(new Runnable() {
-                @Override
-                public void run() {
-                    showSnackbar(R.string.payment_success);
-                }
-            }, 500);
+            @Override
+            public void run() {
+                showSnackbar(R.string.payment_success);
+            }
+        }, 500);
     }
 
     /**
@@ -118,42 +110,35 @@ public final class CheckoutActivity extends AppCompatActivity implements Checkou
      */
     @Override
     public void showPaymentError(String message) {
-        MessageDialogFragment dialog = new MessageDialogFragment();
-        dialog.setTitle(getString(R.string.dialog_error_title));
-        dialog.setMessage(String.format(getString(R.string.dialog_error_message), message));
-        dialog.setNeutralButton(getString(R.string.dialog_error_button));
-        dialog.show(getSupportFragmentManager(), "checkout_dialog");
+        AlertDialog alertDialog = new AlertDialog.Builder(this).create();
+        alertDialog.setTitle(R.string.dialog_error_title);
+        alertDialog.setMessage(String.format(getString(R.string.dialog_error_message), message));
+        alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, getString(R.string.dialog_error_button),
+            new DialogInterface.OnClickListener() {
+                public void onClick(DialogInterface dialog, int which) {
+                    dialog.dismiss();
+                }
+            });
+        alertDialog.show();
     }
-    
+
     /**
      * {@inheritDoc}
      */
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        
+
         if (requestCode != PAYMENT_REQUEST_CODE) {
             return;
         }
         PaymentResult result = null;
-        boolean success = false;
 
         // The PaymentResult may be null if the user cancelled the PaymentPage without making any charge
         // request to be optile Payment API.
         if (data != null && data.hasExtra(PaymentUI.EXTRA_PAYMENT_RESULT)) {
             result = data.getParcelableExtra(PaymentUI.EXTRA_PAYMENT_RESULT);
         }
-        if (resultCode == Activity.RESULT_OK) {
-            success = true;
-        }
-        this.checkoutResult = new CheckoutResult(success, result);
-    }
-    
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public boolean isActive() {
-        return this.active;
+        this.checkoutResult = new CheckoutResult(resultCode, result);
     }
 
     /**
@@ -161,18 +146,30 @@ public final class CheckoutActivity extends AppCompatActivity implements Checkou
      */
     @Override
     public void openPaymentPage(String listUrl) {
+
+        if (TextUtils.isEmpty(listUrl)) {
+            showPaymentError(getString(R.string.dialog_error_listurl_empty));
+            return;
+        }
         PaymentUI paymentUI = PaymentUI.getInstance();
         paymentUI.setListUrl(listUrl);
+
+        // The default optile theme
+        PaymentTheme theme = PaymentTheme.createDefault();
+
+        // The empty theme
+        //PaymentTheme theme = PaymentTheme.createBuilder().build();
+
+        // The custom dark checkout theme
+        //PaymentTheme theme = CheckoutTheme.createCustomTheme();
+
+        paymentUI.setPaymentTheme(theme);
         paymentUI.showPaymentPage(this, PAYMENT_REQUEST_CODE);
     }
 
     private void showSnackbar(int resId) {
         Snackbar snackbar = Snackbar.make(findViewById(R.id.layout_activity),
-                                          getString(resId), Snackbar.LENGTH_LONG);
+            getString(resId), Snackbar.LENGTH_LONG);
         snackbar.show();
-    }
-    
-    private void onButtonClicked() {
-        presenter.createPaymentSession(this);
     }
 }

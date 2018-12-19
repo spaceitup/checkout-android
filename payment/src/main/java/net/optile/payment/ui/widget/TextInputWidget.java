@@ -19,30 +19,27 @@ import android.view.inputmethod.EditorInfo;
 import android.widget.TextView;
 import net.optile.payment.core.PaymentException;
 import net.optile.payment.form.Charge;
-import net.optile.payment.model.InputElement;
 import net.optile.payment.model.InputElementType;
+import net.optile.payment.ui.theme.PaymentTheme;
 import net.optile.payment.validation.ValidationResult;
 
 /**
- * Class for handling text input
+ * Widget for handling text input
  */
 public final class TextInputWidget extends InputLayoutWidget {
 
     private final static String NUMERIC_DIGITS = "0123456789 -";
     private final static int INTEGER_MAXLENGTH = 4;
-    private final InputElement element;
 
     /**
      * Construct a new TextInputWidget
      *
      * @param name name identifying this widget
      * @param rootView the root view of this input
-     * @param element the InputElement this widget is displaying
+     * @param theme PaymentTheme to apply to this widget
      */
-    public TextInputWidget(String name, View rootView, InputElement element) {
-        super(name, rootView, element.getLabel());
-        this.element = element;
-
+    public TextInputWidget(String name, View rootView, PaymentTheme theme) {
+        super(name, rootView, theme);
         input.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override
             public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
@@ -52,7 +49,10 @@ public final class TextInputWidget extends InputLayoutWidget {
                 return false;
             }
         });
-        switch (element.getType()) {
+    }
+
+    public void setInputType(String type) {
+        switch (type) {
             case InputElementType.NUMERIC:
                 setInputType(InputType.TYPE_CLASS_NUMBER, NUMERIC_DIGITS);
                 break;
@@ -86,14 +86,14 @@ public final class TextInputWidget extends InputLayoutWidget {
         String val = getNormalizedValue();
 
         if (!TextUtils.isEmpty(val)) {
-            charge.putValue(element.getName(), val);
+            charge.putValue(name, val);
         }
     }
 
     void handleOnFocusChange(boolean hasFocus) {
         if (hasFocus) {
             setValidation(VALIDATION_UNKNOWN, false, null);
-        } else if (state == VALIDATION_UNKNOWN) {
+        } else if (state == VALIDATION_UNKNOWN && !TextUtils.isEmpty(getNormalizedValue())) {
             validate();
         }
     }

@@ -15,7 +15,9 @@ import android.app.Activity;
 import android.content.Intent;
 import android.text.TextUtils;
 import android.util.Patterns;
-import net.optile.payment.ui.paymentpage.PaymentPageActivity;
+import net.optile.payment.R;
+import net.optile.payment.ui.page.PaymentPageActivity;
+import net.optile.payment.ui.theme.PaymentTheme;
 import net.optile.payment.validation.Validator;
 
 /**
@@ -24,6 +26,9 @@ import net.optile.payment.validation.Validator;
  */
 public final class PaymentUI {
 
+    public final static int RESULT_CODE_OK  = Activity.RESULT_FIRST_USER;
+    public final static int RESULT_CODE_CANCELED = Activity.RESULT_FIRST_USER + 1;
+    public final static int RESULT_CODE_ERROR = Activity.RESULT_FIRST_USER + 2;
     public final static String EXTRA_PAYMENT_RESULT = "paymentresult";
 
     /** The url pointing to the current list */
@@ -78,10 +83,6 @@ public final class PaymentUI {
      * @return the set PaymentTheme or the default PaymentTheme
      */
     public PaymentTheme getPaymentTheme() {
-
-        if (theme == null) {
-            theme = PaymentTheme.createPaymentThemeBuilder().build();
-        }
         return theme;
     }
 
@@ -100,10 +101,6 @@ public final class PaymentUI {
      * @return the set Validator or the default Validator
      */
     public Validator getValidator() {
-
-        if (validator == null) {
-            validator = new Validator();
-        }
         return validator;
     }
 
@@ -129,6 +126,12 @@ public final class PaymentUI {
         }
         if (activity == null) {
             throw new IllegalArgumentException("activity may not be null");
+        }
+        if (validator == null) {
+            setValidator(Validator.createInstance(activity, R.raw.validations));
+        }
+        if (theme == null) {
+            setPaymentTheme(PaymentTheme.createDefault());
         }
         activity.finishActivity(requestCode);
         Intent intent = PaymentPageActivity.createStartIntent(activity, listUrl);

@@ -11,12 +11,18 @@
 
 package net.optile.payment.validation;
 
+import java.io.IOException;
 import java.util.Calendar;
 
+import com.google.gson.JsonSyntaxException;
+
+import android.content.Context;
 import android.text.TextUtils;
 import android.util.Log;
 import net.optile.payment.core.PaymentInputType;
 import net.optile.payment.model.PaymentMethod;
+import net.optile.payment.util.GsonHelper;
+import net.optile.payment.util.PaymentUtils;
 
 /**
  * Class for validating input type values
@@ -26,24 +32,83 @@ public class Validator {
     public final static String REGEX_MONTH = "(^0[1-9]|1[0-2]$)";
     public final static String REGEX_YEAR = "^(20)\\d{2}$";
     public final static String REGEX_BIC = "([a-zA-Z]{4}[a-zA-Z]{2}[a-zA-Z0-9]{2}([a-zA-Z0-9]{3})?)";
-    public final static String REGEX_VERIFICATION_CODE = "^[0-9]{3,4}$";
+    public final static String REGEX_ACCOUNT_NUMBER = "^[0-9]+$";
+    public final static String REGEX_VERIFICATION_CODE = "^[0-9]*$";
+    private final static String TAG = "pay_Validator";
+    private final Validations validations;
+
+    /**
+     * Construct a new Validator with the provided validations
+     *
+     * @param validations the list of validations to be used to validate input values
+     */
+    private Validator(Validations validations) {
+        this.validations = validations;
+    }
+
+    /**
+     * Construct a new default Validator which will be used to validate the entered input values from the user.
+     *
+     * @param context needed to construct the default Validator
+     * @param validationResId the raw json resource containing validations to be used
+     * @return the newly created Validator
+     */
+    public final static Validator createInstance(Context context, int validationResId) {
+        if (context == null) {
+            throw new IllegalArgumentException("Context may not be null");
+        }
+        try {
+            String val = PaymentUtils.readRawResource(context.getResources(), validationResId);
+            return new Validator(GsonHelper.getInstance().fromJson(val, Validations.class));
+        } catch (IOException e) {
+            Log.w(TAG, e);
+        } catch (JsonSyntaxException e) {
+            Log.w(TAG, e);
+        }
+        throw new IllegalArgumentException("Error loading validations resource file, make sure it exist and is valid json.");
+    }
+
+    /**
+     * Get the validation for the given method, code and type.
+     *
+     * @param method Payment method like CREDIT_CARD
+     * @param code Payment code like VISA
+     * @param type payment input type like "number"
+     * @return Validation or null if not found
+     */
+    public Validation getValidation(String method, String code, String type) {
+        return validations != null ? validations.get(method, code, type) : null;
+    }
 
     /**
      * Validate the given input values defined by its type
      *
-     * @param method the Payment method
-     * @param type the input type
-     * @param value1 holding the mandatory first value for the given input type
+     * @param method the Payment method like CREDIT_CARD
+     * @param code the payment code like VISA
+     * @param type the PaymentInputType like "number"
+     * @param value1 holding the mandatory first value for the given input type, may be empty
      * @param value2 holding the optional second value for the given input type
      */
-    public ValidationResult validate(String method, String type, String value1, String value2) {
+    public ValidationResult validate(String method, String code, String type, String value1, String value2) {
 
-        if (TextUtils.isEmpty(type)) {
-            throw new IllegalArgumentException("validation type may not be null or empty");
+        if (TextUtils.isEmpty(method)) {
+            throw new IllegalArgumentException("validate method may not be null or empty");
         }
+        if (TextUtils.isEmpty(code)) {
+            throw new IllegalArgumentException("validate code may not be null or empty");
+        }
+        if (TextUtils.isEmpty(type)) {
+            throw new IllegalArgumentException("validate type may not be null or empty");
+        }
+        value1 = value1 == null ? "" : value1;
+        value2 = value2 == null ? "" : value2;
+        Validation val = validations.get(method, code, type);
+
         switch (type) {
             case PaymentInputType.ACCOUNT_NUMBER:
-                return validateAccountNumber(method, value1);
+                return validateAccountNumber(method, value1, val);
+            case PaymentInputType.VERIFICATION_CODE:
+                return validateVerificationCode(value1, val);
             case PaymentInputType.HOLDER_NAME:
                 return validateHolderName(value1);
             case PaymentInputType.EXPIRY_DATE:
@@ -52,8 +117,6 @@ public class Validator {
                 return validateExpiryMonth(value1);
             case PaymentInputType.EXPIRY_YEAR:
                 return validateExpiryYear(value1);
-            case PaymentInputType.VERIFICATION_CODE:
-                return validateVerificationCode(value1);
             case PaymentInputType.BANK_CODE:
                 return validateBankCode(value1);
             case PaymentInputType.IBAN:
@@ -65,21 +128,48 @@ public class Validator {
         }
     }
 
-    private ValidationResult validateAccountNumber(String method, String accountNumber) {
-        String error = null;
+    private ValidationResult validateAccountNumber(String method, String number, Validation val) {
 
-        if (TextUtils.isEmpty(accountNumber)) {
-            error = ValidationResult.MISSING_ACCOUNT_NUMBER;
-        }
         switch (method) {
             case PaymentMethod.CREDIT_CARD:
             case PaymentMethod.DEBIT_CARD:
-                if (!CardNumberValidator.isValidLuhn(accountNumber)) {
-                    error = ValidationResult.INVALID_ACCOUNT_NUMBER;
+                return validateCardNumber(number, val);
+            default:
+                if (!number.matches(REGEX_ACCOUNT_NUMBER)) {
+                    if (TextUtils.isEmpty(number)) {
+                        return new ValidationResult(ValidationResult.MISSING_ACCOUNT_NUMBER);
+                    }
+                    return new ValidationResult(ValidationResult.INVALID_ACCOUNT_NUMBER);
                 }
-                break;
         }
-        return new ValidationResult(error);
+        return new ValidationResult(null);
+    }
+
+    private ValidationResult validateCardNumber(String number, Validation val) {
+        String regex = val != null ? val.getRegex() : REGEX_ACCOUNT_NUMBER;
+
+        if (!number.matches(regex)) {
+            if (TextUtils.isEmpty(number)) {
+                return new ValidationResult(ValidationResult.MISSING_ACCOUNT_NUMBER);
+            }
+            return new ValidationResult(ValidationResult.INVALID_ACCOUNT_NUMBER);
+        }
+        if (!CardNumberValidator.isValidLuhn(number)) {
+            return new ValidationResult(ValidationResult.INVALID_ACCOUNT_NUMBER);
+        }
+        return new ValidationResult(null);
+    }
+
+    private ValidationResult validateVerificationCode(String verificationCode, Validation val) {
+        String regex = val != null ? val.getRegex() : REGEX_VERIFICATION_CODE;
+
+        if (!verificationCode.matches(regex)) {
+            if (TextUtils.isEmpty(verificationCode)) {
+                return new ValidationResult(ValidationResult.MISSING_VERIFICATION_CODE);
+            }
+            return new ValidationResult(ValidationResult.INVALID_VERIFICATION_CODE);
+        }
+        return new ValidationResult(null);
     }
 
     private ValidationResult validateHolderName(String holderName) {
@@ -120,17 +210,6 @@ public class Validator {
             error = ValidationResult.MISSING_EXPIRY_YEAR;
         } else if (!year.matches(REGEX_YEAR)) {
             error = ValidationResult.INVALID_EXPIRY_YEAR;
-        }
-        return new ValidationResult(error);
-    }
-
-    private ValidationResult validateVerificationCode(String verificationCode) {
-        String error = null;
-
-        if (TextUtils.isEmpty(verificationCode)) {
-            error = ValidationResult.MISSING_VERIFICATION_CODE;
-        } else if (!verificationCode.matches(REGEX_VERIFICATION_CODE)) {
-            error = ValidationResult.INVALID_VERIFICATION_CODE;
         }
         return new ValidationResult(error);
     }

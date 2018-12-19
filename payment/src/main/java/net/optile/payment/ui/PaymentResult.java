@@ -12,6 +12,7 @@ package net.optile.payment.ui;
 
 import com.google.gson.JsonSyntaxException;
 
+import android.app.Activity;
 import android.os.Parcel;
 import android.os.Parcelable;
 import android.text.TextUtils;
@@ -57,14 +58,14 @@ public final class PaymentResult implements Parcelable {
     /**
      * Construct a new PaymentResult with PaymentError.
      *
-     * @param the OperationResult containing the interaction and resultInfo
+     * @param operationResult containing the interaction and resultInfo
      */
     public PaymentResult(OperationResult operationResult) {
         this.resultInfo = operationResult.getResultInfo();
         this.interaction = operationResult.getInteraction();
         this.operationResult = operationResult;
     }
-    
+
     /**
      * Construct a new PaymentResult with the interaction values and the optional operationResult
      *
@@ -99,7 +100,7 @@ public final class PaymentResult implements Parcelable {
         } catch (JsonSyntaxException e) {
             // this should never happen since we use the same GsonHelper
             // to produce these Json strings
-            Log.wtf(TAG, e);
+            Log.w(TAG, e);
         }
     }
 

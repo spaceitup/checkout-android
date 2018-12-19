@@ -20,6 +20,10 @@ import java.net.CookieHandler;
 import java.net.CookieManager;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.security.KeyManagementException;
+import java.security.NoSuchAlgorithmException;
+
+import javax.net.ssl.HttpsURLConnection;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -37,32 +41,25 @@ import net.optile.payment.model.ErrorInfo;
  */
 abstract class BaseConnection {
 
-    final static int TIMEOUT_CONNECT = 5000;
-    final static int TIMEOUT_READ = 30000;
-
     final static String HEADER_AUTHORIZATION = "Authorization";
     final static String HEADER_ACCEPT = "Accept";
     final static String HEADER_CONTENT_TYPE = "Content-Type";
-    final static String HEADER_USER_AGENT = "User-Agent";
-
-    final static String UTF8 = "UTF-8";
-
-    final static String HTTP_GET = "GET";
-    final static String HTTP_POST = "POST";
-
     final static String URI_PATH_API = "api";
     final static String URI_PATH_LISTS = "lists";
     final static String URI_PARAM_VIEW = "view";
-
     final static String VALUE_VIEW = "jsonForms,-htmlForms";
     final static String VALUE_APP_JSON = "application/json;charset=UTF-8";
+    private final static int TIMEOUT_CONNECT = 5000;
+    private final static int TIMEOUT_READ = 30000;
+    private final static String HEADER_USER_AGENT = "User-Agent";
+    private final static String UTF8 = "UTF-8";
+    private final static String HTTP_GET = "GET";
+    private final static String HTTP_POST = "POST";
+    private final static String CONTENTTYPE_JSON = "application/json";
 
-    final static String CONTENTYPE_JSON = "application/json";
-
-    /**
-     * The cached user agent value
-     */
     private static volatile String userAgent;
+
+    private static volatile TLSSocketFactory socketFactory;
 
     /**
      * For now we will use Gson to parse json content
@@ -80,6 +77,30 @@ abstract class BaseConnection {
             CookieHandler.setDefault(new CookieManager());
         }
         this.gson = new GsonBuilder().create();
+    }
+
+    /**
+     * Get the cached TLSSocketFactory
+     *
+     * @return the factory or null if it could not be created
+     */
+    private static TLSSocketFactory getTLSSocketFactory() {
+        if (socketFactory != null) {
+            return socketFactory;
+        }
+        synchronized (BaseConnection.class) {
+            if (socketFactory == null) {
+
+                try {
+                    socketFactory = new TLSSocketFactory();
+                } catch (KeyManagementException e) {
+                    Log.w("pay_BaseConnection", e);
+                } catch (NoSuchAlgorithmException e) {
+                    Log.w("pay_BaseConnection", e);
+                }
+            }
+        }
+        return socketFactory;
     }
 
     /**
@@ -203,7 +224,7 @@ abstract class BaseConnection {
      * @param conn the HttpURLConnection to read from
      * @return the string representation read from the inputstream
      */
-    String readFromErrorStream(final HttpURLConnection conn) throws IOException {
+    private String readFromErrorStream(final HttpURLConnection conn) throws IOException {
 
         if (conn.getErrorStream() == null) {
             return null;
@@ -247,13 +268,13 @@ abstract class BaseConnection {
             data = readFromErrorStream(conn);
             String contentType = conn.getContentType();
 
-            if (!TextUtils.isEmpty(data) && !TextUtils.isEmpty(contentType) && contentType.contains(CONTENTYPE_JSON)) {
+            if (!TextUtils.isEmpty(data) && !TextUtils.isEmpty(contentType) && contentType.contains(CONTENTTYPE_JSON)) {
                 info = gson.fromJson(data, ErrorInfo.class);
             }
         } catch (IOException | JsonParseException e) {
             // Ignore the exceptions since the ErrorInfo is an optional field
             // and it is more important to not loose the status error code
-            Log.wtf(source, e);
+            Log.w(source, e);
         }
         final PaymentError error = new PaymentError(source, errorType, statusCode, data, info);
         return new PaymentException(error, source);
@@ -278,9 +299,26 @@ abstract class BaseConnection {
      * @param conn the url connection
      */
     private void setConnProperties(final HttpURLConnection conn) {
+
+        if (Build.VERSION.SDK_INT == Build.VERSION_CODES.KITKAT) {
+            setTLSSocketFactory(conn);
+        }
         conn.setConnectTimeout(TIMEOUT_CONNECT);
         conn.setReadTimeout(TIMEOUT_READ);
         conn.setRequestProperty(HEADER_USER_AGENT, getUserAgent());
+    }
+
+    private void setTLSSocketFactory(final HttpURLConnection conn) {
+
+        if (!(conn instanceof HttpsURLConnection)) {
+            return;
+        }
+        TLSSocketFactory socketFactory = getTLSSocketFactory();
+
+        if (socketFactory == null) {
+            return;
+        }
+        ((HttpsURLConnection) conn).setSSLSocketFactory(socketFactory);
     }
 
     /**
