@@ -57,7 +57,7 @@ final class CheckoutPresenter {
                 break;
             case PaymentUI.RESULT_CODE_ERROR:
                 // An error occurred and the result.paymentResult contains a PaymentError explaining the reason of the error.
-                // I.e. a connection or security error can be returned throught the PaymentError. 
+                // I.e. an internal connection, protocol or security error can be returned as a PaymentError. 
                 Log.i(TAG, "Error[" + result.paymentResult + "]"); 
         }
     }
