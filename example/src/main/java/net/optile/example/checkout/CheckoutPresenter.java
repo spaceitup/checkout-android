@@ -48,7 +48,7 @@ final class CheckoutPresenter {
                 break;
             case PaymentUI.RESULT_CODE_CANCELED:
                 // Payment has been canceled, the result.paymentResult may be null if the user closed the Payment Page without making any requests.
-                // If result.paymentResult is not null then it contains an Interaction and optional OperationResult.
+                // If result.paymentResult is not null then it contains an Interaction and optional OperationResult. 
                 if (result.paymentResult != null) {
                     Log.i(TAG, "Canceled[" + result.paymentResult + "]");
                 } else {
@@ -56,7 +56,8 @@ final class CheckoutPresenter {
                 }
                 break;
             case PaymentUI.RESULT_CODE_ERROR:
-                // An error occurred and the result.paymentResult contains a PaymentError explaining the reason of the error
+                // An error occurred and the result.paymentResult contains a PaymentError explaining the reason of the error.
+                // I.e. a connection or security error can be returned throught the PaymentError. 
                 Log.i(TAG, "Error[" + result.paymentResult + "]"); 
         }
     }
