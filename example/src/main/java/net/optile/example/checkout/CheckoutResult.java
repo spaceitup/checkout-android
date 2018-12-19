@@ -18,20 +18,20 @@ import net.optile.payment.ui.PaymentResult;
  */
 class CheckoutResult {
 
-    /** Indicating if the checkout was successful */
-    public boolean success;
+    /** The PaymentPage resultCode */
+    public int resultCode;
 
     /** The PaymentResult received from the Payment SDK, this may be null */
     public PaymentResult paymentResult;
 
     /**
-     * Construct a new CheckoutResult
+     * Construct a new TestAppResult
      *
-     * @param success indicating the payment was successful or failed
+     * @param resultCode indicating the payment resultCode
      * @param paymentResult optional result containing PaymentResult details
      */
-    public CheckoutResult(boolean success, PaymentResult paymentResult) {
-        this.success = success;
+    public CheckoutResult(int resultCode, PaymentResult paymentResult) {
+        this.resultCode = resultCode;
         this.paymentResult = paymentResult;
     }
 }

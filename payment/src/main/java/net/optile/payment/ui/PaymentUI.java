@@ -26,6 +26,9 @@ import net.optile.payment.validation.Validator;
  */
 public final class PaymentUI {
 
+    public final static int RESULT_CODE_OK  = Activity.RESULT_FIRST_USER;
+    public final static int RESULT_CODE_CANCELED = Activity.RESULT_FIRST_USER + 1;
+    public final static int RESULT_CODE_ERROR = Activity.RESULT_FIRST_USER + 2;
     public final static String EXTRA_PAYMENT_RESULT = "paymentresult";
 
     /** The url pointing to the current list */
