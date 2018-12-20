@@ -63,7 +63,7 @@ final class PaymentPagePresenter {
     }
 
     void onStop() {
-        service.onStop();
+        service.stop();
     }
 
     /**
@@ -80,7 +80,6 @@ final class PaymentPagePresenter {
         this.listUrl = listUrl;
 
         if (session != null && session.isListUrl(listUrl)) {
-            // show the cached payment session
             view.showPaymentSession(session);
             return;
         }
@@ -146,6 +145,7 @@ final class PaymentPagePresenter {
     }
 
     void onValidatorError(Throwable throwable) {
+        // report the error to the app developer.
     }
     
     void onPaymentSessionError(Throwable cause) {
