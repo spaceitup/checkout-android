@@ -24,6 +24,7 @@ import net.optile.payment.core.WorkerSubscriber;
 import net.optile.payment.core.WorkerTask;
 import net.optile.payment.core.Workers;
 import net.optile.payment.form.Charge;
+import net.optile.payment.validation.Validator;
 import net.optile.payment.model.ErrorInfo;
 import net.optile.payment.model.Interaction;
 import net.optile.payment.model.InteractionCode;
@@ -46,10 +47,8 @@ final class PaymentPagePresenter {
     private final PaymentPageView view;
     private final PaymentPageService service;
 
+    private Validator validator;
     private PaymentSession session;
-    private int groupType;
-    private WorkerTask<OperationResult> chargeTask;
-    private WorkerTask<PaymentSession> loadTask;
     private String listUrl;
     private Interaction reloadInteraction;
 
@@ -60,18 +59,11 @@ final class PaymentPagePresenter {
      */
     PaymentPagePresenter(PaymentPageView view) {
         this.view = view;
-        this.service = new PaymentPageService();
+        this.service = new PaymentPageService(this);
     }
 
     void onStop() {
-        if (loadTask != null) {
-            loadTask.unsubscribe();
-            loadTask = null;
-        }
-        if (chargeTask != null) {
-            chargeTask.unsubscribe();
-            chargeTask = null;
-        }
+        service.onStop();
     }
 
     /**
@@ -82,15 +74,21 @@ final class PaymentPagePresenter {
      */
     void load(String listUrl) {
 
-        if (loadTask != null) {
+        if (service.isLoading()) {
             return;
         }
         this.listUrl = listUrl;
 
         if (session != null && session.isListUrl(listUrl)) {
+            // show the cached payment session
             view.showPaymentSession(session);
+            return;
+        }
+        view.showLoading(true);
+
+        if (validator == null) {
+            service.loadValidator();
         } else {
-            view.showLoading(true);
             loadPaymentSession(listUrl);
         }
     }
@@ -138,8 +136,27 @@ final class PaymentPagePresenter {
         }
     }
 
-    private void callbackLoadSuccess(PaymentSession session) {
-        this.loadTask = null;
+    void onValidatorSuccess(Validator validator) {
+
+        if (!view.isActive()) {
+            return;
+        }
+        this.validator = validator;
+        loadPaymentSession(this.listUrl);
+    }
+
+    void onValidatorError(Throwable throwable) {
+    }
+    
+    void onPaymentSessionError(Throwable cause) {
+        if (cause instanceof PaymentException) {
+            handleLoadPaymentError((PaymentException) cause);
+            return;
+        }
+        closeSessionWithError(R.string.pmpage_error_unknown, cause);
+    }
+    
+    void onPaymentSessionSuccess(PaymentSession session) {
         Interaction interaction = session.listResult.getInteraction();
 
         switch (interaction.getCode()) {
@@ -152,6 +169,14 @@ final class PaymentPagePresenter {
         }
     }
 
+    void onPaymentSessionError(Throwable cause) {
+        if (cause instanceof PaymentException) {
+            handleLoadPaymentError((PaymentException) cause);
+            return;
+        }
+        closeSessionWithError(R.string.pmpage_error_unknown, cause);
+    }
+
     private void handleLoadInteractionProceed(PaymentSession session) {
         this.session = session;
 
@@ -160,16 +185,6 @@ final class PaymentPagePresenter {
             reloadInteraction = null;
         }
         view.showPaymentSession(session);
-    }
-
-    private void callbackLoadError(Throwable cause) {
-        this.loadTask = null;
-
-        if (cause instanceof PaymentException) {
-            handleLoadPaymentError((PaymentException) cause);
-            return;
-        }
-        closeSessionWithError(R.string.pmpage_error_unknown, cause);
     }
 
     private void handleLoadPaymentError(PaymentException cause) {
@@ -325,54 +340,14 @@ final class PaymentPagePresenter {
         return TextUtils.isEmpty(msg) ? defMessage : msg;
     }
 
-    private int nextGroupType() {
-        return groupType++;
-    }
-
     private void loadPaymentSession(final String listUrl) {
         this.session = null;
         view.clear();
-
-        loadTask = WorkerTask.fromCallable(new Callable<PaymentSession>() {
-            @Override
-            public PaymentSession call() throws PaymentException {
-                return service.loadPaymentSession(listUrl);
-            }
-        });
-        loadTask.subscribe(new WorkerSubscriber<PaymentSession>() {
-            @Override
-            public void onSuccess(PaymentSession paymentSession) {
-                callbackLoadSuccess(paymentSession);
-            }
-
-            @Override
-            public void onError(Throwable cause) {
-                callbackLoadError(cause);
-            }
-        });
-        Workers.getInstance().forNetworkTasks().execute(loadTask);
+        service.loadPaymentSession(listUrl);
     }
 
     private void postChargeRequest(final URL url, final Charge charge) {
         view.showLoading(true);
-
-        chargeTask = WorkerTask.fromCallable(new Callable<OperationResult>() {
-            @Override
-            public OperationResult call() throws PaymentException {
-                return service.postChargeRequest(url, charge);
-            }
-        });
-        chargeTask.subscribe(new WorkerSubscriber<OperationResult>() {
-            @Override
-            public void onSuccess(OperationResult result) {
-                callbackChargeSuccess(result);
-            }
-
-            @Override
-            public void onError(Throwable cause) {
-                callbackChargeError(cause);
-            }
-        });
-        Workers.getInstance().forNetworkTasks().execute(chargeTask);
+        service.postChargeRequest(url, charge);
     }
 }

@@ -39,24 +39,140 @@ import net.optile.payment.ui.model.PaymentSession;
  */
 final class PaymentPageService {
 
+    private final PaymentPagePresenter presenter;
     private final ListConnection listConnection;
     private final ChargeConnection chargeConnection;
+    
+    private WorkerTask<OperationResult> chargeTask;
+    private WorkerTask<PaymentSession> loadTask;
+    private WorkerTask<Validator> validatorTask;
 
     /**
      * Create a new PaymentPageService, this service is used to communicate with the Payment API
      */
-    PaymentPageService() {
+    PaymentPageService(PaymentPagePresenter presenter) {
+        this.presenter = presenter;
         this.listConnection = new ListConnection();
         this.chargeConnection = new ChargeConnection();
     }
 
+    void stop() {
+
+        if (loadTask != null) {
+            loadTask.unsubscribe();
+            loadTask = null;
+        }
+        if (chargeTask != null) {
+            chargeTask.unsubscribe();
+            chargeTask = null;
+        }
+        if (validatorTask != null) {
+            validatorTask.unsubscribe();
+            validatorTask = null;
+        }
+    }
+
+    boolean isLoading() {
+        return loadTask != null || chargeTask != null || validatorTask != null;
+    }
+
+    void loadValidator() {
+
+        if (validatorTask != null) {
+            throw new IllegalStateException("Already loading validator, stop first");
+        }
+        validatorTask = WorkerTask.fromCallable(new Callable<Validator>() {
+            @Override
+            public Validator call() throws PaymentException {
+                return asyncLoadValidator();
+            }
+        });
+        validatorTask.subscribe(new WorkerSubscriber<Validator>() {
+            @Override
+            public void onSuccess(Validator validator) {
+                validatorTask = null;
+                presenter.onValidatorSuccess(validator);
+            }
+
+            @Override
+            public void onError(Throwable cause) {
+                validatorTask = null;
+                presenter.onValidatorError(cause);
+            }
+        });
+        Workers.getInstance().forNetworkTasks().execute(validatorTask);
+    }
+    
+    void loadPaymentSession(final String listUrl) {
+
+        if (loadTask != null) {
+            throw new IllegalStateException("Already loading payment session, stop first");
+        }
+        loadTask = WorkerTask.fromCallable(new Callable<PaymentSession>() {
+            @Override
+            public PaymentSession call() throws PaymentException {
+                return asyncLoadPaymentSession(listUrl);
+            }
+        });
+        loadTask.subscribe(new WorkerSubscriber<PaymentSession>() {
+            @Override
+            public void onSuccess(PaymentSession paymentSession) {
+                loadTask = null;
+                presenter.onPaymentSessionSuccess(paymentSession);
+            }
+
+            @Override
+            public void onError(Throwable cause) {
+                loadTask = null;
+                presenter.onPaymentSessionError(cause);
+            }
+        });
+        Workers.getInstance().forNetworkTasks().execute(loadTask);
+    }
+
+    void postChargeRequest(final URL url, final Charge charge) {
+
+        if (chargeTask != null) {
+            throw new IllegalStateException("Already posting charge, stop first");
+        }
+        chargeTask = WorkerTask.fromCallable(new Callable<OperationResult>() {
+            @Override
+            public OperationResult call() throws PaymentException {
+                return asyncPostChargeRequest(url, charge);
+            }
+        });
+        chargeTask.subscribe(new WorkerSubscriber<OperationResult>() {
+            @Override
+            public void onSuccess(OperationResult result) {
+                chargeTask = null;
+                presenter.onChargeSuccess(result);
+            }
+
+            @Override
+            public void onError(Throwable cause) {
+                chargeTask = null;
+                presenter.onChargeError(cause);
+            }
+        });
+        Workers.getInstance().forNetworkTasks().execute(chargeTask);
+    }
+
+    /**
+     * Load the Validator in the background including the validations settings file.
+     *
+     * @return the validator
+     */
+    private Validator loadValidator() throws PaymentException {
+        return null;
+    }
+    
     /**
      * Load the PaymentSession from the Payment API
      *
      * @param listUrl unique list url of the payment session
      * @return the payment session obtained from the Payment API
      */
-    PaymentSession loadPaymentSession(String listUrl) throws PaymentException {
+    private PaymentSession asyncLoadPaymentSession(String listUrl) throws PaymentException {
         ListResult listResult = listConnection.getListResult(listUrl);
         List<PaymentNetwork> networks = loadPaymentNetworks(listResult);
         List<NetworkCard> networkCards = loadNetworkCards(networks);
@@ -74,7 +190,7 @@ final class PaymentPageService {
      * @param charge the object containing the charge details
      * @return operation result containing information about the charge request
      */
-    OperationResult postChargeRequest(URL url, Charge charge) throws PaymentException {
+    private OperationResult asyncPostChargeRequest(URL url, Charge charge) throws PaymentException {
         return chargeConnection.createCharge(url, charge);
     }
 
