@@ -186,7 +186,6 @@ final class PaymentPagePresenter {
      * @param operation operation explaining the result of the charge request
      */
     void onChargeSuccess(OperationResult operation) {
-        this.chargeTask = null;
         PaymentResult result = new PaymentResult(operation);
 
         switch (operation.getInteraction().getCode()) {
@@ -280,7 +279,6 @@ final class PaymentPagePresenter {
     }
 
     private void callbackChargeError(Throwable cause) {
-        this.chargeTask = null;
 
         if (cause instanceof PaymentException) {
             handleChargePaymentError((PaymentException) cause);
@@ -289,6 +287,23 @@ final class PaymentPagePresenter {
         closeSessionWithError(R.string.pmpage_error_unknown, cause);
     }
 
+    private void handleChargePaymentError(PaymentException cause) {
+        PaymentError error = cause.error;
+        ErrorInfo info = error.errorInfo;
+
+        if (info != null) {
+            handleChargeInteractionError(new PaymentResult(info.getResultInfo(), info.getInteraction()));
+        } else {
+            switch (error.errorType) {
+                case PaymentError.CONN_ERROR:
+                    continueSessionWithWarning(R.string.pmpage_error_connection, cause);
+                    break;
+                default:
+                    closeSessionWithError(R.string.pmpage_error_unknown, cause);
+            }
+        }
+    }
+    
     private void handleChargeInteractionError(PaymentResult result) {
         Interaction interaction = result.getInteraction();
 
