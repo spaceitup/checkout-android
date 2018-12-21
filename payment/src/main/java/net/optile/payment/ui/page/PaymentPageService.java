@@ -17,10 +17,15 @@ import java.util.ArrayList;
 import java.util.List;
 
 import android.text.TextUtils;
+import android.content.Context;
 import net.optile.payment.core.LanguageFile;
 import net.optile.payment.core.PaymentError;
 import net.optile.payment.core.PaymentException;
 import net.optile.payment.form.Charge;
+import net.optile.payment.core.WorkerSubscriber;
+import net.optile.payment.core.WorkerTask;
+import net.optile.payment.core.Workers;
+import net.optile.payment.validation.Validator;
 import net.optile.payment.model.AccountRegistration;
 import net.optile.payment.model.ApplicableNetwork;
 import net.optile.payment.model.InputElement;
@@ -35,7 +40,8 @@ import net.optile.payment.ui.model.PaymentNetwork;
 import net.optile.payment.ui.model.PaymentSession;
 
 /**
- * The PaymentPageService implementing the communication with the Payment API
+ * The PaymentPageService providing asynchronize initializing of the PaymentPage and communication with the Payment API .
+ * This service makes callbacks in the presenter to notify of request completions.
  */
 final class PaymentPageService {
 
@@ -72,11 +78,11 @@ final class PaymentPageService {
         }
     }
 
-    boolean isLoading() {
-        return loadTask != null || chargeTask != null || validatorTask != null;
+    boolean isActive() {
+        return validatorTask != null || loadTask != null || chargeTask != null;
     }
 
-    void loadValidator() {
+    void loadValidator(final Context context) {
 
         if (validatorTask != null) {
             throw new IllegalStateException("Already loading validator, stop first");
@@ -84,7 +90,7 @@ final class PaymentPageService {
         validatorTask = WorkerTask.fromCallable(new Callable<Validator>() {
             @Override
             public Validator call() throws PaymentException {
-                return asyncLoadValidator();
+                return asyncLoadValidator(context);
             }
         });
         validatorTask.subscribe(new WorkerSubscriber<Validator>() {
@@ -162,10 +168,11 @@ final class PaymentPageService {
      *
      * @return the validator
      */
-    private Validator loadValidator() throws PaymentException {
-        return null;
+    private Validator asyncLoadValidator(Context context) throws PaymentException {
+        int validationResId = PaymentUI.getInstance().getValidationResId();
+        return Validator.createInstance(context, validationResId);
     }
-    
+
     /**
      * Load the PaymentSession from the Payment API
      *

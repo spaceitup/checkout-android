@@ -19,7 +19,9 @@ import com.google.gson.JsonSyntaxException;
 import android.content.Context;
 import android.text.TextUtils;
 import android.util.Log;
+import net.optile.payment.core.PaymentError;
 import net.optile.payment.core.PaymentInputType;
+import net.optile.payment.core.PaymentException;
 import net.optile.payment.model.PaymentMethod;
 import net.optile.payment.util.GsonHelper;
 import net.optile.payment.util.PaymentUtils;
@@ -53,21 +55,20 @@ public class Validator {
      * @param validationResId the raw json resource containing validations to be used
      * @return the newly created Validator
      */
-    public final static Validator createInstance(Context context, int validationResId) {
+    public final static Validator createInstance(Context context, int validationResId) throws PaymentException {
         if (context == null) {
             throw new IllegalArgumentException("Context may not be null");
         }
         try {
             String val = PaymentUtils.readRawResource(context.getResources(), validationResId);
             return new Validator(GsonHelper.getInstance().fromJson(val, Validations.class));
-        } catch (IOException e) {
-            Log.w(TAG, e);
-        } catch (JsonSyntaxException e) {
-            Log.w(TAG, e);
+        } catch (IOException | JsonSyntaxException e) {
+            String msg = "Validator.createInstance failed: " + e.toString();
+            PaymentError error = new PaymentError("Validator", PaymentError.INTERNAL_ERROR, msg);
+            throw new PaymentException(error, msg, e);
         }
-        throw new IllegalArgumentException("Error loading validations resource file, make sure it exist and is valid json.");
     }
-
+        
     /**
      * Get the validation for the given method, code and type.
      *

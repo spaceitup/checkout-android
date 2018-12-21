@@ -37,11 +37,11 @@ public final class PaymentUI {
     /** The cached payment theme */
     private PaymentTheme theme;
 
-    /** The Validations resource file id */
-    private int validationsResId;
+    /** The validation resource file id */
+    private int validationResId;
 
-    /** The Grouping resource file id */
-    private int groupingResId;
+    /** The group resource file id */
+    private int groupResId;
     
     private PaymentUI() {
     }
