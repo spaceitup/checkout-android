@@ -13,6 +13,7 @@ package net.optile.payment.ui.model;
 
 import java.net.URL;
 import java.util.List;
+import android.util.Log;
 
 import net.optile.payment.core.LanguageFile;
 import net.optile.payment.model.InputElement;
@@ -23,18 +24,17 @@ import net.optile.payment.util.PaymentUtils;
  */
 public final class NetworkCard implements PaymentCard {
 
-    public final PaymentNetwork network;
-    public final List<InputElement> elements;
+    private final List<PaymentNetwork> networks;
+    private PaymentNetwork smartSelected;
 
     /**
      * Construct a new NetworkCard
      *
-     * @param network the network payment shown in this NetworkCard
+     * @param networks the list of payment network inside this network card
      * @param elements containing the ordered list of InputElements
      */
-    public NetworkCard(PaymentNetwork network, List<InputElement> elements) {
-        this.network = network;
-        this.elements = elements;
+    public NetworkCard(List<PaymentNetwork> networks) {
+        this.networks = networks;
     }
 
     /**
@@ -42,7 +42,8 @@ public final class NetworkCard implements PaymentCard {
      */
     @Override
     public URL getOperationLink() {
-        return network.getLink("operation");
+        Log.i("pay_Card", "getOperationLink: " + networks.size());
+        return getActiveNetwork().getLink("operation");
     }
 
     /**
@@ -50,7 +51,7 @@ public final class NetworkCard implements PaymentCard {
      */
     @Override
     public String getPaymentMethod() {
-        return network.getPaymentMethod();
+        return getActiveNetwork().getPaymentMethod();
     }
 
     /**
@@ -58,7 +59,7 @@ public final class NetworkCard implements PaymentCard {
      */
     @Override
     public String getCode() {
-        return network.getCode();
+        return getActiveNetwork().getCode();
     }
 
     /**
@@ -66,7 +67,7 @@ public final class NetworkCard implements PaymentCard {
      */
     @Override
     public LanguageFile getLang() {
-        return network.getLang();
+        return getActiveNetwork().getLang();
     }
 
     /**
@@ -74,7 +75,7 @@ public final class NetworkCard implements PaymentCard {
      */
     @Override
     public List<InputElement> getInputElements() {
-        return elements;
+        return getActiveNetwork().getInputElements();
     }
 
     /**
@@ -82,7 +83,7 @@ public final class NetworkCard implements PaymentCard {
      */
     @Override
     public boolean isPreselected() {
-        return PaymentUtils.isTrue(network.isPreselected());
+        return PaymentUtils.isTrue(getActiveNetwork().isPreselected());
     }
 
     /**
@@ -90,7 +91,7 @@ public final class NetworkCard implements PaymentCard {
      */
     @Override
     public String getButton() {
-        return network.getButton();
+        return getActiveNetwork().getButton();
     }
 
     /**
@@ -98,7 +99,7 @@ public final class NetworkCard implements PaymentCard {
      *
      * @return active PaymentNetwork
      */
-    public PaymentNetwork getActivePaymentNetwork() {
-        return network;
+    public PaymentNetwork getActiveNetwork() {
+        return smartSelected != null ? smartSelected : networks.get(0);
     }
 }

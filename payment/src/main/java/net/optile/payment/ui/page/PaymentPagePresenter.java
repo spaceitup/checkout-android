@@ -83,7 +83,7 @@ final class PaymentPagePresenter {
         this.listUrl = listUrl;
 
         if (validator != null && session != null && session.isListUrl(listUrl)) {
-            // show the cached payment session when all have been previously loaded
+            // show the cached payment session
             view.showPaymentSession(session);
             return;
         }
@@ -197,7 +197,7 @@ final class PaymentPagePresenter {
         }
     }
 
-    private void onChargeError(Throwable cause) {
+    void onChargeError(Throwable cause) {
 
         if (cause instanceof PaymentException) {
             handleChargePaymentError((PaymentException) cause);

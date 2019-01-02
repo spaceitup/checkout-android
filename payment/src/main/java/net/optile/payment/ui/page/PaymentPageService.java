@@ -13,9 +13,11 @@ package net.optile.payment.ui.page;
 
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.Map;
+import java.util.LinkedHashMap;
 import java.util.ArrayList;
 import java.util.List;
-
+import android.util.Log;
 import android.text.TextUtils;
 import android.content.Context;
 import net.optile.payment.core.LanguageFile;
@@ -34,6 +36,7 @@ import net.optile.payment.model.Networks;
 import net.optile.payment.model.OperationResult;
 import net.optile.payment.network.ChargeConnection;
 import net.optile.payment.network.ListConnection;
+import net.optile.payment.ui.PaymentUI;
 import net.optile.payment.ui.model.AccountCard;
 import net.optile.payment.ui.model.NetworkCard;
 import net.optile.payment.ui.model.PaymentNetwork;
@@ -48,6 +51,7 @@ import java.util.concurrent.FutureTask;
  */
 final class PaymentPageService {
 
+    private final static String TAG = "pay_Service";
     private final PaymentPagePresenter presenter;
     private final ListConnection listConnection;
     private final ChargeConnection chargeConnection;
@@ -132,6 +136,7 @@ final class PaymentPageService {
 
             @Override
             public void onError(Throwable cause) {
+                Log.wtf(TAG, cause);
                 loadTask = null;
                 presenter.onPaymentSessionError(cause);
             }
@@ -184,9 +189,10 @@ final class PaymentPageService {
      */
     private PaymentSession asyncLoadPaymentSession(String listUrl) throws PaymentException {
         ListResult listResult = listConnection.getListResult(listUrl);
-        List<PaymentNetwork> networks = loadPaymentNetworks(listResult);
-        List<NetworkCard> networkCards = loadNetworkCards(networks);
-        List<AccountCard> accountCards = loadAccountCards(listResult, networks);
+        Map<String, PaymentNetwork> networks = loadPaymentNetworks(listResult);
+
+        List<AccountCard> accountCards = createAccountCards(listResult, networks);
+        List<NetworkCard> networkCards = createNetworkCards(networks);
 
         PaymentSession session = new PaymentSession(listResult, accountCards, networkCards);
         session.setLang(loadPaymentPageLanguageFile(networks));
@@ -204,16 +210,19 @@ final class PaymentPageService {
         return chargeConnection.createCharge(url, charge);
     }
 
-    private List<NetworkCard> loadNetworkCards(List<PaymentNetwork> networks) {
+    private List<NetworkCard> createNetworkCards(Map<String, PaymentNetwork> networks) throws PaymentException {
+        List<PaymentNetwork> copy = new ArrayList<PaymentNetwork>(networks.values());
         List<NetworkCard> cards = new ArrayList<>();
 
-        for (PaymentNetwork network : networks) {
+        for (PaymentNetwork network : copy) {
             cards.add(createNetworkCard(network));
         }
+        Log.i(TAG, "size of networkcards: " + cards.size());
+        Log.i(TAG, "test" + cards.get(0).toString());
         return cards;
     }
 
-    private List<AccountCard> loadAccountCards(ListResult listResult, List<PaymentNetwork> networks) {
+    private List<AccountCard> createAccountCards(ListResult listResult, Map<String, PaymentNetwork> networks) {
         List<AccountCard> cards = new ArrayList<>();
         List<AccountRegistration> accounts = listResult.getAccounts();
 
@@ -221,7 +230,7 @@ final class PaymentPageService {
             return cards;
         }
         for (AccountRegistration account : accounts) {
-            PaymentNetwork pn = findPaymentNetwork(networks, account.getCode());
+            PaymentNetwork pn = networks.get(account.getCode());
 
             if (pn != null) {
                 cards.add(createAccountCard(account, pn));
@@ -230,17 +239,8 @@ final class PaymentPageService {
         return cards;
     }
 
-    private PaymentNetwork findPaymentNetwork(List<PaymentNetwork> networks, String code) {
-        for (PaymentNetwork pn : networks) {
-            if (pn.network.getCode().equals(code)) {
-                return pn;
-            }
-        }
-        return null;
-    }
-
-    private List<PaymentNetwork> loadPaymentNetworks(ListResult listResult) throws PaymentException {
-        List<PaymentNetwork> items = new ArrayList<>();
+    private Map<String, PaymentNetwork> loadPaymentNetworks(ListResult listResult) throws PaymentException {
+        LinkedHashMap<String, PaymentNetwork> items = new LinkedHashMap<>();
         Networks nw = listResult.getNetworks();
 
         if (nw == null) {
@@ -253,7 +253,8 @@ final class PaymentPageService {
         }
         for (ApplicableNetwork network : an) {
             if (isSupported(network)) {
-                items.add(loadPaymentNetwork(network));
+                Log.i(TAG, "put: " + network.getCode());
+                items.put(network.getCode(), loadPaymentNetwork(network));
             }
         }
         return items;
@@ -271,14 +272,16 @@ final class PaymentPageService {
     }
 
     private AccountCard createAccountCard(AccountRegistration registration, PaymentNetwork paymentNetwork) {
+        Log.i(TAG, "createAccountCard: " + paymentNetwork.toString());
         AccountCard card = new AccountCard(registration, paymentNetwork.network);
         card.setLang(paymentNetwork.getLang());
         return card;
     }
 
-    private NetworkCard createNetworkCard(PaymentNetwork paymentNetwork) {
-        List<InputElement> elements = paymentNetwork.getInputElements();
-        return new NetworkCard(paymentNetwork, elements);
+    private NetworkCard createNetworkCard(PaymentNetwork network) {
+        List<PaymentNetwork> networks = new ArrayList<PaymentNetwork>();
+        networks.add(network);
+        return new NetworkCard(networks);
     }
 
     /**
@@ -288,13 +291,13 @@ final class PaymentPageService {
      * @param networks contains the list of PaymentNetwork elements
      * @return the properties object containing the language entries
      */
-    private LanguageFile loadPaymentPageLanguageFile(List<PaymentNetwork> networks) throws PaymentException {
+    private LanguageFile loadPaymentPageLanguageFile(Map<String, PaymentNetwork> networks) throws PaymentException {
         LanguageFile file = new LanguageFile();
 
         if (networks.size() == 0) {
             return file;
         }
-        PaymentNetwork network = networks.get(0);
+        PaymentNetwork network = networks.entrySet().iterator().next().getValue();
         URL langUrl = network.getLink("lang");
 
         if (langUrl == null) {
@@ -308,12 +311,18 @@ final class PaymentPageService {
         }
     }
 
+    private List<NetworkGroup> loadNetworkGroups() {
+        int groupResId = PaymentUI.getInstance().getGroupResId();
+        return Validator.createInstance(context, validationResId);
+    }
+    
     private boolean isSupported(ApplicableNetwork network) {
         String button = network.getButton();
         return (TextUtils.isEmpty(button) || !button.contains("activate")) && !network.getRedirect();
     }
 
     private PaymentException createPaymentException(String message, Throwable cause) {
+        Log.wtf(TAG, cause);
         final PaymentError error = new PaymentError("PaymentPage", PaymentError.INTERNAL_ERROR, message);
         return new PaymentException(error, message, cause);
     }

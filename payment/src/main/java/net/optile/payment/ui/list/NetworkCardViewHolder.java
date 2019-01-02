@@ -69,7 +69,7 @@ final class NetworkCardViewHolder extends PaymentCardViewHolder {
         super.onBind(paymentCard);
 
         NetworkCard networkCard = (NetworkCard) paymentCard;
-        PaymentNetwork network = networkCard.getActivePaymentNetwork();
+        PaymentNetwork network = networkCard.getActiveNetwork();
         URL logoUrl = network.getLink("logo");
         title.setText(network.getLabel());
 

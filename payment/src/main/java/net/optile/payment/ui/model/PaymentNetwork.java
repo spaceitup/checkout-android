@@ -28,7 +28,8 @@ public class PaymentNetwork {
 
     public final ApplicableNetwork network;
     private LanguageFile lang;
-
+    private NetworkFilter filter;
+    
     public PaymentNetwork(ApplicableNetwork network) {
         this.network = network;
     }
