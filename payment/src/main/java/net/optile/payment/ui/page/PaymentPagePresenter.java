@@ -197,26 +197,13 @@ final class PaymentPagePresenter {
         }
     }
 
-    /** 
-     * Callback from the service that the charge could not be performed.
-     * 
-     * @param cause explaining why the charge request failed.
-     */
-    void onChargeError(PaymentException cause) {
-        PaymentError error = cause.error;
-        ErrorInfo info = error.errorInfo;
+    private void onChargeError(Throwable cause) {
 
-        if (info != null) {
-            handleChargeInteractionError(new PaymentResult(info.getResultInfo(), info.getInteraction()));
-        } else {
-            switch (error.errorType) {
-                case PaymentError.CONN_ERROR:
-                    continueSessionWithWarning(R.string.pmpage_error_connection, cause);
-                    break;
-                default:
-                    closeSessionWithError(R.string.pmpage_error_unknown, cause);
-            }
+        if (cause instanceof PaymentException) {
+            handleChargePaymentError((PaymentException) cause);
+            return;
         }
+        closeSessionWithError(R.string.pmpage_error_unknown, cause);
     }
 
     private void handleLoadInteractionProceed(PaymentSession session) {
