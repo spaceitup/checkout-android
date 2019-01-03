@@ -218,34 +218,37 @@ final class PaymentPageService {
     private List<NetworkCard> createNetworkCards(Map<String, PaymentNetwork> networks) throws PaymentException {
         Map<String, PaymentGroup> groups = loadPaymentGroups();
         Map<String, NetworkCard> cards = new LinkedHashMap<>();
+
+        NetworkCard card = null;
         PaymentGroup group;
-        NetworkCard card;
-        String groupId;
         String code;
         
         for (PaymentNetwork network : networks.values()) {
             code = network.getCode();
 
-            if (groups.containsKey(code)) {
-                group = groups.get(code);
-                groupId = group.getId();
-                network.setSmartSelectionRegex(group.getSmartSelectionRegex(code));
-                
-                if (cards.containsKey(groupId)) {
-                    card = cards.get(groupId);
-                } else {
-                    card = new NetworkCard();
-                    cards.put(groupId, card);
-                }
-            } else {
-                card = new NetworkCard();
-                cards.put(code, card);
+            if ((group = groups.get(code)) == null) {
+                addNetworkCard(cards, code, network);
+                continue;
             }
-            card.addPaymentNetwork(network);
+            network.setSmartSelectionRegex(group.getSmartSelectionRegex(code));
+            card = cards.get(group.getId());
+
+            if (card == null) {
+                addNetworkCard(cards, group.getId(), network);
+            }
+            else if (!card.addPaymentNetwork(network)) {
+                addNetworkCard(cards, code, network);
+            }
         }
         return new ArrayList<NetworkCard>(cards.values());
     }
 
+    private void addNetworkCard(Map<String, NetworkCard> cards, String cardId, PaymentNetwork network) {
+        NetworkCard card = new NetworkCard();
+        card.addPaymentNetwork(network);
+        cards.put(cardId, card);
+    }
+    
     private List<AccountCard> createAccountCards(ListResult listResult, Map<String, PaymentNetwork> networks) {
         List<AccountCard> cards = new ArrayList<>();
         List<AccountRegistration> accounts = listResult.getAccounts();

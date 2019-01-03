@@ -96,12 +96,15 @@ public final class NetworkCard implements PaymentCard {
     }
 
     /** 
-     * Add a PaymentNetwork to this NetworkCard.
+     * Add a PaymentNetwork to this NetworkCard, adding may fail if InputElements of this PaymentNetwork are not similar with InputElements 
+     * of previously added PaymentNetworks.
      * 
      * @param network to be added to this NetworkCard
+     * @return true when this network was added successfully or false otherwise
      */
-    public void addPaymentNetwork(PaymentNetwork network) {
+    public boolean addPaymentNetwork(PaymentNetwork network) {
         networks.add(network);
+        return true;
     }
     
     /**
