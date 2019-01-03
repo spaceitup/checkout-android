@@ -1,6 +1,6 @@
 [
     {
-        "group": [
+        "items": [
             {
                 "code": "MASTERCARD",
                 "regex": "^5[0-9]*$"

@@ -41,6 +41,10 @@ import net.optile.payment.ui.model.AccountCard;
 import net.optile.payment.ui.model.NetworkCard;
 import net.optile.payment.ui.model.PaymentNetwork;
 import net.optile.payment.ui.model.PaymentSession;
+import net.optile.payment.resource.PaymentGroup;
+import net.optile.payment.resource.ResourceLoader;
+import android.content.res.Resources;
+
 import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.FutureTask;
@@ -89,7 +93,7 @@ final class PaymentPageService {
         return validatorTask != null || loadTask != null || chargeTask != null;
     }
 
-    void loadValidator(final Context context) {
+    void loadValidator() {
 
         if (validatorTask != null) {
             throw new IllegalStateException("Already loading validator, stop first");
@@ -97,7 +101,7 @@ final class PaymentPageService {
         validatorTask = WorkerTask.fromCallable(new Callable<Validator>() {
             @Override
             public Validator call() throws PaymentException {
-                return asyncLoadValidator(context);
+                return asyncLoadValidator();
             }
         });
         validatorTask.subscribe(new WorkerSubscriber<Validator>() {
@@ -176,9 +180,10 @@ final class PaymentPageService {
      *
      * @return the validator
      */
-    private Validator asyncLoadValidator(Context context) throws PaymentException {
+    private Validator asyncLoadValidator() throws PaymentException {
         int validationResId = PaymentUI.getInstance().getValidationResId();
-        return Validator.createInstance(context, validationResId);
+        Resources res = presenter.getContext().getResources();
+        return new Validator(ResourceLoader.loadValidations(res, validationResId));
     }
 
     /**
@@ -211,15 +216,34 @@ final class PaymentPageService {
     }
 
     private List<NetworkCard> createNetworkCards(Map<String, PaymentNetwork> networks) throws PaymentException {
-        List<PaymentNetwork> copy = new ArrayList<PaymentNetwork>(networks.values());
-        List<NetworkCard> cards = new ArrayList<>();
+        Map<String, PaymentGroup> groups = loadPaymentGroups();
+        Map<String, NetworkCard> cards = new LinkedHashMap<>();
+        PaymentGroup group;
+        NetworkCard card;
+        String groupId;
+        String code;
+        
+        for (PaymentNetwork network : networks.values()) {
+            code = network.getCode();
 
-        for (PaymentNetwork network : copy) {
-            cards.add(createNetworkCard(network));
+            if (groups.containsKey(code)) {
+                group = groups.get(code);
+                groupId = group.getId();
+                network.setSmartSelectionRegex(group.getSmartSelectionRegex(code));
+                
+                if (cards.containsKey(groupId)) {
+                    card = cards.get(groupId);
+                } else {
+                    card = new NetworkCard();
+                    cards.put(groupId, card);
+                }
+            } else {
+                card = new NetworkCard();
+                cards.put(code, card);
+            }
+            card.addPaymentNetwork(network);
         }
-        Log.i(TAG, "size of networkcards: " + cards.size());
-        Log.i(TAG, "test" + cards.get(0).toString());
-        return cards;
+        return new ArrayList<NetworkCard>(cards.values());
     }
 
     private List<AccountCard> createAccountCards(ListResult listResult, Map<String, PaymentNetwork> networks) {
@@ -253,7 +277,6 @@ final class PaymentPageService {
         }
         for (ApplicableNetwork network : an) {
             if (isSupported(network)) {
-                Log.i(TAG, "put: " + network.getCode());
                 items.put(network.getCode(), loadPaymentNetwork(network));
             }
         }
@@ -272,16 +295,9 @@ final class PaymentPageService {
     }
 
     private AccountCard createAccountCard(AccountRegistration registration, PaymentNetwork paymentNetwork) {
-        Log.i(TAG, "createAccountCard: " + paymentNetwork.toString());
         AccountCard card = new AccountCard(registration, paymentNetwork.network);
         card.setLang(paymentNetwork.getLang());
         return card;
-    }
-
-    private NetworkCard createNetworkCard(PaymentNetwork network) {
-        List<PaymentNetwork> networks = new ArrayList<PaymentNetwork>();
-        networks.add(network);
-        return new NetworkCard(networks);
     }
 
     /**
@@ -311,9 +327,10 @@ final class PaymentPageService {
         }
     }
 
-    private List<NetworkGroup> loadNetworkGroups() {
+    private Map<String, PaymentGroup> loadPaymentGroups() throws PaymentException {
         int groupResId = PaymentUI.getInstance().getGroupResId();
-        return Validator.createInstance(context, validationResId);
+        Resources res = presenter.getContext().getResources();
+        return ResourceLoader.loadPaymentGroups(res, groupResId);
     }
     
     private boolean isSupported(ApplicableNetwork network) {

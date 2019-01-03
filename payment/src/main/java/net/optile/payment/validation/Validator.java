@@ -11,20 +11,15 @@
 
 package net.optile.payment.validation;
 
-import java.io.IOException;
 import java.util.Calendar;
+import java.util.Map;
 
-import com.google.gson.JsonSyntaxException;
-
-import android.content.Context;
 import android.text.TextUtils;
 import android.util.Log;
-import net.optile.payment.core.PaymentError;
 import net.optile.payment.core.PaymentInputType;
-import net.optile.payment.core.PaymentException;
 import net.optile.payment.model.PaymentMethod;
-import net.optile.payment.util.GsonHelper;
-import net.optile.payment.util.PaymentUtils;
+import net.optile.payment.resource.ValidationGroupItem;
+import net.optile.payment.resource.ValidationGroup;
 
 /**
  * Class for validating input type values
@@ -37,48 +32,34 @@ public class Validator {
     public final static String REGEX_ACCOUNT_NUMBER = "^[0-9]+$";
     public final static String REGEX_VERIFICATION_CODE = "^[0-9]*$";
     private final static String TAG = "pay_Validator";
-    private final Validations validations;
+    private final Map<String, ValidationGroup> validations;
 
     /**
      * Construct a new Validator with the provided validations
      *
      * @param validations the list of validations to be used to validate input values
      */
-    private Validator(Validations validations) {
+    public Validator(Map<String, ValidationGroup> validations) {
+        if (validations == null) {
+            throw new IllegalArgumentException("Validations may not be null");
+        }
         this.validations = validations;
     }
 
     /**
-     * Construct a new default Validator which will be used to validate the entered input values from the user.
-     *
-     * @param context needed to construct the default Validator
-     * @param validationResId the raw json resource containing validations to be used
-     * @return the newly created Validator
-     */
-    public final static Validator createInstance(Context context, int validationResId) throws PaymentException {
-        if (context == null) {
-            throw new IllegalArgumentException("Context may not be null");
-        }
-        try {
-            String val = PaymentUtils.readRawResource(context.getResources(), validationResId);
-            return new Validator(GsonHelper.getInstance().fromJson(val, Validations.class));
-        } catch (IOException | JsonSyntaxException e) {
-            String msg = "Validator.createInstance failed: " + e.toString();
-            PaymentError error = new PaymentError("Validator", PaymentError.INTERNAL_ERROR, msg);
-            throw new PaymentException(error, msg, e);
-        }
-    }
-        
-    /**
      * Get the validation for the given method, code and type.
      *
-     * @param method Payment method like CREDIT_CARD
      * @param code Payment code like VISA
      * @param type payment input type like "number"
-     * @return Validation or null if not found
+     * @return ValidationGroupItem or null if not found
      */
-    public Validation getValidation(String method, String code, String type) {
-        return validations != null ? validations.get(method, code, type) : null;
+    public String getValidationRegex(String code, String type) {
+
+        if (!validations.containsKey(code)) {
+            return null;
+        }
+        ValidationGroup group = validations.get(code);
+        return group.getValidationRegex(type);
     }
 
     /**
@@ -103,13 +84,13 @@ public class Validator {
         }
         value1 = value1 == null ? "" : value1;
         value2 = value2 == null ? "" : value2;
-        Validation val = validations.get(method, code, type);
+        String regex = getValidationRegex(code, type);
 
         switch (type) {
             case PaymentInputType.ACCOUNT_NUMBER:
-                return validateAccountNumber(method, value1, val);
+                return validateAccountNumber(method, value1, regex);
             case PaymentInputType.VERIFICATION_CODE:
-                return validateVerificationCode(value1, val);
+                return validateVerificationCode(value1, regex);
             case PaymentInputType.HOLDER_NAME:
                 return validateHolderName(value1);
             case PaymentInputType.EXPIRY_DATE:
@@ -129,12 +110,12 @@ public class Validator {
         }
     }
 
-    private ValidationResult validateAccountNumber(String method, String number, Validation val) {
+    private ValidationResult validateAccountNumber(String method, String number, String regex) {
 
         switch (method) {
             case PaymentMethod.CREDIT_CARD:
             case PaymentMethod.DEBIT_CARD:
-                return validateCardNumber(number, val);
+                return validateCardNumber(number, regex);
             default:
                 if (!number.matches(REGEX_ACCOUNT_NUMBER)) {
                     if (TextUtils.isEmpty(number)) {
@@ -146,8 +127,8 @@ public class Validator {
         return new ValidationResult(null);
     }
 
-    private ValidationResult validateCardNumber(String number, Validation val) {
-        String regex = val != null ? val.getRegex() : REGEX_ACCOUNT_NUMBER;
+    private ValidationResult validateCardNumber(String number, String regex) {
+        regex = regex != null ? regex : REGEX_ACCOUNT_NUMBER;
 
         if (!number.matches(regex)) {
             if (TextUtils.isEmpty(number)) {
@@ -161,8 +142,8 @@ public class Validator {
         return new ValidationResult(null);
     }
 
-    private ValidationResult validateVerificationCode(String verificationCode, Validation val) {
-        String regex = val != null ? val.getRegex() : REGEX_VERIFICATION_CODE;
+    private ValidationResult validateVerificationCode(String verificationCode, String regex) {
+        regex = regex != null ? regex : REGEX_VERIFICATION_CODE;
 
         if (!verificationCode.matches(regex)) {
             if (TextUtils.isEmpty(verificationCode)) {
@@ -268,5 +249,4 @@ public class Validator {
         }
         return false;
     }
-
 }

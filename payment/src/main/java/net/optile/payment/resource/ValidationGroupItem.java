@@ -9,17 +9,17 @@
  * has been received in full.
  */
 
-package net.optile.payment.validation;
+package net.optile.payment.resource;
 
 /**
  * Model class holding the validation Regex for the PaymentInputType
  */
-public class Validation {
+public class ValidationGroupItem {
 
     private String type;
     private String regex;
 
-    public Validation() {
+    public ValidationGroupItem() {
     }
 
     public String getType() {

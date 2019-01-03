@@ -52,7 +52,8 @@ final class PaymentPagePresenter {
     private PaymentSession session;
     private String listUrl;
     private Interaction reloadInteraction;
-
+    private Context context;
+    
     /**
      * Create a new PaymentPagePresenter
      *
@@ -81,7 +82,8 @@ final class PaymentPagePresenter {
             return;
         }
         this.listUrl = listUrl;
-
+        this.context = context;
+        
         if (validator != null && session != null && session.isListUrl(listUrl)) {
             // show the cached payment session
             view.showPaymentSession(session);
@@ -90,12 +92,21 @@ final class PaymentPagePresenter {
         view.showLoading(true);
 
         if (validator == null) {
-            service.loadValidator(context);
+            service.loadValidator();
         } else {
             loadPaymentSession(listUrl);
         }
     }
 
+    /** 
+     * Get the context in which this presenter is running.
+     * 
+     * @return context  
+     */
+    Context getContext() {
+        return this.context;
+    }
+    
     /**
      * Perform the operation specified in the paymentSession for the selected PaymentCard and widgets
      *

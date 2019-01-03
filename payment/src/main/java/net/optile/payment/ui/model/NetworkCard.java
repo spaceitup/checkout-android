@@ -13,6 +13,7 @@ package net.optile.payment.ui.model;
 
 import java.net.URL;
 import java.util.List;
+import java.util.ArrayList;
 import android.util.Log;
 
 import net.optile.payment.core.LanguageFile;
@@ -26,15 +27,15 @@ public final class NetworkCard implements PaymentCard {
 
     private final List<PaymentNetwork> networks;
     private PaymentNetwork smartSelected;
-
+    
     /**
      * Construct a new NetworkCard
      *
      * @param networks the list of payment network inside this network card
      * @param elements containing the ordered list of InputElements
      */
-    public NetworkCard(List<PaymentNetwork> networks) {
-        this.networks = networks;
+    public NetworkCard() {
+        this.networks = new ArrayList<>();
     }
 
     /**
@@ -94,6 +95,15 @@ public final class NetworkCard implements PaymentCard {
         return getActiveNetwork().getButton();
     }
 
+    /** 
+     * Add a PaymentNetwork to this NetworkCard.
+     * 
+     * @param network to be added to this NetworkCard
+     */
+    public void addPaymentNetwork(PaymentNetwork network) {
+        networks.add(network);
+    }
+    
     /**
      * Get the active PaymentNetwork that is selected in the NetworkCard
      *
@@ -102,4 +112,5 @@ public final class NetworkCard implements PaymentCard {
     public PaymentNetwork getActiveNetwork() {
         return smartSelected != null ? smartSelected : networks.get(0);
     }
+
 }

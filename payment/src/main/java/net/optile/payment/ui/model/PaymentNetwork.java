@@ -19,6 +19,7 @@ import java.util.Map;
 import net.optile.payment.core.LanguageFile;
 import net.optile.payment.model.ApplicableNetwork;
 import net.optile.payment.model.InputElement;
+import net.optile.payment.resource.PaymentGroupItem;
 import net.optile.payment.util.PaymentUtils;
 
 /**
@@ -28,7 +29,7 @@ public class PaymentNetwork {
 
     public final ApplicableNetwork network;
     private LanguageFile lang;
-    private NetworkFilter filter;
+    private String smartSelectionRegex;
     
     public PaymentNetwork(ApplicableNetwork network) {
         this.network = network;
@@ -78,5 +79,9 @@ public class PaymentNetwork {
 
     public void setLang(LanguageFile lang) {
         this.lang = lang;
+    }
+
+    public void setSmartSelectionRegex(String regex) {
+        this.smartSelectionRegex = regex;
     }
 }

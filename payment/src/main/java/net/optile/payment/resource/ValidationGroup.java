@@ -9,29 +9,35 @@
  * has been received in full.
  */
 
-package net.optile.payment.validation;
+package net.optile.payment.resource;
 
 import java.util.List;
 
 /**
- * Model class holding the different validations per PaymentMethod.
- * This class is identified by the method and code of a PaymentMethod.
+ * Model class holding the validation per PaymentMethod.
+ * This class is identified by the code of a PaymentMethod.
  */
-class ValidationGroup {
+public class ValidationGroup {
 
-    private String method;
     private String code;
-    private List<Validation> validations;
-
-    boolean matches(String method, String code) {
-        return (this.method.equals(method)) && (this.code.equals(code));
+    private List<ValidationGroupItem> items;
+    
+    private ValidationGroup() {
+    }
+        
+    public String getCode() {
+        return code;
+    }
+    
+    public boolean matches(String code) {
+        return this.code.equals(code);
     }
 
-    Validation getValidation(String type) {
+    public String getValidationRegex(String type) {
 
-        for (Validation validation : validations) {
-            if (validation.getType().equals(type)) {
-                return validation;
+        for (ValidationGroupItem item : items) {
+            if (item.getType().equals(type)) {
+                return item.getRegex();
             }
         }
         return null;
