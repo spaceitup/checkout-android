@@ -12,13 +12,17 @@
 package net.optile.payment.ui.list;
 
 import java.net.URL;
+import java.util.List;
+import java.util.ArrayList;
 
+import android.text.TextUtils;
 import android.support.v7.widget.RecyclerView.ViewHolder;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.GridView;
 import net.optile.payment.R;
 import net.optile.payment.core.LanguageFile;
 import net.optile.payment.core.PaymentInputType;
@@ -39,12 +43,15 @@ import net.optile.payment.util.PaymentUtils;
 final class NetworkCardViewHolder extends PaymentCardViewHolder {
 
     final TextView title;
-    final ImageView logo;
-
+    final GridView logoGridView;
+    private GridViewAdapter logoAdapter;
+    
     NetworkCardViewHolder(ListAdapter adapter, View parent, NetworkCard networkCard) {
         super(adapter, parent);
         this.title = parent.findViewById(R.id.text_title);
-        this.logo = parent.findViewById(R.id.image_logo);
+        this.logoGridView = parent.findViewById(R.id.gridview_logo);
+        initLogoGridView(parent, networkCard);
+        
         PaymentTheme theme = adapter.getPaymentTheme();
 
         addElementWidgets(networkCard.getInputElements(), theme);
@@ -55,6 +62,17 @@ final class NetworkCardViewHolder extends PaymentCardViewHolder {
         setLastImeOptions();
     }
 
+    private void initLogoGridView(View parent, NetworkCard networkCard) {
+        List<PaymentNetwork> networks = networkCard.getPaymentNetworks();
+        List<URL> logos = new ArrayList<>();
+
+        for (PaymentNetwork network : networks) {
+            logos.add(network.getLink("logo"));
+        }
+        this.logoAdapter = new GridViewAdapter(parent.getContext(), logos);
+        logoGridView.setAdapter(logoAdapter);
+    }
+    
     static ViewHolder createInstance(ListAdapter adapter, NetworkCard networkCard, ViewGroup parent) {
         LayoutInflater inflater = LayoutInflater.from(parent.getContext());
         View view = inflater.inflate(R.layout.list_item_networkcard, parent, false);
@@ -67,15 +85,10 @@ final class NetworkCardViewHolder extends PaymentCardViewHolder {
             throw new IllegalArgumentException("Expected Networkcard in onBind");
         }
         super.onBind(paymentCard);
-
         NetworkCard networkCard = (NetworkCard) paymentCard;
-        PaymentNetwork network = networkCard.getActiveNetwork();
-        URL logoUrl = network.getLink("logo");
-        title.setText(network.getLabel());
+        PaymentNetwork network = networkCard.getVisibleNetwork();
 
-        if (logoUrl != null) {
-            ImageHelper.getInstance().loadImage(logo, logoUrl);
-        }
+        bindHeader(networkCard);
         bindRegistrationWidget(network);
         bindRecurrenceWidget(network);
     }
@@ -90,9 +103,33 @@ final class NetworkCardViewHolder extends PaymentCardViewHolder {
     private void applyTheme(PaymentTheme theme) {
         PageParameters params = theme.getPageParameters();
         PaymentUtils.setTextAppearance(title, params.getNetworkCardTitleStyle());
-        PaymentUtils.setImageBackground(logo, params.getPaymentLogoBackground());
     }
 
+    private void bindHeader(NetworkCard card) {
+
+        //URL logoUrl = network.getLink("logo");
+        title.setText(createTitle(card));
+
+        //if (logoUrl != null) {
+        //    ImageHelper.getInstance().loadImage(logo, logoUrl);
+        // }
+    }
+
+    private String createTitle(NetworkCard card) {
+        PaymentNetwork selected = card.getSelectedNetwork();
+
+        if (selected != null) {
+            return selected.getLabel();
+        }
+        List<PaymentNetwork> networks = card.getPaymentNetworks();
+        List<String> labels = new ArrayList<>();
+
+        for (PaymentNetwork network : networks) {
+            labels.add(network.getLabel());
+        }
+        return TextUtils.join(" / ", labels);
+    }
+    
     private void bindRegistrationWidget(PaymentNetwork network) {
         RegisterWidget widget = (RegisterWidget) getFormWidget(PaymentInputType.AUTO_REGISTRATION);
         widget.setRegistrationType(network.getRegistration());

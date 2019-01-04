@@ -41,7 +41,7 @@ public final class NetworkCard implements PaymentCard {
      */
     @Override
     public URL getOperationLink() {
-        return getActiveNetwork().getLink("operation");
+        return getVisibleNetwork().getLink("operation");
     }
 
     /**
@@ -49,7 +49,7 @@ public final class NetworkCard implements PaymentCard {
      */
     @Override
     public String getPaymentMethod() {
-        return getActiveNetwork().getPaymentMethod();
+        return getVisibleNetwork().getPaymentMethod();
     }
 
     /**
@@ -57,7 +57,8 @@ public final class NetworkCard implements PaymentCard {
      */
     @Override
     public String getCode() {
-        return getActiveNetwork().getCode();
+        PaymentNetwork network = getSelectedNetwork();
+        return network != null ? network.getCode() : null;
     }
 
     /**
@@ -65,7 +66,7 @@ public final class NetworkCard implements PaymentCard {
      */
     @Override
     public LanguageFile getLang() {
-        return getActiveNetwork().getLang();
+        return getVisibleNetwork().getLang();
     }
 
     /**
@@ -73,9 +74,23 @@ public final class NetworkCard implements PaymentCard {
      */
     @Override
     public List<InputElement> getInputElements() {
-        return getActiveNetwork().getInputElements();
+        return getVisibleNetwork().getInputElements();
     }
 
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public InputElement getInputElement(String name) {
+        
+        for (InputElement element : getInputElements()) {
+            if (element.getName().equals(name)) {
+                return element;
+            }
+        }
+        return null;
+    }
+    
     /**
      * {@inheritDoc}
      */
@@ -95,7 +110,7 @@ public final class NetworkCard implements PaymentCard {
      */
     @Override
     public String getButton() {
-        return getActiveNetwork().getButton();
+        return getVisibleNetwork().getButton();
     }
 
     /**
@@ -114,12 +129,40 @@ public final class NetworkCard implements PaymentCard {
         return true;
     }
 
+    /** 
+     * The NetworkCard supports smart selection when it has more than 1 PaymentNetwork.
+     * 
+     * @return true when this network card supports smart selection, false otherwise. 
+     */
+    public boolean supportSmartSelection() {
+        return networks.size() > 1;
+    }
+    
+    /** 
+     * Get the list of PaymentNetworks supported by this NetworkCard.
+     * 
+     * @return the list of PaymentNetworks. 
+     */
+    public List<PaymentNetwork> getPaymentNetworks() {
+        return networks;
+    }
+    
     /**
-     * Get the active PaymentNetwork that is selected in the NetworkCard
+     * Get the visible PaymentNetwork, this is either the smart selected or first in the list.
      *
      * @return active PaymentNetwork
      */
-    public PaymentNetwork getActiveNetwork() {
+    public PaymentNetwork getVisibleNetwork() {
         return smartSelected != null ? smartSelected : networks.get(0);
+    }
+
+    /**
+     * Get the PaymentNetwork that is currently selected. 
+     *
+     * @return selected PaymentNetwork, this returns null if there are multiple 
+     *         PaymentNetworks and none is smart selected.
+     */
+    public PaymentNetwork getSelectedNetwork() {
+        return networks.size() == 1 ? networks.get(0) : smartSelected;
     }
 }

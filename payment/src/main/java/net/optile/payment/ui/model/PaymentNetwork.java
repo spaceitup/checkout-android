@@ -86,6 +86,9 @@ public class PaymentNetwork {
 
     public boolean compare(PaymentNetwork network) {
 
+        if (!getPaymentMethod().equals(network.getPaymentMethod())) {
+            return false;
+        }        
         List<InputElement> srcItems = getInputElements();
         List<InputElement> cmpItems = network.getInputElements();
 

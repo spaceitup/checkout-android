@@ -105,18 +105,11 @@ abstract class PaymentCardViewHolder extends RecyclerView.ViewHolder {
             }
             switch (element.getName()) {
                 case PaymentInputType.EXPIRY_MONTH:
-                    if (dateWidget == null) {
-                        dateWidget = WidgetInflater.inflateDateWidget(PaymentInputType.EXPIRY_DATE, formLayout, theme);
-                        addWidget(dateWidget);
-                    }
-                    dateWidget.setMonthInputElement(element);
-                    break;
                 case PaymentInputType.EXPIRY_YEAR:
                     if (dateWidget == null) {
                         dateWidget = WidgetInflater.inflateDateWidget(PaymentInputType.EXPIRY_DATE, formLayout, theme);
                         addWidget(dateWidget);
                     }
-                    dateWidget.setYearInputElement(element);
                     break;
                 default:
                     addWidget(WidgetInflater.inflateElementWidget(element, formLayout, theme));
@@ -186,8 +179,12 @@ abstract class PaymentCardViewHolder extends RecyclerView.ViewHolder {
         }
         LanguageFile pageLang = adapter.getPageLanguageFile();
         bindIconResource(widget);
+        widget.setMonthInputElement(card.getInputElement(PaymentInputType.EXPIRY_MONTH));
+        widget.setYearInputElement(card.getInputElement(PaymentInputType.EXPIRY_YEAR));
+        
         widget.setLabel(card.getLang().translateAccount(name));
         widget.setDialogButtonLabel(pageLang.translate(LanguageFile.KEY_BUTTON_DATE));
+        
     }
 
     void bindButtonWidget(PaymentCard card) {

@@ -29,16 +29,22 @@
                 android:orientation="horizontal"
                 android:focusable="true">
 
-                <ImageView
-                    android:id="@+id/image_logo"
+                <GridView
+                    android:id="@+id/gridview_logo"
                     android:layout_width="@dimen/pmcard_logowidth"
-                    android:layout_height="@dimen/pmcard_logoheight"
-                    android:layout_marginEnd="@dimen/pmborder_small"
-                    android:adjustViewBounds="true"
-                    android:contentDescription="@string/pmpage_contentdescription"/>
-
+                    android:layout_height="wrap_content"
+                    android:columnWidth="@dimen/pmlogo_width"
+                    android:numColumns="2"
+                    android:verticalSpacing="@dimen/pmborder_xsmall"
+                    android:horizontalSpacing="@dimen/pmborder_xsmall"
+                    android:stretchMode="columnWidth"
+                    android:gravity="center"
+                    android:scrollbars="none"
+                    />
+                
                 <TextView
                     android:id="@+id/text_title"
+                    android:layout_marginStart="@dimen/pmborder_small"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"/>
             </LinearLayout>

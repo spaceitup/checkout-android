@@ -54,7 +54,7 @@ public class Validator {
      */
     public String getValidationRegex(String code, String type) {
 
-        if (!validations.containsKey(code)) {
+        if (code == null || !validations.containsKey(code)) {
             return null;
         }
         ValidationGroup group = validations.get(code);
@@ -65,7 +65,7 @@ public class Validator {
      * Validate the given input values defined by its type
      *
      * @param method the Payment method like CREDIT_CARD
-     * @param code the payment code like VISA
+     * @param code the optional payment code like VISA
      * @param type the PaymentInputType like "number"
      * @param value1 holding the mandatory first value for the given input type, may be empty
      * @param value2 holding the optional second value for the given input type
@@ -74,9 +74,6 @@ public class Validator {
 
         if (TextUtils.isEmpty(method)) {
             throw new IllegalArgumentException("validate method may not be null or empty");
-        }
-        if (TextUtils.isEmpty(code)) {
-            throw new IllegalArgumentException("validate code may not be null or empty");
         }
         if (TextUtils.isEmpty(type)) {
             throw new IllegalArgumentException("validate type may not be null or empty");

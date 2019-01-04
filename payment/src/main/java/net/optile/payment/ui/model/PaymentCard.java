@@ -37,7 +37,8 @@ public interface PaymentCard {
     String getPaymentMethod();
 
     /**
-     * Get the code of this PaymentCard
+     * Get the code of this PaymentCard, this may return null if a PaymentCard contains multiple PaymentMethods
+     * and none has been selected.
      *
      * @return code
      */
@@ -70,4 +71,12 @@ public interface PaymentCard {
      * @return list of InputElements
      */
     List<InputElement> getInputElements();
+
+    /** 
+     * Get the InputElement given the name
+     * 
+     * @param name of the InputElement to be returned
+     * @return the InputElement with the given name or null if not found 
+     */
+    InputElement getInputElement(String name);
 }
