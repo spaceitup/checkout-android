@@ -18,7 +18,6 @@ import android.util.Patterns;
 import net.optile.payment.R;
 import net.optile.payment.ui.page.PaymentPageActivity;
 import net.optile.payment.ui.theme.PaymentTheme;
-import net.optile.payment.validation.Validator;
 
 /**
  * The PaymentUI is the controller to initialize and launch the Payment Page.
@@ -26,7 +25,7 @@ import net.optile.payment.validation.Validator;
  */
 public final class PaymentUI {
 
-    public final static int RESULT_CODE_OK  = Activity.RESULT_FIRST_USER;
+    public final static int RESULT_CODE_OK = Activity.RESULT_FIRST_USER;
     public final static int RESULT_CODE_CANCELED = Activity.RESULT_FIRST_USER + 1;
     public final static int RESULT_CODE_ERROR = Activity.RESULT_FIRST_USER + 2;
     public final static String EXTRA_PAYMENT_RESULT = "paymentresult";
@@ -42,7 +41,7 @@ public final class PaymentUI {
 
     /** The group resource file id */
     private int groupResId;
-    
+
     private PaymentUI() {
     }
 
@@ -133,7 +132,7 @@ public final class PaymentUI {
     public void setGroupResId(int groupResId) {
         this.groupResId = groupResId;
     }
-    
+
     /**
      * Show the PaymentPage with the PaymentTheme for the look and feel.
      *

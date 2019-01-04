@@ -13,7 +13,6 @@ package net.optile.payment.ui.page;
 
 import java.net.URL;
 import java.util.Map;
-import java.util.concurrent.Callable;
 
 import android.content.Context;
 import android.text.TextUtils;
@@ -21,22 +20,19 @@ import android.util.Log;
 import net.optile.payment.R;
 import net.optile.payment.core.PaymentError;
 import net.optile.payment.core.PaymentException;
-import net.optile.payment.core.WorkerSubscriber;
-import net.optile.payment.core.WorkerTask;
-import net.optile.payment.core.Workers;
 import net.optile.payment.form.Charge;
-import net.optile.payment.validation.Validator;
 import net.optile.payment.model.ErrorInfo;
 import net.optile.payment.model.Interaction;
 import net.optile.payment.model.InteractionCode;
 import net.optile.payment.model.InteractionReason;
 import net.optile.payment.model.OperationResult;
 import net.optile.payment.model.OperationType;
-import net.optile.payment.ui.PaymentUI;
 import net.optile.payment.ui.PaymentResult;
+import net.optile.payment.ui.PaymentUI;
 import net.optile.payment.ui.model.PaymentCard;
 import net.optile.payment.ui.model.PaymentSession;
 import net.optile.payment.ui.widget.FormWidget;
+import net.optile.payment.validation.Validator;
 
 /**
  * The PaymentPagePresenter implementing the presenter part of the MVP
@@ -53,7 +49,7 @@ final class PaymentPagePresenter {
     private String listUrl;
     private Interaction reloadInteraction;
     private Context context;
-    
+
     /**
      * Create a new PaymentPagePresenter
      *
@@ -75,7 +71,7 @@ final class PaymentPagePresenter {
      * @param context context in which this presenter is running
      * @param listUrl the url pointing to the ListResult in the Payment API
      */
-    
+
     void load(Context context, String listUrl) {
 
         if (service.isActive()) {
@@ -83,7 +79,7 @@ final class PaymentPagePresenter {
         }
         this.listUrl = listUrl;
         this.context = context;
-        
+
         if (validator != null && session != null && session.isListUrl(listUrl)) {
             // show the cached payment session
             view.showPaymentSession(session);
@@ -98,15 +94,15 @@ final class PaymentPagePresenter {
         }
     }
 
-    /** 
+    /**
      * Get the context in which this presenter is running.
-     * 
-     * @return context  
+     *
+     * @return context
      */
     Context getContext() {
         return this.context;
     }
-    
+
     /**
      * Perform the operation specified in the paymentSession for the selected PaymentCard and widgets
      *
@@ -127,18 +123,18 @@ final class PaymentPagePresenter {
         }
     }
 
-    /** 
+    /**
      * Return the Validator stored in this presenter.
-     * 
-     * @return validator validator used to validate user input values 
+     *
+     * @return validator validator used to validate user input values
      */
     Validator getValidator() {
         return validator;
     }
 
-    /** 
+    /**
      * Callback from the service when the validator has been successfully loaded
-     * 
+     *
      * @param validator that has been loaded
      */
     void onValidatorSuccess(Validator validator) {
@@ -150,18 +146,18 @@ final class PaymentPagePresenter {
         loadPaymentSession(this.listUrl);
     }
 
-    /** 
+    /**
      * Callback from the service that the validator could not be loaded
-     * 
+     *
      * @param cause containing the error
      */
     void onValidatorError(Throwable cause) {
         closeSessionWithError(R.string.pmpage_error_unknown, cause);
     }
-    
-    /** 
+
+    /**
      * Callback from the service that the PaymentSession has successfully been loaded
-     * 
+     *
      * @param session that has been loaded from the Payment API
      */
     void onPaymentSessionSuccess(PaymentSession session) {
@@ -177,9 +173,9 @@ final class PaymentPagePresenter {
         }
     }
 
-    /** 
+    /**
      * Callback from the service that the PaymentSession failed to load
-     * 
+     *
      * @param cause containing the reason why the loading failed
      */
     void onPaymentSessionError(Throwable cause) {
@@ -190,9 +186,9 @@ final class PaymentPagePresenter {
         closeSessionWithError(R.string.pmpage_error_unknown, cause);
     }
 
-    /** 
+    /**
      * Callback from the service that the charge request was successfull.
-     * REMIND: We should rename Charge to Operation. 
+     * REMIND: We should rename Charge to Operation.
      *
      * @param operation operation explaining the result of the charge request
      */
@@ -301,7 +297,7 @@ final class PaymentPagePresenter {
             }
         }
     }
-    
+
     private void handleChargeInteractionError(PaymentResult result) {
         Interaction interaction = result.getInteraction();
 
@@ -369,7 +365,7 @@ final class PaymentPagePresenter {
         PaymentResult result;
 
         if (cause instanceof PaymentException) {
-            PaymentException pe = (PaymentException)cause;
+            PaymentException pe = (PaymentException) cause;
             result = new PaymentResult(pe.getMessage(), pe.error);
         } else {
             String resultInfo = cause.toString();
@@ -379,7 +375,7 @@ final class PaymentPagePresenter {
         view.setPaymentResult(PaymentUI.RESULT_CODE_ERROR, result);
         view.closePageWithMessage(view.getStringRes(msgResId));
     }
-        
+
     private String translateInteraction(Interaction interaction, String defMessage) {
 
         if (session == null || interaction == null) {

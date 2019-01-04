@@ -18,7 +18,6 @@ import android.text.TextUtils;
 import android.util.Log;
 import net.optile.payment.core.PaymentInputType;
 import net.optile.payment.model.PaymentMethod;
-import net.optile.payment.resource.ValidationGroupItem;
 import net.optile.payment.resource.ValidationGroup;
 
 /**

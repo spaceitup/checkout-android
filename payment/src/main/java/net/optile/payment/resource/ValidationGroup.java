@@ -21,14 +21,14 @@ public class ValidationGroup {
 
     private String code;
     private List<ValidationGroupItem> items;
-    
+
     private ValidationGroup() {
     }
-        
+
     public String getCode() {
         return code;
     }
-    
+
     public boolean matches(String code) {
         return this.code.equals(code);
     }

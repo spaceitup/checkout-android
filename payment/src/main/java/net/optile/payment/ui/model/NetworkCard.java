@@ -12,13 +12,11 @@
 package net.optile.payment.ui.model;
 
 import java.net.URL;
-import java.util.List;
 import java.util.ArrayList;
-import android.util.Log;
+import java.util.List;
 
 import net.optile.payment.core.LanguageFile;
 import net.optile.payment.model.InputElement;
-import net.optile.payment.util.PaymentUtils;
 
 /**
  * Class for holding the data of a NetworkCard in the list
@@ -27,7 +25,7 @@ public final class NetworkCard implements PaymentCard {
 
     private final List<PaymentNetwork> networks;
     private PaymentNetwork smartSelected;
-    
+
     /**
      * Construct a new NetworkCard
      *
@@ -43,7 +41,6 @@ public final class NetworkCard implements PaymentCard {
      */
     @Override
     public URL getOperationLink() {
-        Log.i("pay_Card", "getOperationLink: " + networks.size());
         return getActiveNetwork().getLink("operation");
     }
 
@@ -84,7 +81,13 @@ public final class NetworkCard implements PaymentCard {
      */
     @Override
     public boolean isPreselected() {
-        return PaymentUtils.isTrue(getActiveNetwork().isPreselected());
+
+        for (PaymentNetwork network : networks) {
+            if (network.isPreselected()) {
+                return true;
+            }
+        }
+        return false;
     }
 
     /**
@@ -95,18 +98,22 @@ public final class NetworkCard implements PaymentCard {
         return getActiveNetwork().getButton();
     }
 
-    /** 
-     * Add a PaymentNetwork to this NetworkCard, adding may fail if InputElements of this PaymentNetwork are not similar with InputElements 
+    /**
+     * Add a PaymentNetwork to this NetworkCard, adding may fail if InputElements of this PaymentNetwork are not similar with InputElements
      * of previously added PaymentNetworks.
-     * 
+     *
      * @param network to be added to this NetworkCard
      * @return true when this network was added successfully or false otherwise
      */
     public boolean addPaymentNetwork(PaymentNetwork network) {
+
+        if (networks.size() > 0 && !network.compare(networks.get(0))) {
+            return false;
+        }
         networks.add(network);
         return true;
     }
-    
+
     /**
      * Get the active PaymentNetwork that is selected in the NetworkCard
      *
@@ -115,5 +122,4 @@ public final class NetworkCard implements PaymentCard {
     public PaymentNetwork getActiveNetwork() {
         return smartSelected != null ? smartSelected : networks.get(0);
     }
-
 }

@@ -24,18 +24,18 @@ public class PaymentGroup {
     private PaymentGroup() {
     }
 
-    /** 
-     * The code of the first filter in the payment group is used to uniquely identify this group 
-     * 
-     * @return the id of this PaymentGroup 
+    /**
+     * The code of the first filter in the payment group is used to uniquely identify this group
+     *
+     * @return the id of this PaymentGroup
      */
     public String getId() {
         return items.get(0).getCode();
     }
 
-    /** 
+    /**
      * populate the lookup table with each PaymentGroupItem code mapping to this group
-     * 
+     *
      * @param map the lookup table to fill
      */
     public Map<String, PaymentGroup> populate(Map<String, PaymentGroup> map) {
@@ -46,14 +46,14 @@ public class PaymentGroup {
         return map;
     }
 
-    /** 
+    /**
      * Get the smart selection regex given the payment code.
-     * 
+     *
      * @param code used to lookup the smart selection regex
-     * @return the regex for smart selection or null if not found 
+     * @return the regex for smart selection or null if not found
      */
     public String getSmartSelectionRegex(String code) {
-        
+
         for (PaymentGroupItem item : items) {
 
             if (item.getCode().equals(code)) {

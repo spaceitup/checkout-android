@@ -13,7 +13,6 @@ package net.optile.payment.ui.page;
 
 import java.util.Map;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;

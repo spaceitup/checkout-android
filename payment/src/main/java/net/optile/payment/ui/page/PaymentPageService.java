@@ -13,41 +13,37 @@ package net.optile.payment.ui.page;
 
 import java.net.MalformedURLException;
 import java.net.URL;
-import java.util.Map;
-import java.util.LinkedHashMap;
 import java.util.ArrayList;
+import java.util.LinkedHashMap;
 import java.util.List;
-import android.util.Log;
+import java.util.Map;
+import java.util.concurrent.Callable;
+
+import android.content.res.Resources;
 import android.text.TextUtils;
-import android.content.Context;
+import android.util.Log;
 import net.optile.payment.core.LanguageFile;
 import net.optile.payment.core.PaymentError;
 import net.optile.payment.core.PaymentException;
-import net.optile.payment.form.Charge;
 import net.optile.payment.core.WorkerSubscriber;
 import net.optile.payment.core.WorkerTask;
 import net.optile.payment.core.Workers;
-import net.optile.payment.validation.Validator;
+import net.optile.payment.form.Charge;
 import net.optile.payment.model.AccountRegistration;
 import net.optile.payment.model.ApplicableNetwork;
-import net.optile.payment.model.InputElement;
 import net.optile.payment.model.ListResult;
 import net.optile.payment.model.Networks;
 import net.optile.payment.model.OperationResult;
 import net.optile.payment.network.ChargeConnection;
 import net.optile.payment.network.ListConnection;
+import net.optile.payment.resource.PaymentGroup;
+import net.optile.payment.resource.ResourceLoader;
 import net.optile.payment.ui.PaymentUI;
 import net.optile.payment.ui.model.AccountCard;
 import net.optile.payment.ui.model.NetworkCard;
 import net.optile.payment.ui.model.PaymentNetwork;
 import net.optile.payment.ui.model.PaymentSession;
-import net.optile.payment.resource.PaymentGroup;
-import net.optile.payment.resource.ResourceLoader;
-import android.content.res.Resources;
-
-import java.util.concurrent.Callable;
-import java.util.concurrent.ExecutionException;
-import java.util.concurrent.FutureTask;
+import net.optile.payment.validation.Validator;
 
 /**
  * The PaymentPageService providing asynchronize initializing of the PaymentPage and communication with the Payment API .
@@ -59,7 +55,7 @@ final class PaymentPageService {
     private final PaymentPagePresenter presenter;
     private final ListConnection listConnection;
     private final ChargeConnection chargeConnection;
-    
+
     private WorkerTask<OperationResult> chargeTask;
     private WorkerTask<PaymentSession> loadTask;
     private WorkerTask<Validator> validatorTask;
@@ -119,7 +115,7 @@ final class PaymentPageService {
         });
         Workers.getInstance().forNetworkTasks().execute(validatorTask);
     }
-    
+
     void loadPaymentSession(final String listUrl) {
 
         if (loadTask != null) {
@@ -222,7 +218,7 @@ final class PaymentPageService {
         NetworkCard card = null;
         PaymentGroup group;
         String code;
-        
+
         for (PaymentNetwork network : networks.values()) {
             code = network.getCode();
 
@@ -235,8 +231,7 @@ final class PaymentPageService {
 
             if (card == null) {
                 addNetworkCard(cards, group.getId(), network);
-            }
-            else if (!card.addPaymentNetwork(network)) {
+            } else if (!card.addPaymentNetwork(network)) {
                 addNetworkCard(cards, code, network);
             }
         }
@@ -248,7 +243,7 @@ final class PaymentPageService {
         card.addPaymentNetwork(network);
         cards.put(cardId, card);
     }
-    
+
     private List<AccountCard> createAccountCards(ListResult listResult, Map<String, PaymentNetwork> networks) {
         List<AccountCard> cards = new ArrayList<>();
         List<AccountRegistration> accounts = listResult.getAccounts();
@@ -335,7 +330,7 @@ final class PaymentPageService {
         Resources res = presenter.getContext().getResources();
         return ResourceLoader.loadPaymentGroups(res, groupResId);
     }
-    
+
     private boolean isSupported(ApplicableNetwork network) {
         String button = network.getButton();
         return (TextUtils.isEmpty(button) || !button.contains("activate")) && !network.getRedirect();
