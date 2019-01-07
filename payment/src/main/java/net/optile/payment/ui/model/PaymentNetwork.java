@@ -116,6 +116,6 @@ public class PaymentNetwork {
         if (TextUtils.isEmpty(this.smartSelectionRegex)) {
             return false;
         }
-        return smartSelectionRegex.matches(text);
+        return text.matches(smartSelectionRegex);
     }
 }
