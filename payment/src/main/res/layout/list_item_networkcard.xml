@@ -29,18 +29,10 @@
                 android:orientation="horizontal"
                 android:focusable="true">
 
-                <GridView
-                    android:id="@+id/gridview_logo"
+                <TableLayout 
+                    android:id="@+id/tablelayout_logo"
                     android:layout_width="@dimen/pmcard_logowidth"
-                    android:layout_height="wrap_content"
-                    android:columnWidth="@dimen/pmlogo_width"
-                    android:numColumns="2"
-                    android:verticalSpacing="@dimen/pmborder_xsmall"
-                    android:horizontalSpacing="@dimen/pmborder_xsmall"
-                    android:stretchMode="columnWidth"
-                    android:gravity="center"
-                    android:scrollbars="none"
-                    />
+                    android:layout_height="wrap_content"/>
                 
                 <TextView
                     android:id="@+id/text_title"

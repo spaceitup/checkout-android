@@ -15,6 +15,7 @@ import java.net.URL;
 import java.util.List;
 import java.util.ArrayList;
 
+import android.util.Log;
 import android.text.TextUtils;
 import android.support.v7.widget.RecyclerView.ViewHolder;
 import android.view.LayoutInflater;
@@ -22,6 +23,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.TableLayout;
+import android.widget.TableRow;
 import android.widget.GridView;
 import net.optile.payment.R;
 import net.optile.payment.core.LanguageFile;
@@ -36,6 +39,7 @@ import net.optile.payment.ui.widget.RegisterWidget;
 import net.optile.payment.ui.widget.WidgetInflater;
 import net.optile.payment.util.ImageHelper;
 import net.optile.payment.util.PaymentUtils;
+import android.widget.LinearLayout.LayoutParams;
 
 /**
  * The NetworkCardViewHolder
@@ -43,14 +47,16 @@ import net.optile.payment.util.PaymentUtils;
 final class NetworkCardViewHolder extends PaymentCardViewHolder {
 
     final TextView title;
-    final GridView logoGridView;
-    private GridViewAdapter logoAdapter;
+    final TableLayout logoLayout;
+    final List<ImageView> logos;
     
     NetworkCardViewHolder(ListAdapter adapter, View parent, NetworkCard networkCard) {
         super(adapter, parent);
         this.title = parent.findViewById(R.id.text_title);
-        this.logoGridView = parent.findViewById(R.id.gridview_logo);
-        initLogoGridView(parent, networkCard);
+        this.logos = new ArrayList<>();
+        this.logoLayout = parent.findViewById(R.id.tablelayout_logo);
+
+        initLogos(parent, networkCard);
         
         PaymentTheme theme = adapter.getPaymentTheme();
 
@@ -62,15 +68,37 @@ final class NetworkCardViewHolder extends PaymentCardViewHolder {
         setLastImeOptions();
     }
 
-    private void initLogoGridView(View parent, NetworkCard networkCard) {
+    private void initLogos(View parent, NetworkCard networkCard) {
+
+        LayoutInflater inflater = LayoutInflater.from(parent.getContext());
         List<PaymentNetwork> networks = networkCard.getPaymentNetworks();
-        List<URL> logos = new ArrayList<>();
+        int count = 0;
+        int nrRows = 0;
+        TableRow row = null;
+        int topMargin = 0;
+        int rightMargin = 0;
+        int border = parent.getContext().getResources().getDimensionPixelSize(R.dimen.pmborder_xsmall);
 
         for (PaymentNetwork network : networks) {
-            logos.add(network.getLink("logo"));
+            topMargin = 0;
+            rightMargin = 0;
+
+            if (count > 1) {
+                topMargin = border;
+            }
+            if ((count++ % 2) == 0) {
+                row = new TableRow(parent.getContext());
+                logoLayout.addView(row);
+                rightMargin = border;
+            }
+            ImageView view = (ImageView)inflater.inflate(R.layout.list_item_logo, (ViewGroup)row, false);
+            LayoutParams params=(LayoutParams) view.getLayoutParams();
+
+            params.setMargins(0, topMargin, rightMargin, 0);
+            view.setLayoutParams(params);
+            logos.add(view);
+            row.addView(view);
         }
-        this.logoAdapter = new GridViewAdapter(parent.getContext(), logos);
-        logoGridView.setAdapter(logoAdapter);
     }
     
     static ViewHolder createInstance(ListAdapter adapter, NetworkCard networkCard, ViewGroup parent) {
@@ -103,16 +131,28 @@ final class NetworkCardViewHolder extends PaymentCardViewHolder {
     private void applyTheme(PaymentTheme theme) {
         PageParameters params = theme.getPageParameters();
         PaymentUtils.setTextAppearance(title, params.getNetworkCardTitleStyle());
+
+        for (ImageView logo : logos) {
+            PaymentUtils.setImageBackground(logo, params.getPaymentLogoBackground());
+        }
     }
 
     private void bindHeader(NetworkCard card) {
-
-        //URL logoUrl = network.getLink("logo");
         title.setText(createTitle(card));
+        List<PaymentNetwork> networks = card.getPaymentNetworks();
+        URL logoUrl;
+        PaymentNetwork network;
+        ImageView logo;
+        
+        for (int i = 0, e = networks.size() ; i < e ; i++) {
+            network = networks.get(i);
+            logo = logos.get(i);
+            logoUrl = network.getLink("logo");
 
-        //if (logoUrl != null) {
-        //    ImageHelper.getInstance().loadImage(logo, logoUrl);
-        // }
+            if (logoUrl != null) {
+                ImageHelper.getInstance().loadImage(logo, logoUrl);
+            }
+        }
     }
 
     private String createTitle(NetworkCard card) {
