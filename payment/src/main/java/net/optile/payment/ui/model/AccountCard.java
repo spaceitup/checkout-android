@@ -111,6 +111,14 @@ public final class AccountCard implements PaymentCard {
         return network.getButton();
     }
 
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public boolean onTextInputChanged(String type, String text) {
+        return false;
+    }
+        
     public URL getLink(String name) {
         Map<String, URL> links = account.getLinks();
         return links != null ? links.get(name) : null;

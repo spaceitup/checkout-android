@@ -76,11 +76,7 @@ final class AccountCardViewHolder extends PaymentCardViewHolder {
         AccountMask mask = card.getMaskedAccount();
         bindTitle(mask, card.getPaymentMethod());
         bindSubTitle(mask);
-        URL logoUrl = card.getLink("logo");
-
-        if (logoUrl != null) {
-            ImageHelper.getInstance().loadImage(logo, logoUrl);
-        }
+        bindLogo(card);
     }
 
     private void bindTitle(AccountMask mask, String method) {
@@ -109,4 +105,13 @@ final class AccountCardViewHolder extends PaymentCardViewHolder {
         }
     }
 
+    private void bindLogo(AccountCard card) {
+        URL url = card.getLink("logo");
+
+        if (url != null) {
+            logo.setImageAlpha(isExpanded() ? LOGO_SELECTED_ALPHA : LOGO_DESELECTED_ALPHA); 
+            ImageHelper.getInstance().loadImage(logo, url);
+        }
+
+    }
 }

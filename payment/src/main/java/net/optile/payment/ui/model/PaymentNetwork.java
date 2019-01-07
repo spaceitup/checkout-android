@@ -11,10 +11,12 @@
 
 package net.optile.payment.ui.model;
 
+import android.util.Log;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import android.text.TextUtils;
 
 import net.optile.payment.core.LanguageFile;
 import net.optile.payment.model.ApplicableNetwork;
@@ -107,5 +109,13 @@ public class PaymentNetwork {
             }
         }
         return true;
+    }
+
+    boolean validateSmartSelect(String text) {
+        Log.i("pay_Network", "smartSelectionRegex: " + smartSelectionRegex);
+        if (TextUtils.isEmpty(this.smartSelectionRegex)) {
+            return false;
+        }
+        return smartSelectionRegex.matches(text);
     }
 }

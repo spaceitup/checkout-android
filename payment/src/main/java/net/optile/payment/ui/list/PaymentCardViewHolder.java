@@ -42,6 +42,10 @@ import net.optile.payment.validation.ValidationResult;
  * The PaymentCardViewHolder holding the header and input widgets
  */
 abstract class PaymentCardViewHolder extends RecyclerView.ViewHolder {
+
+    final static int LOGO_SELECTED_ALPHA = 0xFF; 
+    final static int LOGO_DESELECTED_ALPHA = 0x80; 
+
     final ViewGroup formLayout;
     final ListAdapter adapter;
     final WidgetPresenter presenter;
@@ -86,7 +90,12 @@ abstract class PaymentCardViewHolder extends RecyclerView.ViewHolder {
             public ValidationResult validate(String type, String value1, String value2) {
                 return adapter.validate(getAdapterPosition(), type, value1, value2);
             }
-        };
+
+            @Override
+            public void onTextInputChanged(String type, String text) {
+                adapter.onTextInputChanged(getAdapterPosition(), type, text);
+            }
+            };
     }
 
     void addButtonWidget(PaymentTheme theme) {
@@ -117,6 +126,10 @@ abstract class PaymentCardViewHolder extends RecyclerView.ViewHolder {
         }
     }
 
+    boolean isExpanded() {
+        return formLayout.getVisibility() == View.VISIBLE;
+    }
+    
     void expand(boolean expand) {
         formLayout.setVisibility(expand ? View.VISIBLE : View.GONE);
     }
@@ -186,7 +199,7 @@ abstract class PaymentCardViewHolder extends RecyclerView.ViewHolder {
         widget.setDialogButtonLabel(pageLang.translate(LanguageFile.KEY_BUTTON_DATE));
         
     }
-
+    
     void bindButtonWidget(PaymentCard card) {
         String name = PaymentInputType.ACTION_BUTTON;
         ButtonWidget widget = (ButtonWidget) getFormWidget(name);

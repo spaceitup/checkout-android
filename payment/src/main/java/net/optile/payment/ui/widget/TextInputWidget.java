@@ -17,11 +17,13 @@ import android.view.KeyEvent;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
 import android.widget.TextView;
+import android.text.TextWatcher;
 import net.optile.payment.core.PaymentException;
 import net.optile.payment.form.Charge;
 import net.optile.payment.model.InputElementType;
 import net.optile.payment.ui.theme.PaymentTheme;
 import net.optile.payment.validation.ValidationResult;
+import android.text.Editable;
 
 /**
  * Widget for handling text input
@@ -49,6 +51,16 @@ public final class TextInputWidget extends InputLayoutWidget {
                 return false;
             }
         });
+
+        input.addTextChangedListener(new TextWatcher() {
+                public void onTextChanged(CharSequence s, int start, int before, int count) {
+                    presenter.onTextInputChanged(name, s.toString());
+                }
+                public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+                }
+                public void afterTextChanged(Editable s) {
+                }
+            });
     }
 
     public void setInputType(String type) {

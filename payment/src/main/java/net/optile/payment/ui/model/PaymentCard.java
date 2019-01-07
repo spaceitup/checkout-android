@@ -79,4 +79,13 @@ public interface PaymentCard {
      * @return the InputElement with the given name or null if not found 
      */
     InputElement getInputElement(String name);
+
+    /** 
+     * Notify the PaymentCard that the text input has changed for one of the input fields in this PaymentCard. 
+     * 
+     * @param type the type of the TextInput field
+     * @param text to smart select the payment option inside the PaymentCard.
+     * @return true when this PaymentCard has changed its appearance given the new TextInput, false otherwise
+     */
+    boolean onTextInputChanged(String type, String text);
 }

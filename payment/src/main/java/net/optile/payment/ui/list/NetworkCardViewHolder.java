@@ -69,35 +69,31 @@ final class NetworkCardViewHolder extends PaymentCardViewHolder {
     }
 
     private void initLogos(View parent, NetworkCard networkCard) {
-
         LayoutInflater inflater = LayoutInflater.from(parent.getContext());
         List<PaymentNetwork> networks = networkCard.getPaymentNetworks();
         int count = 0;
-        int nrRows = 0;
         TableRow row = null;
-        int topMargin = 0;
-        int rightMargin = 0;
         int border = parent.getContext().getResources().getDimensionPixelSize(R.dimen.pmborder_xsmall);
 
         for (PaymentNetwork network : networks) {
-            topMargin = 0;
-            rightMargin = 0;
-
+            int marginTop = 0;
+            int marginRight = 0;
+            
             if (count > 1) {
-                topMargin = border;
+                marginTop = border;
             }
-            if ((count++ % 2) == 0) {
+            if (count % 2 == 0) {
                 row = new TableRow(parent.getContext());
                 logoLayout.addView(row);
-                rightMargin = border;
+                marginRight = border;
             }
             ImageView view = (ImageView)inflater.inflate(R.layout.list_item_logo, (ViewGroup)row, false);
-            LayoutParams params=(LayoutParams) view.getLayoutParams();
-
-            params.setMargins(0, topMargin, rightMargin, 0);
+            LayoutParams params = (LayoutParams) view.getLayoutParams();
+            params.setMargins(0, marginTop, marginRight, 0);
             view.setLayoutParams(params);
             logos.add(view);
             row.addView(view);
+            count++;
         }
     }
     
@@ -138,36 +134,40 @@ final class NetworkCardViewHolder extends PaymentCardViewHolder {
     }
 
     private void bindHeader(NetworkCard card) {
-        title.setText(createTitle(card));
-        List<PaymentNetwork> networks = card.getPaymentNetworks();
-        URL logoUrl;
-        PaymentNetwork network;
-        ImageView logo;
-        
-        for (int i = 0, e = networks.size() ; i < e ; i++) {
-            network = networks.get(i);
-            logo = logos.get(i);
-            logoUrl = network.getLink("logo");
-
-            if (logoUrl != null) {
-                ImageHelper.getInstance().loadImage(logo, logoUrl);
-            }
-        }
+        bindTitle(card);
+        bindLogos(card);
     }
 
-    private String createTitle(NetworkCard card) {
-        PaymentNetwork selected = card.getSelectedNetwork();
-
-        if (selected != null) {
-            return selected.getLabel();
+    private void bindTitle(NetworkCard card) {
+        List<PaymentNetwork> networks = card.getSmartSelected();
+        if (networks.size() == 0) {
+            networks = card.getPaymentNetworks();
         }
-        List<PaymentNetwork> networks = card.getPaymentNetworks();
         List<String> labels = new ArrayList<>();
 
         for (PaymentNetwork network : networks) {
             labels.add(network.getLabel());
         }
-        return TextUtils.join(" / ", labels);
+        title.setText(TextUtils.join(" / ", labels));
+    }
+
+    private void bindLogos(NetworkCard card) {
+        List<PaymentNetwork> networks = card.getPaymentNetworks();
+        PaymentNetwork network;
+        ImageView view;
+        URL url;
+        
+        for (int i = 0, e = networks.size() ; i < e ; i++) {
+            network = networks.get(i);
+            view = logos.get(i);
+            url = network.getLink("logo");
+
+            if (url != null) {
+                boolean expanded = isExpanded() && card.isSmartSelected(network);
+                view.setImageAlpha(expanded ? LOGO_SELECTED_ALPHA : LOGO_DESELECTED_ALPHA); 
+                ImageHelper.getInstance().loadImage(view, url);
+            }
+        }
     }
     
     private void bindRegistrationWidget(PaymentNetwork network) {
