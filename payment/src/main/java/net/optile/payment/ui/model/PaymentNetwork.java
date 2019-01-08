@@ -112,9 +112,8 @@ public class PaymentNetwork {
         return true;
     }
 
-    boolean validateSmartSelect(String text) {
-        Log.i("pay_Network", "smartSelectionRegex: " + smartSelectionRegex);
-        if (TextUtils.isEmpty(this.smartSelectionRegex)) {
+    boolean validateSmartSelected(String text) {
+        if (text == null || TextUtils.isEmpty(this.smartSelectionRegex)) {
             return false;
         }
         return text.matches(smartSelectionRegex);

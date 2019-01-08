@@ -29,6 +29,7 @@ public final class NetworkCard implements PaymentCard {
 
     private final List<PaymentNetwork> networks;
     private final List<PaymentNetwork> smartSelected;
+    private final List<PaymentNetwork> smartBuffer;
 
     /**
      * Construct a new NetworkCard
@@ -36,6 +37,7 @@ public final class NetworkCard implements PaymentCard {
     public NetworkCard() {
         this.networks = new ArrayList<>();
         this.smartSelected = new ArrayList<>();
+        this.smartBuffer = new ArrayList<>();
     }
 
     /**
@@ -127,7 +129,7 @@ public final class NetworkCard implements PaymentCard {
             case PaymentMethod.CREDIT_CARD:
             case PaymentMethod.DEBIT_CARD:
                 if (PaymentInputType.ACCOUNT_NUMBER.equals(type)) {
-                    return validateSmartSelect(text);
+                    return validateSmartSelected(text);
                 }
         }
         return false;
@@ -218,20 +220,17 @@ public final class NetworkCard implements PaymentCard {
         return smartSelected.size() == 1 ? smartSelected.get(0) : null;
     }
 
-    private boolean validateSmartSelect(String text) {
-        List<PaymentNetwork> tmp = new ArrayList<>();
+    private boolean validateSmartSelected(String text) {
+        smartBuffer.clear();
 
         for (PaymentNetwork network : networks) {
-            Log.i("pay_matches", "test: " + text);
-
-            if (network.validateSmartSelect(text)) {
-                Log.i("pay_matches", "matches: " + text);
-                tmp.add(network);
+            if (network.validateSmartSelected(text)) {
+                smartBuffer.add(network);
             }
         }
-        if (!smartSelected.equals(tmp)) {
+        if (!smartSelected.equals(smartBuffer)) {
             smartSelected.clear();
-            smartSelected.addAll(tmp);
+            smartSelected.addAll(smartBuffer);
             return true;
         }
         return false;
