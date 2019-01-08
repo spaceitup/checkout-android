@@ -136,7 +136,7 @@ final class PaymentPageService {
 
             @Override
             public void onError(Throwable cause) {
-                Log.wtf(TAG, cause);
+                Log.w(TAG, cause);
                 loadTask = null;
                 presenter.onPaymentSessionError(cause);
             }
@@ -337,7 +337,7 @@ final class PaymentPageService {
     }
 
     private PaymentException createPaymentException(String message, Throwable cause) {
-        Log.wtf(TAG, cause);
+        Log.w(TAG, cause);
         final PaymentError error = new PaymentError("PaymentPage", PaymentError.INTERNAL_ERROR, message);
         return new PaymentException(error, message, cause);
     }
