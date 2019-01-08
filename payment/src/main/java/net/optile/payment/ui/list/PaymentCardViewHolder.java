@@ -68,7 +68,6 @@ abstract class PaymentCardViewHolder extends RecyclerView.ViewHolder {
 
         this.formLayout = parent.findViewById(R.id.layout_form);
         this.widgets = new LinkedHashMap<>();
-
         this.logoLayout = parent.findViewById(R.id.tablelayout_logo);
         this.logos = new HashMap<>();
 
@@ -168,7 +167,7 @@ abstract class PaymentCardViewHolder extends RecyclerView.ViewHolder {
             if (count > 1) {
                 marginTop = border;
             }
-            if (count % 2 == 0) {
+            if (count++ % 2 == 0) {
                 row = new TableRow(context);
                 logoLayout.addView(row);
                 marginRight = border;
@@ -181,7 +180,6 @@ abstract class PaymentCardViewHolder extends RecyclerView.ViewHolder {
             PaymentUtils.setImageBackground(view, logoBackground);
             logos.put(name, view);
             row.addView(view);
-            count++;
         }
     }
 

@@ -134,13 +134,13 @@ final class ListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
             return;
         }
         ListItem item = items.get(position);
-        if (!item.hasPaymentCard()) {
-            return;
-        }
-        PaymentCard card = item.getPaymentCard();
 
-        if (card.onTextInputChanged(type, text)) {
-            notifyItemChanged(position);
+        if (item.hasPaymentCard()) {
+            PaymentCard card = item.getPaymentCard();
+
+            if (card.onTextInputChanged(type, text)) {
+                notifyItemChanged(position);
+            }
         }
     }
 

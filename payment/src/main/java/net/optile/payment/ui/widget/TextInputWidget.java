@@ -52,7 +52,6 @@ public final class TextInputWidget extends InputLayoutWidget {
                 return false;
             }
         });
-
         input.addTextChangedListener(new TextWatcher() {
                 public void onTextChanged(CharSequence s, int start, int before, int count) {
                     presenter.onTextInputChanged(name, s.toString());
