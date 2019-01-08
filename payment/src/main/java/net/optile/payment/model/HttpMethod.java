@@ -11,10 +11,10 @@
 
 package net.optile.payment.model;
 
+import android.support.annotation.StringDef;
+
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
-
-import android.support.annotation.StringDef;
 
 /**
  * This class describes HTTP methods that are valid for customer's browser redirect.

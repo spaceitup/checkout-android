@@ -20,6 +20,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.widget.TextView;
+
 import net.optile.payment.R;
 import net.optile.payment.ui.PaymentUI;
 import net.optile.payment.ui.theme.DialogParameters;

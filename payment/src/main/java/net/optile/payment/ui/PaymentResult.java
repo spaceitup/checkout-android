@@ -10,12 +10,13 @@
  */
 package net.optile.payment.ui;
 
-import com.google.gson.JsonSyntaxException;
-
 import android.os.Parcel;
 import android.os.Parcelable;
 import android.text.TextUtils;
 import android.util.Log;
+
+import com.google.gson.JsonSyntaxException;
+
 import net.optile.payment.core.PaymentError;
 import net.optile.payment.model.Interaction;
 import net.optile.payment.model.OperationResult;

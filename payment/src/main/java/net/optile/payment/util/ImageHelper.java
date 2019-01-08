@@ -11,22 +11,23 @@
 
 package net.optile.payment.util;
 
-import java.net.URL;
-import java.util.concurrent.Callable;
-
-import com.bumptech.glide.Glide;
-
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.util.Log;
 import android.widget.ImageView;
+
+import com.bumptech.glide.Glide;
+
 import net.optile.payment.core.PaymentException;
 import net.optile.payment.core.WorkerSubscriber;
 import net.optile.payment.core.WorkerTask;
 import net.optile.payment.core.Workers;
 import net.optile.payment.network.ImageConnection;
+
+import java.net.URL;
+import java.util.concurrent.Callable;
 
 /**
  * Class for loading images into an ImageView either by using Glide or own network library.

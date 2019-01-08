@@ -11,24 +11,24 @@
 
 package net.optile.payment.network;
 
-import static net.optile.payment.core.PaymentError.API_ERROR;
-import static net.optile.payment.core.PaymentError.CONN_ERROR;
-import static net.optile.payment.core.PaymentError.INTERNAL_ERROR;
-import static net.optile.payment.core.PaymentError.PROTOCOL_ERROR;
-import static net.optile.payment.core.PaymentError.SECURITY_ERROR;
+import com.google.gson.JsonParseException;
+
+import net.optile.payment.core.PaymentException;
+import net.optile.payment.form.Charge;
+import net.optile.payment.model.OperationResult;
+
+import org.json.JSONException;
 
 import java.io.IOException;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 
-import org.json.JSONException;
-
-import com.google.gson.JsonParseException;
-
-import net.optile.payment.core.PaymentException;
-import net.optile.payment.form.Charge;
-import net.optile.payment.model.OperationResult;
+import static net.optile.payment.core.PaymentError.API_ERROR;
+import static net.optile.payment.core.PaymentError.CONN_ERROR;
+import static net.optile.payment.core.PaymentError.INTERNAL_ERROR;
+import static net.optile.payment.core.PaymentError.PROTOCOL_ERROR;
+import static net.optile.payment.core.PaymentError.SECURITY_ERROR;
 
 /**
  * Class implementing the communication with the Charge payment API

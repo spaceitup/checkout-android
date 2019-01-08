@@ -14,6 +14,7 @@ package net.optile.payment.ui.widget;
 import android.support.v4.content.ContextCompat;
 import android.view.View;
 import android.widget.ImageView;
+
 import net.optile.payment.R;
 import net.optile.payment.core.PaymentException;
 import net.optile.payment.form.Charge;

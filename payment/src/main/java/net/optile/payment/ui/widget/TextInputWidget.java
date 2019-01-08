@@ -11,19 +11,20 @@
 
 package net.optile.payment.ui.widget;
 
+import android.text.Editable;
 import android.text.InputType;
 import android.text.TextUtils;
+import android.text.TextWatcher;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
 import android.widget.TextView;
-import android.text.TextWatcher;
+
 import net.optile.payment.core.PaymentException;
 import net.optile.payment.form.Charge;
 import net.optile.payment.model.InputElementType;
 import net.optile.payment.ui.theme.PaymentTheme;
 import net.optile.payment.validation.ValidationResult;
-import android.text.Editable;
 
 /**
  * Widget for handling text input

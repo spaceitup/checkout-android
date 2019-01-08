@@ -11,15 +11,13 @@
 
 package net.optile.payment.ui.list;
 
-import java.net.URL;
-import java.util.Locale;
-
 import android.support.v7.widget.RecyclerView.ViewHolder;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+
 import net.optile.payment.R;
 import net.optile.payment.model.AccountMask;
 import net.optile.payment.model.PaymentMethod;
@@ -27,8 +25,9 @@ import net.optile.payment.ui.model.AccountCard;
 import net.optile.payment.ui.model.PaymentCard;
 import net.optile.payment.ui.theme.PageParameters;
 import net.optile.payment.ui.theme.PaymentTheme;
-import net.optile.payment.util.ImageHelper;
 import net.optile.payment.util.PaymentUtils;
+
+import java.util.Locale;
 
 /**
  * The AccountCardViewHolder class holding and binding views for an AccountCard
@@ -76,7 +75,7 @@ final class AccountCardViewHolder extends PaymentCardViewHolder {
         AccountMask mask = card.getMaskedAccount();
         bindTitle(mask, card.getPaymentMethod());
         bindSubTitle(mask);
-        bindLogo(card);
+        bindLogo(logo, card.getLink("logo"), isExpanded());
     }
 
     private void bindTitle(AccountMask mask, String method) {
@@ -103,15 +102,5 @@ final class AccountCardViewHolder extends PaymentCardViewHolder {
         } else {
             subTitle.setVisibility(View.GONE);
         }
-    }
-
-    private void bindLogo(AccountCard card) {
-        URL url = card.getLink("logo");
-
-        if (url != null) {
-            logo.setImageAlpha(isExpanded() ? LOGO_SELECTED_ALPHA : LOGO_DESELECTED_ALPHA); 
-            ImageHelper.getInstance().loadImage(logo, url);
-        }
-
     }
 }

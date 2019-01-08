@@ -11,16 +11,12 @@
 
 package net.optile.payment.ui.list;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.Map;
-
 import android.support.v4.app.DialogFragment;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
+
 import net.optile.payment.R;
 import net.optile.payment.core.LanguageFile;
 import net.optile.payment.core.PaymentInputType;
@@ -35,8 +31,16 @@ import net.optile.payment.ui.widget.SelectWidget;
 import net.optile.payment.ui.widget.TextInputWidget;
 import net.optile.payment.ui.widget.WidgetInflater;
 import net.optile.payment.ui.widget.WidgetPresenter;
+import net.optile.payment.util.ImageHelper;
 import net.optile.payment.util.PaymentUtils;
 import net.optile.payment.validation.ValidationResult;
+
+import java.net.URL;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.Map;
 
 /**
  * The PaymentCardViewHolder holding the header and input widgets
@@ -50,7 +54,7 @@ abstract class PaymentCardViewHolder extends RecyclerView.ViewHolder {
     final ListAdapter adapter;
     final WidgetPresenter presenter;
     final Map<String, FormWidget> widgets;
-
+    
     PaymentCardViewHolder(ListAdapter adapter, View parent) {
         super(parent);
         this.adapter = adapter;
@@ -211,6 +215,16 @@ abstract class PaymentCardViewHolder extends RecyclerView.ViewHolder {
         widget.setButtonLabel(pageLang.translate(card.getButton()));
     }
 
+    void bindLogo(ImageView view, URL url, boolean selected) {
+        if (url == null) {
+            view.setImageBitmap(null);
+        }
+        else {
+            view.setImageAlpha(selected ? LOGO_SELECTED_ALPHA : LOGO_DESELECTED_ALPHA); 
+            ImageHelper.getInstance().loadImage(view, url);
+        }
+    }
+    
     void setLastImeOptions() {
         List<String> keys = new ArrayList<>(widgets.keySet());
         Collections.reverse(keys);

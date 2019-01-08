@@ -11,11 +11,10 @@
 
 package net.optile.payment.ui.widget;
 
-import java.util.List;
-
 import android.support.design.widget.TextInputEditText;
 import android.text.TextUtils;
 import android.view.View;
+
 import net.optile.payment.R;
 import net.optile.payment.core.PaymentException;
 import net.optile.payment.form.Charge;
@@ -25,6 +24,8 @@ import net.optile.payment.ui.dialog.DateDialogFragment;
 import net.optile.payment.ui.theme.PaymentTheme;
 import net.optile.payment.util.PaymentUtils;
 import net.optile.payment.validation.ValidationResult;
+
+import java.util.List;
 
 /**
  * Widget for handling the date input

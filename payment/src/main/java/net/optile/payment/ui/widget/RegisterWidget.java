@@ -12,6 +12,7 @@
 package net.optile.payment.ui.widget;
 
 import android.view.View;
+
 import net.optile.payment.core.PaymentException;
 import net.optile.payment.form.Charge;
 import net.optile.payment.model.RegistrationType;

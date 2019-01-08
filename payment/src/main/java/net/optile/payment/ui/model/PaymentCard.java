@@ -11,11 +11,11 @@
 
 package net.optile.payment.ui.model;
 
-import java.net.URL;
-import java.util.List;
-
 import net.optile.payment.core.LanguageFile;
 import net.optile.payment.model.InputElement;
+
+import java.net.URL;
+import java.util.List;
 
 /**
  * Interface for payment cards like AccountCard and NetworkCard

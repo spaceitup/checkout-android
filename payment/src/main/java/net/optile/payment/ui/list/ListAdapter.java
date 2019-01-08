@@ -11,8 +11,6 @@
 
 package net.optile.payment.ui.list;
 
-import java.util.List;
-import android.util.Log;
 import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.v4.app.DialogFragment;
@@ -20,6 +18,7 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.RecyclerView.ViewHolder;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
+
 import net.optile.payment.core.LanguageFile;
 import net.optile.payment.ui.PaymentUI;
 import net.optile.payment.ui.model.AccountCard;
@@ -27,6 +26,8 @@ import net.optile.payment.ui.model.NetworkCard;
 import net.optile.payment.ui.model.PaymentCard;
 import net.optile.payment.ui.theme.PaymentTheme;
 import net.optile.payment.validation.ValidationResult;
+
+import java.util.List;
 
 /**
  * The ListAdapter handling the items in this RecyclerView list

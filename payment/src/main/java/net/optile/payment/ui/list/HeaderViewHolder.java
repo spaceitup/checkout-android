@@ -16,6 +16,7 @@ import android.support.v7.widget.RecyclerView.ViewHolder;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+
 import net.optile.payment.R;
 import net.optile.payment.ui.theme.PageParameters;
 import net.optile.payment.ui.theme.PaymentTheme;

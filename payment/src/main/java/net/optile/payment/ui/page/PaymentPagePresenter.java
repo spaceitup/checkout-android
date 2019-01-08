@@ -11,12 +11,10 @@
 
 package net.optile.payment.ui.page;
 
-import java.net.URL;
-import java.util.Map;
-
 import android.content.Context;
 import android.text.TextUtils;
 import android.util.Log;
+
 import net.optile.payment.R;
 import net.optile.payment.core.PaymentError;
 import net.optile.payment.core.PaymentException;
@@ -33,6 +31,9 @@ import net.optile.payment.ui.model.PaymentCard;
 import net.optile.payment.ui.model.PaymentSession;
 import net.optile.payment.ui.widget.FormWidget;
 import net.optile.payment.validation.Validator;
+
+import java.net.URL;
+import java.util.Map;
 
 /**
  * The PaymentPagePresenter implementing the presenter part of the MVP

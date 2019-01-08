@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.design.widget.TextInputLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.design.widget.TextInputLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/textinputlayout"
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
@@ -10,10 +9,10 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:clickable="false"
-        android:longClickable="false"
         android:cursorVisible="false"
-        android:inputType="none"
         android:focusable="true"
         android:focusableInTouchMode="true"
-        android:singleLine="true"/>
+        android:inputType="none"
+        android:longClickable="false"
+        android:singleLine="true" />
 </android.support.design.widget.TextInputLayout>

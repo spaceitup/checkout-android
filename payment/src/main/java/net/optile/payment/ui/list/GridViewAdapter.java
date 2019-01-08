@@ -11,40 +11,18 @@
 
 package net.optile.payment.ui.list;
 
-import java.util.List;
-
-import net.optile.payment.R;
-import android.app.Activity;
-import android.app.Dialog;
 import android.content.Context;
-import android.os.Bundle;
-import android.support.v4.app.DialogFragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
-import android.widget.AdapterView.OnItemClickListener;
 import android.widget.BaseAdapter;
-import android.widget.GridView;
 import android.widget.ImageView;
-import java.net.URL;
-import java.util.Locale;
 
-import android.support.v7.widget.RecyclerView.ViewHolder;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.ImageView;
-import android.widget.TextView;
 import net.optile.payment.R;
-import net.optile.payment.model.AccountMask;
-import net.optile.payment.model.PaymentMethod;
-import net.optile.payment.ui.model.AccountCard;
-import net.optile.payment.ui.model.PaymentCard;
-import net.optile.payment.ui.theme.PageParameters;
-import net.optile.payment.ui.theme.PaymentTheme;
 import net.optile.payment.util.ImageHelper;
-import net.optile.payment.util.PaymentUtils;
+
+import java.net.URL;
+import java.util.List;
 
 /**
  *

@@ -11,17 +11,17 @@
 
 package net.optile.payment.network;
 
-import static org.junit.Assert.assertNotNull;
-
-import java.net.MalformedURLException;
-import java.net.URL;
+import net.optile.payment.core.PaymentException;
+import net.optile.payment.form.Charge;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.robolectric.RobolectricTestRunner;
 
-import net.optile.payment.core.PaymentException;
-import net.optile.payment.form.Charge;
+import java.net.MalformedURLException;
+import java.net.URL;
+
+import static org.junit.Assert.assertNotNull;
 
 /**
  * The type Charge connection test.

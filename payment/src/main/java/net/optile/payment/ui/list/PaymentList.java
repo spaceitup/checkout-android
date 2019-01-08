@@ -11,9 +11,6 @@
 
 package net.optile.payment.ui.list;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import android.content.Context;
 import android.os.IBinder;
 import android.support.v4.app.DialogFragment;
@@ -25,12 +22,16 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.TextView;
+
 import net.optile.payment.R;
 import net.optile.payment.ui.model.AccountCard;
 import net.optile.payment.ui.model.NetworkCard;
 import net.optile.payment.ui.model.PaymentSession;
 import net.optile.payment.ui.page.PaymentPageActivity;
 import net.optile.payment.validation.ValidationResult;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * The PaymentList showing available payment methods and accounts in a list

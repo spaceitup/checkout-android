@@ -11,17 +11,18 @@
 
 package net.optile.payment.ui.model;
 
-import android.util.Log;
-import java.net.URL;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
 import android.text.TextUtils;
+import android.util.Log;
 
 import net.optile.payment.core.LanguageFile;
 import net.optile.payment.model.ApplicableNetwork;
 import net.optile.payment.model.InputElement;
 import net.optile.payment.util.PaymentUtils;
+
+import java.net.URL;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
 
 /**
  * Class for holding the ApplicableNetwork with its localized language file

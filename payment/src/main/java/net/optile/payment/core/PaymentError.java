@@ -11,11 +11,12 @@
 
 package net.optile.payment.core;
 
+import android.support.annotation.StringDef;
+
+import net.optile.payment.model.ErrorInfo;
+
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
-
-import android.support.annotation.StringDef;
-import net.optile.payment.model.ErrorInfo;
 
 /**
  * A class representing the details about the error

@@ -11,8 +11,6 @@
 
 package net.optile.payment.ui.page;
 
-import java.util.Map;
-
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -25,6 +23,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+
 import net.optile.payment.R;
 import net.optile.payment.ui.PaymentResult;
 import net.optile.payment.ui.PaymentUI;
@@ -37,6 +36,8 @@ import net.optile.payment.ui.widget.FormWidget;
 import net.optile.payment.util.PaymentUtils;
 import net.optile.payment.validation.ValidationResult;
 import net.optile.payment.validation.Validator;
+
+import java.util.Map;
 
 /**
  * The PaymentPageActivity showing available payment methods

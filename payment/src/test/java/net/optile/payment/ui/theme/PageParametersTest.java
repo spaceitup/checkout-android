@@ -11,12 +11,12 @@
 
 package net.optile.payment.ui.theme;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
+import net.optile.payment.R;
 
 import org.junit.Test;
 
-import net.optile.payment.R;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
 
 public class PageParametersTest {
 

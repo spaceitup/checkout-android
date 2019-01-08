@@ -11,10 +11,10 @@
 
 package net.optile.payment.model;
 
+import android.support.annotation.StringDef;
+
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
-
-import android.support.annotation.StringDef;
 
 /**
  * This class describes possible checkbox display modes.

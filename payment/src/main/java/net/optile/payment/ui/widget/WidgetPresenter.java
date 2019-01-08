@@ -12,6 +12,7 @@
 package net.optile.payment.ui.widget;
 
 import android.support.v4.app.DialogFragment;
+
 import net.optile.payment.validation.ValidationResult;
 
 /**

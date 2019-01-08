@@ -15,6 +15,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.text.TextUtils;
 import android.util.Patterns;
+
 import net.optile.payment.R;
 import net.optile.payment.ui.page.PaymentPageActivity;
 import net.optile.payment.ui.theme.PaymentTheme;
