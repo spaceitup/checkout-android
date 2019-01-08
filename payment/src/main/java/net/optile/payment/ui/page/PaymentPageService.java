@@ -11,10 +11,17 @@
 
 package net.optile.payment.ui.page;
 
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.util.ArrayList;
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.concurrent.Callable;
+
 import android.content.res.Resources;
 import android.text.TextUtils;
 import android.util.Log;
-
 import net.optile.payment.core.LanguageFile;
 import net.optile.payment.core.PaymentError;
 import net.optile.payment.core.PaymentException;
@@ -37,14 +44,6 @@ import net.optile.payment.ui.model.NetworkCard;
 import net.optile.payment.ui.model.PaymentNetwork;
 import net.optile.payment.ui.model.PaymentSession;
 import net.optile.payment.validation.Validator;
-
-import java.net.MalformedURLException;
-import java.net.URL;
-import java.util.ArrayList;
-import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.concurrent.Callable;
 
 /**
  * The PaymentPageService providing asynchronize initializing of the PaymentPage and communication with the Payment API .

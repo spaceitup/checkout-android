@@ -11,18 +11,6 @@
 
 package net.optile.payment.network;
 
-import android.os.Build;
-import android.text.TextUtils;
-import android.util.Log;
-
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
-import com.google.gson.JsonParseException;
-
-import net.optile.payment.core.PaymentError;
-import net.optile.payment.core.PaymentException;
-import net.optile.payment.model.ErrorInfo;
-
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
@@ -36,6 +24,17 @@ import java.security.KeyManagementException;
 import java.security.NoSuchAlgorithmException;
 
 import javax.net.ssl.HttpsURLConnection;
+
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.google.gson.JsonParseException;
+
+import android.os.Build;
+import android.text.TextUtils;
+import android.util.Log;
+import net.optile.payment.core.PaymentError;
+import net.optile.payment.core.PaymentException;
+import net.optile.payment.model.ErrorInfo;
 
 /**
  * The base class for all Payment API implementations

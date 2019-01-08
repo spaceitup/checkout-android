@@ -86,7 +86,7 @@ public final class NetworkCard implements PaymentCard {
      */
     @Override
     public InputElement getInputElement(String name) {
-        
+
         for (InputElement element : getInputElements()) {
             if (element.getName().equals(name)) {
                 return element;
@@ -94,7 +94,7 @@ public final class NetworkCard implements PaymentCard {
         }
         return null;
     }
-    
+
     /**
      * {@inheritDoc}
      */
@@ -134,7 +134,7 @@ public final class NetworkCard implements PaymentCard {
         }
         return false;
     }
-    
+
     /**
      * Add a PaymentNetwork to this NetworkCard, adding may fail if InputElements of this PaymentNetwork are not similar with InputElements
      * of previously added PaymentNetworks.
@@ -151,26 +151,26 @@ public final class NetworkCard implements PaymentCard {
         return true;
     }
 
-    /** 
+    /**
      * Get the list of PaymentNetworks supported by this NetworkCard.
-     * 
-     * @return the list of PaymentNetworks. 
+     *
+     * @return the list of PaymentNetworks.
      */
     public List<PaymentNetwork> getPaymentNetworks() {
         return networks;
     }
 
-    /** 
+    /**
      * Get the list of smart selected PaymentNetworks.
-     * 
+     *
      * @return the list of smart selected PaymentNetworks.
      */
     public List<PaymentNetwork> getSmartSelected() {
         return smartSelected;
     }
-    
+
     /**
-     * Get the visible PaymentNetwork, this is either the first in the list of smart selected networks or the first network if 
+     * Get the visible PaymentNetwork, this is either the first in the list of smart selected networks or the first network if
      * none are smart selected.
      *
      * @return active PaymentNetwork
@@ -183,22 +183,22 @@ public final class NetworkCard implements PaymentCard {
         return networks.get(0);
     }
 
-    /** 
+    /**
      * The NetworkCard supports smart selection when it has more than 1 PaymentNetwork.
-     * 
-     * @return true when this network card supports smart selection, false otherwise. 
+     *
+     * @return true when this network card supports smart selection, false otherwise.
      */
     public boolean supportSmartSelection() {
         return networks.size() > 1;
     }
-    
-    /** 
-     * Check if the PaymentNetwork is smart selected, it is smart selected when the provided number input matches  
-     * the regex of this PaymentMethod in the groups settings file. A PaymentMethod is always smart selected when 
+
+    /**
+     * Check if the PaymentNetwork is smart selected, it is smart selected when the provided number input matches
+     * the regex of this PaymentMethod in the groups settings file. A PaymentMethod is always smart selected when
      * there is only one PaymentMethod in the NetworkCard.
      *
      * @param network to check if smart selection
-     * @return true when smart selected, false otherwise 
+     * @return true when smart selected, false otherwise
      */
     public boolean isSmartSelected(PaymentNetwork network) {
         if (networks.size() == 1 && networks.get(0) == network) {
@@ -206,9 +206,9 @@ public final class NetworkCard implements PaymentCard {
         }
         return smartSelected.contains(network);
     }
-    
+
     /**
-     * Get the PaymentNetwork that is currently selected. This method may return null when there are multiple smart selected PaymentNetworks.  
+     * Get the PaymentNetwork that is currently selected. This method may return null when there are multiple smart selected PaymentNetworks.
      *
      * @return selected PaymentNetwork, may return null.
      */

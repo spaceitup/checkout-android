@@ -11,10 +11,10 @@
 
 package net.optile.payment.validation;
 
-import android.support.annotation.StringDef;
-
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
+
+import android.support.annotation.StringDef;
 
 /**
  * Class containing PaymentMethodCodes for which the accountNumber and verificationCodes are custom validated.

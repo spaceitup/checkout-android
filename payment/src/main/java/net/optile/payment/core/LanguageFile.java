@@ -11,9 +11,9 @@
 
 package net.optile.payment.core;
 
-import net.optile.payment.model.Interaction;
-
 import java.util.Properties;
+
+import net.optile.payment.model.Interaction;
 
 /**
  * Class holding the language entries for the payment page, ApplicableNetwork or AccountRegistration

@@ -11,14 +11,11 @@
 
 package net.optile.payment.network;
 
-import android.net.Uri;
-import android.text.TextUtils;
-
-import com.google.gson.JsonParseException;
-
-import net.optile.payment.core.LanguageFile;
-import net.optile.payment.core.PaymentException;
-import net.optile.payment.model.ListResult;
+import static net.optile.payment.core.PaymentError.API_ERROR;
+import static net.optile.payment.core.PaymentError.CONN_ERROR;
+import static net.optile.payment.core.PaymentError.INTERNAL_ERROR;
+import static net.optile.payment.core.PaymentError.PROTOCOL_ERROR;
+import static net.optile.payment.core.PaymentError.SECURITY_ERROR;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -27,11 +24,13 @@ import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 
-import static net.optile.payment.core.PaymentError.API_ERROR;
-import static net.optile.payment.core.PaymentError.CONN_ERROR;
-import static net.optile.payment.core.PaymentError.INTERNAL_ERROR;
-import static net.optile.payment.core.PaymentError.PROTOCOL_ERROR;
-import static net.optile.payment.core.PaymentError.SECURITY_ERROR;
+import com.google.gson.JsonParseException;
+
+import android.net.Uri;
+import android.text.TextUtils;
+import net.optile.payment.core.LanguageFile;
+import net.optile.payment.core.PaymentException;
+import net.optile.payment.model.ListResult;
 
 /**
  * Class implementing the communication with the List payment API

@@ -11,13 +11,15 @@
 
 package net.optile.payment.ui.list;
 
+import java.util.Arrays;
+import java.util.List;
+import java.util.Locale;
+
 import android.support.v7.widget.RecyclerView.ViewHolder;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.TextView;
-
 import net.optile.payment.R;
 import net.optile.payment.model.AccountMask;
 import net.optile.payment.model.PaymentMethod;
@@ -27,8 +29,6 @@ import net.optile.payment.ui.theme.PageParameters;
 import net.optile.payment.ui.theme.PaymentTheme;
 import net.optile.payment.util.PaymentUtils;
 
-import java.util.Locale;
-
 /**
  * The AccountCardViewHolder class holding and binding views for an AccountCard
  */
@@ -36,19 +36,23 @@ final class AccountCardViewHolder extends PaymentCardViewHolder {
 
     private final TextView title;
     private final TextView subTitle;
-    private final ImageView logo;
 
     private AccountCardViewHolder(ListAdapter adapter, View parent, AccountCard accountCard) {
         super(adapter, parent);
-        this.title = parent.findViewById(R.id.text_title);
-        this.subTitle = parent.findViewById(R.id.text_subtitle);
-        this.logo = parent.findViewById(R.id.image_logo);
-        PaymentTheme theme = adapter.getPaymentTheme();
 
+        PaymentTheme theme = adapter.getPaymentTheme();
+        PageParameters params = theme.getPageParameters();
+
+        this.title = parent.findViewById(R.id.text_title);
+        PaymentUtils.setTextAppearance(title, params.getAccountCardTitleStyle());
+
+        this.subTitle = parent.findViewById(R.id.text_subtitle);
+        PaymentUtils.setTextAppearance(subTitle, params.getAccountCardSubtitleStyle());
+
+        addAccountLogo(parent, accountCard, theme);
         addElementWidgets(accountCard.getInputElements(), theme);
         addButtonWidget(theme);
 
-        applyTheme(theme);
         setLastImeOptions();
     }
 
@@ -56,13 +60,6 @@ final class AccountCardViewHolder extends PaymentCardViewHolder {
         LayoutInflater inflater = LayoutInflater.from(parent.getContext());
         View view = inflater.inflate(R.layout.list_item_accountcard, parent, false);
         return new AccountCardViewHolder(adapter, view, accountCard);
-    }
-
-    private void applyTheme(PaymentTheme theme) {
-        PageParameters params = theme.getPageParameters();
-        PaymentUtils.setTextAppearance(title, params.getAccountCardTitleStyle());
-        PaymentUtils.setTextAppearance(subTitle, params.getAccountCardSubtitleStyle());
-        PaymentUtils.setImageBackground(logo, params.getPaymentLogoBackground());
     }
 
     void onBind(PaymentCard paymentCard) {
@@ -75,7 +72,12 @@ final class AccountCardViewHolder extends PaymentCardViewHolder {
         AccountMask mask = card.getMaskedAccount();
         bindTitle(mask, card.getPaymentMethod());
         bindSubTitle(mask);
-        bindLogo(logo, card.getLink("logo"), isExpanded());
+        bindLogoView(card.getCode(), card.getLink("logo"), isExpanded());
+    }
+
+    private void addAccountLogo(View parent, AccountCard card, PaymentTheme theme) {
+        List<String> names = Arrays.asList(card.getCode());
+        addLogoViews(parent, names, theme);
     }
 
     private void bindTitle(AccountMask mask, String method) {

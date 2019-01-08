@@ -11,15 +11,6 @@
 
 package net.optile.payment.resource;
 
-import android.content.res.Resources;
-
-import com.google.gson.JsonSyntaxException;
-import com.google.gson.reflect.TypeToken;
-
-import net.optile.payment.core.PaymentError;
-import net.optile.payment.core.PaymentException;
-import net.optile.payment.util.GsonHelper;
-
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
@@ -29,6 +20,14 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+import com.google.gson.JsonSyntaxException;
+import com.google.gson.reflect.TypeToken;
+
+import android.content.res.Resources;
+import net.optile.payment.core.PaymentError;
+import net.optile.payment.core.PaymentException;
+import net.optile.payment.util.GsonHelper;
 
 /**
  * The ResourceLoader class containing helper methods for loading group and validation raw json files.

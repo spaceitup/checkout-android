@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:layout_marginLeft="@dimen/pmborder_xsmall"
-    android:layout_marginRight="@dimen/pmborder_xsmall">
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:layout_marginLeft="@dimen/pmborder_xsmall"
+              android:layout_marginRight="@dimen/pmborder_xsmall">
 
     <android.support.design.card.MaterialCardView
         android:layout_width="match_parent"
@@ -28,18 +28,10 @@
                 android:gravity="center_vertical"
                 android:orientation="horizontal">
 
-                <LinearLayout
+                <TableLayout
+                    android:id="@+id/tablelayout_logo"
                     android:layout_width="@dimen/pmcard_logowidth"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical">
-
-                    <ImageView
-                        android:id="@+id/image_logo"
-                        android:layout_width="@dimen/pmlogo_width"
-                        android:layout_height="@dimen/pmlogo_height"
-                        android:adjustViewBounds="true"
-                        android:contentDescription="@string/pmpage_contentdescription" />
-                </LinearLayout>
+                    android:layout_height="wrap_content"/>
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -50,12 +42,12 @@
                     <TextView
                         android:id="@+id/text_title"
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content" />
+                        android:layout_height="wrap_content"/>
 
                     <TextView
                         android:id="@+id/text_subtitle"
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content" />
+                        android:layout_height="wrap_content"/>
                 </LinearLayout>
             </LinearLayout>
 

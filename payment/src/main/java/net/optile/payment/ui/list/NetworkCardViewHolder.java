@@ -11,17 +11,15 @@
 
 package net.optile.payment.ui.list;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import android.support.v7.widget.RecyclerView.ViewHolder;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
-import android.widget.LinearLayout.LayoutParams;
-import android.widget.TableLayout;
-import android.widget.TableRow;
 import android.widget.TextView;
-
 import net.optile.payment.R;
 import net.optile.payment.core.LanguageFile;
 import net.optile.payment.core.PaymentInputType;
@@ -35,71 +33,44 @@ import net.optile.payment.ui.widget.RegisterWidget;
 import net.optile.payment.ui.widget.WidgetInflater;
 import net.optile.payment.util.PaymentUtils;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
 /**
  * The NetworkCardViewHolder
  */
 final class NetworkCardViewHolder extends PaymentCardViewHolder {
 
     private final TextView title;
-    private final TableLayout logoLayout;
-    private final Map<String, ImageView> logos;
-    
+
     NetworkCardViewHolder(ListAdapter adapter, View parent, NetworkCard networkCard) {
         super(adapter, parent);
-        this.title = parent.findViewById(R.id.text_title);
-        this.logos = new HashMap<>();
-        this.logoLayout = parent.findViewById(R.id.tablelayout_logo);
-        
+
         PaymentTheme theme = adapter.getPaymentTheme();
-        addLogos(parent, networkCard, theme);
+        PageParameters params = theme.getPageParameters();
+
+        this.title = parent.findViewById(R.id.text_title);
+        PaymentUtils.setTextAppearance(title, params.getNetworkCardTitleStyle());
+
+        addNetworkLogos(parent, networkCard, theme);
         addElementWidgets(networkCard.getInputElements(), theme);
         addRegisterWidgets(theme);
         addButtonWidget(theme);
-        applyTheme(theme);
+
         setLastImeOptions();
     }
 
-    private void addLogos(View parent, NetworkCard networkCard, PaymentTheme theme) {
-        int logoBackground = theme.getPageParameters().getPaymentLogoBackground();
-        LayoutInflater inflater = LayoutInflater.from(parent.getContext());
-        List<PaymentNetwork> networks = networkCard.getPaymentNetworks();
-
-        int count = 0;
-        TableRow row = null;
-        int border = parent.getContext().getResources().getDimensionPixelSize(R.dimen.pmborder_xsmall);
-
-        for (PaymentNetwork network : networks) {
-            int marginTop = 0;
-            int marginRight = 0;
-            
-            if (count > 1) {
-                marginTop = border;
-            }
-            if (count % 2 == 0) {
-                row = new TableRow(parent.getContext());
-                logoLayout.addView(row);
-                marginRight = border;
-            }
-            ImageView view = (ImageView)inflater.inflate(R.layout.list_item_logo, (ViewGroup)row, false);
-            LayoutParams params = (LayoutParams) view.getLayoutParams();
-            params.setMargins(0, marginTop, marginRight, 0);
-            view.setLayoutParams(params);
-            PaymentUtils.setImageBackground(view, logoBackground);
-            logos.put(network.getCode(), view);
-            row.addView(view);
-            count++;
-        }
-    }
-    
     static ViewHolder createInstance(ListAdapter adapter, NetworkCard networkCard, ViewGroup parent) {
         LayoutInflater inflater = LayoutInflater.from(parent.getContext());
         View view = inflater.inflate(R.layout.list_item_networkcard, parent, false);
         return new NetworkCardViewHolder(adapter, view, networkCard);
+    }
+
+    private void addNetworkLogos(View parent, NetworkCard networkCard, PaymentTheme theme) {
+        List<String> names = new ArrayList<>();
+        List<PaymentNetwork> networks = networkCard.getPaymentNetworks();
+
+        for (PaymentNetwork network : networks) {
+            names.add(network.getCode());
+        }
+        addLogoViews(parent, names, theme);
     }
 
     void onBind(PaymentCard paymentCard) {
@@ -111,7 +82,8 @@ final class NetworkCardViewHolder extends PaymentCardViewHolder {
         NetworkCard networkCard = (NetworkCard) paymentCard;
         PaymentNetwork network = networkCard.getVisibleNetwork();
 
-        bindHeader(networkCard);
+        bindTitle(networkCard);
+        bindLogos(networkCard);
         bindRegistrationWidget(network);
         bindRecurrenceWidget(network);
     }
@@ -121,16 +93,6 @@ final class NetworkCardViewHolder extends PaymentCardViewHolder {
         addWidget(widget);
         widget = WidgetInflater.inflateRegisterWidget(PaymentInputType.ALLOW_RECURRENCE, formLayout, theme);
         addWidget(widget);
-    }
-
-    private void applyTheme(PaymentTheme theme) {
-        PageParameters params = theme.getPageParameters();
-        PaymentUtils.setTextAppearance(title, params.getNetworkCardTitleStyle());
-    }
-
-    private void bindHeader(NetworkCard card) {
-        bindTitle(card);
-        bindLogos(card);
     }
 
     private void bindTitle(NetworkCard card) {
@@ -148,18 +110,13 @@ final class NetworkCardViewHolder extends PaymentCardViewHolder {
 
     private void bindLogos(NetworkCard card) {
         List<PaymentNetwork> networks = card.getPaymentNetworks();
-        ImageView view;
 
         for (PaymentNetwork network : networks) {
-            view = logos.get(network.getCode());
-            if (view == null) {
-                continue;
-            }
-            boolean selected = isExpanded() && card.isSmartSelected(network); 
-            bindLogo(view, network.getLink("logo"), selected);
+            boolean selected = isExpanded() && card.isSmartSelected(network);
+            bindLogoView(network.getCode(), network.getLink("logo"), selected);
         }
     }
-    
+
     private void bindRegistrationWidget(PaymentNetwork network) {
         RegisterWidget widget = (RegisterWidget) getFormWidget(PaymentInputType.AUTO_REGISTRATION);
         widget.setRegistrationType(network.getRegistration());

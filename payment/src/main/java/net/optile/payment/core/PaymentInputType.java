@@ -11,10 +11,10 @@
 
 package net.optile.payment.core;
 
-import android.support.annotation.StringDef;
-
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
+
+import android.support.annotation.StringDef;
 
 /**
  * Class containing the different payment input types i.e. number, iban, bic etc.

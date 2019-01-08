@@ -11,8 +11,9 @@
 
 package net.optile.payment.form;
 
-import net.optile.payment.core.PaymentException;
-import net.optile.payment.core.PaymentInputType;
+import static io.github.jsonSnapshot.SnapshotMatcher.expect;
+import static io.github.jsonSnapshot.SnapshotMatcher.start;
+import static io.github.jsonSnapshot.SnapshotMatcher.validateSnapshots;
 
 import org.json.JSONException;
 import org.junit.AfterClass;
@@ -21,9 +22,8 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.robolectric.RobolectricTestRunner;
 
-import static io.github.jsonSnapshot.SnapshotMatcher.expect;
-import static io.github.jsonSnapshot.SnapshotMatcher.start;
-import static io.github.jsonSnapshot.SnapshotMatcher.validateSnapshots;
+import net.optile.payment.core.PaymentException;
+import net.optile.payment.core.PaymentInputType;
 
 @RunWith(RobolectricTestRunner.class)
 public class ChargeTest {

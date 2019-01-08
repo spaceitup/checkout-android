@@ -11,14 +11,13 @@
 
 package net.optile.payment.form;
 
-import android.text.TextUtils;
+import org.json.JSONException;
+import org.json.JSONObject;
 
+import android.text.TextUtils;
 import net.optile.payment.core.PaymentError;
 import net.optile.payment.core.PaymentException;
 import net.optile.payment.core.PaymentInputType;
-
-import org.json.JSONException;
-import org.json.JSONObject;
 
 /**
  * Class holding the Charge form values

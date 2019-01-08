@@ -11,17 +11,16 @@
 
 package net.optile.payment.network;
 
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-
-import net.optile.payment.core.PaymentException;
+import static net.optile.payment.core.PaymentError.CONN_ERROR;
 
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
-import static net.optile.payment.core.PaymentError.CONN_ERROR;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import net.optile.payment.core.PaymentException;
 
 /**
  * Class for loading images from the network

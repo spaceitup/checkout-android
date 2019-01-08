@@ -11,15 +11,14 @@
 
 package net.optile.payment.validation;
 
+import java.util.Calendar;
+import java.util.Map;
+
 import android.text.TextUtils;
 import android.util.Log;
-
 import net.optile.payment.core.PaymentInputType;
 import net.optile.payment.model.PaymentMethod;
 import net.optile.payment.resource.ValidationGroup;
-
-import java.util.Calendar;
-import java.util.Map;
 
 /**
  * Class for validating input type values

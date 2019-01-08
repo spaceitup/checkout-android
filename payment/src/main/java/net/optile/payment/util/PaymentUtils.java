@@ -11,19 +11,18 @@
 
 package net.optile.payment.util;
 
-import android.content.res.Resources;
-import android.support.v4.widget.TextViewCompat;
-import android.widget.ImageView;
-import android.widget.TextView;
-
-import net.optile.payment.core.PaymentInputType;
-import net.optile.payment.model.InputElement;
-
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.List;
+
+import android.content.res.Resources;
+import android.support.v4.widget.TextViewCompat;
+import android.widget.ImageView;
+import android.widget.TextView;
+import net.optile.payment.core.PaymentInputType;
+import net.optile.payment.model.InputElement;
 
 /**
  * The PaymentUtils class containing helper methods

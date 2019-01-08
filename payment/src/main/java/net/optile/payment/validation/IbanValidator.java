@@ -11,10 +11,10 @@
 
 package net.optile.payment.validation;
 
-import net.optile.payment.util.PaymentUtils;
-
 import java.util.HashMap;
 import java.util.Map;
+
+import net.optile.payment.util.PaymentUtils;
 
 /**
  * Class with helper methods to validate Iban numbers

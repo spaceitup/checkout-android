@@ -11,18 +11,17 @@
 
 package net.optile.payment.ui.list;
 
+import java.net.URL;
+import java.util.List;
+
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
-
 import net.optile.payment.R;
 import net.optile.payment.util.ImageHelper;
-
-import java.net.URL;
-import java.util.List;
 
 /**
  *

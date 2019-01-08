@@ -11,20 +11,19 @@
 
 package net.optile.payment.validation;
 
-import net.optile.payment.R;
-import net.optile.payment.core.PaymentInputType;
-import net.optile.payment.model.PaymentMethod;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.robolectric.RobolectricTestRunner;
 
 import androidx.test.core.app.ApplicationProvider;
-
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
+import net.optile.payment.R;
+import net.optile.payment.core.PaymentInputType;
+import net.optile.payment.model.PaymentMethod;
 
 
 @RunWith(RobolectricTestRunner.class)
