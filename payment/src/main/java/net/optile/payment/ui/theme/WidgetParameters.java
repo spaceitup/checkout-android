@@ -11,11 +11,11 @@
 
 package net.optile.payment.ui.theme;
 
-import net.optile.payment.R;
-import net.optile.payment.core.PaymentInputType;
-
 import java.util.HashMap;
 import java.util.Map;
+
+import net.optile.payment.R;
+import net.optile.payment.core.PaymentInputType;
 
 /**
  * Class for holding the WidgetParameters for the PaymentTheme.

@@ -172,7 +172,7 @@ abstract class PaymentCardViewHolder extends RecyclerView.ViewHolder {
                 logoLayout.addView(row);
                 marginRight = border;
             }
-            ImageView view = (ImageView) inflater.inflate(R.layout.list_item_logo, (ViewGroup) row, false);
+            ImageView view = (ImageView) inflater.inflate(R.layout.list_item_logo, row, false);
             LayoutParams params = (LayoutParams) view.getLayoutParams();
 
             params.setMargins(0, marginTop, marginRight, 0);

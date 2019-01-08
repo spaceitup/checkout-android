@@ -11,14 +11,14 @@
 
 package net.optile.payment.ui.model;
 
+import java.net.URL;
+import java.util.List;
+import java.util.Map;
+
 import net.optile.payment.core.LanguageFile;
 import net.optile.payment.model.ApplicableNetwork;
 import net.optile.payment.model.ListResult;
 import net.optile.payment.model.Networks;
-
-import java.net.URL;
-import java.util.List;
-import java.util.Map;
 
 /**
  * Class for storing the ListResult and the list of supported PaymentMethods

@@ -11,16 +11,14 @@
 
 package net.optile.payment.ui.model;
 
-import android.util.Log;
+import java.net.URL;
+import java.util.ArrayList;
+import java.util.List;
 
 import net.optile.payment.core.LanguageFile;
 import net.optile.payment.core.PaymentInputType;
 import net.optile.payment.model.InputElement;
 import net.optile.payment.model.PaymentMethod;
-
-import java.net.URL;
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Class for holding the data of a NetworkCard in the list

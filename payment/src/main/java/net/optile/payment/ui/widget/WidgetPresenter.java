@@ -12,7 +12,6 @@
 package net.optile.payment.ui.widget;
 
 import android.support.v4.app.DialogFragment;
-
 import net.optile.payment.validation.ValidationResult;
 
 /**
@@ -54,10 +53,10 @@ public interface WidgetPresenter {
      */
     ValidationResult validate(String type, String value1, String value2);
 
-    /** 
-     * Notify that text has changed in this widget. 
-     * 
-     * @param type the type of the TextInput widget 
+    /**
+     * Notify that text has changed in this widget.
+     *
+     * @param type the type of the TextInput widget
      * @param text new text of the textInput
      */
     void onTextInputChanged(String type, String text);

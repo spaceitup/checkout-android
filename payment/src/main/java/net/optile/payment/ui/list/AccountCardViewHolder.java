@@ -12,6 +12,7 @@
 package net.optile.payment.ui.list;
 
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
 
@@ -74,7 +75,7 @@ final class AccountCardViewHolder extends PaymentCardViewHolder {
     }
 
     private void addAccountLogo(View parent, AccountCard card, PaymentTheme theme) {
-        List<String> names = Arrays.asList(card.getCode());
+        List<String> names = Collections.singletonList(card.getCode());
         addLogoViews(parent, names, theme);
     }
 

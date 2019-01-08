@@ -215,7 +215,7 @@ final class PaymentPageService {
         Map<String, PaymentGroup> groups = loadPaymentGroups();
         Map<String, NetworkCard> cards = new LinkedHashMap<>();
 
-        NetworkCard card = null;
+        NetworkCard card;
         PaymentGroup group;
         String code;
 

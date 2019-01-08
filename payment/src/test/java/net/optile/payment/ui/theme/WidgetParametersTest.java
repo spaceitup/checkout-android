@@ -11,13 +11,13 @@
 
 package net.optile.payment.ui.theme;
 
-import net.optile.payment.R;
-import net.optile.payment.core.PaymentInputType;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
 
 import org.junit.Test;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
+import net.optile.payment.R;
+import net.optile.payment.core.PaymentInputType;
 
 public class WidgetParametersTest {
 
