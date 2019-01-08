@@ -161,12 +161,9 @@ abstract class PaymentCardViewHolder extends RecyclerView.ViewHolder {
         int border = context.getResources().getDimensionPixelSize(R.dimen.pmborder_xsmall);
 
         for (String name : names) {
-            int marginTop = 0;
+            int marginTop = count > 1 ? border : 0;
             int marginRight = 0;
 
-            if (count > 1) {
-                marginTop = border;
-            }
             if (count++ % 2 == 0) {
                 row = new TableRow(context);
                 logoLayout.addView(row);
