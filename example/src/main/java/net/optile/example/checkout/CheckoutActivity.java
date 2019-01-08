@@ -162,10 +162,10 @@ public final class CheckoutActivity extends AppCompatActivity implements Checkou
         // The custom dark checkout theme
         //PaymentTheme theme = CheckoutTheme.createCustomTheme();
 
-        // The custom validation settings file if needed, the default SDK validations are sufficient in most cases 
+        // The custom validation settings file, the default SDK validations are sufficient in most cases 
         //paymentUI.setValidationResId(R.raw.customvalidations);
 
-        // The default grouping settings file if needed
+        // The custom payment method group settings file
         // paymentUI.setGroupResId(R.raw.customgroups);
         paymentUI.setPaymentTheme(theme);
         paymentUI.showPaymentPage(this, PAYMENT_REQUEST_CODE);
