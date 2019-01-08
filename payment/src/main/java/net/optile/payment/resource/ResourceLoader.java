@@ -35,7 +35,7 @@ import net.optile.payment.util.GsonHelper;
 public final class ResourceLoader {
 
     /**
-     * load the payment group definition json file and return the map of PaymentGroups that should be used in the PaymentPage.
+     * Load the payment group definition json file and return the map of PaymentGroups that should be used in the PaymentPage.
      * Each PaymentGroupItem code can be used as lookup key to find the corresponding PaymentGroup.
      *
      * @param res the System resources
@@ -62,7 +62,7 @@ public final class ResourceLoader {
     }
 
     /**
-     * load the validation group definition json file and return a map of ValidationGroups.
+     * Load the validation group definition json file and return a map of ValidationGroups.
      * The lookup key for each validation group is the code combined with merchant. String key = code + merchant.
      *
      * @param res the System resources
