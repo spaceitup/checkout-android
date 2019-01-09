@@ -59,8 +59,7 @@ public final class NetworkCard implements PaymentCard {
      */
     @Override
     public String getCode() {
-        PaymentNetwork network = getSelectedNetwork();
-        return network != null ? network.getCode() : null;
+        return getVisibleNetwork().getCode();
     }
 
     /**
@@ -203,19 +202,6 @@ public final class NetworkCard implements PaymentCard {
             return true;
         }
         return smartSelected.contains(network);
-    }
-
-    /**
-     * Get the PaymentNetwork that is currently selected. This method may return null when there are multiple smart selected PaymentNetworks.
-     *
-     * @return selected PaymentNetwork, may return null.
-     */
-    public PaymentNetwork getSelectedNetwork() {
-
-        if (networks.size() == 1) {
-            return networks.get(0);
-        }
-        return smartSelected.size() == 1 ? smartSelected.get(0) : null;
     }
 
     private boolean validateSmartSelected(String text) {
