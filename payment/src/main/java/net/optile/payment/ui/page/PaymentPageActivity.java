@@ -18,6 +18,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
+import android.support.design.widget.AppBarLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -87,8 +88,10 @@ public final class PaymentPageActivity extends AppCompatActivity implements Paym
             setTheme(pageTheme);
         }
         setContentView(R.layout.activity_paymentpage);
+
         initToolbar(params);
         initList(params);
+
         this.progressBar = findViewById(R.id.progressbar);
         this.presenter = new PaymentPagePresenter(this);
     }
@@ -100,11 +103,11 @@ public final class PaymentPageActivity extends AppCompatActivity implements Paym
     }
 
     private void initToolbar(PageParameters params) {
-        final Toolbar toolbar = findViewById(R.id.toolbar);
-        toolbar.setTitle(getString(R.string.pmpage_title));
-        setSupportActionBar(toolbar);
+        //final Toolbar toolbar = findViewById(R.id.toolbar);
+        //toolbar.setTitle(getString(R.string.pmpage_title));
+        //setSupportActionBar(toolbar);
         ActionBar actionBar = getSupportActionBar();
-
+        
         if (actionBar != null) {
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
             getSupportActionBar().setDisplayShowHomeEnabled(true);
