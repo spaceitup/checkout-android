@@ -11,11 +11,11 @@
 
 package net.optile.payment.ui.model;
 
-import java.net.URL;
-import java.util.List;
-
 import net.optile.payment.core.LanguageFile;
 import net.optile.payment.model.InputElement;
+
+import java.net.URL;
+import java.util.List;
 
 /**
  * Interface for payment cards like AccountCard and NetworkCard
@@ -37,7 +37,8 @@ public interface PaymentCard {
     String getPaymentMethod();
 
     /**
-     * Get the code of this PaymentCard
+     * Get the code of this PaymentCard, this may return null if a PaymentCard contains multiple PaymentMethods
+     * and none has been selected.
      *
      * @return code
      */
@@ -70,4 +71,21 @@ public interface PaymentCard {
      * @return list of InputElements
      */
     List<InputElement> getInputElements();
+
+    /** 
+     * Get the InputElement given the name
+     * 
+     * @param name of the InputElement to be returned
+     * @return the InputElement with the given name or null if not found 
+     */
+    InputElement getInputElement(String name);
+
+    /** 
+     * Notify that text input has changed for one of the input fields in this PaymentCard. 
+     * 
+     * @param type the type of the TextInput field
+     * @param text new text of the input field
+     * @return true when this PaymentCard has changed its appearance because of the new input, false otherwise
+     */
+    boolean onTextInputChanged(String type, String text);
 }

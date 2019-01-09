@@ -11,7 +11,6 @@
 
 package net.optile.example.checkout;
 
-import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -163,6 +162,11 @@ public final class CheckoutActivity extends AppCompatActivity implements Checkou
         // The custom dark checkout theme
         //PaymentTheme theme = CheckoutTheme.createCustomTheme();
 
+        // The custom validation settings file, the default SDK validations are sufficient in most cases 
+        //paymentUI.setValidationResId(R.raw.customvalidations);
+
+        // The custom payment method group settings file
+        // paymentUI.setGroupResId(R.raw.customgroups);
         paymentUI.setPaymentTheme(theme);
         paymentUI.showPaymentPage(this, PAYMENT_REQUEST_CODE);
     }

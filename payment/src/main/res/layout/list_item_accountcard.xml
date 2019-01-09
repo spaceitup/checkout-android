@@ -1,18 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:layout_marginLeft="@dimen/pmborder_xsmall"
-    android:layout_marginRight="@dimen/pmborder_xsmall">
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:layout_marginLeft="@dimen/pmborder_xsmall"
+              android:layout_marginRight="@dimen/pmborder_xsmall">
 
     <android.support.design.card.MaterialCardView
-        android:layout_marginTop="@dimen/pmborder_xxsmall"
-        android:layout_marginLeft="@dimen/pmborder_xsmall"
-        android:layout_marginRight="@dimen/pmborder_xsmall"
-        android:layout_marginBottom="@dimen/pmborder_xxsmall"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/pmborder_xsmall"
+        android:layout_marginTop="@dimen/pmborder_xxsmall"
+        android:layout_marginRight="@dimen/pmborder_xsmall"
+        android:layout_marginBottom="@dimen/pmborder_xxsmall">
 
         <RelativeLayout
             android:layout_width="match_parent"
@@ -25,27 +24,26 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentTop="true"
                 android:clickable="true"
+                android:focusable="true"
                 android:gravity="center_vertical"
-                android:orientation="horizontal"
-                android:focusable="true">
+                android:orientation="horizontal">
 
-                <ImageView
-                    android:id="@+id/image_logo"
+                <TableLayout
+                    android:id="@+id/tablelayout_logo"
                     android:layout_width="@dimen/pmcard_logowidth"
-                    android:layout_height="@dimen/pmcard_logoheight"
-                    android:layout_marginEnd="@dimen/pmborder_small"
-                    android:adjustViewBounds="true"
-                    android:contentDescription="@string/pmpage_contentdescription"/>
+                    android:layout_height="wrap_content"/>
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/pmborder_small"
                     android:orientation="vertical">
 
                     <TextView
                         android:id="@+id/text_title"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"/>
+
                     <TextView
                         android:id="@+id/text_subtitle"
                         android:layout_width="wrap_content"
@@ -57,13 +55,12 @@
                 android:id="@+id/layout_form"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_below="@id/layout_header"
+                android:orientation="vertical"
                 android:paddingTop="@dimen/pmborder_medium"
                 android:paddingEnd="@dimen/pmborder_small"
                 android:paddingBottom="@dimen/pmborder_xxsmall"
-                android:layout_below="@id/layout_header"
-                android:visibility="gone"
-                android:orientation="vertical">
-            </LinearLayout>
+                android:visibility="gone"></LinearLayout>
         </RelativeLayout>
     </android.support.design.card.MaterialCardView>
 

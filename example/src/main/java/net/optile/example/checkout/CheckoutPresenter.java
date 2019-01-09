@@ -44,7 +44,7 @@ final class CheckoutPresenter {
             case PaymentUI.RESULT_CODE_OK:
                 // Payment Charge request has been completed, result.paymentResult contains an Interaction and optional OperationResult.
                 view.showPaymentSuccess();
-                Log.i(TAG, "OK[" + result.paymentResult + "]");                
+                Log.i(TAG, "OK[" + result.paymentResult + "]");
                 break;
             case PaymentUI.RESULT_CODE_CANCELED:
                 // Payment has been canceled, the result.paymentResult may be null if the user closed the Payment Page without making any requests.
@@ -58,7 +58,7 @@ final class CheckoutPresenter {
             case PaymentUI.RESULT_CODE_ERROR:
                 // An internal error occurred and the result.paymentResult contains a PaymentError explaining the reason of the error.
                 // I.e. a Connection, Protocol or Security error can be returned as a PaymentError. 
-                Log.i(TAG, "Error[" + result.paymentResult + "]"); 
+                Log.i(TAG, "Error[" + result.paymentResult + "]");
         }
     }
 

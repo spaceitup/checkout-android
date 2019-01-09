@@ -18,7 +18,6 @@ import android.util.Patterns;
 import net.optile.payment.R;
 import net.optile.payment.ui.page.PaymentPageActivity;
 import net.optile.payment.ui.theme.PaymentTheme;
-import net.optile.payment.validation.Validator;
 
 /**
  * The PaymentUI is the controller to initialize and launch the Payment Page.
@@ -26,7 +25,7 @@ import net.optile.payment.validation.Validator;
  */
 public final class PaymentUI {
 
-    public final static int RESULT_CODE_OK  = Activity.RESULT_FIRST_USER;
+    public final static int RESULT_CODE_OK = Activity.RESULT_FIRST_USER;
     public final static int RESULT_CODE_CANCELED = Activity.RESULT_FIRST_USER + 1;
     public final static int RESULT_CODE_ERROR = Activity.RESULT_FIRST_USER + 2;
     public final static String EXTRA_PAYMENT_RESULT = "paymentresult";
@@ -37,8 +36,11 @@ public final class PaymentUI {
     /** The cached payment theme */
     private PaymentTheme theme;
 
-    /** Cached input value validator */
-    private Validator validator;
+    /** The validation resource file id */
+    private int validationResId;
+
+    /** The group resource file id */
+    private int groupResId;
 
     private PaymentUI() {
     }
@@ -96,21 +98,39 @@ public final class PaymentUI {
     }
 
     /**
-     * Get the Validator set in this PaymentUI. This method is not Thread safe and must be called from the Main UI Thread.
+     * Get the validation resource file id. The validation file contains the validation settings for credit and debit cards.
      *
-     * @return the set Validator or the default Validator
+     * @return the validation resource id
      */
-    public Validator getValidator() {
-        return validator;
+    public int getValidationResId() {
+        return validationResId;
     }
 
     /**
-     * Set the Validator in this PaymentUI
+     * Set the validation resource file id. The validation file contains the validation settings for credit and debit cards.
      *
-     * @param validator containing the Validator
+     * @param validationResId containing the resource id of the validation file.
      */
-    public void setValidator(Validator validator) {
-        this.validator = validator;
+    public void setValidationResId(int validationResId) {
+        this.validationResId = validationResId;
+    }
+
+    /**
+     * Get the group resource file id. The group file defines how payment methods are grouped in the payment page.
+     *
+     * @return the group resource id
+     */
+    public int getGroupResId() {
+        return groupResId;
+    }
+
+    /**
+     * Set the group resource file id. The group file defines how payment methods are grouped in the payment page.
+     *
+     * @param groupResId contains the resource id of the group file.
+     */
+    public void setGroupResId(int groupResId) {
+        this.groupResId = groupResId;
     }
 
     /**
@@ -127,11 +147,14 @@ public final class PaymentUI {
         if (activity == null) {
             throw new IllegalArgumentException("activity may not be null");
         }
-        if (validator == null) {
-            setValidator(Validator.createInstance(activity, R.raw.validations));
-        }
         if (theme == null) {
             setPaymentTheme(PaymentTheme.createDefault());
+        }
+        if (validationResId == 0) {
+            setValidationResId(R.raw.validations);
+        }
+        if (groupResId == 0) {
+            setGroupResId(R.raw.groups);
         }
         activity.finishActivity(requestCode);
         Intent intent = PaymentPageActivity.createStartIntent(activity, listUrl);
