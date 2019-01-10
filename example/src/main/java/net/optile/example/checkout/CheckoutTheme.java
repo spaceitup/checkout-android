@@ -31,9 +31,9 @@ final class CheckoutTheme {
 
         PageParameters pageParams = PageParameters.createBuilder().
             setPageTheme(R.style.CustomThemePaymentPage).
-            setEmptyListLabelStyle(R.style.CustomText_Medium).
-            setSectionHeaderLabelStyle(R.style.CustomText_Medium_Bold).
-            setNetworkCardTitleStyle(R.style.CustomText_Medium).
+            setEmptyListLabelStyle(R.style.CustomText_Medium_Light).
+            setSectionHeaderLabelStyle(R.style.CustomText_Medium_Bold_Light).
+            setNetworkCardTitleStyle(R.style.CustomText_Medium_Bold).
             setAccountCardTitleStyle(R.style.CustomText_Medium_Bold).
             setAccountCardSubtitleStyle(R.style.CustomText_Small).
             setPaymentLogoBackground(R.drawable.custom_logobackground).
@@ -43,11 +43,11 @@ final class CheckoutTheme {
         WidgetParameters widgetParams = WidgetParameters.createBuilder().
             setTextInputTheme(R.style.CustomThemeTextInput).
             setButtonTheme(R.style.CustomThemeButton).
-            setButtonLabelStyle(R.style.CustomText_Medium_Bold).
+            setButtonLabelStyle(R.style.CustomText_Medium_Bold_Light).
             setButtonBackground(R.drawable.custom_buttonbackground).
             setCheckBoxTheme(R.style.CustomThemeCheckBox).
             setCheckBoxLabelCheckedStyle(R.style.CustomText_Medium).
-            setCheckBoxLabelUncheckedStyle(R.style.CustomText_Medium_Middle).
+            setCheckBoxLabelUncheckedStyle(R.style.CustomText_Medium_Gray).
             setSelectLabelStyle(R.style.CustomText_Tiny).
             setDefaultIconMapping().
             setValidationColorOk(R.color.custom_validationok).
@@ -57,12 +57,12 @@ final class CheckoutTheme {
         builder.setWidgetParameters(widgetParams);
 
         DialogParameters dialogParams = DialogParameters.createBuilder().
-            setDateTitleStyle(R.style.CustomText_Medium).
+            setDateTitleStyle(R.style.CustomText_Medium_Bold).
             setDateSubtitleStyle(R.style.CustomText_Small_Bold).
             setMessageTitleStyle(R.style.CustomText_Large_Bold).
             setMessageDetailsStyle(R.style.CustomText_Medium).
             setMessageDetailsNoTitleStyle(R.style.CustomText_Medium_Bold).
-            setButtonLabelStyle(R.style.CustomText_Small_Bold).
+            setButtonLabelStyle(R.style.CustomText_Small_Bold_Primary).
             build();
         builder.setDialogParameters(dialogParams);
 

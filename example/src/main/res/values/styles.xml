@@ -1,7 +1,7 @@
 <resources>
 
     <style name="CustomText" parent="TextAppearance.AppCompat">
-        <item name="android:textColor">@color/custom_foreground</item>
+        <item name="android:textColor">@color/custom_textdark</item>
     </style>
 
     <style name="CustomText.Tiny">
@@ -16,16 +16,28 @@
         <item name="android:textStyle">bold</item>
     </style>
 
+    <style name="CustomText.Small.Bold.Primary">
+        <item name="android:textColor">@color/custom_textprimary</item>
+    </style>
+
     <style name="CustomText.Medium">
         <item name="android:textSize">16sp</item>
     </style>
 
-    <style name="CustomText.Medium.Middle">
-        <item name="android:textColor">@color/custom_middle</item>
+    <style name="CustomText.Medium.Gray">
+        <item name="android:textColor">@color/custom_textgray</item>
+    </style>
+
+    <style name="CustomText.Medium.Light">
+        <item name="android:textColor">@color/custom_textlight</item>
     </style>
 
     <style name="CustomText.Medium.Bold">
         <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="CustomText.Medium.Bold.Light">
+        <item name="android:textColor">@color/custom_textlight</item>
     </style>
 
     <style name="CustomText.Large">
@@ -42,12 +54,12 @@
     </style>
 
     <style name="CustomTextInputLayoutHint" parent="TextAppearance.Design.Hint">
-        <item name="android:textColor">@color/custom_foreground</item>
+        <item name="android:textColor">@color/custom_textdark</item>
         <item name="android:textSize">12sp</item>
     </style>
 
     <style name="CustomTextInputEditText" parent="Widget.AppCompat.EditText">
-        <item name="android:textColor">@color/custom_foreground</item>
+        <item name="android:textColor">@color/custom_textdark</item>
         <item name="android:textSize">16sp</item>
     </style>
 </resources>

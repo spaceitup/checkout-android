@@ -9,14 +9,12 @@
         android:layout_height="0px"
         android:focusable="true"
         android:focusableInTouchMode="true"/>
-
     
     <android.support.v7.widget.RecyclerView
         android:id="@+id/recyclerview_paymentlist"
         android:layout_alignParentTop="true"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_below="@+id/layout_toolbar"/>
+        android:layout_height="match_parent" />
 
     <TextView
         android:id="@+id/label_empty"
@@ -26,7 +24,6 @@
         android:layout_marginLeft="@dimen/pmborder_xlarge"
         android:layout_marginRight="@dimen/pmborder_xlarge"
         android:gravity="center"
-
         android:visibility="gone"/>
 
     <ProgressBar
