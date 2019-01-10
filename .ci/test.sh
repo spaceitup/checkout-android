@@ -1,10 +1,12 @@
 #!/bin/bash
 set -e
 
-PATH=$PATH:/opt/build
+PATH=$PATH:/opt/gocd/build
+
+source /opt/gocd/build/java/buildlib.sh
 
 if [ -d target ]; then
     rm -rf target
 fi
 
-gradle clean :payment:test
+gradle_run_tests

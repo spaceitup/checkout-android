@@ -3,8 +3,6 @@ set -e
 
 PATH=$PATH:/opt/build
 
-if [ -d target ]; then
-    rm -rf target
-fi
+source /opt/build/java/buildlib.sh
 
-gradle clean :payment:assemble
+gradle_build
