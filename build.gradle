@@ -55,4 +55,9 @@ ext {
     androidxTestCoreVersion="1.0.0"
 }
 
+task build(type: GradleBuild) {
+     tasks = ['clean', ':payment:test', ':payment:assemble', ':payment:upload']
+}
+
+
 
