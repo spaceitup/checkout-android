@@ -67,6 +67,12 @@ uploadArchives {
                 pom.artifactId = "op-payment-android"
                 pom.groupId = "com.oscato.test"
             }
+            snapshotRepository(url: "https://nexus.mgmt.oscato.com/repository/snapshots/") {
+                authentication(userName: mavenUser, password: mavenPassword)
+                pom.version = versionName
+                pom.artifactId = "op-payment-android"
+                pom.groupId = "com.oscato.test"
+            }
         }
     }
 }
