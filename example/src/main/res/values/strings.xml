@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">PaymentExample</string>
+    <string name="button_checkout">Open PaymentPage</string>
+    <string name="payment_success">Great, you have made a successful charge with optile Payment SDK</string>
+    <string name="dialog_error_title">Checkout Error</string>
+    <string name="dialog_error_message">A Checkout error occurred: %1$s</string>
+    <string name="dialog_error_button">Close</string>
+    <string name="dialog_error_listurl_empty">Please add a valid optile List Url in the CheckoutPresenter startPayment() method.</string>
+</resources>

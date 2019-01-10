@@ -1,0 +1,60 @@
+<resources>
+
+    <style name="PaymentTheme" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="colorPrimary">@color/pmcolor_primary</item>
+        <item name="colorPrimaryDark">@color/pmcolor_primarydark</item>
+        <item name="colorAccent">@color/pmcolor_accent</item>
+    </style>
+
+    <style name="PaymentTheme.PaymentPage">
+        <item name="colorPrimary">@color/pmcolor_primary</item>
+        <item name="colorPrimaryDark">@color/pmcolor_primarydark</item>
+        <item name="colorAccent">@color/pmcolor_accent</item>
+        <item name="toolbarStyle">@style/PaymentThemeToolbar</item>
+        <item name="textInputStyle">@style/PaymentThemeTextInput</item>
+        <item name="editTextStyle">@style/PaymentThemeEditText</item>
+        <item name="materialCardViewStyle">@style/PaymentThemeCardView</item>
+        <item name="android:windowBackground">@color/pmcolor_list</item>
+    </style>
+
+    <style name="PaymentThemeToolbar" parent="Widget.AppCompat.Toolbar">
+        <item name="titleTextAppearance">@style/PaymentText.Medium.Bold.Light</item>
+    </style>
+
+    <style name="PaymentThemeCardView" parent="CardView.Light">
+        <item name="cardBackgroundColor">@color/pmcolor_background</item>
+        <item name="cardUseCompatPadding">false</item>
+        <item name="cardPreventCornerOverlap">true</item>
+        <item name="cardCornerRadius">@dimen/pmcard_radius</item>
+    </style>
+
+    <style name="PaymentThemeTextInput" parent="Widget.Design.TextInputLayout">
+        <!-- hint text color inside EditText -->
+        <item name="android:textColorHint">@color/pmtext_hint</item>
+        <!-- This color of the area of text selected -->
+        <item name="android:textColorHighlight">?attr/colorPrimary</item>
+        <!-- underline color control normal -->
+        <item name="colorControlNormal">@color/pmcolor_controlnormal</item>
+        <!-- underline color enabled -->
+        <item name="colorControlActivated">?attr/colorPrimary</item>
+        <!-- floating hint text appearance -->
+        <item name="hintTextAppearance">@style/PaymentTextInputLayoutHint</item>
+        <!-- error text appearance -->
+        <item name="errorTextAppearance">@style/PaymentTextInputLayoutError</item>
+    </style>
+
+    <style name="PaymentThemeEditText" parent="Widget.AppCompat.EditText">
+        <item name="android:textAppearance">@style/PaymentTextInputEditText</item>
+    </style>
+
+    <style name="PaymentThemeButton" parent="Widget.AppCompat.Button.Borderless">
+        <item name="android:foreground">?attr/selectableItemBackgroundBorderless</item>
+        <item name="android:textAllCaps">false</item>
+    </style>
+
+    <style name="PaymentThemeCheckBox" parent="Widget.AppCompat.CompoundButton.CheckBox">
+        <item name="colorControlNormal">@color/pmcolor_controlnormal</item>
+        <item name="colorControlActivated">@color/pmvalidation_ok</item>
+    </style>
+
+</resources>
