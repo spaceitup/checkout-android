@@ -17,60 +17,60 @@ import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
 
 import org.junit.Test;
+import org.junit.BeforeClass;
 import org.junit.runner.RunWith;
 import org.robolectric.RobolectricTestRunner;
 
+import android.content.res.Resources;
 import androidx.test.core.app.ApplicationProvider;
 import net.optile.payment.R;
 import net.optile.payment.core.PaymentInputType;
+import net.optile.payment.core.PaymentException;
 import net.optile.payment.model.PaymentMethod;
+import net.optile.payment.resource.ResourceLoader;
 
 
 @RunWith(RobolectricTestRunner.class)
 public class ValidatorTest {
 
-    @Test(expected = IllegalArgumentException.class)
-    public void createInstance_invalidContext() {
-        Validator.createInstance(null, R.raw.validations);
-    }
+    private Validator validator;
 
     @Test(expected = IllegalArgumentException.class)
-    public void createInstance_invalidResource() {
-        Validator.createInstance(ApplicationProvider.getApplicationContext(), 0);
+    public void createInstance_invalidContext() {
+        new Validator(null);
+    }
+
+    @Test(expected = PaymentException.class)
+    public void createInstance_invalidResource() throws PaymentException {
+        createValidator(0);
     }
 
     @Test
-    public void createInstance_success() {
-        Validator validator = Validator.createInstance(ApplicationProvider.getApplicationContext(), R.raw.validations);
+    public void createInstance_success() throws PaymentException {
+        Validator validator = createValidator(R.raw.validations);
         assertNotNull(validator);
     }
 
-    @Test(expected = IllegalArgumentException.class)
-    public void validate_invalidMethod() {
-        Validator validator = Validator.createInstance(ApplicationProvider.getApplicationContext(), R.raw.validations);
+    @Test(expected = IllegalArgumentException.class) 
+    public void validate_invalidMethod() throws PaymentException {
+        final Validator validator = createValidator(R.raw.validations);
         validator.validate(null, PaymentMethodCodes.VISA, PaymentInputType.ACCOUNT_NUMBER, "4111111111111111", null);
     }
 
     @Test(expected = IllegalArgumentException.class)
-    public void validate_invalidCode() {
-        Validator validator = Validator.createInstance(ApplicationProvider.getApplicationContext(), R.raw.validations);
-        validator.validate(PaymentMethod.CREDIT_CARD, null, PaymentInputType.ACCOUNT_NUMBER, "4111111111111111", null);
-    }
-
-    @Test(expected = IllegalArgumentException.class)
-    public void validate_invalidType() {
-        Validator validator = Validator.createInstance(ApplicationProvider.getApplicationContext(), R.raw.validations);
+    public void validate_invalidType() throws PaymentException {
+        final Validator validator = createValidator(R.raw.validations);
         validator.validate(PaymentMethod.CREDIT_CARD, PaymentMethodCodes.VISA, null, "4111111111111111", null);
     }
 
     @Test
-    public void validate_accountNumber_missingValidation() {
-        final Validator validator = Validator.createInstance(ApplicationProvider.getApplicationContext(), R.raw.validations);
+    public void validate_accountNumber_missingValidation() throws PaymentException {
+        final Validator validator = createValidator(R.raw.validations);
         final String method = "method";
         final String code = "code";
         final String type = PaymentInputType.ACCOUNT_NUMBER;
 
-        assertNull(validator.getValidation(method, code, type));
+        assertNull(validator.getValidationRegex(code, type));
 
         ValidationResult result;
         result = validator.validate(method, code, type, "12345", null);
@@ -87,13 +87,13 @@ public class ValidatorTest {
     }
 
     @Test
-    public void validate_cardNumber_missingValidation() {
-        final Validator validator = Validator.createInstance(ApplicationProvider.getApplicationContext(), R.raw.validations);
+    public void validate_cardNumber_missingValidation() throws PaymentException {
+        final Validator validator = createValidator(R.raw.validations);
         final String method = PaymentMethod.CREDIT_CARD;
         final String code = "code";
         final String type = PaymentInputType.ACCOUNT_NUMBER;
 
-        assertNull(validator.getValidation(method, code, type));
+        assertNull(validator.getValidationRegex(code, type));
 
         ValidationResult result;
         result = validator.validate(method, code, type, "36699", null);
@@ -110,13 +110,13 @@ public class ValidatorTest {
     }
 
     @Test
-    public void validate_verificationCode_missingValidation() {
-        final Validator validator = Validator.createInstance(ApplicationProvider.getApplicationContext(), R.raw.validations);
+    public void validate_verificationCode_missingValidation() throws PaymentException {
+        final Validator validator = createValidator(R.raw.validations);
         final String method = "method";
         final String code = "code";
         final String type = PaymentInputType.VERIFICATION_CODE;
 
-        assertNull(validator.getValidation(method, code, type));
+        assertNull(validator.getValidationRegex(code, type));
 
         ValidationResult result;
         result = validator.validate(method, code, type, "123456789", null);
@@ -133,13 +133,13 @@ public class ValidatorTest {
     }
 
     @Test
-    public void validate_CREDIT_AMEX_accountNumber() {
-        final Validator validator = Validator.createInstance(ApplicationProvider.getApplicationContext(), R.raw.validations);
+    public void validate_CREDIT_AMEX_accountNumber() throws PaymentException {
+        final Validator validator = createValidator(R.raw.validations);
         final String method = PaymentMethod.CREDIT_CARD;
         final String code = PaymentMethodCodes.AMEX;
         final String type = PaymentInputType.ACCOUNT_NUMBER;
 
-        assertNotNull(validator.getValidation(method, code, type));
+        assertNotNull(validator.getValidationRegex(code, type));
 
         ValidationResult result;
         result = validator.validate(method, code, type, "373051954985299", null);
@@ -156,13 +156,13 @@ public class ValidatorTest {
     }
 
     @Test
-    public void validate_CREDIT_AMEX_verificationCode() {
-        final Validator validator = Validator.createInstance(ApplicationProvider.getApplicationContext(), R.raw.validations);
+    public void validate_CREDIT_AMEX_verificationCode() throws PaymentException {
+        final Validator validator = createValidator(R.raw.validations);
         final String method = PaymentMethod.CREDIT_CARD;
         final String code = PaymentMethodCodes.AMEX;
         final String type = PaymentInputType.VERIFICATION_CODE;
 
-        assertNotNull(validator.getValidation(method, code, type));
+        assertNotNull(validator.getValidationRegex(code, type));
 
         ValidationResult result;
         result = validator.validate(method, code, type, "1234", null);
@@ -182,13 +182,13 @@ public class ValidatorTest {
     }
 
     @Test
-    public void validate_CREDIT_CASTORAMA_accountNumber() {
-        final Validator validator = Validator.createInstance(ApplicationProvider.getApplicationContext(), R.raw.validations);
+    public void validate_CREDIT_CASTORAMA_accountNumber() throws PaymentException {
+        final Validator validator = createValidator(R.raw.validations);
         final String method = PaymentMethod.CREDIT_CARD;
         final String code = PaymentMethodCodes.CASTORAMA;
         final String type = PaymentInputType.ACCOUNT_NUMBER;
 
-        assertNotNull(validator.getValidation(method, code, type));
+        assertNotNull(validator.getValidationRegex(code, type));
 
         ValidationResult result;
         result = validator.validate(method, code, type, "4111111111111111", null);
@@ -205,13 +205,13 @@ public class ValidatorTest {
     }
 
     @Test
-    public void validate_CREDIT_CASTORAMA_verificationCode() {
-        final Validator validator = Validator.createInstance(ApplicationProvider.getApplicationContext(), R.raw.validations);
+    public void validate_CREDIT_CASTORAMA_verificationCode() throws PaymentException {
+        final Validator validator = createValidator(R.raw.validations);
         final String method = PaymentMethod.CREDIT_CARD;
         final String code = PaymentMethodCodes.CASTORAMA;
         final String type = PaymentInputType.VERIFICATION_CODE;
 
-        assertNotNull(validator.getValidation(method, code, type));
+        assertNotNull(validator.getValidationRegex(code, type));
 
         ValidationResult result;
         result = validator.validate(method, code, type, "1234", null);
@@ -231,13 +231,13 @@ public class ValidatorTest {
     }
 
     @Test
-    public void validate_CREDIT_DINERS_accountNumber() {
-        final Validator validator = Validator.createInstance(ApplicationProvider.getApplicationContext(), R.raw.validations);
+    public void validate_CREDIT_DINERS_accountNumber() throws PaymentException {
+        final Validator validator = createValidator(R.raw.validations);
         final String method = PaymentMethod.CREDIT_CARD;
         final String code = PaymentMethodCodes.DINERS;
         final String type = PaymentInputType.ACCOUNT_NUMBER;
 
-        assertNotNull(validator.getValidation(method, code, type));
+        assertNotNull(validator.getValidationRegex(code, type));
 
         ValidationResult result;
         result = validator.validate(method, code, type, "30282713214300", null);
@@ -254,13 +254,13 @@ public class ValidatorTest {
     }
 
     @Test
-    public void validate_CREDIT_DINERS_verificationCode() {
-        final Validator validator = Validator.createInstance(ApplicationProvider.getApplicationContext(), R.raw.validations);
+    public void validate_CREDIT_DINERS_verificationCode() throws PaymentException {
+        final Validator validator = createValidator(R.raw.validations);
         final String method = PaymentMethod.CREDIT_CARD;
         final String code = PaymentMethodCodes.DINERS;
         final String type = PaymentInputType.VERIFICATION_CODE;
 
-        assertNotNull(validator.getValidation(method, code, type));
+        assertNotNull(validator.getValidationRegex(code, type));
 
         ValidationResult result;
         result = validator.validate(method, code, type, "123", null);
@@ -280,13 +280,13 @@ public class ValidatorTest {
     }
 
     @Test
-    public void validate_CREDIT_DISCOVER_accountNumber() {
-        final Validator validator = Validator.createInstance(ApplicationProvider.getApplicationContext(), R.raw.validations);
+    public void validate_CREDIT_DISCOVER_accountNumber() throws PaymentException {
+        final Validator validator = createValidator(R.raw.validations);
         final String method = PaymentMethod.CREDIT_CARD;
         final String code = PaymentMethodCodes.DISCOVER;
         final String type = PaymentInputType.ACCOUNT_NUMBER;
 
-        assertNotNull(validator.getValidation(method, code, type));
+        assertNotNull(validator.getValidationRegex(code, type));
 
         ValidationResult result;
         result = validator.validate(method, code, type, "6011548597185331", null);
@@ -303,13 +303,13 @@ public class ValidatorTest {
     }
 
     @Test
-    public void validate_CREDIT_DISCOVER_verificationCode() {
-        final Validator validator = Validator.createInstance(ApplicationProvider.getApplicationContext(), R.raw.validations);
+    public void validate_CREDIT_DISCOVER_verificationCode() throws PaymentException {
+        final Validator validator = createValidator(R.raw.validations);
         final String method = PaymentMethod.CREDIT_CARD;
         final String code = PaymentMethodCodes.DISCOVER;
         final String type = PaymentInputType.VERIFICATION_CODE;
 
-        assertNotNull(validator.getValidation(method, code, type));
+        assertNotNull(validator.getValidationRegex(code, type));
 
         ValidationResult result;
         result = validator.validate(method, code, type, "123", null);
@@ -329,13 +329,13 @@ public class ValidatorTest {
     }
 
     @Test
-    public void validate_CREDIT_MASTERCARD_validation() {
-        final Validator validator = Validator.createInstance(ApplicationProvider.getApplicationContext(), R.raw.validations);
+    public void validate_CREDIT_MASTERCARD_validation() throws PaymentException {
+        final Validator validator = createValidator(R.raw.validations);
         final String method = PaymentMethod.CREDIT_CARD;
         final String code = PaymentMethodCodes.MASTERCARD;
         final String type = PaymentInputType.ACCOUNT_NUMBER;
 
-        assertNotNull(validator.getValidation(method, code, type));
+        assertNotNull(validator.getValidationRegex(code, type));
 
         ValidationResult result;
         result = validator.validate(method, code, type, "5290836048016633", null);
@@ -352,13 +352,13 @@ public class ValidatorTest {
     }
 
     @Test
-    public void validate_CREDIT_MASTERCARD_verificationCode() {
-        final Validator validator = Validator.createInstance(ApplicationProvider.getApplicationContext(), R.raw.validations);
+    public void validate_CREDIT_MASTERCARD_verificationCode() throws PaymentException {
+        final Validator validator = createValidator(R.raw.validations);
         final String method = PaymentMethod.CREDIT_CARD;
         final String code = PaymentMethodCodes.MASTERCARD;
         final String type = PaymentInputType.VERIFICATION_CODE;
 
-        assertNotNull(validator.getValidation(method, code, type));
+        assertNotNull(validator.getValidationRegex(code, type));
 
         ValidationResult result;
         result = validator.validate(method, code, type, "123", null);
@@ -379,13 +379,13 @@ public class ValidatorTest {
 
 
     @Test
-    public void validate_CREDIT_UNIONPAY_accountNumber() {
-        final Validator validator = Validator.createInstance(ApplicationProvider.getApplicationContext(), R.raw.validations);
+    public void validate_CREDIT_UNIONPAY_accountNumber() throws PaymentException {
+        final Validator validator = createValidator(R.raw.validations);
         final String method = PaymentMethod.CREDIT_CARD;
         final String code = PaymentMethodCodes.UNIONPAY;
         final String type = PaymentInputType.ACCOUNT_NUMBER;
 
-        assertNotNull(validator.getValidation(method, code, type));
+        assertNotNull(validator.getValidationRegex(code, type));
 
         ValidationResult result;
         result = validator.validate(method, code, type, "62123456789000003", null);
@@ -402,13 +402,13 @@ public class ValidatorTest {
     }
 
     @Test
-    public void validate_CREDIT_UNIONPAY_verificationCode() {
-        final Validator validator = Validator.createInstance(ApplicationProvider.getApplicationContext(), R.raw.validations);
+    public void validate_CREDIT_UNIONPAY_verificationCode() throws PaymentException {
+        final Validator validator = createValidator(R.raw.validations);
         final String method = PaymentMethod.CREDIT_CARD;
         final String code = PaymentMethodCodes.UNIONPAY;
         final String type = PaymentInputType.VERIFICATION_CODE;
 
-        assertNotNull(validator.getValidation(method, code, type));
+        assertNotNull(validator.getValidationRegex(code, type));
 
         ValidationResult result;
         result = validator.validate(method, code, type, "123", null);
@@ -428,13 +428,13 @@ public class ValidatorTest {
     }
 
     @Test
-    public void validate_CREDIT_VISA_accountNumber() {
-        Validator validator = Validator.createInstance(ApplicationProvider.getApplicationContext(), R.raw.validations);
+    public void validate_CREDIT_VISA_accountNumber() throws PaymentException {
+        Validator validator = createValidator(R.raw.validations);
         final String method = PaymentMethod.CREDIT_CARD;
         final String code = PaymentMethodCodes.VISA;
         final String type = PaymentInputType.ACCOUNT_NUMBER;
 
-        assertNotNull(validator.getValidation(method, code, type));
+        assertNotNull(validator.getValidationRegex(code, type));
 
         ValidationResult result;
         result = validator.validate(method, code, type, "4556260657599841", null);
@@ -451,13 +451,13 @@ public class ValidatorTest {
     }
 
     @Test
-    public void validate_CREDIT_VISA_verificationCode() {
-        Validator validator = Validator.createInstance(ApplicationProvider.getApplicationContext(), R.raw.validations);
+    public void validate_CREDIT_VISA_verificationCode() throws PaymentException {
+        Validator validator = createValidator(R.raw.validations);
         final String method = PaymentMethod.CREDIT_CARD;
         final String code = PaymentMethodCodes.VISA;
         final String type = PaymentInputType.VERIFICATION_CODE;
 
-        assertNotNull(validator.getValidation(method, code, type));
+        assertNotNull(validator.getValidationRegex(code, type));
 
         ValidationResult result;
         result = validator.validate(method, code, type, "123", null);
@@ -477,13 +477,13 @@ public class ValidatorTest {
     }
 
     @Test
-    public void validate_CREDIT_VISA_DANKORT_accountNumber() {
-        Validator validator = Validator.createInstance(ApplicationProvider.getApplicationContext(), R.raw.validations);
+    public void validate_CREDIT_VISA_DANKORT_accountNumber() throws PaymentException {
+        Validator validator = createValidator(R.raw.validations);
         final String method = PaymentMethod.CREDIT_CARD;
         final String code = PaymentMethodCodes.VISA_DANKORT;
         final String type = PaymentInputType.ACCOUNT_NUMBER;
 
-        assertNotNull(validator.getValidation(method, code, type));
+        assertNotNull(validator.getValidationRegex(code, type));
 
         ValidationResult result;
         result = validator.validate(method, code, type, "4917300800000000", null);
@@ -500,13 +500,13 @@ public class ValidatorTest {
     }
 
     @Test
-    public void validate_CREDIT_VISA_DANKORT_verificationCode() {
-        Validator validator = Validator.createInstance(ApplicationProvider.getApplicationContext(), R.raw.validations);
+    public void validate_CREDIT_VISA_DANKORT_verificationCode() throws PaymentException {
+        Validator validator = createValidator(R.raw.validations);
         final String method = PaymentMethod.CREDIT_CARD;
         final String code = PaymentMethodCodes.VISA_DANKORT;
         final String type = PaymentInputType.VERIFICATION_CODE;
 
-        assertNotNull(validator.getValidation(method, code, type));
+        assertNotNull(validator.getValidationRegex(code, type));
 
         ValidationResult result;
         result = validator.validate(method, code, type, "123", null);
@@ -526,14 +526,13 @@ public class ValidatorTest {
     }
 
     @Test
-    public void validate_DEBIT_VISAELECTRON_accountNumber() {
-        Validator validator = Validator.createInstance(ApplicationProvider.getApplicationContext(), R.raw.validations);
+    public void validate_DEBIT_VISAELECTRON_accountNumber() throws PaymentException {
+        Validator validator = createValidator(R.raw.validations);
         final String method = PaymentMethod.DEBIT_CARD;
         final String code = PaymentMethodCodes.VISAELECTRON;
         final String type = PaymentInputType.ACCOUNT_NUMBER;
 
-        assertNotNull(validator.getValidation(method, code, type));
-        assertNotNull(validator.getValidation(method, code, type));
+        assertNotNull(validator.getValidationRegex(code, type));
 
         ValidationResult result;
         result = validator.validate(method, code, type, "4917300800000000", null);
@@ -550,13 +549,13 @@ public class ValidatorTest {
     }
 
     @Test
-    public void validate_DEBIT_VISAELECTRON_verificationCode() {
-        Validator validator = Validator.createInstance(ApplicationProvider.getApplicationContext(), R.raw.validations);
+    public void validate_DEBIT_VISAELECTRON_verificationCode() throws PaymentException {
+        Validator validator = createValidator(R.raw.validations);
         final String method = PaymentMethod.DEBIT_CARD;
         final String code = PaymentMethodCodes.VISAELECTRON;
         final String type = PaymentInputType.VERIFICATION_CODE;
 
-        assertNotNull(validator.getValidation(method, code, type));
+        assertNotNull(validator.getValidationRegex(code, type));
 
         ValidationResult result;
         result = validator.validate(method, code, type, "123", null);
@@ -576,13 +575,13 @@ public class ValidatorTest {
     }
 
     @Test
-    public void validate_DEBIT_CARTEBANCAIRE_accountNumber() {
-        Validator validator = Validator.createInstance(ApplicationProvider.getApplicationContext(), R.raw.validations);
+    public void validate_DEBIT_CARTEBANCAIRE_accountNumber() throws PaymentException {
+        Validator validator = createValidator(R.raw.validations);
         final String method = PaymentMethod.DEBIT_CARD;
         final String code = PaymentMethodCodes.CARTEBANCAIRE;
         final String type = PaymentInputType.ACCOUNT_NUMBER;
 
-        assertNotNull(validator.getValidation(method, code, type));
+        assertNotNull(validator.getValidationRegex(code, type));
 
         ValidationResult result;
         result = validator.validate(method, code, type, "4035501000000008", null);
@@ -599,14 +598,13 @@ public class ValidatorTest {
     }
 
     @Test
-    public void validate_DEBIT_CARTEBANCAIRE_verificationCode() {
-        Validator validator = Validator.createInstance(ApplicationProvider.getApplicationContext(), R.raw.validations);
+    public void validate_DEBIT_CARTEBANCAIRE_verificationCode() throws PaymentException {
+        Validator validator = createValidator(R.raw.validations);
         final String method = PaymentMethod.DEBIT_CARD;
         final String code = PaymentMethodCodes.CARTEBANCAIRE;
         final String type = PaymentInputType.VERIFICATION_CODE;
 
-        assertNotNull(validator.getValidation(method, code, type));
-        assertNotNull(validator.getValidation(method, code, type));
+        assertNotNull(validator.getValidationRegex(code, type));
 
         ValidationResult result;
         result = validator.validate(method, code, type, "123456", null);
@@ -623,13 +621,13 @@ public class ValidatorTest {
     }
 
     @Test
-    public void validate_DEBIT_MAESTRO_accountNumber() {
-        Validator validator = Validator.createInstance(ApplicationProvider.getApplicationContext(), R.raw.validations);
+    public void validate_DEBIT_MAESTRO_accountNumber() throws PaymentException {
+        Validator validator = createValidator(R.raw.validations);
         final String method = PaymentMethod.DEBIT_CARD;
         final String code = PaymentMethodCodes.MAESTRO;
         final String type = PaymentInputType.ACCOUNT_NUMBER;
 
-        assertNotNull(validator.getValidation(method, code, type));
+        assertNotNull(validator.getValidationRegex(code, type));
 
         ValidationResult result;
         result = validator.validate(method, code, type, "6759649826438453", null);
@@ -646,13 +644,13 @@ public class ValidatorTest {
     }
 
     @Test
-    public void validate_DEBIT_MAESTRO_verificationCode() {
-        Validator validator = Validator.createInstance(ApplicationProvider.getApplicationContext(), R.raw.validations);
+    public void validate_DEBIT_MAESTRO_verificationCode() throws PaymentException {
+        Validator validator = createValidator(R.raw.validations);
         final String method = PaymentMethod.DEBIT_CARD;
         final String code = PaymentMethodCodes.MAESTRO;
         final String type = PaymentInputType.VERIFICATION_CODE;
 
-        assertNotNull(validator.getValidation(method, code, type));
+        assertNotNull(validator.getValidationRegex(code, type));
 
         ValidationResult result;
         result = validator.validate(method, code, type, "123456", null);
@@ -669,13 +667,13 @@ public class ValidatorTest {
     }
 
     @Test
-    public void validate_DEBIT_MAESTROUK_accountNumber() {
-        Validator validator = Validator.createInstance(ApplicationProvider.getApplicationContext(), R.raw.validations);
+    public void validate_DEBIT_MAESTROUK_accountNumber() throws PaymentException {
+        Validator validator = createValidator(R.raw.validations);
         final String method = PaymentMethod.DEBIT_CARD;
         final String code = PaymentMethodCodes.MAESTROUK;
         final String type = PaymentInputType.ACCOUNT_NUMBER;
 
-        assertNotNull(validator.getValidation(method, code, type));
+        assertNotNull(validator.getValidationRegex(code, type));
 
         ValidationResult result;
         result = validator.validate(method, code, type, "6759649826438453", null);
@@ -692,13 +690,13 @@ public class ValidatorTest {
     }
 
     @Test
-    public void validate_DEBIT_MAESTROUK_verificationCode() {
-        Validator validator = Validator.createInstance(ApplicationProvider.getApplicationContext(), R.raw.validations);
+    public void validate_DEBIT_MAESTROUK_verificationCode() throws PaymentException {
+        Validator validator = createValidator(R.raw.validations);
         final String method = PaymentMethod.DEBIT_CARD;
         final String code = PaymentMethodCodes.MAESTROUK;
         final String type = PaymentInputType.VERIFICATION_CODE;
 
-        assertNotNull(validator.getValidation(method, code, type));
+        assertNotNull(validator.getValidationRegex(code, type));
 
         ValidationResult result;
         result = validator.validate(method, code, type, "123456", null);
@@ -716,13 +714,13 @@ public class ValidatorTest {
 
 
     @Test
-    public void validate_DEBIT_POSTEPAY_accountNumber() {
-        Validator validator = Validator.createInstance(ApplicationProvider.getApplicationContext(), R.raw.validations);
+    public void validate_DEBIT_POSTEPAY_accountNumber() throws PaymentException {
+        Validator validator = createValidator(R.raw.validations);
         final String method = PaymentMethod.DEBIT_CARD;
         final String code = PaymentMethodCodes.POSTEPAY;
         final String type = PaymentInputType.ACCOUNT_NUMBER;
 
-        assertNotNull(validator.getValidation(method, code, type));
+        assertNotNull(validator.getValidationRegex(code, type));
 
         ValidationResult result;
         result = validator.validate(method, code, type, "6759649826438453", null);
@@ -739,13 +737,13 @@ public class ValidatorTest {
     }
 
     @Test
-    public void validate_DEBIT_POSTEPAY_verificationCode() {
-        Validator validator = Validator.createInstance(ApplicationProvider.getApplicationContext(), R.raw.validations);
+    public void validate_DEBIT_POSTEPAY_verificationCode() throws PaymentException {
+        Validator validator = createValidator(R.raw.validations);
         final String method = PaymentMethod.DEBIT_CARD;
         final String code = PaymentMethodCodes.POSTEPAY;
         final String type = PaymentInputType.VERIFICATION_CODE;
 
-        assertNotNull(validator.getValidation(method, code, type));
+        assertNotNull(validator.getValidationRegex(code, type));
 
         ValidationResult result;
         result = validator.validate(method, code, type, "123456", null);
@@ -762,13 +760,13 @@ public class ValidatorTest {
     }
 
     @Test
-    public void validate_DEBIT_SOLO_accountNumber() {
-        Validator validator = Validator.createInstance(ApplicationProvider.getApplicationContext(), R.raw.validations);
+    public void validate_DEBIT_SOLO_accountNumber() throws PaymentException {
+        Validator validator = createValidator(R.raw.validations);
         final String method = PaymentMethod.DEBIT_CARD;
         final String code = PaymentMethodCodes.SOLO;
         final String type = PaymentInputType.ACCOUNT_NUMBER;
 
-        assertNotNull(validator.getValidation(method, code, type));
+        assertNotNull(validator.getValidationRegex(code, type));
 
         ValidationResult result;
         result = validator.validate(method, code, type, "6759649826438453", null);
@@ -785,13 +783,13 @@ public class ValidatorTest {
     }
 
     @Test
-    public void validate_DEBIT_SOLO_verificationCode() {
-        Validator validator = Validator.createInstance(ApplicationProvider.getApplicationContext(), R.raw.validations);
+    public void validate_DEBIT_SOLO_verificationCode() throws PaymentException {
+        Validator validator = createValidator(R.raw.validations);
         final String method = PaymentMethod.DEBIT_CARD;
         final String code = PaymentMethodCodes.SOLO;
         final String type = PaymentInputType.VERIFICATION_CODE;
 
-        assertNotNull(validator.getValidation(method, code, type));
+        assertNotNull(validator.getValidationRegex(code, type));
 
         ValidationResult result;
         result = validator.validate(method, code, type, "123456", null);
@@ -809,8 +807,8 @@ public class ValidatorTest {
 
 
     @Test
-    public void validate_HolderName() {
-        Validator validator = Validator.createInstance(ApplicationProvider.getApplicationContext(), R.raw.validations);
+    public void validate_HolderName() throws PaymentException {
+        Validator validator = createValidator(R.raw.validations);
         final String method = "method";
         final String code = "code";
         final String type = PaymentInputType.HOLDER_NAME;
@@ -827,8 +825,8 @@ public class ValidatorTest {
     }
 
     @Test
-    public void validateExpiryDate() {
-        Validator validator = Validator.createInstance(ApplicationProvider.getApplicationContext(), R.raw.validations);
+    public void validateExpiryDate() throws PaymentException {
+        Validator validator = createValidator(R.raw.validations);
         final String method = "method";
         final String code = "code";
         final String type = PaymentInputType.EXPIRY_DATE;
@@ -848,8 +846,8 @@ public class ValidatorTest {
     }
 
     @Test
-    public void validateExpiryMonth() {
-        Validator validator = Validator.createInstance(ApplicationProvider.getApplicationContext(), R.raw.validations);
+    public void validateExpiryMonth() throws PaymentException {
+        Validator validator = createValidator(R.raw.validations);
         final String method = "method";
         final String code = "code";
         final String type = PaymentInputType.EXPIRY_MONTH;
@@ -873,8 +871,8 @@ public class ValidatorTest {
     }
 
     @Test
-    public void validateExpiryYear() {
-        Validator validator = Validator.createInstance(ApplicationProvider.getApplicationContext(), R.raw.validations);
+    public void validateExpiryYear() throws PaymentException {
+        Validator validator = createValidator(R.raw.validations);
         final String method = "method";
         final String code = "code";
         final String type = PaymentInputType.EXPIRY_YEAR;
@@ -897,8 +895,8 @@ public class ValidatorTest {
     }
 
     @Test
-    public void validateBankCode() {
-        Validator validator = Validator.createInstance(ApplicationProvider.getApplicationContext(), R.raw.validations);
+    public void validateBankCode() throws PaymentException {
+        Validator validator = createValidator(R.raw.validations);
         final String method = "method";
         final String code = "code";
         final String type = PaymentInputType.BANK_CODE;
@@ -915,8 +913,8 @@ public class ValidatorTest {
     }
 
     @Test
-    public void validateIban() {
-        Validator validator = Validator.createInstance(ApplicationProvider.getApplicationContext(), R.raw.validations);
+    public void validateIban() throws PaymentException {
+        Validator validator = createValidator(R.raw.validations);
         final String method = "method";
         final String code = "code";
         final String type = PaymentInputType.IBAN;
@@ -936,8 +934,8 @@ public class ValidatorTest {
     }
 
     @Test
-    public void validateBic() {
-        Validator validator = Validator.createInstance(ApplicationProvider.getApplicationContext(), R.raw.validations);
+    public void validateBic() throws PaymentException {
+        Validator validator = createValidator(R.raw.validations);
         final String method = "method";
         final String code = "code";
         final String type = PaymentInputType.BIC;
@@ -954,5 +952,10 @@ public class ValidatorTest {
 
         result = validator.validate(method, code, type, null, null);
         assertEquals(ValidationResult.MISSING_BIC, result.getError());
+    }
+
+    private Validator createValidator(int resId) throws PaymentException {
+        Resources res = ApplicationProvider.getApplicationContext().getResources();
+        return new Validator(ResourceLoader.loadValidations(res, resId));
     }
 }
