@@ -1,4 +1,5 @@
 apply plugin: 'com.android.library'
+apply plugin: 'maven'
 
 assemble.dependsOn('lint')
 
@@ -55,4 +56,17 @@ dependencies {
 
     androidTestImplementation "com.android.support.test:runner:${rootProject.runnerVersion}"
     androidTestImplementation "com.android.support.test.espresso:espresso-core:${rootProject.espressoCoreVersion}"
+}
+
+uploadArchives {
+    repositories {
+        mavenDeployer {
+            repository(url: "https://nexus.mgmt.oscato.com/repository/releases/") {
+                authentication(userName: mavenUser, password: mavenPassword)
+                pom.version = versionName
+                pom.artifactId = "op-payment-android"
+                pom.groupId = "com.oscato.test"
+            }
+        }
+    }
 }
