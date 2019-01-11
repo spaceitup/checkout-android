@@ -46,15 +46,19 @@ import net.optile.payment.ui.widget.WidgetPresenter;
 import net.optile.payment.util.ImageHelper;
 import net.optile.payment.util.PaymentUtils;
 import net.optile.payment.validation.ValidationResult;
+import android.animation.ObjectAnimator;
+import android.graphics.ColorMatrix;
+import android.graphics.ColorMatrixColorFilter;
 
 /**
  * The PaymentCardViewHolder holding the header and input widgets
  */
 abstract class PaymentCardViewHolder extends RecyclerView.ViewHolder {
 
-    final static int LOGO_SELECTED_ALPHA = 0xFF;
-    final static int LOGO_DESELECTED_ALPHA = 0x80;
-
+    final static int ALPHA_SELECTED = 0xFF;
+    final static int ALPHA_DESELECTED = 0x60;
+    final static int ANIM_DURATION = 200;
+    
     final ViewGroup formLayout;
     final ListAdapter adapter;
     final WidgetPresenter presenter;
@@ -186,6 +190,7 @@ abstract class PaymentCardViewHolder extends RecyclerView.ViewHolder {
 
     void expand(boolean expand) {
         formLayout.setVisibility(expand ? View.VISIBLE : View.GONE);
+        clearInputErrors();
     }
 
     FormWidget getFormWidget(String name) {
@@ -260,8 +265,9 @@ abstract class PaymentCardViewHolder extends RecyclerView.ViewHolder {
         if (view == null || url == null) {
             return;
         }
-        view.setImageAlpha(selected ? LOGO_SELECTED_ALPHA : LOGO_DESELECTED_ALPHA);
         ImageHelper.getInstance().loadImage(view, url);
+        int alpha = selected ? ALPHA_SELECTED : ALPHA_DESELECTED;
+        ObjectAnimator.ofInt(view, "imageAlpha", alpha).setDuration(ANIM_DURATION).start();
     }
 
     void setLastImeOptions() {
@@ -273,6 +279,13 @@ abstract class PaymentCardViewHolder extends RecyclerView.ViewHolder {
             if (widget.setLastImeOptionsWidget()) {
                 break;
             }
+        }
+    }
+
+    private void clearInputErrors() {
+
+        for (FormWidget widget : widgets.values()) {
+            widget.clearInputErrors();
         }
     }
 }

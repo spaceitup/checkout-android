@@ -53,14 +53,16 @@ public final class TextInputWidget extends InputLayoutWidget {
             }
         });
         input.addTextChangedListener(new TextWatcher() {
-                public void onTextChanged(CharSequence s, int start, int before, int count) {
-                    presenter.onTextInputChanged(name, getNormalizedValue());
-                }
-                public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-                }
-                public void afterTextChanged(Editable s) {
-                }
-            });
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                presenter.onTextInputChanged(name, getNormalizedValue());
+            }
+
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+            }
+
+            public void afterTextChanged(Editable s) {
+            }
+        });
     }
 
     public void setInputType(String type) {

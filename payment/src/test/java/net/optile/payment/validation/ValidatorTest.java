@@ -51,7 +51,7 @@ public class ValidatorTest {
         assertNotNull(validator);
     }
 
-    @Test(expected = IllegalArgumentException.class) 
+    @Test(expected = IllegalArgumentException.class)
     public void validate_invalidMethod() throws PaymentException {
         final Validator validator = createValidator(R.raw.validations);
         validator.validate(null, PaymentMethodCodes.VISA, PaymentInputType.ACCOUNT_NUMBER, "4111111111111111", null);
