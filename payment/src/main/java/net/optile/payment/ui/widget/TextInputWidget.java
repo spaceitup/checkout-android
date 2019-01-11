@@ -19,7 +19,6 @@ import android.view.KeyEvent;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
 import android.widget.TextView;
-
 import net.optile.payment.core.PaymentException;
 import net.optile.payment.form.Charge;
 import net.optile.payment.model.InputElementType;

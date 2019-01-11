@@ -19,6 +19,7 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
+import android.animation.ObjectAnimator;
 import android.content.Context;
 import android.support.v4.app.DialogFragment;
 import android.support.v7.widget.RecyclerView;
@@ -46,9 +47,6 @@ import net.optile.payment.ui.widget.WidgetPresenter;
 import net.optile.payment.util.ImageHelper;
 import net.optile.payment.util.PaymentUtils;
 import net.optile.payment.validation.ValidationResult;
-import android.animation.ObjectAnimator;
-import android.graphics.ColorMatrix;
-import android.graphics.ColorMatrixColorFilter;
 
 /**
  * The PaymentCardViewHolder holding the header and input widgets
@@ -58,7 +56,7 @@ abstract class PaymentCardViewHolder extends RecyclerView.ViewHolder {
     final static int ALPHA_SELECTED = 0xFF;
     final static int ALPHA_DESELECTED = 0x60;
     final static int ANIM_DURATION = 200;
-    
+
     final ViewGroup formLayout;
     final ListAdapter adapter;
     final WidgetPresenter presenter;
