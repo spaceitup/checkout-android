@@ -1,8 +1,8 @@
 #!/bin/bash
 set -e
 
-PATH=$PATH:/opt/build
+PATH=$PATH:/opt/gocd/build
 
-source /opt/build/java/buildlib.sh
+source /opt/gocd/build/java/buildlib.sh
 
 gradle_build
