@@ -34,6 +34,7 @@ import net.optile.payment.ui.widget.FormWidget;
 import net.optile.payment.ui.widget.RegisterWidget;
 import net.optile.payment.ui.widget.WidgetInflater;
 import net.optile.payment.util.PaymentUtils;
+import android.support.v4.widget.TextViewCompat;
 
 /**
  * The NetworkCardViewHolder
@@ -48,7 +49,7 @@ final class NetworkCardViewHolder extends PaymentCardViewHolder {
 
         PaymentTheme theme = adapter.getPaymentTheme();
         this.title = parent.findViewById(R.id.textswitcher_title);
-        initTextSwitcher(parent.getContext(), theme);
+        initTextSwitcher(parent, theme);
 
         addNetworkLogos(parent, networkCard, theme);
         addElementWidgets(networkCard.getInputElements(), theme);
@@ -135,14 +136,13 @@ final class NetworkCardViewHolder extends PaymentCardViewHolder {
         widget.setLabel(lang.translate(LanguageFile.KEY_ALLOW_RECURRENCE, null));
     }
 
-    private void initTextSwitcher(final Context context, PaymentTheme theme) {
+    private void initTextSwitcher(final View parent, final PaymentTheme theme) {
         final int style = theme.getPageParameters().getNetworkCardTitleStyle();
-        title.setFactory(new ViewSwitcher.ViewFactory() {
-            public View makeView() {
-                TextView view = new TextView(context, null, 0);
-                PaymentUtils.setTextAppearance(view, style);
-                return view;
-            }
-        });
+
+        TextView tv = parent.findViewById(R.id.title0);
+        PaymentUtils.setTextAppearance(tv, style);
+
+        tv = parent.findViewById(R.id.title1);
+        PaymentUtils.setTextAppearance(tv, style);
     }
 }
