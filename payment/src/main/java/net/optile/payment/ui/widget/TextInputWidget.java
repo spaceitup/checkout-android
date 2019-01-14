@@ -11,8 +11,10 @@
 
 package net.optile.payment.ui.widget;
 
+import android.text.Editable;
 import android.text.InputType;
 import android.text.TextUtils;
+import android.text.TextWatcher;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
@@ -47,6 +49,17 @@ public final class TextInputWidget extends InputLayoutWidget {
                     handleOnKeyboardDone();
                 }
                 return false;
+            }
+        });
+        input.addTextChangedListener(new TextWatcher() {
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                presenter.onTextInputChanged(name, getNormalizedValue());
+            }
+
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+            }
+
+            public void afterTextChanged(Editable s) {
             }
         });
     }

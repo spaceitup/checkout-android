@@ -36,7 +36,6 @@ public final class DateWidget extends InputLayoutWidget implements DateDialogFra
     private InputElement yearElement;
     private String expiryMonth;
     private String expiryYear;
-    private DateDialogFragment dateDialog;
 
     /**
      * Construct a new TextInputWidget
@@ -119,9 +118,7 @@ public final class DateWidget extends InputLayoutWidget implements DateDialogFra
         if (monthOptions == null || monthOptions.size() == 0 || yearOptions == null || yearOptions.size() == 0) {
             return;
         }
-        if (this.dateDialog == null) {
-            dateDialog = createDateDialogFragment(monthOptions, yearOptions);
-        }
+        DateDialogFragment dateDialog = createDateDialogFragment(monthOptions, yearOptions);
         presenter.showDialogFragment(dateDialog, "date_dialog");
     }
 

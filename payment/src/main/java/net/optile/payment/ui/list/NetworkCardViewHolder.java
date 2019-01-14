@@ -11,47 +11,51 @@
 
 package net.optile.payment.ui.list;
 
-import java.net.URL;
+import java.util.ArrayList;
+import java.util.List;
 
+import android.content.Context;
 import android.support.v7.widget.RecyclerView.ViewHolder;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
+import android.widget.TextSwitcher;
 import android.widget.TextView;
+import android.widget.ViewSwitcher;
 import net.optile.payment.R;
 import net.optile.payment.core.LanguageFile;
 import net.optile.payment.core.PaymentInputType;
 import net.optile.payment.ui.model.NetworkCard;
 import net.optile.payment.ui.model.PaymentCard;
 import net.optile.payment.ui.model.PaymentNetwork;
-import net.optile.payment.ui.theme.PageParameters;
 import net.optile.payment.ui.theme.PaymentTheme;
 import net.optile.payment.ui.widget.FormWidget;
 import net.optile.payment.ui.widget.RegisterWidget;
 import net.optile.payment.ui.widget.WidgetInflater;
-import net.optile.payment.util.ImageHelper;
 import net.optile.payment.util.PaymentUtils;
+import android.support.v4.widget.TextViewCompat;
 
 /**
  * The NetworkCardViewHolder
  */
 final class NetworkCardViewHolder extends PaymentCardViewHolder {
 
-    final TextView title;
-    final ImageView logo;
+    private final TextSwitcher title;
+
 
     NetworkCardViewHolder(ListAdapter adapter, View parent, NetworkCard networkCard) {
         super(adapter, parent);
-        this.title = parent.findViewById(R.id.text_title);
-        this.logo = parent.findViewById(R.id.image_logo);
-        PaymentTheme theme = adapter.getPaymentTheme();
 
+        PaymentTheme theme = adapter.getPaymentTheme();
+        this.title = parent.findViewById(R.id.textswitcher_title);
+        initTextSwitcher(parent, theme);
+
+        addNetworkLogos(parent, networkCard, theme);
         addElementWidgets(networkCard.getInputElements(), theme);
         addRegisterWidgets(theme);
         addButtonWidget(theme);
 
-        applyTheme(theme);
         setLastImeOptions();
     }
 
@@ -61,21 +65,27 @@ final class NetworkCardViewHolder extends PaymentCardViewHolder {
         return new NetworkCardViewHolder(adapter, view, networkCard);
     }
 
+    private void addNetworkLogos(View parent, NetworkCard networkCard, PaymentTheme theme) {
+        List<String> names = new ArrayList<>();
+        List<PaymentNetwork> networks = networkCard.getPaymentNetworks();
+
+        for (PaymentNetwork network : networks) {
+            names.add(network.getCode());
+        }
+        addLogoViews(parent, names, theme);
+    }
+
     void onBind(PaymentCard paymentCard) {
 
         if (!(paymentCard instanceof NetworkCard)) {
             throw new IllegalArgumentException("Expected Networkcard in onBind");
         }
         super.onBind(paymentCard);
-
         NetworkCard networkCard = (NetworkCard) paymentCard;
-        PaymentNetwork network = networkCard.getActivePaymentNetwork();
-        URL logoUrl = network.getLink("logo");
-        title.setText(network.getLabel());
+        PaymentNetwork network = networkCard.getVisibleNetwork();
 
-        if (logoUrl != null) {
-            ImageHelper.getInstance().loadImage(logo, logoUrl);
-        }
+        bindTitle(networkCard);
+        bindLogos(networkCard);
         bindRegistrationWidget(network);
         bindRecurrenceWidget(network);
     }
@@ -87,10 +97,27 @@ final class NetworkCardViewHolder extends PaymentCardViewHolder {
         addWidget(widget);
     }
 
-    private void applyTheme(PaymentTheme theme) {
-        PageParameters params = theme.getPageParameters();
-        PaymentUtils.setTextAppearance(title, params.getNetworkCardTitleStyle());
-        PaymentUtils.setImageBackground(logo, params.getPaymentLogoBackground());
+    private void bindTitle(NetworkCard card) {
+        List<PaymentNetwork> networks = card.getSmartSelected();
+        if (networks.size() == 0) {
+            networks = card.getPaymentNetworks();
+        }
+        List<String> labels = new ArrayList<>();
+
+        for (PaymentNetwork network : networks) {
+            labels.add(network.getLabel());
+        }
+        title.setText(TextUtils.join(" / ", labels));
+    }
+
+    private void bindLogos(NetworkCard card) {
+        List<PaymentNetwork> networks = card.getPaymentNetworks();
+
+        boolean selected;
+        for (PaymentNetwork network : networks) {
+            selected = !card.hasSmartSelections() || card.isSmartSelected(network);
+            bindLogoView(network.getCode(), network.getLink("logo"), selected);
+        }
     }
 
     private void bindRegistrationWidget(PaymentNetwork network) {
@@ -107,5 +134,15 @@ final class NetworkCardViewHolder extends PaymentCardViewHolder {
 
         LanguageFile lang = adapter.getPageLanguageFile();
         widget.setLabel(lang.translate(LanguageFile.KEY_ALLOW_RECURRENCE, null));
+    }
+
+    private void initTextSwitcher(final View parent, final PaymentTheme theme) {
+        final int style = theme.getPageParameters().getNetworkCardTitleStyle();
+
+        TextView tv = parent.findViewById(R.id.title0);
+        PaymentUtils.setTextAppearance(tv, style);
+
+        tv = parent.findViewById(R.id.title1);
+        PaymentUtils.setTextAppearance(tv, style);
     }
 }

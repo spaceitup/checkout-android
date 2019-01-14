@@ -1,28 +1,27 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/layout"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:paddingTop="@dimen/pmborder_large"
-    android:orientation="vertical">
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:id="@+id/layout"
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:orientation="vertical"
+              android:paddingTop="@dimen/pmborder_large">
 
     <TextView
         android:id="@+id/text_title"
-        android:visibility="gone"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginLeft="@dimen/pmborder_large"
         android:layout_marginRight="@dimen/pmborder_large"
-        android:layout_marginBottom="@dimen/pmborder_medium"/>
+        android:layout_marginBottom="@dimen/pmborder_medium"
+        android:visibility="gone"/>
 
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_gravity="center"
         android:layout_marginStart="@dimen/pmborder_large"
         android:layout_marginEnd="@dimen/pmborder_large"
         android:layout_marginBottom="@dimen/pmborder_medium"
-        android:layout_gravity="center"
         android:orientation="horizontal">
 
         <LinearLayout
@@ -34,9 +33,8 @@
                 android:id="@+id/numberpicker_month"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:descendantFocusability="blocksDescendants"
                 android:layout_marginEnd="@dimen/pmborder_medium"
-            />
+                android:descendantFocusability="blocksDescendants"/>
         </LinearLayout>
 
         <LinearLayout
@@ -48,9 +46,8 @@
                 android:id="@+id/numberpicker_year"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:descendantFocusability="blocksDescendants"
                 android:layout_marginStart="@dimen/pmborder_medium"
-            />
+                android:descendantFocusability="blocksDescendants"/>
         </LinearLayout>
 
     </LinearLayout>
@@ -59,11 +56,11 @@
         android:id="@+id/layout_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:padding="@dimen/pmborder_medium"
-        android:clickable="true"
-        android:visibility="gone"
         android:layout_gravity="end"
-        android:focusable="true">
+        android:clickable="true"
+        android:focusable="true"
+        android:padding="@dimen/pmborder_medium"
+        android:visibility="gone">
 
         <TextView
             android:id="@+id/text_button"

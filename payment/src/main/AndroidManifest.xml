@@ -1,13 +1,10 @@
-<manifest
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    package="net.optile.payment">
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+          package="net.optile.payment">
 
     <uses-permission android:name="android.permission.INTERNET"/>
-    <application
-        android:hardwareAccelerated="true">
+    <application android:hardwareAccelerated="true">
         <activity
             android:name="net.optile.payment.ui.page.PaymentPageActivity"
-            android:theme="@style/PaymentTheme">
-        </activity>
+            android:theme="@style/PaymentTheme"></activity>
     </application>
 </manifest>

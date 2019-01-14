@@ -13,14 +13,12 @@ package net.optile.payment.ui.page;
 
 import java.util.Map;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
 import android.view.MenuItem;
 import android.view.View;
@@ -87,8 +85,10 @@ public final class PaymentPageActivity extends AppCompatActivity implements Paym
             setTheme(pageTheme);
         }
         setContentView(R.layout.activity_paymentpage);
-        initToolbar(params);
+
+        initActionBar(params);
         initList(params);
+
         this.progressBar = findViewById(R.id.progressbar);
         this.presenter = new PaymentPagePresenter(this);
     }
@@ -99,15 +99,13 @@ public final class PaymentPageActivity extends AppCompatActivity implements Paym
         this.paymentList = new PaymentList(this, findViewById(R.id.recyclerview_paymentlist), empty);
     }
 
-    private void initToolbar(PageParameters params) {
-        final Toolbar toolbar = findViewById(R.id.toolbar);
-        toolbar.setTitle(getString(R.string.pmpage_title));
-        setSupportActionBar(toolbar);
+    private void initActionBar(PageParameters params) {
         ActionBar actionBar = getSupportActionBar();
 
         if (actionBar != null) {
-            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-            getSupportActionBar().setDisplayShowHomeEnabled(true);
+            actionBar.setTitle(getString(R.string.pmpage_title));
+            actionBar.setDisplayHomeAsUpEnabled(true);
+            actionBar.setDisplayShowHomeEnabled(true);
         }
     }
 
@@ -138,7 +136,7 @@ public final class PaymentPageActivity extends AppCompatActivity implements Paym
     public void onResume() {
         super.onResume();
         this.active = true;
-        presenter.load(this.listUrl);
+        presenter.load(this, this.listUrl);
     }
 
     /**
@@ -265,7 +263,7 @@ public final class PaymentPageActivity extends AppCompatActivity implements Paym
     }
 
     public ValidationResult validate(PaymentCard card, String type, String value1, String value2) {
-        Validator validator = PaymentUI.getInstance().getValidator();
+        Validator validator = presenter.getValidator();
         ValidationResult result = validator.validate(card.getPaymentMethod(), card.getCode(), type, value1, value2);
 
         if (!result.isError()) {

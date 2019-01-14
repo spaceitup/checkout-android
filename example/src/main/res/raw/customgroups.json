@@ -1,0 +1,14 @@
+[
+    {
+        "items": [
+            {
+                "code": "MASTERCARD",
+                "regex": "^5[0-9]*$"
+            },
+            {
+                "code": "VISA",
+                "regex": "^4[0-9]*$"
+            }
+        ]
+    }
+]

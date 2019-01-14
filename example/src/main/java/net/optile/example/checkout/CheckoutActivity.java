@@ -11,7 +11,6 @@
 
 package net.optile.example.checkout;
 
-import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -20,7 +19,6 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
@@ -57,8 +55,6 @@ public final class CheckoutActivity extends AppCompatActivity implements Checkou
     public void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_checkout);
-        Toolbar toolbar = findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
 
         Button button = findViewById(R.id.button_checkout);
         button.setOnClickListener(new View.OnClickListener() {
@@ -163,6 +159,11 @@ public final class CheckoutActivity extends AppCompatActivity implements Checkou
         // The custom dark checkout theme
         //PaymentTheme theme = CheckoutTheme.createCustomTheme();
 
+        // The custom validation settings file, the default SDK validations are sufficient in most cases 
+        //paymentUI.setValidationResId(R.raw.customvalidations);
+
+        // The custom payment method group settings file
+        // paymentUI.setGroupResId(R.raw.customgroups);
         paymentUI.setPaymentTheme(theme);
         paymentUI.showPaymentPage(this, PAYMENT_REQUEST_CODE);
     }

@@ -73,6 +73,9 @@ public abstract class FormWidget {
         return false;
     }
 
+    public void clearInputErrors() {
+    }
+
     public void setLabel(String label) {
     }
 
