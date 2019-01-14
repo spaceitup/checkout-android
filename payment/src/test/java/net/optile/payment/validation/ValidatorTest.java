@@ -29,7 +29,6 @@ import net.optile.payment.core.PaymentException;
 import net.optile.payment.model.PaymentMethod;
 import net.optile.payment.resource.ResourceLoader;
 
-
 @RunWith(RobolectricTestRunner.class)
 public class ValidatorTest {
 
