@@ -20,6 +20,7 @@ import java.net.CookieHandler;
 import java.net.CookieManager;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.nio.charset.StandardCharsets;
 import java.security.KeyManagementException;
 import java.security.NoSuchAlgorithmException;
 
@@ -259,7 +260,7 @@ abstract class BaseConnection {
     void writeToOutputStream(final HttpURLConnection conn, String data) throws IOException {
 
         try (OutputStream out = conn.getOutputStream()) {
-            out.write(data.getBytes(UTF8));
+            out.write(data.getBytes(StandardCharsets.UTF_8));
         }
     }
 
