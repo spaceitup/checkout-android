@@ -190,6 +190,15 @@ public final class NetworkCard implements PaymentCard {
     }
 
     /**
+     * Are any PaymentNetworks smart selected in this NetworkCard.
+     *
+     * @return true when there are selected payment networks, false otherwise
+     */
+    public boolean hasSmartSelections() {
+        return smartSelected.size() > 0;
+    }
+
+    /**
      * Check if the PaymentNetwork is smart selected, it is smart selected when the provided number input matches
      * the regex of this PaymentMethod in the groups settings file. A PaymentMethod is always smart selected when
      * there is only one PaymentMethod in the NetworkCard.

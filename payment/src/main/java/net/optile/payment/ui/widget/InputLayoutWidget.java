@@ -68,6 +68,12 @@ abstract class InputLayoutWidget extends FormWidget {
         return true;
     }
 
+    public void clearInputErrors() {
+        if (TextUtils.isEmpty(getNormalizedValue())) {
+            setValidation(VALIDATION_UNKNOWN, false, null);
+        }
+    }
+
     void handleOnFocusChange(boolean hasFocus) {
     }
 

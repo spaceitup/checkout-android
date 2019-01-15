@@ -19,7 +19,6 @@ import android.view.KeyEvent;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
 import android.widget.TextView;
-
 import net.optile.payment.core.PaymentException;
 import net.optile.payment.form.Charge;
 import net.optile.payment.model.InputElementType;
@@ -53,14 +52,16 @@ public final class TextInputWidget extends InputLayoutWidget {
             }
         });
         input.addTextChangedListener(new TextWatcher() {
-                public void onTextChanged(CharSequence s, int start, int before, int count) {
-                    presenter.onTextInputChanged(name, getNormalizedValue());
-                }
-                public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-                }
-                public void afterTextChanged(Editable s) {
-                }
-            });
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                presenter.onTextInputChanged(name, getNormalizedValue());
+            }
+
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+            }
+
+            public void afterTextChanged(Editable s) {
+            }
+        });
     }
 
     public void setInputType(String type) {

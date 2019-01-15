@@ -19,7 +19,6 @@ import android.os.Bundle;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
 import android.view.MenuItem;
 import android.view.View;
@@ -86,8 +85,10 @@ public final class PaymentPageActivity extends AppCompatActivity implements Paym
             setTheme(pageTheme);
         }
         setContentView(R.layout.activity_paymentpage);
-        initToolbar(params);
+
+        initActionBar(params);
         initList(params);
+
         this.progressBar = findViewById(R.id.progressbar);
         this.presenter = new PaymentPagePresenter(this);
     }
@@ -98,15 +99,13 @@ public final class PaymentPageActivity extends AppCompatActivity implements Paym
         this.paymentList = new PaymentList(this, findViewById(R.id.recyclerview_paymentlist), empty);
     }
 
-    private void initToolbar(PageParameters params) {
-        final Toolbar toolbar = findViewById(R.id.toolbar);
-        toolbar.setTitle(getString(R.string.pmpage_title));
-        setSupportActionBar(toolbar);
+    private void initActionBar(PageParameters params) {
         ActionBar actionBar = getSupportActionBar();
 
         if (actionBar != null) {
-            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-            getSupportActionBar().setDisplayShowHomeEnabled(true);
+            actionBar.setTitle(getString(R.string.pmpage_title));
+            actionBar.setDisplayHomeAsUpEnabled(true);
+            actionBar.setDisplayShowHomeEnabled(true);
         }
     }
 

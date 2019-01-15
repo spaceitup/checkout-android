@@ -17,15 +17,14 @@ import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
 
 import org.junit.Test;
-import org.junit.BeforeClass;
 import org.junit.runner.RunWith;
 import org.robolectric.RobolectricTestRunner;
 
 import android.content.res.Resources;
 import androidx.test.core.app.ApplicationProvider;
 import net.optile.payment.R;
-import net.optile.payment.core.PaymentInputType;
 import net.optile.payment.core.PaymentException;
+import net.optile.payment.core.PaymentInputType;
 import net.optile.payment.model.PaymentMethod;
 import net.optile.payment.resource.ResourceLoader;
 
@@ -50,7 +49,7 @@ public class ValidatorTest {
         assertNotNull(validator);
     }
 
-    @Test(expected = IllegalArgumentException.class) 
+    @Test(expected = IllegalArgumentException.class)
     public void validate_invalidMethod() throws PaymentException {
         final Validator validator = createValidator(R.raw.validations);
         validator.validate(null, PaymentMethodCodes.VISA, PaymentInputType.ACCOUNT_NUMBER, "4111111111111111", null);

@@ -11,7 +11,6 @@
 
 package net.optile.payment.ui.list;
 
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
@@ -71,7 +70,7 @@ final class AccountCardViewHolder extends PaymentCardViewHolder {
         AccountMask mask = card.getMaskedAccount();
         bindTitle(mask, card.getPaymentMethod());
         bindSubTitle(mask);
-        bindLogoView(card.getCode(), card.getLink("logo"), isExpanded());
+        bindLogoView(card.getCode(), card.getLink("logo"), true);
     }
 
     private void addAccountLogo(View parent, AccountCard card, PaymentTheme theme) {
