@@ -13,7 +13,6 @@ package net.optile.payment.ui.page;
 
 import java.util.Map;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -138,7 +137,7 @@ public final class PaymentPageActivity extends AppCompatActivity implements Paym
     public void onResume() {
         super.onResume();
         this.active = true;
-        presenter.load(this.listUrl);
+        presenter.load(this, this.listUrl);
     }
 
     /**
@@ -265,7 +264,7 @@ public final class PaymentPageActivity extends AppCompatActivity implements Paym
     }
 
     public ValidationResult validate(PaymentCard card, String type, String value1, String value2) {
-        Validator validator = PaymentUI.getInstance().getValidator();
+        Validator validator = presenter.getValidator();
         ValidationResult result = validator.validate(card.getPaymentMethod(), card.getCode(), type, value1, value2);
 
         if (!result.isError()) {

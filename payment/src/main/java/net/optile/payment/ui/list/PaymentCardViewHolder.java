@@ -11,16 +11,24 @@
 
 package net.optile.payment.ui.list;
 
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
+import android.content.Context;
 import android.support.v4.app.DialogFragment;
 import android.support.v7.widget.RecyclerView;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.LinearLayout.LayoutParams;
+import android.widget.TableLayout;
+import android.widget.TableRow;
 import net.optile.payment.R;
 import net.optile.payment.core.LanguageFile;
 import net.optile.payment.core.PaymentInputType;
@@ -35,6 +43,7 @@ import net.optile.payment.ui.widget.SelectWidget;
 import net.optile.payment.ui.widget.TextInputWidget;
 import net.optile.payment.ui.widget.WidgetInflater;
 import net.optile.payment.ui.widget.WidgetPresenter;
+import net.optile.payment.util.ImageHelper;
 import net.optile.payment.util.PaymentUtils;
 import net.optile.payment.validation.ValidationResult;
 
@@ -42,16 +51,25 @@ import net.optile.payment.validation.ValidationResult;
  * The PaymentCardViewHolder holding the header and input widgets
  */
 abstract class PaymentCardViewHolder extends RecyclerView.ViewHolder {
+
+    final static int LOGO_SELECTED_ALPHA = 0xFF;
+    final static int LOGO_DESELECTED_ALPHA = 0x80;
+
     final ViewGroup formLayout;
     final ListAdapter adapter;
     final WidgetPresenter presenter;
     final Map<String, FormWidget> widgets;
+    final TableLayout logoLayout;
+    final Map<String, ImageView> logos;
 
     PaymentCardViewHolder(ListAdapter adapter, View parent) {
         super(parent);
         this.adapter = adapter;
+
         this.formLayout = parent.findViewById(R.id.layout_form);
         this.widgets = new LinkedHashMap<>();
+        this.logoLayout = parent.findViewById(R.id.tablelayout_logo);
+        this.logos = new HashMap<>();
 
         View view = parent.findViewById(R.id.layout_header);
         view.setOnClickListener(new View.OnClickListener() {
@@ -86,6 +104,11 @@ abstract class PaymentCardViewHolder extends RecyclerView.ViewHolder {
             public ValidationResult validate(String type, String value1, String value2) {
                 return adapter.validate(getAdapterPosition(), type, value1, value2);
             }
+
+            @Override
+            public void onTextInputChanged(String type, String text) {
+                adapter.onTextInputChanged(getAdapterPosition(), type, text);
+            }
         };
     }
 
@@ -105,27 +128,16 @@ abstract class PaymentCardViewHolder extends RecyclerView.ViewHolder {
             }
             switch (element.getName()) {
                 case PaymentInputType.EXPIRY_MONTH:
-                    if (dateWidget == null) {
-                        dateWidget = WidgetInflater.inflateDateWidget(PaymentInputType.EXPIRY_DATE, formLayout, theme);
-                        addWidget(dateWidget);
-                    }
-                    dateWidget.setMonthInputElement(element);
-                    break;
                 case PaymentInputType.EXPIRY_YEAR:
                     if (dateWidget == null) {
                         dateWidget = WidgetInflater.inflateDateWidget(PaymentInputType.EXPIRY_DATE, formLayout, theme);
                         addWidget(dateWidget);
                     }
-                    dateWidget.setYearInputElement(element);
                     break;
                 default:
                     addWidget(WidgetInflater.inflateElementWidget(element, formLayout, theme));
             }
         }
-    }
-
-    void expand(boolean expand) {
-        formLayout.setVisibility(expand ? View.VISIBLE : View.GONE);
     }
 
     void addWidget(FormWidget widget) {
@@ -137,6 +149,43 @@ abstract class PaymentCardViewHolder extends RecyclerView.ViewHolder {
         widget.setPresenter(presenter);
         widgets.put(name, widget);
         formLayout.addView(widget.getRootView());
+    }
+
+    void addLogoViews(View parent, List<String> names, PaymentTheme theme) {
+        int logoBackground = theme.getPageParameters().getPaymentLogoBackground();
+        LayoutInflater inflater = LayoutInflater.from(parent.getContext());
+        Context context = parent.getContext();
+
+        int count = 0;
+        TableRow row = null;
+        int border = context.getResources().getDimensionPixelSize(R.dimen.pmborder_xsmall);
+
+        for (String name : names) {
+            int marginTop = count > 1 ? border : 0;
+            int marginRight = 0;
+
+            if (count++ % 2 == 0) {
+                row = new TableRow(context);
+                logoLayout.addView(row);
+                marginRight = border;
+            }
+            ImageView view = (ImageView) inflater.inflate(R.layout.list_item_logo, row, false);
+            LayoutParams params = (LayoutParams) view.getLayoutParams();
+
+            params.setMargins(0, marginTop, marginRight, 0);
+            view.setLayoutParams(params);
+            PaymentUtils.setImageBackground(view, logoBackground);
+            logos.put(name, view);
+            row.addView(view);
+        }
+    }
+
+    boolean isExpanded() {
+        return formLayout.getVisibility() == View.VISIBLE;
+    }
+
+    void expand(boolean expand) {
+        formLayout.setVisibility(expand ? View.VISIBLE : View.GONE);
     }
 
     FormWidget getFormWidget(String name) {
@@ -186,8 +235,12 @@ abstract class PaymentCardViewHolder extends RecyclerView.ViewHolder {
         }
         LanguageFile pageLang = adapter.getPageLanguageFile();
         bindIconResource(widget);
+        widget.setMonthInputElement(card.getInputElement(PaymentInputType.EXPIRY_MONTH));
+        widget.setYearInputElement(card.getInputElement(PaymentInputType.EXPIRY_YEAR));
+
         widget.setLabel(card.getLang().translateAccount(name));
         widget.setDialogButtonLabel(pageLang.translate(LanguageFile.KEY_BUTTON_DATE));
+
     }
 
     void bindButtonWidget(PaymentCard card) {
@@ -199,6 +252,16 @@ abstract class PaymentCardViewHolder extends RecyclerView.ViewHolder {
         }
         LanguageFile pageLang = adapter.getPageLanguageFile();
         widget.setButtonLabel(pageLang.translate(card.getButton()));
+    }
+
+    void bindLogoView(String name, URL url, boolean selected) {
+        ImageView view = logos.get(name);
+
+        if (view == null || url == null) {
+            return;
+        }
+        view.setImageAlpha(selected ? LOGO_SELECTED_ALPHA : LOGO_DESELECTED_ALPHA);
+        ImageHelper.getInstance().loadImage(view, url);
     }
 
     void setLastImeOptions() {

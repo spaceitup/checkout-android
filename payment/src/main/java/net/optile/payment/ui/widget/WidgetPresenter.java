@@ -52,4 +52,12 @@ public interface WidgetPresenter {
      * @return ValidationResult holding the result of the validation
      */
     ValidationResult validate(String type, String value1, String value2);
+
+    /**
+     * Notify that text has changed in this widget.
+     *
+     * @param type the type of the TextInput widget
+     * @param text new text of the textInput
+     */
+    void onTextInputChanged(String type, String text);
 }

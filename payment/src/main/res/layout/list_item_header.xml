@@ -1,12 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:paddingTop="@dimen/pmborder_medium"
-    android:paddingBottom="@dimen/pmborder_xxsmall"
-    android:paddingStart="@dimen/pmborder_medium"
-    android:paddingEnd="@dimen/pmborder_medium">
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:paddingStart="@dimen/pmborder_medium"
+              android:paddingTop="@dimen/pmborder_medium"
+              android:paddingEnd="@dimen/pmborder_medium"
+              android:paddingBottom="@dimen/pmborder_xxsmall">
 
     <TextView
         android:id="@+id/text_title"

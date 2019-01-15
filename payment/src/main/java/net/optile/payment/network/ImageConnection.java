@@ -36,7 +36,6 @@ public final class ImageConnection extends BaseConnection {
      * Load the Bitmap from the given URL
      *
      * @param url the pointing to the language entries
-     * @param file store the loaded language entries in this LanguageFile
      * @return Bitmap drawable
      */
     public Bitmap loadBitmap(final URL url) throws PaymentException {

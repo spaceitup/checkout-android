@@ -1,5 +1,5 @@
 /*
- * Copyright(c) 2012-2018 optile GmbH. All Rights Reserved.
+ * Copyright(c) 2012-2019 optile GmbH. All Rights Reserved.
  * https://www.optile.net
  *
  * This software is the property of optile GmbH. Distribution  of  this
@@ -9,24 +9,24 @@
  * has been received in full.
  */
 
-package net.optile.payment.validation;
+package net.optile.payment.resource;
 
 /**
- * Model class holding the validation Regex for the PaymentInputType
+ * Class holding a filter for a PaymentMethod inside a payment group
  */
-public class Validation {
+public class PaymentGroupItem {
 
-    private String type;
+    private String code;
     private String regex;
 
-    public Validation() {
+    private PaymentGroupItem() {
     }
 
-    public String getType() {
-        return type;
+    public String getCode() {
+        return code;
     }
 
     public String getRegex() {
-        return regex;
+        return this.regex;
     }
 }

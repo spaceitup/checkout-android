@@ -16,6 +16,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import android.text.TextUtils;
 import net.optile.payment.core.LanguageFile;
 import net.optile.payment.model.ApplicableNetwork;
 import net.optile.payment.model.InputElement;
@@ -28,6 +29,7 @@ public class PaymentNetwork {
 
     public final ApplicableNetwork network;
     private LanguageFile lang;
+    private String smartSelectionRegex;
 
     public PaymentNetwork(ApplicableNetwork network) {
         this.network = network;
@@ -77,5 +79,37 @@ public class PaymentNetwork {
 
     public void setLang(LanguageFile lang) {
         this.lang = lang;
+    }
+
+    public void setSmartSelectionRegex(String regex) {
+        this.smartSelectionRegex = regex;
+    }
+
+    public boolean compare(PaymentNetwork network) {
+        List<InputElement> srcItems = getInputElements();
+        List<InputElement> cmpItems = network.getInputElements();
+
+        if (srcItems.size() != cmpItems.size()) {
+            return false;
+        }
+        InputElement srcItem;
+        InputElement cmpItem;
+
+        for (int i = 0, e = srcItems.size(); i < e; i++) {
+            srcItem = srcItems.get(i);
+            cmpItem = cmpItems.get(i);
+
+            if (!(srcItem.getName().equals(cmpItem.getName()) && srcItem.getType().equals(cmpItem.getType()))) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    boolean validateSmartSelected(String text) {
+        if (text == null || TextUtils.isEmpty(this.smartSelectionRegex)) {
+            return false;
+        }
+        return text.matches(smartSelectionRegex);
     }
 }
