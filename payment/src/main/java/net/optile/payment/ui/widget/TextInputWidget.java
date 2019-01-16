@@ -42,7 +42,7 @@ public final class TextInputWidget extends InputLayoutWidget {
      */
     public TextInputWidget(String name, View rootView, PaymentTheme theme) {
         super(name, rootView, theme);
-        input.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+        textInput.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override
             public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
                 if (actionId == EditorInfo.IME_ACTION_DONE) {
@@ -51,7 +51,7 @@ public final class TextInputWidget extends InputLayoutWidget {
                 return false;
             }
         });
-        input.addTextChangedListener(new TextWatcher() {
+        textInput.addTextChangedListener(new TextWatcher() {
             public void onTextChanged(CharSequence s, int start, int before, int count) {
                 presenter.onTextInputChanged(name, getNormalizedValue());
             }
@@ -72,7 +72,7 @@ public final class TextInputWidget extends InputLayoutWidget {
             case InputElementType.INTEGER:
                 setInputType(InputType.TYPE_CLASS_NUMBER, null);
                 setMaxLength(INTEGER_MAXLENGTH);
-                setLayoutWidth(WEIGHT_REDUCED);
+                setReducedView();
         }
     }
 
@@ -89,8 +89,8 @@ public final class TextInputWidget extends InputLayoutWidget {
             setValidation(VALIDATION_OK, false, null);
             validated = true;
         }
-        if (input.hasFocus()) {
-            input.clearFocus();
+        if (textInput.hasFocus()) {
+            textInput.clearFocus();
         }
         return validated;
     }
@@ -112,7 +112,7 @@ public final class TextInputWidget extends InputLayoutWidget {
     }
 
     void handleOnKeyboardDone() {
-        input.clearFocus();
+        textInput.clearFocus();
         presenter.hideKeyboard();
     }
 }

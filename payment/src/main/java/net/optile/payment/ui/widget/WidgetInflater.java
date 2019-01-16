@@ -99,7 +99,7 @@ public final class WidgetInflater {
      */
     public static DateWidget inflateDateWidget(String name, ViewGroup parent, PaymentTheme theme) {
         WidgetParameters params = theme.getWidgetParameters();
-        View layout = inflateWithThemedChild(parent, R.layout.widget_textinput, R.layout.view_date, params.getTextInputTheme());
+        View layout = inflateInputLayout(parent, R.layout.widget_textinput, R.layout.view_date, params.getTextInputTheme());
         return new DateWidget(name, layout, theme);
     }
 
@@ -113,7 +113,7 @@ public final class WidgetInflater {
      */
     public static TextInputWidget inflateTextInputWidget(String name, ViewGroup parent, PaymentTheme theme) {
         WidgetParameters params = theme.getWidgetParameters();
-        View layout = inflateWithThemedChild(parent, R.layout.widget_textinput, R.layout.view_textinput, params.getTextInputTheme());
+        View layout = inflateInputLayout(parent, R.layout.widget_textinput, R.layout.view_textinput, params.getTextInputTheme());
         return new TextInputWidget(name, layout, theme);
     }
 
@@ -142,6 +142,26 @@ public final class WidgetInflater {
         return inflater.inflate(layoutResId, parent, false);
     }
 
+    /**
+     * Inflate the input layout and add the hint element to it
+     *
+     * @param parent ViewGroup in which this inflated view will be added
+     * @param layoutResId layout resource id of the view that should be inflated
+     * @param childResId internal view resource id that should be inflated with the theme
+     * @param themeResId theme used to inflate the internval view element
+     * @return the inflated view
+     */
+    private static View inflateInputLayout(ViewGroup parent, int layoutResId, int childResId, int themeResId) {
+        View view = inflateWithThemedChild(parent, layoutResId, childResId, themeResId);
+        LayoutInflater inflater = LayoutInflater.from(parent.getContext());
+        ViewGroup group = parent.findViewById(R.id.layout_viewholder);
+
+        if (group != null) {
+            inflater.inflate(R.layout.view_hint, group, true);
+        }
+        return view;
+    }
+    
     /**
      * Inflate the layout and attach the themed internal view
      *

@@ -13,7 +13,7 @@ package net.optile.payment.ui.list;
 
 import java.util.ArrayList;
 import java.util.List;
-
+import android.util.Log;
 import android.content.Context;
 import android.os.IBinder;
 import android.support.v4.app.DialogFragment;
@@ -29,6 +29,7 @@ import net.optile.payment.R;
 import net.optile.payment.ui.model.AccountCard;
 import net.optile.payment.ui.model.NetworkCard;
 import net.optile.payment.ui.model.PaymentSession;
+import net.optile.payment.ui.dialog.HintDialogHelper;
 import net.optile.payment.ui.page.PaymentPageActivity;
 import net.optile.payment.validation.ValidationResult;
 
@@ -136,6 +137,13 @@ public final class PaymentList {
         dialog.show(activity.getSupportFragmentManager(), tag);
     }
 
+    void onHintClicked(int position, String type) {
+        ListItem item = items.get(position);
+        if (item.hasPaymentCard()) {
+            HintDialogHelper.showHintDialog(activity, item.getPaymentCard(), type);
+        }
+    }
+    
     void onActionClicked(int position) {
         ListItem item = items.get(position);
         PaymentCardViewHolder holder = (PaymentCardViewHolder) recyclerView.findViewHolderForAdapterPosition(position);

@@ -13,6 +13,7 @@ package net.optile.payment.core;
 
 import java.util.Properties;
 
+import android.text.TextUtils;
 import net.optile.payment.model.Interaction;
 
 /**
@@ -23,6 +24,12 @@ public final class LanguageFile {
     public final static String KEY_BUTTON_DATE = "button.update.label";
     public final static String KEY_AUTO_REGISTRATION = "autoRegistrationLabel";
     public final static String KEY_ALLOW_RECURRENCE = "allowRecurrenceLabel";
+
+    public final static String HINT_TITLE = "title";
+    public final static String HINT_TEXT = "text";
+    public final static String HINT_WHERE = "where";
+    public final static String HINT_WHAT = "what";
+    public final static String HINT_WHY = "why";
 
     private final Properties lang;
 
@@ -45,13 +52,23 @@ public final class LanguageFile {
         return translate("error.".concat(error));
     }
 
-    public String translateAccount(String account) {
+    public String translateAccountLabel(String account) {
         return translate("account.".concat(account).concat(".label"));
     }
 
     public String translateInteraction(Interaction interaction) {
         String key = "interaction.".concat(interaction.getCode()).concat(".").concat(interaction.getReason());
         return translate(key);
+    }
+
+    public String translateHint(String name, String subject, String label) {
+        String key = "account.".concat(name).concat(".").concat("hint.").concat(subject).concat(".").concat(label);
+        return translate(key);
+    }
+
+    public boolean containsHint(String name) {
+        String val = translateHint(name, HINT_WHERE, HINT_TITLE);
+        return !TextUtils.isEmpty(val);
     }
 
     public Properties getProperties() {

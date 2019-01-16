@@ -88,7 +88,10 @@ abstract class PaymentCardViewHolder extends RecyclerView.ViewHolder {
             public void onActionClicked() {
                 adapter.onActionClicked(getAdapterPosition());
             }
-
+            @Override
+            public void onHintClicked(String type) {
+                adapter.onHintClicked(getAdapterPosition(), type);
+            }
             @Override
             public void hideKeyboard() {
                 adapter.hideKeyboard(getAdapterPosition());
@@ -204,26 +207,31 @@ abstract class PaymentCardViewHolder extends RecyclerView.ViewHolder {
     }
 
     void bindElementWidgets(PaymentCard card) {
-
         FormWidget widget;
+        LanguageFile lang = card.getLang();
+
         for (InputElement element : card.getInputElements()) {
             widget = getFormWidget(element.getName());
-            if (widget == null) {
-                continue;
+            
+            if (widget instanceof SelectWidget) {
+                bindSelectWidget((SelectWidget)widget, element, lang);
+            } else if (widget instanceof TextInputWidget) {
+                bindTextInputWidget((TextInputWidget)widget, element, lang);
             }
-            bindElementWidget(widget, element);
-        }
+        }                    
     }
 
-    void bindElementWidget(FormWidget widget, InputElement element) {
+    void bindSelectWidget(SelectWidget widget, InputElement element, LanguageFile lang) {
         bindIconResource(widget);
         widget.setLabel(element.getLabel());
+        widget.setSelectOptions(element.getOptions());
+    }
 
-        if (widget instanceof SelectWidget) {
-            ((SelectWidget) widget).setSelectOptions(element.getOptions());
-        } else if (widget instanceof TextInputWidget) {
-            ((TextInputWidget) widget).setInputType(element.getType());
-        }
+    void bindTextInputWidget(TextInputWidget widget, InputElement element, LanguageFile lang) {
+        bindIconResource(widget);
+        widget.setLabel(element.getLabel());
+        widget.setInputType(element.getType());
+        widget.showHint(lang.containsHint(widget.getName()));
     }
 
     void bindIconResource(FormWidget widget) {
@@ -243,7 +251,7 @@ abstract class PaymentCardViewHolder extends RecyclerView.ViewHolder {
         widget.setMonthInputElement(card.getInputElement(PaymentInputType.EXPIRY_MONTH));
         widget.setYearInputElement(card.getInputElement(PaymentInputType.EXPIRY_YEAR));
 
-        widget.setLabel(card.getLang().translateAccount(name));
+        widget.setLabel(card.getLang().translateAccountLabel(name));
         widget.setDialogButtonLabel(pageLang.translate(LanguageFile.KEY_BUTTON_DATE));
 
     }
