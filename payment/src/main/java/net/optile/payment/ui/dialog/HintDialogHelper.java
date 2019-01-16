@@ -13,7 +13,10 @@ package net.optile.payment.ui.dialog;
 
 import android.app.Activity;
 import net.optile.payment.ui.model.PaymentCard;
+import net.optile.payment.core.LanguageFile;
 import android.util.Log;
+import net.optile.payment.R;
+import android.support.v7.app.AppCompatActivity;
 
 /**
  * Class with helper methods for showing a hint dialog.
@@ -27,7 +30,22 @@ public class HintDialogHelper {
      * @param card PaymentCard from which this request originated
      * @param type input type, i.e. number or verificationCode.
      */
-    public static void showHintDialog(Activity activity, PaymentCard card, String type) {
-        Log.i("pay_Hint", "Hint dialog clicked: " + type);
+    public static void showHintDialog(AppCompatActivity activity, PaymentCard card, String type) {
+        MessageDialogFragment dialog = new MessageDialogFragment();
+        LanguageFile lang = card.getLang();
+
+        dialog.setTitle(lang.translateAccountHint(type, LanguageFile.TITLE));
+        dialog.setMessage(lang.translateAccountHint(type, LanguageFile.TEXT));
+        dialog.setNeutralButton(activity.getString(R.string.pmdialog_close_button));
+        dialog.setListener(new MessageDialogFragment.MessageDialogListener() {
+            @Override
+            public void onNeutralButtonClick() {
+            }
+
+            @Override
+            public void onCancelled() {
+            }
+        });
+        dialog.show(activity.getSupportFragmentManager(), "hint_dialog");
     }
 }

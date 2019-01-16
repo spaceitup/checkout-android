@@ -25,12 +25,8 @@ public final class LanguageFile {
     public final static String KEY_AUTO_REGISTRATION = "autoRegistrationLabel";
     public final static String KEY_ALLOW_RECURRENCE = "allowRecurrenceLabel";
 
-    public final static String HINT_TITLE = "title";
-    public final static String HINT_TEXT = "text";
-    public final static String HINT_WHERE = "where";
-    public final static String HINT_WHAT = "what";
-    public final static String HINT_WHY = "why";
-
+    public final static String TITLE = "title";
+    public final static String TEXT = "text";
     private final Properties lang;
 
     /**
@@ -56,19 +52,19 @@ public final class LanguageFile {
         return translate("account.".concat(account).concat(".label"));
     }
 
+    public String translateAccountHint(String account, String type) {
+        String key = "account.".concat(account).concat(".").concat("hint.").concat("where.").concat(type);
+        return translate(key);
+    }
+
+    public boolean containsAccountHint(String account) {
+        String val = translateAccountHint(account, TITLE);
+        return !TextUtils.isEmpty(val);
+    }
+
     public String translateInteraction(Interaction interaction) {
         String key = "interaction.".concat(interaction.getCode()).concat(".").concat(interaction.getReason());
         return translate(key);
-    }
-
-    public String translateHint(String name, String subject, String label) {
-        String key = "account.".concat(name).concat(".").concat("hint.").concat(subject).concat(".").concat(label);
-        return translate(key);
-    }
-
-    public boolean containsHint(String name) {
-        String val = translateHint(name, HINT_WHERE, HINT_TITLE);
-        return !TextUtils.isEmpty(val);
     }
 
     public Properties getProperties() {

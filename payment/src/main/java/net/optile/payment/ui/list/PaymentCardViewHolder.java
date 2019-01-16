@@ -231,7 +231,7 @@ abstract class PaymentCardViewHolder extends RecyclerView.ViewHolder {
         bindIconResource(widget);
         widget.setLabel(element.getLabel());
         widget.setInputType(element.getType());
-        widget.showHint(lang.containsHint(widget.getName()));
+        widget.showHint(lang.containsAccountHint(widget.getName()));
     }
 
     void bindIconResource(FormWidget widget) {

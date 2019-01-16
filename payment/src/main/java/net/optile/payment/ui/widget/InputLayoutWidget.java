@@ -11,6 +11,7 @@
 
 package net.optile.payment.ui.widget;
 
+import android.util.Log;
 import android.support.design.widget.TextInputEditText;
 import android.support.design.widget.TextInputLayout;
 import android.text.InputFilter;
@@ -60,6 +61,13 @@ abstract class InputLayoutWidget extends FormWidget {
                 handleOnFocusChange(hasFocus);
             }
         });
+
+        hintLayout.setOnClickListener(new View.OnClickListener() {      
+            @Override
+            public void onClick(View v) {
+                presenter.onHintClicked(name);                
+            }
+        });
     }
 
     public void setLabel(String label) {
@@ -81,9 +89,6 @@ abstract class InputLayoutWidget extends FormWidget {
     }
 
     public void showHint(boolean val) {
-        if (hintLayout == null) {
-            return;
-        }
         hintLayout.setVisibility(val ? View.VISIBLE : View.GONE);
     }
         
@@ -96,12 +101,10 @@ abstract class InputLayoutWidget extends FormWidget {
         params.width = 0;
         textLayout.setLayoutParams(params);
 
-        if (hintLayout != null) {
-            params = (LinearLayout.LayoutParams)hintLayout.getLayoutParams();
-            params.weight = WEIGHT_REDUCED_HINT;
-            params.width = 0;
-            hintLayout.setLayoutParams(params);
-        }
+        params = (LinearLayout.LayoutParams)hintLayout.getLayoutParams();
+        params.weight = WEIGHT_REDUCED_HINT;
+        params.width = 0;
+        hintLayout.setLayoutParams(params);
     }
 
     void setMaxLength(int length) {
