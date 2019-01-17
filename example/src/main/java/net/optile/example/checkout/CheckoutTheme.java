@@ -59,7 +59,7 @@ final class CheckoutTheme {
         builder.setWidgetParameters(widgetParams);
 
         DialogParameters dialogParams = DialogParameters.createBuilder().
-            setDialogTheme(R.style.CustomThemeDialog);
+            setDialogTheme(R.style.CustomThemeDialog).
             setDateTitleStyle(R.style.CustomText_Medium_Bold).
             setDateSubtitleStyle(R.style.CustomText_Small_Bold).
             setMessageTitleStyle(R.style.CustomText_Large_Bold).
