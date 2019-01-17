@@ -29,6 +29,7 @@ final class CheckoutTheme {
     public static PaymentTheme createCustomTheme() {
         PaymentTheme.Builder builder = PaymentTheme.createBuilder();
 
+
         PageParameters pageParams = PageParameters.createBuilder().
             setPageTheme(R.style.CustomThemePaymentPage).
             setEmptyListLabelStyle(R.style.CustomText_Medium_Light).
@@ -49,10 +50,11 @@ final class CheckoutTheme {
             setCheckBoxLabelCheckedStyle(R.style.CustomText_Medium).
             setCheckBoxLabelUncheckedStyle(R.style.CustomText_Medium_Gray).
             setSelectLabelStyle(R.style.CustomText_Tiny).
-            setDefaultIconMapping().
             setValidationColorOk(R.color.custom_validationok).
             setValidationColorUnknown(R.color.custom_validationunknown).
             setValidationColorError(R.color.custom_validationerror).
+            setDefaultIconMapping().
+            setDefaultHintDrawable().
             build();
         builder.setWidgetParameters(widgetParams);
 
@@ -63,6 +65,7 @@ final class CheckoutTheme {
             setMessageDetailsStyle(R.style.CustomText_Medium).
             setMessageDetailsNoTitleStyle(R.style.CustomText_Medium_Bold).
             setButtonLabelStyle(R.style.CustomText_Small_Bold_Primary).
+            setImageLabelStyle(R.style.CustomText_Tiny).
             build();
         builder.setDialogParameters(dialogParams);
 

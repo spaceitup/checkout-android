@@ -129,11 +129,11 @@ public final class MessageDialogFragment extends DialogFragment {
     }
 
     private void initImageLabel(TextView tv, String label, DialogParameters params) {
-        //PaymentUtils.setTextAppearance(tv, params.getMessageTitleStyle());
         if (TextUtils.isEmpty(label)) {
             tv.setVisibility(View.GONE);
             return;
         }
+        PaymentUtils.setTextAppearance(tv, params.getImageLabelStyle());
         tv.setVisibility(View.VISIBLE);
         tv.setText(label);
     }

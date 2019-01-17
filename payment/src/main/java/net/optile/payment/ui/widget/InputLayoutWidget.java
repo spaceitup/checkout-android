@@ -87,8 +87,14 @@ abstract class InputLayoutWidget extends FormWidget {
         }
     }
 
-    public void showHint(boolean val) {
-        hintLayout.setVisibility(val ? View.VISIBLE : View.GONE);
+    public void setHint(boolean visible, int hintDrawable) {
+
+        if (visible) {
+            hintLayout.setVisibility(View.VISIBLE);
+            hintImage.setImageResource(hintDrawable);
+        } else {
+            hintLayout.setVisibility(View.GONE);
+        }
     }
 
     void handleOnFocusChange(boolean hasFocus) {
