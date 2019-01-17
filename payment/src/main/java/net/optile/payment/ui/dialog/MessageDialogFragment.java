@@ -25,6 +25,7 @@ import net.optile.payment.R;
 import net.optile.payment.ui.PaymentUI;
 import net.optile.payment.ui.theme.DialogParameters;
 import net.optile.payment.util.PaymentUtils;
+import android.view.WindowManager;
 
 /**
  * Message Dialog Fragment for showing a message to the user with an action button
@@ -83,22 +84,31 @@ public final class MessageDialogFragment extends DialogFragment {
     public void setListener(MessageDialogListener listener) {
         this.listener = listener;
     }
-
+    
     /**
      * {@inheritDoc}
      */
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         Dialog dialog = new Dialog(getActivity(), getTheme()) {
-            @Override
+        @Override
             public void onBackPressed() {
                 handleBackPressed();
             }
         };
-        dialog.getWindow().requestFeature(Window.FEATURE_NO_TITLE);
         return dialog;
     }
 
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public int getTheme() {
+        DialogParameters params = PaymentUI.getInstance().getPaymentTheme().getDialogParameters();
+        int theme = params.getDialogTheme();
+        return theme == 0 ? super.getTheme() : theme;
+    }
+    
     /**
      * {@inheritDoc}
      */
@@ -112,7 +122,7 @@ public final class MessageDialogFragment extends DialogFragment {
         initButtons(v, params);
         return v;
     }
-
+    
     private void initImage(View rootView, DialogParameters params) {
 
         View layout = rootView.findViewById(R.id.layout_image);
@@ -178,14 +188,13 @@ public final class MessageDialogFragment extends DialogFragment {
     }
 
     private void initButtons(View rootView, DialogParameters params) {
-        View layout = rootView.findViewById(R.id.layout_button);
+        TextView tv = rootView.findViewById(R.id.text_button);
 
         if (TextUtils.isEmpty(neutralButtonLabel)) {
-            layout.setVisibility(View.GONE);
+            tv.setVisibility(View.GONE);
             return;
         }
-        layout.setVisibility(View.VISIBLE);
-        TextView tv = rootView.findViewById(R.id.text_button);
+        tv.setVisibility(View.VISIBLE);
         tv.setText(neutralButtonLabel);
         PaymentUtils.setTextAppearance(tv, params.getButtonLabelStyle());
         tv.setOnClickListener(new View.OnClickListener() {

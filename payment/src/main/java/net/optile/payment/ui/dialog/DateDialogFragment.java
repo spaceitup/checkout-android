@@ -94,6 +94,24 @@ public final class DateDialogFragment extends DialogFragment {
         return v;
     }
 
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public Dialog onCreateDialog(Bundle savedInstanceState) {
+        return new Dialog(getActivity(), getTheme());
+    }
+    
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public int getTheme() {
+        DialogParameters params = PaymentUI.getInstance().getPaymentTheme().getDialogParameters();
+        int theme = params.getDialogTheme();
+        return theme == 0 ? super.getTheme() : theme;
+    }
+    
     private void initNumberPickers(View rootView) {
         monthPicker = rootView.findViewById(R.id.numberpicker_month);
         monthPicker.setDisplayedValues(monthLabels);
@@ -135,16 +153,6 @@ public final class DateDialogFragment extends DialogFragment {
         });
     }
 
-    /**
-     * {@inheritDoc}
-     */
-    @NonNull
-    @Override
-    public Dialog onCreateDialog(Bundle savedInstanceState) {
-        Dialog dialog = super.onCreateDialog(savedInstanceState);
-        Objects.requireNonNull(dialog.getWindow()).requestFeature(Window.FEATURE_NO_TITLE);
-        return dialog;
-    }
 
     private void handleButtonClick() {
 
