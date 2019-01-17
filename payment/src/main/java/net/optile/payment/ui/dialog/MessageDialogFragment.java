@@ -18,14 +18,12 @@ import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.Window;
 import android.widget.ImageView;
 import android.widget.TextView;
 import net.optile.payment.R;
 import net.optile.payment.ui.PaymentUI;
 import net.optile.payment.ui.theme.DialogParameters;
 import net.optile.payment.util.PaymentUtils;
-import android.view.WindowManager;
 
 /**
  * Message Dialog Fragment for showing a message to the user with an action button
@@ -84,14 +82,14 @@ public final class MessageDialogFragment extends DialogFragment {
     public void setListener(MessageDialogListener listener) {
         this.listener = listener;
     }
-    
+
     /**
      * {@inheritDoc}
      */
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         Dialog dialog = new Dialog(getActivity(), getTheme()) {
-        @Override
+            @Override
             public void onBackPressed() {
                 handleBackPressed();
             }
@@ -108,7 +106,7 @@ public final class MessageDialogFragment extends DialogFragment {
         int theme = params.getDialogTheme();
         return theme == 0 ? super.getTheme() : theme;
     }
-    
+
     /**
      * {@inheritDoc}
      */
@@ -122,7 +120,7 @@ public final class MessageDialogFragment extends DialogFragment {
         initButtons(v, params);
         return v;
     }
-    
+
     private void initImage(View rootView, DialogParameters params) {
 
         View layout = rootView.findViewById(R.id.layout_image);

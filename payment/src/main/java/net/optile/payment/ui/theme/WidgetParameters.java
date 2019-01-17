@@ -36,7 +36,7 @@ public final class WidgetParameters {
     private final int validationColorOk;
     private final int validationColorError;
     private final int hintDrawable;
-    
+
     private WidgetParameters(Builder builder) {
         this.iconMapping = new HashMap<>(builder.iconMapping);
         this.textInputTheme = builder.textInputTheme;
@@ -119,7 +119,7 @@ public final class WidgetParameters {
     public int getHintDrawable() {
         return hintDrawable;
     }
-    
+
     public int getValidationColorOk() {
         return validationColorOk;
     }
@@ -146,7 +146,7 @@ public final class WidgetParameters {
         int validationColorOk;
         int validationColorError;
         int hintDrawable;
-        
+
         Builder() {
             iconMapping = new HashMap<>();
         }
@@ -213,7 +213,7 @@ public final class WidgetParameters {
             this.hintDrawable = R.drawable.ic_hint;
             return this;
         }
-        
+
         public Builder setValidationColorOk(int validationColorOk) {
             this.validationColorOk = validationColorOk;
             return this;
@@ -233,7 +233,7 @@ public final class WidgetParameters {
             this.hintDrawable = hintDrawable;
             return this;
         }
-        
+
         public WidgetParameters build() {
             return new WidgetParameters(this);
         }

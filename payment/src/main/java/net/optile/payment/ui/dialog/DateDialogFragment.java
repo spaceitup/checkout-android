@@ -11,17 +11,13 @@
 
 package net.optile.payment.ui.dialog;
 
-import java.util.Objects;
-
 import android.app.Dialog;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
 import android.support.v4.app.DialogFragment;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.Window;
 import android.widget.NumberPicker;
 import android.widget.TextView;
 import net.optile.payment.R;
@@ -101,7 +97,7 @@ public final class DateDialogFragment extends DialogFragment {
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         return new Dialog(getActivity(), getTheme());
     }
-    
+
     /**
      * {@inheritDoc}
      */
@@ -111,7 +107,7 @@ public final class DateDialogFragment extends DialogFragment {
         int theme = params.getDialogTheme();
         return theme == 0 ? super.getTheme() : theme;
     }
-    
+
     private void initNumberPickers(View rootView) {
         monthPicker = rootView.findViewById(R.id.numberpicker_month);
         monthPicker.setDisplayedValues(monthLabels);

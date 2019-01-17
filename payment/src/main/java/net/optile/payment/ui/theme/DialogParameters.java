@@ -27,7 +27,7 @@ public final class DialogParameters {
     private final int messageDetailsNoTitleStyle;
     private final int buttonLabelStyle;
     private final int imageLabelStyle;
-    
+
     private DialogParameters(Builder builder) {
         this.dialogTheme = builder.dialogTheme;
         this.dateTitleStyle = builder.dateTitleStyle;
@@ -59,7 +59,7 @@ public final class DialogParameters {
     public int getDialogTheme() {
         return dialogTheme;
     }
-    
+
     public int getDateTitleStyle() {
         return dateTitleStyle;
     }
@@ -87,7 +87,7 @@ public final class DialogParameters {
     public int getImageLabelStyle() {
         return imageLabelStyle;
     }
-    
+
     public final static class Builder {
         int dialogTheme;
         int messageTitleStyle;
@@ -97,7 +97,7 @@ public final class DialogParameters {
         int dateSubtitleStyle;
         int buttonLabelStyle;
         int imageLabelStyle;
-        
+
         Builder() {
         }
 
@@ -105,7 +105,7 @@ public final class DialogParameters {
             this.dialogTheme = dialogTheme;
             return this;
         }
-        
+
         public Builder setMessageTitleStyle(int messageTitleStyle) {
             this.messageTitleStyle = messageTitleStyle;
             return this;
@@ -140,7 +140,7 @@ public final class DialogParameters {
             this.imageLabelStyle = imageLabelStyle;
             return this;
         }
-        
+
         public DialogParameters build() {
             return new DialogParameters(this);
         }
