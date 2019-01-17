@@ -14,7 +14,6 @@ package net.optile.payment.ui.list;
 import java.util.ArrayList;
 import java.util.List;
 
-import android.content.Context;
 import android.support.v7.widget.RecyclerView.ViewHolder;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
@@ -22,7 +21,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextSwitcher;
 import android.widget.TextView;
-import android.widget.ViewSwitcher;
 import net.optile.payment.R;
 import net.optile.payment.core.LanguageFile;
 import net.optile.payment.core.PaymentInputType;
@@ -34,7 +32,6 @@ import net.optile.payment.ui.widget.FormWidget;
 import net.optile.payment.ui.widget.RegisterWidget;
 import net.optile.payment.ui.widget.WidgetInflater;
 import net.optile.payment.util.PaymentUtils;
-import android.support.v4.widget.TextViewCompat;
 
 /**
  * The NetworkCardViewHolder

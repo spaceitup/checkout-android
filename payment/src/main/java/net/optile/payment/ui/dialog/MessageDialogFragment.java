@@ -19,8 +19,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
-import android.widget.TextView;
 import android.widget.ImageView;
+import android.widget.TextView;
 import net.optile.payment.R;
 import net.optile.payment.ui.PaymentUI;
 import net.optile.payment.ui.theme.DialogParameters;
@@ -74,7 +74,7 @@ public final class MessageDialogFragment extends DialogFragment {
     public void setImageResId(int imageResId) {
         this.imageResId = imageResId;
     }
-    
+
     /**
      * Set the listener to this MessageDialogFragment
      *
@@ -138,7 +138,7 @@ public final class MessageDialogFragment extends DialogFragment {
         tv.setText(label);
     }
 
-    
+
     private void initTitle(View rootView, DialogParameters params) {
         TextView tv = rootView.findViewById(R.id.text_title);
         PaymentUtils.setTextAppearance(tv, params.getMessageTitleStyle());

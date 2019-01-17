@@ -19,6 +19,7 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
+import android.animation.ObjectAnimator;
 import android.content.Context;
 import android.support.v4.app.DialogFragment;
 import android.support.v7.widget.RecyclerView;
@@ -46,9 +47,6 @@ import net.optile.payment.ui.widget.WidgetPresenter;
 import net.optile.payment.util.ImageHelper;
 import net.optile.payment.util.PaymentUtils;
 import net.optile.payment.validation.ValidationResult;
-import android.animation.ObjectAnimator;
-import android.graphics.ColorMatrix;
-import android.graphics.ColorMatrixColorFilter;
 
 /**
  * The PaymentCardViewHolder holding the header and input widgets
@@ -58,7 +56,7 @@ abstract class PaymentCardViewHolder extends RecyclerView.ViewHolder {
     final static float ALPHA_SELECTED = 1f;
     final static float ALPHA_DESELECTED = 0.4f;
     final static int ANIM_DURATION = 200;
-    
+
     final ViewGroup formLayout;
     final ListAdapter adapter;
     final WidgetPresenter presenter;
@@ -88,10 +86,12 @@ abstract class PaymentCardViewHolder extends RecyclerView.ViewHolder {
             public void onActionClicked() {
                 adapter.onActionClicked(getAdapterPosition());
             }
+
             @Override
             public void onHintClicked(String type) {
                 adapter.onHintClicked(getAdapterPosition(), type);
             }
+
             @Override
             public void hideKeyboard() {
                 adapter.hideKeyboard(getAdapterPosition());
@@ -212,13 +212,13 @@ abstract class PaymentCardViewHolder extends RecyclerView.ViewHolder {
 
         for (InputElement element : card.getInputElements()) {
             widget = getFormWidget(element.getName());
-            
+
             if (widget instanceof SelectWidget) {
-                bindSelectWidget((SelectWidget)widget, element, lang);
+                bindSelectWidget((SelectWidget) widget, element, lang);
             } else if (widget instanceof TextInputWidget) {
-                bindTextInputWidget((TextInputWidget)widget, element, lang);
+                bindTextInputWidget((TextInputWidget) widget, element, lang);
             }
-        }                    
+        }
     }
 
     void bindSelectWidget(SelectWidget widget, InputElement element, LanguageFile lang) {

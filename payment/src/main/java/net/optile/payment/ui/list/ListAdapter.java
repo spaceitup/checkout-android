@@ -131,7 +131,7 @@ final class ListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         }
         list.onHintClicked(position, type);
     }
-    
+
     Context getContext() {
         return list.getContext();
     }

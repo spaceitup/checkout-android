@@ -156,7 +156,7 @@ public final class WidgetInflater {
         inflater.inflate(R.layout.view_hint, group, true);
         return view;
     }
-    
+
     /**
      * Inflate the layout and attach the themed internal view
      *

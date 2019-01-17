@@ -11,7 +11,6 @@
 
 package net.optile.payment.ui.widget;
 
-import android.util.Log;
 import android.support.design.widget.TextInputEditText;
 import android.support.design.widget.TextInputLayout;
 import android.text.InputFilter;
@@ -19,8 +18,8 @@ import android.text.TextUtils;
 import android.text.method.DigitsKeyListener;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
-import android.widget.LinearLayout;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import net.optile.payment.R;
 import net.optile.payment.core.PaymentInputType;
 import net.optile.payment.ui.theme.PaymentTheme;
@@ -38,7 +37,7 @@ abstract class InputLayoutWidget extends FormWidget {
 
     final View hintLayout;
     final ImageView hintImage;
-    
+
     String label;
 
     /**
@@ -62,10 +61,10 @@ abstract class InputLayoutWidget extends FormWidget {
             }
         });
 
-        hintLayout.setOnClickListener(new View.OnClickListener() {      
+        hintLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                presenter.onHintClicked(name);                
+                presenter.onHintClicked(name);
             }
         });
     }
@@ -91,17 +90,17 @@ abstract class InputLayoutWidget extends FormWidget {
     public void showHint(boolean val) {
         hintLayout.setVisibility(val ? View.VISIBLE : View.GONE);
     }
-        
+
     void handleOnFocusChange(boolean hasFocus) {
     }
 
     void setReducedView() {
-        LinearLayout.LayoutParams params = (LinearLayout.LayoutParams)textLayout.getLayoutParams();
+        LinearLayout.LayoutParams params = (LinearLayout.LayoutParams) textLayout.getLayoutParams();
         params.weight = WEIGHT_REDUCED_TEXT;
         params.width = 0;
         textLayout.setLayoutParams(params);
 
-        params = (LinearLayout.LayoutParams)hintLayout.getLayoutParams();
+        params = (LinearLayout.LayoutParams) hintLayout.getLayoutParams();
         params.weight = WEIGHT_REDUCED_HINT;
         params.width = 0;
         hintLayout.setLayoutParams(params);

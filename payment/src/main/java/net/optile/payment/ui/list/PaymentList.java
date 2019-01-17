@@ -13,7 +13,7 @@ package net.optile.payment.ui.list;
 
 import java.util.ArrayList;
 import java.util.List;
-import android.util.Log;
+
 import android.content.Context;
 import android.os.IBinder;
 import android.support.v4.app.DialogFragment;
@@ -26,13 +26,13 @@ import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.TextView;
 import net.optile.payment.R;
+import net.optile.payment.core.LanguageFile;
+import net.optile.payment.ui.dialog.DialogHelper;
 import net.optile.payment.ui.model.AccountCard;
 import net.optile.payment.ui.model.NetworkCard;
 import net.optile.payment.ui.model.PaymentSession;
-import net.optile.payment.ui.dialog.DialogHelper;
 import net.optile.payment.ui.page.PaymentPageActivity;
 import net.optile.payment.validation.ValidationResult;
-import net.optile.payment.core.LanguageFile;
 
 /**
  * The PaymentList showing available payment methods and accounts in a list
@@ -141,13 +141,13 @@ public final class PaymentList {
     void onHintClicked(int position, String type) {
         ListItem item = items.get(position);
         String button = session.getLang().translate(LanguageFile.KEY_BUTTON_BACK);
-            
+
         if (item.hasPaymentCard()) {
             DialogFragment dialog = DialogHelper.createHintDialog(item.getPaymentCard(), type, button);
             showDialogFragment(dialog, "hint_dialog");
         }
     }
-    
+
     void onActionClicked(int position) {
         ListItem item = items.get(position);
         PaymentCardViewHolder holder = (PaymentCardViewHolder) recyclerView.findViewHolderForAdapterPosition(position);

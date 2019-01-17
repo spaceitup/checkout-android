@@ -11,21 +11,18 @@
 
 package net.optile.payment.ui.dialog;
 
-import android.app.Activity;
-import net.optile.payment.ui.model.PaymentCard;
-import net.optile.payment.core.PaymentInputType;
-import net.optile.payment.core.LanguageFile;
-import net.optile.payment.core.PaymentMethodCodes;
-import android.util.Log;
 import net.optile.payment.R;
-import android.support.v7.app.AppCompatActivity;
+import net.optile.payment.core.LanguageFile;
+import net.optile.payment.core.PaymentInputType;
+import net.optile.payment.core.PaymentMethodCodes;
+import net.optile.payment.ui.model.PaymentCard;
 
 /**
  * Class with helper methods for creating dialogs.
  */
 public class DialogHelper {
 
-    /** 
+    /**
      * Helper method to create a hint dialog for the given paymentcard and input type.
      *
      * @param card PaymentCard from which this request originated
@@ -53,5 +50,5 @@ public class DialogHelper {
             default:
                 return R.drawable.img_card;
         }
-    }        
+    }
 }
