@@ -25,6 +25,7 @@ import androidx.test.core.app.ApplicationProvider;
 import net.optile.payment.R;
 import net.optile.payment.core.PaymentException;
 import net.optile.payment.core.PaymentInputType;
+import net.optile.payment.core.PaymentMethodCodes;
 import net.optile.payment.model.PaymentMethod;
 import net.optile.payment.resource.ResourceLoader;
 

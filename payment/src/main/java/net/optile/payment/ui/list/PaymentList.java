@@ -29,9 +29,10 @@ import net.optile.payment.R;
 import net.optile.payment.ui.model.AccountCard;
 import net.optile.payment.ui.model.NetworkCard;
 import net.optile.payment.ui.model.PaymentSession;
-import net.optile.payment.ui.dialog.HintDialogHelper;
+import net.optile.payment.ui.dialog.DialogHelper;
 import net.optile.payment.ui.page.PaymentPageActivity;
 import net.optile.payment.validation.ValidationResult;
+import net.optile.payment.core.LanguageFile;
 
 /**
  * The PaymentList showing available payment methods and accounts in a list
@@ -139,8 +140,11 @@ public final class PaymentList {
 
     void onHintClicked(int position, String type) {
         ListItem item = items.get(position);
+        String button = session.getLang().translate(LanguageFile.KEY_BUTTON_BACK);
+            
         if (item.hasPaymentCard()) {
-            HintDialogHelper.showHintDialog(activity, item.getPaymentCard(), type);
+            DialogFragment dialog = DialogHelper.createHintDialog(item.getPaymentCard(), type, button);
+            showDialogFragment(dialog, "hint_dialog");
         }
     }
     

@@ -21,7 +21,8 @@ import net.optile.payment.model.Interaction;
  */
 public final class LanguageFile {
 
-    public final static String KEY_BUTTON_DATE = "button.update.label";
+    public final static String KEY_BUTTON_UPDATE = "button.update.label";
+    public final static String KEY_BUTTON_BACK = "button.back.label";    
     public final static String KEY_AUTO_REGISTRATION = "autoRegistrationLabel";
     public final static String KEY_ALLOW_RECURRENCE = "allowRecurrenceLabel";
 
