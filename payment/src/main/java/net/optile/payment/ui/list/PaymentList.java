@@ -140,9 +140,9 @@ public final class PaymentList {
 
     void onHintClicked(int position, String type) {
         ListItem item = items.get(position);
-        String button = session.getLang().translate(LanguageFile.KEY_BUTTON_BACK);
 
         if (item.hasPaymentCard()) {
+            String button = session.getLang().translate(LanguageFile.KEY_BUTTON_BACK);
             DialogFragment dialog = DialogHelper.createHintDialog(item.getPaymentCard(), type, button);
             showDialogFragment(dialog, "hint_dialog");
         }
