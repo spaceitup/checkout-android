@@ -98,8 +98,7 @@ public final class WidgetInflater {
      * @return inflated and themed DateWidget
      */
     public static DateWidget inflateDateWidget(String name, ViewGroup parent, PaymentTheme theme) {
-        WidgetParameters params = theme.getWidgetParameters();
-        View layout = inflateWithThemedChild(parent, R.layout.widget_textinput, R.layout.view_date, params.getTextInputTheme());
+        View layout = inflateTextInputView(parent, theme);
         return new DateWidget(name, layout, theme);
     }
 
@@ -112,8 +111,7 @@ public final class WidgetInflater {
      * @return inflated and themed TextInputWidget
      */
     public static TextInputWidget inflateTextInputWidget(String name, ViewGroup parent, PaymentTheme theme) {
-        WidgetParameters params = theme.getWidgetParameters();
-        View layout = inflateWithThemedChild(parent, R.layout.widget_textinput, R.layout.view_textinput, params.getTextInputTheme());
+        View layout = inflateTextInputView(parent, theme);
         return new TextInputWidget(name, layout, theme);
     }
 
@@ -140,6 +138,23 @@ public final class WidgetInflater {
     private static View inflate(ViewGroup parent, int layoutResId) {
         LayoutInflater inflater = LayoutInflater.from(parent.getContext());
         return inflater.inflate(layoutResId, parent, false);
+    }
+
+    /**
+     * Inflate the input layout and add the hint element to it
+     *
+     * @param parent ViewGroup in which this inflated view will be added
+     * @param theme the PaymentTheme to apply to the inflated view
+     * @return the inflated view
+     */
+    private static View inflateTextInputView(ViewGroup parent, PaymentTheme theme) {
+        int themeResId = theme.getWidgetParameters().getTextInputTheme();
+        View view = inflateWithThemedChild(parent, R.layout.widget_textinput, R.layout.view_textinput, themeResId);
+
+        LayoutInflater inflater = LayoutInflater.from(parent.getContext());
+        ViewGroup group = view.findViewById(R.id.layout_viewholder);
+        inflater.inflate(R.layout.view_hint, group, true);
+        return view;
     }
 
     /**

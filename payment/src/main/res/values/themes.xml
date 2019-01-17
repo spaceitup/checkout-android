@@ -28,6 +28,17 @@
         <item name="cardCornerRadius">@dimen/pmcard_radius</item>
     </style>
 
+    <style name="PaymentThemeDialog" parent="Theme.AppCompat.Light.Dialog">
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:bottomRightRadius">@dimen/pmdialog_radius</item>
+        <item name="android:bottomLeftRadius">@dimen/pmdialog_radius</item>
+        <item name="android:topRightRadius">@dimen/pmdialog_radius</item>a
+        <item name="android:topLeftRadius">@dimen/pmdialog_radius</item>
+        <item name="android:windowFullscreen">false</item>
+        <item name="android:windowIsFloating">true</item>
+        <item name="android:windowCloseOnTouchOutside">true</item>
+    </style>
+
     <style name="PaymentThemeTextInput" parent="Widget.Design.TextInputLayout">
         <!-- hint text color inside EditText -->
         <item name="android:textColorHint">@color/pmtext_hint</item>

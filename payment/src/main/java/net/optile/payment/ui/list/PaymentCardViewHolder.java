@@ -19,6 +19,7 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
+import android.animation.ObjectAnimator;
 import android.content.Context;
 import android.support.v4.app.DialogFragment;
 import android.support.v7.widget.RecyclerView;
@@ -46,9 +47,6 @@ import net.optile.payment.ui.widget.WidgetPresenter;
 import net.optile.payment.util.ImageHelper;
 import net.optile.payment.util.PaymentUtils;
 import net.optile.payment.validation.ValidationResult;
-import android.animation.ObjectAnimator;
-import android.graphics.ColorMatrix;
-import android.graphics.ColorMatrixColorFilter;
 
 /**
  * The PaymentCardViewHolder holding the header and input widgets
@@ -58,7 +56,7 @@ abstract class PaymentCardViewHolder extends RecyclerView.ViewHolder {
     final static float ALPHA_SELECTED = 1f;
     final static float ALPHA_DESELECTED = 0.4f;
     final static int ANIM_DURATION = 200;
-    
+
     final ViewGroup formLayout;
     final ListAdapter adapter;
     final WidgetPresenter presenter;
@@ -87,6 +85,11 @@ abstract class PaymentCardViewHolder extends RecyclerView.ViewHolder {
             @Override
             public void onActionClicked() {
                 adapter.onActionClicked(getAdapterPosition());
+            }
+
+            @Override
+            public void onHintClicked(String type) {
+                adapter.onHintClicked(getAdapterPosition(), type);
             }
 
             @Override
@@ -204,26 +207,35 @@ abstract class PaymentCardViewHolder extends RecyclerView.ViewHolder {
     }
 
     void bindElementWidgets(PaymentCard card) {
-
         FormWidget widget;
+        LanguageFile lang = card.getLang();
+
         for (InputElement element : card.getInputElements()) {
             widget = getFormWidget(element.getName());
-            if (widget == null) {
-                continue;
+
+            if (widget instanceof SelectWidget) {
+                bindSelectWidget((SelectWidget) widget, element, lang);
+            } else if (widget instanceof TextInputWidget) {
+                bindTextInputWidget((TextInputWidget) widget, element, lang);
             }
-            bindElementWidget(widget, element);
         }
     }
 
-    void bindElementWidget(FormWidget widget, InputElement element) {
+    void bindSelectWidget(SelectWidget widget, InputElement element, LanguageFile lang) {
         bindIconResource(widget);
         widget.setLabel(element.getLabel());
+        widget.setSelectOptions(element.getOptions());
+    }
 
-        if (widget instanceof SelectWidget) {
-            ((SelectWidget) widget).setSelectOptions(element.getOptions());
-        } else if (widget instanceof TextInputWidget) {
-            ((TextInputWidget) widget).setInputType(element.getType());
-        }
+    void bindTextInputWidget(TextInputWidget widget, InputElement element, LanguageFile lang) {
+        WidgetParameters params = adapter.getPaymentTheme().getWidgetParameters();
+        bindIconResource(widget);
+        widget.setLabel(element.getLabel());
+        widget.setInputType(element.getType());
+
+        int hintDrawable = params.getHintDrawable();
+        boolean visible = hintDrawable != 0 && lang.containsAccountHint(widget.getName());
+        widget.setHint(visible, hintDrawable);
     }
 
     void bindIconResource(FormWidget widget) {
@@ -243,9 +255,8 @@ abstract class PaymentCardViewHolder extends RecyclerView.ViewHolder {
         widget.setMonthInputElement(card.getInputElement(PaymentInputType.EXPIRY_MONTH));
         widget.setYearInputElement(card.getInputElement(PaymentInputType.EXPIRY_YEAR));
 
-        widget.setLabel(card.getLang().translateAccount(name));
-        widget.setDialogButtonLabel(pageLang.translate(LanguageFile.KEY_BUTTON_DATE));
-
+        widget.setLabel(card.getLang().translateAccountLabel(name));
+        widget.setDialogButtonLabel(pageLang.translate(LanguageFile.KEY_BUTTON_UPDATE));
     }
 
     void bindButtonWidget(PaymentCard card) {

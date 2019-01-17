@@ -18,7 +18,7 @@ import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.Window;
+import android.widget.ImageView;
 import android.widget.TextView;
 import net.optile.payment.R;
 import net.optile.payment.ui.PaymentUI;
@@ -33,6 +33,9 @@ public final class MessageDialogFragment extends DialogFragment {
     private String title;
     private String message;
     private String neutralButtonLabel;
+    private String imagePrefix;
+    private String imageSuffix;
+    private int imageResId;
     private MessageDialogListener listener;
 
     /**
@@ -62,6 +65,15 @@ public final class MessageDialogFragment extends DialogFragment {
         this.neutralButtonLabel = label;
     }
 
+    public void setImageLabels(String imagePrefix, String imageSuffix) {
+        this.imagePrefix = imagePrefix;
+        this.imageSuffix = imageSuffix;
+    }
+
+    public void setImageResId(int imageResId) {
+        this.imageResId = imageResId;
+    }
+
     /**
      * Set the listener to this MessageDialogFragment
      *
@@ -82,8 +94,17 @@ public final class MessageDialogFragment extends DialogFragment {
                 handleBackPressed();
             }
         };
-        dialog.getWindow().requestFeature(Window.FEATURE_NO_TITLE);
         return dialog;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public int getTheme() {
+        DialogParameters params = PaymentUI.getInstance().getPaymentTheme().getDialogParameters();
+        int theme = params.getDialogTheme();
+        return theme == 0 ? super.getTheme() : theme;
     }
 
     /**
@@ -95,9 +116,36 @@ public final class MessageDialogFragment extends DialogFragment {
         View v = inflater.inflate(R.layout.dialogfragment_message, container, false);
         initTitle(v, params);
         initMessage(v, params);
+        initImage(v, params);
         initButtons(v, params);
         return v;
     }
+
+    private void initImage(View rootView, DialogParameters params) {
+
+        View layout = rootView.findViewById(R.id.layout_image);
+        if (imageResId == 0) {
+            layout.setVisibility(View.GONE);
+            return;
+        }
+        layout.setVisibility(View.VISIBLE);
+        initImageLabel(rootView.findViewById(R.id.text_imageprefix), imagePrefix, params);
+        initImageLabel(rootView.findViewById(R.id.text_imagesuffix), imageSuffix, params);
+        ImageView view = rootView.findViewById(R.id.image_logo);
+        view.setVisibility(View.VISIBLE);
+        view.setImageResource(imageResId);
+    }
+
+    private void initImageLabel(TextView tv, String label, DialogParameters params) {
+        if (TextUtils.isEmpty(label)) {
+            tv.setVisibility(View.GONE);
+            return;
+        }
+        PaymentUtils.setTextAppearance(tv, params.getImageLabelStyle());
+        tv.setVisibility(View.VISIBLE);
+        tv.setText(label);
+    }
+
 
     private void initTitle(View rootView, DialogParameters params) {
         TextView tv = rootView.findViewById(R.id.text_title);
@@ -138,18 +186,16 @@ public final class MessageDialogFragment extends DialogFragment {
     }
 
     private void initButtons(View rootView, DialogParameters params) {
-        View layout = rootView.findViewById(R.id.layout_button);
+        TextView tv = rootView.findViewById(R.id.text_button);
 
         if (TextUtils.isEmpty(neutralButtonLabel)) {
-            layout.setVisibility(View.GONE);
+            tv.setVisibility(View.GONE);
             return;
         }
-        layout.setVisibility(View.VISIBLE);
-        TextView tv = rootView.findViewById(R.id.text_button);
+        tv.setVisibility(View.VISIBLE);
         tv.setText(neutralButtonLabel);
         PaymentUtils.setTextAppearance(tv, params.getButtonLabelStyle());
-
-        layout.setOnClickListener(new View.OnClickListener() {
+        tv.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 handleNeutralButtonClick();

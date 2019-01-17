@@ -4,5 +4,6 @@
     <dimen name="custom_logoradius">4dp</dimen>
     <dimen name="custom_borderlarge">20dp</dimen>
     <dimen name="custom_buttonradius">10dp</dimen>
+    <dimen name="custom_dialogradius">10dp</dimen>
     <dimen name="custom_cardradius">10dp</dimen>
 </resources>

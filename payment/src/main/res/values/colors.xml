@@ -12,6 +12,7 @@
     <color name="pmvalidation_error">#df3737</color>
     <color name="pmvalidation_ok">#207a20</color>
 
+    <color name="pmtext_primary">#299928</color>
     <color name="pmtext_dark">#FF424242</color>
     <color name="pmtext_gray">#8A000000</color>
     <color name="pmtext_hint">#66424242</color>

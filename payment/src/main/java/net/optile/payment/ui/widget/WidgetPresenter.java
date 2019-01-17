@@ -25,6 +25,13 @@ public interface WidgetPresenter {
     void onActionClicked();
 
     /**
+     * Inform the presenter that the hint icon has been clicked for the input field with the given type
+     *
+     * @param type the type of the widget
+     */
+    void onHintClicked(String type);
+
+    /**
      * Ask the presenter to hide the keyboard
      */
     void hideKeyboard();

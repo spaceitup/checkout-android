@@ -35,6 +35,7 @@ public final class WidgetParameters {
     private final int validationColorUnknown;
     private final int validationColorOk;
     private final int validationColorError;
+    private final int hintDrawable;
 
     private WidgetParameters(Builder builder) {
         this.iconMapping = new HashMap<>(builder.iconMapping);
@@ -49,6 +50,7 @@ public final class WidgetParameters {
         this.validationColorOk = builder.validationColorOk;
         this.validationColorUnknown = builder.validationColorUnknown;
         this.validationColorError = builder.validationColorError;
+        this.hintDrawable = builder.hintDrawable;
     }
 
     public static Builder createBuilder() {
@@ -69,6 +71,7 @@ public final class WidgetParameters {
             setValidationColorOk(R.color.pmvalidation_ok).
             setValidationColorUnknown(R.color.pmvalidation_unknown).
             setValidationColorError(R.color.pmvalidation_error).
+            setHintDrawable(R.drawable.ic_hint).
             build();
     }
 
@@ -113,6 +116,10 @@ public final class WidgetParameters {
         return R.drawable.ic_default;
     }
 
+    public int getHintDrawable() {
+        return hintDrawable;
+    }
+
     public int getValidationColorOk() {
         return validationColorOk;
     }
@@ -138,6 +145,7 @@ public final class WidgetParameters {
         int validationColorUnknown;
         int validationColorOk;
         int validationColorError;
+        int hintDrawable;
 
         Builder() {
             iconMapping = new HashMap<>();
@@ -201,6 +209,11 @@ public final class WidgetParameters {
             return this;
         }
 
+        public Builder setDefaultHintDrawable() {
+            this.hintDrawable = R.drawable.ic_hint;
+            return this;
+        }
+
         public Builder setValidationColorOk(int validationColorOk) {
             this.validationColorOk = validationColorOk;
             return this;
@@ -213,6 +226,11 @@ public final class WidgetParameters {
 
         public Builder setValidationColorError(int validationColorError) {
             this.validationColorError = validationColorError;
+            return this;
+        }
+
+        public Builder setHintDrawable(int hintDrawable) {
+            this.hintDrawable = hintDrawable;
             return this;
         }
 

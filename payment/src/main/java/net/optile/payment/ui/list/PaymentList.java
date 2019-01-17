@@ -26,6 +26,8 @@ import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.TextView;
 import net.optile.payment.R;
+import net.optile.payment.core.LanguageFile;
+import net.optile.payment.ui.dialog.DialogHelper;
 import net.optile.payment.ui.model.AccountCard;
 import net.optile.payment.ui.model.NetworkCard;
 import net.optile.payment.ui.model.PaymentSession;
@@ -134,6 +136,16 @@ public final class PaymentList {
 
     void showDialogFragment(DialogFragment dialog, String tag) {
         dialog.show(activity.getSupportFragmentManager(), tag);
+    }
+
+    void onHintClicked(int position, String type) {
+        ListItem item = items.get(position);
+
+        if (item.hasPaymentCard()) {
+            String button = session.getLang().translate(LanguageFile.KEY_BUTTON_BACK);
+            DialogFragment dialog = DialogHelper.createHintDialog(item.getPaymentCard(), type, button);
+            showDialogFragment(dialog, "hint_dialog");
+        }
     }
 
     void onActionClicked(int position) {

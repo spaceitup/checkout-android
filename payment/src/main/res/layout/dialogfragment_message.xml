@@ -1,52 +1,85 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
               android:id="@+id/layout"
-              android:layout_width="fill_parent"
+              android:layout_width="match_parent"
               android:layout_height="wrap_content"
-              android:orientation="vertical"
-              android:paddingTop="@dimen/pmborder_large">
+              android:orientation="vertical">
 
-    <TextView
-        android:id="@+id/text_title"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="@dimen/pmborder_large"
-        android:layout_marginRight="@dimen/pmborder_large"
-        android:layout_marginBottom="@dimen/pmborder_medium"
-        android:visibility="gone"/>
+    <ScrollView
+        android:id="@+id/scrollview"
+        android:layout_weight="1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
 
-    <TextView
-        android:id="@+id/text_message_notitle"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="@dimen/pmborder_large"
-        android:layout_marginRight="@dimen/pmborder_large"
-        android:layout_marginBottom="@dimen/pmborder_large"
-        android:visibility="gone"/>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="top"
+            android:paddingLeft="@dimen/pmborder_large"
+            android:paddingRight="@dimen/pmborder_large"
+            android:paddingTop="@dimen/pmborder_large"
+            android:paddingBottom="@dimen/pmborder_small"
+            android:orientation="vertical">
 
-    <TextView
-        android:id="@+id/text_message_title"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="@dimen/pmborder_large"
-        android:layout_marginRight="@dimen/pmborder_large"
-        android:layout_marginBottom="@dimen/pmborder_large"
-        android:visibility="gone"/>
+            <TextView
+                android:id="@+id/text_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/pmborder_medium"
+                android:visibility="gone"/>
+
+            <TextView
+                android:id="@+id/text_message_notitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:visibility="gone"/>
+
+            <TextView
+                android:id="@+id/text_message_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:visibility="gone"/>
+
+            <LinearLayout
+                android:id="@+id/layout_image"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/pmborder_large"
+                android:orientation="vertical"
+                android:visibility="gone">
+
+                <TextView
+                    android:id="@+id/text_imageprefix"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:visibility="gone"/>
+
+                <ImageView
+                    android:id="@+id/image_logo"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:contentDescription="@string/pmpage_contentdescription"/>
+
+                <TextView
+                    android:id="@+id/text_imagesuffix"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:visibility="gone"/>
+            </LinearLayout>
+        </LinearLayout>
+    </ScrollView>
 
     <LinearLayout
         android:id="@+id/layout_button"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_gravity="end"
-        android:clickable="true"
-        android:focusable="true"
-        android:padding="@dimen/pmborder_medium"
-        android:visibility="gone">
+        android:gravity="end">
 
         <TextView
             android:id="@+id/text_button"
+            android:padding="@dimen/pmborder_medium"
+            android:clickable="true"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"/>
-
     </LinearLayout>
 </LinearLayout>
