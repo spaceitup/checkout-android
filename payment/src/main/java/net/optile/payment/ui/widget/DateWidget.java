@@ -47,14 +47,14 @@ public final class DateWidget extends InputLayoutWidget implements DateDialogFra
     public DateWidget(String name, View rootView, PaymentTheme theme) {
         super(name, rootView, theme);
 
-        input.setKeyListener(null);
-        input.setOnClickListener(new View.OnClickListener() {
+        textInput.setKeyListener(null);
+        textInput.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 showDateDialogFragment();
             }
         });
-        setLayoutWidth(WEIGHT_REDUCED);
+        setReducedView();
     }
 
     public void setDialogButtonLabel(String dialogButtonLabel) {
@@ -83,8 +83,8 @@ public final class DateWidget extends InputLayoutWidget implements DateDialogFra
             setValidation(VALIDATION_OK, false, null);
             validated = true;
         }
-        if (input.hasFocus()) {
-            input.clearFocus();
+        if (textInput.hasFocus()) {
+            textInput.clearFocus();
         }
         return validated;
     }
@@ -162,14 +162,14 @@ public final class DateWidget extends InputLayoutWidget implements DateDialogFra
         this.expiryYear = yearElement.getOptions().get(yearIndex).getValue();
 
         String format = rootView.getContext().getString(R.string.pmlist_date);
-        input.setText(String.format(format, monthLabel, yearLabel));
+        textInput.setText(String.format(format, monthLabel, yearLabel));
 
-        View nextField = input.focusSearch(View.FOCUS_DOWN);
+        View nextField = textInput.focusSearch(View.FOCUS_DOWN);
         if (nextField instanceof TextInputEditText) {
             nextField.requestFocus();
             presenter.showKeyboard();
         } else {
-            input.clearFocus();
+            textInput.clearFocus();
         }
     }
 }

@@ -18,7 +18,7 @@
     </style>
 
     <style name="PaymentText.Small.Bold.Primary">
-        <item name="android:textColor">?attr/colorPrimary</item>
+        <item name="android:textColor">@color/pmtext_primary</item>
         <item name="android:fontFamily">@font/roboto_medium</item>
     </style>
 

@@ -125,6 +125,13 @@ final class ListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         list.onActionClicked(position);
     }
 
+    void onHintClicked(int position, String type) {
+        if (isInvalidPosition(position)) {
+            return;
+        }
+        list.onHintClicked(position, type);
+    }
+
     Context getContext() {
         return list.getContext();
     }

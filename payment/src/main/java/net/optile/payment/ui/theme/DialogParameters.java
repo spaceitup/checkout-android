@@ -19,20 +19,24 @@ import net.optile.payment.R;
  */
 public final class DialogParameters {
 
+    private final int dialogTheme;
     private final int dateTitleStyle;
     private final int dateSubtitleStyle;
     private final int messageTitleStyle;
     private final int messageDetailsStyle;
     private final int messageDetailsNoTitleStyle;
     private final int buttonLabelStyle;
+    private final int imageLabelStyle;
 
     private DialogParameters(Builder builder) {
+        this.dialogTheme = builder.dialogTheme;
         this.dateTitleStyle = builder.dateTitleStyle;
         this.dateSubtitleStyle = builder.dateSubtitleStyle;
         this.messageTitleStyle = builder.messageTitleStyle;
         this.messageDetailsStyle = builder.messageDetailsStyle;
         this.messageDetailsNoTitleStyle = builder.messageDetailsNoTitleStyle;
         this.buttonLabelStyle = builder.buttonLabelStyle;
+        this.imageLabelStyle = builder.imageLabelStyle;
     }
 
     public static Builder createBuilder() {
@@ -41,13 +45,19 @@ public final class DialogParameters {
 
     public static DialogParameters createDefault() {
         return createBuilder().
+            setDialogTheme(R.style.PaymentThemeDialog).
             setDateTitleStyle(R.style.PaymentText_Medium_Bold).
             setDateSubtitleStyle(R.style.PaymentText_Small_Bold).
             setMessageTitleStyle(R.style.PaymentText_Large_Bold).
             setMessageDetailsStyle(R.style.PaymentText_Medium_Gray).
             setMessageDetailsNoTitleStyle(R.style.PaymentText_Medium_Bold_Gray).
             setButtonLabelStyle(R.style.PaymentText_Small_Bold_Primary).
+            setImageLabelStyle(R.style.PaymentText_Tiny).
             build();
+    }
+
+    public int getDialogTheme() {
+        return dialogTheme;
     }
 
     public int getDateTitleStyle() {
@@ -74,15 +84,26 @@ public final class DialogParameters {
         return buttonLabelStyle;
     }
 
+    public int getImageLabelStyle() {
+        return imageLabelStyle;
+    }
+
     public final static class Builder {
+        int dialogTheme;
         int messageTitleStyle;
         int messageDetailsStyle;
         int messageDetailsNoTitleStyle;
         int dateTitleStyle;
         int dateSubtitleStyle;
         int buttonLabelStyle;
+        int imageLabelStyle;
 
         Builder() {
+        }
+
+        public Builder setDialogTheme(int dialogTheme) {
+            this.dialogTheme = dialogTheme;
+            return this;
         }
 
         public Builder setMessageTitleStyle(int messageTitleStyle) {
@@ -112,6 +133,11 @@ public final class DialogParameters {
 
         public Builder setButtonLabelStyle(int buttonLabelStyle) {
             this.buttonLabelStyle = buttonLabelStyle;
+            return this;
+        }
+
+        public Builder setImageLabelStyle(int imageLabelStyle) {
+            this.imageLabelStyle = imageLabelStyle;
             return this;
         }
 
