@@ -49,8 +49,8 @@ public final class PaymentPageActivity extends AppCompatActivity implements Paym
     private String listUrl;
     private boolean active;
     private PaymentList paymentList;
-    private ProgressBar progressBar;
     private int cachedListIndex;
+    private PaymentProgressView progressView;
 
     /**
      * Create the start intent for this Activity
@@ -88,11 +88,19 @@ public final class PaymentPageActivity extends AppCompatActivity implements Paym
 
         initActionBar(params);
         initList(params);
-
-        this.progressBar = findViewById(R.id.progressbar);
+        initProgressView(params);
+        
         this.presenter = new PaymentPagePresenter(this);
     }
 
+    void setPageTitle(String title) {
+        ActionBar actionBar = getSupportActionBar();
+
+        if (actionBar != null) {
+            actionBar.setTitle(title);
+        }
+    }
+    
     private void initList(PageParameters params) {
         TextView empty = findViewById(R.id.label_empty);
         PaymentUtils.setTextAppearance(empty, params.getEmptyListLabelStyle());
@@ -108,7 +116,11 @@ public final class PaymentPageActivity extends AppCompatActivity implements Paym
             actionBar.setDisplayShowHomeEnabled(true);
         }
     }
-
+    
+    private void initProgressView(PageParameters params) {
+        this.progressView = new PaymentProgressView(this, params);
+    }
+        
     /**
      * {@inheritDoc}
      */
@@ -189,7 +201,8 @@ public final class PaymentPageActivity extends AppCompatActivity implements Paym
         if (!isActive()) {
             return;
         }
-        progressBar.setVisibility(View.GONE);
+        setPageTitle(getString(R.string.pmpage_title));                
+        progressView.setVisible(false);
         paymentList.showPaymentSession(session, cachedListIndex);
         this.cachedListIndex = -1;
     }
@@ -198,16 +211,18 @@ public final class PaymentPageActivity extends AppCompatActivity implements Paym
      * {@inheritDoc}
      */
     @Override
-    public void showLoading(boolean show) {
+    public void showProgress(boolean show, int style) {
         if (!isActive()) {
             return;
         }
         if (show) {
             paymentList.setVisible(false);
-            progressBar.setVisibility(View.VISIBLE);
+            progressView.setStyle(style);
+            progressView.setVisible(true);
         } else {
+            setPageTitle(getString(R.string.pmpage_title));                
             paymentList.setVisible(true);
-            progressBar.setVisibility(View.GONE);
+            progressView.setVisible(false);
         }
     }
 
