@@ -208,10 +208,6 @@ final class PaymentPageService {
      * @return operation result containing information about the charge request
      */
     private OperationResult asyncPostChargeRequest(URL url, Charge charge) throws PaymentException {
-        try {
-          Thread.sleep(60000);
-        } catch (InterruptedException e) {
-        }
         return chargeConnection.createCharge(url, charge);
     }
 

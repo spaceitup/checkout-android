@@ -51,7 +51,7 @@ public final class PaymentPageActivity extends AppCompatActivity implements Paym
     private boolean active;
     private PaymentList paymentList;
     private int cachedListIndex;
-    private PaymentProgressView progressView;
+    private PaymentProgressView progress;
 
     /**
      * Create the start intent for this Activity
@@ -89,8 +89,8 @@ public final class PaymentPageActivity extends AppCompatActivity implements Paym
         setContentView(R.layout.activity_paymentpage);
         initActionBar();
         initList(theme);
-        initProgressView(theme);
-        
+
+        this.progress = new PaymentProgressView(this, theme);        
         this.presenter = new PaymentPagePresenter(this);
     }
 
@@ -116,10 +116,6 @@ public final class PaymentPageActivity extends AppCompatActivity implements Paym
             actionBar.setDisplayShowHomeEnabled(true);
         }
     }
-    
-    private void initProgressView(PaymentTheme theme) {
-        this.progressView = new PaymentProgressView(this, theme);
-    }
         
     /**
      * {@inheritDoc}
@@ -139,7 +135,7 @@ public final class PaymentPageActivity extends AppCompatActivity implements Paym
         super.onPause();
         this.active = false;
         this.presenter.onStop();
-        this.progressView.onStop();
+        this.progress.onStop();
     }
 
     /**
@@ -203,7 +199,7 @@ public final class PaymentPageActivity extends AppCompatActivity implements Paym
             return;
         }
         setPageTitle(getString(R.string.pmpage_title));                
-        progressView.setVisible(false);
+        progress.setVisible(false);
         paymentList.showPaymentSession(session, cachedListIndex);
         this.cachedListIndex = -1;
     }
@@ -218,12 +214,12 @@ public final class PaymentPageActivity extends AppCompatActivity implements Paym
         }
         if (show) {
             paymentList.setVisible(false);
-            progressView.setStyle(style);
-            progressView.setVisible(true);
+            progress.setStyle(style);
+            progress.setVisible(true);
         } else {
             setPageTitle(getString(R.string.pmpage_title));                
             paymentList.setVisible(true);
-            progressView.setVisible(false);
+            progress.setVisible(false);
         }
     }
 
