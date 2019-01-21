@@ -19,11 +19,13 @@ public final class PaymentTheme {
     private final PageParameters pageParameters;
     private final WidgetParameters widgetParameters;
     private final DialogParameters dialogParameters;
-
+    private final ProgressParameters progressParameters;
+    
     private PaymentTheme(Builder builder) {
         this.pageParameters = builder.pageParameters;
         this.widgetParameters = builder.widgetParameters;
         this.dialogParameters = builder.dialogParameters;
+        this.progressParameters = builder.progressParameters;
     }
 
     public static Builder createBuilder() {
@@ -35,6 +37,7 @@ public final class PaymentTheme {
             setPageParameters(PageParameters.createDefault()).
             setWidgetParameters(WidgetParameters.createDefault()).
             setDialogParameters(DialogParameters.createDefault()).
+            setProgressParameters(ProgressParameters.createDefault()).
             build();
     }
 
@@ -50,11 +53,16 @@ public final class PaymentTheme {
         return dialogParameters;
     }
 
+    public ProgressParameters getProgressParameters() {
+        return progressParameters;
+    }
+    
     public static final class Builder {
         PageParameters pageParameters;
         WidgetParameters widgetParameters;
         DialogParameters dialogParameters;
-
+        ProgressParameters progressParameters;
+        
         Builder() {
         }
 
@@ -73,6 +81,11 @@ public final class PaymentTheme {
             return this;
         }
 
+        public Builder setProgressParameters(ProgressParameters progressParameters) {
+            this.progressParameters = progressParameters;
+            return this;
+        }
+
         public PaymentTheme build() {
 
             if (pageParameters == null) {
@@ -83,6 +96,9 @@ public final class PaymentTheme {
             }
             if (dialogParameters == null) {
                 dialogParameters = DialogParameters.createBuilder().build();
+            }
+            if (progressParameters == null) {
+                progressParameters = ProgressParameters.createBuilder().build();
             }
             return new PaymentTheme(this);
         }

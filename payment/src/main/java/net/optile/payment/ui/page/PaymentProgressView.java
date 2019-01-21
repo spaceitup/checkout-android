@@ -11,6 +11,7 @@
 
 package net.optile.payment.ui.page;
 
+import android.util.Log;
 import android.view.View;
 import android.widget.ProgressBar;
 import net.optile.payment.ui.theme.PageParameters;
@@ -21,13 +22,16 @@ import android.view.ContextThemeWrapper;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ProgressBar;
 import net.optile.payment.R;
 import net.optile.payment.model.InputElement;
 import net.optile.payment.model.InputElementType;
 import net.optile.payment.ui.theme.PaymentTheme;
-import net.optile.payment.ui.theme.WidgetParameters;
+import net.optile.payment.ui.theme.ProgressParameters;
 import net.optile.payment.util.PaymentUtils;
 import android.widget.TextView;
+import android.os.Handler;
+import android.os.Looper;
 
 /**
  * View managing the different style of progress animations.
@@ -36,34 +40,49 @@ class PaymentProgressView {
 
     public final static int LOAD = 0x00;
     public final static int SEND = 0x01;
+    
+    private final static int SEND_MIN = 0;
+    private final static int SEND_MAX = 1000;
+    private final static int SEND_TIMEOUT = 30000 / SEND_MAX;
 
     private final PaymentPageActivity activity;
     private final View loadLayout;
     private final View sendLayout;
     private final TextView sendHeader;
     private final TextView sendInfo;
+    private final Handler sendHandler;
+    private final ProgressBar sendProgressBar;
     private int style;
-
     
     /** 
      * Construct a new loading view given the parent view that holds the Views for the loading animations
      * 
      * @param activity controls the loading animation
-     * @param params contains theming for the loading animations
+     * @param theme contains the ProgressParameters for theming the progress views
      */
-    PaymentProgressView(PaymentPageActivity activity, PageParameters params) {
+    PaymentProgressView(PaymentPageActivity activity, PaymentTheme theme) {
         this.activity = activity;
-        loadLayout = activity.findViewById(R.id.layout_progress_load);
+        ProgressParameters params = theme.getProgressParameters();
 
-        sendLayout = activity.findViewById(R.id.layout_progress_send);
+        // setup the ProgressBar for loading
+        loadLayout = activity.findViewById(R.id.layout_load);
+        loadLayout.setBackgroundResource(params.getLoadBackground());
+        inflateProgressBar(activity, loadLayout, R.layout.view_progressbar_load, params.getLoadProgressBarTheme());
+
+        // setup the ProgressBar for sending
+        sendLayout = activity.findViewById(R.id.layout_send);
+        sendLayout.setBackgroundResource(params.getSendBackground());
         sendHeader = sendLayout.findViewById(R.id.text_sendheader);
         sendInfo = sendLayout.findViewById(R.id.text_sendinfo);
+        PaymentUtils.setTextAppearance(sendHeader, params.getHeaderStyle());
+        PaymentUtils.setTextAppearance(sendInfo, params.getInfoStyle());
+ 
+        inflateProgressBar(activity, sendLayout, R.layout.view_progressbar_send, params.getSendProgressBarTheme());
+        sendProgressBar = activity.findViewById(R.id.view_progressbar_send);
+        sendProgressBar.setMin(SEND_MIN);
+        sendProgressBar.setMax(SEND_MAX);
 
-        PaymentUtils.setTextAppearance(sendHeader, params.getProgressSendHeaderStyle());
-        PaymentUtils.setTextAppearance(sendInfo, params.getProgressSendInfoStyle());
-        
-        inflateProgressBar(activity, loadLayout, R.layout.view_progressbar_load, params.getProgressBarLoadTheme());
-        inflateProgressBar(activity, sendLayout, R.layout.view_progressbar_send, params.getProgressBarSendTheme());
+        sendHandler = new Handler(Looper.getMainLooper());        
     }
 
     /** 
@@ -85,28 +104,56 @@ class PaymentProgressView {
         if (!visible) {
             loadLayout.setVisibility(View.GONE);
             sendLayout.setVisibility(View.GONE);
+            stopSendProgress();
             return;
         }
         switch (style) {
             case SEND:
-                setSendProgressVisible();
+                setSendVisible();
                 break;
             default:
-                setLoadProgressVisible();
+                setLoadVisible();
         }
     }
 
-    private void setSendProgressVisible() {
+    /** 
+     * Notify that this Progress view should be stopped
+     */
+    public void onStop() {
+        stopSendProgress();
+    }
+
+    private void setLoadVisible() {
+        sendLayout.setVisibility(View.GONE);
+        loadLayout.setVisibility(View.VISIBLE);
+    }
+
+    private void setSendVisible() {
         loadLayout.setVisibility(View.GONE);
         sendLayout.setVisibility(View.VISIBLE);
         activity.setPageTitle(activity.getString(R.string.pmprogress_sendtitle));
         sendHeader.setText(activity.getString(R.string.pmprogress_sendheader));
         sendInfo.setText(activity.getString(R.string.pmprogress_sendinfo));
+        startSendProgress();
     }
 
-    private void setLoadProgressVisible() {
-        sendLayout.setVisibility(View.GONE);
-        loadLayout.setVisibility(View.VISIBLE);
+    private void stopSendProgress() {
+        sendHandler.removeCallbacksAndMessages(null);
+    }
+
+    private void startSendProgress() {
+        sendProgressBar.setProgress(SEND_MIN);
+        sendHandler.postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    int progress = sendProgressBar.getProgress() + 1;
+                    if (progress > SEND_MAX) {
+                        progress = SEND_MIN;
+                    }
+                    sendProgressBar.setProgress(progress);
+                    sendHandler.postDelayed(this, SEND_TIMEOUT);
+                }
+            }, SEND_TIMEOUT);
     }
 
     private void inflateProgressBar(Context context, View parent, int progressBarResId, int themeResId) {

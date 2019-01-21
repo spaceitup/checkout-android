@@ -31,6 +31,7 @@ import net.optile.payment.ui.dialog.MessageDialogFragment;
 import net.optile.payment.ui.list.PaymentList;
 import net.optile.payment.ui.model.PaymentCard;
 import net.optile.payment.ui.model.PaymentSession;
+import net.optile.payment.ui.theme.PaymentTheme;
 import net.optile.payment.ui.theme.PageParameters;
 import net.optile.payment.ui.widget.FormWidget;
 import net.optile.payment.util.PaymentUtils;
@@ -79,16 +80,16 @@ public final class PaymentPageActivity extends AppCompatActivity implements Paym
             Intent intent = getIntent();
             this.listUrl = intent.getStringExtra(EXTRA_LISTURL);
         }
-        PageParameters params = PaymentUI.getInstance().getPaymentTheme().getPageParameters();
-        int pageTheme = params.getPageTheme();
+        PaymentTheme theme = PaymentUI.getInstance().getPaymentTheme();
+        int pageTheme = theme.getPageParameters().getPageTheme();
+
         if (pageTheme != 0) {
             setTheme(pageTheme);
         }
         setContentView(R.layout.activity_paymentpage);
-
-        initActionBar(params);
-        initList(params);
-        initProgressView(params);
+        initActionBar();
+        initList(theme);
+        initProgressView(theme);
         
         this.presenter = new PaymentPagePresenter(this);
     }
@@ -101,15 +102,14 @@ public final class PaymentPageActivity extends AppCompatActivity implements Paym
         }
     }
     
-    private void initList(PageParameters params) {
+    private void initList(PaymentTheme theme) {
         TextView empty = findViewById(R.id.label_empty);
-        PaymentUtils.setTextAppearance(empty, params.getEmptyListLabelStyle());
+        PaymentUtils.setTextAppearance(empty, theme.getPageParameters().getEmptyListLabelStyle());
         this.paymentList = new PaymentList(this, findViewById(R.id.recyclerview_paymentlist), empty);
     }
 
-    private void initActionBar(PageParameters params) {
+    private void initActionBar() {
         ActionBar actionBar = getSupportActionBar();
-
         if (actionBar != null) {
             actionBar.setTitle(getString(R.string.pmpage_title));
             actionBar.setDisplayHomeAsUpEnabled(true);
@@ -117,8 +117,8 @@ public final class PaymentPageActivity extends AppCompatActivity implements Paym
         }
     }
     
-    private void initProgressView(PageParameters params) {
-        this.progressView = new PaymentProgressView(this, params);
+    private void initProgressView(PaymentTheme theme) {
+        this.progressView = new PaymentProgressView(this, theme);
     }
         
     /**
@@ -139,6 +139,7 @@ public final class PaymentPageActivity extends AppCompatActivity implements Paym
         super.onPause();
         this.active = false;
         this.presenter.onStop();
+        this.progressView.onStop();
     }
 
     /**

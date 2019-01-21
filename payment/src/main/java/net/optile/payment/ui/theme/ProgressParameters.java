@@ -14,7 +14,7 @@ package net.optile.payment.ui.theme;
 import net.optile.payment.R;
 
 /**
- * Class for holding the Progress theme parameters.
+ * Class for holding the Progress (load and send) theme parameters.
  * These parameters may be used to theme the progress (loading) UI elements and text appearances.
  */
 public final class ProgressParameters {
@@ -22,16 +22,16 @@ public final class ProgressParameters {
     private final int loadProgressBarTheme;    
     private final int sendBackground;    
     private final int sendProgressBarTheme;
-    private final int sendHeaderStyle;
-    private final int sendInfoStyle;
+    private final int headerStyle;
+    private final int infoStyle;
     
     private ProgressParameters(Builder builder) {
         this.loadBackground = builder.loadBackground;
         this.loadProgressBarTheme = builder.loadProgressBarTheme;
         this.sendBackground = builder.sendBackground;
         this.sendProgressBarTheme = builder.sendProgressBarTheme;
-        this.sendHeaderStyle = builder.sendHeaderStyle;
-        this.sendInfoStyle = builder.sendInfoStyle;
+        this.headerStyle = builder.headerStyle;
+        this.infoStyle = builder.infoStyle;
     }
 
     public static Builder createBuilder() {
@@ -40,10 +40,12 @@ public final class ProgressParameters {
 
     public static ProgressParameters createDefault() {
         return createBuilder().
-            setLoadProgressBarTheme(R.style.PaymentThemeLoadProgressBar).
-            setSendProgressBarTheme(R.style.PaymentThemeSendProgressBar).
-            setSendHeaderStyle(R.style.PaymentText_XLarge_Bold).
-            setSendInfoStyle(R.style.PaymentText_Medium).            
+            setLoadBackground(R.color.pmcolor_list).
+            setLoadProgressBarTheme(R.style.PaymentThemeProgressBarLoad).
+            setSendBackground(R.color.pmcolor_list).
+            setSendProgressBarTheme(R.style.PaymentThemeProgressBarSend).
+            setHeaderStyle(R.style.PaymentText_XLarge_Bold).
+            setInfoStyle(R.style.PaymentText_Medium).            
             build();
     }
 
@@ -52,7 +54,7 @@ public final class ProgressParameters {
     }
 
     public int getLoadProgressBarTheme() {
-        return progressBarLoadTheme;
+        return loadProgressBarTheme;
     }
 
     public int getSendBackground() {
@@ -60,15 +62,15 @@ public final class ProgressParameters {
     }
     
     public int getSendProgressBarTheme() {
-        return progressBarSendTheme;
+        return sendProgressBarTheme;
     }
 
-    public int getSendHeaderStyle() {
-        return progressSendHeaderStyle;
+    public int getHeaderStyle() {
+        return headerStyle;
     }
 
-    public int getSendInfoStyle() {
-        return progressSendInfoStyle;
+    public int getInfoStyle() {
+        return infoStyle;
     }
     
     public final static class Builder {
@@ -76,8 +78,8 @@ public final class ProgressParameters {
         int loadProgressBarTheme;
         int sendBackground;
         int sendProgressBarTheme;
-        int sendHeaderStyle;
-        int sendInfoStyle;
+        int headerStyle;
+        int infoStyle;
         
         Builder() {
         }
@@ -102,18 +104,18 @@ public final class ProgressParameters {
             return this;
         }
 
-        public Builder setSendHeaderStyle(int sendHeaderStyle) {
-            this.sendHeaderStyle = sendHeaderStyle;
+        public Builder setHeaderStyle(int headerStyle) {
+            this.headerStyle = headerStyle;
             return this;
         }
 
-        public Builder setSendInfoStyle(int sendInfoStyle) {
-            this.sendInfoStyle = sendInfoStyle;
+        public Builder setInfoStyle(int infoStyle) {
+            this.infoStyle = infoStyle;
             return this;
         }
         
-        public PageParameters build() {
-            return new PageParameters(this);
+        public ProgressParameters build() {
+            return new ProgressParameters(this);
         }
     }
 }

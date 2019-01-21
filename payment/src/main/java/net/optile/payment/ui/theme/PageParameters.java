@@ -25,10 +25,6 @@ public final class PageParameters {
     private final int accountCardSubtitleStyle;
     private final int networkCardTitleStyle;
     private final int paymentLogoBackground;
-    private final int progressBarSendTheme;
-    private final int progressBarLoadTheme;
-    private final int progressSendHeaderStyle;
-    private final int progressSendInfoStyle;
     
     private PageParameters(Builder builder) {
         this.pageTheme = builder.pageTheme;
@@ -38,10 +34,6 @@ public final class PageParameters {
         this.accountCardSubtitleStyle = builder.accountCardSubtitleStyle;
         this.networkCardTitleStyle = builder.networkCardTitleStyle;
         this.paymentLogoBackground = builder.paymentLogoBackground;
-        this.progressBarLoadTheme = builder.progressBarLoadTheme;
-        this.progressBarSendTheme = builder.progressBarSendTheme;
-        this.progressSendHeaderStyle = builder.progressSendHeaderStyle;
-        this.progressSendInfoStyle = builder.progressSendInfoStyle;
     }
 
     public static Builder createBuilder() {
@@ -56,11 +48,6 @@ public final class PageParameters {
             setAccountCardTitleStyle(R.style.PaymentText_Medium_Bold).
             setAccountCardSubtitleStyle(R.style.PaymentText_Tiny).
             setNetworkCardTitleStyle(R.style.PaymentText_Medium).
-            setProgressBarLoadTheme(R.style.PaymentThemeProgressBarLoad).
-            setProgressBarSendTheme(R.style.PaymentThemeProgressBarSend).
-            setProgressSendBackground(
-            setProgressSendHeaderStyle(R.style.PaymentText_XLarge_Bold).
-            setProgressSendInfoStyle(R.style.PaymentText_Medium).            
             build();
     }
 
@@ -92,22 +79,6 @@ public final class PageParameters {
         return paymentLogoBackground;
     }
 
-    public int getProgressBarLoadTheme() {
-        return progressBarLoadTheme;
-    }
-
-    public int getProgressBarSendTheme() {
-        return progressBarSendTheme;
-    }
-
-    public int getProgressSendHeaderStyle() {
-        return progressSendHeaderStyle;
-    }
-
-    public int getProgressSendInfoStyle() {
-        return progressSendInfoStyle;
-    }
-    
     public final static class Builder {
         int pageTheme;
         int emptyListLabelStyle;
@@ -116,10 +87,6 @@ public final class PageParameters {
         int accountCardSubtitleStyle;
         int networkCardTitleStyle;
         int paymentLogoBackground;
-        int progressBarSendTheme;
-        int progressBarLoadTheme;
-        int progressSendHeaderStyle;
-        int progressSendInfoStyle;
         
         Builder() {
         }
@@ -156,26 +123,6 @@ public final class PageParameters {
 
         public Builder setPaymentLogoBackground(int paymentLogoBackground) {
             this.paymentLogoBackground = paymentLogoBackground;
-            return this;
-        }
-
-        public Builder setProgressBarLoadTheme(int progressBarLoadTheme) {
-            this.progressBarLoadTheme = progressBarLoadTheme;
-            return this;
-        }
-
-        public Builder setProgressBarSendTheme(int progressBarSendTheme) {
-            this.progressBarSendTheme = progressBarSendTheme;
-            return this;
-        }
-
-        public Builder setProgressSendHeaderStyle(int progressSendHeaderStyle) {
-            this.progressSendHeaderStyle = progressSendHeaderStyle;
-            return this;
-        }
-
-        public Builder setProgressSendInfoStyle(int progressSendInfoStyle) {
-            this.progressSendInfoStyle = progressSendInfoStyle;
             return this;
         }
         
