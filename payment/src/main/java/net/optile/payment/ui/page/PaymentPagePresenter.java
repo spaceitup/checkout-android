@@ -85,7 +85,7 @@ final class PaymentPagePresenter {
             view.showPaymentSession(session);
             return;
         }
-        view.showLoading(true);
+        view.showProgress(true, PaymentProgressView.LOAD);
 
         if (validator == null) {
             service.loadValidator();
@@ -258,7 +258,6 @@ final class PaymentPagePresenter {
                 }
             }
             if (!error) {
-                view.showLoading(true);
                 postChargeRequest(url, charge);
             }
         } catch (PaymentException e) {
@@ -392,7 +391,7 @@ final class PaymentPagePresenter {
     }
 
     private void postChargeRequest(final URL url, final Charge charge) {
-        view.showLoading(true);
+        view.showProgress(true, PaymentProgressView.SEND);
         service.postChargeRequest(url, charge);
     }
 }

@@ -39,11 +39,12 @@ interface PaymentPageView {
     void clear();
 
     /**
-     * Show or hide the loading animation
+     * Show or hide the progress animation, progress animations are shown when lists are loaded or operation requests are performed.
      *
-     * @param show if true show the loading animation, hide otherwise
+     * @param show if true show the progress animation, hide otherwise
+     * @param style the style of progress animation to be used
      */
-    void showLoading(boolean show);
+    void showProgress(boolean show, int style);
 
     /**
      * Stop loading and show the PaymentSession

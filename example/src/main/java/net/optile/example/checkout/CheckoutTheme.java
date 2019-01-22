@@ -15,6 +15,7 @@ import net.optile.payment.ui.theme.DialogParameters;
 import net.optile.payment.ui.theme.PageParameters;
 import net.optile.payment.ui.theme.PaymentTheme;
 import net.optile.payment.ui.theme.WidgetParameters;
+import net.optile.payment.ui.theme.ProgressParameters;
 
 /**
  * Class used to create a custom PaymentTheme for skinning the Android SDK Payment page
@@ -70,6 +71,16 @@ final class CheckoutTheme {
             build();
         builder.setDialogParameters(dialogParams);
 
+        ProgressParameters progressParams = ProgressParameters.createBuilder().
+            setLoadBackground(R.color.customColorPrimary).
+            setLoadProgressBarTheme(R.style.CustomThemeProgressBarLoad).
+            setSendBackground(R.color.custom_cardbackground).
+            setSendProgressBarTheme(R.style.CustomThemeProgressBarSend).
+            setHeaderStyle(R.style.CustomText_XLarge_Bold).
+            setInfoStyle(R.style.CustomText_Medium).            
+            build();
+        builder.setProgressParameters(progressParams);        
+        
         return builder.build();
     }
 }

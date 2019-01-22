@@ -31,6 +31,7 @@ import net.optile.payment.ui.dialog.MessageDialogFragment;
 import net.optile.payment.ui.list.PaymentList;
 import net.optile.payment.ui.model.PaymentCard;
 import net.optile.payment.ui.model.PaymentSession;
+import net.optile.payment.ui.theme.PaymentTheme;
 import net.optile.payment.ui.theme.PageParameters;
 import net.optile.payment.ui.widget.FormWidget;
 import net.optile.payment.util.PaymentUtils;
@@ -49,8 +50,8 @@ public final class PaymentPageActivity extends AppCompatActivity implements Paym
     private String listUrl;
     private boolean active;
     private PaymentList paymentList;
-    private ProgressBar progressBar;
     private int cachedListIndex;
+    private PaymentProgressView progress;
 
     /**
      * Create the start intent for this Activity
@@ -79,36 +80,43 @@ public final class PaymentPageActivity extends AppCompatActivity implements Paym
             Intent intent = getIntent();
             this.listUrl = intent.getStringExtra(EXTRA_LISTURL);
         }
-        PageParameters params = PaymentUI.getInstance().getPaymentTheme().getPageParameters();
-        int pageTheme = params.getPageTheme();
+        PaymentTheme theme = PaymentUI.getInstance().getPaymentTheme();
+        int pageTheme = theme.getPageParameters().getPageTheme();
+
         if (pageTheme != 0) {
             setTheme(pageTheme);
         }
         setContentView(R.layout.activity_paymentpage);
+        initActionBar();
+        initList(theme);
 
-        initActionBar(params);
-        initList(params);
-
-        this.progressBar = findViewById(R.id.progressbar);
+        this.progress = new PaymentProgressView(this, theme);        
         this.presenter = new PaymentPagePresenter(this);
     }
 
-    private void initList(PageParameters params) {
+    void setPageTitle(String title) {
+        ActionBar actionBar = getSupportActionBar();
+
+        if (actionBar != null) {
+            actionBar.setTitle(title);
+        }
+    }
+    
+    private void initList(PaymentTheme theme) {
         TextView empty = findViewById(R.id.label_empty);
-        PaymentUtils.setTextAppearance(empty, params.getEmptyListLabelStyle());
+        PaymentUtils.setTextAppearance(empty, theme.getPageParameters().getEmptyListLabelStyle());
         this.paymentList = new PaymentList(this, findViewById(R.id.recyclerview_paymentlist), empty);
     }
 
-    private void initActionBar(PageParameters params) {
+    private void initActionBar() {
         ActionBar actionBar = getSupportActionBar();
-
         if (actionBar != null) {
             actionBar.setTitle(getString(R.string.pmpage_title));
             actionBar.setDisplayHomeAsUpEnabled(true);
             actionBar.setDisplayShowHomeEnabled(true);
         }
     }
-
+        
     /**
      * {@inheritDoc}
      */
@@ -127,6 +135,7 @@ public final class PaymentPageActivity extends AppCompatActivity implements Paym
         super.onPause();
         this.active = false;
         this.presenter.onStop();
+        this.progress.onStop();
     }
 
     /**
@@ -189,7 +198,8 @@ public final class PaymentPageActivity extends AppCompatActivity implements Paym
         if (!isActive()) {
             return;
         }
-        progressBar.setVisibility(View.GONE);
+        setPageTitle(getString(R.string.pmpage_title));                
+        progress.setVisible(false);
         paymentList.showPaymentSession(session, cachedListIndex);
         this.cachedListIndex = -1;
     }
@@ -198,16 +208,18 @@ public final class PaymentPageActivity extends AppCompatActivity implements Paym
      * {@inheritDoc}
      */
     @Override
-    public void showLoading(boolean show) {
+    public void showProgress(boolean show, int style) {
         if (!isActive()) {
             return;
         }
         if (show) {
             paymentList.setVisible(false);
-            progressBar.setVisibility(View.VISIBLE);
+            progress.setStyle(style);
+            progress.setVisible(true);
         } else {
+            setPageTitle(getString(R.string.pmpage_title));                
             paymentList.setVisible(true);
-            progressBar.setVisibility(View.GONE);
+            progress.setVisible(false);
         }
     }
 
