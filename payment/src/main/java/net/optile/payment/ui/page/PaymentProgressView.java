@@ -79,7 +79,6 @@ class PaymentProgressView {
  
         inflateProgressBar(activity, sendLayout, R.layout.view_progressbar_send, params.getSendProgressBarTheme());
         sendProgressBar = activity.findViewById(R.id.view_progressbar_send);
-        sendProgressBar.setMin(SEND_MIN);
         sendProgressBar.setMax(SEND_MAX);
 
         sendHandler = new Handler(Looper.getMainLooper());        

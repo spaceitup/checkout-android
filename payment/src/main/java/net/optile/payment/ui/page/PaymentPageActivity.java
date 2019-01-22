@@ -24,6 +24,8 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.content.pm.ActivityInfo;
+    
 import net.optile.payment.R;
 import net.optile.payment.ui.PaymentResult;
 import net.optile.payment.ui.PaymentUI;
@@ -81,12 +83,11 @@ public final class PaymentPageActivity extends AppCompatActivity implements Paym
             this.listUrl = intent.getStringExtra(EXTRA_LISTURL);
         }
         PaymentTheme theme = PaymentUI.getInstance().getPaymentTheme();
-        int pageTheme = theme.getPageParameters().getPageTheme();
+        initPageTheme(theme);
 
-        if (pageTheme != 0) {
-            setTheme(pageTheme);
-        }
         setContentView(R.layout.activity_paymentpage);
+        setRequestedOrientation(PaymentUI.getInstance().getOrientation());
+
         initActionBar();
         initList(theme);
 
@@ -99,6 +100,14 @@ public final class PaymentPageActivity extends AppCompatActivity implements Paym
 
         if (actionBar != null) {
             actionBar.setTitle(title);
+        }
+    }
+
+    private void initPageTheme(PaymentTheme theme) {
+        int pageTheme = theme.getPageParameters().getPageTheme();
+
+        if (pageTheme != 0) {
+            setTheme(pageTheme);
         }
     }
     

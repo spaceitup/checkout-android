@@ -15,6 +15,8 @@ import android.app.Activity;
 import android.content.Intent;
 import android.text.TextUtils;
 import android.util.Patterns;
+import android.content.pm.ActivityInfo;
+
 import net.optile.payment.R;
 import net.optile.payment.ui.page.PaymentPageActivity;
 import net.optile.payment.ui.theme.PaymentTheme;
@@ -30,6 +32,9 @@ public final class PaymentUI {
     public final static int RESULT_CODE_ERROR = Activity.RESULT_FIRST_USER + 2;
     public final static String EXTRA_PAYMENT_RESULT = "paymentresult";
 
+    /** The orientation of the Payment page, by default it is in locked mode */
+    private int orientation;
+    
     /** The url pointing to the current list */
     private String listUrl;
 
@@ -43,6 +48,7 @@ public final class PaymentUI {
     private int groupResId;
 
     private PaymentUI() {
+        this.orientation = ActivityInfo.SCREEN_ORIENTATION_LOCKED;        
     }
 
     /**
@@ -79,6 +85,43 @@ public final class PaymentUI {
         this.listUrl = listUrl;
     }
 
+    /** 
+     * Get the orientation mode for the PaymentPage, by default the ActivityInfo.SCREEN_ORIENTATION_LOCKED is used. 
+     * 
+     * @return orientation mode
+     */
+    public int getOrientation() {
+        return this.orientation;
+    }
+
+    /** 
+     * Set the orientation of the Payment Page, the following orientation modes are supported:
+     *
+     * ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE
+     * ActivityInfo.SCREEN_ORIENTATION_PORTRAIT
+     * ActivityInfo.SCREEN_ORIENTATION_REVERSE_LANDSCAPE
+     * ActivityInfo.SCREEN_ORIENTATION_REVERSE_PORTRAIT
+     * ActivityInfo.SCREEN_ORIENTATION_LOCKED
+     *
+     * The SCREEN_ORIENTATION_LOCKED is by default used. 
+     *
+     * @param orientation mode for the Payment Page 
+     */
+    public void setOrientation(int orientation) {
+
+        switch (orientation) {
+            case ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE:
+            case ActivityInfo.SCREEN_ORIENTATION_PORTRAIT:
+            case ActivityInfo.SCREEN_ORIENTATION_REVERSE_LANDSCAPE:
+            case ActivityInfo.SCREEN_ORIENTATION_REVERSE_PORTRAIT:            
+            case ActivityInfo.SCREEN_ORIENTATION_LOCKED:
+                this.orientation = orientation;
+                break;
+            default:
+                throw new IllegalArgumentException("Orientation mode is not supported: " + orientation);
+        }
+    }
+    
     /**
      * Get the PaymentTheme set in this PaymentUI. This method is not Thread safe and must be called from the Main UI Thread.
      *

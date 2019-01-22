@@ -25,6 +25,7 @@ import android.widget.Button;
 import net.optile.payment.ui.PaymentResult;
 import net.optile.payment.ui.PaymentUI;
 import net.optile.payment.ui.theme.PaymentTheme;
+import android.content.pm.ActivityInfo;
 
 /**
  * This is the main Activity of this Checkout example app.
@@ -162,6 +163,9 @@ public final class CheckoutActivity extends AppCompatActivity implements Checkou
         // The custom validation settings file, the default SDK validations are sufficient in most cases 
         //paymentUI.setValidationResId(R.raw.customvalidations);
 
+        // Set the orientation to be fixed to landscape mode
+        //paymentUI.setOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
+        
         // The custom payment method group settings file
         // paymentUI.setGroupResId(R.raw.customgroups);
         paymentUI.setPaymentTheme(theme);
