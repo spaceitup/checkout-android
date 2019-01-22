@@ -96,11 +96,14 @@ public final class PaymentUI {
 
     /** 
      * Set the orientation of the Payment Page, the following orientation modes are supported:
+     *
      * ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE
      * ActivityInfo.SCREEN_ORIENTATION_PORTRAIT
      * ActivityInfo.SCREEN_ORIENTATION_REVERSE_LANDSCAPE
      * ActivityInfo.SCREEN_ORIENTATION_REVERSE_PORTRAIT
-
+     * ActivityInfo.SCREEN_ORIENTATION_LOCKED
+     *
+     * The SCREEN_ORIENTATION_LOCKED is by default used. 
      *
      * @param orientation mode for the Payment Page 
      */
