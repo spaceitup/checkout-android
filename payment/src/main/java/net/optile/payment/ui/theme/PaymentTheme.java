@@ -20,7 +20,7 @@ public final class PaymentTheme {
     private final WidgetParameters widgetParameters;
     private final DialogParameters dialogParameters;
     private final ProgressParameters progressParameters;
-    
+
     private PaymentTheme(Builder builder) {
         this.pageParameters = builder.pageParameters;
         this.widgetParameters = builder.widgetParameters;
@@ -56,13 +56,13 @@ public final class PaymentTheme {
     public ProgressParameters getProgressParameters() {
         return progressParameters;
     }
-    
+
     public static final class Builder {
         PageParameters pageParameters;
         WidgetParameters widgetParameters;
         DialogParameters dialogParameters;
         ProgressParameters progressParameters;
-        
+
         Builder() {
         }
 

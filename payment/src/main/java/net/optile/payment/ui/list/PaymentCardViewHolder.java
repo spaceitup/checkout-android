@@ -19,6 +19,8 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
+import android.content.res.Configuration;
+import android.content.res.Resources;
 import android.animation.ObjectAnimator;
 import android.content.Context;
 import android.support.v4.app.DialogFragment;
@@ -56,7 +58,9 @@ abstract class PaymentCardViewHolder extends RecyclerView.ViewHolder {
     final static float ALPHA_SELECTED = 1f;
     final static float ALPHA_DESELECTED = 0.4f;
     final static int ANIM_DURATION = 200;
-
+    final static int LOGO_ROW_SIZE_LANDSCAPE = 3;
+    final static int LOGO_ROW_SIZE_PORTRAIT = 2;
+    
     final ViewGroup formLayout;
     final ListAdapter adapter;
     final WidgetPresenter presenter;
@@ -163,18 +167,24 @@ abstract class PaymentCardViewHolder extends RecyclerView.ViewHolder {
         LayoutInflater inflater = LayoutInflater.from(parent.getContext());
         Context context = parent.getContext();
 
-        int count = 0;
         TableRow row = null;
-        int border = context.getResources().getDimensionPixelSize(R.dimen.pmborder_xsmall);
-
+        Resources res = context.getResources();
+        int border = res.getDimensionPixelSize(R.dimen.pmborder_xsmall);
+        int rowSize = getLogoRowSize(res);
+        int rowIndex = 0;
+        int count = 0;
+        
         for (String name : names) {
-            int marginTop = count > 1 ? border : 0;
-            int marginRight = 0;
 
-            if (count++ % 2 == 0) {
+            if (rowIndex++ == 0) {
                 row = new TableRow(context);
                 logoLayout.addView(row);
-                marginRight = border;
+            }
+            int marginTop = count++ >= rowSize ? border : 0;
+            int marginRight = rowIndex < rowSize ? border : 0;
+
+            if (rowIndex == rowSize) {
+                rowIndex = 0;
             }
             ImageView view = (ImageView) inflater.inflate(R.layout.list_item_logo, row, false);
             LayoutParams params = (LayoutParams) view.getLayoutParams();
@@ -297,6 +307,15 @@ abstract class PaymentCardViewHolder extends RecyclerView.ViewHolder {
 
         for (FormWidget widget : widgets.values()) {
             widget.clearInputErrors();
+        }
+    }
+
+    private int getLogoRowSize(Resources res) {
+        switch (res.getConfiguration().orientation) {
+        case Configuration.ORIENTATION_LANDSCAPE:
+            return LOGO_ROW_SIZE_LANDSCAPE;
+        default:
+            return LOGO_ROW_SIZE_PORTRAIT;
         }
     }
 }
