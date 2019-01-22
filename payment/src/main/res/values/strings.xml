@@ -11,8 +11,8 @@
     <string name="pmlist_network">Choose another account</string>
     <string name="pmlist_network_only">Choose a method</string>
     <string name="pmlist_date">%1$s / %2$s</string>
-    <string name="pmprogress_sendtitle">Processing payment...</string>
+    <string name="pmprogress_sendtitle">Payment processing...</string>
     <string name="pmprogress_sendheader">Sending...</string>
-    <string name="pmprogress_sendinfo">Hold on while we process your payment.</string>
+    <string name="pmprogress_sendinfo">Payment confirmation should take less than 30 seconds.</string>
     <string name="pmdialog_close_button">Close</string>
 </resources>
