@@ -24,6 +24,8 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.content.pm.ActivityInfo;
+    
 import net.optile.payment.R;
 import net.optile.payment.ui.PaymentResult;
 import net.optile.payment.ui.PaymentUI;
@@ -81,11 +83,9 @@ public final class PaymentPageActivity extends AppCompatActivity implements Paym
             this.listUrl = intent.getStringExtra(EXTRA_LISTURL);
         }
         PaymentTheme theme = PaymentUI.getInstance().getPaymentTheme();
-        int pageTheme = theme.getPageParameters().getPageTheme();
+        initPageTheme(theme);
+        initOrientation();
 
-        if (pageTheme != 0) {
-            setTheme(pageTheme);
-        }
         setContentView(R.layout.activity_paymentpage);
         initActionBar();
         initList(theme);
@@ -100,6 +100,31 @@ public final class PaymentPageActivity extends AppCompatActivity implements Paym
         if (actionBar != null) {
             actionBar.setTitle(title);
         }
+    }
+
+    private void initPageTheme(PaymentTheme theme) {
+        int pageTheme = theme.getPageParameters().getPageTheme();
+
+        if (pageTheme != 0) {
+            setTheme(pageTheme);
+        }
+    }
+
+    private void initOrientation() {
+        int orientation = PaymentUI.getInstance().getOrientation();
+        int mode;
+        
+        switch (orientation) {
+            case ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE:
+            case ActivityInfo.SCREEN_ORIENTATION_PORTRAIT:
+            case ActivityInfo.SCREEN_ORIENTATION_REVERSE_LANDSCAPE:
+            case ActivityInfo.SCREEN_ORIENTATION_REVERSE_PORTRAIT:            
+                mode = orientation;
+                break;
+            default:
+                mode = ActivityInfo.SCREEN_ORIENTATION_LOCKED;
+        }
+        setRequestedOrientation(mode);
     }
     
     private void initList(PaymentTheme theme) {
