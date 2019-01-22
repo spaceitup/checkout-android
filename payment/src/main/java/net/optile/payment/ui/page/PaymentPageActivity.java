@@ -84,9 +84,10 @@ public final class PaymentPageActivity extends AppCompatActivity implements Paym
         }
         PaymentTheme theme = PaymentUI.getInstance().getPaymentTheme();
         initPageTheme(theme);
-        initOrientation();
 
         setContentView(R.layout.activity_paymentpage);
+        setRequestedOrientation(PaymentUI.getInstance().getOrientation());
+
         initActionBar();
         initList(theme);
 
@@ -108,23 +109,6 @@ public final class PaymentPageActivity extends AppCompatActivity implements Paym
         if (pageTheme != 0) {
             setTheme(pageTheme);
         }
-    }
-
-    private void initOrientation() {
-        int orientation = PaymentUI.getInstance().getOrientation();
-        int mode;
-        
-        switch (orientation) {
-            case ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE:
-            case ActivityInfo.SCREEN_ORIENTATION_PORTRAIT:
-            case ActivityInfo.SCREEN_ORIENTATION_REVERSE_LANDSCAPE:
-            case ActivityInfo.SCREEN_ORIENTATION_REVERSE_PORTRAIT:            
-                mode = orientation;
-                break;
-            default:
-                mode = ActivityInfo.SCREEN_ORIENTATION_LOCKED;
-        }
-        setRequestedOrientation(mode);
     }
     
     private void initList(PaymentTheme theme) {

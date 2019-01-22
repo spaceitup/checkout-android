@@ -100,11 +100,23 @@ public final class PaymentUI {
      * ActivityInfo.SCREEN_ORIENTATION_PORTRAIT
      * ActivityInfo.SCREEN_ORIENTATION_REVERSE_LANDSCAPE
      * ActivityInfo.SCREEN_ORIENTATION_REVERSE_PORTRAIT
+
      *
      * @param orientation mode for the Payment Page 
      */
     public void setOrientation(int orientation) {
-        this.orientation = orientation;
+
+        switch (orientation) {
+            case ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE:
+            case ActivityInfo.SCREEN_ORIENTATION_PORTRAIT:
+            case ActivityInfo.SCREEN_ORIENTATION_REVERSE_LANDSCAPE:
+            case ActivityInfo.SCREEN_ORIENTATION_REVERSE_PORTRAIT:            
+            case ActivityInfo.SCREEN_ORIENTATION_LOCKED:
+                this.orientation = orientation;
+                break;
+            default:
+                throw new IllegalArgumentException("Orientation mode is not supported: " + orientation);
+        }
     }
     
     /**
