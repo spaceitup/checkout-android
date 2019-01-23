@@ -64,7 +64,7 @@
     <style name="PaymentText.XLarge.Bold">
         <item name="android:fontFamily">@font/roboto_medium</item>
     </style>
-    
+
     <style name="PaymentTextInputLayoutError" parent="TextAppearance.Design.Error">
         <item name="android:textColor">@color/pmtext_error</item>
         <item name="android:textSize">12sp</item>

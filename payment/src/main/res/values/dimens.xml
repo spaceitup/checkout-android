@@ -12,7 +12,8 @@
     <dimen name="pmwidget_checkboxwidth">40dp</dimen>
 
     <dimen name="pmcard_radius">4dp</dimen>
-    <dimen name="pmcard_logowidth">108dp</dimen>
+    <dimen name="pmcard_logos_portrait">108dp</dimen>
+    <dimen name="pmcard_logos_landscape">166dp</dimen>
 
     <dimen name="pmdialog_radius">5dp</dimen>
 

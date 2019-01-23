@@ -25,7 +25,7 @@ public final class PageParameters {
     private final int accountCardSubtitleStyle;
     private final int networkCardTitleStyle;
     private final int paymentLogoBackground;
-    
+
     private PageParameters(Builder builder) {
         this.pageTheme = builder.pageTheme;
         this.emptyListLabelStyle = builder.emptyListLabelStyle;
@@ -87,7 +87,7 @@ public final class PageParameters {
         int accountCardSubtitleStyle;
         int networkCardTitleStyle;
         int paymentLogoBackground;
-        
+
         Builder() {
         }
 
@@ -125,7 +125,7 @@ public final class PageParameters {
             this.paymentLogoBackground = paymentLogoBackground;
             return this;
         }
-        
+
         public PageParameters build() {
             return new PageParameters(this);
         }

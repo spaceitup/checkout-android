@@ -19,12 +19,12 @@ import net.optile.payment.R;
  */
 public final class ProgressParameters {
     private final int loadBackground;
-    private final int loadProgressBarTheme;    
-    private final int sendBackground;    
+    private final int loadProgressBarTheme;
+    private final int sendBackground;
     private final int sendProgressBarTheme;
     private final int headerStyle;
     private final int infoStyle;
-    
+
     private ProgressParameters(Builder builder) {
         this.loadBackground = builder.loadBackground;
         this.loadProgressBarTheme = builder.loadProgressBarTheme;
@@ -45,7 +45,7 @@ public final class ProgressParameters {
             setSendBackground(R.color.pmcolor_list).
             setSendProgressBarTheme(R.style.PaymentThemeProgressBarSend).
             setHeaderStyle(R.style.PaymentText_XLarge_Bold).
-            setInfoStyle(R.style.PaymentText_Medium).            
+            setInfoStyle(R.style.PaymentText_Medium).
             build();
     }
 
@@ -60,7 +60,7 @@ public final class ProgressParameters {
     public int getSendBackground() {
         return sendBackground;
     }
-    
+
     public int getSendProgressBarTheme() {
         return sendProgressBarTheme;
     }
@@ -72,7 +72,7 @@ public final class ProgressParameters {
     public int getInfoStyle() {
         return infoStyle;
     }
-    
+
     public final static class Builder {
         int loadBackground;
         int loadProgressBarTheme;
@@ -80,7 +80,7 @@ public final class ProgressParameters {
         int sendProgressBarTheme;
         int headerStyle;
         int infoStyle;
-        
+
         Builder() {
         }
 
@@ -88,7 +88,7 @@ public final class ProgressParameters {
             this.loadBackground = loadBackground;
             return this;
         }
-        
+
         public Builder setLoadProgressBarTheme(int loadProgressBarTheme) {
             this.loadProgressBarTheme = loadProgressBarTheme;
             return this;
@@ -113,7 +113,7 @@ public final class ProgressParameters {
             this.infoStyle = infoStyle;
             return this;
         }
-        
+
         public ProgressParameters build() {
             return new ProgressParameters(this);
         }
