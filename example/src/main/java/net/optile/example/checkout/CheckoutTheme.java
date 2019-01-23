@@ -73,9 +73,10 @@ final class CheckoutTheme {
 
         ProgressParameters progressParams = ProgressParameters.createBuilder().
             setLoadBackground(R.color.customColorPrimary).
-            setLoadProgressBarTheme(R.style.CustomThemeProgressBarLoad).
+            setLoadProgressBarColor(R.color.customColorAccent).
             setSendBackground(R.color.custom_cardbackground).
-            setSendProgressBarTheme(R.style.CustomThemeProgressBarSend).
+            setSendProgressBarColorFront(R.color.customColorPrimary).
+            setSendProgressBarColorBack(R.color.custom_validationunknown).
             setHeaderStyle(R.style.CustomText_XLarge_Bold).
             setInfoStyle(R.style.CustomText_Medium).            
             build();
