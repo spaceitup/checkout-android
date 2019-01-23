@@ -146,12 +146,7 @@ class PaymentProgressView {
 
     private void applyLoadTheming(ProgressParameters params) {
         loadLayout.setBackgroundResource(params.getLoadBackground());
-        int resId = params.getLoadProgressBarColor();
-
-        if (resId != 0) {
-            Drawable d = loadProgressBar.getIndeterminateDrawable();
-            d.setColorFilter(ContextCompat.getColor(activity, resId), PorterDuff.Mode.SRC_IN);
-        }
+        setColorFilter(loadProgressBar.getIndeterminateDrawable(), params.getLoadProgressBarColor());
     }
     
     private void applySendTheming(ProgressParameters params) {
@@ -160,16 +155,14 @@ class PaymentProgressView {
         PaymentUtils.setTextAppearance(sendInfo, params.getInfoStyle());
 
         LayerDrawable layer = (LayerDrawable)sendProgressBar.getProgressDrawable();
-        int resId = params.getSendProgressBarColorBack();
+        setColorFilter(layer.getDrawable(0), params.getSendProgressBarColorBack());
+        setColorFilter(layer.getDrawable(1), params.getSendProgressBarColorFront());
+    }
 
-        if (resId != 0) {
-            Drawable d = layer.getDrawable(0);
-            d.setColorFilter(ContextCompat.getColor(activity, resId), PorterDuff.Mode.SRC_IN);
+    private void setColorFilter(Drawable drawable, int resId) {
+        if (drawable == null || resId == 0) {
+            return;
         }
-        resId = params.getSendProgressBarColorFront();
-        if (resId != 0) {
-            Drawable d = layer.getDrawable(1);
-            d.setColorFilter(ContextCompat.getColor(activity, resId), PorterDuff.Mode.SRC_IN);
-        }
+        drawable.setColorFilter(ContextCompat.getColor(activity, resId), PorterDuff.Mode.SRC_IN);
     }
 }
