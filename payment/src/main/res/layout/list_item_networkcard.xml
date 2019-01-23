@@ -60,7 +60,7 @@
                 android:paddingTop="@dimen/pmborder_medium"
                 android:paddingEnd="@dimen/pmborder_small"
                 android:paddingBottom="@dimen/pmborder_xxsmall"
-                android:visibility="gone"></LinearLayout>
+                android:visibility="gone"/>
         </RelativeLayout>
 
     </android.support.design.card.MaterialCardView>

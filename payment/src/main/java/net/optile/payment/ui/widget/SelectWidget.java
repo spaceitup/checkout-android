@@ -13,6 +13,7 @@ package net.optile.payment.ui.widget;
 
 import java.util.List;
 
+import android.support.annotation.NonNull;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -104,6 +105,7 @@ public final class SelectWidget extends FormWidget {
             this.value = value;
         }
 
+        @NonNull
         public String toString() {
             return label;
         }
