@@ -58,8 +58,8 @@ abstract class PaymentCardViewHolder extends RecyclerView.ViewHolder {
     final static float ALPHA_SELECTED = 1f;
     final static float ALPHA_DESELECTED = 0.4f;
     final static int ANIM_DURATION = 200;
-    final static int ROW_SIZE_LANDSCAPE = 3;
-    final static int ROW_SIZE_PORTRAIT = 2;
+    final static int COLUMN_SIZE_LANDSCAPE = 3;
+    final static int COLUMN_SIZE_PORTRAIT = 2;
     
     final ViewGroup formLayout;
     final ListAdapter adapter;
@@ -170,22 +170,21 @@ abstract class PaymentCardViewHolder extends RecyclerView.ViewHolder {
         TableRow row = null;
         Resources res = context.getResources();
         int border = res.getDimensionPixelSize(R.dimen.pmborder_xsmall);
-        int rowSize = PaymentUtils.isLandscape(context) ? ROW_SIZE_LANDSCAPE : ROW_SIZE_PORTRAIT;
-        int rowIndex = 0;
-        int count = 0;
+        int columnsPerRow = PaymentUtils.isLandscape(context) ? COLUMN_SIZE_LANDSCAPE : COLUMN_SIZE_PORTRAIT;
+        int columnIndex = 0;
+        int rowCount = 0;
         
         for (String name : names) {
 
-            if (rowIndex++ == 0) {
+            if (columnIndex % columnsPerRow == 0) {
+                rowCount++;
+                columnIndex = 0;
                 row = new TableRow(context);
                 logoLayout.addView(row);
             }
-            int marginTop = count++ >= rowSize ? border : 0;
-            int marginRight = rowIndex < rowSize ? border : 0;
+            int marginTop = rowCount > 1 ? border : 0;
+            int marginRight = ++columnIndex < columnsPerRow ? border : 0;
 
-            if (rowIndex == rowSize) {
-                rowIndex = 0;
-            }
             ImageView view = (ImageView) inflater.inflate(R.layout.list_item_logo, row, false);
             LayoutParams params = (LayoutParams) view.getLayoutParams();
 

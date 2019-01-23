@@ -105,15 +105,8 @@ abstract class InputLayoutWidget extends FormWidget {
 
     void setReducedView() {
         boolean landscape = PaymentUtils.isLandscape(rootView.getContext());
-        LinearLayout.LayoutParams params = (LinearLayout.LayoutParams) textLayout.getLayoutParams();
-        params.weight = landscape ? REDUCED_LANDSCAPE_TEXT : REDUCED_PORTRAIT_TEXT;
-        params.width = 0;
-        textLayout.setLayoutParams(params);
-
-        params = (LinearLayout.LayoutParams) hintLayout.getLayoutParams();
-        params.weight = landscape ? REDUCED_LANDSCAPE_HINT : REDUCED_PORTRAIT_HINT;
-        params.width = 0;
-        hintLayout.setLayoutParams(params);
+        setReducedWidth(textLayout, landscape ? REDUCED_LANDSCAPE_TEXT : REDUCED_PORTRAIT_TEXT);
+        setReducedWidth(hintLayout, landscape ? REDUCED_LANDSCAPE_HINT : REDUCED_PORTRAIT_HINT); 
     }
 
     void setMaxLength(int length) {
@@ -148,5 +141,12 @@ abstract class InputLayoutWidget extends FormWidget {
         setState(state);
         textLayout.setErrorEnabled(errorEnabled);
         textLayout.setError(message);
+    }
+
+    private void setReducedWidth(View view, float weight) {
+        LinearLayout.LayoutParams params = (LinearLayout.LayoutParams) view.getLayoutParams();
+        params.weight = weight;
+        params.width = 0;
+        view.setLayoutParams(params);
     }
 }
