@@ -58,8 +58,8 @@ abstract class PaymentCardViewHolder extends RecyclerView.ViewHolder {
     final static float ALPHA_SELECTED = 1f;
     final static float ALPHA_DESELECTED = 0.4f;
     final static int ANIM_DURATION = 200;
-    final static int LOGO_SIZE_LANDSCAPE = 3;
-    final static int LOGO_SIZE_PORTRAIT = 2;
+    final static int ROW_SIZE_LANDSCAPE = 3;
+    final static int ROW_SIZE_PORTRAIT = 2;
     
     final ViewGroup formLayout;
     final ListAdapter adapter;
@@ -170,7 +170,7 @@ abstract class PaymentCardViewHolder extends RecyclerView.ViewHolder {
         TableRow row = null;
         Resources res = context.getResources();
         int border = res.getDimensionPixelSize(R.dimen.pmborder_xsmall);
-        int rowSize = getLogoRowSize(res);
+        int rowSize = PaymentUtils.isLandscape(context) ? ROW_SIZE_LANDSCAPE : ROW_SIZE_PORTRAIT;
         int rowIndex = 0;
         int count = 0;
         
@@ -308,14 +308,5 @@ abstract class PaymentCardViewHolder extends RecyclerView.ViewHolder {
         for (FormWidget widget : widgets.values()) {
             widget.clearInputErrors();
         }
-    }
-
-    private int getLogoRowSize(Resources res) {
-        int orientation = res.getConfiguration().orientation;
-
-        if (orientation == Configuration.ORIENTATION_LANDSCAPE) {
-            return LOGO_SIZE_LANDSCAPE;
-        }
-        return LOGO_SIZE_PORTRAIT;
     }
 }

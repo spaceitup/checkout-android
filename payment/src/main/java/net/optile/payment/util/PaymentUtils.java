@@ -17,6 +17,8 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.List;
 
+import android.content.Context;
+import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.support.v4.widget.TextViewCompat;
 import android.widget.ImageView;
@@ -28,8 +30,6 @@ import net.optile.payment.model.InputElement;
  * The PaymentUtils class containing helper methods
  */
 public final class PaymentUtils {
-
-    private final static String TAG = "payment_PaymentUtils";
 
     /**
      * Check if the Boolean object is true, the Boolean object may be null.
@@ -108,6 +108,17 @@ public final class PaymentUtils {
         }
     }
 
+    /** 
+     * Check if the device is in landscape mode.
+     * 
+     * @param context containing the configuration for determining the mode. 
+     * @return true when in landscape mode, false otherwise
+     */
+    public static boolean isLandscape(Context context) {
+        int orientation = context.getResources().getConfiguration().orientation;
+        return orientation == Configuration.ORIENTATION_LANDSCAPE;
+    }
+    
     /**
      * Read the contents of the raw resource
      *
