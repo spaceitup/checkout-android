@@ -60,14 +60,14 @@ class PaymentProgressView {
         // setup the ProgressBar for loading
         loadLayout = activity.findViewById(R.id.layout_load);
         loadProgressBar = loadLayout.findViewById(R.id.progressbar_load);
-        themeLoadProgress(params);
+        applyLoadTheming(params);
         
         // setup the ProgressBar for sending
         sendLayout = activity.findViewById(R.id.layout_send);
         sendHeader = sendLayout.findViewById(R.id.text_sendheader);
         sendInfo = sendLayout.findViewById(R.id.text_sendinfo);
         sendProgressBar = sendLayout.findViewById(R.id.progressbar_send);
-        themeSendProgress(params);
+        applySendTheming(params);
 
         sendHandler = new Handler(Looper.getMainLooper());        
     }
@@ -144,7 +144,7 @@ class PaymentProgressView {
             }, SEND_TIMEOUT);
     }
 
-    private void themeLoadProgress(ProgressParameters params) {
+    private void applyLoadTheming(ProgressParameters params) {
         loadLayout.setBackgroundResource(params.getLoadBackground());
         int resId = params.getLoadProgressBarColor();
 
@@ -154,7 +154,7 @@ class PaymentProgressView {
         }
     }
     
-    private void themeSendProgress(ProgressParameters params) {
+    private void applySendTheming(ProgressParameters params) {
         sendLayout.setBackgroundResource(params.getSendBackground());
         PaymentUtils.setTextAppearance(sendHeader, params.getHeaderStyle());
         PaymentUtils.setTextAppearance(sendInfo, params.getInfoStyle());
