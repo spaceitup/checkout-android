@@ -22,6 +22,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import net.optile.payment.R;
 import net.optile.payment.core.PaymentInputType;
+import net.optile.payment.util.PaymentUtils;
 import net.optile.payment.ui.theme.PaymentTheme;
 
 /**
@@ -29,9 +30,11 @@ import net.optile.payment.ui.theme.PaymentTheme;
  */
 abstract class InputLayoutWidget extends FormWidget {
 
-    final static float WEIGHT_REDUCED_TEXT = 0.65f;
-    final static float WEIGHT_REDUCED_HINT = 0.35f;
-
+    final static float REDUCED_PORTRAIT_TEXT = 0.65f;
+    final static float REDUCED_PORTRAIT_HINT = 0.35f;
+    final static float REDUCED_LANDSCAPE_TEXT = 0.5f;
+    final static float REDUCED_LANDSCAPE_HINT = 0.5f;
+    
     final TextInputEditText textInput;
     final TextInputLayout textLayout;
 
@@ -101,15 +104,9 @@ abstract class InputLayoutWidget extends FormWidget {
     }
 
     void setReducedView() {
-        LinearLayout.LayoutParams params = (LinearLayout.LayoutParams) textLayout.getLayoutParams();
-        params.weight = WEIGHT_REDUCED_TEXT;
-        params.width = 0;
-        textLayout.setLayoutParams(params);
-
-        params = (LinearLayout.LayoutParams) hintLayout.getLayoutParams();
-        params.weight = WEIGHT_REDUCED_HINT;
-        params.width = 0;
-        hintLayout.setLayoutParams(params);
+        boolean landscape = PaymentUtils.isLandscape(rootView.getContext());
+        setReducedWidth(textLayout, landscape ? REDUCED_LANDSCAPE_TEXT : REDUCED_PORTRAIT_TEXT);
+        setReducedWidth(hintLayout, landscape ? REDUCED_LANDSCAPE_HINT : REDUCED_PORTRAIT_HINT); 
     }
 
     void setMaxLength(int length) {
@@ -144,5 +141,12 @@ abstract class InputLayoutWidget extends FormWidget {
         setState(state);
         textLayout.setErrorEnabled(errorEnabled);
         textLayout.setError(message);
+    }
+
+    private void setReducedWidth(View view, float weight) {
+        LinearLayout.LayoutParams params = (LinearLayout.LayoutParams) view.getLayoutParams();
+        params.weight = weight;
+        params.width = 0;
+        view.setLayoutParams(params);
     }
 }

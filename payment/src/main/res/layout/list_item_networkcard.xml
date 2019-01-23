@@ -28,10 +28,8 @@
                 android:gravity="center_vertical"
                 android:orientation="horizontal">
 
-                <TableLayout
-                    android:id="@+id/tablelayout_logo"
-                    android:layout_width="@dimen/pmcard_logowidth"
-                    android:layout_height="wrap_content"/>
+                <include
+                    layout="@layout/view_logos"/>        
 
                 <TextSwitcher
                     android:id="@+id/textswitcher_title"
