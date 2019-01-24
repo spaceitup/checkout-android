@@ -42,7 +42,7 @@ final class CheckoutPresenter {
 
         switch (result.resultCode) {
             case PaymentUI.RESULT_CODE_OK:
-                // Payment Charge request has been completed, result.paymentResult contains an Interaction and optional OperationResult.
+                // Payment Operation request has been completed, result.paymentResult contains an Interaction and optional OperationResult.
                 view.showPaymentSuccess();
                 Log.i(TAG, "OK[" + result.paymentResult + "]");
                 break;

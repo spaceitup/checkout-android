@@ -275,8 +275,7 @@ public final class PaymentPageActivity extends AppCompatActivity implements Paym
     }
 
     public void onActionClicked(PaymentCard item, Map<String, FormWidget> widgets) {
-        paymentList.hideKeyboard();
-        presenter.performOperation(item, widgets);
+        presenter.onActionClicked(item, widgets);
     }
 
     public ValidationResult validate(PaymentCard card, String type, String value1, String value2) {

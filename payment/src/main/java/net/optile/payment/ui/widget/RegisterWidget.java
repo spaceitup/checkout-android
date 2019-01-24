@@ -13,7 +13,7 @@ package net.optile.payment.ui.widget;
 
 import android.view.View;
 import net.optile.payment.core.PaymentException;
-import net.optile.payment.form.Charge;
+import net.optile.payment.form.Operation;
 import net.optile.payment.model.RegistrationType;
 import net.optile.payment.ui.theme.PaymentTheme;
 
@@ -35,7 +35,7 @@ public final class RegisterWidget extends CheckBoxWidget {
         super(name, rootView, theme);
     }
 
-    public void putValue(Charge charge) throws PaymentException {
+    public void putValue(Operation operation) throws PaymentException {
 
         if (!RegistrationType.isValid(type)) {
             return;
@@ -43,11 +43,11 @@ public final class RegisterWidget extends CheckBoxWidget {
         switch (type) {
             case RegistrationType.FORCED:
             case RegistrationType.FORCED_DISPLAYED:
-                charge.putValue(name, true);
+                operation.putValue(name, true);
                 break;
             case RegistrationType.OPTIONAL:
             case RegistrationType.OPTIONAL_PRESELECTED:
-                charge.putValue(name, isChecked());
+                operation.putValue(name, isChecked());
         }
     }
 

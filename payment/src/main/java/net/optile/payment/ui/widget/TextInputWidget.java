@@ -20,7 +20,7 @@ import android.view.View;
 import android.view.inputmethod.EditorInfo;
 import android.widget.TextView;
 import net.optile.payment.core.PaymentException;
-import net.optile.payment.form.Charge;
+import net.optile.payment.form.Operation;
 import net.optile.payment.model.InputElementType;
 import net.optile.payment.ui.theme.PaymentTheme;
 import net.optile.payment.validation.ValidationResult;
@@ -102,11 +102,11 @@ public final class TextInputWidget extends InputLayoutWidget {
         return validated;
     }
 
-    public void putValue(Charge charge) throws PaymentException {
+    public void putValue(Operation operation) throws PaymentException {
         String val = getNormalizedValue();
 
         if (!TextUtils.isEmpty(val)) {
-            charge.putValue(name, val);
+            operation.putValue(name, val);
         }
     }
 
