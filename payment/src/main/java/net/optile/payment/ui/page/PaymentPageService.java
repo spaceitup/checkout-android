@@ -150,11 +150,10 @@ final class PaymentPageService {
         if (operationTask != null) {
             throw new IllegalStateException("Already posting operation, stop first");
         }
-        Log.i(TAG, "postOperation: " + url.toString());
         operationTask = WorkerTask.fromCallable(new Callable<OperationResult>() {
             @Override
             public OperationResult call() throws PaymentException {
-                return asyncPostOperationRequest(url, operation);
+                return asyncPostOperation(url, operation);
             }
         });
         operationTask.subscribe(new WorkerSubscriber<OperationResult>() {
@@ -209,13 +208,13 @@ final class PaymentPageService {
     }
 
     /**
-     * Post a OperationRequest to the Payment API
+     * Post an Operation to the Payment API
      *
      * @param url the url of the operation request
      * @param operation the object containing the operation details
      * @return operation result containing information about the operation request
      */
-    private OperationResult asyncPostOperationRequest(URL url, Operation operation) throws PaymentException {
+    private OperationResult asyncPostOperation(URL url, Operation operation) throws PaymentException {
         return operationConnection.postOperation(url, operation);
     }
 
