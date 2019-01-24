@@ -161,6 +161,10 @@ abstract class PaymentCardViewHolder extends RecyclerView.ViewHolder {
         formLayout.addView(widget.getRootView());
     }
 
+    void addLogoView(View parent, String name, PaymentTheme theme) {
+        addLogoViews(parent, Collections.singletonList(name), theme);
+    }
+    
     void addLogoViews(View parent, List<String> names, PaymentTheme theme) {
         int logoBackground = theme.getPageParameters().getPaymentLogoBackground();
         LayoutInflater inflater = LayoutInflater.from(parent.getContext());
