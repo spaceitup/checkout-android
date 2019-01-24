@@ -21,7 +21,7 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import net.optile.payment.R;
 import net.optile.payment.core.PaymentException;
-import net.optile.payment.form.Charge;
+import net.optile.payment.form.Operation;
 import net.optile.payment.model.SelectOption;
 import net.optile.payment.ui.theme.PaymentTheme;
 import net.optile.payment.ui.theme.WidgetParameters;
@@ -68,11 +68,11 @@ public final class SelectWidget extends FormWidget {
         this.label.setText(label);
     }
 
-    public void putValue(Charge charge) throws PaymentException {
+    public void putValue(Operation operation) throws PaymentException {
         SpinnerItem selected = (SpinnerItem) spinner.getSelectedItem();
 
         if (selected != null) {
-            charge.putValue(name, selected.value);
+            operation.putValue(name, selected.value);
         }
     }
 

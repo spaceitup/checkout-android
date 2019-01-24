@@ -21,13 +21,13 @@ import org.junit.runner.RunWith;
 import org.robolectric.RobolectricTestRunner;
 
 import net.optile.payment.core.PaymentException;
-import net.optile.payment.form.Charge;
+import net.optile.payment.form.Operation;
 
 /**
- * The type Charge connection test.
+ * The type Operation connection test.
  */
 @RunWith(RobolectricTestRunner.class)
-public class ChargeConnectionTest {
+public class OperationConnectionTest {
 
     /**
      * Create charge.
@@ -36,9 +36,9 @@ public class ChargeConnectionTest {
      */
     @Test(expected = IllegalArgumentException.class)
     public void createCharge_invalidURL_exception() throws PaymentException {
-        ChargeConnection conn = new ChargeConnection();
-        Charge charge = new Charge();
-        conn.createCharge(null, charge);
+        OperationConnection conn = new OperationConnection();
+        Operation operation = new Operation();
+        conn.createCharge(null, operation);
     }
 
     /**
@@ -48,7 +48,7 @@ public class ChargeConnectionTest {
      */
     @Test(expected = IllegalArgumentException.class)
     public void createCharge_invalidData_exception() throws PaymentException {
-        ChargeConnection conn = new ChargeConnection();
+        OperationConnection conn = new OperationConnection();
         URL url = null;
         try {
             url = new URL("http://localhost");

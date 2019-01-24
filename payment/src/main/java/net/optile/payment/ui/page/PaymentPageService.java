@@ -28,13 +28,14 @@ import net.optile.payment.core.PaymentException;
 import net.optile.payment.core.WorkerSubscriber;
 import net.optile.payment.core.WorkerTask;
 import net.optile.payment.core.Workers;
-import net.optile.payment.form.Charge;
+import net.optile.payment.form.Operation;
 import net.optile.payment.model.AccountRegistration;
 import net.optile.payment.model.ApplicableNetwork;
 import net.optile.payment.model.ListResult;
 import net.optile.payment.model.Networks;
 import net.optile.payment.model.OperationResult;
-import net.optile.payment.network.ChargeConnection;
+import net.optile.payment.model.PresetAccount;
+import net.optile.payment.network.OperationConnection;
 import net.optile.payment.network.ListConnection;
 import net.optile.payment.resource.PaymentGroup;
 import net.optile.payment.resource.ResourceLoader;
@@ -54,9 +55,9 @@ final class PaymentPageService {
     private final static String TAG = "pay_Service";
     private final PaymentPagePresenter presenter;
     private final ListConnection listConnection;
-    private final ChargeConnection chargeConnection;
+    private final OperationConnection operationConnection;
 
-    private WorkerTask<OperationResult> chargeTask;
+    private WorkerTask<OperationResult> operationTask;
     private WorkerTask<PaymentSession> loadTask;
     private WorkerTask<Validator> validatorTask;
 
@@ -66,7 +67,7 @@ final class PaymentPageService {
     PaymentPageService(PaymentPagePresenter presenter) {
         this.presenter = presenter;
         this.listConnection = new ListConnection();
-        this.chargeConnection = new ChargeConnection();
+        this.operationConnection = new OperationConnection();
     }
 
     void stop() {
@@ -75,9 +76,9 @@ final class PaymentPageService {
             loadTask.unsubscribe();
             loadTask = null;
         }
-        if (chargeTask != null) {
-            chargeTask.unsubscribe();
-            chargeTask = null;
+        if (operationTask != null) {
+            operationTask.unsubscribe();
+            operationTask = null;
         }
         if (validatorTask != null) {
             validatorTask.unsubscribe();
@@ -86,7 +87,7 @@ final class PaymentPageService {
     }
 
     boolean isActive() {
-        return validatorTask != null || loadTask != null || chargeTask != null;
+        return validatorTask != null || loadTask != null || operationTask != null;
     }
 
     void loadValidator() {
@@ -144,31 +145,32 @@ final class PaymentPageService {
         Workers.getInstance().forNetworkTasks().execute(loadTask);
     }
 
-    void postChargeRequest(final URL url, final Charge charge) {
-
-        if (chargeTask != null) {
-            throw new IllegalStateException("Already posting charge, stop first");
+    void postOperation(final URL url, final Operation operation) {
+        
+        if (operationTask != null) {
+            throw new IllegalStateException("Already posting operation, stop first");
         }
-        chargeTask = WorkerTask.fromCallable(new Callable<OperationResult>() {
+        Log.i(TAG, "postOperation: " + url.toString());
+        operationTask = WorkerTask.fromCallable(new Callable<OperationResult>() {
             @Override
             public OperationResult call() throws PaymentException {
-                return asyncPostChargeRequest(url, charge);
+                return asyncPostOperationRequest(url, operation);
             }
         });
-        chargeTask.subscribe(new WorkerSubscriber<OperationResult>() {
+        operationTask.subscribe(new WorkerSubscriber<OperationResult>() {
             @Override
             public void onSuccess(OperationResult result) {
-                chargeTask = null;
-                presenter.onChargeSuccess(result);
+                operationTask = null;
+                presenter.onOperationSuccess(result);
             }
 
             @Override
             public void onError(Throwable cause) {
-                chargeTask = null;
-                presenter.onChargeError(cause);
+                operationTask = null;
+                presenter.onOperationError(cause);
             }
         });
-        Workers.getInstance().forNetworkTasks().execute(chargeTask);
+        Workers.getInstance().forNetworkTasks().execute(operationTask);
     }
 
     /**
@@ -190,6 +192,12 @@ final class PaymentPageService {
      */
     private PaymentSession asyncLoadPaymentSession(String listUrl) throws PaymentException {
         ListResult listResult = listConnection.getListResult(listUrl);
+
+        PresetAccount account = listResult.getPresetAccount();
+        if (account != null) {
+            Log.i(TAG, "Contains preset account: " + account.getCode()); 
+        }
+
         Map<String, PaymentNetwork> networks = loadPaymentNetworks(listResult);
 
         List<AccountCard> accountCards = createAccountCards(listResult, networks);
@@ -201,14 +209,14 @@ final class PaymentPageService {
     }
 
     /**
-     * Post a ChargeRequest to the Payment API
+     * Post a OperationRequest to the Payment API
      *
-     * @param url the url of the charge request
-     * @param charge the object containing the charge details
-     * @return operation result containing information about the charge request
+     * @param url the url of the operation request
+     * @param operation the object containing the operation details
+     * @return operation result containing information about the operation request
      */
-    private OperationResult asyncPostChargeRequest(URL url, Charge charge) throws PaymentException {
-        return chargeConnection.createCharge(url, charge);
+    private OperationResult asyncPostOperationRequest(URL url, Operation operation) throws PaymentException {
+        return operationConnection.postOperation(url, operation);
     }
 
     private List<NetworkCard> createNetworkCards(Map<String, PaymentNetwork> networks) throws PaymentException {

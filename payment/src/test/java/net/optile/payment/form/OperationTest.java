@@ -26,7 +26,7 @@ import net.optile.payment.core.PaymentException;
 import net.optile.payment.core.PaymentInputType;
 
 @RunWith(RobolectricTestRunner.class)
-public class ChargeTest {
+public class OperationTest {
 
     @BeforeClass
     public static void beforeAll() {
@@ -40,24 +40,24 @@ public class ChargeTest {
 
     @Test(expected = IllegalArgumentException.class)
     public void putValue_invalidName_exception() throws PaymentException {
-        Charge charge = new Charge();
-        charge.putValue(null, "Foo");
+        Operation operation = new Operation();
+        operation.putValue(null, "Foo");
     }
 
     @Test
     public void putValue_success() throws PaymentException, JSONException {
-        Charge charge = new Charge();
-        charge.putValue(PaymentInputType.ACCOUNT_NUMBER, "accountnumber123");
-        charge.putValue(PaymentInputType.HOLDER_NAME, "John Doe");
-        charge.putValue(PaymentInputType.EXPIRY_MONTH, 12);
-        charge.putValue(PaymentInputType.EXPIRY_YEAR, 2019);
-        charge.putValue(PaymentInputType.VERIFICATION_CODE, "123");
-        charge.putValue(PaymentInputType.BANK_CODE, "bankcode123");
-        charge.putValue(PaymentInputType.IBAN, "iban123");
-        charge.putValue(PaymentInputType.BIC, "bic123");
-        charge.putValue(PaymentInputType.ALLOW_RECURRENCE, "true");
-        charge.putValue(PaymentInputType.AUTO_REGISTRATION, "true");
-        expect(charge.toJson()).toMatchSnapshot();
+        Operation operation = new Operation();
+        operation.putValue(PaymentInputType.ACCOUNT_NUMBER, "accountnumber123");
+        operation.putValue(PaymentInputType.HOLDER_NAME, "John Doe");
+        operation.putValue(PaymentInputType.EXPIRY_MONTH, 12);
+        operation.putValue(PaymentInputType.EXPIRY_YEAR, 2019);
+        operation.putValue(PaymentInputType.VERIFICATION_CODE, "123");
+        operation.putValue(PaymentInputType.BANK_CODE, "bankcode123");
+        operation.putValue(PaymentInputType.IBAN, "iban123");
+        operation.putValue(PaymentInputType.BIC, "bic123");
+        operation.putValue(PaymentInputType.ALLOW_RECURRENCE, "true");
+        operation.putValue(PaymentInputType.AUTO_REGISTRATION, "true");
+        expect(operation.toJson()).toMatchSnapshot();
     }
 }
 
