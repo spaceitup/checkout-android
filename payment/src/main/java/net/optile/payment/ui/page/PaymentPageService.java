@@ -191,12 +191,6 @@ final class PaymentPageService {
      */
     private PaymentSession asyncLoadPaymentSession(String listUrl) throws PaymentException {
         ListResult listResult = listConnection.getListResult(listUrl);
-
-        PresetAccount account = listResult.getPresetAccount();
-        if (account != null) {
-            Log.i(TAG, "Contains preset account: " + account.getCode()); 
-        }
-
         Map<String, PaymentNetwork> networks = loadPaymentNetworks(listResult);
 
         List<AccountCard> accountCards = createAccountCards(listResult, networks);
