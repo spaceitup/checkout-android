@@ -38,7 +38,7 @@ public class Operation {
     }
 
     /**
-     * Put a value for a Operation request into this Operation object.
+     * Put a value into this Operation form.
      * Depending on the name of the value it will be added to the correct place in the Operation Json Object.
      *
      * @param name the name of the value
