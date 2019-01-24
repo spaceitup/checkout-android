@@ -25,7 +25,6 @@ import android.widget.Button;
 import net.optile.payment.ui.PaymentResult;
 import net.optile.payment.ui.PaymentUI;
 import net.optile.payment.ui.theme.PaymentTheme;
-import android.content.pm.ActivityInfo;
 
 /**
  * This is the main Activity of this Checkout example app.

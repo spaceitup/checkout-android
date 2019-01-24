@@ -5,14 +5,13 @@
               android:layout_height="wrap_content"
               android:gravity="center"
               android:orientation="horizontal"
-              android:paddingTop="@dimen/pmborder_small"
-              android:paddingBottom="@dimen/pmwidget_padding">
+              android:paddingTop="@dimen/pmborder_small">
 
     <ImageView
         android:id="@+id/image_icon"
         android:layout_width="@dimen/pmwidget_iconsize"
         android:layout_height="@dimen/pmwidget_iconsize"
-        android:layout_marginStart="@dimen/pmborder_small"
+        android:layout_marginStart="@dimen/pmborder_xsmall"
         android:layout_marginEnd="@dimen/pmborder_xxsmall"
         android:contentDescription="@string/pmpage_contentdescription"
         android:src="@drawable/ic_default"/>

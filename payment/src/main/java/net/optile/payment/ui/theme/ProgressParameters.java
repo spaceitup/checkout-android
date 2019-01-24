@@ -19,17 +19,19 @@ import net.optile.payment.R;
  */
 public final class ProgressParameters {
     private final int loadBackground;
-    private final int loadProgressBarTheme;
+    private final int loadProgressBarColor;
     private final int sendBackground;
-    private final int sendProgressBarTheme;
+    private final int sendProgressBarColorFront;
+    private final int sendProgressBarColorBack;    
     private final int headerStyle;
     private final int infoStyle;
 
     private ProgressParameters(Builder builder) {
         this.loadBackground = builder.loadBackground;
-        this.loadProgressBarTheme = builder.loadProgressBarTheme;
+        this.loadProgressBarColor = builder.loadProgressBarColor;
         this.sendBackground = builder.sendBackground;
-        this.sendProgressBarTheme = builder.sendProgressBarTheme;
+        this.sendProgressBarColorFront = builder.sendProgressBarColorFront;
+        this.sendProgressBarColorBack = builder.sendProgressBarColorBack;        
         this.headerStyle = builder.headerStyle;
         this.infoStyle = builder.infoStyle;
     }
@@ -41,9 +43,10 @@ public final class ProgressParameters {
     public static ProgressParameters createDefault() {
         return createBuilder().
             setLoadBackground(R.color.pmcolor_list).
-            setLoadProgressBarTheme(R.style.PaymentThemeProgressBarLoad).
+            setLoadProgressBarColor(R.color.pmcolor_primary).
             setSendBackground(R.color.pmcolor_list).
-            setSendProgressBarTheme(R.style.PaymentThemeProgressBarSend).
+            setSendProgressBarColorFront(R.color.pmcolor_primary).
+            setSendProgressBarColorBack(R.color.pmvalidation_unknown).            
             setHeaderStyle(R.style.PaymentText_XLarge_Bold).
             setInfoStyle(R.style.PaymentText_Medium).
             build();
@@ -53,18 +56,22 @@ public final class ProgressParameters {
         return loadBackground;
     }
 
-    public int getLoadProgressBarTheme() {
-        return loadProgressBarTheme;
+    public int getLoadProgressBarColor() {
+        return loadProgressBarColor;
     }
 
     public int getSendBackground() {
         return sendBackground;
     }
 
-    public int getSendProgressBarTheme() {
-        return sendProgressBarTheme;
+    public int getSendProgressBarColorFront() {
+        return sendProgressBarColorFront;
     }
 
+    public int getSendProgressBarColorBack() {
+        return sendProgressBarColorBack;
+    }
+    
     public int getHeaderStyle() {
         return headerStyle;
     }
@@ -75,9 +82,10 @@ public final class ProgressParameters {
 
     public final static class Builder {
         int loadBackground;
-        int loadProgressBarTheme;
+        int loadProgressBarColor;
         int sendBackground;
-        int sendProgressBarTheme;
+        int sendProgressBarColorFront;
+        int sendProgressBarColorBack;
         int headerStyle;
         int infoStyle;
 
@@ -89,8 +97,8 @@ public final class ProgressParameters {
             return this;
         }
 
-        public Builder setLoadProgressBarTheme(int loadProgressBarTheme) {
-            this.loadProgressBarTheme = loadProgressBarTheme;
+        public Builder setLoadProgressBarColor(int loadProgressBarColor) {
+            this.loadProgressBarColor = loadProgressBarColor;
             return this;
         }
 
@@ -99,11 +107,16 @@ public final class ProgressParameters {
             return this;
         }
 
-        public Builder setSendProgressBarTheme(int sendProgressBarTheme) {
-            this.sendProgressBarTheme = sendProgressBarTheme;
+        public Builder setSendProgressBarColorFront(int sendProgressBarColorFront) {
+            this.sendProgressBarColorFront = sendProgressBarColorFront;
             return this;
         }
 
+        public Builder setSendProgressBarColorBack(int sendProgressBarColorBack) {
+            this.sendProgressBarColorBack = sendProgressBarColorBack;
+            return this;
+        }
+        
         public Builder setHeaderStyle(int headerStyle) {
             this.headerStyle = headerStyle;
             return this;

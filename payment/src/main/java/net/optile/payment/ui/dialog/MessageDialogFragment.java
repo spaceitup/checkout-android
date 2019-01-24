@@ -88,13 +88,12 @@ public final class MessageDialogFragment extends DialogFragment {
      */
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
-        Dialog dialog = new Dialog(getActivity(), getTheme()) {
+        return new Dialog(getActivity(), getTheme()) {
             @Override
             public void onBackPressed() {
                 handleBackPressed();
             }
         };
-        return dialog;
     }
 
     /**

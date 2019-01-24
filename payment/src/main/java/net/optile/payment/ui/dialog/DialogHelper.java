@@ -39,7 +39,7 @@ public class DialogHelper {
         return dialog;
     }
 
-    public static int getHintImageResId(PaymentCard card, String type) {
+    private static int getHintImageResId(PaymentCard card, String type) {
 
         if (!PaymentInputType.VERIFICATION_CODE.equals(type)) {
             return 0;
