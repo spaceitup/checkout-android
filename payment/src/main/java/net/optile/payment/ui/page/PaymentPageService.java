@@ -235,7 +235,7 @@ final class PaymentPageService {
                 addNetworkCard(cards, code, network);
             }
         }
-        return new ArrayList<NetworkCard>(cards.values());
+        return new ArrayList<>(cards.values());
     }
 
     private void addNetworkCard(Map<String, NetworkCard> cards, String cardId, PaymentNetwork network) {
