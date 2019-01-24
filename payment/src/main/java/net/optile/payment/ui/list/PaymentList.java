@@ -153,6 +153,7 @@ public final class PaymentList {
         PaymentCardViewHolder holder = (PaymentCardViewHolder) recyclerView.findViewHolderForAdapterPosition(position);
 
         if (holder != null && item.hasPaymentCard()) {
+            hideKeyboard();
             activity.onActionClicked(item.getPaymentCard(), holder.widgets);
         }
     }

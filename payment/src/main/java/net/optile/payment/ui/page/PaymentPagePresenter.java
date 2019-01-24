@@ -20,13 +20,12 @@ import android.util.Log;
 import net.optile.payment.R;
 import net.optile.payment.core.PaymentError;
 import net.optile.payment.core.PaymentException;
-import net.optile.payment.form.Charge;
+import net.optile.payment.form.Operation;
 import net.optile.payment.model.ErrorInfo;
 import net.optile.payment.model.Interaction;
 import net.optile.payment.model.InteractionCode;
 import net.optile.payment.model.InteractionReason;
 import net.optile.payment.model.OperationResult;
-import net.optile.payment.model.OperationType;
 import net.optile.payment.ui.PaymentResult;
 import net.optile.payment.ui.PaymentUI;
 import net.optile.payment.ui.model.PaymentCard;
@@ -104,19 +103,21 @@ final class PaymentPagePresenter {
     }
 
     /**
-     * Perform the operation specified in the paymentSession for the selected PaymentCard and widgets
+     * Notify this presenter that the user has clicked the action button in the PaymentCard. 
+     * The presenter will validate if the operation is supported and then post it to the Payment API.
      *
      * @param card the PaymentCard containing the operation URL
      * @param widgets containing the user input data
      */
-    void performOperation(PaymentCard card, Map<String, FormWidget> widgets) {
+    void onActionClicked(PaymentCard card, Map<String, FormWidget> widgets) {
 
         if (service.isActive()) {
             return;
         }
         switch (session.getOperationType()) {
-            case OperationType.CHARGE:
-                performChargeOperation(card, widgets);
+            case Operation.CHARGE:
+            case Operation.PRESET:
+                postOperation(card, widgets);
                 break;
             default:
                 Log.w(TAG, "OperationType not supported");
@@ -187,12 +188,11 @@ final class PaymentPagePresenter {
     }
 
     /**
-     * Callback from the service that the charge request was successfull.
-     * REMIND: We should rename Charge to Operation.
+     * Callback from the service that the operation request was successfull.
      *
      * @param operation operation explaining the result of the charge request
      */
-    void onChargeSuccess(OperationResult operation) {
+    void onOperationSuccess(OperationResult operation) {
         PaymentResult result = new PaymentResult(operation);
 
         switch (operation.getInteraction().getCode()) {
@@ -200,14 +200,14 @@ final class PaymentPagePresenter {
                 closeSession(result);
                 break;
             default:
-                handleChargeInteractionError(result);
+                handleOperationInteractionError(result);
         }
     }
 
-    void onChargeError(Throwable cause) {
+    void onOperationError(Throwable cause) {
 
         if (cause instanceof PaymentException) {
-            handleChargePaymentError((PaymentException) cause);
+            handleOperationPaymentError((PaymentException) cause);
             return;
         }
         closeSessionWithError(R.string.pmpage_error_unknown, cause);
@@ -243,49 +243,50 @@ final class PaymentPagePresenter {
         }
     }
 
-    private void performChargeOperation(PaymentCard card, Map<String, FormWidget> widgets) {
+    private void postOperation(PaymentCard card, Map<String, FormWidget> widgets) {
         URL url = card.getOperationLink();
-        Charge charge = new Charge();
+        Operation operation = new Operation();
 
         try {
             boolean error = false;
             for (FormWidget widget : widgets.values()) {
 
                 if (widget.validate()) {
-                    widget.putValue(charge);
+                    widget.putValue(operation);
                 } else {
                     error = true;
                 }
             }
             if (!error) {
-                postChargeRequest(url, charge);
+                view.showProgress(true, PaymentProgressView.SEND);
+                service.postOperation(url, operation);
             }
         } catch (PaymentException e) {
             closeSessionWithError(R.string.pmpage_error_unknown, e);
         }
     }
-
+    
     private void reloadPaymentSession(PaymentResult result) {
         view.setPaymentResult(PaymentUI.RESULT_CODE_CANCELED, result);
         this.reloadInteraction = result.getInteraction();
         loadPaymentSession(this.listUrl);
     }
 
-    private void callbackChargeError(Throwable cause) {
+    private void callbackOperationError(Throwable cause) {
 
         if (cause instanceof PaymentException) {
-            handleChargePaymentError((PaymentException) cause);
+            handleOperationPaymentError((PaymentException) cause);
             return;
         }
         closeSessionWithError(R.string.pmpage_error_unknown, cause);
     }
 
-    private void handleChargePaymentError(PaymentException cause) {
+    private void handleOperationPaymentError(PaymentException cause) {
         PaymentError error = cause.error;
         ErrorInfo info = error.errorInfo;
 
         if (info != null) {
-            handleChargeInteractionError(new PaymentResult(info.getResultInfo(), info.getInteraction()));
+            handleOperationInteractionError(new PaymentResult(info.getResultInfo(), info.getInteraction()));
         } else {
             switch (error.errorType) {
                 case PaymentError.CONN_ERROR:
@@ -297,7 +298,7 @@ final class PaymentPagePresenter {
         }
     }
 
-    private void handleChargeInteractionError(PaymentResult result) {
+    private void handleOperationInteractionError(PaymentResult result) {
         Interaction interaction = result.getInteraction();
 
         switch (interaction.getCode()) {
@@ -310,14 +311,14 @@ final class PaymentPagePresenter {
                 continueSessionWithWarning(result);
                 break;
             case InteractionCode.ABORT:
-                handleChargeInteractionAbort(result);
+                handleOperationInteractionAbort(result);
                 break;
             default:
                 cancelSession(result);
         }
     }
 
-    private void handleChargeInteractionAbort(PaymentResult result) {
+    private void handleOperationInteractionAbort(PaymentResult result) {
         Interaction interaction = result.getInteraction();
 
         switch (interaction.getReason()) {
@@ -388,10 +389,5 @@ final class PaymentPagePresenter {
         this.session = null;
         view.clear();
         service.loadPaymentSession(listUrl);
-    }
-
-    private void postChargeRequest(final URL url, final Charge charge) {
-        view.showProgress(true, PaymentProgressView.SEND);
-        service.postChargeRequest(url, charge);
     }
 }

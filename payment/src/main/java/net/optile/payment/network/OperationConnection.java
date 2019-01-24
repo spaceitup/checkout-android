@@ -27,34 +27,34 @@ import org.json.JSONException;
 import com.google.gson.JsonParseException;
 
 import net.optile.payment.core.PaymentException;
-import net.optile.payment.form.Charge;
+import net.optile.payment.form.Operation;
 import net.optile.payment.model.OperationResult;
 
 /**
- * Class implementing the communication with the Charge payment API
+ * Class containing methods to send Operation requests to the Payment API.
  * <p>
  * All requests in this class are blocking calls and should be
  * executed in a separate thread to avoid blocking the main application thread.
  * These methods are not thread safe and must not be called by different threads
  * at the same time.
  */
-public final class ChargeConnection extends BaseConnection {
+public final class OperationConnection extends BaseConnection {
 
     /**
-     * Create a new charge through the Payment API
+     * Post an operation through the Payment API, i.e. a Preset or Charge operation.
      *
-     * @param url the url of the charge
-     * @param charge holding the charge request data
+     * @param url the url of the operation
+     * @param operation holding the request data
      * @return the OperationResult object received from the Payment API
      */
-    public OperationResult createCharge(final URL url, final Charge charge) throws PaymentException {
-        final String source = "ChargeConnection[createCharge]";
+    public OperationResult postOperation(final URL url, final Operation operation) throws PaymentException {
+        final String source = "OperationConnection[postOperation]";
 
         if (url == null) {
             throw new IllegalArgumentException(source + " - url cannot be null");
         }
-        if (charge == null) {
-            throw new IllegalArgumentException(source + " - charge cannot be null");
+        if (operation == null) {
+            throw new IllegalArgumentException(source + " - operation cannot be null");
         }
         HttpURLConnection conn = null;
 
@@ -63,13 +63,13 @@ public final class ChargeConnection extends BaseConnection {
             conn.setRequestProperty(HEADER_CONTENT_TYPE, VALUE_APP_JSON);
             conn.setRequestProperty(HEADER_ACCEPT, VALUE_APP_JSON);
 
-            writeToOutputStream(conn, charge.toJson());
+            writeToOutputStream(conn, operation.toJson());
             conn.connect();
             final int rc = conn.getResponseCode();
 
             switch (rc) {
                 case HttpURLConnection.HTTP_OK:
-                    return handleCreateChargeOk(readFromInputStream(conn));
+                    return handlePostOperationOk(readFromInputStream(conn));
                 default:
                     throw createPaymentException(source, API_ERROR, rc, conn);
             }
@@ -89,12 +89,12 @@ public final class ChargeConnection extends BaseConnection {
     }
 
     /**
-     * Handle the create charge OK state
+     * Handle the post operation OK state
      *
      * @param data the response data received from the API
      * @return the network response containing the ListResult
      */
-    private OperationResult handleCreateChargeOk(final String data) throws JsonParseException {
+    private OperationResult handlePostOperationOk(final String data) throws JsonParseException {
         return gson.fromJson(data, OperationResult.class);
     }
 }

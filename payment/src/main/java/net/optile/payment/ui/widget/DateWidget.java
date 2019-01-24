@@ -18,7 +18,7 @@ import android.text.TextUtils;
 import android.view.View;
 import net.optile.payment.R;
 import net.optile.payment.core.PaymentException;
-import net.optile.payment.form.Charge;
+import net.optile.payment.form.Operation;
 import net.optile.payment.model.InputElement;
 import net.optile.payment.model.SelectOption;
 import net.optile.payment.ui.dialog.DateDialogFragment;
@@ -89,11 +89,11 @@ public final class DateWidget extends InputLayoutWidget implements DateDialogFra
         return validated;
     }
 
-    public void putValue(Charge charge) throws PaymentException {
+    public void putValue(Operation operation) throws PaymentException {
 
         if (!(TextUtils.isEmpty(expiryMonth) || TextUtils.isEmpty(expiryYear))) {
-            charge.putValue(monthElement.getName(), expiryMonth);
-            charge.putValue(yearElement.getName(), expiryYear);
+            operation.putValue(monthElement.getName(), expiryMonth);
+            operation.putValue(yearElement.getName(), expiryYear);
         }
     }
 
