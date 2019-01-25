@@ -68,34 +68,8 @@ final class AccountCardViewHolder extends PaymentCardViewHolder {
         super.onBind(paymentCard);
         AccountCard card = (AccountCard) paymentCard;
         AccountMask mask = card.getMaskedAccount();
-        bindTitle(mask, card.getPaymentMethod());
-        bindSubTitle(mask);
+        bindMaskedTitle(title, mask, card.getPaymentMethod());
+        bindMaskedSubTitle(subTitle, mask);
         bindLogoView(card.getCode(), card.getLink("logo"), true);
-    }
-
-    private void bindTitle(AccountMask mask, String method) {
-        switch (method) {
-            case PaymentMethod.CREDIT_CARD:
-            case PaymentMethod.DEBIT_CARD:
-                title.setText(mask.getNumber());
-                break;
-            default:
-                title.setText(mask.getDisplayLabel());
-        }
-    }
-
-    private void bindSubTitle(AccountMask mask) {
-        int expiryMonth = PaymentUtils.toInt(mask.getExpiryMonth());
-        int expiryYear = PaymentUtils.toInt(mask.getExpiryYear());
-
-        if (expiryMonth > 0 && expiryYear > 0) {
-            String format = subTitle.getContext().getString(R.string.pmlist_date);
-            String monthLabel = String.format(Locale.getDefault(), "%02d", expiryMonth);
-            String yearLabel = Integer.toString(expiryYear);
-            subTitle.setText(String.format(format, monthLabel, yearLabel));
-            subTitle.setVisibility(View.VISIBLE);
-        } else {
-            subTitle.setVisibility(View.GONE);
-        }
     }
 }

@@ -18,6 +18,7 @@ import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Locale;
 
 import android.content.res.Resources;
 import android.animation.ObjectAnimator;
@@ -31,10 +32,13 @@ import android.widget.ImageView;
 import android.widget.LinearLayout.LayoutParams;
 import android.widget.TableLayout;
 import android.widget.TableRow;
+import android.widget.TextView;
 import net.optile.payment.R;
 import net.optile.payment.core.LanguageFile;
 import net.optile.payment.core.PaymentInputType;
 import net.optile.payment.model.InputElement;
+import net.optile.payment.model.PaymentMethod;
+import net.optile.payment.model.AccountMask;
 import net.optile.payment.ui.model.PaymentCard;
 import net.optile.payment.ui.theme.PaymentTheme;
 import net.optile.payment.ui.theme.WidgetParameters;
@@ -250,6 +254,33 @@ abstract class PaymentCardViewHolder extends RecyclerView.ViewHolder {
         }
     }
 
+    void bindMaskedTitle(TextView title, AccountMask mask, String method) {
+        switch (method) {
+            case PaymentMethod.CREDIT_CARD:
+            case PaymentMethod.DEBIT_CARD:
+                title.setText(mask.getNumber());
+                break;
+            default:
+                title.setText(mask.getDisplayLabel());
+        }
+    }
+
+    void bindMaskedSubTitle(TextView subTitle, AccountMask mask) {
+        int expiryMonth = PaymentUtils.toInt(mask.getExpiryMonth());
+        int expiryYear = PaymentUtils.toInt(mask.getExpiryYear());
+
+        if (expiryMonth > 0 && expiryYear > 0) {
+            String format = subTitle.getContext().getString(R.string.pmlist_date);
+            String monthLabel = String.format(Locale.getDefault(), "%02d", expiryMonth);
+            String yearLabel = Integer.toString(expiryYear);
+            subTitle.setText(String.format(format, monthLabel, yearLabel));
+            subTitle.setVisibility(View.VISIBLE);
+        } else {
+            subTitle.setVisibility(View.GONE);
+        }
+    }
+
+    
     void bindSelectWidget(SelectWidget widget, InputElement element, LanguageFile lang) {
         bindIconResource(widget);
         widget.setLabel(element.getLabel());

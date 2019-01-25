@@ -12,7 +12,6 @@
 package net.optile.payment.ui.list;
 
 import java.util.List;
-import android.util.Log;
 import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.v4.app.DialogFragment;

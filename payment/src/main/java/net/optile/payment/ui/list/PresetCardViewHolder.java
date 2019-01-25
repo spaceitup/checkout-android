@@ -35,7 +35,6 @@ import net.optile.payment.util.PaymentUtils;
  */
 final class PresetCardViewHolder extends PaymentCardViewHolder {
 
-    private static final String INFO_LABEL = "infoLabel";
     private final TextView title;
     private final TextView subTitle;
 
@@ -53,7 +52,6 @@ final class PresetCardViewHolder extends PaymentCardViewHolder {
         addLogoView(parent, presetCard.getCode(), theme);
         addButtonWidget(theme);
         addLabelWidget(theme);
-        setLastImeOptions();
     }
 
     static ViewHolder createInstance(ListAdapter adapter, PresetCard presetCard, ViewGroup parent) {
@@ -70,35 +68,10 @@ final class PresetCardViewHolder extends PaymentCardViewHolder {
         super.onBind(paymentCard);
         PresetCard card = (PresetCard) paymentCard;
         AccountMask mask = card.getMaskedAccount();
-        bindTitle(mask, card.getPaymentMethod());
-        bindSubTitle(mask);
+        bindMaskedTitle(title, mask, card.getPaymentMethod());
+        bindMaskedSubTitle(subTitle, mask);
         bindLogoView(card.getCode(), card.getLink("logo"), true);
         bindLabelWidget(adapter.getContext().getString(R.string.pmlist_preset_info));
     }
 
-    private void bindTitle(AccountMask mask, String method) {
-        switch (method) {
-            case PaymentMethod.CREDIT_CARD:
-            case PaymentMethod.DEBIT_CARD:
-                title.setText(mask.getNumber());
-                break;
-            default:
-                title.setText(mask.getDisplayLabel());
-        }
-    }
-
-    private void bindSubTitle(AccountMask mask) {
-        int expiryMonth = PaymentUtils.toInt(mask.getExpiryMonth());
-        int expiryYear = PaymentUtils.toInt(mask.getExpiryYear());
-
-        if (expiryMonth > 0 && expiryYear > 0) {
-            String format = subTitle.getContext().getString(R.string.pmlist_date);
-            String monthLabel = String.format(Locale.getDefault(), "%02d", expiryMonth);
-            String yearLabel = Integer.toString(expiryYear);
-            subTitle.setText(String.format(format, monthLabel, yearLabel));
-            subTitle.setVisibility(View.VISIBLE);
-        } else {
-            subTitle.setVisibility(View.GONE);
-        }
-    }
 }
