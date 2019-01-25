@@ -40,6 +40,7 @@ import net.optile.payment.ui.theme.PaymentTheme;
 import net.optile.payment.ui.theme.WidgetParameters;
 import net.optile.payment.ui.widget.ButtonWidget;
 import net.optile.payment.ui.widget.DateWidget;
+import net.optile.payment.ui.widget.LabelWidget;
 import net.optile.payment.ui.widget.FormWidget;
 import net.optile.payment.ui.widget.SelectWidget;
 import net.optile.payment.ui.widget.TextInputWidget;
@@ -54,6 +55,9 @@ import net.optile.payment.validation.ValidationResult;
  */
 abstract class PaymentCardViewHolder extends RecyclerView.ViewHolder {
 
+    final static String BUTTON_WIDGET = "buttonWidget";
+    final static String LABEL_WIDGET = "labelWidget";
+    
     final static float ALPHA_SELECTED = 1f;
     final static float ALPHA_DESELECTED = 0.4f;
     final static int ANIM_DURATION = 200;
@@ -123,10 +127,15 @@ abstract class PaymentCardViewHolder extends RecyclerView.ViewHolder {
     }
 
     void addButtonWidget(PaymentTheme theme) {
-        FormWidget widget = WidgetInflater.inflateButtonWidget(PaymentInputType.ACTION_BUTTON, formLayout, theme);
+        FormWidget widget = WidgetInflater.inflateButtonWidget(BUTTON_WIDGET, formLayout, theme);
         addWidget(widget);
     }
 
+    void addLabelWidget(PaymentTheme theme) {
+        FormWidget widget = WidgetInflater.inflateLabelWidget(LABEL_WIDGET, formLayout, theme);
+        addWidget(widget);
+    }
+    
     void addElementWidgets(List<InputElement> elements, PaymentTheme theme) {
         DateWidget dateWidget = null;
         boolean containsExpiryDate = PaymentUtils.containsExpiryDate(elements);
@@ -218,6 +227,14 @@ abstract class PaymentCardViewHolder extends RecyclerView.ViewHolder {
         bindButtonWidget(paymentCard);
     }
 
+    void bindLabelWidget(String label) {
+        LabelWidget widget = (LabelWidget) getFormWidget(LABEL_WIDGET);
+
+        if (widget != null) { 
+            widget.setLabel(label);
+        }
+    }
+    
     void bindElementWidgets(PaymentCard card) {
         FormWidget widget;
         LanguageFile lang = card.getLang();
@@ -272,8 +289,7 @@ abstract class PaymentCardViewHolder extends RecyclerView.ViewHolder {
     }
 
     void bindButtonWidget(PaymentCard card) {
-        String name = PaymentInputType.ACTION_BUTTON;
-        ButtonWidget widget = (ButtonWidget) getFormWidget(name);
+        ButtonWidget widget = (ButtonWidget) getFormWidget(BUTTON_WIDGET);
 
         if (widget == null) {
             return;

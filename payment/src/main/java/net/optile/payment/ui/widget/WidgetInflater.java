@@ -129,6 +129,19 @@ public final class WidgetInflater {
     }
 
     /**
+     * Inflate a LabelWidget with the proper theming
+     *
+     * @param name unique name of the widget
+     * @param parent the parent ViewGroup in which this SelectWidget will be placed
+     * @param theme used to style the LabelWidget
+     * @return inflated and themed LabelWidget
+     */
+    public static LabelWidget inflateLabelWidget(String name, ViewGroup parent, PaymentTheme theme) {
+        View view = inflate(parent, R.layout.widget_label);
+        return new LabelWidget(name, view, theme);
+    }
+    
+    /**
      * Inflate the layout given the parent ViewGroup
      *
      * @param parent ViewGroup in which this inflated view will be added

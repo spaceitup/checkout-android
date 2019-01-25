@@ -36,7 +36,8 @@ public final class WidgetParameters {
     private final int validationColorOk;
     private final int validationColorError;
     private final int hintDrawable;
-
+    private final int infoLabelStyle;
+    
     private WidgetParameters(Builder builder) {
         this.iconMapping = new HashMap<>(builder.iconMapping);
         this.textInputTheme = builder.textInputTheme;
@@ -51,6 +52,7 @@ public final class WidgetParameters {
         this.validationColorUnknown = builder.validationColorUnknown;
         this.validationColorError = builder.validationColorError;
         this.hintDrawable = builder.hintDrawable;
+        this.infoLabelStyle = builder.infoLabelStyle;
     }
 
     public static Builder createBuilder() {
@@ -72,6 +74,7 @@ public final class WidgetParameters {
             setValidationColorUnknown(R.color.pmvalidation_unknown).
             setValidationColorError(R.color.pmvalidation_error).
             setHintDrawable(R.drawable.ic_hint).
+            setInfoLabelStyle(R.style.PaymentText_Small).
             build();
     }
 
@@ -132,6 +135,10 @@ public final class WidgetParameters {
         return validationColorError;
     }
 
+    public int getInfoLabelStyle() {
+        return infoLabelStyle;
+    }
+    
     public final static class Builder {
         int textInputTheme;
         int buttonTheme;
@@ -146,7 +153,8 @@ public final class WidgetParameters {
         int validationColorOk;
         int validationColorError;
         int hintDrawable;
-
+        int infoLabelStyle;
+        
         Builder() {
             iconMapping = new HashMap<>();
         }
@@ -231,6 +239,11 @@ public final class WidgetParameters {
 
         public Builder setHintDrawable(int hintDrawable) {
             this.hintDrawable = hintDrawable;
+            return this;
+        }
+
+        public Builder setInfoLabelStyle(int infoLabelStyle) {
+            this.infoLabelStyle = infoLabelStyle;
             return this;
         }
 

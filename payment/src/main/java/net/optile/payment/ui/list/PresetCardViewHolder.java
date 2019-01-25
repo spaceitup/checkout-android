@@ -24,6 +24,7 @@ import net.optile.payment.R;
 import net.optile.payment.model.AccountMask;
 import net.optile.payment.model.PaymentMethod;
 import net.optile.payment.ui.model.AccountCard;
+import net.optile.payment.ui.model.PresetCard;
 import net.optile.payment.ui.model.PaymentCard;
 import net.optile.payment.ui.theme.PageParameters;
 import net.optile.payment.ui.theme.PaymentTheme;
@@ -34,10 +35,11 @@ import net.optile.payment.util.PaymentUtils;
  */
 final class PresetCardViewHolder extends PaymentCardViewHolder {
 
+    private static final String INFO_LABEL = "infoLabel";
     private final TextView title;
     private final TextView subTitle;
 
-    private PresetCardViewHolder(ListAdapter adapter, View parent, PresetCard accountCard) {
+    private PresetCardViewHolder(ListAdapter adapter, View parent, PresetCard presetCard) {
         super(adapter, parent);
 
         PaymentTheme theme = adapter.getPaymentTheme();
@@ -48,34 +50,30 @@ final class PresetCardViewHolder extends PaymentCardViewHolder {
         this.subTitle = parent.findViewById(R.id.text_subtitle);
         PaymentUtils.setTextAppearance(subTitle, params.getPresetCardSubtitleStyle());
 
-        addAccountLogo(parent, accountCard, theme);
-        addElementWidgets(accountCard.getInputElements(), theme);
+        addLogoView(parent, presetCard.getCode(), theme);
         addButtonWidget(theme);
+        addLabelWidget(theme);
         setLastImeOptions();
     }
 
-    static ViewHolder createInstance(ListAdapter adapter, PresetCard PresetCard, ViewGroup parent) {
+    static ViewHolder createInstance(ListAdapter adapter, PresetCard presetCard, ViewGroup parent) {
         LayoutInflater inflater = LayoutInflater.from(parent.getContext());
-        View view = inflater.inflate(R.layout.list_item_accountcard, parent, false);
-        return new PresetCardViewHolder(adapter, view, accountCard);
+        View view = inflater.inflate(R.layout.list_item_presetcard, parent, false);
+        return new PresetCardViewHolder(adapter, view, presetCard);
     }
 
     void onBind(PaymentCard paymentCard) {
 
-        if (!(paymentCard instanceof AccountCard)) {
-            throw new IllegalArgumentException("Expected AccountCard in onBind");
+        if (!(paymentCard instanceof PresetCard)) {
+            throw new IllegalArgumentException("Expected PresetCard in onBind");
         }
         super.onBind(paymentCard);
-        AccountCard card = (AccountCard) paymentCard;
+        PresetCard card = (PresetCard) paymentCard;
         AccountMask mask = card.getMaskedAccount();
         bindTitle(mask, card.getPaymentMethod());
         bindSubTitle(mask);
         bindLogoView(card.getCode(), card.getLink("logo"), true);
-    }
-
-    private void addPresetLogo(View parent, PresetCard card, PaymentTheme theme) {
-        List<String> names = Collections.singletonList(card.getCode());
-        addLogoViews(parent, names, theme);
+        bindLabelWidget(adapter.getContext().getString(R.string.pmlist_preset_info));
     }
 
     private void bindTitle(AccountMask mask, String method) {

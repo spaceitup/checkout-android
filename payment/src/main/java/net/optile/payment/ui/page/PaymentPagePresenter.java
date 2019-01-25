@@ -114,6 +114,10 @@ final class PaymentPagePresenter {
         if (service.isActive()) {
             return;
         }
+        if (session.presetCard == card) {
+            view.closePage();
+            return;
+        }
         switch (session.getOperationType()) {
             case Operation.CHARGE:
             case Operation.PRESET:

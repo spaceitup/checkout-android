@@ -48,7 +48,7 @@ final class AccountCardViewHolder extends PaymentCardViewHolder {
         this.subTitle = parent.findViewById(R.id.text_subtitle);
         PaymentUtils.setTextAppearance(subTitle, params.getAccountCardSubtitleStyle());
 
-        addAccountLogo(parent, accountCard, theme);
+        addLogoView(parent, accountCard.getCode(), theme);
         addElementWidgets(accountCard.getInputElements(), theme);
         addButtonWidget(theme);
         setLastImeOptions();
@@ -71,11 +71,6 @@ final class AccountCardViewHolder extends PaymentCardViewHolder {
         bindTitle(mask, card.getPaymentMethod());
         bindSubTitle(mask);
         bindLogoView(card.getCode(), card.getLink("logo"), true);
-    }
-
-    private void addAccountLogo(View parent, AccountCard card, PaymentTheme theme) {
-        List<String> names = Collections.singletonList(card.getCode());
-        addLogoViews(parent, names, theme);
     }
 
     private void bindTitle(AccountMask mask, String method) {
