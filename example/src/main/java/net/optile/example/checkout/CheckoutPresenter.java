@@ -67,7 +67,7 @@ final class CheckoutPresenter {
      * open the PaymentPage using the PaymentUI class.
      */
     void startPayment() {
-        String listUrl = "https://api.integration.oscato.com/pci/v1/5c4b09ebc9305e634f45e225l791slljf1gj2pkgb65qbq9guk"; // load the list url here
+        String listUrl = ""; // load the list url here
         view.openPaymentPage(listUrl);
     }
 }
