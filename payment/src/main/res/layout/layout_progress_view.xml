@@ -6,7 +6,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
-        android:gravity="center" >
+        android:gravity="center">
 
         <ProgressBar
             xmlns:android="http://schemas.android.com/apk/res/android"
@@ -21,7 +21,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
-        android:gravity="center" >
+        android:gravity="center">
 
         <LinearLayout
             android:layout_width="wrap_content"
@@ -37,7 +37,7 @@
                 android:layout_width="@dimen/pmprogressbar_sendsize"
                 android:layout_height="@dimen/pmprogressbar_sendsize"
                 android:progressDrawable="@drawable/progressbar_send"
-                android:layout_marginBottom="@dimen/pmborder_large" />
+                android:layout_marginBottom="@dimen/pmborder_large"/>
 
             <TextView
                 android:id="@+id/text_sendheader"
