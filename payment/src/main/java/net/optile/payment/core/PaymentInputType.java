@@ -32,7 +32,6 @@ public class PaymentInputType {
     public final static String BIC = "bic";
     public final static String ALLOW_RECURRENCE = "allowRecurrence";
     public final static String AUTO_REGISTRATION = "autoRegistration";
-    public final static String ACTION_BUTTON = "actionButton";
 
     /**
      * Check if the given type is a valid payment input type
@@ -55,7 +54,6 @@ public class PaymentInputType {
                 case BIC:
                 case ALLOW_RECURRENCE:
                 case AUTO_REGISTRATION:
-                case ACTION_BUTTON:
                     return true;
             }
         }
@@ -74,8 +72,7 @@ public class PaymentInputType {
         IBAN,
         BIC,
         ALLOW_RECURRENCE,
-        AUTO_REGISTRATION,
-        ACTION_BUTTON
+        AUTO_REGISTRATION
     })
     public @interface Definition { }
 }

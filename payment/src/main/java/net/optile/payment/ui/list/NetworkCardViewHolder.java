@@ -40,7 +40,6 @@ final class NetworkCardViewHolder extends PaymentCardViewHolder {
 
     private final TextSwitcher title;
 
-
     NetworkCardViewHolder(ListAdapter adapter, View parent, NetworkCard networkCard) {
         super(adapter, parent);
 

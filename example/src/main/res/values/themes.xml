@@ -7,7 +7,7 @@
 
     <style name="AppButton" parent="Widget.AppCompat.Button">
         <item name="android:textAllCaps">false</item>
-        <item name="android:textAppearance">@style/CustomText.Medium.Bold.Light</item>
+        <item name="android:textAppearance">@style/ButtonText</item>
     </style>
 
     <style name="CustomThemePaymentPage" parent="Theme.AppCompat.Light.DarkActionBar">

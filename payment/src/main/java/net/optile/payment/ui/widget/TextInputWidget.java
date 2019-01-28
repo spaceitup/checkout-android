@@ -34,7 +34,7 @@ public final class TextInputWidget extends InputLayoutWidget {
     private final static int MAXLENGTH_INTEGER = 4;
     private final static int MAXLENGTH_NUMERIC = 56;
     private final static int MAXLENGTH_DEFAULT = 256;
-    
+
     /**
      * Construct a new TextInputWidget
      *

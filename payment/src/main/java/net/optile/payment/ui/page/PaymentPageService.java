@@ -35,8 +35,8 @@ import net.optile.payment.model.ListResult;
 import net.optile.payment.model.Networks;
 import net.optile.payment.model.OperationResult;
 import net.optile.payment.model.PresetAccount;
-import net.optile.payment.network.OperationConnection;
 import net.optile.payment.network.ListConnection;
+import net.optile.payment.network.OperationConnection;
 import net.optile.payment.resource.PaymentGroup;
 import net.optile.payment.resource.ResourceLoader;
 import net.optile.payment.ui.PaymentUI;
@@ -44,6 +44,7 @@ import net.optile.payment.ui.model.AccountCard;
 import net.optile.payment.ui.model.NetworkCard;
 import net.optile.payment.ui.model.PaymentNetwork;
 import net.optile.payment.ui.model.PaymentSession;
+import net.optile.payment.ui.model.PresetCard;
 import net.optile.payment.validation.Validator;
 
 /**
@@ -146,7 +147,7 @@ final class PaymentPageService {
     }
 
     void postOperation(final URL url, final Operation operation) {
-        
+
         if (operationTask != null) {
             throw new IllegalStateException("Already posting operation, stop first");
         }
@@ -193,10 +194,11 @@ final class PaymentPageService {
         ListResult listResult = listConnection.getListResult(listUrl);
         Map<String, PaymentNetwork> networks = loadPaymentNetworks(listResult);
 
+        PresetCard presetCard = createPresetCard(listResult, networks);
         List<AccountCard> accountCards = createAccountCards(listResult, networks);
         List<NetworkCard> networkCards = createNetworkCards(networks);
 
-        PaymentSession session = new PaymentSession(listResult, accountCards, networkCards);
+        PaymentSession session = new PaymentSession(listResult, presetCard, accountCards, networkCards);
         session.setLang(loadPaymentPageLanguageFile(networks));
         return session;
     }
@@ -260,6 +262,21 @@ final class PaymentPageService {
             }
         }
         return cards;
+    }
+
+    private PresetCard createPresetCard(ListResult listResult, Map<String, PaymentNetwork> networks) {
+        PresetAccount account = listResult.getPresetAccount();
+
+        if (account == null) {
+            return null;
+        }
+        PaymentNetwork pn = networks.get(account.getCode());
+        if (pn == null) {
+            return null;
+        }
+        PresetCard card = new PresetCard(account, pn.network);
+        card.setLang(pn.getLang());
+        return card;
     }
 
     private Map<String, PaymentNetwork> loadPaymentNetworks(ListResult listResult) throws PaymentException {
