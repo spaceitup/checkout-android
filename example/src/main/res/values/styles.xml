@@ -17,6 +17,10 @@
         <item name="android:textSize">14sp</item>
     </style>
 
+    <style name="CustomText.Small.Light">
+        <item name="android:textColor">@color/custom_textlight</item>
+    </style>
+    
     <style name="CustomText.Small.Bold">
         <item name="android:fontFamily">@font/avenir_next_bold</item>
     </style>

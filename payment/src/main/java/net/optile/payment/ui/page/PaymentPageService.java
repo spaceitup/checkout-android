@@ -87,6 +87,10 @@ final class PaymentPageService {
         }
     }
 
+    boolean isPerformingOperation() {
+        return operationTask != null && operationTask.isSubscribed();
+    }
+    
     boolean isActive() {
         return validatorTask != null || loadTask != null || operationTask != null;
     }

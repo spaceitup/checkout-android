@@ -27,7 +27,7 @@ interface PaymentPageView {
     boolean isActive();
 
     /**
-     * Get the string resource given the resource id
+     * Get the String representation given the string resource id
      *
      * @return the string resource
      */
@@ -60,6 +60,13 @@ interface PaymentPageView {
      */
     void showMessage(String message);
 
+    /** 
+     * Show a snackbar message to the user
+     * 
+     * @param message The message to be shown
+     */
+    void showSnackbar(String message);
+    
     /**
      * Close the payment page
      */

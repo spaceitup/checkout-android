@@ -118,7 +118,6 @@ class PaymentProgressView {
     private void setSendVisible() {
         loadLayout.setVisibility(View.GONE);
         sendLayout.setVisibility(View.VISIBLE);
-        activity.setPageTitle(activity.getString(R.string.pmprogress_sendtitle));
         sendHeader.setText(activity.getString(R.string.pmprogress_sendheader));
         sendInfo.setText(activity.getString(R.string.pmprogress_sendinfo));
         startSendProgress();

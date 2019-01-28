@@ -63,6 +63,19 @@ final class PaymentPagePresenter {
         service.stop();
     }
 
+    /** 
+     * Let the Presenter handle the back press, i.e. if the presenter is currently performing an operation, the presenter may disable the back button press.
+     * 
+     * @return true when this presenter handles the back press, false otherwise 
+     */
+    boolean onBackPressed() {
+        if (service.isPerformingOperation()) {
+            view.showSnackbar(view.getStringRes(R.string.pmsnackbar_operation_interrupted));
+            return true;
+        }
+        return false;
+    }
+        
     /**
      * Load the PaymentSession from the Payment API. once loaded, populate the View with the newly loaded groups of payment methods.
      * If a previous session with the same listUrl is available then reuse the existing one.

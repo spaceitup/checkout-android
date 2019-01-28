@@ -13,6 +13,10 @@
         <item name="android:textSize">14sp</item>
     </style>
 
+    <style name="PaymentText.Small.Light">
+        <item name="android:textColor">@color/pmtext_light</item>
+    </style>
+    
     <style name="PaymentText.Small.Bold">
         <item name="android:fontFamily">@font/roboto_medium</item>
     </style>
