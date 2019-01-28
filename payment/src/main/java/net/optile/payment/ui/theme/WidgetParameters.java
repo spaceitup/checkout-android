@@ -37,7 +37,7 @@ public final class WidgetParameters {
     private final int validationColorError;
     private final int hintDrawable;
     private final int infoLabelStyle;
-    
+
     private WidgetParameters(Builder builder) {
         this.iconMapping = new HashMap<>(builder.iconMapping);
         this.textInputTheme = builder.textInputTheme;
@@ -138,7 +138,7 @@ public final class WidgetParameters {
     public int getInfoLabelStyle() {
         return infoLabelStyle;
     }
-    
+
     public final static class Builder {
         int textInputTheme;
         int buttonTheme;
@@ -154,7 +154,7 @@ public final class WidgetParameters {
         int validationColorError;
         int hintDrawable;
         int infoLabelStyle;
-        
+
         Builder() {
             iconMapping = new HashMap<>();
         }

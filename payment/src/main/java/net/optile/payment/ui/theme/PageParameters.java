@@ -76,7 +76,7 @@ public final class PageParameters {
     public int getPresetCardSubtitleStyle() {
         return presetCardSubtitleStyle;
     }
-    
+
     public int getAccountCardTitleStyle() {
         return accountCardTitleStyle;
     }
@@ -131,7 +131,7 @@ public final class PageParameters {
             this.presetCardSubtitleStyle = presetCardSubtitleStyle;
             return this;
         }
-        
+
         public Builder setAccountCardTitleStyle(int accountCardTitleStyle) {
             this.accountCardTitleStyle = accountCardTitleStyle;
             return this;

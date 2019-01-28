@@ -103,7 +103,7 @@ final class PaymentPagePresenter {
     }
 
     /**
-     * Notify this presenter that the user has clicked the action button in the PaymentCard. 
+     * Notify this presenter that the user has clicked the action button in the PaymentCard.
      * The presenter will validate if the operation is supported and then post it to the Payment API.
      *
      * @param card the PaymentCard containing the operation URL
@@ -269,7 +269,7 @@ final class PaymentPagePresenter {
             closeSessionWithError(R.string.pmpage_error_unknown, e);
         }
     }
-    
+
     private void reloadPaymentSession(PaymentResult result) {
         view.setPaymentResult(PaymentUI.RESULT_CODE_CANCELED, result);
         this.reloadInteraction = result.getInteraction();

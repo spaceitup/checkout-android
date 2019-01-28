@@ -140,7 +140,7 @@ public final class WidgetInflater {
         View view = inflate(parent, R.layout.widget_label);
         return new LabelWidget(name, view, theme);
     }
-    
+
     /**
      * Inflate the layout given the parent ViewGroup
      *

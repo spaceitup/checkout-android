@@ -22,7 +22,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
 import android.view.MenuItem;
 import android.widget.TextView;
-
 import net.optile.payment.R;
 import net.optile.payment.ui.PaymentResult;
 import net.optile.payment.ui.PaymentUI;
@@ -87,7 +86,7 @@ public final class PaymentPageActivity extends AppCompatActivity implements Paym
         initActionBar();
         initList(theme);
 
-        this.progress = new PaymentProgressView(this, theme);        
+        this.progress = new PaymentProgressView(this, theme);
         this.presenter = new PaymentPagePresenter(this);
     }
 
@@ -106,7 +105,7 @@ public final class PaymentPageActivity extends AppCompatActivity implements Paym
             setTheme(pageTheme);
         }
     }
-    
+
     private void initList(PaymentTheme theme) {
         TextView empty = findViewById(R.id.label_empty);
         PaymentUtils.setTextAppearance(empty, theme.getPageParameters().getEmptyListLabelStyle());
@@ -121,7 +120,7 @@ public final class PaymentPageActivity extends AppCompatActivity implements Paym
             actionBar.setDisplayShowHomeEnabled(true);
         }
     }
-        
+
     /**
      * {@inheritDoc}
      */
@@ -203,7 +202,7 @@ public final class PaymentPageActivity extends AppCompatActivity implements Paym
         if (!isActive()) {
             return;
         }
-        setPageTitle(getString(R.string.pmpage_title));                
+        setPageTitle(getString(R.string.pmpage_title));
         progress.setVisible(false);
         paymentList.showPaymentSession(session, cachedListIndex);
         this.cachedListIndex = -1;
@@ -222,7 +221,7 @@ public final class PaymentPageActivity extends AppCompatActivity implements Paym
             progress.setStyle(style);
             progress.setVisible(true);
         } else {
-            setPageTitle(getString(R.string.pmpage_title));                
+            setPageTitle(getString(R.string.pmpage_title));
             paymentList.setVisible(true);
             progress.setVisible(false);
         }

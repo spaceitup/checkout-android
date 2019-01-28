@@ -13,7 +13,7 @@ package net.optile.payment.ui.list;
 
 import java.util.ArrayList;
 import java.util.List;
-import android.util.Log;
+
 import android.content.Context;
 import android.os.IBinder;
 import android.support.v4.app.DialogFragment;
@@ -30,7 +30,6 @@ import net.optile.payment.core.LanguageFile;
 import net.optile.payment.ui.dialog.DialogHelper;
 import net.optile.payment.ui.model.AccountCard;
 import net.optile.payment.ui.model.NetworkCard;
-import net.optile.payment.ui.model.PresetCard;
 import net.optile.payment.ui.model.PaymentSession;
 import net.optile.payment.ui.page.PaymentPageActivity;
 import net.optile.payment.validation.ValidationResult;
@@ -95,7 +94,7 @@ public final class PaymentList {
         } else {
             int startIndex = session.presetCard != null ? 0 : selIndex;
             recyclerView.scrollToPosition(startIndex);
-        } 
+        }
         emptyMessage.setText(msg);
         adapter.notifyDataSetChanged();
         setVisible(true);
@@ -204,7 +203,7 @@ public final class PaymentList {
             this.selIndex = 1;
             index += 2;
         }
-        
+
         if (accountSize > 0) {
             items.add(new HeaderItem(nextViewType(), activity.getString(R.string.pmlist_account_header)));
             index++;

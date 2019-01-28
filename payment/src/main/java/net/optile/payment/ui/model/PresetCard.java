@@ -18,10 +18,9 @@ import java.util.Map;
 
 import net.optile.payment.core.LanguageFile;
 import net.optile.payment.model.AccountMask;
-import net.optile.payment.model.PresetAccount;
 import net.optile.payment.model.ApplicableNetwork;
 import net.optile.payment.model.InputElement;
-import net.optile.payment.util.PaymentUtils;
+import net.optile.payment.model.PresetAccount;
 
 /**
  * Class for holding the data of a PresetCard in the list

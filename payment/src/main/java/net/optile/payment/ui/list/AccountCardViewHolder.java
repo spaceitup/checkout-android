@@ -11,10 +11,6 @@
 
 package net.optile.payment.ui.list;
 
-import java.util.Collections;
-import java.util.List;
-import java.util.Locale;
-
 import android.support.v7.widget.RecyclerView.ViewHolder;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -22,7 +18,6 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 import net.optile.payment.R;
 import net.optile.payment.model.AccountMask;
-import net.optile.payment.model.PaymentMethod;
 import net.optile.payment.ui.model.AccountCard;
 import net.optile.payment.ui.model.PaymentCard;
 import net.optile.payment.ui.theme.PageParameters;

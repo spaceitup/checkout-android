@@ -35,16 +35,16 @@ import net.optile.payment.model.ListResult;
 import net.optile.payment.model.Networks;
 import net.optile.payment.model.OperationResult;
 import net.optile.payment.model.PresetAccount;
-import net.optile.payment.network.OperationConnection;
 import net.optile.payment.network.ListConnection;
+import net.optile.payment.network.OperationConnection;
 import net.optile.payment.resource.PaymentGroup;
 import net.optile.payment.resource.ResourceLoader;
 import net.optile.payment.ui.PaymentUI;
 import net.optile.payment.ui.model.AccountCard;
-import net.optile.payment.ui.model.PresetCard;
 import net.optile.payment.ui.model.NetworkCard;
 import net.optile.payment.ui.model.PaymentNetwork;
 import net.optile.payment.ui.model.PaymentSession;
+import net.optile.payment.ui.model.PresetCard;
 import net.optile.payment.validation.Validator;
 
 /**
@@ -147,7 +147,7 @@ final class PaymentPageService {
     }
 
     void postOperation(final URL url, final Operation operation) {
-        
+
         if (operationTask != null) {
             throw new IllegalStateException("Already posting operation, stop first");
         }
@@ -275,10 +275,10 @@ final class PaymentPageService {
             return null;
         }
         PresetCard card = new PresetCard(account, pn.network);
-        card.setLang(pn.getLang()); 
+        card.setLang(pn.getLang());
         return card;
     }
-    
+
     private Map<String, PaymentNetwork> loadPaymentNetworks(ListResult listResult) throws PaymentException {
         LinkedHashMap<String, PaymentNetwork> items = new LinkedHashMap<>();
         Networks nw = listResult.getNetworks();
