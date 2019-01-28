@@ -11,11 +11,12 @@
     <string name="pmlist_preset_info">Unless authorized previously, this account is not saved or retained at the end of the payment
         session.
     </string>
+    <string name="pmlist_subtitle_date">%1$02d / %2$d</string>
     <string name="pmlist_account_header">Saved accounts</string>
     <string name="pmlist_network_header">Choose another account</string>
     <string name="pmlist_networkonly_header">Choose a method</string>
+    <string name="pmlist_widget_date">%1$s / %2$s</string>
 
-    <string name="pmlist_date">%1$s / %2$s</string>
     <string name="pmprogress_sendtitle">Payment processing…</string>
     <string name="pmprogress_sendheader">Sending…</string>
     <string name="pmprogress_sendinfo">Payment confirmation should take less than 30 seconds.</string>

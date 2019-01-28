@@ -161,7 +161,7 @@ public final class DateWidget extends InputLayoutWidget implements DateDialogFra
         this.expiryMonth = monthElement.getOptions().get(monthIndex).getValue();
         this.expiryYear = yearElement.getOptions().get(yearIndex).getValue();
 
-        String format = rootView.getContext().getString(R.string.pmlist_date);
+        String format = rootView.getContext().getString(R.string.pmlist_widget_date);
         textInput.setText(String.format(format, monthLabel, yearLabel));
 
         View nextField = textInput.focusSearch(View.FOCUS_DOWN);

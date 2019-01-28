@@ -19,7 +19,7 @@ import net.optile.payment.ui.theme.WidgetParameters;
 import net.optile.payment.util.PaymentUtils;
 
 /**
- * Widget for showing the CheckBox input element
+ * Widget for showing an info label in the PaymentCard
  */
 public class LabelWidget extends FormWidget {
 

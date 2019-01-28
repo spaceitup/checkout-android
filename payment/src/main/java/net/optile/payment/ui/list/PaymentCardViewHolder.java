@@ -270,10 +270,8 @@ abstract class PaymentCardViewHolder extends RecyclerView.ViewHolder {
         int expiryYear = PaymentUtils.toInt(mask.getExpiryYear());
 
         if (expiryMonth > 0 && expiryYear > 0) {
-            String format = subTitle.getContext().getString(R.string.pmlist_date);
-            String monthLabel = String.format(Locale.getDefault(), "%02d", expiryMonth);
-            String yearLabel = Integer.toString(expiryYear);
-            subTitle.setText(String.format(format, monthLabel, yearLabel));
+            String format = subTitle.getContext().getString(R.string.pmlist_subtitle_date);
+            subTitle.setText(String.format(format, expiryMonth, expiryYear));
             subTitle.setVisibility(View.VISIBLE);
         } else {
             subTitle.setVisibility(View.GONE);
