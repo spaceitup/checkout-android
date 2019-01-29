@@ -30,18 +30,6 @@ import net.optile.payment.form.Operation;
 public class OperationConnectionTest {
 
     /**
-     * Post operation with an invalid URL
-     *
-     * @throws PaymentException the network exception
-     */
-    @Test(expected = IllegalArgumentException.class)
-    public void createOperation_invalidURL_exception() throws PaymentException {
-        OperationConnection conn = new OperationConnection();
-        Operation operation = new Operation();
-        conn.postOperation(null, operation);
-    }
-
-    /**
      * Post operation invalid data invalid value error.
      *
      * @throws PaymentException the network exception
@@ -49,13 +37,18 @@ public class OperationConnectionTest {
     @Test(expected = IllegalArgumentException.class)
     public void createOperation_invalidData_exception() throws PaymentException {
         OperationConnection conn = new OperationConnection();
+        conn.postOperation(null);
+    }
+
+    private URL createTestURL() {
         URL url = null;
+
         try {
             url = new URL("http://localhost");
         } catch (MalformedURLException e) {
             e.printStackTrace();
         }
         assertNotNull(url);
-        conn.postOperation(url, null);
+        return url;
     }
 }
