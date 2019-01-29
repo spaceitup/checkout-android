@@ -71,6 +71,9 @@ final class PaymentPageService {
         this.operationConnection = new OperationConnection();
     }
 
+    /** 
+     * Stop and unsubscribe from tasks that are currently active in this service. 
+     */
     void stop() {
 
         if (loadTask != null) {

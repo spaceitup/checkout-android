@@ -14,6 +14,7 @@ package net.optile.payment.ui.dialog;
 import android.app.Dialog;
 import android.content.DialogInterface;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v4.app.DialogFragment;
 import android.text.TextUtils;
 import android.view.View;
@@ -51,6 +52,7 @@ public abstract class ThemedDialogFragment extends DialogFragment {
     /**
      * {@inheritDoc}
      */
+    @NonNull
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         return new Dialog(getActivity(), getTheme()) {

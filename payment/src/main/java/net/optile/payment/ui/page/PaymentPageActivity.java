@@ -41,9 +41,7 @@ import net.optile.payment.validation.Validator;
  */
 public final class PaymentPageActivity extends AppCompatActivity implements PaymentPageView {
 
-    private static final String TAG = "pay_PaymentPageActivity";
     private static final String EXTRA_LISTURL = "extra_listurl";
-
     private PaymentPagePresenter presenter;
     private String listUrl;
     private boolean active;
