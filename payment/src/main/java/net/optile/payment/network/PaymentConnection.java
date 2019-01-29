@@ -30,23 +30,23 @@ import net.optile.payment.form.Operation;
 import net.optile.payment.model.OperationResult;
 
 /**
- * Class containing methods to send Operation requests to the Payment API.
+ * Class containing methods to send Payment Operation requests to the Payment API.
  * <p>
  * All requests in this class are blocking calls and should be
  * executed in a separate thread to avoid blocking the main application thread.
  * These methods are not thread safe and must not be called by different threads
  * at the same time.
  */
-public final class OperationConnection extends BaseConnection {
+public final class PaymentConnection extends BaseConnection {
 
     /**
-     * Post an operation through the Payment API, i.e. a Preset or Charge operation.
+     * Post an operation to the Payment API, i.e. a Preset or Charge operation.
      *
      * @param operation holding the request data
      * @return the OperationResult object received from the Payment API
      */
     public OperationResult postOperation(final Operation operation) throws PaymentException {
-        final String source = "OperationConnection[postOperation]";
+        final String source = "PaymentConnection[postOperation]";
 
         if (operation == null) {
             throw new IllegalArgumentException(source + " - operation cannot be null");
@@ -84,10 +84,10 @@ public final class OperationConnection extends BaseConnection {
     }
 
     /**
-     * Handle the post operation OK state
+     * Handle the post Operation OK state
      *
      * @param data the response data received from the API
-     * @return the network response containing the ListResult
+     * @return the network response containing the OperationResult
      */
     private OperationResult handlePostOperationOk(final String data) throws JsonParseException {
         return gson.fromJson(data, OperationResult.class);

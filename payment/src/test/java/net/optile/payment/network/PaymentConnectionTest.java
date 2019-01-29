@@ -21,13 +21,12 @@ import org.junit.runner.RunWith;
 import org.robolectric.RobolectricTestRunner;
 
 import net.optile.payment.core.PaymentException;
-import net.optile.payment.form.Operation;
 
 /**
  * The type Operation connection test.
  */
 @RunWith(RobolectricTestRunner.class)
-public class OperationConnectionTest {
+public class PaymentConnectionTest {
 
     /**
      * Post operation invalid data invalid value error.
@@ -36,7 +35,7 @@ public class OperationConnectionTest {
      */
     @Test(expected = IllegalArgumentException.class)
     public void createOperation_invalidData_exception() throws PaymentException {
-        OperationConnection conn = new OperationConnection();
+        PaymentConnection conn = new PaymentConnection();
         conn.postOperation(null);
     }
 

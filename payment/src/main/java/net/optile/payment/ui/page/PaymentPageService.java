@@ -36,7 +36,7 @@ import net.optile.payment.model.Networks;
 import net.optile.payment.model.OperationResult;
 import net.optile.payment.model.PresetAccount;
 import net.optile.payment.network.ListConnection;
-import net.optile.payment.network.OperationConnection;
+import net.optile.payment.network.PaymentConnection;
 import net.optile.payment.resource.PaymentGroup;
 import net.optile.payment.resource.ResourceLoader;
 import net.optile.payment.ui.PaymentUI;
@@ -56,7 +56,7 @@ final class PaymentPageService {
     private final static String TAG = "pay_Service";
     private final PaymentPagePresenter presenter;
     private final ListConnection listConnection;
-    private final OperationConnection operationConnection;
+    private final PaymentConnection paymentConnection;
 
     private WorkerTask<OperationResult> operationTask;
     private WorkerTask<PaymentSession> loadTask;
@@ -68,7 +68,7 @@ final class PaymentPageService {
     PaymentPageService(PaymentPagePresenter presenter) {
         this.presenter = presenter;
         this.listConnection = new ListConnection();
-        this.operationConnection = new OperationConnection();
+        this.paymentConnection = new PaymentConnection();
     }
 
     /** 
@@ -217,7 +217,7 @@ final class PaymentPageService {
      * @return operation result containing information about the operation request
      */
     private OperationResult asyncPostOperation(Operation operation) throws PaymentException {
-        return operationConnection.postOperation(operation);
+        return paymentConnection.postOperation(operation);
     }
 
     private List<NetworkCard> createNetworkCards(Map<String, PaymentNetwork> networks) throws PaymentException {
