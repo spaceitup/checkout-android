@@ -20,6 +20,7 @@
     <string name="pmprogress_sendtitle">Payment processing…</string>
     <string name="pmprogress_sendheader">Sending…</string>
     <string name="pmprogress_sendinfo">Payment confirmation should take less than 30 seconds.</string>
-    <string name="pmdialog_close_button">Close</string>
-    <string name="pmsnackbar_operation_interrupted">Please do not interrupt the payment request.</string>    
+    <string name="pmdialog_cancel_button">Cancel</string>
+    <string name="pmdialog_retry_button">Retry</string>
+    <string name="pmsnackbar_operation_interrupted">Please wait for the payment to process.</string>
 </resources>

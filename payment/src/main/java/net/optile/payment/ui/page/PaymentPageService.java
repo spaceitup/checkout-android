@@ -90,7 +90,7 @@ final class PaymentPageService {
     boolean isPerformingOperation() {
         return operationTask != null && operationTask.isSubscribed();
     }
-    
+
     boolean isActive() {
         return validatorTask != null || loadTask != null || operationTask != null;
     }
@@ -150,7 +150,7 @@ final class PaymentPageService {
         Workers.getInstance().forNetworkTasks().execute(loadTask);
     }
 
-    void postOperation(final URL url, final Operation operation) {
+    void postOperation(final Operation operation) {
 
         if (operationTask != null) {
             throw new IllegalStateException("Already posting operation, stop first");
@@ -158,7 +158,7 @@ final class PaymentPageService {
         operationTask = WorkerTask.fromCallable(new Callable<OperationResult>() {
             @Override
             public OperationResult call() throws PaymentException {
-                return asyncPostOperation(url, operation);
+                return asyncPostOperation(operation);
             }
         });
         operationTask.subscribe(new WorkerSubscriber<OperationResult>() {
@@ -210,12 +210,11 @@ final class PaymentPageService {
     /**
      * Post an Operation to the Payment API
      *
-     * @param url the url of the operation request
      * @param operation the object containing the operation details
      * @return operation result containing information about the operation request
      */
-    private OperationResult asyncPostOperation(URL url, Operation operation) throws PaymentException {
-        return operationConnection.postOperation(url, operation);
+    private OperationResult asyncPostOperation(Operation operation) throws PaymentException {
+        return operationConnection.postOperation(operation);
     }
 
     private List<NetworkCard> createNetworkCards(Map<String, PaymentNetwork> networks) throws PaymentException {

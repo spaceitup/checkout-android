@@ -20,7 +20,6 @@ import static net.optile.payment.core.PaymentError.SECURITY_ERROR;
 import java.io.IOException;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
-import java.net.URL;
 
 import org.json.JSONException;
 
@@ -43,23 +42,19 @@ public final class OperationConnection extends BaseConnection {
     /**
      * Post an operation through the Payment API, i.e. a Preset or Charge operation.
      *
-     * @param url the url of the operation
      * @param operation holding the request data
      * @return the OperationResult object received from the Payment API
      */
-    public OperationResult postOperation(final URL url, final Operation operation) throws PaymentException {
+    public OperationResult postOperation(final Operation operation) throws PaymentException {
         final String source = "OperationConnection[postOperation]";
 
-        if (url == null) {
-            throw new IllegalArgumentException(source + " - url cannot be null");
-        }
         if (operation == null) {
             throw new IllegalArgumentException(source + " - operation cannot be null");
         }
         HttpURLConnection conn = null;
 
         try {
-            conn = createPostConnection(url);
+            conn = createPostConnection(operation.getURL());
             conn.setRequestProperty(HEADER_CONTENT_TYPE, VALUE_APP_JSON);
             conn.setRequestProperty(HEADER_ACCEPT, VALUE_APP_JSON);
 

@@ -28,7 +28,7 @@ public final class DialogParameters {
     private final int buttonLabelStyle;
     private final int imageLabelStyle;
     private final int snackbarTextStyle;
-    
+
     private DialogParameters(Builder builder) {
         this.dialogTheme = builder.dialogTheme;
         this.dateTitleStyle = builder.dateTitleStyle;
@@ -94,7 +94,7 @@ public final class DialogParameters {
     public int getSnackbarTextStyle() {
         return snackbarTextStyle;
     }
-    
+
     public final static class Builder {
         int dialogTheme;
         int messageTitleStyle;
@@ -105,7 +105,7 @@ public final class DialogParameters {
         int buttonLabelStyle;
         int imageLabelStyle;
         int snackbarTextStyle;
-        
+
         Builder() {
         }
 
@@ -153,7 +153,7 @@ public final class DialogParameters {
             this.snackbarTextStyle = snackbarTextStyle;
             return this;
         }
-        
+
         public DialogParameters build() {
             return new DialogParameters(this);
         }

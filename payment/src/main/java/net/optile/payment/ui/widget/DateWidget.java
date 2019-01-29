@@ -22,6 +22,8 @@ import net.optile.payment.form.Operation;
 import net.optile.payment.model.InputElement;
 import net.optile.payment.model.SelectOption;
 import net.optile.payment.ui.dialog.DateDialogFragment;
+import net.optile.payment.ui.dialog.ThemedDialogFragment;
+import net.optile.payment.ui.dialog.ThemedDialogFragment.ThemedDialogListener;
 import net.optile.payment.ui.theme.PaymentTheme;
 import net.optile.payment.util.PaymentUtils;
 import net.optile.payment.validation.ValidationResult;
@@ -29,13 +31,15 @@ import net.optile.payment.validation.ValidationResult;
 /**
  * Widget for handling the date input
  */
-public final class DateWidget extends InputLayoutWidget implements DateDialogFragment.DateDialogListener {
+public final class DateWidget extends InputLayoutWidget implements ThemedDialogListener {
 
     private String dialogButtonLabel;
     private InputElement monthElement;
     private InputElement yearElement;
     private String expiryMonth;
     private String expiryYear;
+    private int selMonthIndex;
+    private int selYearIndex;
 
     /**
      * Construct a new TextInputWidget
@@ -123,9 +127,9 @@ public final class DateWidget extends InputLayoutWidget implements DateDialogFra
     }
 
     private DateDialogFragment createDateDialogFragment(List<SelectOption> monthOptions, List<SelectOption> yearOptions) {
-        int selMonthIndex = 0;
+        int selMonthIndex = this.selMonthIndex;
         String[] monthLabels = new String[monthOptions.size()];
-        int selYearIndex = 0;
+        int selYearIndex = this.selYearIndex;
         String[] yearLabels = new String[yearOptions.size()];
         SelectOption option;
 
@@ -148,7 +152,7 @@ public final class DateWidget extends InputLayoutWidget implements DateDialogFra
         DateDialogFragment dialog = new DateDialogFragment();
         dialog.setTitle(label);
         dialog.setValues(selMonthIndex, monthLabels, selYearIndex, yearLabels);
-        dialog.setButtonLabel(dialogButtonLabel);
+        dialog.setNeutralButton(dialogButtonLabel);
         dialog.setListener(this);
         return dialog;
     }
@@ -157,19 +161,34 @@ public final class DateWidget extends InputLayoutWidget implements DateDialogFra
      * {@inheritDoc}
      */
     @Override
-    public void onDateChanged(int monthIndex, String monthLabel, int yearIndex, String yearLabel) {
-        this.expiryMonth = monthElement.getOptions().get(monthIndex).getValue();
-        this.expiryYear = yearElement.getOptions().get(yearIndex).getValue();
+    public void onButtonClicked(ThemedDialogFragment dialog, int which) {
+        DateDialogFragment dateDialog = (DateDialogFragment) dialog;
+
+        this.selMonthIndex = dateDialog.getMonthIndex();
+        this.selYearIndex = dateDialog.getYearIndex();
+
+        SelectOption monthOption = monthElement.getOptions().get(selMonthIndex);
+        SelectOption yearOption = yearElement.getOptions().get(selYearIndex);
+
+        this.expiryMonth = monthOption.getValue();
+        this.expiryYear = yearOption.getValue();
 
         String format = rootView.getContext().getString(R.string.pmlist_widget_date);
-        textInput.setText(String.format(format, monthLabel, yearLabel));
-
+        textInput.setText(String.format(format, monthOption.getLabel(), yearOption.getLabel()));
         View nextField = textInput.focusSearch(View.FOCUS_DOWN);
+
         if (nextField instanceof TextInputEditText) {
             nextField.requestFocus();
             presenter.showKeyboard();
         } else {
             textInput.clearFocus();
         }
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void onDismissed(ThemedDialogFragment dialog) {
     }
 }

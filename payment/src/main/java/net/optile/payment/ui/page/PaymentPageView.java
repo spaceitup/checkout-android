@@ -12,6 +12,7 @@
 package net.optile.payment.ui.page;
 
 import net.optile.payment.ui.PaymentResult;
+import net.optile.payment.ui.dialog.ThemedDialogFragment;
 import net.optile.payment.ui.model.PaymentSession;
 
 /**
@@ -54,30 +55,23 @@ interface PaymentPageView {
     void showPaymentSession(PaymentSession session);
 
     /**
-     * Display a message to the user using a Dialog
-     *
-     * @param message the message to be shown
-     */
-    void showMessage(String message);
-
-    /** 
      * Show a snackbar message to the user
-     * 
+     *
      * @param message The message to be shown
      */
     void showSnackbar(String message);
-    
+
     /**
      * Close the payment page
      */
     void closePage();
 
     /**
-     * First show the message to the user and then close the Payment page
+     * Show the message dialog as a modal dialog
      *
-     * @param message to be shown in a Dialog to the user
+     * @param dialog message dialog to be shown
      */
-    void closePageWithMessage(String message);
+    void showDialog(ThemedDialogFragment dialog);
 
     /**
      * Set the current activity payment result, this is either PaymentUI.RESULT_CODE_OK,

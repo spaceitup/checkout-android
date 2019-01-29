@@ -11,6 +11,8 @@
 
 package net.optile.payment.form;
 
+import java.net.URL;
+
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -29,12 +31,14 @@ public class Operation {
     public final static String PAYOUT = "PAYOUT";
     public final static String UPDATE = "UPDATE";
 
+    private final URL url;
     private final JSONObject form;
     private final JSONObject account;
 
-    public Operation() {
-        form = new JSONObject();
-        account = new JSONObject();
+    public Operation(URL url) {
+        this.url = url;
+        this.form = new JSONObject();
+        this.account = new JSONObject();
     }
 
     /**
@@ -75,5 +79,9 @@ public class Operation {
     public String toJson() throws JSONException {
         form.put("account", account);
         return form.toString();
+    }
+
+    public URL getURL() {
+        return url;
     }
 }

@@ -13,7 +13,6 @@ package net.optile.payment.ui.page;
 
 import java.util.Map;
 
-import android.util.Log;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -23,18 +22,16 @@ import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
 import android.view.MenuItem;
 import android.widget.TextView;
-import android.support.design.widget.Snackbar;
-import android.view.View;
 import net.optile.payment.R;
 import net.optile.payment.ui.PaymentResult;
 import net.optile.payment.ui.PaymentUI;
-import net.optile.payment.ui.dialog.MessageDialogFragment;
+import net.optile.payment.ui.dialog.DialogHelper;
+import net.optile.payment.ui.dialog.ThemedDialogFragment;
 import net.optile.payment.ui.list.PaymentList;
 import net.optile.payment.ui.model.PaymentCard;
 import net.optile.payment.ui.model.PaymentSession;
 import net.optile.payment.ui.theme.PaymentTheme;
 import net.optile.payment.ui.widget.FormWidget;
-import net.optile.payment.ui.dialog.DialogHelper;
 import net.optile.payment.util.PaymentUtils;
 import net.optile.payment.validation.ValidationResult;
 import net.optile.payment.validation.Validator;
@@ -174,7 +171,7 @@ public final class PaymentPageActivity extends AppCompatActivity implements Paym
         }
         super.onBackPressed();
     }
-    
+
     /**
      * {@inheritDoc}
      */
@@ -228,7 +225,7 @@ public final class PaymentPageActivity extends AppCompatActivity implements Paym
         if (show) {
 
             if (style == PaymentProgressView.SEND) {
-                initActionBar(getString(R.string.pmprogress_sendtitle), false);                
+                initActionBar(getString(R.string.pmprogress_sendtitle), false);
             }
             paymentList.setVisible(false);
             progress.setStyle(style);
@@ -255,28 +252,6 @@ public final class PaymentPageActivity extends AppCompatActivity implements Paym
      * {@inheritDoc}
      */
     @Override
-    public void showMessage(String message) {
-        if (!isActive()) {
-            return;
-        }
-        showMessageDialog(message, false);
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public void closePageWithMessage(String message) {
-        if (!isActive()) {
-            return;
-        }
-        showMessageDialog(message, true);
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
     public void setPaymentResult(int resultCode, PaymentResult result) {
         if (!isActive()) {
             return;
@@ -284,6 +259,14 @@ public final class PaymentPageActivity extends AppCompatActivity implements Paym
         Intent intent = new Intent();
         intent.putExtra(PaymentUI.EXTRA_PAYMENT_RESULT, result);
         setResult(resultCode, intent);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void showDialog(ThemedDialogFragment dialog) {
+        dialog.show(getSupportFragmentManager(), "paymentpage_dialog");
     }
 
     /**
@@ -298,7 +281,7 @@ public final class PaymentPageActivity extends AppCompatActivity implements Paym
         Snackbar snackbar = DialogHelper.createSnackbar(findViewById(R.id.layout_paymentpage), message);
         snackbar.show();
     }
-    
+
     public void onActionClicked(PaymentCard item, Map<String, FormWidget> widgets) {
         presenter.onActionClicked(item, widgets);
     }
@@ -318,30 +301,4 @@ public final class PaymentPageActivity extends AppCompatActivity implements Paym
         result.setMessage(msg);
         return result;
     }
-
-    private void showMessageDialog(final String message, final boolean finish) {
-        if (!isActive()) {
-            return;
-        }
-        MessageDialogFragment dialog = new MessageDialogFragment();
-        dialog.setMessage(message);
-        dialog.setNeutralButton(getString(R.string.pmdialog_close_button));
-        dialog.setListener(new MessageDialogFragment.MessageDialogListener() {
-            @Override
-            public void onNeutralButtonClick() {
-                if (finish) {
-                    finish();
-                }
-            }
-
-            @Override
-            public void onCancelled() {
-                if (finish) {
-                    finish();
-                }
-            }
-        });
-        dialog.show(getSupportFragmentManager(), "paymentpage_dialog");
-    }
-
 }

@@ -11,30 +11,30 @@
 
 package net.optile.payment.ui.dialog;
 
+import android.support.design.widget.Snackbar;
 import android.view.View;
 import android.widget.TextView;
-import android.support.design.widget.Snackbar;
 import net.optile.payment.R;
 import net.optile.payment.core.LanguageFile;
 import net.optile.payment.core.PaymentInputType;
 import net.optile.payment.core.PaymentMethodCodes;
-import net.optile.payment.ui.model.PaymentCard;
-import net.optile.payment.util.PaymentUtils;
-import net.optile.payment.ui.theme.PaymentTheme;
-import net.optile.payment.ui.theme.DialogParameters;
 import net.optile.payment.ui.PaymentUI;
+import net.optile.payment.ui.model.PaymentCard;
+import net.optile.payment.ui.theme.DialogParameters;
+import net.optile.payment.ui.theme.PaymentTheme;
+import net.optile.payment.util.PaymentUtils;
 
 /**
  * Class with helper methods for creating themed dialogs and snackbars.
  */
 public class DialogHelper {
 
-    /** 
+    /**
      * Create a themed Snackbar given the view and message this Snackbar should show
-     * 
+     *
      * @param view the view this Snackbar is attached to
      * @param message shown in the Snackbar
-     * @return the newly created Snackbar 
+     * @return the newly created Snackbar
      */
     public static Snackbar createSnackbar(View view, String message) {
         Snackbar snackbar = Snackbar.make(view, message, Snackbar.LENGTH_LONG);
@@ -42,14 +42,14 @@ public class DialogHelper {
         PaymentTheme theme = PaymentUI.getInstance().getPaymentTheme();
         DialogParameters params = theme.getDialogParameters();
         View snackbarView = snackbar.getView();
-        TextView textView = (TextView)snackbarView.findViewById(snackbarTextId);
+        TextView textView = snackbarView.findViewById(snackbarTextId);
 
         if (textView != null) {
             PaymentUtils.setTextAppearance(textView, params.getSnackbarTextStyle());
         }
         return snackbar;
     }
-    
+
     /**
      * Helper method to create a hint dialog for the given paymentcard and input type.
      *
@@ -66,7 +66,7 @@ public class DialogHelper {
         dialog.setNeutralButton(button);
         return dialog;
     }
-    
+
     private static int getHintImageResId(PaymentCard card, String type) {
 
         if (!PaymentInputType.VERIFICATION_CODE.equals(type)) {
