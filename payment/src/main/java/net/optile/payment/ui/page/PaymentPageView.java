@@ -28,9 +28,9 @@ interface PaymentPageView {
     boolean isActive();
 
     /**
-     * Get the String representation given the string resource id
+     * Get the String value given the resource id
      *
-     * @return the string resource
+     * @return the string value or null if not found
      */
     String getStringRes(int resId);
 
@@ -67,9 +67,9 @@ interface PaymentPageView {
     void closePage();
 
     /**
-     * Show the message dialog as a modal dialog
+     * Show the Themed Dialog 
      *
-     * @param dialog message dialog to be shown
+     * @param dialog to be shown
      */
     void showDialog(ThemedDialogFragment dialog);
 

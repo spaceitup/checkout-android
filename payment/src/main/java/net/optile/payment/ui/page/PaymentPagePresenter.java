@@ -60,7 +60,7 @@ final class PaymentPagePresenter {
     }
 
     /** 
-     * Notification that the presenter including the service should stop
+     * Notify this presenter that it should stop and cleanup its resources
      */
     void onStop() {
         service.stop();
@@ -208,9 +208,9 @@ final class PaymentPagePresenter {
     }
 
     /**
-     * Callback from the service that the operation request was successfull.
+     * Callback from the service that the operation request was successful.
      *
-     * @param operation explaining the result of the charge request
+     * @param operation containing the result of the operation
      */
     void onOperationSuccess(OperationResult operation) {
         PaymentResult result = new PaymentResult(operation);
