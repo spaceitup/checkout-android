@@ -12,6 +12,34 @@
         android:gravity="center"
         android:orientation="vertical">
 
+        <RadioGroup
+            android:id="@+id/radio_themes"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/border"
+            android:orientation="vertical">
+
+            <RadioButton
+                android:id="@+id/radio_theme_default"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:checked="true"
+                android:layout_marginBottom="@dimen/border"
+                android:text="@string/theme_default" />
+            <RadioButton
+                android:id="@+id/radio_theme_custom"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/border"
+            android:text="@string/theme_custom" />
+            <RadioButton
+                android:id="@+id/radio_theme_empty"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/border"
+                android:text="@string/theme_empty" />
+        </RadioGroup>
+        
         <Button
             style="@style/AppButton"
             app:backgroundTint="@color/colorPrimary"

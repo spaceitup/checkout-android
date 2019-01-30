@@ -108,17 +108,17 @@ public final class PaymentUtils {
         }
     }
 
-    /** 
+    /**
      * Check if the device is in landscape mode.
-     * 
-     * @param context containing the configuration for determining the mode. 
+     *
+     * @param context containing the configuration for determining the mode.
      * @return true when in landscape mode, false otherwise
      */
     public static boolean isLandscape(Context context) {
         int orientation = context.getResources().getConfiguration().orientation;
         return orientation == Configuration.ORIENTATION_LANDSCAPE;
     }
-    
+
     /**
      * Read the contents of the raw resource
      *

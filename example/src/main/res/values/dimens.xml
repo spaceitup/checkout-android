@@ -1,4 +1,5 @@
 <resources>
+    <dimen name="border">8dp</dimen>
     <dimen name="custom_logopadding">6dp</dimen>
     <dimen name="custom_logostroke">1dp</dimen>
     <dimen name="custom_logoradius">4dp</dimen>

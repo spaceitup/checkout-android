@@ -22,7 +22,7 @@ public final class ProgressParameters {
     private final int loadProgressBarColor;
     private final int sendBackground;
     private final int sendProgressBarColorFront;
-    private final int sendProgressBarColorBack;    
+    private final int sendProgressBarColorBack;
     private final int headerStyle;
     private final int infoStyle;
 
@@ -31,7 +31,7 @@ public final class ProgressParameters {
         this.loadProgressBarColor = builder.loadProgressBarColor;
         this.sendBackground = builder.sendBackground;
         this.sendProgressBarColorFront = builder.sendProgressBarColorFront;
-        this.sendProgressBarColorBack = builder.sendProgressBarColorBack;        
+        this.sendProgressBarColorBack = builder.sendProgressBarColorBack;
         this.headerStyle = builder.headerStyle;
         this.infoStyle = builder.infoStyle;
     }
@@ -46,7 +46,7 @@ public final class ProgressParameters {
             setLoadProgressBarColor(R.color.pmcolor_primary).
             setSendBackground(R.color.pmcolor_list).
             setSendProgressBarColorFront(R.color.pmcolor_primary).
-            setSendProgressBarColorBack(R.color.pmvalidation_unknown).            
+            setSendProgressBarColorBack(R.color.pmvalidation_unknown).
             setHeaderStyle(R.style.PaymentText_XLarge_Bold).
             setInfoStyle(R.style.PaymentText_Medium).
             build();
@@ -71,7 +71,7 @@ public final class ProgressParameters {
     public int getSendProgressBarColorBack() {
         return sendProgressBarColorBack;
     }
-    
+
     public int getHeaderStyle() {
         return headerStyle;
     }
@@ -116,7 +116,7 @@ public final class ProgressParameters {
             this.sendProgressBarColorBack = sendProgressBarColorBack;
             return this;
         }
-        
+
         public Builder setHeaderStyle(int headerStyle) {
             this.headerStyle = headerStyle;
             return this;

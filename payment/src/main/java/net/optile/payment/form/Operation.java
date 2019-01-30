@@ -28,7 +28,7 @@ public class Operation {
     public final static String PRESET = "PRESET";
     public final static String PAYOUT = "PAYOUT";
     public final static String UPDATE = "UPDATE";
-    
+
     private final JSONObject form;
     private final JSONObject account;
 

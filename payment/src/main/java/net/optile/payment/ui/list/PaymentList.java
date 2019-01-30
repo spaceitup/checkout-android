@@ -92,7 +92,8 @@ public final class PaymentList {
         } else if (session.networks.size() == 0) {
             msg = activity.getString(R.string.pmpage_error_notsupported);
         } else {
-            recyclerView.scrollToPosition(selIndex);
+            int startIndex = session.presetCard != null ? 0 : selIndex;
+            recyclerView.scrollToPosition(startIndex);
         }
         emptyMessage.setText(msg);
         adapter.notifyDataSetChanged();
@@ -160,6 +161,7 @@ public final class PaymentList {
 
     void onItemClicked(int position) {
         ListItem item = items.get(position);
+
         if (!item.hasPaymentCard()) {
             return;
         }
@@ -195,8 +197,15 @@ public final class PaymentList {
         int accountSize = session.accounts.size();
         int networkSize = session.networks.size();
 
+        if (session.presetCard != null) {
+            items.add(new HeaderItem(nextViewType(), activity.getString(R.string.pmlist_preset_header)));
+            items.add(new PaymentCardItem(nextViewType(), session.presetCard));
+            this.selIndex = 1;
+            index += 2;
+        }
+
         if (accountSize > 0) {
-            items.add(new HeaderItem(nextViewType(), activity.getString(R.string.pmlist_account)));
+            items.add(new HeaderItem(nextViewType(), activity.getString(R.string.pmlist_account_header)));
             index++;
         }
         for (AccountCard card : session.accounts) {
@@ -207,7 +216,7 @@ public final class PaymentList {
             index++;
         }
         if (networkSize > 0) {
-            int resId = accountSize == 0 ? R.string.pmlist_network_only : R.string.pmlist_network;
+            int resId = accountSize == 0 ? R.string.pmlist_networkonly_header : R.string.pmlist_network_header;
             items.add(new HeaderItem(nextViewType(), activity.getString(resId)));
         }
         for (NetworkCard card : session.networks) {

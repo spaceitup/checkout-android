@@ -22,8 +22,8 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import net.optile.payment.R;
 import net.optile.payment.core.PaymentInputType;
-import net.optile.payment.util.PaymentUtils;
 import net.optile.payment.ui.theme.PaymentTheme;
+import net.optile.payment.util.PaymentUtils;
 
 /**
  * Base class for widgets using the TextInputLayout and TextInputEditText
@@ -34,7 +34,7 @@ abstract class InputLayoutWidget extends FormWidget {
     final static float REDUCED_PORTRAIT_HINT = 0.35f;
     final static float REDUCED_LANDSCAPE_TEXT = 0.5f;
     final static float REDUCED_LANDSCAPE_HINT = 0.5f;
-    
+
     final TextInputEditText textInput;
     final TextInputLayout textLayout;
 
@@ -106,7 +106,7 @@ abstract class InputLayoutWidget extends FormWidget {
     void setReducedView() {
         boolean landscape = PaymentUtils.isLandscape(rootView.getContext());
         setReducedWidth(textLayout, landscape ? REDUCED_LANDSCAPE_TEXT : REDUCED_PORTRAIT_TEXT);
-        setReducedWidth(hintLayout, landscape ? REDUCED_LANDSCAPE_HINT : REDUCED_PORTRAIT_HINT); 
+        setReducedWidth(hintLayout, landscape ? REDUCED_LANDSCAPE_HINT : REDUCED_PORTRAIT_HINT);
     }
 
     void setMaxLength(int length) {

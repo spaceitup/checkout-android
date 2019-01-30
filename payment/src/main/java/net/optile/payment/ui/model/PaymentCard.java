@@ -37,10 +37,9 @@ public interface PaymentCard {
     String getPaymentMethod();
 
     /**
-     * Get the code of this PaymentCard, this may return null if a PaymentCard contains multiple PaymentMethods
-     * and none has been selected.
+     * Get the code of this visible PaymentCard.
      *
-     * @return code
+     * @return code of the visible network, preset or account
      */
     String getCode();
 

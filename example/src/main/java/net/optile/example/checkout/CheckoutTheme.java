@@ -35,9 +35,11 @@ final class CheckoutTheme {
             setPageTheme(R.style.CustomThemePaymentPage).
             setEmptyListLabelStyle(R.style.CustomText_Medium_Light).
             setSectionHeaderLabelStyle(R.style.CustomText_Medium_Bold_Light).
-            setNetworkCardTitleStyle(R.style.CustomText_Medium_Bold).
+            setPresetCardTitleStyle(R.style.CustomText_Medium_Bold).
+            setPresetCardSubtitleStyle(R.style.CustomText_Small).
             setAccountCardTitleStyle(R.style.CustomText_Medium_Bold).
             setAccountCardSubtitleStyle(R.style.CustomText_Small).
+            setNetworkCardTitleStyle(R.style.CustomText_Medium_Bold).
             setPaymentLogoBackground(R.drawable.custom_logobackground).
             build();
         builder.setPageParameters(pageParams);
@@ -54,6 +56,7 @@ final class CheckoutTheme {
             setValidationColorOk(R.color.custom_validationok).
             setValidationColorUnknown(R.color.custom_validationunknown).
             setValidationColorError(R.color.custom_validationerror).
+            setInfoLabelStyle(R.style.CustomText_Small).
             setDefaultIconMapping().
             setDefaultHintDrawable().
             build();
