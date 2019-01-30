@@ -15,6 +15,10 @@ import static io.github.jsonSnapshot.SnapshotMatcher.expect;
 import static io.github.jsonSnapshot.SnapshotMatcher.start;
 import static io.github.jsonSnapshot.SnapshotMatcher.validateSnapshots;
 
+import static org.junit.Assert.assertNotNull;
+
+import java.net.URL;
+import java.net.MalformedURLException;
 import org.json.JSONException;
 import org.junit.AfterClass;
 import org.junit.BeforeClass;
@@ -40,13 +44,13 @@ public class OperationTest {
 
     @Test(expected = IllegalArgumentException.class)
     public void putValue_invalidName_exception() throws PaymentException {
-        Operation operation = new Operation();
+        Operation operation = new Operation(createTestURL());
         operation.putValue(null, "Foo");
     }
 
     @Test
     public void putValue_success() throws PaymentException, JSONException {
-        Operation operation = new Operation();
+        Operation operation = new Operation(createTestURL());
         operation.putValue(PaymentInputType.ACCOUNT_NUMBER, "accountnumber123");
         operation.putValue(PaymentInputType.HOLDER_NAME, "John Doe");
         operation.putValue(PaymentInputType.EXPIRY_MONTH, 12);
@@ -58,6 +62,18 @@ public class OperationTest {
         operation.putValue(PaymentInputType.ALLOW_RECURRENCE, "true");
         operation.putValue(PaymentInputType.AUTO_REGISTRATION, "true");
         expect(operation.toJson()).toMatchSnapshot();
+    }
+
+    private URL createTestURL() {
+        URL url = null;
+
+        try {
+            url = new URL("http://localhost");
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+        }
+        assertNotNull(url);
+        return url;
     }
 }
 

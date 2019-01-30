@@ -11,9 +11,7 @@
 
 package net.optile.payment.ui.dialog;
 
-import android.app.Dialog;
 import android.os.Bundle;
-import android.support.v4.app.DialogFragment;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -28,15 +26,13 @@ import net.optile.payment.util.PaymentUtils;
 /**
  * Message Dialog Fragment for showing a message to the user with an action button
  */
-public final class MessageDialogFragment extends DialogFragment {
+public final class MessageDialogFragment extends ThemedDialogFragment {
 
     private String title;
     private String message;
-    private String neutralButtonLabel;
     private String imagePrefix;
     private String imageSuffix;
     private int imageResId;
-    private MessageDialogListener listener;
 
     /**
      * Set the title in this message dialog
@@ -56,15 +52,6 @@ public final class MessageDialogFragment extends DialogFragment {
         this.message = message;
     }
 
-    /**
-     * Set the neutral button label
-     *
-     * @param label the Label of the button
-     */
-    public void setNeutralButton(String label) {
-        this.neutralButtonLabel = label;
-    }
-
     public void setImageLabels(String imagePrefix, String imageSuffix) {
         this.imagePrefix = imagePrefix;
         this.imageSuffix = imageSuffix;
@@ -72,38 +59,6 @@ public final class MessageDialogFragment extends DialogFragment {
 
     public void setImageResId(int imageResId) {
         this.imageResId = imageResId;
-    }
-
-    /**
-     * Set the listener to this MessageDialogFragment
-     *
-     * @param listener to inform of an action button click
-     */
-    public void setListener(MessageDialogListener listener) {
-        this.listener = listener;
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public Dialog onCreateDialog(Bundle savedInstanceState) {
-        return new Dialog(getActivity(), getTheme()) {
-            @Override
-            public void onBackPressed() {
-                handleBackPressed();
-            }
-        };
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public int getTheme() {
-        DialogParameters params = PaymentUI.getInstance().getPaymentTheme().getDialogParameters();
-        int theme = params.getDialogTheme();
-        return theme == 0 ? super.getTheme() : theme;
     }
 
     /**
@@ -184,39 +139,6 @@ public final class MessageDialogFragment extends DialogFragment {
         textView.setText(message);
     }
 
-    private void initButtons(View rootView, DialogParameters params) {
-        TextView tv = rootView.findViewById(R.id.text_button);
-
-        if (TextUtils.isEmpty(neutralButtonLabel)) {
-            tv.setVisibility(View.GONE);
-            return;
-        }
-        tv.setVisibility(View.VISIBLE);
-        tv.setText(neutralButtonLabel);
-        PaymentUtils.setTextAppearance(tv, params.getButtonLabelStyle());
-        tv.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                handleNeutralButtonClick();
-            }
-        });
-    }
-
-    private void handleNeutralButtonClick() {
-        if (this.listener != null) {
-            listener.onNeutralButtonClick();
-        }
-        dismiss();
-    }
-
-    private void handleBackPressed() {
-        if (this.listener != null) {
-            listener.onCancelled();
-        }
-        dismiss();
-    }
-
-
     private void setTextView(final View rootView, final int resId, final String value) {
         TextView tv = rootView.findViewById(resId);
         if (TextUtils.isEmpty(value)) {
@@ -225,11 +147,5 @@ public final class MessageDialogFragment extends DialogFragment {
         }
         tv.setVisibility(View.VISIBLE);
         tv.setText(value);
-    }
-
-    public interface MessageDialogListener {
-        void onNeutralButtonClick();
-
-        void onCancelled();
     }
 }

@@ -71,6 +71,7 @@ final class CheckoutTheme {
             setMessageDetailsNoTitleStyle(R.style.CustomText_Medium_Bold).
             setButtonLabelStyle(R.style.CustomText_Small_Bold_Primary).
             setImageLabelStyle(R.style.CustomText_Tiny).
+            setSnackbarTextStyle(R.style.CustomText_Small_Light).
             build();
         builder.setDialogParameters(dialogParams);
 

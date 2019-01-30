@@ -21,25 +21,12 @@ import org.junit.runner.RunWith;
 import org.robolectric.RobolectricTestRunner;
 
 import net.optile.payment.core.PaymentException;
-import net.optile.payment.form.Operation;
 
 /**
  * The type Operation connection test.
  */
 @RunWith(RobolectricTestRunner.class)
-public class OperationConnectionTest {
-
-    /**
-     * Post operation with an invalid URL
-     *
-     * @throws PaymentException the network exception
-     */
-    @Test(expected = IllegalArgumentException.class)
-    public void createOperation_invalidURL_exception() throws PaymentException {
-        OperationConnection conn = new OperationConnection();
-        Operation operation = new Operation();
-        conn.postOperation(null, operation);
-    }
+public class PaymentConnectionTest {
 
     /**
      * Post operation invalid data invalid value error.
@@ -48,14 +35,19 @@ public class OperationConnectionTest {
      */
     @Test(expected = IllegalArgumentException.class)
     public void createOperation_invalidData_exception() throws PaymentException {
-        OperationConnection conn = new OperationConnection();
+        PaymentConnection conn = new PaymentConnection();
+        conn.postOperation(null);
+    }
+
+    private URL createTestURL() {
         URL url = null;
+
         try {
             url = new URL("http://localhost");
         } catch (MalformedURLException e) {
             e.printStackTrace();
         }
         assertNotNull(url);
-        conn.postOperation(url, null);
+        return url;
     }
 }

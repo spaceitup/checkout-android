@@ -52,19 +52,6 @@
 
     </LinearLayout>
 
-    <LinearLayout
-        android:id="@+id/layout_button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="end"
-        android:clickable="true"
-        android:focusable="true"
-        android:padding="@dimen/pmborder_medium"
-        android:visibility="gone">
-
-        <TextView
-            android:id="@+id/text_button"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"/>
-    </LinearLayout>
+    <include
+        layout="@layout/dialogfragment_buttons"/>
 </LinearLayout>

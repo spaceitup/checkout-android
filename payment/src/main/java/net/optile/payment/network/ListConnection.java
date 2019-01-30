@@ -160,6 +160,9 @@ public final class ListConnection extends BaseConnection {
         if (url == null) {
             throw new IllegalArgumentException(source + " - url cannot be null");
         }
+        if (file == null) {
+            throw new IllegalArgumentException(source + " - file cannot be null");
+        }
         HttpURLConnection conn = null;
         try {
             conn = createGetConnection(url);

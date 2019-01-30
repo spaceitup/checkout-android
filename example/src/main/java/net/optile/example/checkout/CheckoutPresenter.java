@@ -20,8 +20,6 @@ import net.optile.payment.ui.PaymentUI;
  */
 final class CheckoutPresenter {
 
-    private static String TAG = "pay_CheckoutPresenter";
-
     private CheckoutView view;
 
     /**
@@ -39,26 +37,27 @@ final class CheckoutPresenter {
      * @param result the result received from the SDK
      */
     void handleCheckoutResult(CheckoutResult result) {
+        String tag = "checkout";
 
         switch (result.resultCode) {
             case PaymentUI.RESULT_CODE_OK:
                 // Payment Operation request has been completed, result.paymentResult contains an Interaction and optional OperationResult.
                 view.showPaymentSuccess();
-                Log.i(TAG, "OK[" + result.paymentResult + "]");
+                Log.i(tag, "OK[" + result.paymentResult + "]");
                 break;
             case PaymentUI.RESULT_CODE_CANCELED:
                 // Payment has been canceled, the result.paymentResult may be null if the user closed the Payment Page without making any requests.
                 // If result.paymentResult is not null then it contains an Interaction and optional OperationResult. 
                 if (result.paymentResult != null) {
-                    Log.i(TAG, "Canceled[" + result.paymentResult + "]");
+                    Log.i(tag, "Canceled[" + result.paymentResult + "]");
                 } else {
-                    Log.i(TAG, "Canceled[unknown]");
+                    Log.i(tag, "Canceled[unknown]");
                 }
                 break;
             case PaymentUI.RESULT_CODE_ERROR:
                 // An internal error occurred and the result.paymentResult contains a PaymentError explaining the reason of the error.
                 // I.e. a Connection, Protocol or Security error can be returned as a PaymentError. 
-                Log.i(TAG, "Error[" + result.paymentResult + "]");
+                Log.i(tag, "Error[" + result.paymentResult + "]");
         }
     }
 

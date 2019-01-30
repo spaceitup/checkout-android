@@ -89,13 +89,18 @@ public class ListConnectionTest {
     @Test(expected = IllegalArgumentException.class)
     public void loadLanguageFile_invalidProperties_IllegalArgumentException() throws PaymentException {
         ListConnection conn = new ListConnection();
+        LanguageFile lang = conn.loadLanguageFile(createTestURL(), null);
+    }
+
+    private URL createTestURL() {
         URL url = null;
+
         try {
             url = new URL("http://localhost");
         } catch (MalformedURLException e) {
             e.printStackTrace();
         }
         assertNotNull(url);
-        LanguageFile lang = conn.loadLanguageFile(null, new LanguageFile());
+        return url;
     }
 }

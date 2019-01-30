@@ -57,6 +57,15 @@ public final class WorkerTask<V> extends FutureTask<V> {
     }
 
     /**
+     * Check if a Subscriber has been subscribed to this WorkerTask.
+     *
+     * @return true when subscribed, false otherwise
+     */
+    public boolean isSubscribed() {
+        return this.subscriber != null;
+    }
+
+    /**
      * {@inheritDoc}
      */
     @Override

@@ -36,7 +36,7 @@ import net.optile.payment.model.Networks;
 import net.optile.payment.model.OperationResult;
 import net.optile.payment.model.PresetAccount;
 import net.optile.payment.network.ListConnection;
-import net.optile.payment.network.OperationConnection;
+import net.optile.payment.network.PaymentConnection;
 import net.optile.payment.resource.PaymentGroup;
 import net.optile.payment.resource.ResourceLoader;
 import net.optile.payment.ui.PaymentUI;
@@ -56,7 +56,7 @@ final class PaymentPageService {
     private final static String TAG = "pay_Service";
     private final PaymentPagePresenter presenter;
     private final ListConnection listConnection;
-    private final OperationConnection operationConnection;
+    private final PaymentConnection paymentConnection;
 
     private WorkerTask<OperationResult> operationTask;
     private WorkerTask<PaymentSession> loadTask;
@@ -68,9 +68,12 @@ final class PaymentPageService {
     PaymentPageService(PaymentPagePresenter presenter) {
         this.presenter = presenter;
         this.listConnection = new ListConnection();
-        this.operationConnection = new OperationConnection();
+        this.paymentConnection = new PaymentConnection();
     }
 
+    /** 
+     * Stop and unsubscribe from tasks that are currently active in this service. 
+     */
     void stop() {
 
         if (loadTask != null) {
@@ -85,6 +88,10 @@ final class PaymentPageService {
             validatorTask.unsubscribe();
             validatorTask = null;
         }
+    }
+
+    boolean isPerformingOperation() {
+        return operationTask != null && operationTask.isSubscribed();
     }
 
     boolean isActive() {
@@ -146,7 +153,7 @@ final class PaymentPageService {
         Workers.getInstance().forNetworkTasks().execute(loadTask);
     }
 
-    void postOperation(final URL url, final Operation operation) {
+    void postOperation(final Operation operation) {
 
         if (operationTask != null) {
             throw new IllegalStateException("Already posting operation, stop first");
@@ -154,7 +161,7 @@ final class PaymentPageService {
         operationTask = WorkerTask.fromCallable(new Callable<OperationResult>() {
             @Override
             public OperationResult call() throws PaymentException {
-                return asyncPostOperation(url, operation);
+                return asyncPostOperation(operation);
             }
         });
         operationTask.subscribe(new WorkerSubscriber<OperationResult>() {
@@ -206,12 +213,11 @@ final class PaymentPageService {
     /**
      * Post an Operation to the Payment API
      *
-     * @param url the url of the operation request
      * @param operation the object containing the operation details
      * @return operation result containing information about the operation request
      */
-    private OperationResult asyncPostOperation(URL url, Operation operation) throws PaymentException {
-        return operationConnection.postOperation(url, operation);
+    private OperationResult asyncPostOperation(Operation operation) throws PaymentException {
+        return paymentConnection.postOperation(operation);
     }
 
     private List<NetworkCard> createNetworkCards(Map<String, PaymentNetwork> networks) throws PaymentException {
