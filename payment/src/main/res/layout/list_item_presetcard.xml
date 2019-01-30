@@ -54,7 +54,6 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@id/layout_header"
                 android:orientation="vertical"
-                android:paddingTop="@dimen/pmborder_medium"
                 android:paddingEnd="@dimen/pmborder_xsmall"
                 android:visibility="gone"/>
         </RelativeLayout>
