@@ -179,7 +179,7 @@ emptyListLabelStyle|TextAppearance for label shown when the list of payment meth
 sectionHeaderLabelStyle|TextAppearance for section header label in the list, i.e. "Saved accounts" 
 networkCardTitleStyle|TextAppearance for network card title, i.e. "Visa"
 accountCardTitleStyle|TextAppearance for account card title, i.e. "41 *** 1111"
-accountCardSubtitleStyle|TextAppearance for account card subtitle, i.e. the expiry date "01 / 232" 
+accountCardSubtitleStyle|TextAppearance for account card subtitle, i.e. the expiry date "01 / 2032" 
 paymentLogoBackground|Background resource ID drawn behind payment method images
 
 ## WidgetParameters
