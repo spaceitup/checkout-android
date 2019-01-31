@@ -171,6 +171,7 @@ builder.setPageParameters(pageParams);
 ```
 
 Table explaining each page parameter:
+
 Name|Purpose
 ----|-------
 pageTheme|Main theme of the Payment Page Activity. 
@@ -196,6 +197,7 @@ builder.setWidgetParameters(widgetParams);
 ```
 
 Table explaining each widget parameter:
+
 Name|Purpose
 ----|-------
 textInputTheme|Theme for TextInputLayout elements 
@@ -225,6 +227,7 @@ builder.setDialogParameters(dialogParams);
 ```
 
 Table explaining each dialog parameter:
+
 Name|Purpose
 ----|-------
 dialogTheme|Theme for Dialogs, i.e. message and date dialogs
@@ -250,6 +253,7 @@ builder.setProgressParameters(progressParams);
 ```
 
 Table explaining each dialog parameter:
+
 Name|Purpose
 ----|-------
 loadBackground|Background resource ID of the loading page
@@ -322,6 +326,7 @@ paymentUI.showPaymentPage(this, PAYMENT_REQUEST_CODE);
 The choice which payment method in a group is displayed and used for charge requests is done by "Smart Selection". Each payment method in a group contains a Regular Expression that is used to "smart select" this method based on the partially entered credit/debit number. While the user types the number, the SDK will validate the partial number with the regular expressions. When one or more payment methods match the number input they will be highlighted and displayed.
 
 Table containing the rules of Smart Selection:
+
 Name|Purpose
 ----|-------
 No payment method regex match the number input.|The first payment method in the group is displayed and is used to validate other input values and perform Charge requests. 
@@ -334,6 +339,7 @@ One payment method regex match the number input.|This payment method is displaye
 Before a charge request is made, each input value provided by the user is validated. 
 
 Table containing the validations used for each input type:
+
 Input Type|Validation
 ----------|----------
 holderName|Valid if not empty
@@ -350,6 +356,7 @@ bic|Regex: `([a-zA-Z]{4}[a-zA-Z]{2}[a-zA-Z0-9]{2}([a-zA-Z0-9]{3})?)`
 The Payment SDK uses customised validations for certain Credit & Debit cards. 
 
 Table containing the list of validations used for each card type:
+
 Card Code|Regex
 ----------|----------
 AMEX|number: `^3[47][0-9]{13}$`<br>verificationCode: `^[0-9]{4}$`
