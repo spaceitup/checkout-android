@@ -48,11 +48,11 @@ There are 2 kinds of registration: Regular and Recurring. Both types are support
 # Make your first payment
 In order to make a successful payment you must complete the following steps:
 
-* Create a payment session on your server and retrieve the list URL in your app 
-* Install Payment SDK in your app
-* Initialise and show the Payment Page with the list URL
+1. Create a payment session on your server and retrieve the list URL in your app 
+2. Install Payment SDK in your app
+3. Initialise and show the Payment Page with the list URL
 
-## Step 1: Create payment session
+## 1 - Create payment session
 The documentation at optile.io will guide you through optile's Open Payment Gateway (OPG) features for frontend checkout and backend use cases. It provides important information about integration scenarios, testing possibilities, and references. The documentation will help you create a payment session that can be used by the Android Payment SDK.
 
 After you have created a payment session on your server you will receive a response containing the List Result in Json format. This List Result contains a "self" URL which is used to initialise the Payment Page.
@@ -69,14 +69,14 @@ After you have created a payment session on your server you will receive a respo
   ...
   ```
   
-## Step 2: Install Payment SDK
+## 2 - Install Payment SDK
 Installing the Payment SDK is easy and requires only adding the optile Payment SDK module to your build.gradle file. Note: the Android SDK is currently only available through optile internal Nexus repository.
 
 ```
 implementation  "com.oscato.mobile:op-payment-android:0.0.12"
 ```
 
-## Step 3: Show Payment Page
+## 3 - Show Payment Page
 The Payment SDK provides a class called PaymentUI which is used to initialise and launch the Payment Page. The following code samples shows how to initialise and show the Payment Page.
 
 ```
@@ -122,17 +122,14 @@ public void onActivityResult(int requestCode, int resultCode, Intent data) {
 ```
 
 # Customise Payment Page
-The look & feel of the Payment Page may be customised, i.e. colors, font style and icons can be changed so that it matches the look & feel of the mobile app. The first image shows the default theme provided by the Payment SDK and the second image is a screenshot of the custom theme provided in the example app.
+The look & feel of the Payment Page may be customised, i.e. colors, font style and icons can be changed so that it matches the look & feel of the mobile app. 
 
-
-
-
-
-Page Orientation
+## Page Orientation
 By default the orientation of the Payment Page will be locked based on the orientation in which the Payment Page was opened. I.e. if the mobile app is shown in landscape mode the Payment Page will also be opened in landscape mode but cannot be changed anymore by rotating the phone.
 
 The following code sample shows how to set the fixed orientation mode of the Payment Page prior to open the page.
 
+```
 //
 // Orientation modes supported by the Payment Page
 // ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE
@@ -143,40 +140,47 @@ The following code sample shows how to set the fixed orientation mode of the Pay
 PaymentUI paymentUI = PaymentUI.getInstance();
 paymentUI.setOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
 paymentUI.showPaymentPage(this, PAYMENT_REQUEST_CODE);
-Page Theming
+```
+
+## Page Theming
 Theming of the Payment Page is done using the PaymentTheme class and in order for theming to take effect, the customised PaymentTheme instance must be set in the PaymentUI class prior to opening the Payment Page.
 
-
+```
 // Code sample how to create and set a custom PaymentTheme
 PaymentTheme.Builder builder = PaymentTheme.createBuilder();
 ...  
 PaymentUI paymentUI = PaymentUI.getInstance();
 paymentUI.setPaymentTheme(builder.build());
 paymentUI.showPaymentPage(this, PAYMENT_REQUEST_CODE);
+```
 
 The PaymentTheme contains a set of parameters defining the customised theming. When a parameter name ends with Style, the parameter holds a TextAppearance style resource id used for TextView elements. If the parameter name ends with Theme then the parameter holds a theme resource id and is applied during inflation of the UI element.
 
-PageParameters
+#### PageParameters
 The PageParameters class contains a collection of parameters used to theme the page and list.
 
-
+```
 // Code sample how to set the page parameters in the PaymentTheme builder
 PageParameters pageParams = PageParameters.createBuilder().
 setPageTheme(R.style.CustomThemePaymentPage).
 ...
 build();
 builder.setPageParameters(pageParams);
+```
 
 Table explaining each page parameter
 
-pageTheme	Main theme of the Payment Page Activity. 
-emptyListLabelStyle	TextAppearance for label shown when the list of payment methods is empty
-sectionHeaderLabelStyle	TextAppearance for section header label in the list, i.e. "Saved accounts" 
-networkCardTitleStyle	TextAppearance for network card title, i.e. "Visa"
-accountCardTitleStyle	TextAppearance for account card title, i.e. "41 *** 1111"
-accountCardSubtitleStyle	TextAppearance for account card subtitle, i.e. the expiry date "01 / 232" 
-paymentLogoBackground	Background resource ID drawn behind payment method images
-WidgetParameters
+Name|Purpose
+----|-------
+pageTheme|Main theme of the Payment Page Activity. 
+emptyListLabelStyle|TextAppearance for label shown when the list of payment methods is empty
+sectionHeaderLabelStyle|TextAppearance for section header label in the list, i.e. "Saved accounts" 
+networkCardTitleStyle|TextAppearance for network card title, i.e. "Visa"
+accountCardTitleStyle|TextAppearance for account card title, i.e. "41 *** 1111"
+accountCardSubtitleStyle|TextAppearance for account card subtitle, i.e. the expiry date "01 / 232" 
+paymentLogoBackground|Background resource ID drawn behind payment method images
+
+## WidgetParameters
 The WidgetParameters contains a collection of parameters used to theme widgets. Widgets are UI elements handling user input, i.e. TextInput, CheckBoxes and buttons. Below is a table explaining each parameter.
 
 The WidgetParameters class allow setting individual drawable resource ids for icons by using the putInputTypeIcon() method, use the setDefaultIconMapping() method to use the icons provided by the Payment SDK.
