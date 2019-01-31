@@ -156,7 +156,7 @@ paymentUI.showPaymentPage(this, PAYMENT_REQUEST_CODE);
 
 The PaymentTheme contains a set of parameters defining the customised theming. When a parameter name ends with Style, the parameter holds a TextAppearance style resource id used for TextView elements. If the parameter name ends with Theme then the parameter holds a theme resource id and is applied during inflation of the UI element.
 
-#### PageParameters
+## PageParameters
 The PageParameters class contains a collection of parameters used to theme the page and list.
 
 ```
@@ -185,74 +185,84 @@ The WidgetParameters contains a collection of parameters used to theme widgets. 
 
 The WidgetParameters class allow setting individual drawable resource ids for icons by using the putInputTypeIcon() method, use the setDefaultIconMapping() method to use the icons provided by the Payment SDK.
 
-
+```
 // Code sample how to set the widget parameters in the PaymentTheme builder
 WidgetParameters widgetParams = WidgetParameters.createBuilder().
 setTextInputTheme(R.style.CustomThemeTextInput).
 ...
 build();
 builder.setWidgetParameters(widgetParams);
-
+```
 
 Table explaining each widget parameter
 
-textInputTheme	Theme for TextInputLayout elements 
-buttonTheme	Theme for action button in each payment card
-buttonLabelStyle	TextAppearance of label inside the action button 
-buttonBackground	Background resource ID of action button
-checkBoxTheme	Theme for checkBox UI element
-checkBoxLabelCheckedStyle	TextAppearance of label when checkBox is checked
-checkBoxLabelUncheckedStyle	TextAppearance of label when checkBox is unchecked
-selectLabelStyle	TextAppearance of label shown above SelectBox
-validationColorOk	Color resource ID indicating successful validation state
-validationColorUnknown	Color resource ID indicating unknown validation state
-validationColorError	Color resource ID indicating error validation state
-hintDrawable	Drawable resource ID of the hint icon for verification codes
+Name|Purpose
+----|-------
+textInputTheme|Theme for TextInputLayout elements 
+buttonTheme|Theme for action button in each payment card
+buttonLabelStyle|TextAppearance of label inside the action button 
+buttonBackground|Background resource ID of action button
+checkBoxTheme|Theme for checkBox UI element
+checkBoxLabelCheckedStyle|TextAppearance of label when checkBox is checked
+checkBoxLabelUncheckedStyle|TextAppearance of label when checkBox is unchecked
+selectLabelStyle|TextAppearance of label shown above SelectBox
+validationColorOk|Color resource ID indicating successful validation state
+validationColorUnknown|Color resource ID indicating unknown validation state
+validationColorError|Color resource ID indicating error validation state
+hintDrawable|Drawable resource ID of the hint icon for verification codes
 
 
-DialogParameters
+## DialogParameters
 The DialogParameters in the PaymentTheme holds parameters to theme popup dialog windows. The Payment SDK contain two different dialogs, the DateDialog for setting expiry dates and MessageDialog to show warning and errors. 
 
-
+```
 // Code sample how to set the widget parameters in the PaymentTheme builder
 DialogParameters dialogParams = DialogParameters.createBuilder().
 setDateTitleStyle(R.style.CustomText_Medium).
 ...
 build();
 builder.setDialogParameters(dialogParams);
+```
 
 Table explaining each dialog parameter
 
-dialogTheme	Theme for Dialogs, i.e. message and date dialogs
-dateTitleStyle	TextAppearance of title in DateDialog
-dateSubtitleStyle	TextAppearance of subtitle in DateDialog
-messageTitleStyle	TextAppearance of title in MessageDialog
-messageDetailsStyle	TextAppearance of message in MessageDialog
-messageDetailsNoTitleStyle	TextAppearance of message MessageDialog without a title
-buttonLabelStyle	TextAppearance of action button for Date and MessageDialogs
-imageLabelStyle	TextAppearance of the image prefix & suffix labels in MessageDialog 
-snackbarTextStyle	TextAppearance of the text label inside a Snackbar
-ProgressParameters
+Name|Purpose
+----|-------
+dialogTheme|Theme for Dialogs, i.e. message and date dialogs
+dateTitleStyle|TextAppearance of title in DateDialog
+dateSubtitleStyle|TextAppearance of subtitle in DateDialog
+messageTitleStyle|TextAppearance of title in MessageDialog
+messageDetailsStyle|TextAppearance of message in MessageDialog
+messageDetailsNoTitleStyle|TextAppearance of message MessageDialog without a title
+buttonLabelStyle|TextAppearance of action button for Date and MessageDialogs
+imageLabelStyle|TextAppearance of the image prefix & suffix labels in MessageDialog 
+snackbarTextStyle|TextAppearance of the text label inside a Snackbar
+
+## ProgressParameters
 The ProgressParameters in the PaymentTheme hold parameters to theme progress animations shown when loading lists or sending charge requests to the Payment API. 
 
-
+```
 // Code sample how to set the progress parameters in the PaymentTheme builder
 ProgressParameters progressParams = ProgressParameters.createBuilder().
 setLoadProgressBarColor(R.color.customColorPrimary).
 ...
 build();
 builder.setProgressParameters(progressParams);
+```
 
 Table explaining each dialog parameter
 
-loadBackground	Background resource ID of the loading page
-loadProgressBarColor	Indeterminate ProgressBar color resource ID
-sendBackground	Background resource ID of the loading page
-sendProgressBarColorFront	Determinate ProgressBar front color resource ID
-sendProgressBarColorBack	Determinate ProgressBar back color resource ID
-headerStyle	TextAppearance of header in the send progress screen
-infoStyle	TextAppearance of info in the send progress screen
-Grouping of Payment Methods
+Name|Purpose
+----|-------
+loadBackground|Background resource ID of the loading page
+loadProgressBarColor|Indeterminate ProgressBar color resource ID
+sendBackground|Background resource ID of the loading page
+sendProgressBarColorFront|Determinate ProgressBar front color resource ID
+sendProgressBarColorBack|Determinate ProgressBar back color resource ID
+headerStyle|TextAppearance of header in the send progress screen
+infoStyle|TextAppearance of info in the send progress screen
+
+# Grouping of Payment Methods
 The Android Payment SDK supports grouping of payment methods within a card in the payment page. By default the SDK supports one group which contains the payment methods Visa, Mastercard and American Express.
 
 Customise grouping
