@@ -74,7 +74,7 @@ Part of the list result containing the "self" URL:
 Installing the Payment SDK is easy and requires only adding the optile Payment SDK module to your build.gradle file. Note: the Android SDK is currently only available through optile internal Nexus repository.
 
 ```
-implementation  "com.oscato.mobile:op-payment-android:0.0.12"
+implementation  "com.oscato.mobile:android-payment-sdk:1.1.0"
 ```
 
 ## 3 - Show Payment Page
