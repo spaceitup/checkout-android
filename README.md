@@ -44,7 +44,7 @@ Example list request Json body:
 ```
 
 ## Registration
-There are 2 kinds of registration: Regular and Recurring. Both types are supported and depending on registration settings in the List Result a checkbox may be shown for each type of registration. Please see documentation at  optile.io for more information about both registration types.
+There are two kind of registrations: Regular and Recurring. Both types are supported and depending on registration settings in the List Result a checkbox may show for either type of registration. Please see documentation at  optile.io for more information about the registration types.
 
 # Make your first payment
 In order to make a successful payment you must complete the following steps:
