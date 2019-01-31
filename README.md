@@ -361,7 +361,7 @@ Card Code|Regex
 ----------|----------
 AMEX|number: `^3[47][0-9]{13}$`<br>verificationCode: `^[0-9]{4}$`
 CASTORAMA|number: `[1-9]{1}[0-9]{15,18}$`<br>verificationCode: `^[0-9]{4}$`
-DINERS|number: `^3(?:0[0-5]|[689][0-9])[0-9]{11}$`<br>verificationCode: `^[0-9]{3}$`
+DINERS|number: `^3(?:0[0-5]\|[689][0-9])[0-9]{11}$`<br>verificationCode: `^[0-9]{3}$`
 DISCOVER|number: `^(?:6011\|622[1-9]\|64[4-9][0-9]\|65[0-9]{2})[0-9]{12}$`<br>verificationCode: `^[0-9]{3}$`
 MASTERCARD|number: `^5[1-5][0-9]{14}\|(222[1-9]\|22[3-9][0-9]\|2[3-6][0-9]{2}\|27[01][0-9]\|2720)[0-9]{12}$`<br>verificationCode: `^[0-9]{3}$`
 UNIONPAY|number: `^62[0-5][0-9]{13,16}$`<br>verificationCode: `^[0-9]{3}$`
