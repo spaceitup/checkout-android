@@ -331,35 +331,24 @@ One payment method regex match the number input.|This payment method is displaye
 ## Input Type Validations
 Before a charge request is made, each input value provided by the user is validated. The table below shows the validations used for each input type.
 
-|Input Type|Validation|
-|----------|----------|
-|holderName|Valid if not empty|
-|accountNumber|**Debit & Credit cards**<br> 
-1. Custom validation (see table below), if not set then default regex is used. 
-2. Luhn algorithm is applied
-**Default**<br>Regex: "^[0-9]+$"|
-verificationCode|**Debit & Credit cards**<br>
-Custom validation (see table below), if not set then default regex is used.
-<br>**Default**<br>Regex: "^[0-9]*$"
+Input Type|Validation
+----------|----------
+holderName|Valid if not empty
+accountNumber|**Debit & Credit cards**<br>1. Custom validation (see table below), if not set then default regex is used.<br>2. Luhn algorithm is applied<br>**Default**<br>Regex: `^[0-9]+$`
+verificationCode|**Debit & Credit cards**<br>Custom validation (see table below), if not set then default regex is used.<br>**Default**<br>Regex: `^[0-9]*$` test
+expiryMonth|Regex: `(^0[1-9]|1[0-2]$)` test
+expiryYear|Regex: `^(20)\\d{2}$`
+expiryDate|Month regex: `(^0[1-9]|1[0-2]$)`<br>Year regex: `^(20)\\d{2}$`<br>Month and Year combined must be same or later than current date.
+bankCode|Valid if not empty
+iban|Standard Iban validation
+bic|Regex: `([a-zA-Z]{4}[a-zA-Z]{2}[a-zA-Z0-9]{2}([a-zA-Z0-9]{3})?)`
 
-expiryMonth	Regex: "(^0[1-9]|1[0-2]$)"
-expiryYear	Regex: "^(20)\\d{2}$"
-expiryDate	
-Month regex: "(^0[1-9]|1[0-2]$)"
-Year regex: "^(20)\\d{2}$"
-Month and Year combined must be same or later than current date
-bankCode	Valid if not empty
-iban	Iban validation
-bic	Regex: "([a-zA-Z]{4}[a-zA-Z]{2}[a-zA-Z0-9]{2}([a-zA-Z0-9]{3})?)"
-
-
-Debit & Credit card validations
+## Debit & Credit card validations
 The Payment SDK uses customised validations for certain Credit & Debit cards. The table below shows the list of validations used for each card type.
 
-AMEX	
-number: "^3[47][0-9]{13}$"
-
-verificationCode: "^[0-9]{4}$"
+|Card Code|Regex|
+|----------|----------|
+|AMEX|number: ```"^3[47][0-9]{13}$"```<br>verificationCode: ```"^[0-9]{4}$"```|
 
 CASTORAMA	
 number: "[1-9]{1}[0-9]{15,18}$"
