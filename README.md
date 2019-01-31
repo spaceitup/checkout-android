@@ -273,7 +273,10 @@ The SDK allow customisation of which payment methods are grouped together in a c
 PaymentUI paymentUI = PaymentUI.getInstance();
 paymentUI.setGroupResId(R.raw.customgroups);
 paymentUI.showPaymentPage(this, PAYMENT_REQUEST_CODE);
+```
 Example customgroups.json file
+
+```
 [
     {
         "items": [
@@ -348,69 +351,34 @@ The Payment SDK uses customised validations for certain Credit & Debit cards. Th
 
 Card Code|Regex
 ----------|----------
-AMEX|number: `^3[47][0-9]{13}$`<br>verificationCode: `^[0-9]{4}$"`
-CASTORAMA|number: `[1-9]{1}[0-9]{15,18}$"`<br>verificationCode: `^[0-9]{4}$`
+AMEX|number: `^3[47][0-9]{13}$`<br>verificationCode: `^[0-9]{4}$`
+CASTORAMA|number: `[1-9]{1}[0-9]{15,18}$`<br>verificationCode: `^[0-9]{4}$`
 DINERS|number: `^3(?:0[0-5]|[689][0-9])[0-9]{11}$`<br>verificationCode: `^[0-9]{3}$`
-DISCOVER|number: `^(?:6011\|622[1-9]\|64[4-9][0-9]\|65[0-9]{2})[0-9]{12}$`<br>verificationCode: `^[0-9]{3}$"`
+DISCOVER|number: `^(?:6011\|622[1-9]\|64[4-9][0-9]\|65[0-9]{2})[0-9]{12}$`<br>verificationCode: `^[0-9]{3}$`
+MASTERCARD|number: `^5[1-5][0-9]{14}\|(222[1-9]\|22[3-9][0-9]\|2[3-6][0-9]{2}\|27[01][0-9]\|2720)[0-9]{12}$`<br>verificationCode: `^[0-9]{3}$`
+UNIONPAY|number: `^62[0-5][0-9]{13,16}$`<br>verificationCode: `^[0-9]{3}$`
+VISA|number: `^4(?:[0-9]{12}\|[0-9]{15}\|[0-9]{18})$`<br>verificationCode: `^[0-9]{3}$`
+VISA_DANKORT|number: `^4(?:[0-9]{12}\|[0-9]{15})$`<br>verificationCode: `^[0-9]{3}$`
+VISAELECTRON|number: `^4[0-9]{15}$`|verificationCode: `^[0-9]{3}$`
+CARTEBANCAIRE|number: `^(2\|[4-6])[0-9]{10,16}`<br>verificationCode: `^[0-9]*$`
+CARTEBLEUE|number: `^(50\|59\|6[0-9])[0-9]{10,17}`<br>verificationCode: `^[0-9]*$`
+MAESTRO|number: `^(50\|59\|6[0-9])[0-9]{10,17}`<br>verificationCode: `^[0-9]*$`
+MAESTROUK|number: `^(50\|59\|6[0-9])[0-9]{10,17}`<br>verificationCode: `^[0-9]*$`
+POSTEPAY|number: `^(50\|59\|6[0-9])[0-9]{10,17}`<br>verificationCode: `^[0-9]*$`
 
-MASTERCARD	
-number: "^5[1-5][0-9]{14}|(222[1-9]|22[3-9][0-9]|2[3-6][0-9]{2}|27[01][0-9]|2720)[0-9]{12}$"
-
-verificationCode: "^[0-9]{3}$"
-
-UNIONPAY	
-number: "^62[0-5][0-9]{13,16}$"
-
-verificationCode: "^[0-9]{3}$"
-
-VISA	
-number: "^4(?:[0-9]{12}|[0-9]{15}|[0-9]{18})$"
-
-verificationCode: "^[0-9]{3}$"
-
-VISA_DANKORT	
-number: "^4(?:[0-9]{12}|[0-9]{15})$"
-
-verificationCode: 
-
-VISAELECTRON	
-number: "^4[0-9]{15}$"
-
-verificationCode: "^[0-9]{3}$"
-
-CARTEBANCAIRE	
-number: "^(2|[4-6])[0-9]{10,16}"
-
-verificationCode: "^[0-9]*$"
-
-CARTEBLEUE	
-number: "^(50|59|6[0-9])[0-9]{10,17}"
-
-verificationCode: "^[0-9]*$"
-
-MAESTRO	
-number: "^(50|59|6[0-9])[0-9]{10,17}"
-
-verificationCode: "^[0-9]*$"
-
-MAESTROUK	
-number: "^(50|59|6[0-9])[0-9]{10,17}"
-
-verificationCode: "^[0-9]*$"
-
-POSTEPAY	
-number: "^(50|59|6[0-9])[0-9]{10,17}"
-
-verificationCode: "^[0-9]*$"
-
-Customise validations
+## Customise validations
 The Payment SDK allow limited customisation of validations applied to input values. The validation for debit and credit card numbers and verificationCodes can only be customised. Customized validation is enabled by providing the resource ID of the validation Json file to the PaymentUI class prior to showing the payment page. The default validation provided by the Android Payment SDK are sufficient in most cases.
 
+```
 // Code sample showing how to set a custom validation settings file in the Payment SDK
 PaymentUI paymentUI = PaymentUI.getInstance();
 paymentUI.setValidationResId(R.raw.customvalidations);
 paymentUI.showPaymentPage(this, PAYMENT_REQUEST_CODE);
+```
+
 Example customvalidations.json file
+
+```
 [{
     "code": "VISA",
     "items": [
@@ -426,11 +394,4 @@ Example customvalidations.json file
 },
 ...
 ]
-
-
-
-
-
-
-
-
+```
