@@ -335,10 +335,10 @@ Input Type|Validation
 ----------|----------
 holderName|Valid if not empty
 accountNumber|**Debit & Credit cards**<br>1. Custom validation (see table below), if not set then default regex is used.<br>2. Luhn algorithm is applied<br>**Default**<br>Regex: `^[0-9]+$`
-verificationCode|**Debit & Credit cards**<br>Custom validation (see table below), if not set then default regex is used.<br>**Default**<br>Regex: `^[0-9]*$` test
-expiryMonth|Regex: `(^0[1-9]|1[0-2]$)` test
+verificationCode|**Debit & Credit cards**<br>Custom validation (see table below), if not set then default regex is used.<br>**Default**<br>Regex: `^[0-9]*$`
+expiryMonth|Regex: `(^0[1-9]\|1[0-2]$)`
 expiryYear|Regex: `^(20)\\d{2}$`
-expiryDate|Month regex: `(^0[1-9]|1[0-2]$)`<br>Year regex: `^(20)\\d{2}$`<br>Month and Year combined must be same or later than current date.
+expiryDate|Month regex: `(^0[1-9]\|1[0-2]$)`<br>Year regex: `^(20)\\d{2}$`<br>Month and Year combined must be same or later than current date.
 bankCode|Valid if not empty
 iban|Standard Iban validation
 bic|Regex: `([a-zA-Z]{4}[a-zA-Z]{2}[a-zA-Z0-9]{2}([a-zA-Z0-9]{3})?)`
@@ -346,24 +346,12 @@ bic|Regex: `([a-zA-Z]{4}[a-zA-Z]{2}[a-zA-Z0-9]{2}([a-zA-Z0-9]{3})?)`
 ## Debit & Credit card validations
 The Payment SDK uses customised validations for certain Credit & Debit cards. The table below shows the list of validations used for each card type.
 
-|Card Code|Regex|
-|----------|----------|
-|AMEX|number: ```"^3[47][0-9]{13}$"```<br>verificationCode: ```"^[0-9]{4}$"```|
-
-CASTORAMA	
-number: "[1-9]{1}[0-9]{15,18}$"
-
-verificationCode: "^[0-9]{4}$"
-
-DINERS	
-number: "^3(?:0[0-5]|[689][0-9])[0-9]{11}$"
-
-verificationCode: "^[0-9]{3}$"
-
-DISCOVER	
-number: "^(?:6011|622[1-9]|64[4-9][0-9]|65[0-9]{2})[0-9]{12}$"
-
-verificationCode: "^[0-9]{3}$"
+Card Code|Regex
+----------|----------
+AMEX|number: `^3[47][0-9]{13}$`<br>verificationCode: `^[0-9]{4}$"`
+CASTORAMA|number: `[1-9]{1}[0-9]{15,18}$"`<br>verificationCode: `^[0-9]{4}$`
+DINERS|number: `^3(?:0[0-5]|[689][0-9])[0-9]{11}$`<br>verificationCode: `^[0-9]{3}$`
+DISCOVER|number: `^(?:6011\|622[1-9]\|64[4-9][0-9]\|65[0-9]{2})[0-9]{12}$`<br>verificationCode: `^[0-9]{3}$"`
 
 MASTERCARD	
 number: "^5[1-5][0-9]{14}|(222[1-9]|22[3-9][0-9]|2[3-6][0-9]{2}|27[01][0-9]|2720)[0-9]{12}$"
