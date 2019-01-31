@@ -9,7 +9,7 @@ Android API versions 19 - 28 (Kitkat 4.4 - Pie 9.0) are supported by the Android
 
 ## Payment Methods
 
-All "direct" payment methods are supported, this includes Credit, Debit cards, Sepa. Payments that require "redirects" (external WebView) like Paypal, Sofort are not supported by this SDK. The option "presetFirst" is also not supported and will be added later.
+All "direct" payment methods are supported, this includes Credit, Debit cards, Sepa. Payments that require "redirects" (external WebView) like Paypal, Sofort are not supported by this SDK. The option "presetFirst" is also supported and gives the opportunity to show a summary page before the actual Charge.
 
 ## Integration Scenario
 
@@ -217,7 +217,7 @@ hintDrawable|Drawable resource ID of the hint icon for verification codes
 ## DialogParameters
 The DialogParameters in the PaymentTheme holds parameters to theme popup dialog windows. The Payment SDK contain two different dialogs, the DateDialog for setting expiry dates and MessageDialog to show warning and errors. 
 
-Code sample how to set the WidgetParameters in the PaymentTheme:
+Code sample how to set the DialogParameters in the PaymentTheme:
 ```
 DialogParameters dialogParams = DialogParameters.createBuilder().
 setDateTitleStyle(R.style.CustomText_Medium).
@@ -252,7 +252,7 @@ build();
 builder.setProgressParameters(progressParams);
 ```
 
-Table explaining each dialog parameter:
+Table explaining each progress parameter:
 
 Name|Purpose
 ----|-------
