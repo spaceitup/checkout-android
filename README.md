@@ -265,9 +265,10 @@ infoStyle|TextAppearance of info in the send progress screen
 # Grouping of Payment Methods
 The Android Payment SDK supports grouping of payment methods within a card in the payment page. By default the SDK supports one group which contains the payment methods Visa, Mastercard and American Express.
 
-Customise grouping
+## Customise grouping
 The SDK allow customisation of which payment methods are grouped together in a card. Customisation is done by setting the resource ID of a grouping Json settings file in the SDK prior to showing the payment page. Payment methods can only be grouped together in a card when they contain the same set of InputElements. If InputElements of grouped Payment Methods differ then each Payment Method will be shown in its own card in the payment page. The following example shows how to create two groups, first group contains Mastercard and Amex and the second group contains Visa and Visa Electron.
 
+```
 // Code sample showing how to set a custom group settings file in the Payment SDK
 PaymentUI paymentUI = PaymentUI.getInstance();
 paymentUI.setGroupResId(R.raw.customgroups);
@@ -299,56 +300,47 @@ Example customgroups.json file
         ]
     }
 ]
-Disable grouping
+```
+
+## Disable grouping
 If all payment methods should be shown in their own cards then this can be achieved by providing a grouping Json settings file with an empty array. 
 
+```
 // Code sample showing how to disable grouping in the Payment SDK
 PaymentUI paymentUI = PaymentUI.getInstance();
 paymentUI.setGroupResId(R.raw.disablegroups);
 paymentUI.showPaymentPage(this, PAYMENT_REQUEST_CODE);
+```
+
 Example disablegroups.json file
-[]
-Smart Selection
+```[]```
+
+# Smart Selection
 The choice which payment method in a group is displayed and used for charge requests is done by "Smart Selection". Each payment method in a group contains a Regular Expression that is used to "smart select" this method based on the partially entered credit/debit number. While the user types the number, the SDK will validate the partial number with the regular expressions. When one or more payment methods match the number input they will be highlighted and displayed.
-
-
 
 The following table contains the rules of Smart Selection:
 
-No payment method regex match the number input.	
-The first payment method in the group is displayed and is used to validate other input values and perform Charge requests. 
+Name|Purpose
+----|-------
+No payment method regex match the number input.|The first payment method in the group is displayed and is used to validate other input values and perform Charge requests. 
+Two or more payment method regex match the number input.|The first matching payment method is displayed and is used to validate other input values and perform Charge requests.
+One payment method regex match the number input.|This payment method is displayed and is used to validate other input values and perform Charge requests.
 
-Two or more payment method regex match the number input.	The first matching payment method is displayed and is used to validate other input values and perform Charge requests.
-One payment method regex match the number input.	This payment method is displayed and is used to validate other input values and perform Charge requests. 
+# Input Validation
 
-
-Input Validation
-Input Type Validations
+## Input Type Validations
 Before a charge request is made, each input value provided by the user is validated. The table below shows the validations used for each input type.
 
-holderName	Valid if not empty
-accountNumber
-
-
-
-Debit & Credit cards
-
+|Input Type|Validation|
+|----------|----------|
+|holderName|Valid if not empty|
+|accountNumber|**Debit & Credit cards**<br> 
+1. Custom validation (see table below), if not set then default regex is used. 
+2. Luhn algorithm is applied
+**Default**<br>Regex: "^[0-9]+$"|
+verificationCode|**Debit & Credit cards**<br>
 Custom validation (see table below), if not set then default regex is used.
- Luhn algorithm is applied
-Default
-
-Regex: "^[0-9]+$"
-
-verificationCode
-
-
-Debit & Credit cards
-
-Custom validation (see table below), if not set then default regex is used.
-
-Default
-
-Regex: "^[0-9]*$"
+<br>**Default**<br>Regex: "^[0-9]*$"
 
 expiryMonth	Regex: "(^0[1-9]|1[0-2]$)"
 expiryYear	Regex: "^(20)\\d{2}$"
