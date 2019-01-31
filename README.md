@@ -316,7 +316,9 @@ paymentUI.showPaymentPage(this, PAYMENT_REQUEST_CODE);
 ```
 
 Example disablegroups.json file
-```[]```
+```
+[]
+```
 
 # Smart Selection
 The choice which payment method in a group is displayed and used for charge requests is done by "Smart Selection". Each payment method in a group contains a Regular Expression that is used to "smart select" this method based on the partially entered credit/debit number. While the user types the number, the SDK will validate the partial number with the regular expressions. When one or more payment methods match the number input they will be highlighted and displayed.
