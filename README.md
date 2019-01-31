@@ -15,6 +15,7 @@ All "direct" payment methods are supported, this includes Credit, Debit cards, S
 
 The SDK requires payment sessions created using the DISPLAY_NATIVE integration scenario. Below is a sample list request object that can be used to create a payment session that is supported by the Android Payment SDK. 
 
+Example list request Json body:
 ```
 {
     "transactionId": "tr1",
@@ -57,8 +58,8 @@ The documentation at optile.io will guide you through optile's Open Payment Gate
 
 After you have created a payment session on your server you will receive a response containing the List Result in Json format. This List Result contains a "self" URL which is used to initialise the Payment Page.
 
+Part of the list result containing the "self" URL:
 ```
-// Part of the list result containing the "self" URL required by the Payment Page.
 {
   "links": {
     "self": "https://api.integration.oscato.com/pci/v1/5c17b47e7862056fa0755e66lrui4dvavak9ehlvh4n3abcde9",
@@ -77,13 +78,14 @@ implementation  "com.oscato.mobile:op-payment-android:0.0.12"
 ```
 
 ## 3 - Show Payment Page
-The Payment SDK provides a class called PaymentUI which is used to initialise and launch the Payment Page. The following code samples shows how to initialise and show the Payment Page.
+The Payment SDK provides a class called PaymentUI which is used to initialise and launch the Payment Page. 
 
+Code sample how to initialise and display the Payment Page:
 ```
 // Request code to identify the response in onActivityResult()
 int PAYMENT_REQUEST_CODE = 1;
 
-// list URL obtained from your server
+// list URL obtained from your backend
 String listUrl = "<https://...>";
 
 // Show the Payment Page
@@ -93,8 +95,9 @@ paymentUI.showPaymentPage(this, PAYMENT_REQUEST_CODE);
 ```
 
 # Payment Result
-Payment results are returned through the onActivityResult() method in your Activity. The following code sample shows how to obtain the PaymentResult Object inside the onActivityResult() method.
+Payment results are returned through the onActivityResult() method in your Activity. 
 
+Code sample how to obtain the PaymentResult inside the onActivityResult() method:
 ```
 @Override
 public void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -127,7 +130,7 @@ The look & feel of the Payment Page may be customised, i.e. colors, font style a
 ## Page Orientation
 By default the orientation of the Payment Page will be locked based on the orientation in which the Payment Page was opened. I.e. if the mobile app is shown in landscape mode the Payment Page will also be opened in landscape mode but cannot be changed anymore by rotating the phone.
 
-The following code sample shows how to set the fixed orientation mode of the Payment Page prior to open the page.
+Code sample how to set the fixed orientation mode:
 ```
 //
 // Orientation modes supported by the Payment Page
@@ -144,7 +147,7 @@ paymentUI.showPaymentPage(this, PAYMENT_REQUEST_CODE);
 ## Page Theming
 Theming of the Payment Page is done using the PaymentTheme class and in order for theming to take effect, the customised PaymentTheme instance must be set in the PaymentUI class prior to opening the Payment Page.
 
-Code sample how to create and set a custom PaymentTheme
+Code sample how to create and set a custom PaymentTheme:
 ```
 PaymentTheme.Builder builder = PaymentTheme.createBuilder();
 ...  
@@ -158,7 +161,7 @@ The PaymentTheme contains a set of parameters defining the customised theming. W
 ## PageParameters
 The PageParameters class contains a collection of parameters used to theme the page and list.
 
-Code sample how to set the page parameters in the PaymentTheme builder
+Code sample how to set the PageParameters in the PaymentTheme:
 ```
 PageParameters pageParams = PageParameters.createBuilder().
 setPageTheme(R.style.CustomThemePaymentPage).
@@ -167,8 +170,7 @@ build();
 builder.setPageParameters(pageParams);
 ```
 
-Table explaining each page parameter
-
+Table explaining each page parameter:
 Name|Purpose
 ----|-------
 pageTheme|Main theme of the Payment Page Activity. 
@@ -184,7 +186,7 @@ The WidgetParameters contains a collection of parameters used to theme widgets. 
 
 The WidgetParameters class allow setting individual drawable resource ids for icons by using the putInputTypeIcon() method, use the setDefaultIconMapping() method to use the icons provided by the Payment SDK.
 
-Code sample how to set the widget parameters in the PaymentTheme builder
+Code sample how to set the WidgetParameters in the PaymentTheme:
 ```
 WidgetParameters widgetParams = WidgetParameters.createBuilder().
 setTextInputTheme(R.style.CustomThemeTextInput).
@@ -193,8 +195,7 @@ build();
 builder.setWidgetParameters(widgetParams);
 ```
 
-Table explaining each widget parameter
-
+Table explaining each widget parameter:
 Name|Purpose
 ----|-------
 textInputTheme|Theme for TextInputLayout elements 
@@ -214,7 +215,7 @@ hintDrawable|Drawable resource ID of the hint icon for verification codes
 ## DialogParameters
 The DialogParameters in the PaymentTheme holds parameters to theme popup dialog windows. The Payment SDK contain two different dialogs, the DateDialog for setting expiry dates and MessageDialog to show warning and errors. 
 
-Code sample how to set the widget parameters in the PaymentTheme builder
+Code sample how to set the WidgetParameters in the PaymentTheme:
 ```
 DialogParameters dialogParams = DialogParameters.createBuilder().
 setDateTitleStyle(R.style.CustomText_Medium).
@@ -223,8 +224,7 @@ build();
 builder.setDialogParameters(dialogParams);
 ```
 
-Table explaining each dialog parameter
-
+Table explaining each dialog parameter:
 Name|Purpose
 ----|-------
 dialogTheme|Theme for Dialogs, i.e. message and date dialogs
@@ -240,8 +240,8 @@ snackbarTextStyle|TextAppearance of the text label inside a Snackbar
 ## ProgressParameters
 The ProgressParameters in the PaymentTheme hold parameters to theme progress animations shown when loading lists or sending charge requests to the Payment API. 
 
+Code sample how to set the ProgressParameters in the PaymentTheme:
 ```
-// Code sample how to set the progress parameters in the PaymentTheme builder
 ProgressParameters progressParams = ProgressParameters.createBuilder().
 setLoadProgressBarColor(R.color.customColorPrimary).
 ...
@@ -249,8 +249,7 @@ build();
 builder.setProgressParameters(progressParams);
 ```
 
-Table explaining each dialog parameter
-
+Table explaining each dialog parameter:
 Name|Purpose
 ----|-------
 loadBackground|Background resource ID of the loading page
@@ -267,7 +266,7 @@ The Android Payment SDK supports grouping of payment methods within a card in th
 ## Customise grouping
 The SDK allow customisation of which payment methods are grouped together in a card. Customisation is done by setting the resource ID of a grouping Json settings file in the SDK prior to showing the payment page. Payment methods can only be grouped together in a card when they contain the same set of InputElements. If InputElements of grouped Payment Methods differ then each Payment Method will be shown in its own card in the payment page. The following example shows how to create two groups, first group contains Mastercard and Amex and the second group contains Visa and Visa Electron.
 
-Example customgroups.json file
+Example customgroups.json file:
 ```
 [
     {
@@ -297,7 +296,7 @@ Example customgroups.json file
 ]
 ```
 
-Code sample showing how to set a customgroups.json file in the Payment SDK
+Code sample how to set a customgroups.json file:
 ```
 PaymentUI paymentUI = PaymentUI.getInstance();
 paymentUI.setGroupResId(R.raw.customgroups);
@@ -307,12 +306,12 @@ paymentUI.showPaymentPage(this, PAYMENT_REQUEST_CODE);
 ## Disable grouping
 If all payment methods should be shown in their own cards then this can be achieved by providing a grouping Json settings file with an empty array. 
 
-Example disablegroups.json file
+Example disablegroups.json file:
 ```
 []
 ```
 
-Code sample showing how to set the disabledgroups.json file in the Payment SDK
+Code sample how to set the disabledgroups.json file:
 ```
 PaymentUI paymentUI = PaymentUI.getInstance();
 paymentUI.setGroupResId(R.raw.disablegroups);
@@ -322,8 +321,7 @@ paymentUI.showPaymentPage(this, PAYMENT_REQUEST_CODE);
 # Smart Selection
 The choice which payment method in a group is displayed and used for charge requests is done by "Smart Selection". Each payment method in a group contains a Regular Expression that is used to "smart select" this method based on the partially entered credit/debit number. While the user types the number, the SDK will validate the partial number with the regular expressions. When one or more payment methods match the number input they will be highlighted and displayed.
 
-The following table contains the rules of Smart Selection:
-
+Table containing the rules of Smart Selection:
 Name|Purpose
 ----|-------
 No payment method regex match the number input.|The first payment method in the group is displayed and is used to validate other input values and perform Charge requests. 
@@ -333,8 +331,9 @@ One payment method regex match the number input.|This payment method is displaye
 # Input Validation
 
 ## Input Type Validations
-Before a charge request is made, each input value provided by the user is validated. The table below shows the validations used for each input type.
+Before a charge request is made, each input value provided by the user is validated. 
 
+Table containing the validations used for each input type:
 Input Type|Validation
 ----------|----------
 holderName|Valid if not empty
@@ -348,8 +347,9 @@ iban|Standard Iban validation
 bic|Regex: `([a-zA-Z]{4}[a-zA-Z]{2}[a-zA-Z0-9]{2}([a-zA-Z0-9]{3})?)`
 
 ## Debit & Credit card validations
-The Payment SDK uses customised validations for certain Credit & Debit cards. The table below shows the list of validations used for each card type.
+The Payment SDK uses customised validations for certain Credit & Debit cards. 
 
+Table containing the list of validations used for each card type:
 Card Code|Regex
 ----------|----------
 AMEX|number: `^3[47][0-9]{13}$`<br>verificationCode: `^[0-9]{4}$`
@@ -370,7 +370,7 @@ POSTEPAY|number: `^(50\|59\|6[0-9])[0-9]{10,17}`<br>verificationCode: `^[0-9]*$`
 ## Customise validations
 The Payment SDK allow limited customisation of validations applied to input values. The validation for debit and credit card numbers and verificationCodes can only be customised. Customized validation is enabled by providing the resource ID of the validation Json file to the PaymentUI class prior to showing the payment page. The default validation provided by the Android Payment SDK are sufficient in most cases.
 
-Example customvalidations.json file
+Example customvalidations.json file:
 ```
 [{
     "code": "VISA",
@@ -389,7 +389,7 @@ Example customvalidations.json file
 ]
 ```
 
-Code sample showing how to set the customvalidations.json file in the Payment SDK.
+Code sample how to set the customvalidations.json file:
 ```
 PaymentUI paymentUI = PaymentUI.getInstance();
 paymentUI.setValidationResId(R.raw.customvalidations);
