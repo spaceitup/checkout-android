@@ -128,7 +128,6 @@ The look & feel of the Payment Page may be customised, i.e. colors, font style a
 By default the orientation of the Payment Page will be locked based on the orientation in which the Payment Page was opened. I.e. if the mobile app is shown in landscape mode the Payment Page will also be opened in landscape mode but cannot be changed anymore by rotating the phone.
 
 The following code sample shows how to set the fixed orientation mode of the Payment Page prior to open the page.
-
 ```
 //
 // Orientation modes supported by the Payment Page
@@ -145,8 +144,8 @@ paymentUI.showPaymentPage(this, PAYMENT_REQUEST_CODE);
 ## Page Theming
 Theming of the Payment Page is done using the PaymentTheme class and in order for theming to take effect, the customised PaymentTheme instance must be set in the PaymentUI class prior to opening the Payment Page.
 
+Code sample how to create and set a custom PaymentTheme
 ```
-// Code sample how to create and set a custom PaymentTheme
 PaymentTheme.Builder builder = PaymentTheme.createBuilder();
 ...  
 PaymentUI paymentUI = PaymentUI.getInstance();
@@ -159,8 +158,8 @@ The PaymentTheme contains a set of parameters defining the customised theming. W
 ## PageParameters
 The PageParameters class contains a collection of parameters used to theme the page and list.
 
+Code sample how to set the page parameters in the PaymentTheme builder
 ```
-// Code sample how to set the page parameters in the PaymentTheme builder
 PageParameters pageParams = PageParameters.createBuilder().
 setPageTheme(R.style.CustomThemePaymentPage).
 ...
@@ -185,8 +184,8 @@ The WidgetParameters contains a collection of parameters used to theme widgets. 
 
 The WidgetParameters class allow setting individual drawable resource ids for icons by using the putInputTypeIcon() method, use the setDefaultIconMapping() method to use the icons provided by the Payment SDK.
 
+Code sample how to set the widget parameters in the PaymentTheme builder
 ```
-// Code sample how to set the widget parameters in the PaymentTheme builder
 WidgetParameters widgetParams = WidgetParameters.createBuilder().
 setTextInputTheme(R.style.CustomThemeTextInput).
 ...
@@ -215,8 +214,8 @@ hintDrawable|Drawable resource ID of the hint icon for verification codes
 ## DialogParameters
 The DialogParameters in the PaymentTheme holds parameters to theme popup dialog windows. The Payment SDK contain two different dialogs, the DateDialog for setting expiry dates and MessageDialog to show warning and errors. 
 
+Code sample how to set the widget parameters in the PaymentTheme builder
 ```
-// Code sample how to set the widget parameters in the PaymentTheme builder
 DialogParameters dialogParams = DialogParameters.createBuilder().
 setDateTitleStyle(R.style.CustomText_Medium).
 ...
@@ -268,14 +267,7 @@ The Android Payment SDK supports grouping of payment methods within a card in th
 ## Customise grouping
 The SDK allow customisation of which payment methods are grouped together in a card. Customisation is done by setting the resource ID of a grouping Json settings file in the SDK prior to showing the payment page. Payment methods can only be grouped together in a card when they contain the same set of InputElements. If InputElements of grouped Payment Methods differ then each Payment Method will be shown in its own card in the payment page. The following example shows how to create two groups, first group contains Mastercard and Amex and the second group contains Visa and Visa Electron.
 
-```
-// Code sample showing how to set a custom group settings file in the Payment SDK
-PaymentUI paymentUI = PaymentUI.getInstance();
-paymentUI.setGroupResId(R.raw.customgroups);
-paymentUI.showPaymentPage(this, PAYMENT_REQUEST_CODE);
-```
 Example customgroups.json file
-
 ```
 [
     {
@@ -305,19 +297,26 @@ Example customgroups.json file
 ]
 ```
 
-## Disable grouping
-If all payment methods should be shown in their own cards then this can be achieved by providing a grouping Json settings file with an empty array. 
-
+Code sample showing how to set a customgroups.json file in the Payment SDK
 ```
-// Code sample showing how to disable grouping in the Payment SDK
 PaymentUI paymentUI = PaymentUI.getInstance();
-paymentUI.setGroupResId(R.raw.disablegroups);
+paymentUI.setGroupResId(R.raw.customgroups);
 paymentUI.showPaymentPage(this, PAYMENT_REQUEST_CODE);
 ```
+
+## Disable grouping
+If all payment methods should be shown in their own cards then this can be achieved by providing a grouping Json settings file with an empty array. 
 
 Example disablegroups.json file
 ```
 []
+```
+
+Code sample showing how to set the disabledgroups.json file in the Payment SDK
+```
+PaymentUI paymentUI = PaymentUI.getInstance();
+paymentUI.setGroupResId(R.raw.disablegroups);
+paymentUI.showPaymentPage(this, PAYMENT_REQUEST_CODE);
 ```
 
 # Smart Selection
@@ -371,15 +370,7 @@ POSTEPAY|number: `^(50\|59\|6[0-9])[0-9]{10,17}`<br>verificationCode: `^[0-9]*$`
 ## Customise validations
 The Payment SDK allow limited customisation of validations applied to input values. The validation for debit and credit card numbers and verificationCodes can only be customised. Customized validation is enabled by providing the resource ID of the validation Json file to the PaymentUI class prior to showing the payment page. The default validation provided by the Android Payment SDK are sufficient in most cases.
 
-```
-// Code sample showing how to set a custom validation settings file in the Payment SDK
-PaymentUI paymentUI = PaymentUI.getInstance();
-paymentUI.setValidationResId(R.raw.customvalidations);
-paymentUI.showPaymentPage(this, PAYMENT_REQUEST_CODE);
-```
-
 Example customvalidations.json file
-
 ```
 [{
     "code": "VISA",
@@ -397,3 +388,11 @@ Example customvalidations.json file
 ...
 ]
 ```
+
+Code sample showing how to set the customvalidations.json file in the Payment SDK.
+```
+PaymentUI paymentUI = PaymentUI.getInstance();
+paymentUI.setValidationResId(R.raw.customvalidations);
+paymentUI.showPaymentPage(this, PAYMENT_REQUEST_CODE);
+```
+
