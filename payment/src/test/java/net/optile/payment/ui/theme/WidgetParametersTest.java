@@ -44,6 +44,9 @@ public class WidgetParametersTest {
         assertEquals(params.getValidationColorUnknown(), R.color.pmvalidation_unknown);
         assertEquals(params.getValidationColorError(), R.color.pmvalidation_error);
 
+        assertEquals(params.getHintDrawable(), R.drawable.ic_hint);
+        assertEquals(params.getInfoLabelStyle(), R.style.PaymentText_Small);        
+        
         assertEquals(params.getInputTypeIcon(PaymentInputType.HOLDER_NAME), R.drawable.ic_name);
         assertEquals(params.getInputTypeIcon(PaymentInputType.EXPIRY_DATE), R.drawable.ic_date);
         assertEquals(params.getInputTypeIcon(PaymentInputType.EXPIRY_MONTH), R.drawable.ic_date);
@@ -145,4 +148,19 @@ public class WidgetParametersTest {
         assertEquals(params.getValidationColorError(), value);
     }
 
+    @Test
+    public void getHintDrawable() {
+        int value = 112;
+        WidgetParameters params = WidgetParameters.createBuilder().
+            setHintDrawable(value).build();
+        assertEquals(params.getHintDrawable(), value);
+    }
+
+    @Test
+    public void getInfoLabelStyle() {
+        int value = 113;
+        WidgetParameters params = WidgetParameters.createBuilder().
+            setInfoLabelStyle(value).build();
+        assertEquals(params.getInfoLabelStyle(), value);
+    }
 }
