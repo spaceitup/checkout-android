@@ -2,7 +2,7 @@
 Introduction
 ============
 
-The optile Android Payment SDK makes it easy to integrate with optile
+The optile Android SDK makes it easy to integrate with optile
 and provides a great looking payment experience in your Android app. The
 SDK comes with a ready made, easy to use Payment Page which takes care
 of showing supported payment methods and handling payments. The SDK also
@@ -22,10 +22,10 @@ Payment Methods
 ---------------
 
 All “direct” payment methods are supported, this includes Credit, Debit
-cards, Sepa. Payments that require “redirects” (external WebView) like
-Paypal, Sofort are not supported by this SDK. The option “presetFirst”
-is also supported and gives the opportunity to show a summary page
-before the actual Charge.
+cards and Sepa. Payments that require “redirects” (external WebView) like
+Paypal and Sofort are not supported by this SDK. The option “presetFirst”
+is also supported and provides the option to show a summary page to your users
+before finalizing the payment.
 
 Integration Scenario
 --------------------
@@ -70,24 +70,24 @@ Registration
 There are two kind of registrations: Regular and Recurring. Both types
 are supported and depending on registration settings in the List Result
 a checkbox may show for either type of registration. Please see
-documentation at optile.io for more information about the registration
-types.
+documentation at `optile.io <https://optile.io>`_for more information 
+about the registration types.
 
-Make your first payment
-=======================
+Your first payment
+==================
 
 In order to make a successful payment you must complete the following
 steps:
 
 1. Create a payment session on your server and retrieve the list URL in
    your app
-2. Install Payment SDK in your app
+2. Install Android SDK in your app
 3. Initialise and show the Payment Page with the list URL
 
 1 - Create payment session
 --------------------------
 
-The documentation at optile.io will guide you through optile’s Open
+The documentation at `optile.io <https://optile.io>`_ will guide you through optile’s Open
 Payment Gateway (OPG) features for frontend checkout and backend use
 cases. It provides important information about integration scenarios,
 testing possibilities, and references. The documentation will help you
@@ -110,21 +110,21 @@ Part of the list result containing the “self” URL:
      "operation": "LIST",
      ...
 
-2 - Install Payment SDK
+2 - Install Android SDK
 -----------------------
 
-Installing the Payment SDK is easy and requires only adding the optile
-Payment SDK module to your build.gradle file. Note: the Android SDK is
+Installing the Android SDK is easy and requires only adding the optile
+Android SDK module to your build.gradle file. Note: the Android SDK is
 currently only available through optile internal Nexus repository.
 
 ::
 
-   implementation "com.oscato.mobile:android-payment-sdk:1.1.0"
+   implementation "com.oscato.mobile:android-sdk:1.1.0"
 
 3 - Show Payment Page
 ---------------------
 
-The Payment SDK provides a class called PaymentUI which is used to
+The Android SDK provides a class called PaymentUI which is used to
 initialise and launch the Payment Page.
 
 Code sample how to initialise and display the Payment Page:
@@ -181,7 +181,7 @@ Customise Payment Page
 ======================
 
 The look & feel of the Payment Page may be customised, i.e. colors, font
-style and icons can be changed so that it matches the look & feel of the
+style and icons can be changed so that it matches the look & feel of your
 mobile app.
 
 Page Orientation
@@ -277,7 +277,7 @@ WidgetParameters
 
 The WidgetParameters contains a collection of parameters used to theme
 widgets. Widgets are UI elements handling user input, i.e. TextInput,
-CheckBoxes and buttons. Below is a table explaining each parameter.
+CheckBoxes Select options. Below is a table explaining each parameter.
 
 The WidgetParameters class allow setting individual drawable resource
 ids for icons by using the putInputTypeIcon() method, use the
@@ -337,8 +337,8 @@ DialogParameters
 ----------------
 
 The DialogParameters in the PaymentTheme holds parameters to theme popup
-dialog windows. The Payment SDK contain two different dialogs, the
-DateDialog for setting expiry dates and MessageDialog to show warning
+dialog windows. The SDK contain two different dialogs, the
+DateDialog for setting expiry dates and MessageDialog to show warnings
 and errors.
 
 Code sample how to set the DialogParameters in the PaymentTheme:
@@ -384,7 +384,7 @@ ProgressParameters
 ------------------
 
 The ProgressParameters in the PaymentTheme hold parameters to theme
-progress animations shown when loading lists or sending charge requests
+progress animations shown when loading lists or sending charge/preset requests
 to the Payment API.
 
 Code sample how to set the ProgressParameters in the PaymentTheme:
@@ -425,19 +425,19 @@ Table explaining each progress parameter:
 Grouping of Payment Methods
 ===========================
 
-The Android Payment SDK supports grouping of payment methods within a
-card in the payment page. By default the SDK supports one group which
-contains the payment methods Visa, Mastercard and American Express.
+The SDK supports grouping of payment methods within a card in the payment page. 
+By default the SDK supports one group which contains the payment methods Visa, 
+Mastercard and American Express.
 The default grouping of payment methods in the Payment SDK is defined in `groups.json <./payment/src/main/res/raw/groups.json>`_
 
 Customise grouping
 ------------------
 
-The SDK allow customisation of which payment methods are grouped
+The SDK allow customisation which payment methods are grouped
 together in a card. Customisation is done by setting the resource ID of
 a grouping Json settings file in the SDK prior to showing the payment
-page. Payment methods can only be grouped together in a card when they
-contain the same set of InputElements. If InputElements of grouped
+page. Payment methods can only be grouped together when they
+have the same set of InputElements. If InputElements of grouped
 Payment Methods differ then each Payment Method will be shown in its own
 card in the payment page. The following example shows how to create two
 groups, first group contains Mastercard and Amex and the second group
@@ -485,7 +485,7 @@ Code sample how to set a customgroups.json file:
 Disable grouping
 ----------------
 
-If all payment methods should be shown in their own cards then this can
+If each payment method should be placed in a separate card then this can
 be achieved by providing a grouping Json settings file with an empty
 array.
 
@@ -509,10 +509,10 @@ Smart Selection
 The choice which payment method in a group is displayed and used for
 charge requests is done by “Smart Selection”. Each payment method in a
 group contains a Regular Expression that is used to “smart select” this
-method based on the partially entered credit/debit number. While the
+method based on the partially entered card number. While the
 user types the number, the SDK will validate the partial number with the
-regular expressions. When one or more payment methods match the number
-input they will be highlighted and displayed.
+regular expression. When one or more payment methods match the number
+input they will be highlighted.
 
 Table containing the rules of Smart Selection:
 
