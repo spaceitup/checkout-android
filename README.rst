@@ -416,6 +416,7 @@ Grouping of Payment Methods
 The Android Payment SDK supports grouping of payment methods within a
 card in the payment page. By default the SDK supports one group which
 contains the payment methods Visa, Mastercard and American Express.
+The default grouping of payment methods in the Payment SDK is defined in `groups.json <./payment/src/main/res/raw/groups.json>`_
 
 Customise grouping
 ------------------
@@ -522,12 +523,10 @@ Table containing the rules of Smart Selection:
 Input Validation
 ================
 
-Before a charge/preset request is made the Payment SDK validates each input value.
-The file `validations.json <./payment/src/main/res/raw/validations.json>`_ contains the regular expressions
-to validate credit & debit card numbers.
-
-The Payment SDK uses customised validations for certain Credit & Debit
-cards.
+The Android SDK validates all input values provided by the user for each charge/preset request. 
+The file `validations.json <./payment/src/main/res/raw/validations.json>`_ contains the regular expression
+definitions that the Payment SDK uses to validate card numbers and verificationCodes. 
+All other validations for input values i.e. expiryMonth and expiryYear are defined in `Validator.java <./payment/src/main/java/net/optile/payment/validation/Validator.java>`_.
 
 Customise Card validations
 ---------------------
