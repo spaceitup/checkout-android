@@ -231,7 +231,7 @@ parameter name ends with Theme then the parameter holds a theme resource
 id and is applied during inflation of the UI element.
 
 PageParameters
---------------
+~~~~~~~~~~~~~~
 
 The PageParameters class contains a collection of parameters used to
 theme the page and list.
@@ -273,7 +273,7 @@ Table explaining each page parameter:
 +-------------------------+--------------------------------------------+
 
 WidgetParameters
-----------------
+~~~~~~~~~~~~~~~~
 
 The WidgetParameters contains a collection of parameters used to theme
 widgets. Widgets are UI elements handling user input, i.e. TextInput,
@@ -334,7 +334,7 @@ Table explaining each widget parameter:
 +-------------------------+--------------------------------------------+
 
 DialogParameters
-----------------
+~~~~~~~~~~~~~~~~
 
 The DialogParameters in the PaymentTheme holds parameters to theme popup
 dialog windows. The SDK contain two different dialogs, the
@@ -381,7 +381,7 @@ Table explaining each dialog parameter:
 +-------------------------+--------------------------------------------+
 
 ProgressParameters
-------------------
+~~~~~~~~~~~~~~~~~~
 
 The ProgressParameters in the PaymentTheme hold parameters to theme
 progress animations shown when loading lists or sending charge/preset requests
