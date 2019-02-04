@@ -1,4 +1,3 @@
-.. contents:: Table of Contents
 
 Introduction
 ============
