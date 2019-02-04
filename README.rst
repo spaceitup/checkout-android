@@ -70,7 +70,7 @@ Registration
 There are two kind of registrations: Regular and Recurring. Both types
 are supported and depending on registration settings in the List Result
 a checkbox may show for either type of registration. Please see
-documentation at `optile.io <https://optile.io>`_for more information 
+documentation at `optile.io <https://optile.io>`_ for more information 
 about the registration types.
 
 Your first payment
