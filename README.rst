@@ -253,19 +253,19 @@ Table explaining each page parameter:
 +=========================+============================================+
 | pageTheme               | Main theme of the Payment Page Activity.   |
 +-------------------------+--------------------------------------------+
-| emptyListLabelStyle     | TextAppearance for label shown when the    |
+| emptyListLabelStyle     | TextAppearance of label shown when the     |
 |                         | list of payment methods is empty           |
 +-------------------------+--------------------------------------------+
-| sectionHeaderLabelStyle | TextAppearance for section header label in |
+| sectionHeaderLabelStyle | TextAppearance of section header label in  |
 |                         | the list, i.e. “Saved accounts”            |
 +-------------------------+--------------------------------------------+
-| networkCardTitleStyle   | TextAppearance for network card title,     |
+| networkCardTitleStyle   | TextAppearance of network card title,      |
 |                         | i.e. “Visa”                                |
 +-------------------------+--------------------------------------------+
-| accountCardTitleStyle   | TextAppearance for account card title,     |
+| accountCardTitleStyle   | TextAppearance of account card title,      |
 |                         | i.e. “41 \**\* 1111”                       |
 +-------------------------+--------------------------------------------+
-| accountCardSubtitleStyl | TextAppearance for account card subtitle,  |
+| accountCardSubtitleStyl | TextAppearance of account card subtitle,   |
 | e                       | i.e. the expiry date “01 / 2032”           |
 +-------------------------+--------------------------------------------+
 | paymentLogoBackground   | Background resource ID drawn behind        |
@@ -367,8 +367,8 @@ Table explaining each dialog parameter:
 +-------------------------+--------------------------------------------+
 | messageDetailsStyle     | TextAppearance of message in MessageDialog |
 +-------------------------+--------------------------------------------+
-| messageDetailsNoTitleSt | TextAppearance of message MessageDialog    |
-| yle                     | without a title                            |
+| messageDetailsNoTitleSt | TextAppearance of message in MessageDialog |
+| yle                     | without title                              |
 +-------------------------+--------------------------------------------+
 | buttonLabelStyle        | TextAppearance of action button for Date   |
 |                         | and MessageDialogs                         |
@@ -428,7 +428,7 @@ Grouping of Payment Methods
 The SDK supports grouping of payment methods within a card in the payment page. 
 By default the SDK supports one group which contains the payment methods Visa, 
 Mastercard and American Express.
-The default grouping of payment methods in the Payment SDK is defined in `groups.json <./payment/src/main/res/raw/groups.json>`_
+The default grouping of payment methods in the Payment SDK is defined in `groups.json <./payment/src/main/res/raw/groups.json>`_.
 
 Customise grouping
 ------------------
@@ -520,16 +520,16 @@ Table containing the rules of Smart Selection:
 | Name                    | Purpose                                    |
 +=========================+============================================+
 | No payment method regex | The first payment method in the group is   |
-| match the number input. | displayed and is used to validate other    |
-|                         | input values and perform Charge requests.  |
+| match the number input  | displayed and is used to validate input    |
+| value.                  | values and perform Charge/Preset requests. |
 +-------------------------+--------------------------------------------+
 | Two or more payment     | The first matching payment method is       |
-| method regex match the  | displayed and is used to validate other    |
-| number input.           | input values and perform Charge requests.  |
+| method regex match the  | displayed and is used to validate input    |
+| number input value      | values and perform Charge/Preset requests. |
 +-------------------------+--------------------------------------------+
 | One payment method      | This payment method is displayed and is    |
-| regex match the number  | used to validate other input values and    |
-| input.                  | perform Charge requests.                   |
+| regex match the number  | used to validate input values and          |
+| input value.            | perform Charge/Preset requests.            |
 +-------------------------+--------------------------------------------+
 
 Input Validation
