@@ -248,29 +248,29 @@ Code sample how to set the PageParameters in the PaymentTheme:
 
 Table explaining each page parameter:
 
-+-------------------------+--------------------------------------------+
-| Name                    | Purpose                                    |
-+=========================+============================================+
-| pageTheme               | Main theme of the Payment Page Activity.   |
-+-------------------------+--------------------------------------------+
-| emptyListLabelStyle     | TextAppearance of label shown when the     |
-|                         | list of payment methods is empty           |
-+-------------------------+--------------------------------------------+
-| sectionHeaderLabelStyle | TextAppearance of section header label in  |
-|                         | the list, i.e. “Saved accounts”            |
-+-------------------------+--------------------------------------------+
-| networkCardTitleStyle   | TextAppearance of network card title,      |
-|                         | i.e. “Visa”                                |
-+-------------------------+--------------------------------------------+
-| accountCardTitleStyle   | TextAppearance of account card title,      |
-|                         | i.e. “41 \**\* 1111”                       |
-+-------------------------+--------------------------------------------+
-| accountCardSubtitleStyl | TextAppearance of account card subtitle,   |
-| e                       | i.e. the expiry date “01 / 2032”           |
-+-------------------------+--------------------------------------------+
-| paymentLogoBackground   | Background resource ID drawn behind        |
-|                         | payment method images                      |
-+-------------------------+--------------------------------------------+
++--------------------------+--------------------------------------------+
+| Name                     | Purpose                                    |
++==========================+============================================+
+| pageTheme                | Main theme of the Payment Page Activity.   |
++--------------------------+--------------------------------------------+
+| emptyListLabelStyle      | TextAppearance of label shown when the     |
+|                          | list of payment methods is empty           |
++--------------------------+--------------------------------------------+
+| sectionHeaderLabelStyle  | TextAppearance of section header label in  |
+|                          | the list, i.e. “Saved accounts”            |
++--------------------------+--------------------------------------------+
+| networkCardTitleStyle    | TextAppearance of network card title,      |
+|                          | i.e. “Visa”                                |
++--------------------------+--------------------------------------------+
+| accountCardTitleStyle    | TextAppearance of account card title,      |
+|                          | i.e. “41 \**\* 1111”                       |
++--------------------------+--------------------------------------------+
+| accountCardSubtitleStyle | TextAppearance of account card subtitle,   |
+|                          | i.e. the expiry date “01 / 2032”           |
++--------------------------+--------------------------------------------+
+| paymentLogoBackground    | Background resource ID drawn behind        |
+|                          | payment method images                      |
++--------------------------+--------------------------------------------+
 
 WidgetParameters
 ~~~~~~~~~~~~~~~~
@@ -296,42 +296,42 @@ Code sample how to set the WidgetParameters in the PaymentTheme:
 
 Table explaining each widget parameter:
 
-+-------------------------+--------------------------------------------+
-| Name                    | Purpose                                    |
-+=========================+============================================+
-| textInputTheme          | Theme for TextInputLayout elements         |
-+-------------------------+--------------------------------------------+
-| buttonTheme             | Theme for action button in each payment    |
-|                         | card                                       |
-+-------------------------+--------------------------------------------+
-| buttonLabelStyle        | TextAppearance of label inside the action  |
-|                         | button                                     |
-+-------------------------+--------------------------------------------+
-| buttonBackground        | Background resource ID of action button    |
-+-------------------------+--------------------------------------------+
-| checkBoxTheme           | Theme for checkBox UI element              |
-+-------------------------+--------------------------------------------+
-| checkBoxLabelCheckedSty | TextAppearance of label when checkBox is   |
-| le                      | checked                                    |
-+-------------------------+--------------------------------------------+
-| checkBoxLabelUncheckedS | TextAppearance of label when checkBox is   |
-| tyle                    | unchecked                                  |
-+-------------------------+--------------------------------------------+
-| selectLabelStyle        | TextAppearance of label shown above        |
-|                         | SelectBox                                  |
-+-------------------------+--------------------------------------------+
-| validationColorOk       | Color resource ID indicating successful    |
-|                         | validation state                           |
-+-------------------------+--------------------------------------------+
-| validationColorUnknown  | Color resource ID indicating unknown       |
-|                         | validation state                           |
-+-------------------------+--------------------------------------------+
-| validationColorError    | Color resource ID indicating error         |
-|                         | validation state                           |
-+-------------------------+--------------------------------------------+
-| hintDrawable            | Drawable resource ID of the hint icon for  |
-|                         | verification codes                         |
-+-------------------------+--------------------------------------------+
++-----------------------------+--------------------------------------------+
+| Name                        | Purpose                                    |
++=============================+============================================+
+| textInputTheme              | Theme for TextInputLayout elements         |
++-----------------------------+--------------------------------------------+
+| buttonTheme                 | Theme for action button in each payment    |
+|                             | card                                       |
++-----------------------------+--------------------------------------------+
+| buttonLabelStyle            | TextAppearance of label inside the action  |
+|                             | button                                     |
++-----------------------------+--------------------------------------------+
+| buttonBackground            | Background resource ID of action button    |
++-----------------------------+--------------------------------------------+
+| checkBoxTheme               | Theme for checkBox UI element              |
++-----------------------------+--------------------------------------------+
+| checkBoxLabelCheckedStyle   | TextAppearance of label when checkBox is   |
+| le                          | checked                                    |
++-----------------------------+--------------------------------------------+
+| checkBoxLabelUncheckedStyle | TextAppearance of label when checkBox is   |
+| tyle                        | unchecked                                  |
++-----------------------------+--------------------------------------------+
+| selectLabelStyle            | TextAppearance of label shown above        |
+|                             | SelectBox                                  |
++-----------------------------+--------------------------------------------+
+| validationColorOk           | Color resource ID indicating successful    |
+|                             | validation state                           |
++-----------------------------+--------------------------------------------+
+| validationColorUnknown      | Color resource ID indicating unknown       |
+|                             | validation state                           |
++-----------------------------+--------------------------------------------+
+| validationColorError        | Color resource ID indicating error         |
+|                             | validation state                           |
++-----------------------------+--------------------------------------------+
+| hintDrawable                | Drawable resource ID of the hint icon for  |
+|                             | verification codes                         |
++-----------------------------+--------------------------------------------+
 
 DialogParameters
 ~~~~~~~~~~~~~~~~
@@ -353,32 +353,32 @@ Code sample how to set the DialogParameters in the PaymentTheme:
 
 Table explaining each dialog parameter:
 
-+-------------------------+--------------------------------------------+
-| Name                    | Purpose                                    |
-+=========================+============================================+
-| dialogTheme             | Theme for Dialogs, i.e. message and date   |
-|                         | dialogs                                    |
-+-------------------------+--------------------------------------------+
-| dateTitleStyle          | TextAppearance of title in DateDialog      |
-+-------------------------+--------------------------------------------+
-| dateSubtitleStyle       | TextAppearance of subtitle in DateDialog   |
-+-------------------------+--------------------------------------------+
-| messageTitleStyle       | TextAppearance of title in MessageDialog   |
-+-------------------------+--------------------------------------------+
-| messageDetailsStyle     | TextAppearance of message in MessageDialog |
-+-------------------------+--------------------------------------------+
-| messageDetailsNoTitleSt | TextAppearance of message in MessageDialog |
-| yle                     | without title                              |
-+-------------------------+--------------------------------------------+
-| buttonLabelStyle        | TextAppearance of action button for Date   |
-|                         | and MessageDialogs                         |
-+-------------------------+--------------------------------------------+
-| imageLabelStyle         | TextAppearance of the image prefix &       |
-|                         | suffix labels in MessageDialog             |
-+-------------------------+--------------------------------------------+
-| snackbarTextStyle       | TextAppearance of the text label inside a  |
-|                         | Snackbar                                   |
-+-------------------------+--------------------------------------------+
++-----------------------------+--------------------------------------------+
+| Name                        | Purpose                                    |
++=============================+============================================+
+| dialogTheme                 | Theme for Dialogs, i.e. message and date   |
+|                             | dialogs                                    |
++-----------------------------+--------------------------------------------+
+| dateTitleStyle              | TextAppearance of title in DateDialog      |
++-----------------------------+--------------------------------------------+
+| dateSubtitleStyle           | TextAppearance of subtitle in DateDialog   |
++-----------------------------+--------------------------------------------+
+| messageTitleStyle           | TextAppearance of title in MessageDialog   |
++-----------------------------+--------------------------------------------+
+| messageDetailsStyle         | TextAppearance of message in MessageDialog |
++-----------------------------+--------------------------------------------+
+| messageDetailsNoTitleStyle  | TextAppearance of message in MessageDialog |
+|                             | without title                              |
++-----------------------------+--------------------------------------------+
+| buttonLabelStyle            | TextAppearance of action button for Date   |
+|                             | and MessageDialogs                         |
++-----------------------------+--------------------------------------------+
+| imageLabelStyle             | TextAppearance of the image prefix &       |
+|                             | suffix labels in MessageDialog             |
++-----------------------------+--------------------------------------------+
+| snackbarTextStyle           | TextAppearance of the text label inside a  |
+|                             | Snackbar                                   |
++-----------------------------+--------------------------------------------+
 
 ProgressParameters
 ~~~~~~~~~~~~~~~~~~
