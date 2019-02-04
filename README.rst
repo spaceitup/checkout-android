@@ -523,7 +523,7 @@ Input Validation
 ================
 
 Before a charge/preset request is made the Payment SDK validates each input value.
-The file [validations.json](payment/src/main/res/raw/validations.json) contains the regular expressions
+The file `validations.json <./payment/src/main/res/raw/validations.json>`_ contains the regular expressions
 to validate credit & debit card numbers.
 
 The Payment SDK uses customised validations for certain Credit & Debit
