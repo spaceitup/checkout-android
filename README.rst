@@ -399,6 +399,7 @@ Code sample how to set the ProgressParameters in the PaymentTheme:
    builder.setProgressParameters(progressParams);
 
 Table explaining each progress parameter:
+
 +---------------------------+--------------------------------------------+
 | Name                      | Purpose                                    |   
 +===========================+============================================+
@@ -504,7 +505,7 @@ Code sample how to set the disabledgroups.json file:
    paymentUI.showPaymentPage(this, PAYMENT_REQUEST_CODE);
 
 Smart Selection
-===============
+---------------
 
 The choice which payment method in a group is displayed and used for
 charge requests is done by “Smart Selection”. Each payment method in a
@@ -541,7 +542,7 @@ definitions that the Payment SDK uses to validate card numbers and verification 
 Validations for other input values i.e. expiryMonth and expiryYear are defined in `Validator.java <./payment/src/main/java/net/optile/payment/validation/Validator.java>`_.
 
 Customise validations
-=======
+---------------------
 
 The Payment SDK allow customisation of validations applied to
 certain input types. Currently the validation for debit, credit card numbers and
