@@ -537,10 +537,9 @@ Table containing the validations used for each input type:
 +-----------------------------------+-----------------------------------+
 | accountNumber                     | **Debit & Credit cards**          |
 |                                   |                                   |
-|                                   | 1. Custom card validation, if not |
+|                                   | - Custom card validation, if not  |
 |                                   | set then default regex is used. 	|
-|                                   |                                   |
-|                                   | 2. Luhn algorithm is applied      |
+|                                   | - Luhn algorithm is applied       |
 |                                   |                                   |
 |                  	            | **Default**                       |
 |                                   |                                   |
