@@ -313,10 +313,10 @@ Table explaining each widget parameter:
 | checkBoxTheme               | Theme for checkBox UI element              |
 +-----------------------------+--------------------------------------------+
 | checkBoxLabelCheckedStyle   | TextAppearance of label when checkBox is   |
-| le                          | checked                                    |
+|                             | checked                                    |
 +-----------------------------+--------------------------------------------+
 | checkBoxLabelUncheckedStyle | TextAppearance of label when checkBox is   |
-| tyle                        | unchecked                                  |
+|                             | unchecked                                  |
 +-----------------------------+--------------------------------------------+
 | selectLabelStyle            | TextAppearance of label shown above        |
 |                             | SelectBox                                  |
