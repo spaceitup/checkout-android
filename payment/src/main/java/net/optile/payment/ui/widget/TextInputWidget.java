@@ -11,14 +11,16 @@
 
 package net.optile.payment.ui.widget;
 
+import android.text.Editable;
 import android.text.InputType;
 import android.text.TextUtils;
+import android.text.TextWatcher;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
 import android.widget.TextView;
 import net.optile.payment.core.PaymentException;
-import net.optile.payment.form.Charge;
+import net.optile.payment.form.Operation;
 import net.optile.payment.model.InputElementType;
 import net.optile.payment.ui.theme.PaymentTheme;
 import net.optile.payment.validation.ValidationResult;
@@ -29,7 +31,9 @@ import net.optile.payment.validation.ValidationResult;
 public final class TextInputWidget extends InputLayoutWidget {
 
     private final static String NUMERIC_DIGITS = "0123456789 -";
-    private final static int INTEGER_MAXLENGTH = 4;
+    private final static int MAXLENGTH_INTEGER = 4;
+    private final static int MAXLENGTH_NUMERIC = 56;
+    private final static int MAXLENGTH_DEFAULT = 256;
 
     /**
      * Construct a new TextInputWidget
@@ -40,7 +44,7 @@ public final class TextInputWidget extends InputLayoutWidget {
      */
     public TextInputWidget(String name, View rootView, PaymentTheme theme) {
         super(name, rootView, theme);
-        input.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+        textInput.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override
             public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
                 if (actionId == EditorInfo.IME_ACTION_DONE) {
@@ -49,17 +53,33 @@ public final class TextInputWidget extends InputLayoutWidget {
                 return false;
             }
         });
+        textInput.addTextChangedListener(new TextWatcher() {
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                presenter.onTextInputChanged(name, getNormalizedValue());
+            }
+
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+            }
+
+            public void afterTextChanged(Editable s) {
+            }
+        });
     }
 
     public void setInputType(String type) {
+
         switch (type) {
             case InputElementType.NUMERIC:
                 setInputType(InputType.TYPE_CLASS_NUMBER, NUMERIC_DIGITS);
+                setMaxLength(MAXLENGTH_NUMERIC);
                 break;
             case InputElementType.INTEGER:
                 setInputType(InputType.TYPE_CLASS_NUMBER, null);
-                setMaxLength(INTEGER_MAXLENGTH);
-                setLayoutWidth(WEIGHT_REDUCED);
+                setMaxLength(MAXLENGTH_INTEGER);
+                setReducedView();
+                break;
+            default:
+                setMaxLength(MAXLENGTH_DEFAULT);
         }
     }
 
@@ -76,17 +96,17 @@ public final class TextInputWidget extends InputLayoutWidget {
             setValidation(VALIDATION_OK, false, null);
             validated = true;
         }
-        if (input.hasFocus()) {
-            input.clearFocus();
+        if (textInput.hasFocus()) {
+            textInput.clearFocus();
         }
         return validated;
     }
 
-    public void putValue(Charge charge) throws PaymentException {
+    public void putValue(Operation operation) throws PaymentException {
         String val = getNormalizedValue();
 
         if (!TextUtils.isEmpty(val)) {
-            charge.putValue(name, val);
+            operation.putValue(name, val);
         }
     }
 
@@ -99,7 +119,7 @@ public final class TextInputWidget extends InputLayoutWidget {
     }
 
     void handleOnKeyboardDone() {
-        input.clearFocus();
+        textInput.clearFocus();
         presenter.hideKeyboard();
     }
 }

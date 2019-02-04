@@ -11,6 +11,8 @@
 
 package net.optile.payment.util;
 
+import java.lang.reflect.Type;
+
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonSyntaxException;
@@ -46,6 +48,10 @@ public final class GsonHelper {
 
     public <T> T fromJson(String json, Class<T> classOfT) throws JsonSyntaxException {
         return gson.fromJson(json, classOfT);
+    }
+
+    public <T> T fromJson(String json, Type type) throws JsonSyntaxException {
+        return gson.fromJson(json, type);
     }
 
     private static class InstanceHolder {

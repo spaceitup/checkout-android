@@ -21,6 +21,8 @@ public final class PageParameters {
     private final int pageTheme;
     private final int emptyListLabelStyle;
     private final int sectionHeaderLabelStyle;
+    private final int presetCardTitleStyle;
+    private final int presetCardSubtitleStyle;
     private final int accountCardTitleStyle;
     private final int accountCardSubtitleStyle;
     private final int networkCardTitleStyle;
@@ -30,6 +32,8 @@ public final class PageParameters {
         this.pageTheme = builder.pageTheme;
         this.emptyListLabelStyle = builder.emptyListLabelStyle;
         this.sectionHeaderLabelStyle = builder.sectionHeaderLabelStyle;
+        this.presetCardTitleStyle = builder.presetCardTitleStyle;
+        this.presetCardSubtitleStyle = builder.presetCardSubtitleStyle;
         this.accountCardTitleStyle = builder.accountCardTitleStyle;
         this.accountCardSubtitleStyle = builder.accountCardSubtitleStyle;
         this.networkCardTitleStyle = builder.networkCardTitleStyle;
@@ -45,6 +49,8 @@ public final class PageParameters {
             setPageTheme(R.style.PaymentTheme_PaymentPage).
             setEmptyListLabelStyle(R.style.PaymentText_Medium_Gray).
             setSectionHeaderLabelStyle(R.style.PaymentText_Medium_Bold).
+            setPresetCardTitleStyle(R.style.PaymentText_Medium_Bold).
+            setPresetCardSubtitleStyle(R.style.PaymentText_Tiny).
             setAccountCardTitleStyle(R.style.PaymentText_Medium_Bold).
             setAccountCardSubtitleStyle(R.style.PaymentText_Tiny).
             setNetworkCardTitleStyle(R.style.PaymentText_Medium).
@@ -61,6 +67,14 @@ public final class PageParameters {
 
     public int getSectionHeaderLabelStyle() {
         return sectionHeaderLabelStyle;
+    }
+
+    public int getPresetCardTitleStyle() {
+        return presetCardTitleStyle;
+    }
+
+    public int getPresetCardSubtitleStyle() {
+        return presetCardSubtitleStyle;
     }
 
     public int getAccountCardTitleStyle() {
@@ -85,6 +99,8 @@ public final class PageParameters {
         int sectionHeaderLabelStyle;
         int accountCardTitleStyle;
         int accountCardSubtitleStyle;
+        int presetCardTitleStyle;
+        int presetCardSubtitleStyle;
         int networkCardTitleStyle;
         int paymentLogoBackground;
 
@@ -103,6 +119,16 @@ public final class PageParameters {
 
         public Builder setSectionHeaderLabelStyle(int sectionHeaderLabelStyle) {
             this.sectionHeaderLabelStyle = sectionHeaderLabelStyle;
+            return this;
+        }
+
+        public Builder setPresetCardTitleStyle(int presetCardTitleStyle) {
+            this.presetCardTitleStyle = presetCardTitleStyle;
+            return this;
+        }
+
+        public Builder setPresetCardSubtitleStyle(int presetCardSubtitleStyle) {
+            this.presetCardSubtitleStyle = presetCardSubtitleStyle;
             return this;
         }
 

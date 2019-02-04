@@ -86,6 +86,19 @@ public final class AccountCard implements PaymentCard {
      * {@inheritDoc}
      */
     @Override
+    public InputElement getInputElement(String name) {
+        for (InputElement element : getInputElements()) {
+            if (element.getName().equals(name)) {
+                return element;
+            }
+        }
+        return null;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
     public boolean isPreselected() {
         return PaymentUtils.isTrue(account.getSelected());
     }
@@ -96,6 +109,14 @@ public final class AccountCard implements PaymentCard {
     @Override
     public String getButton() {
         return network.getButton();
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public boolean onTextInputChanged(String type, String text) {
+        return false;
     }
 
     public URL getLink(String name) {

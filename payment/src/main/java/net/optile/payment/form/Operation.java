@@ -11,6 +11,8 @@
 
 package net.optile.payment.form;
 
+import java.net.URL;
+
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -20,21 +22,28 @@ import net.optile.payment.core.PaymentException;
 import net.optile.payment.core.PaymentInputType;
 
 /**
- * Class holding the Charge form values
+ * Class holding Operation form values
  */
-public class Charge {
+public class Operation {
 
-    private final JSONObject charge;
+    public final static String CHARGE = "CHARGE";
+    public final static String PRESET = "PRESET";
+    public final static String PAYOUT = "PAYOUT";
+    public final static String UPDATE = "UPDATE";
+
+    private final URL url;
+    private final JSONObject form;
     private final JSONObject account;
 
-    public Charge() {
-        charge = new JSONObject();
-        account = new JSONObject();
+    public Operation(URL url) {
+        this.url = url;
+        this.form = new JSONObject();
+        this.account = new JSONObject();
     }
 
     /**
-     * Put a value for a Charge request into this Charge object.
-     * Depending on the name of the value it will be added to the correct place in the Charge Json Object.
+     * Put a value into this Operation form.
+     * Depending on the name of the value it will be added to the correct place in the Operation Json Object.
      *
      * @param name the name of the value
      * @param value containing the value
@@ -58,17 +67,21 @@ public class Charge {
                     break;
                 case PaymentInputType.ALLOW_RECURRENCE:
                 case PaymentInputType.AUTO_REGISTRATION:
-                    charge.put(name, value);
+                    form.put(name, value);
             }
         } catch (JSONException e) {
-            String msg = "Charge.putValue failed for name: " + name;
-            PaymentError error = new PaymentError("Charge", PaymentError.INTERNAL_ERROR, msg);
+            String msg = "Operation.putValue failed for name: " + name;
+            PaymentError error = new PaymentError("Operation", PaymentError.INTERNAL_ERROR, msg);
             throw new PaymentException(error, msg, e);
         }
     }
 
     public String toJson() throws JSONException {
-        charge.put("account", account);
-        return charge.toString();
+        form.put("account", account);
+        return form.toString();
+    }
+
+    public URL getURL() {
+        return url;
     }
 }

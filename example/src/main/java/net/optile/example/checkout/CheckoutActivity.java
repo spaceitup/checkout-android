@@ -11,7 +11,6 @@
 
 package net.optile.example.checkout;
 
-import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -20,10 +19,10 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
+import android.widget.RadioGroup;
 import net.optile.payment.ui.PaymentResult;
 import net.optile.payment.ui.PaymentUI;
 import net.optile.payment.ui.theme.PaymentTheme;
@@ -39,6 +38,7 @@ public final class CheckoutActivity extends AppCompatActivity implements Checkou
 
     private CheckoutPresenter presenter;
     private CheckoutResult checkoutResult;
+    private RadioGroup themeGroup;
 
     /**
      * Create an Intent to launch this checkout activity
@@ -57,8 +57,7 @@ public final class CheckoutActivity extends AppCompatActivity implements Checkou
     public void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_checkout);
-        Toolbar toolbar = findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
+        themeGroup = findViewById(R.id.radio_themes);
 
         Button button = findViewById(R.id.button_checkout);
         button.setOnClickListener(new View.OnClickListener() {
@@ -154,19 +153,30 @@ public final class CheckoutActivity extends AppCompatActivity implements Checkou
         PaymentUI paymentUI = PaymentUI.getInstance();
         paymentUI.setListUrl(listUrl);
 
-        // The default optile theme
-        PaymentTheme theme = PaymentTheme.createDefault();
+        // The custom validation settings file, the default SDK validations are sufficient in most cases 
+        //paymentUI.setValidationResId(R.raw.customvalidations);
 
-        // The empty theme
-        //PaymentTheme theme = PaymentTheme.createBuilder().build();
-
-        // The custom dark checkout theme
-        //PaymentTheme theme = CheckoutTheme.createCustomTheme();
-
-        paymentUI.setPaymentTheme(theme);
+        // Set the orientation to be fixed to landscape mode
+        //paymentUI.setOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
+        
+        // The custom payment method group settings file
+        // paymentUI.setGroupResId(R.raw.customgroups);
+        paymentUI.setPaymentTheme(createPaymentTheme());
         paymentUI.showPaymentPage(this, PAYMENT_REQUEST_CODE);
     }
 
+    private PaymentTheme createPaymentTheme() {
+
+        switch (themeGroup.getCheckedRadioButtonId()) {
+            case R.id.radio_theme_default:
+                return PaymentTheme.createDefault();
+            case R.id.radio_theme_custom:
+                return CheckoutTheme.createCustomTheme();
+            default:
+                return PaymentTheme.createBuilder().build();
+        }
+    }
+    
     private void showSnackbar(int resId) {
         Snackbar snackbar = Snackbar.make(findViewById(R.id.layout_activity),
             getString(resId), Snackbar.LENGTH_LONG);

@@ -1,32 +1,31 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:orientation="horizontal"
-    android:gravity="center_vertical"
-    android:paddingTop="@dimen/pmborder_medium"
-    android:paddingBottom="@dimen/pmwidget_padding">
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:gravity="center_vertical"
+              android:orientation="horizontal"
+              android:paddingTop="@dimen/pmborder_medium"
+              android:paddingBottom="@dimen/pmwidget_padding">
 
     <LinearLayout
         android:id="@+id/layout_viewholder"
         android:layout_width="@dimen/pmwidget_checkboxwidth"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:gravity="end"/>
+        android:gravity="end"
+        android:layout_marginEnd="@dimen/pmwidget_padding"
+        android:orientation="horizontal"/>
 
     <TextView
         android:id="@+id/label_value_unchecked"
-        android:layout_marginStart="@dimen/pmwidget_padding"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"/>
+
 
     <TextView
         android:id="@+id/label_value_checked"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/pmwidget_padding"
         android:visibility="gone"/>
 
 </LinearLayout>

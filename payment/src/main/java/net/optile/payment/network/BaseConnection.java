@@ -20,6 +20,7 @@ import java.net.CookieHandler;
 import java.net.CookieManager;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.nio.charset.StandardCharsets;
 import java.security.KeyManagementException;
 import java.security.NoSuchAlgorithmException;
 
@@ -101,6 +102,19 @@ abstract class BaseConnection {
             }
         }
         return socketFactory;
+    }
+
+    private void setTLSSocketFactory(final HttpURLConnection conn) {
+
+        if (!(conn instanceof HttpsURLConnection)) {
+            return;
+        }
+        TLSSocketFactory socketFactory = getTLSSocketFactory();
+
+        if (socketFactory == null) {
+            return;
+        }
+        ((HttpsURLConnection) conn).setSSLSocketFactory(socketFactory);
     }
 
     /**
@@ -246,7 +260,7 @@ abstract class BaseConnection {
     void writeToOutputStream(final HttpURLConnection conn, String data) throws IOException {
 
         try (OutputStream out = conn.getOutputStream()) {
-            out.write(data.getBytes(UTF8));
+            out.write(data.getBytes(StandardCharsets.UTF_8));
         }
     }
 
@@ -306,19 +320,6 @@ abstract class BaseConnection {
         conn.setConnectTimeout(TIMEOUT_CONNECT);
         conn.setReadTimeout(TIMEOUT_READ);
         conn.setRequestProperty(HEADER_USER_AGENT, getUserAgent());
-    }
-
-    private void setTLSSocketFactory(final HttpURLConnection conn) {
-
-        if (!(conn instanceof HttpsURLConnection)) {
-            return;
-        }
-        TLSSocketFactory socketFactory = getTLSSocketFactory();
-
-        if (socketFactory == null) {
-            return;
-        }
-        ((HttpsURLConnection) conn).setSSLSocketFactory(socketFactory);
     }
 
     /**

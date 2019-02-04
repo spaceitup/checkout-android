@@ -1,3 +1,3 @@
-net.optile.payment.form.ChargeTest.putValue_success=[
+net.optile.payment.form.OperationTest.putValue_success=[
   "{\"allowRecurrence\":\"true\",\"autoRegistration\":\"true\",\"account\":{\"number\":\"accountnumber123\",\"holderName\":\"John Doe\",\"expiryMonth\":12,\"expiryYear\":2019,\"verificationCode\":\"123\",\"bankCode\":\"bankcode123\",\"iban\":\"iban123\",\"bic\":\"bic123\"}}"
 ]

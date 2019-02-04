@@ -25,6 +25,7 @@ import net.optile.payment.ui.PaymentUI;
 import net.optile.payment.ui.model.AccountCard;
 import net.optile.payment.ui.model.NetworkCard;
 import net.optile.payment.ui.model.PaymentCard;
+import net.optile.payment.ui.model.PresetCard;
 import net.optile.payment.ui.theme.PaymentTheme;
 import net.optile.payment.validation.ValidationResult;
 
@@ -49,12 +50,14 @@ final class ListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         PaymentCard card = getItemWithViewType(viewType).getPaymentCard();
 
-        if (card == null) {
-            return HeaderViewHolder.createInstance(this, parent);
-        } else if (card instanceof NetworkCard) {
+        if (card instanceof NetworkCard) {
             return NetworkCardViewHolder.createInstance(this, (NetworkCard) card, parent);
-        } else {
+        } else if (card instanceof AccountCard) {
             return AccountCardViewHolder.createInstance(this, (AccountCard) card, parent);
+        } else if (card instanceof PresetCard) {
+            return PresetCardViewHolder.createInstance(this, (PresetCard) card, parent);
+        } else {
+            return HeaderViewHolder.createInstance(this, parent);
         }
     }
 
@@ -91,6 +94,7 @@ final class ListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     }
 
     void onItemClicked(int position) {
+
         if (isInvalidPosition(position)) {
             return;
         }
@@ -125,8 +129,30 @@ final class ListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         list.onActionClicked(position);
     }
 
+    void onHintClicked(int position, String type) {
+        if (isInvalidPosition(position)) {
+            return;
+        }
+        list.onHintClicked(position, type);
+    }
+
     Context getContext() {
         return list.getContext();
+    }
+
+    void onTextInputChanged(int position, String type, String text) {
+        if (isInvalidPosition(position)) {
+            return;
+        }
+        ListItem item = items.get(position);
+
+        if (item.hasPaymentCard()) {
+            PaymentCard card = item.getPaymentCard();
+
+            if (card.onTextInputChanged(type, text)) {
+                notifyItemChanged(position);
+            }
+        }
     }
 
     ValidationResult validate(int position, String type, String value1, String value2) {

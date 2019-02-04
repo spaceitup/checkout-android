@@ -1,21 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                xmlns:app="http://schemas.android.com/apk/res-auto"
                 android:id="@+id/layout_activity"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
-
-    <android.support.design.widget.AppBarLayout
-        android:id="@+id/layout_toolbar"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
-
-        <android.support.v7.widget.Toolbar
-            android:id="@+id/toolbar"
-            android:layout_width="match_parent"
-            android:layout_height="?attr/actionBarSize"/>
-    </android.support.design.widget.AppBarLayout>
 
     <LinearLayout
         android:layout_width="wrap_content"
@@ -24,10 +12,38 @@
         android:gravity="center"
         android:orientation="vertical">
 
+        <RadioGroup
+            android:id="@+id/radio_themes"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/border"
+            android:orientation="vertical">
+
+            <RadioButton
+                android:id="@+id/radio_theme_default"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:checked="true"
+                android:layout_marginBottom="@dimen/border"
+                android:text="@string/theme_default" />
+            <RadioButton
+                android:id="@+id/radio_theme_custom"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/border"
+            android:text="@string/theme_custom" />
+            <RadioButton
+                android:id="@+id/radio_theme_empty"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/border"
+                android:text="@string/theme_empty" />
+        </RadioGroup>
+        
         <Button
-            android:id="@+id/button_checkout"
             style="@style/AppButton"
-            android:stateListAnimator="@null"
+            app:backgroundTint="@color/colorPrimary"
+            android:id="@+id/button_checkout"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/button_checkout"

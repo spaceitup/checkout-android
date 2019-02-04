@@ -15,11 +15,12 @@ import java.net.URL;
 import java.util.concurrent.Callable;
 
 import com.bumptech.glide.Glide;
-import android.util.Log;
+
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
+import android.util.Log;
 import android.widget.ImageView;
 import net.optile.payment.core.PaymentException;
 import net.optile.payment.core.WorkerSubscriber;

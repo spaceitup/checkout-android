@@ -26,6 +26,7 @@ import net.optile.payment.model.Networks;
 public final class PaymentSession {
 
     public final ListResult listResult;
+    public final PresetCard presetCard;
     public final List<AccountCard> accounts;
     public final List<NetworkCard> networks;
     private LanguageFile lang;
@@ -34,11 +35,13 @@ public final class PaymentSession {
      * Construct a new PaymentSession object
      *
      * @param listResult Object holding the current list session data
+     * @param presetCard the optional PresetCard with the PresetAccount
      * @param accounts list of AccountCards supported by this PaymentSession
      * @param networks list of NetworkCards supported by this PaymentSession
      */
-    public PaymentSession(ListResult listResult, List<AccountCard> accounts, List<NetworkCard> networks) {
+    public PaymentSession(ListResult listResult, PresetCard presetCard, List<AccountCard> accounts, List<NetworkCard> networks) {
         this.listResult = listResult;
+        this.presetCard = presetCard;
         this.accounts = accounts;
         this.networks = networks;
     }

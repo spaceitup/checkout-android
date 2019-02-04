@@ -12,6 +12,7 @@
 package net.optile.payment.ui.page;
 
 import net.optile.payment.ui.PaymentResult;
+import net.optile.payment.ui.dialog.ThemedDialogFragment;
 import net.optile.payment.ui.model.PaymentSession;
 
 /**
@@ -27,9 +28,9 @@ interface PaymentPageView {
     boolean isActive();
 
     /**
-     * Get the string resource given the resource id
+     * Get the String value given the resource id
      *
-     * @return the string resource
+     * @return the string value or null if not found
      */
     String getStringRes(int resId);
 
@@ -39,11 +40,12 @@ interface PaymentPageView {
     void clear();
 
     /**
-     * Show or hide the loading animation
+     * Show or hide the progress animation, progress animations are shown when lists are loaded or operation requests are performed.
      *
-     * @param show if true show the loading animation, hide otherwise
+     * @param show if true show the progress animation, hide otherwise
+     * @param style the style of progress animation to be used
      */
-    void showLoading(boolean show);
+    void showProgress(boolean show, int style);
 
     /**
      * Stop loading and show the PaymentSession
@@ -53,11 +55,11 @@ interface PaymentPageView {
     void showPaymentSession(PaymentSession session);
 
     /**
-     * Display a message to the user using a Dialog
+     * Show a snackbar message to the user
      *
-     * @param message the message to be shown
+     * @param message The message to be shown
      */
-    void showMessage(String message);
+    void showSnackbar(String message);
 
     /**
      * Close the payment page
@@ -65,17 +67,17 @@ interface PaymentPageView {
     void closePage();
 
     /**
-     * First show the message to the user and then close the Payment page
+     * Show the Themed Dialog 
      *
-     * @param message to be shown in a Dialog to the user
+     * @param dialog to be shown
      */
-    void closePageWithMessage(String message);
+    void showDialog(ThemedDialogFragment dialog);
 
     /**
-     * Set the current activity payment result, this is either PaymentUI.RESULT_CODE_OK, 
-     * PaymentUI.RESULT_CODE_CANCELED, PaymentUI.RESULT_CODE_ERROR  
+     * Set the current activity payment result, this is either PaymentUI.RESULT_CODE_OK,
+     * PaymentUI.RESULT_CODE_CANCELED, PaymentUI.RESULT_CODE_ERROR
      *
-     * @param resultCode the current resultCode 
+     * @param resultCode the current resultCode
      * @param result containing the Payment result state
      */
     void setPaymentResult(int resultCode, PaymentResult result);

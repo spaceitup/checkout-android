@@ -13,27 +13,24 @@ package net.optile.payment.ui.page;
 
 import java.util.Map;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
 import android.view.MenuItem;
-import android.view.View;
-import android.widget.ProgressBar;
 import android.widget.TextView;
 import net.optile.payment.R;
 import net.optile.payment.ui.PaymentResult;
 import net.optile.payment.ui.PaymentUI;
-import net.optile.payment.ui.dialog.MessageDialogFragment;
+import net.optile.payment.ui.dialog.DialogHelper;
+import net.optile.payment.ui.dialog.ThemedDialogFragment;
 import net.optile.payment.ui.list.PaymentList;
 import net.optile.payment.ui.model.PaymentCard;
 import net.optile.payment.ui.model.PaymentSession;
-import net.optile.payment.ui.theme.PageParameters;
+import net.optile.payment.ui.theme.PaymentTheme;
 import net.optile.payment.ui.widget.FormWidget;
 import net.optile.payment.util.PaymentUtils;
 import net.optile.payment.validation.ValidationResult;
@@ -44,15 +41,13 @@ import net.optile.payment.validation.Validator;
  */
 public final class PaymentPageActivity extends AppCompatActivity implements PaymentPageView {
 
-    private static final String TAG = "pay_PaymentPageActivity";
     private static final String EXTRA_LISTURL = "extra_listurl";
-
     private PaymentPagePresenter presenter;
     private String listUrl;
     private boolean active;
     private PaymentList paymentList;
-    private ProgressBar progressBar;
     private int cachedListIndex;
+    private PaymentProgressView progress;
 
     /**
      * Create the start intent for this Activity
@@ -81,33 +76,41 @@ public final class PaymentPageActivity extends AppCompatActivity implements Paym
             Intent intent = getIntent();
             this.listUrl = intent.getStringExtra(EXTRA_LISTURL);
         }
-        PageParameters params = PaymentUI.getInstance().getPaymentTheme().getPageParameters();
-        int pageTheme = params.getPageTheme();
-        if (pageTheme != 0) {
-            setTheme(pageTheme);
-        }
+        PaymentTheme theme = PaymentUI.getInstance().getPaymentTheme();
+        initPageTheme(theme);
+
         setContentView(R.layout.activity_paymentpage);
-        initToolbar(params);
-        initList(params);
-        this.progressBar = findViewById(R.id.progressbar);
+        setRequestedOrientation(PaymentUI.getInstance().getOrientation());
+
+        initActionBar(getString(R.string.pmpage_title), true);
+        initList(theme);
+
+        this.progress = new PaymentProgressView(this, theme);
         this.presenter = new PaymentPagePresenter(this);
     }
 
-    private void initList(PageParameters params) {
+    private void initPageTheme(PaymentTheme theme) {
+        int pageTheme = theme.getPageParameters().getPageTheme();
+
+        if (pageTheme != 0) {
+            setTheme(pageTheme);
+        }
+    }
+
+    private void initList(PaymentTheme theme) {
         TextView empty = findViewById(R.id.label_empty);
-        PaymentUtils.setTextAppearance(empty, params.getEmptyListLabelStyle());
+        PaymentUtils.setTextAppearance(empty, theme.getPageParameters().getEmptyListLabelStyle());
         this.paymentList = new PaymentList(this, findViewById(R.id.recyclerview_paymentlist), empty);
     }
 
-    private void initToolbar(PageParameters params) {
-        final Toolbar toolbar = findViewById(R.id.toolbar);
-        toolbar.setTitle(getString(R.string.pmpage_title));
-        setSupportActionBar(toolbar);
+    private void initActionBar(String title, boolean homeEnabled) {
         ActionBar actionBar = getSupportActionBar();
 
         if (actionBar != null) {
-            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-            getSupportActionBar().setDisplayShowHomeEnabled(true);
+            actionBar.setTitle(title);
+            actionBar.setHomeButtonEnabled(homeEnabled);
+            actionBar.setDisplayHomeAsUpEnabled(homeEnabled);
+            actionBar.setDisplayShowHomeEnabled(true);
         }
     }
 
@@ -129,6 +132,7 @@ public final class PaymentPageActivity extends AppCompatActivity implements Paym
         super.onPause();
         this.active = false;
         this.presenter.onStop();
+        this.progress.onStop();
     }
 
     /**
@@ -138,7 +142,7 @@ public final class PaymentPageActivity extends AppCompatActivity implements Paym
     public void onResume() {
         super.onResume();
         this.active = true;
-        presenter.load(this.listUrl);
+        presenter.load(this, this.listUrl);
     }
 
     /**
@@ -153,6 +157,17 @@ public final class PaymentPageActivity extends AppCompatActivity implements Paym
                 return true;
         }
         return false;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void onBackPressed() {
+        if (presenter.onBackPressed()) {
+            return;
+        }
+        super.onBackPressed();
     }
 
     /**
@@ -191,7 +206,8 @@ public final class PaymentPageActivity extends AppCompatActivity implements Paym
         if (!isActive()) {
             return;
         }
-        progressBar.setVisibility(View.GONE);
+        initActionBar(getString(R.string.pmpage_title), true);
+        progress.setVisible(false);
         paymentList.showPaymentSession(session, cachedListIndex);
         this.cachedListIndex = -1;
     }
@@ -200,16 +216,22 @@ public final class PaymentPageActivity extends AppCompatActivity implements Paym
      * {@inheritDoc}
      */
     @Override
-    public void showLoading(boolean show) {
+    public void showProgress(boolean show, int style) {
         if (!isActive()) {
             return;
         }
         if (show) {
+
+            if (style == PaymentProgressView.SEND) {
+                initActionBar(getString(R.string.pmprogress_sendtitle), false);
+            }
             paymentList.setVisible(false);
-            progressBar.setVisibility(View.VISIBLE);
+            progress.setStyle(style);
+            progress.setVisible(true);
         } else {
+            initActionBar(getString(R.string.pmpage_title), true);
             paymentList.setVisible(true);
-            progressBar.setVisibility(View.GONE);
+            progress.setVisible(false);
         }
     }
 
@@ -228,28 +250,6 @@ public final class PaymentPageActivity extends AppCompatActivity implements Paym
      * {@inheritDoc}
      */
     @Override
-    public void showMessage(String message) {
-        if (!isActive()) {
-            return;
-        }
-        showMessageDialog(message, false);
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public void closePageWithMessage(String message) {
-        if (!isActive()) {
-            return;
-        }
-        showMessageDialog(message, true);
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
     public void setPaymentResult(int resultCode, PaymentResult result) {
         if (!isActive()) {
             return;
@@ -259,13 +259,33 @@ public final class PaymentPageActivity extends AppCompatActivity implements Paym
         setResult(resultCode, intent);
     }
 
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void showDialog(ThemedDialogFragment dialog) {
+        dialog.show(getSupportFragmentManager(), "paymentpage_dialog");
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void showSnackbar(String message) {
+
+        if (TextUtils.isEmpty(message)) {
+            return;
+        }
+        Snackbar snackbar = DialogHelper.createSnackbar(findViewById(R.id.layout_paymentpage), message);
+        snackbar.show();
+    }
+
     public void onActionClicked(PaymentCard item, Map<String, FormWidget> widgets) {
-        paymentList.hideKeyboard();
-        presenter.performOperation(item, widgets);
+        presenter.onActionClicked(item, widgets);
     }
 
     public ValidationResult validate(PaymentCard card, String type, String value1, String value2) {
-        Validator validator = PaymentUI.getInstance().getValidator();
+        Validator validator = presenter.getValidator();
         ValidationResult result = validator.validate(card.getPaymentMethod(), card.getCode(), type, value1, value2);
 
         if (!result.isError()) {
@@ -278,38 +298,5 @@ public final class PaymentPageActivity extends AppCompatActivity implements Paym
         }
         result.setMessage(msg);
         return result;
-    }
-
-    private void showMessageDialog(final String message, final boolean finish) {
-        if (!isActive()) {
-            return;
-        }
-        MessageDialogFragment dialog = new MessageDialogFragment();
-        dialog.setMessage(message);
-        dialog.setNeutralButton(getString(R.string.pmdialog_close_button));
-        dialog.setListener(new MessageDialogFragment.MessageDialogListener() {
-            @Override
-            public void onNeutralButtonClick() {
-                if (finish) {
-                    finish();
-                }
-            }
-
-            @Override
-            public void onCancelled() {
-                if (finish) {
-                    finish();
-                }
-            }
-        });
-        dialog.show(getSupportFragmentManager(), "paymentpage_dialog");
-    }
-
-    private void showSnackBar(String message) {
-        if (TextUtils.isEmpty(message)) {
-            return;
-        }
-        Snackbar snackbar = Snackbar.make(findViewById(R.id.layout_paymentpage), message, Snackbar.LENGTH_LONG);
-        snackbar.show();
     }
 }

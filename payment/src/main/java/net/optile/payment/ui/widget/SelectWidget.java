@@ -13,6 +13,7 @@ package net.optile.payment.ui.widget;
 
 import java.util.List;
 
+import android.support.annotation.NonNull;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -20,7 +21,7 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import net.optile.payment.R;
 import net.optile.payment.core.PaymentException;
-import net.optile.payment.form.Charge;
+import net.optile.payment.form.Operation;
 import net.optile.payment.model.SelectOption;
 import net.optile.payment.ui.theme.PaymentTheme;
 import net.optile.payment.ui.theme.WidgetParameters;
@@ -67,11 +68,11 @@ public final class SelectWidget extends FormWidget {
         this.label.setText(label);
     }
 
-    public void putValue(Charge charge) throws PaymentException {
+    public void putValue(Operation operation) throws PaymentException {
         SpinnerItem selected = (SpinnerItem) spinner.getSelectedItem();
 
         if (selected != null) {
-            charge.putValue(name, selected.value);
+            operation.putValue(name, selected.value);
         }
     }
 
@@ -104,6 +105,7 @@ public final class SelectWidget extends FormWidget {
             this.value = value;
         }
 
+        @NonNull
         public String toString() {
             return label;
         }

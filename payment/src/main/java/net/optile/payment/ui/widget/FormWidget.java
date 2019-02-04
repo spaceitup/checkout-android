@@ -16,7 +16,7 @@ import android.view.View;
 import android.widget.ImageView;
 import net.optile.payment.R;
 import net.optile.payment.core.PaymentException;
-import net.optile.payment.form.Charge;
+import net.optile.payment.form.Operation;
 import net.optile.payment.ui.theme.PaymentTheme;
 import net.optile.payment.ui.theme.WidgetParameters;
 
@@ -73,6 +73,9 @@ public abstract class FormWidget {
         return false;
     }
 
+    public void clearInputErrors() {
+    }
+
     public void setLabel(String label) {
     }
 
@@ -80,7 +83,7 @@ public abstract class FormWidget {
         return this.state == VALIDATION_OK;
     }
 
-    public void putValue(Charge charge) throws PaymentException {
+    public void putValue(Operation operation) throws PaymentException {
     }
 
     public boolean validate() {

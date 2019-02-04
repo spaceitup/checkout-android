@@ -26,6 +26,8 @@ import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.TextView;
 import net.optile.payment.R;
+import net.optile.payment.core.LanguageFile;
+import net.optile.payment.ui.dialog.DialogHelper;
 import net.optile.payment.ui.model.AccountCard;
 import net.optile.payment.ui.model.NetworkCard;
 import net.optile.payment.ui.model.PaymentSession;
@@ -90,7 +92,8 @@ public final class PaymentList {
         } else if (session.networks.size() == 0) {
             msg = activity.getString(R.string.pmpage_error_notsupported);
         } else {
-            recyclerView.scrollToPosition(selIndex);
+            int startIndex = session.presetCard != null ? 0 : selIndex;
+            recyclerView.scrollToPosition(startIndex);
         }
         emptyMessage.setText(msg);
         adapter.notifyDataSetChanged();
@@ -136,17 +139,29 @@ public final class PaymentList {
         dialog.show(activity.getSupportFragmentManager(), tag);
     }
 
+    void onHintClicked(int position, String type) {
+        ListItem item = items.get(position);
+
+        if (item.hasPaymentCard()) {
+            String button = session.getLang().translate(LanguageFile.KEY_BUTTON_BACK);
+            DialogFragment dialog = DialogHelper.createHintDialog(item.getPaymentCard(), type, button);
+            showDialogFragment(dialog, "hint_dialog");
+        }
+    }
+
     void onActionClicked(int position) {
         ListItem item = items.get(position);
         PaymentCardViewHolder holder = (PaymentCardViewHolder) recyclerView.findViewHolderForAdapterPosition(position);
 
         if (holder != null && item.hasPaymentCard()) {
+            hideKeyboard();
             activity.onActionClicked(item.getPaymentCard(), holder.widgets);
         }
     }
 
     void onItemClicked(int position) {
         ListItem item = items.get(position);
+
         if (!item.hasPaymentCard()) {
             return;
         }
@@ -182,8 +197,15 @@ public final class PaymentList {
         int accountSize = session.accounts.size();
         int networkSize = session.networks.size();
 
+        if (session.presetCard != null) {
+            items.add(new HeaderItem(nextViewType(), activity.getString(R.string.pmlist_preset_header)));
+            items.add(new PaymentCardItem(nextViewType(), session.presetCard));
+            this.selIndex = 1;
+            index += 2;
+        }
+
         if (accountSize > 0) {
-            items.add(new HeaderItem(nextViewType(), activity.getString(R.string.pmlist_account)));
+            items.add(new HeaderItem(nextViewType(), activity.getString(R.string.pmlist_account_header)));
             index++;
         }
         for (AccountCard card : session.accounts) {
@@ -194,7 +216,7 @@ public final class PaymentList {
             index++;
         }
         if (networkSize > 0) {
-            int resId = accountSize == 0 ? R.string.pmlist_network_only : R.string.pmlist_network;
+            int resId = accountSize == 0 ? R.string.pmlist_networkonly_header : R.string.pmlist_network_header;
             items.add(new HeaderItem(nextViewType(), activity.getString(resId)));
         }
         for (NetworkCard card : session.networks) {

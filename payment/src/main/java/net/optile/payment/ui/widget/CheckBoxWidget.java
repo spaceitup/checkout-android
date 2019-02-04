@@ -17,7 +17,7 @@ import android.widget.CompoundButton;
 import android.widget.TextView;
 import net.optile.payment.R;
 import net.optile.payment.core.PaymentException;
-import net.optile.payment.form.Charge;
+import net.optile.payment.form.Operation;
 import net.optile.payment.ui.theme.PaymentTheme;
 import net.optile.payment.ui.theme.WidgetParameters;
 import net.optile.payment.util.PaymentUtils;
@@ -61,8 +61,8 @@ public class CheckBoxWidget extends FormWidget {
         this.labelChecked.setText(label);
     }
 
-    public void putValue(Charge charge) throws PaymentException {
-        charge.putValue(name, value.isChecked());
+    public void putValue(Operation operation) throws PaymentException {
+        operation.putValue(name, value.isChecked());
     }
 
     boolean isChecked() {

@@ -20,56 +20,51 @@ import static net.optile.payment.core.PaymentError.SECURITY_ERROR;
 import java.io.IOException;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
-import java.net.URL;
 
 import org.json.JSONException;
 
 import com.google.gson.JsonParseException;
 
 import net.optile.payment.core.PaymentException;
-import net.optile.payment.form.Charge;
+import net.optile.payment.form.Operation;
 import net.optile.payment.model.OperationResult;
 
 /**
- * Class implementing the communication with the Charge payment API
+ * Class containing methods to send Payment Operation requests to the Payment API.
  * <p>
  * All requests in this class are blocking calls and should be
  * executed in a separate thread to avoid blocking the main application thread.
  * These methods are not thread safe and must not be called by different threads
  * at the same time.
  */
-public final class ChargeConnection extends BaseConnection {
+public final class PaymentConnection extends BaseConnection {
 
     /**
-     * Create a new charge through the Payment API
+     * Post an operation to the Payment API, i.e. a Preset or Charge operation.
      *
-     * @param url the url of the charge
-     * @param charge holding the charge request data
+     * @param operation holding the request data
      * @return the OperationResult object received from the Payment API
      */
-    public OperationResult createCharge(final URL url, final Charge charge) throws PaymentException {
-        final String source = "ChargeConnection[createCharge]";
+    public OperationResult postOperation(final Operation operation) throws PaymentException {
+        final String source = "PaymentConnection[postOperation]";
 
-        if (url == null) {
-            throw new IllegalArgumentException(source + " - url cannot be null");
-        }
-        if (charge == null) {
-            throw new IllegalArgumentException(source + " - charge cannot be null");
+        if (operation == null) {
+            throw new IllegalArgumentException(source + " - operation cannot be null");
         }
         HttpURLConnection conn = null;
 
         try {
-            conn = createPostConnection(url);
+            conn = createPostConnection(operation.getURL());
             conn.setRequestProperty(HEADER_CONTENT_TYPE, VALUE_APP_JSON);
             conn.setRequestProperty(HEADER_ACCEPT, VALUE_APP_JSON);
 
-            writeToOutputStream(conn, charge.toJson());
+            writeToOutputStream(conn, operation.toJson());
             conn.connect();
             final int rc = conn.getResponseCode();
 
             switch (rc) {
                 case HttpURLConnection.HTTP_OK:
-                    return handleCreateChargeOk(readFromInputStream(conn));
+                    return handlePostOperationOk(readFromInputStream(conn));
                 default:
                     throw createPaymentException(source, API_ERROR, rc, conn);
             }
@@ -89,12 +84,12 @@ public final class ChargeConnection extends BaseConnection {
     }
 
     /**
-     * Handle the create charge OK state
+     * Handle the post Operation OK state
      *
      * @param data the response data received from the API
-     * @return the network response containing the ListResult
+     * @return the network response containing the OperationResult
      */
-    private OperationResult handleCreateChargeOk(final String data) throws JsonParseException {
+    private OperationResult handlePostOperationOk(final String data) throws JsonParseException {
         return gson.fromJson(data, OperationResult.class);
     }
 }

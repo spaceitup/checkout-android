@@ -37,9 +37,9 @@ public interface PaymentCard {
     String getPaymentMethod();
 
     /**
-     * Get the code of this PaymentCard
+     * Get the code of this visible PaymentCard.
      *
-     * @return code
+     * @return code of the visible network, preset or account
      */
     String getCode();
 
@@ -70,4 +70,21 @@ public interface PaymentCard {
      * @return list of InputElements
      */
     List<InputElement> getInputElements();
+
+    /**
+     * Get the InputElement given the name
+     *
+     * @param name of the InputElement to be returned
+     * @return the InputElement with the given name or null if not found
+     */
+    InputElement getInputElement(String name);
+
+    /**
+     * Notify that text input has changed for one of the input fields in this PaymentCard.
+     *
+     * @param type the type of the TextInput field
+     * @param text new text of the input field
+     * @return true when this PaymentCard has changed its appearance because of the new input, false otherwise
+     */
+    boolean onTextInputChanged(String type, String text);
 }
