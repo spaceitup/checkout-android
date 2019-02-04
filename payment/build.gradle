@@ -64,13 +64,13 @@ uploadArchives {
             repository(url: "https://nexus.mgmt.oscato.com/repository/releases/") {
                 authentication(userName: mavenUser, password: mavenPassword)
                 pom.version = versionName
-                pom.artifactId = "op-payment-android"
+                pom.artifactId = "android-sdk"
                 pom.groupId = "com.oscato.mobile"
             }
             snapshotRepository(url: "https://nexus.mgmt.oscato.com/repository/snapshots/") {
                 authentication(userName: mavenUser, password: mavenPassword)
                 pom.version = versionName
-                pom.artifactId = "op-payment-android"
+                pom.artifactId = "android-sdk"
                 pom.groupId = "com.oscato.mobile"
             }
         }
