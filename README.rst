@@ -535,8 +535,8 @@ Table containing the validations used for each input type:
 +===================================+===================================+
 | holderName                        | Valid if not empty                |
 +-----------------------------------+-----------------------------------+
-| accountNumber                     | **Debit & Credit cards**\ 1.      |
-|                                   | Custom validation (see table      |
+| accountNumber                     | **Debit & Credit cards** .        |
+|                                   | 1. Custom validation (see table   |
 |                                   | below), if not set then default   |
 |                                   | regex is used.2. Luhn algorithm   |
 |                                   | is applied\ **Default**\ Regex:   |
