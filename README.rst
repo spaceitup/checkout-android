@@ -399,18 +399,28 @@ Code sample how to set the ProgressParameters in the PaymentTheme:
    builder.setProgressParameters(progressParams);
 
 Table explaining each progress parameter:
-
-========================= ====================================================
-Name                      Purpose
-========================= ====================================================
-loadBackground            Background resource ID of the loading page
-loadProgressBarColor      Indeterminate ProgressBar color resource ID
-sendBackground            Background resource ID of the loading page
-sendProgressBarColorFront Determinate ProgressBar front color resource ID
-sendProgressBarColorBack  Determinate ProgressBar back color resource ID
-headerStyle               TextAppearance of header in the send progress screen
-infoStyle                 TextAppearance of info in the send progress screen
-========================= ====================================================
++---------------------------+--------------------------------------------+
+| Name                      | Purpose                                    |   
++===========================+============================================+
+| loadBackground            | Background resource ID of the loading page |
++---------------------------+--------------------------------------------+
+| loadProgressBarColor      | Indeterminate ProgressBar color resource   |
+|                           | ID                                         | 
++---------------------------+--------------------------------------------+
+| sendBackground            | Background resource ID of the loading page |
++---------------------------+--------------------------------------------+
+| sendProgressBarColorFront | Determinate ProgressBar front color        |
+|                           | resource ID                                | 
++---------------------------+--------------------------------------------+
+| sendProgressBarColorBack  | Determinate ProgressBar back color         |
+|                           | resource ID                                | 
++---------------------------+--------------------------------------------+
+| headerStyle               | TextAppearance of header in the send       |
+|                           | progress screen                            | 
++---------------------------+--------------------------------------------+
+| infoStyle                 | TextAppearance of info in the send         |
+|                           | progress screen                            | 
++---------------------------+--------------------------------------------+
 
 Grouping of Payment Methods
 ===========================
