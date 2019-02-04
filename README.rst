@@ -522,137 +522,19 @@ Table containing the rules of Smart Selection:
 Input Validation
 ================
 
-Input Type Validations
-----------------------
-
-Before a charge request is made, each input value provided by the user
-is validated.
-
-Table containing the validations used for each input type:
-
-+-----------------------------------+-----------------------------------+
-| Input Type                        | Validation                        |
-+===================================+===================================+
-| holderName                        | Valid if not empty                |
-+-----------------------------------+-----------------------------------+
-| accountNumber                     | **Debit & Credit cards**          |
-|                                   |-Custom card validation, if not    |
-|                                   |then default regex is used.        |                                
-|                                   |-Luhn algorithm is applied         |
-|                                   |                                   |
-|                  	               | | **Default**                     |                             
-|                                   | Regex: ``^[0-9]+$``               |
-+-----------------------------------+-----------------------------------+
-| verificationCode                  | **Debit & Credit cards**\ Custom  |
-|                                   | validation (see table below), if  |
-|                                   | not set then default regex is     |
-|                                   | used.\ **Default**\ Regex:        |
-|                                   | ``^[0-9]*$``                      |
-+-----------------------------------+-----------------------------------+
-| expiryMonth                       | Regex: ``(^0[1-9]\|1[0-2]$)``     |
-+-----------------------------------+-----------------------------------+
-| expiryYear                        | Regex: ``^(20)\\d{2}$``           |
-+-----------------------------------+-----------------------------------+
-| expiryDate                        | Month regex:                      |
-|                                   | ``(^0[1-9]\|1[0-2]$)``\ Year      |
-|                                   | regex: ``^(20)\\d{2}$``\ Month    |
-|                                   | and Year combined must be same or |
-|                                   | later than current date.          |
-+-----------------------------------+-----------------------------------+
-| bankCode                          | Valid if not empty                |
-+-----------------------------------+-----------------------------------+
-| iban                              | Standard Iban validation          |
-+-----------------------------------+-----------------------------------+
-| bic                               | Regex:                            |
-|                                   | ``([a-zA-Z]{4}[a-zA-Z]{2}[a-zA-Z0 |
-|                                   | -9]{2}([a-zA-Z0-9]{3})?)``        |
-+-----------------------------------+-----------------------------------+
-
-Debit & Credit card validations
--------------------------------
+Before a charge/preset request is made the Payment SDK validates each input value.
+The file [validations.json](payment/src/main/res/raw/validations.json) contains the regular expressions
+to validate credit & debit card numbers.
 
 The Payment SDK uses customised validations for certain Credit & Debit
 cards.
 
-Table containing the list of validations used for each card type:
-
-+-----------------------------------+-----------------------------------+
-| Card Code                         | Regex                             |
-+===================================+===================================+
-| AMEX                              | number: ^3[47][0-9]{13}$          | 
-|                                   |                                   |
-|                                   | verificationCode:: ^[0-9]{4}$     |
-+-----------------------------------+-----------------------------------+
-| CASTORAMA                         | number: ``[1-9]{1}[0-9]{15,18}$`` |
-|                                   | verificationCode:``^[0-9]{4}$``   |
-+-----------------------------------+-----------------------------------+
-| DINERS                            | number:                           |
-|                                   | ``^3(?:0[0-5]\|[689][0-9])[0-9]{1 |
-|                                   | 1}$``\ verificationCode:          |
-|                                   | ``^[0-9]{3}$``                    |
-+-----------------------------------+-----------------------------------+
-| DISCOVER                          | number:                           |
-|                                   | ``^(?:6011\|622[1-9]\|64[4-9][0-9 |
-|                                   | ]\|65[0-9]{2})[0-9]{12}$``\ verif |
-|                                   | icationCode:                      |
-|                                   | ``^[0-9]{3}$``                    |
-+-----------------------------------+-----------------------------------+
-| MASTERCARD                        | number:                           |
-|                                   | ``^5[1-5][0-9]{14}\|(222[1-9]\|22 |
-|                                   | [3-9][0-9]\|2[3-6][0-9]{2}\|27[01 |
-|                                   | ][0-9]\|2720)[0-9]{12}$``\ verifi |
-|                                   | cationCode:                       |
-|                                   | ``^[0-9]{3}$``                    |
-+-----------------------------------+-----------------------------------+
-| UNIONPAY                          | number:                           |
-|                                   | ``^62[0-5][0-9]{13,16}$``\ verifi |
-|                                   | cationCode:                       |
-|                                   | ``^[0-9]{3}$``                    |
-+-----------------------------------+-----------------------------------+
-| VISA                              | number:                           |
-|                                   | ``^4(?:[0-9]{12}\|[0-9]{15}\|[0-9 |
-|                                   | ]{18})$``\ verificationCode:      |
-|                                   | ``^[0-9]{3}$``                    |
-+-----------------------------------+-----------------------------------+
-| VISA_DANKORT                      | number:                           |
-|                                   | ``^4(?:[0-9]{12}\|[0-9]{15})$``\  |
-|                                   | verificationCode:                 |
-|                                   | ``^[0-9]{3}$``                    |
-+-----------------------------------+-----------------------------------+
-| VISAELECTRON                      | number: ``^4[0-9]{15}$``          |
-+-----------------------------------+-----------------------------------+
-| CARTEBANCAIRE                     | number:                           |
-|                                   | ``^(2\|[4-6])[0-9]{10,16}``\ veri |
-|                                   | ficationCode:                     |
-|                                   | ``^[0-9]*$``                      |
-+-----------------------------------+-----------------------------------+
-| CARTEBLEUE                        | number:                           |
-|                                   | ``^(50\|59\|6[0-9])[0-9]{10,17}`` |
-|                                   | \ verificationCode:               |
-|                                   | ``^[0-9]*$``                      |
-+-----------------------------------+-----------------------------------+
-| MAESTRO                           | number:                           |
-|                                   | ``^(50\|59\|6[0-9])[0-9]{10,17}`` |
-|                                   | \ verificationCode:               |
-|                                   | ``^[0-9]*$``                      |
-+-----------------------------------+-----------------------------------+
-| MAESTROUK                         | number:                           |
-|                                   | ``^(50\|59\|6[0-9])[0-9]{10,17}`` |
-|                                   | \ verificationCode:               |
-|                                   | ``^[0-9]*$``                      |
-+-----------------------------------+-----------------------------------+
-| POSTEPAY                          | number:                           |
-|                                   | ``^(50\|59\|6[0-9])[0-9]{10,17}`` |
-|                                   | \ verificationCode:               |
-|                                   | ``^[0-9]*$``                      |
-+-----------------------------------+-----------------------------------+
-
-Customise validations
+Customise Card validations
 ---------------------
 
-The Payment SDK allow limited customisation of validations applied to
-input values. The validation for debit and credit card numbers and
-verificationCodes can only be customised. Customized validation is
+The Payment SDK allow customisation of validations applied to
+certain input types. Currently the validation for debit, credit card numbers and
+verificationCodes can be customised. Customised validation is
 enabled by providing the resource ID of the validation Json file to the
 PaymentUI class prior to showing the payment page. The default
 validation provided by the Android Payment SDK are sufficient in most
