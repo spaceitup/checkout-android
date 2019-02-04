@@ -114,8 +114,9 @@ Part of the list result containing the “self” URL:
 -----------------------
 
 Installing the Android SDK is easy and requires only adding the optile
-Android SDK module to your build.gradle file. Note: the Android SDK is
-currently only available through optile internal Nexus repository.
+Android SDK module to your build.gradle file. 
+
+    Note: the Android SDK is currently only available through optile internal Nexus repository.
 
 ::
 
