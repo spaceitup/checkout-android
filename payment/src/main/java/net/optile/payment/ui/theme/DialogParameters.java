@@ -11,6 +11,7 @@
 
 package net.optile.payment.ui.theme;
 
+import android.support.annotation.StyleRes;
 import net.optile.payment.R;
 
 /**
@@ -108,48 +109,48 @@ public final class DialogParameters {
 
         Builder() {
         }
-
-        public Builder setDialogTheme(int dialogTheme) {
+        
+        public Builder setDialogTheme(@StyleRes int dialogTheme) {
             this.dialogTheme = dialogTheme;
             return this;
         }
 
-        public Builder setMessageTitleStyle(int messageTitleStyle) {
+        public Builder setMessageTitleStyle(@StyleRes int messageTitleStyle) {
             this.messageTitleStyle = messageTitleStyle;
             return this;
         }
 
-        public Builder setMessageDetailsStyle(int messageDetailsStyle) {
+        public Builder setMessageDetailsStyle(@StyleRes int messageDetailsStyle) {
             this.messageDetailsStyle = messageDetailsStyle;
             return this;
         }
 
-        public Builder setMessageDetailsNoTitleStyle(int messageDetailsNoTitleStyle) {
+        public Builder setMessageDetailsNoTitleStyle(@StyleRes int messageDetailsNoTitleStyle) {
             this.messageDetailsNoTitleStyle = messageDetailsNoTitleStyle;
             return this;
         }
 
-        public Builder setDateTitleStyle(int dateTitleStyle) {
+        public Builder setDateTitleStyle(@StyleRes int dateTitleStyle) {
             this.dateTitleStyle = dateTitleStyle;
             return this;
         }
 
-        public Builder setDateSubtitleStyle(int dateSubtitleStyle) {
+        public Builder setDateSubtitleStyle(@StyleRes int dateSubtitleStyle) {
             this.dateSubtitleStyle = dateSubtitleStyle;
             return this;
         }
 
-        public Builder setButtonLabelStyle(int buttonLabelStyle) {
+        public Builder setButtonLabelStyle(@StyleRes int buttonLabelStyle) {
             this.buttonLabelStyle = buttonLabelStyle;
             return this;
         }
 
-        public Builder setImageLabelStyle(int imageLabelStyle) {
+        public Builder setImageLabelStyle(@StyleRes int imageLabelStyle) {
             this.imageLabelStyle = imageLabelStyle;
             return this;
         }
 
-        public Builder setSnackbarTextStyle(int snackbarTextStyle) {
+        public Builder setSnackbarTextStyle(@StyleRes int snackbarTextStyle) {
             this.snackbarTextStyle = snackbarTextStyle;
             return this;
         }
