@@ -12,7 +12,6 @@
 package net.optile.payment.ui.theme;
 
 import android.support.annotation.AnyRes;
-import android.support.annotation.ColorRes;
 import android.support.annotation.StyleRes;
 import net.optile.payment.R;
 

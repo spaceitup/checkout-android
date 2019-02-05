@@ -61,7 +61,7 @@ public class WidgetParametersTest {
 
     @Test
     public void getTextInputTheme() {
-        int value = 101;
+        int value = R.style.PaymentThemeTextInput;
         WidgetParameters params = WidgetParameters.createBuilder().
             setTextInputTheme(value).build();
         assertEquals(params.getTextInputTheme(), value);
@@ -69,7 +69,7 @@ public class WidgetParametersTest {
 
     @Test
     public void getButtonTheme() {
-        int value = 102;
+        int value = R.style.PaymentThemeButton;
         WidgetParameters params = WidgetParameters.createBuilder().
             setButtonTheme(value).build();
         assertEquals(params.getButtonTheme(), value);
@@ -77,7 +77,7 @@ public class WidgetParametersTest {
 
     @Test
     public void getButtonLabelStyle() {
-        int value = 103;
+        int value = R.style.PaymentText_Medium_Bold_Light;
         WidgetParameters params = WidgetParameters.createBuilder().
             setButtonLabelStyle(value).build();
         assertEquals(params.getButtonLabelStyle(), value);
@@ -85,7 +85,7 @@ public class WidgetParametersTest {
 
     @Test
     public void getCheckBoxTheme() {
-        int value = 104;
+        int value = R.style.PaymentThemeCheckBox;
         WidgetParameters params = WidgetParameters.createBuilder().
             setCheckBoxTheme(value).build();
         assertEquals(params.getCheckBoxTheme(), value);
@@ -93,7 +93,7 @@ public class WidgetParametersTest {
 
     @Test
     public void getCheckBoxLabelCheckedStyle() {
-        int value = 105;
+        int value = R.style.PaymentText_Medium;
         WidgetParameters params = WidgetParameters.createBuilder().
             setCheckBoxLabelCheckedStyle(value).build();
         assertEquals(params.getCheckBoxLabelCheckedStyle(), value);
@@ -101,7 +101,7 @@ public class WidgetParametersTest {
 
     @Test
     public void getCheckBoxLabelUncheckedStyle() {
-        int value = 106;
+        int value = R.style.PaymentText_Medium_Hint;
         WidgetParameters params = WidgetParameters.createBuilder().
             setCheckBoxLabelUncheckedStyle(value).build();
         assertEquals(params.getCheckBoxLabelUncheckedStyle(), value);
@@ -109,7 +109,7 @@ public class WidgetParametersTest {
 
     @Test
     public void getSelectLabelStyle() {
-        int value = 107;
+        int value = R.style.PaymentText_Tiny;
         WidgetParameters params = WidgetParameters.createBuilder().
             setSelectLabelStyle(value).build();
         assertEquals(params.getSelectLabelStyle(), value);
@@ -117,7 +117,7 @@ public class WidgetParametersTest {
 
     @Test
     public void getInputTypeIcon() {
-        int value = 108;
+        int value = R.drawable.ic_card;
         String name = "test";
         WidgetParameters params = WidgetParameters.createBuilder().
             putInputTypeIcon(name, value).build();
@@ -126,7 +126,7 @@ public class WidgetParametersTest {
 
     @Test
     public void getValidationColorOk() {
-        int value = 109;
+        int value = R.color.pmvalidation_ok;
         WidgetParameters params = WidgetParameters.createBuilder().
             setValidationColorOk(value).build();
         assertEquals(params.getValidationColorOk(), value);
@@ -134,7 +134,7 @@ public class WidgetParametersTest {
 
     @Test
     public void getValidationColorUnknown() {
-        int value = 110;
+        int value = R.color.pmvalidation_unknown;
         WidgetParameters params = WidgetParameters.createBuilder().
             setValidationColorUnknown(value).build();
         assertEquals(params.getValidationColorUnknown(), value);
@@ -142,7 +142,7 @@ public class WidgetParametersTest {
 
     @Test
     public void getValidationColorError() {
-        int value = 111;
+        int value = R.color.pmvalidation_error;
         WidgetParameters params = WidgetParameters.createBuilder().
             setValidationColorError(value).build();
         assertEquals(params.getValidationColorError(), value);
@@ -150,7 +150,7 @@ public class WidgetParametersTest {
 
     @Test
     public void getHintDrawable() {
-        int value = 112;
+        int value = R.drawable.ic_hint;
         WidgetParameters params = WidgetParameters.createBuilder().
             setHintDrawable(value).build();
         assertEquals(params.getHintDrawable(), value);
@@ -158,7 +158,7 @@ public class WidgetParametersTest {
 
     @Test
     public void getInfoLabelStyle() {
-        int value = 113;
+        int value = R.style.PaymentText_Small;
         WidgetParameters params = WidgetParameters.createBuilder().
             setInfoLabelStyle(value).build();
         assertEquals(params.getInfoLabelStyle(), value);

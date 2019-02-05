@@ -41,7 +41,7 @@ public class ProgressParametersTest {
 
     @Test
     public void getLoadBackground() {
-        int value = 101;
+        int value = R.color.pmcolor_list;
         ProgressParameters params = ProgressParameters.createBuilder().
             setLoadBackground(value).build();
         assertEquals(params.getLoadBackground(), value);
@@ -49,7 +49,7 @@ public class ProgressParametersTest {
 
     @Test
     public void getLoadProgressBarColor() {
-        int value = 102;
+        int value = R.color.pmcolor_primary;
         ProgressParameters params = ProgressParameters.createBuilder().
             setLoadProgressBarColor(value).build();
         assertEquals(params.getLoadProgressBarColor(), value);
@@ -57,7 +57,7 @@ public class ProgressParametersTest {
 
     @Test
     public void getSendBackground() {
-        int value = 103;
+        int value = R.color.pmcolor_list;
         ProgressParameters params = ProgressParameters.createBuilder().
             setSendBackground(value).build();
         assertEquals(params.getSendBackground(), value);
@@ -65,7 +65,7 @@ public class ProgressParametersTest {
 
     @Test
     public void getSendProgressBarColorFront() {
-        int value = 104;
+        int value = R.color.pmcolor_primary;
         ProgressParameters params = ProgressParameters.createBuilder().
             setSendProgressBarColorFront(value).build();
         assertEquals(params.getSendProgressBarColorFront(), value);
@@ -73,7 +73,7 @@ public class ProgressParametersTest {
 
     @Test
     public void getSendProgressBarColorBack() {
-        int value = 105;
+        int value = R.color.pmvalidation_unknown;
         ProgressParameters params = ProgressParameters.createBuilder().
             setSendProgressBarColorBack(value).build();
         assertEquals(params.getSendProgressBarColorBack(), value);
@@ -81,7 +81,7 @@ public class ProgressParametersTest {
 
     @Test
     public void getHeaderStyle() {
-        int value = 106;
+        int value = R.style.PaymentText_XLarge_Bold;
         ProgressParameters params = ProgressParameters.createBuilder().
             setHeaderStyle(value).build();
         assertEquals(params.getHeaderStyle(), value);
@@ -89,7 +89,7 @@ public class ProgressParametersTest {
 
     @Test
     public void getInfoStyle() {
-        int value = 107;
+        int value = R.style.PaymentText_Medium;
         ProgressParameters params = ProgressParameters.createBuilder().
             setInfoStyle(value).build();
         assertEquals(params.getInfoStyle(), value);
