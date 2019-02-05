@@ -19,6 +19,7 @@ import android.util.Patterns;
 import net.optile.payment.R;
 import net.optile.payment.ui.page.PaymentPageActivity;
 import net.optile.payment.ui.theme.PaymentTheme;
+import android.support.annotation.RawRes;
 
 /**
  * The PaymentUI is the controller to initialize and launch the Payment Page.
@@ -153,7 +154,7 @@ public final class PaymentUI {
      *
      * @param validationResId containing the resource id of the validation file.
      */
-    public void setValidationResId(int validationResId) {
+    public void setValidationResId(@RawRes int validationResId) {
         this.validationResId = validationResId;
     }
 
@@ -171,7 +172,7 @@ public final class PaymentUI {
      *
      * @param groupResId contains the resource id of the group file.
      */
-    public void setGroupResId(int groupResId) {
+    public void setGroupResId(@RawRes int groupResId) {
         this.groupResId = groupResId;
     }
 

@@ -11,6 +11,9 @@
 
 package net.optile.payment.ui.theme;
 
+import android.support.annotation.AnyRes;
+import android.support.annotation.ColorRes;
+import android.support.annotation.StyleRes;
 import net.optile.payment.R;
 
 /**
@@ -92,37 +95,37 @@ public final class ProgressParameters {
         Builder() {
         }
 
-        public Builder setLoadBackground(int loadBackground) {
+        public Builder setLoadBackground(@AnyRes int loadBackground) {
             this.loadBackground = loadBackground;
             return this;
         }
 
-        public Builder setLoadProgressBarColor(int loadProgressBarColor) {
+        public Builder setLoadProgressBarColor(@ColorRes int loadProgressBarColor) {
             this.loadProgressBarColor = loadProgressBarColor;
             return this;
         }
 
-        public Builder setSendBackground(int sendBackground) {
+        public Builder setSendBackground(@AnyRes int sendBackground) {
             this.sendBackground = sendBackground;
             return this;
         }
 
-        public Builder setSendProgressBarColorFront(int sendProgressBarColorFront) {
+        public Builder setSendProgressBarColorFront(@ColorRes int sendProgressBarColorFront) {
             this.sendProgressBarColorFront = sendProgressBarColorFront;
             return this;
         }
 
-        public Builder setSendProgressBarColorBack(int sendProgressBarColorBack) {
+        public Builder setSendProgressBarColorBack(@ColorRes int sendProgressBarColorBack) {
             this.sendProgressBarColorBack = sendProgressBarColorBack;
             return this;
         }
 
-        public Builder setHeaderStyle(int headerStyle) {
+        public Builder setHeaderStyle(@StyleRes int headerStyle) {
             this.headerStyle = headerStyle;
             return this;
         }
 
-        public Builder setInfoStyle(int infoStyle) {
+        public Builder setInfoStyle(@StyleRes int infoStyle) {
             this.infoStyle = infoStyle;
             return this;
         }

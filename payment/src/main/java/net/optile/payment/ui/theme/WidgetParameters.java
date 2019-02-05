@@ -17,6 +17,11 @@ import java.util.Map;
 import net.optile.payment.R;
 import net.optile.payment.core.PaymentInputType;
 
+import android.support.annotation.AnyRes;
+import android.support.annotation.ColorRes;
+import android.support.annotation.DrawableRes;
+import android.support.annotation.StyleRes;
+
 /**
  * Class for holding the WidgetParameters for the PaymentTheme.
  * These parameters may be used to theme the widgets shown inside the payment cards, i.e. the textInput, button and checkbox widgets
@@ -159,47 +164,47 @@ public final class WidgetParameters {
             iconMapping = new HashMap<>();
         }
 
-        public Builder setTextInputTheme(int textInputTheme) {
+        public Builder setTextInputTheme(@StyleRes int textInputTheme) {
             this.textInputTheme = textInputTheme;
             return this;
         }
 
-        public Builder setButtonTheme(int buttonTheme) {
+        public Builder setButtonTheme(@StyleRes int buttonTheme) {
             this.buttonTheme = buttonTheme;
             return this;
         }
 
-        public Builder setButtonLabelStyle(int buttonLabelStyle) {
+        public Builder setButtonLabelStyle(@StyleRes int buttonLabelStyle) {
             this.buttonLabelStyle = buttonLabelStyle;
             return this;
         }
 
-        public Builder setButtonBackground(int buttonBackground) {
+        public Builder setButtonBackground(@AnyRes int buttonBackground) {
             this.buttonBackground = buttonBackground;
             return this;
         }
 
-        public Builder setCheckBoxTheme(int checkBoxTheme) {
+        public Builder setCheckBoxTheme(@StyleRes int checkBoxTheme) {
             this.checkBoxTheme = checkBoxTheme;
             return this;
         }
 
-        public Builder setCheckBoxLabelCheckedStyle(int checkBoxLabelCheckedStyle) {
+        public Builder setCheckBoxLabelCheckedStyle(@StyleRes int checkBoxLabelCheckedStyle) {
             this.checkBoxLabelCheckedStyle = checkBoxLabelCheckedStyle;
             return this;
         }
 
-        public Builder setCheckBoxLabelUncheckedStyle(int checkBoxLabelUncheckedStyle) {
+        public Builder setCheckBoxLabelUncheckedStyle(@StyleRes int checkBoxLabelUncheckedStyle) {
             this.checkBoxLabelUncheckedStyle = checkBoxLabelUncheckedStyle;
             return this;
         }
 
-        public Builder setSelectLabelStyle(int selectLabelStyle) {
+        public Builder setSelectLabelStyle(@StyleRes int selectLabelStyle) {
             this.selectLabelStyle = selectLabelStyle;
             return this;
         }
 
-        public Builder putInputTypeIcon(String inputType, int iconRes) {
+        public Builder putInputTypeIcon(String inputType, @DrawableRes int iconRes) {
             iconMapping.put(inputType, iconRes);
             return this;
         }
@@ -222,17 +227,17 @@ public final class WidgetParameters {
             return this;
         }
 
-        public Builder setValidationColorOk(int validationColorOk) {
+        public Builder setValidationColorOk(@ColorRes int validationColorOk) {
             this.validationColorOk = validationColorOk;
             return this;
         }
 
-        public Builder setValidationColorUnknown(int validationColorUnknown) {
+        public Builder setValidationColorUnknown(@ColorRes int validationColorUnknown) {
             this.validationColorUnknown = validationColorUnknown;
             return this;
         }
 
-        public Builder setValidationColorError(int validationColorError) {
+        public Builder setValidationColorError(@ColorRes int validationColorError) {
             this.validationColorError = validationColorError;
             return this;
         }

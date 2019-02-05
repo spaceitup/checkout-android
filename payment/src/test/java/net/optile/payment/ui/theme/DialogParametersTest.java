@@ -43,7 +43,7 @@ public class DialogParametersTest {
 
     @Test
     public void getDialogTheme() {
-        int value = 100;
+        int value = R.style.PaymentThemeDialog;
         DialogParameters params = DialogParameters.createBuilder().
             setDialogTheme(value).build();
         assertEquals(params.getDialogTheme(), value);
@@ -51,7 +51,7 @@ public class DialogParametersTest {
 
     @Test
     public void getDateTitleStyle() {
-        int value = 101;
+        int value = R.style.PaymentText_Medium_Bold;
         DialogParameters params = DialogParameters.createBuilder().
             setDateTitleStyle(value).build();
         assertEquals(params.getDateTitleStyle(), value);
@@ -59,7 +59,7 @@ public class DialogParametersTest {
 
     @Test
     public void getDateSubtitleStyle() {
-        int value = 102;
+        int value = R.style.PaymentText_Small_Bold;
         DialogParameters params = DialogParameters.createBuilder().
             setDateSubtitleStyle(value).build();
         assertEquals(params.getDateSubtitleStyle(), value);
@@ -67,7 +67,7 @@ public class DialogParametersTest {
 
     @Test
     public void getMessageTitleStyle() {
-        int value = 103;
+        int value = R.style.PaymentText_Large_Bold;
         DialogParameters params = DialogParameters.createBuilder().
             setMessageTitleStyle(value).build();
         assertEquals(params.getMessageTitleStyle(), value);
@@ -75,7 +75,7 @@ public class DialogParametersTest {
 
     @Test
     public void getMessageDetailsStyle() {
-        int value = 104;
+        int value = R.style.PaymentText_Medium_Gray;
         DialogParameters params = DialogParameters.createBuilder().
             setMessageDetailsStyle(value).build();
         assertEquals(params.getMessageDetailsStyle(), value);
@@ -83,7 +83,7 @@ public class DialogParametersTest {
 
     @Test
     public void getMessageDetailsNoTitleStyle() {
-        int value = 105;
+        int value = R.style.PaymentText_Medium_Bold_Gray;
         DialogParameters params = DialogParameters.createBuilder().
             setMessageDetailsNoTitleStyle(value).build();
         assertEquals(params.getMessageDetailsNoTitleStyle(), value);
@@ -91,7 +91,7 @@ public class DialogParametersTest {
 
     @Test
     public void getButtonLabelStyle() {
-        int value = 106;
+        int value = R.style.PaymentText_Small_Bold_Primary;
         DialogParameters params = DialogParameters.createBuilder().
             setButtonLabelStyle(value).build();
         assertEquals(params.getButtonLabelStyle(), value);
@@ -99,7 +99,7 @@ public class DialogParametersTest {
 
     @Test
     public void getImageLabelStyle() {
-        int value = 107;
+        int value = R.style.PaymentText_Tiny;
         DialogParameters params = DialogParameters.createBuilder().
             setImageLabelStyle(value).build();
         assertEquals(params.getImageLabelStyle(), value);
@@ -107,7 +107,7 @@ public class DialogParametersTest {
 
     @Test
     public void getSnackbarTextStyle() {
-        int value = 108;
+        int value = R.style.PaymentText_Small_Light;
         DialogParameters params = DialogParameters.createBuilder().
             setSnackbarTextStyle(value).build();
         assertEquals(params.getSnackbarTextStyle(), value);
