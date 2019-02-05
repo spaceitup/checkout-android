@@ -56,5 +56,6 @@ public final class GsonHelper {
 
     private static class InstanceHolder {
         static final GsonHelper INSTANCE = new GsonHelper();
+
     }
 }

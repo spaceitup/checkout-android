@@ -71,8 +71,8 @@ final class PaymentPageService {
         this.paymentConnection = new PaymentConnection();
     }
 
-    /** 
-     * Stop and unsubscribe from tasks that are currently active in this service. 
+    /**
+     * Stop and unsubscribe from tasks that are currently active in this service.
      */
     void stop() {
 

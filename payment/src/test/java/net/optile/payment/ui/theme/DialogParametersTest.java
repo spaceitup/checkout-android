@@ -30,12 +30,23 @@ public class DialogParametersTest {
     public void createDefault() {
         DialogParameters params = DialogParameters.createDefault();
         assertNotNull(params);
+        assertEquals(params.getDialogTheme(), R.style.PaymentThemeDialog);
         assertEquals(params.getDateTitleStyle(), R.style.PaymentText_Medium_Bold);
         assertEquals(params.getDateSubtitleStyle(), R.style.PaymentText_Small_Bold);
         assertEquals(params.getMessageTitleStyle(), R.style.PaymentText_Large_Bold);
         assertEquals(params.getMessageDetailsStyle(), R.style.PaymentText_Medium_Gray);
         assertEquals(params.getMessageDetailsNoTitleStyle(), R.style.PaymentText_Medium_Bold_Gray);
         assertEquals(params.getButtonLabelStyle(), R.style.PaymentText_Small_Bold_Primary);
+        assertEquals(params.getImageLabelStyle(), R.style.PaymentText_Tiny);
+        assertEquals(params.getSnackbarTextStyle(), R.style.PaymentText_Small_Light);
+    }
+
+    @Test
+    public void getDialogTheme() {
+        int value = 100;
+        DialogParameters params = DialogParameters.createBuilder().
+            setDialogTheme(value).build();
+        assertEquals(params.getDialogTheme(), value);
     }
 
     @Test
@@ -85,4 +96,21 @@ public class DialogParametersTest {
             setButtonLabelStyle(value).build();
         assertEquals(params.getButtonLabelStyle(), value);
     }
+
+    @Test
+    public void getImageLabelStyle() {
+        int value = 107;
+        DialogParameters params = DialogParameters.createBuilder().
+            setImageLabelStyle(value).build();
+        assertEquals(params.getImageLabelStyle(), value);
+    }
+
+    @Test
+    public void getSnackbarTextStyle() {
+        int value = 108;
+        DialogParameters params = DialogParameters.createBuilder().
+            setSnackbarTextStyle(value).build();
+        assertEquals(params.getSnackbarTextStyle(), value);
+    }
+
 }

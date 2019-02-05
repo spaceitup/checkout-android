@@ -33,6 +33,8 @@ public class PageParametersTest {
         assertEquals(params.getPageTheme(), R.style.PaymentTheme_PaymentPage);
         assertEquals(params.getEmptyListLabelStyle(), R.style.PaymentText_Medium_Gray);
         assertEquals(params.getSectionHeaderLabelStyle(), R.style.PaymentText_Medium_Bold);
+        assertEquals(params.getPresetCardTitleStyle(), R.style.PaymentText_Medium_Bold);
+        assertEquals(params.getPresetCardSubtitleStyle(), R.style.PaymentText_Tiny);
         assertEquals(params.getAccountCardTitleStyle(), R.style.PaymentText_Medium_Bold);
         assertEquals(params.getAccountCardSubtitleStyle(), R.style.PaymentText_Tiny);
         assertEquals(params.getNetworkCardTitleStyle(), R.style.PaymentText_Medium);
@@ -64,8 +66,24 @@ public class PageParametersTest {
     }
 
     @Test
-    public void getAccountCardTitleStyle() {
+    public void getPresetCardTitleStyle() {
         int value = 102;
+        PageParameters params = PageParameters.createBuilder().
+            setPresetCardTitleStyle(value).build();
+        assertEquals(params.getPresetCardTitleStyle(), value);
+    }
+
+    @Test
+    public void getPresetCardSubtitleStyle() {
+        int value = 103;
+        PageParameters params = PageParameters.createBuilder().
+            setPresetCardSubtitleStyle(value).build();
+        assertEquals(params.getPresetCardSubtitleStyle(), value);
+    }
+
+    @Test
+    public void getAccountCardTitleStyle() {
+        int value = 104;
         PageParameters params = PageParameters.createBuilder().
             setAccountCardTitleStyle(value).build();
         assertEquals(params.getAccountCardTitleStyle(), value);
@@ -73,7 +91,7 @@ public class PageParametersTest {
 
     @Test
     public void getAccountCardSubtitleStyle() {
-        int value = 103;
+        int value = 105;
         PageParameters params = PageParameters.createBuilder().
             setAccountCardSubtitleStyle(value).build();
         assertEquals(params.getAccountCardSubtitleStyle(), value);
@@ -81,7 +99,7 @@ public class PageParametersTest {
 
     @Test
     public void getNetworkCardTitleStyle() {
-        int value = 104;
+        int value = 106;
         PageParameters params = PageParameters.createBuilder().
             setNetworkCardTitleStyle(value).build();
         assertEquals(params.getNetworkCardTitleStyle(), value);
@@ -89,7 +107,7 @@ public class PageParametersTest {
 
     @Test
     public void getPaymentLogoBackground() {
-        int value = 105;
+        int value = 107;
         PageParameters params = PageParameters.createBuilder().
             setPaymentLogoBackground(value).build();
         assertEquals(params.getPaymentLogoBackground(), value);
