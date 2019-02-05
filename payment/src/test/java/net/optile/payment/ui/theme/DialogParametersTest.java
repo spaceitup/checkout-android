@@ -38,7 +38,7 @@ public class DialogParametersTest {
         assertEquals(params.getMessageDetailsNoTitleStyle(), R.style.PaymentText_Medium_Bold_Gray);
         assertEquals(params.getButtonLabelStyle(), R.style.PaymentText_Small_Bold_Primary);
         assertEquals(params.getImageLabelStyle(), R.style.PaymentText_Tiny);
-        assertEquals(params.getSnackbarTextStyle(), R.style.PaymentText_Small_Light);        
+        assertEquals(params.getSnackbarTextStyle(), R.style.PaymentText_Small_Light);
     }
 
     @Test
@@ -48,7 +48,7 @@ public class DialogParametersTest {
             setDialogTheme(value).build();
         assertEquals(params.getDialogTheme(), value);
     }
-    
+
     @Test
     public void getDateTitleStyle() {
         int value = 101;
@@ -112,5 +112,5 @@ public class DialogParametersTest {
             setSnackbarTextStyle(value).build();
         assertEquals(params.getSnackbarTextStyle(), value);
     }
-    
+
 }

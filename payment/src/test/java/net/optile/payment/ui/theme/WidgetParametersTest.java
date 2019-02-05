@@ -45,8 +45,8 @@ public class WidgetParametersTest {
         assertEquals(params.getValidationColorError(), R.color.pmvalidation_error);
 
         assertEquals(params.getHintDrawable(), R.drawable.ic_hint);
-        assertEquals(params.getInfoLabelStyle(), R.style.PaymentText_Small);        
-        
+        assertEquals(params.getInfoLabelStyle(), R.style.PaymentText_Small);
+
         assertEquals(params.getInputTypeIcon(PaymentInputType.HOLDER_NAME), R.drawable.ic_name);
         assertEquals(params.getInputTypeIcon(PaymentInputType.EXPIRY_DATE), R.drawable.ic_date);
         assertEquals(params.getInputTypeIcon(PaymentInputType.EXPIRY_MONTH), R.drawable.ic_date);

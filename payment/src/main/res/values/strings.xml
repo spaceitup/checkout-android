@@ -24,6 +24,6 @@
     <string name="pmdialog_cancel_button">Cancel</string>
     <string name="pmdialog_retry_button">Retry</string>
 
-    
+
     <string name="pmsnackbar_operation_interrupted">Please wait for the payment to process.</string>
 </resources>

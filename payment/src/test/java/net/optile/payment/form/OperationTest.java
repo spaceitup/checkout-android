@@ -14,11 +14,11 @@ package net.optile.payment.form;
 import static io.github.jsonSnapshot.SnapshotMatcher.expect;
 import static io.github.jsonSnapshot.SnapshotMatcher.start;
 import static io.github.jsonSnapshot.SnapshotMatcher.validateSnapshots;
-
 import static org.junit.Assert.assertNotNull;
 
-import java.net.URL;
 import java.net.MalformedURLException;
+import java.net.URL;
+
 import org.json.JSONException;
 import org.junit.AfterClass;
 import org.junit.BeforeClass;

@@ -80,7 +80,7 @@ public class PageParametersTest {
             setPresetCardSubtitleStyle(value).build();
         assertEquals(params.getPresetCardSubtitleStyle(), value);
     }
-    
+
     @Test
     public void getAccountCardTitleStyle() {
         int value = 104;

@@ -17,7 +17,6 @@ import static org.junit.Assert.assertNotNull;
 import org.junit.Test;
 
 import net.optile.payment.R;
-import net.optile.payment.core.PaymentInputType;
 
 public class ProgressParametersTest {
 
