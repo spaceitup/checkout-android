@@ -39,7 +39,7 @@ public final class ImageConnection extends BaseConnection {
      * @return Bitmap drawable
      */
     public Bitmap loadBitmap(final URL url) throws PaymentException {
-        final String source = "ListConnection[loadBitmap]";
+        final String source = "ImageConnection[loadBitmap]";
 
         if (url == null) {
             throw new IllegalArgumentException(source + " - url cannot be null");

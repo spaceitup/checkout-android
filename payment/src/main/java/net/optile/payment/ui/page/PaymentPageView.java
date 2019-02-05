@@ -67,7 +67,7 @@ interface PaymentPageView {
     void closePage();
 
     /**
-     * Show the Themed Dialog 
+     * Show the Themed Dialog
      *
      * @param dialog to be shown
      */

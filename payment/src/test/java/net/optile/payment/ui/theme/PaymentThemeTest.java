@@ -30,8 +30,8 @@ public class PaymentThemeTest {
         assertNotNull(params);
         assertNotNull(params.getPageParameters());
         assertNotNull(params.getWidgetParameters());
-        assertNotNull(params.getPageParameters());
         assertNotNull(params.getDialogParameters());
+        assertNotNull(params.getProgressParameters());
     }
 
     @Test
@@ -56,5 +56,13 @@ public class PaymentThemeTest {
         PaymentTheme params = PaymentTheme.createBuilder().
             setDialogParameters(value).build();
         assertEquals(params.getDialogParameters(), value);
+    }
+
+    @Test
+    public void getProgressParameters() {
+        ProgressParameters value = ProgressParameters.createDefault();
+        PaymentTheme params = PaymentTheme.createBuilder().
+            setProgressParameters(value).build();
+        assertEquals(params.getProgressParameters(), value);
     }
 }
