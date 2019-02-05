@@ -18,6 +18,15 @@ Android Version
 Android API versions 19 - 28 (Kitkat 4.4 - Pie 9.0) are supported by the
 Android Payment SDK. TLS1.2 is enabled for Android version 19 (Kitkat).
 
+Proguard
+--------
+
+If you intend to obfuscate your mobile app then please make sure to exclude the optile Android SDK classes from being obfuscated as well. Excluding the Android SDK from being obfuscated can be done by adding the following to your proguard-rules.pro file:
+
+::
+
+    -keep class net.optile.** { *; }
+
 Payment Methods
 ---------------
 
