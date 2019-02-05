@@ -11,6 +11,9 @@
 
 package net.optile.payment.ui.theme;
 
+import android.support.annotation.AnyRes;
+import android.support.annotation.ColorRes;
+import android.support.annotation.StyleRes;
 import net.optile.payment.R;
 
 /**
@@ -107,47 +110,47 @@ public final class PageParameters {
         Builder() {
         }
 
-        public Builder setPageTheme(int pageTheme) {
+        public Builder setPageTheme(@StyleRes int pageTheme) {
             this.pageTheme = pageTheme;
             return this;
         }
 
-        public Builder setEmptyListLabelStyle(int emptyListLabelStyle) {
+        public Builder setEmptyListLabelStyle(@StyleRes int emptyListLabelStyle) {
             this.emptyListLabelStyle = emptyListLabelStyle;
             return this;
         }
 
-        public Builder setSectionHeaderLabelStyle(int sectionHeaderLabelStyle) {
+        public Builder setSectionHeaderLabelStyle(@StyleRes int sectionHeaderLabelStyle) {
             this.sectionHeaderLabelStyle = sectionHeaderLabelStyle;
             return this;
         }
 
-        public Builder setPresetCardTitleStyle(int presetCardTitleStyle) {
+        public Builder setPresetCardTitleStyle(@StyleRes int presetCardTitleStyle) {
             this.presetCardTitleStyle = presetCardTitleStyle;
             return this;
         }
 
-        public Builder setPresetCardSubtitleStyle(int presetCardSubtitleStyle) {
+        public Builder setPresetCardSubtitleStyle(@StyleRes int presetCardSubtitleStyle) {
             this.presetCardSubtitleStyle = presetCardSubtitleStyle;
             return this;
         }
 
-        public Builder setAccountCardTitleStyle(int accountCardTitleStyle) {
+        public Builder setAccountCardTitleStyle(@StyleRes int accountCardTitleStyle) {
             this.accountCardTitleStyle = accountCardTitleStyle;
             return this;
         }
 
-        public Builder setAccountCardSubtitleStyle(int accountCardSubtitleStyle) {
+        public Builder setAccountCardSubtitleStyle(@StyleRes int accountCardSubtitleStyle) {
             this.accountCardSubtitleStyle = accountCardSubtitleStyle;
             return this;
         }
 
-        public Builder setNetworkCardTitleStyle(int networkCardTitleStyle) {
+        public Builder setNetworkCardTitleStyle(@StyleRes int networkCardTitleStyle) {
             this.networkCardTitleStyle = networkCardTitleStyle;
             return this;
         }
 
-        public Builder setPaymentLogoBackground(int paymentLogoBackground) {
+        public Builder setPaymentLogoBackground(@AnyRes int paymentLogoBackground) {
             this.paymentLogoBackground = paymentLogoBackground;
             return this;
         }
