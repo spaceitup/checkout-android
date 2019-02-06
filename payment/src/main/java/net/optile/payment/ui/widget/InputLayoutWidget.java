@@ -64,7 +64,7 @@ abstract class InputLayoutWidget extends FormWidget {
             }
         });
 
-        hintLayout.setOnClickListener(new View.OnClickListener() {
+        hintImage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 presenter.onHintClicked(name);
