@@ -161,7 +161,7 @@ Code sample how to initialise and display the Payment Page:
 Payment Result
 ==============
 
-Payment results are returned through the onActivityResult() method in your Activity. If available, the Payment Page returns the result on the last request performed. This is either a request to load the list details or a request to perform an Operation (Charge/Preset).
+Payment results are returned through the onActivityResult() method in your Activity. When the payment page is closed, the Android SDK returns the result status of the last request performed. The last request is either a request to load the list or performing an operation (Charge/Preset).
 
 Code sample how to obtain the PaymentResult inside the onActivityResult() method:
 
@@ -182,7 +182,7 @@ Code sample how to obtain the PaymentResult inside the onActivityResult() method
            // Operation request has been made and "result" contains
            // an Interaction and optional OperationResult describing the operation result
        } 
-       if (resultCode == PaymentUI.RESULT_CODE_CANCELLED) {
+       if (resultCode == PaymentUI.RESULT_CODE_CANCELED) {
            // 1. "result" is null if user closed the payment page without making an operation request. 
            // 2. "result" contains an Interaction and optional OperationResult. 
        }
@@ -194,21 +194,21 @@ Code sample how to obtain the PaymentResult inside the onActivityResult() method
 RESULT_CODE_OK
 --------------
 
-The code indicates that the operation has executed successfully, there are two situations when this result code is returned:
+Indicates that the operation request was successful, there are two situations when this result is returned:
 
-1. InteractionCode is PROCEED - the PaymentResult also contains an OperationResult with detailed information about the operation. 
+1. InteractionCode is PROCEED - the PaymentResult contains an OperationResult with detailed information about the operation. 
 
-2. InteractionCode is ABORT and InteractionReason is DUPLICATE_OPERATION, this means that a previous Operation on the same List has already been executed. This may happen if there was a network error during the first operation and the Android SDK was unable to receive a proper response from the Payment API.
+2. InteractionCode is ABORT and InteractionReason is DUPLICATE_OPERATION, this means that a previous operation on the same List has already been performed. This may happen if there was a network error during the first operation and the Android SDK was unable to receive a proper response from the Payment API.
 
-RESULT_CODE_CANCELLED
+RESULT_CODE_CANCELED
 ---------------------
 
-The code indicates that the Payment Page did not perform an Operation request. This may happen for different reasons, i.e. the user clicked the back button. The PaymentResult may have an OperationResult with details about the failed operation request.
+Indicates that the Payment Page did not perform a successful operation. This may happen for different reasons, i.e. the user clicked the back button. The PaymentResult may contain an OperationResult with details about the failed operation.
     
 RESULT_CODE_ERROR
 -----------------
 
-The code indicates that an unrecoverable error has occurred, i.e. a Network Error or a SecurityException has been thrown inside the Android SDK. The PaymentResult contains a PaymentError object containing the details of the error.
+Indicates that an unrecoverable error has occurred, i.e. a SecurityException has been thrown inside the Android SDK. The PaymentResult contains a PaymentError Object with the error details.
     
 Customise Payment Page
 ======================
