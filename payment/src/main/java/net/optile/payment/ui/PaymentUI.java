@@ -1,12 +1,9 @@
 /*
- * Copyright(c) 2012-2018 optile GmbH. All Rights Reserved.
+ * Copyright (c) 2019 optile GmbH
  * https://www.optile.net
  *
- * This software is the property of optile GmbH. Distribution  of  this
- * software without agreement in writing is strictly prohibited.
- *
- * This software may not be copied, used or distributed unless agreement
- * has been received in full.
+ * This file is open source and available under the MIT license.
+ * See the LICENSE file for more information.
  */
 
 package net.optile.payment.ui;
@@ -14,12 +11,12 @@ package net.optile.payment.ui;
 import android.app.Activity;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
+import android.support.annotation.RawRes;
 import android.text.TextUtils;
 import android.util.Patterns;
 import net.optile.payment.R;
 import net.optile.payment.ui.page.PaymentPageActivity;
 import net.optile.payment.ui.theme.PaymentTheme;
-import android.support.annotation.RawRes;
 
 /**
  * The PaymentUI is the controller to initialize and launch the Payment Page.
