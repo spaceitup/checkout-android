@@ -27,7 +27,7 @@ If you intend to obfuscate your mobile app then please make sure to exclude the 
 
     -keep class net.optile.** { *; }
     
-The Android SDK uses the following third-party libraries, please make sure to add the proper rules in your proguard-rules.pro file if needed.
+The Android SDK uses the following third-party libraries, please make sure to add the proper rules for these libraries in your proguard-rules.pro file if needed.
 
 ::
 
