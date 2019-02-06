@@ -191,8 +191,8 @@ Code sample how to obtain the PaymentResult inside the onActivityResult() method
        }
    }
 
-Status OK
---------------
+OK
+--
 
 The RESULT_CODE_OK code indicates that the operation request was successful, there are two situations when this result is returned:
 
@@ -200,13 +200,13 @@ The RESULT_CODE_OK code indicates that the operation request was successful, the
 
 2. InteractionCode is ABORT and InteractionReason is DUPLICATE_OPERATION, this means that a previous operation on the same List has already been performed. This may happen if there was a network error during the first operation and the Android SDK was unable to receive a proper response from the Payment API.
 
-Status Cancelled
----------------------
+Cancelled
+---------
 
 The RESULT_CODE_CANCELED code indicates that the Payment Page did not perform a successful operation. This may happen for different reasons, i.e. the user clicked the back button. The PaymentResult may contain an OperationResult with details about the failed operation.
     
-Status Error
------------------
+Error
+-----
 
 The RESULT_CODE_ERROR code indicates that an unrecoverable error has occurred, i.e. a SecurityException has been thrown inside the Android SDK. The PaymentResult contains a PaymentError Object with the error details.
     
