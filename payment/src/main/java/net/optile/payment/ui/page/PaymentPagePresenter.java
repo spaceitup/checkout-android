@@ -214,8 +214,7 @@ final class PaymentPagePresenter {
 
         switch (operation.getInteraction().getCode()) {
             case InteractionCode.PROCEED:
-                view.showPaymentSession(session);
-                //closeSession(result);
+                closeSession(result);
                 break;
             default:
                 handleOperationInteractionError(result);
