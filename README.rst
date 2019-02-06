@@ -191,7 +191,7 @@ Code sample how to obtain the PaymentResult inside the onActivityResult() method
        }
    }
 
-OK
+successful
 --
 
 The RESULT_CODE_OK code indicates that the operation request was successful, there are two situations when this result is returned:
