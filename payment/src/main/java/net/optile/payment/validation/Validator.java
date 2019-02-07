@@ -27,7 +27,15 @@ public class Validator {
     public final static String REGEX_BIC = "([a-zA-Z]{4}[a-zA-Z]{2}[a-zA-Z0-9]{2}([a-zA-Z0-9]{3})?)";
     public final static String REGEX_ACCOUNT_NUMBER = "^[0-9]+$";
     public final static String REGEX_VERIFICATION_CODE = "^[0-9]*$";
-    private final static String TAG = "pay_Validator";
+
+    private final static int MAXLENGTH_DEFAULT = 256;
+    private final static int MAXLENGTH_ACCOUNT_NUMBER = 64;
+    private final static int MAXLENGTH_HOLDER_NAME = 128;
+    private final static int MAXLENGTH_VERIFICATION_CODE = 8;
+    private final static int MAXLENGTH_BANK_CODE = 128;
+    private final static int MAXLENGTH_IBAN = 34;
+    private final static int MAXLENGTH_BIC = 11;
+
     private final Map<String, ValidationGroup> validations;
 
     /**
@@ -51,18 +59,60 @@ public class Validator {
      */
     public String getValidationRegex(String code, String type) {
 
-        if (code == null || !validations.containsKey(code)) {
+        if (code == null || type == null || !validations.containsKey(code)) {
             return null;
         }
-        ValidationGroup group = validations.get(code);
-        return group.getValidationRegex(type);
+        return validations.get(code).getValidationRegex(type);
     }
 
+    public int getMaxLength(String code, String type) {
+
+        if (code == null || type == null) {
+            return MAXLENGTH_DEFAULT;
+        }
+        int maxLength = 0;
+        
+        if (validations.containsKey(code)) {
+            maxLength = validations.get(code).getMaxLength();
+        }
+        if (maxLength > 0) {
+            return maxLength;
+        }
+        switch (type) {
+            case PaymentInputType.ACCOUNT_NUMBER:
+                return MAXLENGTH_ACCOUNT_NUMBER;
+            case PaymentInputType.HOLDER_NAME:
+                return MAXLENGTH_HOLDER_NAME;
+            case PaymentInputType.VERIFICATION_CODE:
+                return MAXLENGTH_VERIFICATION_CODE;
+            case PaymentInputType.BANK_CODE:
+                return MAXLENGTH_BANK_CODE;    
+            case PaymentInputType.IBAN:
+                return MAXLENGTH_IBAN;
+            case PaymentInputType.BIC:
+                return MAXLENGTH_BIC;
+            default:
+                return MAXLENGTH_DEFAULT;
+        }
+    }
+    
+    public boolean isHidden(String code, String type) {
+
+        if (code == null || type == null) {
+            return false;
+        }
+        if (!validations.containsKey(code)) {
+            return false;
+        }
+        ValidationGroup group = validations.get(code);        
+        return group.isHidden(type);
+    }
+    
     /**
      * Validate the given input values defined by its type
      *
      * @param method the Payment method like CREDIT_CARD
-     * @param code the optional payment code like VISA
+     * @param code the payment code like VISA
      * @param type the PaymentInputType like "number"
      * @param value1 holding the mandatory first value for the given input type, may be empty
      * @param value2 holding the optional second value for the given input type
@@ -70,10 +120,13 @@ public class Validator {
     public ValidationResult validate(String method, String code, String type, String value1, String value2) {
 
         if (TextUtils.isEmpty(method)) {
-            throw new IllegalArgumentException("validate method may not be null or empty");
+            throw new IllegalArgumentException("method may not be null or empty");
+        }
+        if (TextUtils.isEmpty(code)) {
+            throw new IllegalArgumentException("code may not be null or empty");
         }
         if (TextUtils.isEmpty(type)) {
-            throw new IllegalArgumentException("validate type may not be null or empty");
+            throw new IllegalArgumentException("type may not be null or empty");
         }
         value1 = value1 == null ? "" : value1;
         value2 = value2 == null ? "" : value2;

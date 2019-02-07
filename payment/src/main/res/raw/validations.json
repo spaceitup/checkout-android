@@ -193,5 +193,15 @@
                 "regex": "^[0-9]*$"
             }
         ]
+    },
+    {
+        "code": "SEPADD",
+        "items": [
+            {
+                "type": "bic",
+		"hide": true
+            }
+        ]
     }
+
 ]

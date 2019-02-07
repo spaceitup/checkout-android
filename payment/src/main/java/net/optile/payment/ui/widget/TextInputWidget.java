@@ -28,9 +28,6 @@ import net.optile.payment.validation.ValidationResult;
 public final class TextInputWidget extends InputLayoutWidget {
 
     private final static String NUMERIC_DIGITS = "0123456789 -";
-    private final static int MAXLENGTH_INTEGER = 4;
-    private final static int MAXLENGTH_NUMERIC = 56;
-    private final static int MAXLENGTH_DEFAULT = 256;
 
     /**
      * Construct a new TextInputWidget
@@ -68,15 +65,10 @@ public final class TextInputWidget extends InputLayoutWidget {
         switch (type) {
             case InputElementType.NUMERIC:
                 setInputType(InputType.TYPE_CLASS_NUMBER, NUMERIC_DIGITS);
-                setMaxLength(MAXLENGTH_NUMERIC);
                 break;
             case InputElementType.INTEGER:
                 setInputType(InputType.TYPE_CLASS_NUMBER, null);
-                setMaxLength(MAXLENGTH_INTEGER);
                 setReducedView();
-                break;
-            default:
-                setMaxLength(MAXLENGTH_DEFAULT);
         }
     }
 

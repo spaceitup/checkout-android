@@ -9,7 +9,7 @@
 package net.optile.payment.ui.list;
 
 import java.util.List;
-
+import android.util.Log;
 import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.v4.app.DialogFragment;
@@ -159,6 +159,10 @@ final class ListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         return list.validate(position, type, value1, value2);
     }
 
+    boolean isHidden(String code, String type) {
+        return list.isHidden(code, type);
+    }
+    
     PaymentTheme getPaymentTheme() {
         return PaymentUI.getInstance().getPaymentTheme();
     }

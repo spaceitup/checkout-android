@@ -136,11 +136,18 @@ abstract class PaymentCardViewHolder extends RecyclerView.ViewHolder {
         addWidget(widget);
     }
 
-    void addElementWidgets(List<InputElement> elements, PaymentTheme theme) {
+    void addElementWidgets(PaymentCard card, PaymentTheme theme) {
+        String code = card.getCode();
+        List<InputElement> elements = card.getInputElements();
         DateWidget dateWidget = null;
         boolean containsExpiryDate = PaymentUtils.containsExpiryDate(elements);
 
         for (InputElement element : elements) {
+            String name = element.getName();
+
+            if (adapter.isHidden(code, name)) {
+                continue;
+            }
             if (!containsExpiryDate) {
                 addWidget(WidgetInflater.inflateElementWidget(element, formLayout, theme));
                 continue;

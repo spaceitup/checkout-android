@@ -9,7 +9,7 @@
 package net.optile.payment.ui.page;
 
 import java.util.Map;
-
+import android.util.Log;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -281,6 +281,15 @@ public final class PaymentPageActivity extends AppCompatActivity implements Paym
         presenter.onActionClicked(item, widgets);
     }
 
+    /** 
+     * Validate the input type value for the given PaymentCard
+     * 
+     * @param card payment card containing the input type
+     * @param type type of the input field, i.e. number
+     * @param value1 mandatory value1 
+     * @param value2 optional value2, mainly used to validate expiry month and year at the same time 
+     * @return result of the validation 
+     */
     public ValidationResult validate(PaymentCard card, String type, String value1, String value2) {
         Validator validator = presenter.getValidator();
         ValidationResult result = validator.validate(card.getPaymentMethod(), card.getCode(), type, value1, value2);
@@ -295,5 +304,17 @@ public final class PaymentPageActivity extends AppCompatActivity implements Paym
         }
         result.setMessage(msg);
         return result;
+    }
+
+    /** 
+     * Check if the input type is hidden for the given payment card
+     * 
+     * @param code the code of the payment method the input type belongs to, i.e. SEPA
+     * @param type of the input field, i.e. bic
+     * @return true when the input field should be hidden, false otherwise 
+     */
+    public boolean isHidden(String code, String type) {
+        Validator validator = presenter.getValidator();
+        return validator.isHidden(code, type);
     }
 }

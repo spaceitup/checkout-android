@@ -15,15 +15,25 @@ public class ValidationGroupItem {
 
     private String type;
     private String regex;
-
-    public ValidationGroupItem() {
+    private boolean hide;
+    private int maxLength;
+    
+    private ValidationGroupItem() {
     }
 
+    public int getMaxLength() {
+        return maxLength;
+    }
+    
     public String getType() {
         return type;
     }
 
     public String getRegex() {
         return regex;
+    }
+
+    public boolean getHide() {
+        return hide;
     }
 }

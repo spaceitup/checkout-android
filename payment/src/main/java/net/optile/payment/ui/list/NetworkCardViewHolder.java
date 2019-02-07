@@ -45,7 +45,7 @@ final class NetworkCardViewHolder extends PaymentCardViewHolder {
         initTextSwitcher(parent, theme);
 
         addNetworkLogos(parent, networkCard, theme);
-        addElementWidgets(networkCard.getInputElements(), theme);
+        addElementWidgets(networkCard, theme);
         addRegisterWidgets(theme);
         addButtonWidget(theme);
 
