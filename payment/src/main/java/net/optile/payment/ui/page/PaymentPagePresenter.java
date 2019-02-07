@@ -267,7 +267,7 @@ final class PaymentPagePresenter {
             boolean error = false;
             for (FormWidget widget : widgets.values()) {
 
-                if (widget.validate()) {
+                if (widget.validate(true)) {
                     widget.putValue(operation);
                 } else {
                     error = true;

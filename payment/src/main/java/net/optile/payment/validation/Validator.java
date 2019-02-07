@@ -27,6 +27,7 @@ public class Validator {
     public final static String REGEX_BIC = "([a-zA-Z]{4}[a-zA-Z]{2}[a-zA-Z0-9]{2}([a-zA-Z0-9]{3})?)";
     public final static String REGEX_ACCOUNT_NUMBER = "^[0-9]+$";
     public final static String REGEX_VERIFICATION_CODE = "^[0-9]*$";
+    public final static String REGEX_HOLDER_NAME = "^.{3,}$";
 
     private final static int MAXLENGTH_DEFAULT = 256;
     private final static int MAXLENGTH_ACCOUNT_NUMBER = 64;
@@ -67,13 +68,16 @@ public class Validator {
 
     public int getMaxLength(String code, String type) {
 
+        Log.i("pay", "max: " + code + ", " + type);
         if (code == null || type == null) {
             return MAXLENGTH_DEFAULT;
         }
         int maxLength = 0;
         
         if (validations.containsKey(code)) {
-            maxLength = validations.get(code).getMaxLength();
+            maxLength = validations.get(code).getMaxLength(type);
+            Log.i("pay", "getMaxLength in Group: " + maxLength);
+
         }
         if (maxLength > 0) {
             return maxLength;
@@ -138,15 +142,15 @@ public class Validator {
             case PaymentInputType.VERIFICATION_CODE:
                 return validateVerificationCode(value1, regex);
             case PaymentInputType.HOLDER_NAME:
-                return validateHolderName(value1);
+                return validateHolderName(value1, regex);
+            case PaymentInputType.BANK_CODE:
+                return validateBankCode(value1);
             case PaymentInputType.EXPIRY_DATE:
                 return validateExpiryDate(value1, value2);
             case PaymentInputType.EXPIRY_MONTH:
                 return validateExpiryMonth(value1);
             case PaymentInputType.EXPIRY_YEAR:
                 return validateExpiryYear(value1);
-            case PaymentInputType.BANK_CODE:
-                return validateBankCode(value1);
             case PaymentInputType.IBAN:
                 return validateIban(value1);
             case PaymentInputType.BIC:
@@ -200,13 +204,17 @@ public class Validator {
         return new ValidationResult(null);
     }
 
-    private ValidationResult validateHolderName(String holderName) {
+    private ValidationResult validateHolderName(String holderName, String regex) {
+        regex = regex != null ? regex : REGEX_HOLDER_NAME;        
         String error = null;
 
-        if (TextUtils.isEmpty(holderName)) {
-            error = ValidationResult.MISSING_HOLDER_NAME;
+        if (!holderName.matches(regex)) {
+            if (TextUtils.isEmpty(holderName)) {
+                return new ValidationResult(ValidationResult.MISSING_HOLDER_NAME);
+            }
+            return new ValidationResult(ValidationResult.INVALID_HOLDER_NAME);
         }
-        return new ValidationResult(error);
+        return new ValidationResult(null);
     }
 
     private ValidationResult validateExpiryDate(String month, String year) {

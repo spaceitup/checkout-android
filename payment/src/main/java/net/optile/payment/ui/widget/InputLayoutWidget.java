@@ -97,6 +97,12 @@ abstract class InputLayoutWidget extends FormWidget {
         }
     }
 
+    void setMaxLength(int length) {
+        InputFilter[] filters = new InputFilter[1];
+        filters[0] = new InputFilter.LengthFilter(length);
+        textInput.setFilters(filters);
+    }
+
     void handleOnFocusChange(boolean hasFocus) {
     }
 
@@ -106,13 +112,7 @@ abstract class InputLayoutWidget extends FormWidget {
         setReducedWidth(hintLayout, landscape ? REDUCED_LANDSCAPE_HINT : REDUCED_PORTRAIT_HINT);
     }
 
-    void setMaxLength(int length) {
-        InputFilter[] filters = new InputFilter[1];
-        filters[0] = new InputFilter.LengthFilter(length);
-        textInput.setFilters(filters);
-    }
-
-    void setInputType(int type, String digits) {
+    void setTextInputType(int type, String digits) {
         textInput.setInputType(type);
 
         if (!TextUtils.isEmpty(digits)) {

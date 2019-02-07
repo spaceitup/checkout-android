@@ -221,7 +221,7 @@ abstract class PaymentCardViewHolder extends RecyclerView.ViewHolder {
 
     void expand(boolean expand) {
         formLayout.setVisibility(expand ? View.VISIBLE : View.GONE);
-        clearInputErrors();
+        validateInputValues();
     }
 
     FormWidget getFormWidget(String name) {
@@ -252,7 +252,7 @@ abstract class PaymentCardViewHolder extends RecyclerView.ViewHolder {
             if (widget instanceof SelectWidget) {
                 bindSelectWidget((SelectWidget) widget, element, lang);
             } else if (widget instanceof TextInputWidget) {
-                bindTextInputWidget((TextInputWidget) widget, element, lang);
+                bindTextInputWidget((TextInputWidget) widget, card.getCode(), element, lang);
             }
         }
     }
@@ -288,15 +288,17 @@ abstract class PaymentCardViewHolder extends RecyclerView.ViewHolder {
         widget.setSelectOptions(element.getOptions());
     }
 
-    void bindTextInputWidget(TextInputWidget widget, InputElement element, LanguageFile lang) {
+    void bindTextInputWidget(TextInputWidget widget, String code, InputElement element, LanguageFile lang) {
         WidgetParameters params = adapter.getPaymentTheme().getWidgetParameters();
-        bindIconResource(widget);
-        widget.setLabel(element.getLabel());
-        widget.setInputType(element.getType());
-
         int hintDrawable = params.getHintDrawable();
         boolean visible = hintDrawable != 0 && lang.containsAccountHint(widget.getName());
+        
+        bindIconResource(widget);
+        widget.setLabel(element.getLabel());
+        widget.setInputElementType(element.getType());
+        widget.setMaxLength(adapter.getMaxLength(code, element.getName()));
         widget.setHint(visible, hintDrawable);
+        widget.validate(false);
     }
 
     void bindIconResource(FormWidget widget) {
@@ -353,10 +355,10 @@ abstract class PaymentCardViewHolder extends RecyclerView.ViewHolder {
         }
     }
 
-    private void clearInputErrors() {
+    private void clearEmptyErrors() {
 
         for (FormWidget widget : widgets.values()) {
-            widget.clearInputErrors();
+            widget.validateInputValue();
         }
     }
 }

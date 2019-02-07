@@ -162,6 +162,10 @@ final class ListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     boolean isHidden(String code, String type) {
         return list.isHidden(code, type);
     }
+
+    int getMaxLength(String code, String type) {
+        return list.getMaxLength(code, type);
+    }
     
     PaymentTheme getPaymentTheme() {
         return PaymentUI.getInstance().getPaymentTheme();

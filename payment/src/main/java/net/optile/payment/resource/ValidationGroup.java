@@ -9,6 +9,7 @@
 package net.optile.payment.resource;
 
 import java.util.List;
+import android.util.Log;
 
 /**
  * Model class holding the validation per PaymentMethod.

@@ -60,7 +60,7 @@ public final class TextInputWidget extends InputLayoutWidget {
         });
     }
 
-    public void setInputType(String type) {
+    public void setInputElementType(String type) {
 
         switch (type) {
             case InputElementType.NUMERIC:

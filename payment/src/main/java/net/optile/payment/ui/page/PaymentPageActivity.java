@@ -317,4 +317,16 @@ public final class PaymentPageActivity extends AppCompatActivity implements Paym
         Validator validator = presenter.getValidator();
         return validator.isHidden(code, type);
     }
+
+    /** 
+     * Get the max length for the given input type.
+     * 
+     * @param code the code of the payment method the input type belongs to, i.e. SEPA
+     * @param type of the input field, i.e. number 
+     * @return maxLength of the input field 
+     */
+    public int getMaxLength(String code, String type) {
+        Validator validator = presenter.getValidator();
+        return validator.getMaxLength(code, type);
+    }
 }
