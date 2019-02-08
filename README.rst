@@ -579,7 +579,7 @@ Customise validations
 The Payment SDK allow customisation of validations applied to certain input types. 
 
 - Validation for number, bankCode, holderName and verificationCode can be customised with the "regex" parameter.
-- Input fields can be hidden by setting the "hide" parameter to true.
+- Input fields can be hidden by setting the "hide" parameter is true.
 - The maximum input length can be set with the "maxLength" parameter.
 
 Customised validations can be set by providing the resource ID of the validation Json file to the
