@@ -28,12 +28,11 @@ public class Validator {
     public final static String REGEX_ACCOUNT_NUMBER = "^[0-9]+$";
     public final static String REGEX_VERIFICATION_CODE = "^[0-9]*$";
     public final static String REGEX_HOLDER_NAME = "^.{3,}$";
+    public final static String REGEX_BANK_CODE = "^.{1,}$";
 
-    private final static int MAXLENGTH_DEFAULT = 256;
-    private final static int MAXLENGTH_ACCOUNT_NUMBER = 64;
-    private final static int MAXLENGTH_HOLDER_NAME = 128;
-    private final static int MAXLENGTH_VERIFICATION_CODE = 8;
-    private final static int MAXLENGTH_BANK_CODE = 128;
+    private final static int MAXLENGTH_DEFAULT = 128;
+    private final static int MAXLENGTH_ACCOUNT_NUMBER = 34;
+    private final static int MAXLENGTH_VERIFICATION_CODE = 4;
     private final static int MAXLENGTH_IBAN = 34;
     private final static int MAXLENGTH_BIC = 11;
 
@@ -68,7 +67,6 @@ public class Validator {
 
     public int getMaxLength(String code, String type) {
 
-        Log.i("pay", "max: " + code + ", " + type);
         if (code == null || type == null) {
             return MAXLENGTH_DEFAULT;
         }
@@ -76,8 +74,6 @@ public class Validator {
         
         if (validations.containsKey(code)) {
             maxLength = validations.get(code).getMaxLength(type);
-            Log.i("pay", "getMaxLength in Group: " + maxLength);
-
         }
         if (maxLength > 0) {
             return maxLength;
@@ -85,12 +81,8 @@ public class Validator {
         switch (type) {
             case PaymentInputType.ACCOUNT_NUMBER:
                 return MAXLENGTH_ACCOUNT_NUMBER;
-            case PaymentInputType.HOLDER_NAME:
-                return MAXLENGTH_HOLDER_NAME;
             case PaymentInputType.VERIFICATION_CODE:
                 return MAXLENGTH_VERIFICATION_CODE;
-            case PaymentInputType.BANK_CODE:
-                return MAXLENGTH_BANK_CODE;    
             case PaymentInputType.IBAN:
                 return MAXLENGTH_IBAN;
             case PaymentInputType.BIC:
@@ -144,7 +136,7 @@ public class Validator {
             case PaymentInputType.HOLDER_NAME:
                 return validateHolderName(value1, regex);
             case PaymentInputType.BANK_CODE:
-                return validateBankCode(value1);
+                return validateBankCode(value1, regex);
             case PaymentInputType.EXPIRY_DATE:
                 return validateExpiryDate(value1, value2);
             case PaymentInputType.EXPIRY_MONTH:
@@ -250,13 +242,16 @@ public class Validator {
         return new ValidationResult(error);
     }
 
-    private ValidationResult validateBankCode(String bankCode) {
-        String error = null;
+    private ValidationResult validateBankCode(String bankCode, String regex) {
+        regex = regex != null ? regex : REGEX_BANK_CODE;        
 
-        if (TextUtils.isEmpty(bankCode)) {
-            error = ValidationResult.MISSING_BANK_CODE;
+        if (!bankCode.matches(regex)) {
+            if (TextUtils.isEmpty(bankCode)) {
+                return new ValidationResult(ValidationResult.MISSING_BANK_CODE);
+            }
+            return new ValidationResult(ValidationResult.INVALID_BANK_CODE);
         }
-        return new ValidationResult(error);
+        return new ValidationResult(null);
     }
 
     private ValidationResult validateIban(String iban) {
