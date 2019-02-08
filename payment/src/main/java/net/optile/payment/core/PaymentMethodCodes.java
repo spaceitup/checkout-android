@@ -32,7 +32,7 @@ public class PaymentMethodCodes {
     public final static String MAESTRO = "MAESTRO";
     public final static String MAESTROUK = "MAESTROUK";
     public final static String POSTEPAY = "POSTEPAY";
-    public final static String SOLO = "SOLO";
+    public final static String SEPADD = "SEPADD";
 
     /**
      * Check if the given type is a valid payment input type
@@ -57,7 +57,7 @@ public class PaymentMethodCodes {
                 case MAESTRO:
                 case MAESTROUK:
                 case POSTEPAY:
-                case SOLO:
+                case SEPADD:
                     return true;
             }
         }
@@ -79,7 +79,7 @@ public class PaymentMethodCodes {
         MAESTRO,
         MAESTROUK,
         POSTEPAY,
-        SOLO
+        SEPADD
     })
     public @interface Definition { }
 }

@@ -35,6 +35,6 @@ public class PaymentMethodCodesTest {
         assertTrue(PaymentMethodCodes.isValid(PaymentMethodCodes.MAESTRO));
         assertTrue(PaymentMethodCodes.isValid(PaymentMethodCodes.MAESTROUK));
         assertTrue(PaymentMethodCodes.isValid(PaymentMethodCodes.POSTEPAY));
-        assertTrue(PaymentMethodCodes.isValid(PaymentMethodCodes.SOLO));
+        assertTrue(PaymentMethodCodes.isValid(PaymentMethodCodes.SEPADD));
     }
 }

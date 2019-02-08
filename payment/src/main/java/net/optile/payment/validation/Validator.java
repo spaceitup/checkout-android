@@ -30,11 +30,11 @@ public class Validator {
     public final static String REGEX_HOLDER_NAME = "^.{3,}$";
     public final static String REGEX_BANK_CODE = "^.{1,}$";
 
-    private final static int MAXLENGTH_DEFAULT = 128;
-    private final static int MAXLENGTH_ACCOUNT_NUMBER = 34;
-    private final static int MAXLENGTH_VERIFICATION_CODE = 4;
-    private final static int MAXLENGTH_IBAN = 34;
-    private final static int MAXLENGTH_BIC = 11;
+    public final static int MAXLENGTH_DEFAULT = 128;
+    public final static int MAXLENGTH_ACCOUNT_NUMBER = 34;
+    public final static int MAXLENGTH_VERIFICATION_CODE = 4;
+    public final static int MAXLENGTH_IBAN = 34;
+    public final static int MAXLENGTH_BIC = 11;
 
     private final Map<String, ValidationGroup> validations;
 
@@ -153,13 +153,14 @@ public class Validator {
     }
 
     private ValidationResult validateAccountNumber(String method, String number, String regex) {
+        regex = regex != null ? regex : REGEX_ACCOUNT_NUMBER;
 
         switch (method) {
             case PaymentMethod.CREDIT_CARD:
             case PaymentMethod.DEBIT_CARD:
                 return validateCardNumber(number, regex);
             default:
-                if (!number.matches(REGEX_ACCOUNT_NUMBER)) {
+                if (!number.matches(regex)) {
                     if (TextUtils.isEmpty(number)) {
                         return new ValidationResult(ValidationResult.MISSING_ACCOUNT_NUMBER);
                     }
@@ -170,7 +171,6 @@ public class Validator {
     }
 
     private ValidationResult validateCardNumber(String number, String regex) {
-        regex = regex != null ? regex : REGEX_ACCOUNT_NUMBER;
 
         if (!number.matches(regex)) {
             if (TextUtils.isEmpty(number)) {

@@ -60,11 +60,8 @@ public class ResourceLoaderTest {
         validateGroup(validations, "VISA_DANKORT");
         validateGroup(validations, "VISAELECTRON");
         validateGroup(validations, "CARTEBANCAIRE");
-        validateGroup(validations, "CARTEBLEUE");
         validateGroup(validations, "MAESTRO");
         validateGroup(validations, "MAESTROUK");
-        validateGroup(validations, "POSTEPAY");
-        validateGroup(validations, "SOLO");
     }
 
     @Test(expected = IOException.class)
