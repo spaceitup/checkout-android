@@ -93,7 +93,7 @@ public abstract class FormWidget {
     }
 
     /**
-     * Set the validation state given the current input value.
+     * Set the validation in this widget given the current input value.
      */
     public void setValidation() {
     }
