@@ -19,8 +19,10 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import net.optile.payment.R;
 import net.optile.payment.core.PaymentInputType;
+import net.optile.payment.validation.ValidationResult;
 import net.optile.payment.ui.theme.PaymentTheme;
 import net.optile.payment.util.PaymentUtils;
+import android.support.annotation.DrawableRes;
 
 /**
  * Base class for widgets using the TextInputLayout and TextInputEditText
@@ -69,6 +71,10 @@ abstract class InputLayoutWidget extends FormWidget {
         });
     }
 
+    /**
+     * {@inheritDoc}
+     */
+    @Override
     public void setLabel(String label) {
         this.label = label;
         textLayout.setHintAnimationEnabled(false);
@@ -76,18 +82,39 @@ abstract class InputLayoutWidget extends FormWidget {
         textLayout.setHintAnimationEnabled(true);
     }
 
+    /**
+     * {@inheritDoc}
+     */
+    @Override
     public boolean setLastImeOptionsWidget() {
         textInput.setImeOptions(EditorInfo.IME_ACTION_DONE);
         return true;
     }
 
-    public void clearInputErrors() {
-        if (TextUtils.isEmpty(getNormalizedValue())) {
-            setValidation(VALIDATION_UNKNOWN, false, null);
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void clearFocus() {
+        if (textInput.hasFocus()) {
+            textInput.clearFocus();
         }
     }
 
-    public void setHint(boolean visible, int hintDrawable) {
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void setValidation() {
+
+        if (textInput.hasFocus() || TextUtils.isEmpty(getNormalizedValue())) {
+            setInputLayoutState(VALIDATION_UNKNOWN, false, null);
+            return;
+        }
+        validate();
+    }
+
+    public void setHint(boolean visible, @DrawableRes int hintDrawable) {
 
         if (visible) {
             hintLayout.setVisibility(View.VISIBLE);
@@ -97,7 +124,7 @@ abstract class InputLayoutWidget extends FormWidget {
         }
     }
 
-    void setMaxLength(int length) {
+    public void setMaxLength(int length) {
         InputFilter[] filters = new InputFilter[1];
         filters[0] = new InputFilter.LengthFilter(length);
         textInput.setFilters(filters);
@@ -134,8 +161,21 @@ abstract class InputLayoutWidget extends FormWidget {
         return val;
     }
 
-    void setValidation(int state, boolean errorEnabled, String message) {
-        setState(state);
+    boolean setValidationResult(ValidationResult result) {
+
+        if (result == null) {
+            return false;
+        }
+        if (result.isError()) {
+            setInputLayoutState(VALIDATION_ERROR, true, result.getMessage());
+            return false;
+        }
+        setInputLayoutState(VALIDATION_OK, false, null);
+        return true;
+    }
+
+    void setInputLayoutState(int state, boolean errorEnabled, String message) {
+        setValidationState(state);
         textLayout.setErrorEnabled(errorEnabled);
         textLayout.setError(message);
     }

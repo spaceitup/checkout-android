@@ -58,6 +58,34 @@ public final class DateWidget extends InputLayoutWidget implements ThemedDialogL
         setReducedView();
     }
 
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public boolean validate() {
+        ValidationResult result = presenter.validate(name, expiryMonth, expiryYear);
+        return setValidationResult(result);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void putValue(Operation operation) throws PaymentException {
+
+        if (!(TextUtils.isEmpty(expiryMonth) || TextUtils.isEmpty(expiryYear))) {
+            operation.putValue(monthElement.getName(), expiryMonth);
+            operation.putValue(yearElement.getName(), expiryYear);
+        }
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void onDismissed(ThemedDialogFragment dialog) {
+    }
+    
     public void setDialogButtonLabel(String dialogButtonLabel) {
         this.dialogButtonLabel = dialogButtonLabel;
     }
@@ -70,37 +98,9 @@ public final class DateWidget extends InputLayoutWidget implements ThemedDialogL
         this.yearElement = yearElement;
     }
 
-    public boolean validate() {
-        ValidationResult result = presenter.validate(name, expiryMonth, expiryYear);
-
-        if (result == null) {
-            return false;
-        }
-        boolean validated = false;
-
-        if (result.isError()) {
-            setValidation(VALIDATION_ERROR, true, result.getMessage());
-        } else {
-            setValidation(VALIDATION_OK, false, null);
-            validated = true;
-        }
-        if (textInput.hasFocus()) {
-            textInput.clearFocus();
-        }
-        return validated;
-    }
-
-    public void putValue(Operation operation) throws PaymentException {
-
-        if (!(TextUtils.isEmpty(expiryMonth) || TextUtils.isEmpty(expiryYear))) {
-            operation.putValue(monthElement.getName(), expiryMonth);
-            operation.putValue(yearElement.getName(), expiryYear);
-        }
-    }
-
     void handleOnFocusChange(boolean hasFocus) {
         if (hasFocus) {
-            setValidation(VALIDATION_UNKNOWN, false, null);
+            setInputLayoutState(VALIDATION_UNKNOWN, false, null);
             showDateDialogFragment();
         } else if (state == VALIDATION_UNKNOWN && !(TextUtils.isEmpty(expiryMonth) || TextUtils.isEmpty(expiryYear))) {
             validate();
@@ -180,12 +180,5 @@ public final class DateWidget extends InputLayoutWidget implements ThemedDialogL
         } else {
             textInput.clearFocus();
         }
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public void onDismissed(ThemedDialogFragment dialog) {
     }
 }

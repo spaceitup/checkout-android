@@ -60,37 +60,19 @@ public final class TextInputWidget extends InputLayoutWidget {
         });
     }
 
-    public void setInputElementType(String type) {
-
-        switch (type) {
-            case InputElementType.NUMERIC:
-                setInputType(InputType.TYPE_CLASS_NUMBER, NUMERIC_DIGITS);
-                break;
-            case InputElementType.INTEGER:
-                setInputType(InputType.TYPE_CLASS_NUMBER, null);
-                setReducedView();
-        }
-    }
-
+    /**
+     * {@inheritDoc}
+     */
+    @Override
     public boolean validate() {
         ValidationResult result = presenter.validate(name, getNormalizedValue(), null);
-
-        if (result == null) {
-            return false;
-        }
-        boolean validated = false;
-        if (result.isError()) {
-            setValidation(VALIDATION_ERROR, true, result.getMessage());
-        } else {
-            setValidation(VALIDATION_OK, false, null);
-            validated = true;
-        }
-        if (textInput.hasFocus()) {
-            textInput.clearFocus();
-        }
-        return validated;
+        return setValidationResult(result);
     }
 
+    /**
+     * {@inheritDoc}
+     */
+    @Override
     public void putValue(Operation operation) throws PaymentException {
         String val = getNormalizedValue();
 
@@ -99,9 +81,22 @@ public final class TextInputWidget extends InputLayoutWidget {
         }
     }
 
+    public void setInputElementType(String type) {
+
+        switch (type) {
+            case InputElementType.NUMERIC:
+                setTextInputType(InputType.TYPE_CLASS_NUMBER, NUMERIC_DIGITS);
+                break;
+            case InputElementType.INTEGER:
+                setTextInputType(InputType.TYPE_CLASS_NUMBER, null);
+                setReducedView();
+        }
+    }
+
     void handleOnFocusChange(boolean hasFocus) {
+
         if (hasFocus) {
-            setValidation(VALIDATION_UNKNOWN, false, null);
+            setInputLayoutState(VALIDATION_UNKNOWN, false, null);
         } else if (state == VALIDATION_UNKNOWN && !TextUtils.isEmpty(getNormalizedValue())) {
             validate();
         }

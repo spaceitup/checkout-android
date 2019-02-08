@@ -37,6 +37,10 @@ public class LabelWidget extends FormWidget {
         PaymentUtils.setTextAppearance(label, params.getInfoLabelStyle());
     }
 
+    /**
+     * {@inheritDoc}
+     */
+    @Override
     public void setLabel(String text) {
         label.setText(text);
     }

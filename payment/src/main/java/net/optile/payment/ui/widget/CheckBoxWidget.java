@@ -53,11 +53,19 @@ public class CheckBoxWidget extends FormWidget {
         });
     }
 
+    /**
+     * {@inheritDoc}
+     */
+    @Override
     public void setLabel(String label) {
         this.labelUnchecked.setText(label);
         this.labelChecked.setText(label);
     }
 
+    /**
+     * {@inheritDoc}
+     */
+    @Override
     public void putValue(Operation operation) throws PaymentException {
         operation.putValue(name, value.isChecked());
     }

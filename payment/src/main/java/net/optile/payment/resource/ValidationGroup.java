@@ -38,7 +38,7 @@ public class ValidationGroup {
     
     public boolean isHidden(String type) {
         ValidationGroupItem item = getGroupItem(type);
-        return item != null ? item.getHide() : false;
+        return item != null && item.getHide();
     }
     
     public String getValidationRegex(String type) {

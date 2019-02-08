@@ -221,7 +221,10 @@ abstract class PaymentCardViewHolder extends RecyclerView.ViewHolder {
 
     void expand(boolean expand) {
         formLayout.setVisibility(expand ? View.VISIBLE : View.GONE);
-        validateInputValues();
+
+        for (FormWidget widget : widgets.values()) {
+            widget.setValidation();
+        }
     }
 
     FormWidget getFormWidget(String name) {
@@ -298,7 +301,7 @@ abstract class PaymentCardViewHolder extends RecyclerView.ViewHolder {
         widget.setInputElementType(element.getType());
         widget.setMaxLength(adapter.getMaxLength(code, element.getName()));
         widget.setHint(visible, hintDrawable);
-        widget.validate(false);
+        widget.setValidation();
     }
 
     void bindIconResource(FormWidget widget) {
@@ -329,7 +332,7 @@ abstract class PaymentCardViewHolder extends RecyclerView.ViewHolder {
             return;
         }
         LanguageFile pageLang = adapter.getPageLanguageFile();
-        widget.setButtonLabel(pageLang.translate(card.getButton()));
+        widget.setLabel(pageLang.translate(card.getButton()));
     }
 
     void bindLogoView(String name, URL url, boolean selected) {
@@ -352,13 +355,6 @@ abstract class PaymentCardViewHolder extends RecyclerView.ViewHolder {
             if (widget.setLastImeOptionsWidget()) {
                 break;
             }
-        }
-    }
-
-    private void clearEmptyErrors() {
-
-        for (FormWidget widget : widgets.values()) {
-            widget.validateInputValue();
         }
     }
 }

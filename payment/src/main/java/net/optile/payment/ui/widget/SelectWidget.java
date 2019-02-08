@@ -61,10 +61,18 @@ public final class SelectWidget extends FormWidget {
         });
     }
 
+    /**
+     * {@inheritDoc}
+     */
+    @Override
     public void setLabel(String label) {
         this.label.setText(label);
     }
 
+    /**
+     * {@inheritDoc}
+     */
+    @Override
     public void putValue(Operation operation) throws PaymentException {
         SpinnerItem selected = (SpinnerItem) spinner.getSelectedItem();
 
