@@ -9,7 +9,7 @@
 package net.optile.payment.ui.list;
 
 import java.util.List;
-import android.util.Log;
+
 import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.v4.app.DialogFragment;
@@ -166,7 +166,7 @@ final class ListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     int getMaxLength(String code, String type) {
         return list.getMaxLength(code, type);
     }
-    
+
     PaymentTheme getPaymentTheme() {
         return PaymentUI.getInstance().getPaymentTheme();
     }

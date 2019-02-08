@@ -189,7 +189,7 @@ public final class PaymentList {
     int getMaxLength(String code, String type) {
         return activity.getMaxLength(code, type);
     }
-    
+
     private int nextViewType() {
         return viewType++;
     }

@@ -9,8 +9,7 @@
             {
                 "type": "verificationCode",
                 "regex": "^[0-9]{4}$",
-		"maxLength": 4
-
+                "maxLength": 4
             }
         ]
     },
@@ -24,7 +23,7 @@
             {
                 "type": "verificationCode",
                 "regex": "^[0-9]{4}$",
-		"maxLength": 4
+                "maxLength": 4
             }
         ]
     },
@@ -38,7 +37,7 @@
             {
                 "type": "verificationCode",
                 "regex": "^[0-9]{3}$",
-		"maxLength": 3
+                "maxLength": 3
             }
         ]
     },
@@ -52,7 +51,7 @@
             {
                 "type": "verificationCode",
                 "regex": "^[0-9]{3}$",
-		"maxLength": 3
+                "maxLength": 3
             }
         ]
     },
@@ -66,7 +65,7 @@
             {
                 "type": "verificationCode",
                 "regex": "^[0-9]{3}$",
-		"maxLength": 3
+                "maxLength": 3
             }
         ]
     },
@@ -80,7 +79,7 @@
             {
                 "type": "verificationCode",
                 "regex": "^[0-9]{3}$",
-		"maxLength": 3
+                "maxLength": 3
             }
         ]
     },
@@ -94,7 +93,7 @@
             {
                 "type": "verificationCode",
                 "regex": "^[0-9]{3}$",
-		"maxLength": 3
+                "maxLength": 3
             }
         ]
     },
@@ -108,7 +107,7 @@
             {
                 "type": "verificationCode",
                 "regex": "^[0-9]{3}$",
-		"maxLength": 3
+                "maxLength": 3
             }
         ]
     },
@@ -122,7 +121,7 @@
             {
                 "type": "verificationCode",
                 "regex": "^[0-9]{3}$",
-		"maxLength": 3
+                "maxLength": 3
             }
         ]
     },
@@ -170,9 +169,8 @@
         "items": [
             {
                 "type": "bic",
-		"hide": true
+                "hide": true
             }
         ]
     }
-
 ]

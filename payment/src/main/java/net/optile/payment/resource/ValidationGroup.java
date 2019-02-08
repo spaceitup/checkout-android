@@ -9,7 +9,6 @@
 package net.optile.payment.resource;
 
 import java.util.List;
-import android.util.Log;
 
 /**
  * Model class holding the validation per PaymentMethod.
@@ -35,12 +34,12 @@ public class ValidationGroup {
         ValidationGroupItem item = getGroupItem(type);
         return item != null ? item.getMaxLength() : 0;
     }
-    
+
     public boolean isHidden(String type) {
         ValidationGroupItem item = getGroupItem(type);
         return item != null && item.getHide();
     }
-    
+
     public String getValidationRegex(String type) {
         ValidationGroupItem item = getGroupItem(type);
         return item != null ? item.getRegex() : null;

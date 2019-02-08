@@ -17,14 +17,14 @@ public class ValidationGroupItem {
     private String regex;
     private boolean hide;
     private int maxLength;
-    
+
     private ValidationGroupItem() {
     }
 
     public int getMaxLength() {
         return maxLength;
     }
-    
+
     public String getType() {
         return type;
     }

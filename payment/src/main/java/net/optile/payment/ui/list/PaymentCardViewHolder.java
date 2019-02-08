@@ -295,7 +295,7 @@ abstract class PaymentCardViewHolder extends RecyclerView.ViewHolder {
         WidgetParameters params = adapter.getPaymentTheme().getWidgetParameters();
         int hintDrawable = params.getHintDrawable();
         boolean visible = hintDrawable != 0 && lang.containsAccountHint(widget.getName());
-        
+
         bindIconResource(widget);
         widget.setLabel(element.getLabel());
         widget.setInputElementType(element.getType());

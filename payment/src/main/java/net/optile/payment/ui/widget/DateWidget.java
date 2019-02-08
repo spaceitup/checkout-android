@@ -85,7 +85,7 @@ public final class DateWidget extends InputLayoutWidget implements ThemedDialogL
     @Override
     public void onDismissed(ThemedDialogFragment dialog) {
     }
-    
+
     public void setDialogButtonLabel(String dialogButtonLabel) {
         this.dialogButtonLabel = dialogButtonLabel;
     }

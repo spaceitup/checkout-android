@@ -71,7 +71,7 @@ public class Validator {
             return MAXLENGTH_DEFAULT;
         }
         int maxLength = 0;
-        
+
         if (validations.containsKey(code)) {
             maxLength = validations.get(code).getMaxLength(type);
         }
@@ -91,7 +91,7 @@ public class Validator {
                 return MAXLENGTH_DEFAULT;
         }
     }
-    
+
     public boolean isHidden(String code, String type) {
 
         if (code == null || type == null) {
@@ -100,10 +100,10 @@ public class Validator {
         if (!validations.containsKey(code)) {
             return false;
         }
-        ValidationGroup group = validations.get(code);        
+        ValidationGroup group = validations.get(code);
         return group.isHidden(type);
     }
-    
+
     /**
      * Validate the given input values defined by its type
      *
@@ -197,7 +197,7 @@ public class Validator {
     }
 
     private ValidationResult validateHolderName(String holderName, String regex) {
-        regex = regex != null ? regex : REGEX_HOLDER_NAME;        
+        regex = regex != null ? regex : REGEX_HOLDER_NAME;
         String error = null;
 
         if (!holderName.matches(regex)) {
@@ -243,7 +243,7 @@ public class Validator {
     }
 
     private ValidationResult validateBankCode(String bankCode, String regex) {
-        regex = regex != null ? regex : REGEX_BANK_CODE;        
+        regex = regex != null ? regex : REGEX_BANK_CODE;
 
         if (!bankCode.matches(regex)) {
             if (TextUtils.isEmpty(bankCode)) {

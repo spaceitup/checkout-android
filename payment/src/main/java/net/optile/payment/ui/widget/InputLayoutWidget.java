@@ -8,6 +8,7 @@
 
 package net.optile.payment.ui.widget;
 
+import android.support.annotation.DrawableRes;
 import android.support.design.widget.TextInputEditText;
 import android.support.design.widget.TextInputLayout;
 import android.text.InputFilter;
@@ -19,10 +20,9 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import net.optile.payment.R;
 import net.optile.payment.core.PaymentInputType;
-import net.optile.payment.validation.ValidationResult;
 import net.optile.payment.ui.theme.PaymentTheme;
 import net.optile.payment.util.PaymentUtils;
-import android.support.annotation.DrawableRes;
+import net.optile.payment.validation.ValidationResult;
 
 /**
  * Base class for widgets using the TextInputLayout and TextInputEditText
