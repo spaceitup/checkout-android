@@ -570,16 +570,17 @@ Input Validation
 
 The Android SDK validates all input values provided by the user before all charge/preset requests. 
 The file `validations.json <./payment/src/main/res/raw/validations.json>`_ contains the regular expression
-definitions that the Payment SDK uses to validate card numbers and verification codes. 
-Validations for other input values i.e. expiryMonth and expiryYear are defined in `Validator.java <./payment/src/main/java/net/optile/payment/validation/Validator.java>`_.
+definitions that the Payment SDK uses to validate card numbersverification codes, bank codes and holder names. 
+Validations for other input values i.e. expiryMonth and expiryYear are defined by the `Validator.java <./payment/src/main/java/net/optile/payment/validation/Validator.java>`_.
 
 Customise validations
 ---------------------
 
-The Payment SDK allow customisation of validations applied to
-certain input types. Currently the validation for debit, credit card numbers and
-verificationCodes can be customised. Customised validation is
-enabled by providing the resource ID of the validation Json file to the
+The Payment SDK allow customisation of validations applied to certain input types. 
+Currently the regular expression validation for card numbers, bank codes, holder names and verification codes can be customised. 
+It is also possible to hide certain input fields for a payment method by setting the "hide" field to true. 
+The maximum input length can be set with the maxLength parameter. 
+Customised validation is enabled by providing the resource ID of the validation Json file to the
 PaymentUI class prior to showing the payment page. The default
 validation provided by the Android Payment SDK are sufficient in most
 cases.
@@ -588,20 +589,30 @@ Example customvalidations.json file:
 
 ::
 
-   [{
-       "code": "VISA",
-       "items": [
-           {
-               "type": "number",
-               "regex": "^4(?:[0-9]{12}|[0-9]{15}|[0-9]{18})$"
-           },
-           {
-               "type": "verificationCode",
-               "regex": "^[0-9]{3}$"
-           }
-       ]
-   },
-   ...
+    [{
+        "code": "VISA",
+        "items": [
+            {
+                "type": "number",
+                "regex": "^4(?:[0-9]{12}|[0-9]{15}|[0-9]{18})$"
+            },
+            {
+                "type": "verificationCode",
+                "regex": "^[0-9]{3}$",
+                "maxLength": 3
+            }
+        ]
+    },
+    {
+        "code": "SEPADD",
+        "items": [
+             {
+                 "type": "bic",
+                 "hide": true
+             }
+         ]
+     }
+    ...
    ]
 
 Code sample how to set the customvalidations.json file:
