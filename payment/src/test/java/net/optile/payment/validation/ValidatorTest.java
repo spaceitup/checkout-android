@@ -67,7 +67,7 @@ public class ValidatorTest {
     }
 
     @Test
-    public void isHidden_VISA_holderName() throws PaymentException {
+    public void isHidden_CREDIT_VISA_holderName() throws PaymentException {
         final Validator validator = createValidator(R.raw.validations);
         assertFalse(validator.isHidden(PaymentMethodCodes.VISA, PaymentInputType.HOLDER_NAME));
     }
