@@ -570,7 +570,7 @@ Input Validation
 
 The Android SDK validates all input values provided by the user before all charge/preset requests. 
 The file `validations.json <./payment/src/main/res/raw/validations.json>`_ contains the regular expression
-definitions that the Payment SDK uses to validate card numbersverification codes, bank codes and holder names. 
+definitions that the Payment SDK uses to validate numbers, verificationCodes, bankCodes and holderNames. 
 Validations for other input values i.e. expiryMonth and expiryYear are defined by the `Validator.java <./payment/src/main/java/net/optile/payment/validation/Validator.java>`_.
 
 Customise validations
