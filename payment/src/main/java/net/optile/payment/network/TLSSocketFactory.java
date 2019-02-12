@@ -11,7 +11,7 @@ import javax.net.ssl.SSLSocket;
 import javax.net.ssl.SSLSocketFactory;
 
 /**
- * Class implements the TLSv1.2 socket 
+ * Class implements the TLSv1.2 socket
  *
  * For more information:
  * https://gist.github.com/fkrauthan/ac8624466a4dee4fd02f

@@ -10,6 +10,7 @@ package net.optile.payment.validation;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
 
@@ -43,10 +44,35 @@ public class ValidatorTest {
 
     @Test
     public void createInstance_success() throws PaymentException {
-        Validator validator = createValidator(R.raw.validations);
+        final Validator validator = createValidator(R.raw.validations);
         assertNotNull(validator);
     }
 
+    @Test
+    public void getMaxLength_from_resource() throws PaymentException {
+        final Validator validator = createValidator(R.raw.validations);
+        assertEquals(3, validator.getMaxLength(PaymentMethodCodes.VISA, PaymentInputType.VERIFICATION_CODE));
+    }
+
+    @Test
+    public void getMaxLength_default() throws PaymentException {
+        final Validator validator = createValidator(R.raw.validations);
+        assertEquals(Validator.MAXLENGTH_VERIFICATION_CODE, validator.getMaxLength("FOO", PaymentInputType.VERIFICATION_CODE));
+    }
+
+    @Test
+    public void isHidden_SEPADD_bic() throws PaymentException {
+        final Validator validator = createValidator(R.raw.validations);
+        assertTrue(validator.isHidden(PaymentMethodCodes.SEPADD, PaymentInputType.BIC));
+    }
+
+    @Test
+    public void isHidden_CREDIT_VISA_holderName() throws PaymentException {
+        final Validator validator = createValidator(R.raw.validations);
+        assertFalse(validator.isHidden(PaymentMethodCodes.VISA, PaymentInputType.HOLDER_NAME));
+    }
+
+    
     @Test(expected = IllegalArgumentException.class)
     public void validate_invalidMethod() throws PaymentException {
         final Validator validator = createValidator(R.raw.validations);
@@ -707,100 +733,6 @@ public class ValidatorTest {
         result = validator.validate(method, code, type, null, null);
         assertFalse(result.isError());
     }
-
-
-    @Test
-    public void validate_DEBIT_POSTEPAY_accountNumber() throws PaymentException {
-        Validator validator = createValidator(R.raw.validations);
-        final String method = PaymentMethod.DEBIT_CARD;
-        final String code = PaymentMethodCodes.POSTEPAY;
-        final String type = PaymentInputType.ACCOUNT_NUMBER;
-
-        assertNotNull(validator.getValidationRegex(code, type));
-
-        ValidationResult result;
-        result = validator.validate(method, code, type, "6759649826438453", null);
-        assertFalse(result.isError());
-
-        result = validator.validate(method, code, type, "36699", null);
-        assertEquals(ValidationResult.INVALID_ACCOUNT_NUMBER, result.getError());
-
-        result = validator.validate(method, code, type, "", null);
-        assertEquals(ValidationResult.MISSING_ACCOUNT_NUMBER, result.getError());
-
-        result = validator.validate(method, code, type, null, null);
-        assertEquals(ValidationResult.MISSING_ACCOUNT_NUMBER, result.getError());
-    }
-
-    @Test
-    public void validate_DEBIT_POSTEPAY_verificationCode() throws PaymentException {
-        Validator validator = createValidator(R.raw.validations);
-        final String method = PaymentMethod.DEBIT_CARD;
-        final String code = PaymentMethodCodes.POSTEPAY;
-        final String type = PaymentInputType.VERIFICATION_CODE;
-
-        assertNotNull(validator.getValidationRegex(code, type));
-
-        ValidationResult result;
-        result = validator.validate(method, code, type, "123456", null);
-        assertFalse(result.isError());
-
-        result = validator.validate(method, code, type, "123ABC", null);
-        assertEquals(ValidationResult.INVALID_VERIFICATION_CODE, result.getError());
-
-        result = validator.validate(method, code, type, "", null);
-        assertFalse(result.isError());
-
-        result = validator.validate(method, code, type, null, null);
-        assertFalse(result.isError());
-    }
-
-    @Test
-    public void validate_DEBIT_SOLO_accountNumber() throws PaymentException {
-        Validator validator = createValidator(R.raw.validations);
-        final String method = PaymentMethod.DEBIT_CARD;
-        final String code = PaymentMethodCodes.SOLO;
-        final String type = PaymentInputType.ACCOUNT_NUMBER;
-
-        assertNotNull(validator.getValidationRegex(code, type));
-
-        ValidationResult result;
-        result = validator.validate(method, code, type, "6759649826438453", null);
-        assertFalse(result.isError());
-
-        result = validator.validate(method, code, type, "36699", null);
-        assertEquals(ValidationResult.INVALID_ACCOUNT_NUMBER, result.getError());
-
-        result = validator.validate(method, code, type, "", null);
-        assertEquals(ValidationResult.MISSING_ACCOUNT_NUMBER, result.getError());
-
-        result = validator.validate(method, code, type, null, null);
-        assertEquals(ValidationResult.MISSING_ACCOUNT_NUMBER, result.getError());
-    }
-
-    @Test
-    public void validate_DEBIT_SOLO_verificationCode() throws PaymentException {
-        Validator validator = createValidator(R.raw.validations);
-        final String method = PaymentMethod.DEBIT_CARD;
-        final String code = PaymentMethodCodes.SOLO;
-        final String type = PaymentInputType.VERIFICATION_CODE;
-
-        assertNotNull(validator.getValidationRegex(code, type));
-
-        ValidationResult result;
-        result = validator.validate(method, code, type, "123456", null);
-        assertFalse(result.isError());
-
-        result = validator.validate(method, code, type, "123ABC", null);
-        assertEquals(ValidationResult.INVALID_VERIFICATION_CODE, result.getError());
-
-        result = validator.validate(method, code, type, "", null);
-        assertFalse(result.isError());
-
-        result = validator.validate(method, code, type, null, null);
-        assertFalse(result.isError());
-    }
-
 
     @Test
     public void validate_HolderName() throws PaymentException {

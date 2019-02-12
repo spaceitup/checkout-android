@@ -272,6 +272,7 @@ final class PaymentPagePresenter {
                 } else {
                     error = true;
                 }
+                widget.clearFocus();
             }
             if (!error) {
                 postOperation(operation);

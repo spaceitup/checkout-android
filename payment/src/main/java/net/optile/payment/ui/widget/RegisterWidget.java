@@ -32,6 +32,10 @@ public final class RegisterWidget extends CheckBoxWidget {
         super(name, rootView, theme);
     }
 
+    /**
+     * {@inheritDoc}
+     */
+    @Override
     public void putValue(Operation operation) throws PaymentException {
 
         if (!RegistrationType.isValid(type)) {

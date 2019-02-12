@@ -41,7 +41,7 @@ final class AccountCardViewHolder extends PaymentCardViewHolder {
         PaymentUtils.setTextAppearance(subTitle, params.getAccountCardSubtitleStyle());
 
         addLogoView(parent, accountCard.getCode(), theme);
-        addElementWidgets(accountCard.getInputElements(), theme);
+        addElementWidgets(accountCard, theme);
         addButtonWidget(theme);
         setLastImeOptions();
     }

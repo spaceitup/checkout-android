@@ -182,6 +182,14 @@ public final class PaymentList {
         return activity.validate(item.getPaymentCard(), type, value1, value2);
     }
 
+    boolean isHidden(String code, String type) {
+        return activity.isHidden(code, type);
+    }
+
+    int getMaxLength(String code, String type) {
+        return activity.getMaxLength(code, type);
+    }
+
     private int nextViewType() {
         return viewType++;
     }

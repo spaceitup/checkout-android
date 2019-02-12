@@ -136,11 +136,18 @@ abstract class PaymentCardViewHolder extends RecyclerView.ViewHolder {
         addWidget(widget);
     }
 
-    void addElementWidgets(List<InputElement> elements, PaymentTheme theme) {
+    void addElementWidgets(PaymentCard card, PaymentTheme theme) {
+        String code = card.getCode();
+        List<InputElement> elements = card.getInputElements();
         DateWidget dateWidget = null;
         boolean containsExpiryDate = PaymentUtils.containsExpiryDate(elements);
 
         for (InputElement element : elements) {
+            String name = element.getName();
+
+            if (adapter.isHidden(code, name)) {
+                continue;
+            }
             if (!containsExpiryDate) {
                 addWidget(WidgetInflater.inflateElementWidget(element, formLayout, theme));
                 continue;
@@ -214,7 +221,10 @@ abstract class PaymentCardViewHolder extends RecyclerView.ViewHolder {
 
     void expand(boolean expand) {
         formLayout.setVisibility(expand ? View.VISIBLE : View.GONE);
-        clearInputErrors();
+
+        for (FormWidget widget : widgets.values()) {
+            widget.setValidation();
+        }
     }
 
     FormWidget getFormWidget(String name) {
@@ -245,7 +255,7 @@ abstract class PaymentCardViewHolder extends RecyclerView.ViewHolder {
             if (widget instanceof SelectWidget) {
                 bindSelectWidget((SelectWidget) widget, element, lang);
             } else if (widget instanceof TextInputWidget) {
-                bindTextInputWidget((TextInputWidget) widget, element, lang);
+                bindTextInputWidget((TextInputWidget) widget, card.getCode(), element, lang);
             }
         }
     }
@@ -281,15 +291,17 @@ abstract class PaymentCardViewHolder extends RecyclerView.ViewHolder {
         widget.setSelectOptions(element.getOptions());
     }
 
-    void bindTextInputWidget(TextInputWidget widget, InputElement element, LanguageFile lang) {
+    void bindTextInputWidget(TextInputWidget widget, String code, InputElement element, LanguageFile lang) {
         WidgetParameters params = adapter.getPaymentTheme().getWidgetParameters();
-        bindIconResource(widget);
-        widget.setLabel(element.getLabel());
-        widget.setInputType(element.getType());
-
         int hintDrawable = params.getHintDrawable();
         boolean visible = hintDrawable != 0 && lang.containsAccountHint(widget.getName());
+
+        bindIconResource(widget);
+        widget.setLabel(element.getLabel());
+        widget.setInputElementType(element.getType());
+        widget.setMaxLength(adapter.getMaxLength(code, element.getName()));
         widget.setHint(visible, hintDrawable);
+        widget.setValidation();
     }
 
     void bindIconResource(FormWidget widget) {
@@ -320,7 +332,7 @@ abstract class PaymentCardViewHolder extends RecyclerView.ViewHolder {
             return;
         }
         LanguageFile pageLang = adapter.getPageLanguageFile();
-        widget.setButtonLabel(pageLang.translate(card.getButton()));
+        widget.setLabel(pageLang.translate(card.getButton()));
     }
 
     void bindLogoView(String name, URL url, boolean selected) {
@@ -343,13 +355,6 @@ abstract class PaymentCardViewHolder extends RecyclerView.ViewHolder {
             if (widget.setLastImeOptionsWidget()) {
                 break;
             }
-        }
-    }
-
-    private void clearInputErrors() {
-
-        for (FormWidget widget : widgets.values()) {
-            widget.clearInputErrors();
         }
     }
 }

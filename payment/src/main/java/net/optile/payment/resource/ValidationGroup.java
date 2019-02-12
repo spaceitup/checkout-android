@@ -30,11 +30,26 @@ public class ValidationGroup {
         return this.code.equals(code);
     }
 
+    public int getMaxLength(String type) {
+        ValidationGroupItem item = getGroupItem(type);
+        return item != null ? item.getMaxLength() : 0;
+    }
+
+    public boolean isHidden(String type) {
+        ValidationGroupItem item = getGroupItem(type);
+        return item != null && item.getHide();
+    }
+
     public String getValidationRegex(String type) {
+        ValidationGroupItem item = getGroupItem(type);
+        return item != null ? item.getRegex() : null;
+    }
+
+    public ValidationGroupItem getGroupItem(String type) {
 
         for (ValidationGroupItem item : items) {
             if (item.getType().equals(type)) {
-                return item.getRegex();
+                return item;
             }
         }
         return null;

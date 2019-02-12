@@ -1,10 +1,10 @@
 /*
-  * Copyright (c) 2019 optile GmbH
-  * https://www.optile.net
-  *
-  * This file is open source and available under the MIT license.
-  * See the LICENSE file for more information.
-  */
+ * Copyright (c) 2019 optile GmbH
+ * https://www.optile.net
+ *
+ * This file is open source and available under the MIT license.
+ * See the LICENSE file for more information.
+ */
 
 package net.optile.payment.ui.list;
 
@@ -45,7 +45,7 @@ final class NetworkCardViewHolder extends PaymentCardViewHolder {
         initTextSwitcher(parent, theme);
 
         addNetworkLogos(parent, networkCard, theme);
-        addElementWidgets(networkCard.getInputElements(), theme);
+        addElementWidgets(networkCard, theme);
         addRegisterWidgets(theme);
         addButtonWidget(theme);
 
