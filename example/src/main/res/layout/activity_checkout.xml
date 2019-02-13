@@ -1,52 +1,99 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                xmlns:app="http://schemas.android.com/apk/res-auto"
-                android:id="@+id/layout_activity"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent">
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:app="http://schemas.android.com/apk/res-auto"
+              android:id="@+id/layout_activity"
+              android:padding="@dimen/border_large"
+              android:orientation="vertical"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content">
 
-    <LinearLayout
-        android:layout_width="wrap_content"
+    <RadioGroup
+        android:id="@+id/radio_themes"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_centerInParent="true"
-        android:gravity="center"
+        android:layout_marginBottom="@dimen/border_medium"
         android:orientation="vertical">
 
-        <RadioGroup
-            android:id="@+id/radio_themes"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="@dimen/border"
-            android:orientation="vertical">
-
-            <RadioButton
-                android:id="@+id/radio_theme_default"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:checked="true"
-                android:layout_marginBottom="@dimen/border"
-                android:text="@string/theme_default" />
-            <RadioButton
-                android:id="@+id/radio_theme_custom"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="@dimen/border"
-            android:text="@string/theme_custom" />
-            <RadioButton
-                android:id="@+id/radio_theme_empty"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="@dimen/border"
-                android:text="@string/theme_empty" />
-        </RadioGroup>
-        
-        <Button
-            style="@style/AppButton"
-            app:backgroundTint="@color/colorPrimary"
-            android:id="@+id/button_checkout"
+        <RadioButton
+            android:id="@+id/radio_theme_default"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/button_checkout"
-            android:padding="@dimen/custom_borderlarge"/>
-    </LinearLayout>
-</RelativeLayout>
+            android:checked="true"
+            android:layout_marginBottom="@dimen/border_small"
+            android:text="@string/request_theme_default" />
+        <RadioButton
+            android:id="@+id/radio_theme_custom"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/border_small"
+            android:text="@string/request_theme_custom" />
+        <RadioButton
+            android:id="@+id/radio_theme_empty"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/request_theme_empty" />
+    </RadioGroup>
+
+    <EditText
+        android:id="@+id/input_listurl"
+        android:layout_width="match_parent"
+        android:hint="@string/request_list_hint"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/border_medium"/>
+
+    <Button
+        style="@style/AppButton"
+        app:backgroundTint="@color/colorPrimary"
+        android:id="@+id/button_checkout"
+        android:padding="@dimen/border_large"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/border_large"
+        android:text="@string/request_button" />
+
+    <TextView
+        android:id="@+id/label_resultcode"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textAppearance="@android:style/TextAppearance.Material.Subhead"
+        android:visibility="gone"
+        android:text="@string/response_resultcode" />
+
+    <TextView
+        android:id="@+id/text_resultcode"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        android:layout_marginBottom="@dimen/border_medium" />
+
+    <TextView
+        android:id="@+id/label_resultinfo"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/response_resultinfo"
+        android:visibility="gone"
+        android:textAppearance="@android:style/TextAppearance.Material.Subhead" />
+
+    <TextView
+        android:id="@+id/text_resultinfo"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        android:layout_marginBottom="@dimen/border_medium" />
+
+    <TextView
+        android:id="@+id/label_paymenterror"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/response_paymenterror"
+        android:visibility="gone"
+        android:textAppearance="@android:style/TextAppearance.Material.Subhead" />
+
+    <TextView
+        android:id="@+id/text_paymenterror"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        />
+
+</LinearLayout>

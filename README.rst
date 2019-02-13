@@ -183,8 +183,8 @@ Code sample how to obtain the PaymentResult inside the onActivityResult() method
            // an Interaction and optional OperationResult describing the operation result
        } 
        if (resultCode == PaymentUI.RESULT_CODE_CANCELED) {
-           // 1. "result" is null if user closed the payment page without making an operation request. 
-           // 2. "result" contains an Interaction and optional OperationResult. 
+           "result" contains a resultInfo and an optional Interaction and optional OperationResult. 
+	   If the Interaction is null then the user closed the page before any request was made.
        }
        if (resultCode == PaymentUI.RESULT_CODE_ERROR) {
            // "result" contains a PaymentError explaining the error that occurred i.e. connection error.
@@ -203,7 +203,7 @@ The RESULT_CODE_OK code indicates that the operation request was successful, the
 Cancelled
 ---------
 
-The RESULT_CODE_CANCELED code indicates that the Payment Page did not perform a successful operation. This may happen for different reasons, i.e. the user clicked the back button. The PaymentResult may contain an OperationResult with details about the failed operation.
+The RESULT_CODE_CANCELED code indicates that the Payment Page did not perform a successful operation. This may happen for different reasons, i.e. the user clicked the back button. The PaymentResult may contain an Interaction and an OperationResult with details about the failed operation. If both Interaction and OperationResult are null then the user closed the page before any request was made. 
     
 Error
 -----

@@ -64,7 +64,9 @@ public final class PaymentPageActivity extends AppCompatActivity implements Paym
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setResult(PaymentUI.RESULT_CODE_CANCELED, null);
+
+        PaymentResult result = new PaymentResult("PaymentPage closed by user");
+        setActivityResult(PaymentUI.RESULT_CODE_CANCELED, result);
         this.cachedListIndex = -1;
 
         if (savedInstanceState != null) {
@@ -251,9 +253,7 @@ public final class PaymentPageActivity extends AppCompatActivity implements Paym
         if (!isActive()) {
             return;
         }
-        Intent intent = new Intent();
-        intent.putExtra(PaymentUI.EXTRA_PAYMENT_RESULT, result);
-        setResult(resultCode, intent);
+        setActivityResult(resultCode, result);
     }
 
     /**
@@ -328,5 +328,11 @@ public final class PaymentPageActivity extends AppCompatActivity implements Paym
     public int getMaxLength(String code, String type) {
         Validator validator = presenter.getValidator();
         return validator.getMaxLength(code, type);
+    }
+
+    private void setActivityResult(int resultCode, PaymentResult result) {
+        Intent intent = new Intent();
+        intent.putExtra(PaymentUI.EXTRA_PAYMENT_RESULT, result);
+        setResult(resultCode, intent);
     }
 }

@@ -9,6 +9,7 @@
 package net.optile.example.checkout;
 
 import net.optile.payment.ui.PaymentResult;
+import net.optile.payment.ui.PaymentUI;
 
 /**
  * Class for holding the CheckoutResult data
@@ -30,5 +31,23 @@ class CheckoutResult {
     public CheckoutResult(int resultCode, PaymentResult paymentResult) {
         this.resultCode = resultCode;
         this.paymentResult = paymentResult;
+    }
+
+    /** 
+     * Get a string representation of the resultCode
+     * 
+     * @return the String representation of the resultCode 
+     */
+    public String getResultCodeString() {
+        switch (resultCode) {
+            case PaymentUI.RESULT_CODE_OK:
+                return "RESULT_CODE_OK";
+            case PaymentUI.RESULT_CODE_CANCELED:
+                return "RESULT_CODE_CANCELED";
+            case PaymentUI.RESULT_CODE_ERROR:
+                return "RESULT_CODE_ERROR"; 
+            default:
+                return "Unknown";
+        }
     }
 }

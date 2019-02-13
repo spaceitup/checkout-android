@@ -7,6 +7,8 @@
  */
 package net.optile.example.checkout;
 
+import android.util.Log;
+import android.text.TextUtils;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -19,23 +21,25 @@ import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
 import android.widget.RadioGroup;
+import android.widget.EditText;
+import android.widget.TextView;
 import net.optile.payment.ui.PaymentResult;
 import net.optile.payment.ui.PaymentUI;
 import net.optile.payment.ui.theme.PaymentTheme;
+import net.optile.payment.core.PaymentError;
+import net.optile.payment.model.Interaction;
 
 /**
- * This is the main Activity of this Checkout example app.
- * There are two buttons visible, one button is used to launch the Android PaymentPage with the default optile theme,
- * and one with a custom theme defined in this example app.
+ * This is the main Activity of this Checkout example app
  */
-public final class CheckoutActivity extends AppCompatActivity implements CheckoutView {
+public final class CheckoutActivity extends AppCompatActivity {
 
     private static int PAYMENT_REQUEST_CODE = 1;
 
-    private CheckoutPresenter presenter;
     private CheckoutResult checkoutResult;
     private RadioGroup themeGroup;
-
+    private EditText listInput; 
+    
     /**
      * Create an Intent to launch this checkout activity
      *
@@ -54,14 +58,14 @@ public final class CheckoutActivity extends AppCompatActivity implements Checkou
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_checkout);
         themeGroup = findViewById(R.id.radio_themes);
-
+        listInput = findViewById(R.id.input_listurl);
+        
         Button button = findViewById(R.id.button_checkout);
         button.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                presenter.startPayment();
+                openPaymentPage();
             }
         });
-        this.presenter = new CheckoutPresenter(this);
     }
 
     /**
@@ -80,7 +84,7 @@ public final class CheckoutActivity extends AppCompatActivity implements Checkou
         super.onResume();
 
         if (checkoutResult != null) {
-            presenter.handleCheckoutResult(checkoutResult);
+            showCheckoutResult(checkoutResult);
             this.checkoutResult = null;
         }
     }
@@ -89,22 +93,43 @@ public final class CheckoutActivity extends AppCompatActivity implements Checkou
      * {@inheritDoc}
      */
     @Override
-    public void showPaymentSuccess() {
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
 
-        final Handler handler = new Handler();
-        handler.postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                showSnackbar(R.string.payment_success);
-            }
-        }, 500);
+        if (requestCode != PAYMENT_REQUEST_CODE) {
+            return;
+        }
+        if (data != null  && data.hasExtra(PaymentUI.EXTRA_PAYMENT_RESULT)) {
+            PaymentResult result = data.getParcelableExtra(PaymentUI.EXTRA_PAYMENT_RESULT);
+            this.checkoutResult = new CheckoutResult(resultCode, result);
+        }
     }
 
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public void showPaymentError(String message) {
+    private void showCheckoutResult(CheckoutResult result) {
+        PaymentResult pr = result.paymentResult;
+
+        setText(result.getResultCodeString(), R.id.label_resultcode, R.id.text_resultcode);
+        setText(pr.getResultInfo(), R.id.label_resultinfo, R.id.text_resultinfo);
+
+        PaymentError error = pr.getPaymentError();        
+        String val = error != null ? error.toString() : null;
+        setText(val, R.id.label_paymenterror, R.id.text_paymenterror);        
+    }
+
+    private void setText(String text, int labelResId, int textResId) {
+        TextView labelView = findViewById(labelResId);
+        TextView textView = findViewById(textResId);
+
+        if (TextUtils.isEmpty(text)) {
+            labelView.setVisibility(View.GONE);
+            textView.setVisibility(View.GONE);
+            return;
+        }
+        labelView.setVisibility(View.VISIBLE);
+        textView.setVisibility(View.VISIBLE);
+        textView.setText(text);
+    }
+    
+    private void showPaymentError(String message) {
         AlertDialog alertDialog = new AlertDialog.Builder(this).create();
         alertDialog.setTitle(R.string.dialog_error_title);
         alertDialog.setMessage(String.format(getString(R.string.dialog_error_message), message));
@@ -117,30 +142,8 @@ public final class CheckoutActivity extends AppCompatActivity implements Checkou
         alertDialog.show();
     }
 
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
-
-        if (requestCode != PAYMENT_REQUEST_CODE) {
-            return;
-        }
-        PaymentResult result = null;
-
-        // The PaymentResult may be null if the user cancelled the PaymentPage without making any charge
-        // request to be optile Payment API.
-        if (data != null && data.hasExtra(PaymentUI.EXTRA_PAYMENT_RESULT)) {
-            result = data.getParcelableExtra(PaymentUI.EXTRA_PAYMENT_RESULT);
-        }
-        this.checkoutResult = new CheckoutResult(resultCode, result);
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public void openPaymentPage(String listUrl) {
+    private void openPaymentPage() {
+        String listUrl = listInput.getText().toString().trim();        
 
         if (TextUtils.isEmpty(listUrl)) {
             showPaymentError(getString(R.string.dialog_error_listurl_empty));
@@ -148,7 +151,8 @@ public final class CheckoutActivity extends AppCompatActivity implements Checkou
         }
         PaymentUI paymentUI = PaymentUI.getInstance();
         paymentUI.setListUrl(listUrl);
-
+        paymentUI.setPaymentTheme(createPaymentTheme());
+        
         // The custom validation settings file, the default SDK validations are sufficient in most cases 
         //paymentUI.setValidationResId(R.raw.customvalidations);
 
@@ -157,7 +161,7 @@ public final class CheckoutActivity extends AppCompatActivity implements Checkou
         
         // The custom payment method group settings file
         // paymentUI.setGroupResId(R.raw.customgroups);
-        paymentUI.setPaymentTheme(createPaymentTheme());
+
         paymentUI.showPaymentPage(this, PAYMENT_REQUEST_CODE);
     }
 
@@ -165,17 +169,12 @@ public final class CheckoutActivity extends AppCompatActivity implements Checkou
 
         switch (themeGroup.getCheckedRadioButtonId()) {
             case R.id.radio_theme_default:
-                return PaymentTheme.createDefault();
+                return CheckoutThemeBuilder.createDefaultTheme();
             case R.id.radio_theme_custom:
-                return CheckoutTheme.createCustomTheme();
+                return CheckoutThemeBuilder.createCustomTheme();
             default:
-                return PaymentTheme.createBuilder().build();
+                return CheckoutThemeBuilder.createEmptyTheme();
         }
     }
-    
-    private void showSnackbar(int resId) {
-        Snackbar snackbar = Snackbar.make(findViewById(R.id.layout_activity),
-            getString(resId), Snackbar.LENGTH_LONG);
-        snackbar.show();
-    }
+
 }

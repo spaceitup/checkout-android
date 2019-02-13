@@ -1,14 +1,19 @@
 <resources>
     <string name="app_name">PaymentExample</string>
-    <string name="button_checkout">Open PaymentPage</string>
     <string name="payment_success">Great, you have made a successful operation with optile Payment SDK</string>
 
-    <string name="theme_default">Default Theme</string>
-    <string name="theme_custom">Custom Theme</string>
-    <string name="theme_empty">Empty Theme</string>
+    <string name="request_theme_default">Default Theme</string>
+    <string name="request_theme_custom">Custom Theme</string>
+    <string name="request_theme_empty">Empty Theme</string>
+    <string name="request_button">Open PaymentPage</string>
+    <string name="request_list_hint">Paste list URL here</string>    
 
+    <string name="response_resultcode">ResultCode</string>
+    <string name="response_resultinfo">Resultinfo</string>
+    <string name="response_paymenterror">PaymentError</string>
+    
     <string name="dialog_error_title">Checkout Error</string>
     <string name="dialog_error_message">A Checkout error occurred: %1$s</string>
     <string name="dialog_error_button">Close</string>
-    <string name="dialog_error_listurl_empty">Please add a valid optile List Url in the CheckoutPresenter startPayment() method.</string>
+    <string name="dialog_error_listurl_empty">Please paste a valid optile List Url in the input field.</string>
 </resources>
