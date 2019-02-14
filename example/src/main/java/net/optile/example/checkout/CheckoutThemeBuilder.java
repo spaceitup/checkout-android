@@ -17,8 +17,26 @@ import net.optile.payment.ui.theme.ProgressParameters;
 /**
  * Class used to create a custom PaymentTheme for skinning the Android SDK Payment page
  */
-final class CheckoutTheme {
+final class CheckoutThemeBuilder {
 
+    /** 
+     * Create an empty payment theme
+     * 
+     * @return the empty theme 
+     */
+    public static PaymentTheme createEmptyTheme() {
+        return PaymentTheme.createBuilder().build();
+    }
+
+    /** 
+     * Create a default payment theme
+     * 
+     * @return the default theme 
+     */
+    public static PaymentTheme createDefaultTheme() {
+        return PaymentTheme.createDefault();
+    }
+    
     /**
      * Construct a new PaymentTheme with the custom dark skin for the Android SDK payment page
      *
@@ -26,7 +44,6 @@ final class CheckoutTheme {
      */
     public static PaymentTheme createCustomTheme() {
         PaymentTheme.Builder builder = PaymentTheme.createBuilder();
-
 
         PageParameters pageParams = PageParameters.createBuilder().
             setPageTheme(R.style.CustomThemePaymentPage).

@@ -128,7 +128,8 @@ final class PaymentPagePresenter {
             return;
         }
         if (session.presetCard == card) {
-            view.closePage();
+            PaymentResult result = new PaymentResult("Same presetAccount selected");
+            closeSessionWithOkCode(result);
             return;
         }
         switch (session.getOperationType()) {
@@ -170,7 +171,7 @@ final class PaymentPagePresenter {
      * @param cause containing the error
      */
     void onValidatorError(Throwable cause) {
-        closeSessionWithError(R.string.pmdialog_error_unknown, cause);
+        closeSessionWithErrorCode(R.string.pmdialog_error_unknown, cause);
     }
 
     /**
@@ -187,7 +188,7 @@ final class PaymentPagePresenter {
                 break;
             default:
                 PaymentResult result = new PaymentResult(session.listResult.getResultInfo(), interaction);
-                cancelSession(result);
+                closeSessionWithCanceledCode(result);
         }
     }
 
@@ -201,7 +202,7 @@ final class PaymentPagePresenter {
             handleLoadPaymentError((PaymentException) cause);
             return;
         }
-        closeSessionWithError(R.string.pmdialog_error_unknown, cause);
+        closeSessionWithErrorCode(R.string.pmdialog_error_unknown, cause);
     }
 
     /**
@@ -214,7 +215,7 @@ final class PaymentPagePresenter {
 
         switch (operation.getInteraction().getCode()) {
             case InteractionCode.PROCEED:
-                closeSession(result);
+                closeSessionWithOkCode(result);
                 break;
             default:
                 handleOperationInteractionError(result);
@@ -232,7 +233,7 @@ final class PaymentPagePresenter {
             handleOperationPaymentError((PaymentException) cause);
             return;
         }
-        closeSessionWithError(R.string.pmdialog_error_unknown, cause);
+        closeSessionWithErrorCode(R.string.pmdialog_error_unknown, cause);
     }
 
     private void handleLoadInteractionProceed(PaymentSession session) {
@@ -251,11 +252,11 @@ final class PaymentPagePresenter {
         PaymentResult result;
 
         if (info != null) {
-            cancelSession(new PaymentResult(info.getResultInfo(), info.getInteraction()));
+            closeSessionWithCanceledCode(new PaymentResult(info.getResultInfo(), info.getInteraction()));
         } else if (error.isError(PaymentError.CONN_ERROR)) {
             handleLoadConnError(cause);
         } else {
-            closeSessionWithError(R.string.pmdialog_error_unknown, cause);
+            closeSessionWithErrorCode(R.string.pmdialog_error_unknown, cause);
         }
     }
 
@@ -278,12 +279,11 @@ final class PaymentPagePresenter {
                 postOperation(operation);
             }
         } catch (PaymentException e) {
-            closeSessionWithError(R.string.pmdialog_error_unknown, e);
+            closeSessionWithErrorCode(R.string.pmdialog_error_unknown, e);
         }
     }
 
     private void reloadPaymentSession(PaymentResult result) {
-        view.setPaymentResult(PaymentUI.RESULT_CODE_CANCELED, result);
         this.reloadInteraction = result.getInteraction();
         loadPaymentSession(this.listUrl);
     }
@@ -294,7 +294,7 @@ final class PaymentPagePresenter {
             handleOperationPaymentError((PaymentException) cause);
             return;
         }
-        closeSessionWithError(R.string.pmdialog_error_unknown, cause);
+        closeSessionWithErrorCode(R.string.pmdialog_error_unknown, cause);
     }
 
     private void handleOperationPaymentError(PaymentException cause) {
@@ -306,7 +306,7 @@ final class PaymentPagePresenter {
         } else if (error.isError(PaymentError.CONN_ERROR)) {
             handleOperationConnError(cause);
         } else {
-            closeSessionWithError(R.string.pmdialog_error_unknown, cause);
+            closeSessionWithErrorCode(R.string.pmdialog_error_unknown, cause);
         }
     }
 
@@ -326,7 +326,7 @@ final class PaymentPagePresenter {
                 handleOperationInteractionAbort(result);
                 break;
             default:
-                cancelSession(result);
+                closeSessionWithCanceledCode(result);
         }
     }
 
@@ -335,10 +335,10 @@ final class PaymentPagePresenter {
 
         switch (interaction.getReason()) {
             case InteractionReason.DUPLICATE_OPERATION:
-                closeSession(result);
+                closeSessionWithOkCode(result);
                 break;
             default:
-                cancelSession(result);
+                closeSessionWithCanceledCode(result);
         }
     }
 
@@ -351,29 +351,22 @@ final class PaymentPagePresenter {
     }
 
     private void continueSessionWithWarning(PaymentResult result) {
-        view.setPaymentResult(PaymentUI.RESULT_CODE_CANCELED, result);
         view.showPaymentSession(this.session);
         showInteractionMessage(result.getInteraction());
     }
 
-    private void continueSessionWithWarning(int msgResId, PaymentException cause) {
-        view.setPaymentResult(PaymentUI.RESULT_CODE_ERROR, new PaymentResult(cause.getMessage(), cause.error));
-        view.showPaymentSession(this.session);
-        showMessage(view.getStringRes(msgResId));
-    }
-
-    private void closeSession(PaymentResult result) {
+    private void closeSessionWithOkCode(PaymentResult result) {
         view.setPaymentResult(PaymentUI.RESULT_CODE_OK, result);
         view.closePage();
     }
 
-    private void cancelSession(PaymentResult result) {
+    private void closeSessionWithCanceledCode(PaymentResult result) {
         String msg = translateInteraction(result.getInteraction(), view.getStringRes(R.string.pmdialog_error_unknown));
         view.setPaymentResult(PaymentUI.RESULT_CODE_CANCELED, result);
         closePageWithMessage(msg);
     }
-
-    private void closeSessionWithError(int msgResId, Throwable cause) {
+    
+    private void closeSessionWithErrorCode(int msgResId, Throwable cause) {
         PaymentResult result;
 
         if (cause instanceof PaymentException) {
@@ -400,10 +393,10 @@ final class PaymentPagePresenter {
         service.postOperation(operation);
     }
 
-    private void handleLoadConnError(PaymentException pe) {
+    private void handleLoadConnError(final PaymentException pe) {
+        MessageDialogFragment dialog = createMessageDialog(view.getStringRes(R.string.pmdialog_error_connection), true);
         PaymentResult result = new PaymentResult(pe.getMessage(), pe.error);
         view.setPaymentResult(PaymentUI.RESULT_CODE_ERROR, result);
-        MessageDialogFragment dialog = createMessageDialog(view.getStringRes(R.string.pmdialog_error_connection), true);
 
         dialog.setListener(new ThemedDialogListener() {
             @Override
@@ -426,8 +419,6 @@ final class PaymentPagePresenter {
     }
 
     private void handleOperationConnError(PaymentException pe) {
-        PaymentResult result = new PaymentResult(pe.getMessage(), pe.error);
-        view.setPaymentResult(PaymentUI.RESULT_CODE_ERROR, result);
         view.showPaymentSession(this.session);
         MessageDialogFragment dialog = createMessageDialog(view.getStringRes(R.string.pmdialog_error_connection), true);
 

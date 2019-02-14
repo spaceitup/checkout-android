@@ -42,6 +42,15 @@ public final class PaymentResult implements Parcelable {
     private OperationResult operationResult;
 
     /**
+     * Construct a new PaymentResult with only the resultInfo.
+     *
+     * @param resultInfo a string containing a description of the payment result
+     */
+    public PaymentResult(String resultInfo) {
+        this.resultInfo = resultInfo;
+    }
+
+    /**
      * Construct a new PaymentResult with PaymentError.
      *
      * @param resultInfo a string containing a description of the payment result
