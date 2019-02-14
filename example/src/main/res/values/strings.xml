@@ -16,5 +16,5 @@
     
     <string name="dialog_error_title">Checkout Error</string>
     <string name="dialog_error_button">Close</string>
-    <string name="dialog_error_listurl_empty">Please paste a valid optile List Url in the input field.</string>
+    <string name="dialog_error_listurl_invalid">Please paste a valid optile List Url in the input field.</string>
 </resources>
