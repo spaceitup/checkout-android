@@ -161,7 +161,7 @@ Code sample how to initialise and display the Payment Page:
 Payment Result
 ==============
 
-Payment results are returned through the onActivityResult() method in your Activity. When the payment page is closed, the Android SDK returns the result status of the last request performed. The last request is either a request to load the list or performing an operation (Charge/Preset).
+Payment results are returned through the onActivityResult() method in your Activity. When the page is closed, the returned PaymentResult contains the reason why the page was closed. I.e. because a charge operation was successful or the user closed the page.
 
 Code sample how to obtain the PaymentResult inside the onActivityResult() method:
 
