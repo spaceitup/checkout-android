@@ -1,7 +1,6 @@
 <resources>
-    <style name="ButtonText" parent="TextAppearance.AppCompat">
+    <style name="ButtonText" parent="@android:style/TextAppearance.Material.Button">
         <item name="android:textColor">@android:color/white</item>
-        <item name="android:textStyle">bold</item>
     </style>
 
     <style name="CustomText" parent="TextAppearance.AppCompat">
