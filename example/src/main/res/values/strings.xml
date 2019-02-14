@@ -15,7 +15,6 @@
     <string name="response_paymenterror">Payment Error</string>
     
     <string name="dialog_error_title">Checkout Error</string>
-    <string name="dialog_error_message">A Checkout error occurred: %1$s</string>
     <string name="dialog_error_button">Close</string>
     <string name="dialog_error_listurl_empty">Please paste a valid optile List Url in the input field.</string>
 </resources>

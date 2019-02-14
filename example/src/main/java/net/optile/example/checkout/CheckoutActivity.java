@@ -139,7 +139,7 @@ public final class CheckoutActivity extends AppCompatActivity {
     private void showPaymentError(String message) {
         AlertDialog alertDialog = new AlertDialog.Builder(this).create();
         alertDialog.setTitle(R.string.dialog_error_title);
-        alertDialog.setMessage(String.format(getString(R.string.dialog_error_message), message));
+        alertDialog.setMessage(message);
         alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, getString(R.string.dialog_error_button),
             new DialogInterface.OnClickListener() {
                 public void onClick(DialogInterface dialog, int which) {
