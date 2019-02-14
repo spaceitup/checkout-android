@@ -110,8 +110,15 @@ public final class CheckoutActivity extends AppCompatActivity {
         setText(result.getResultCodeString(), R.id.label_resultcode, R.id.text_resultcode);
         setText(pr.getResultInfo(), R.id.label_resultinfo, R.id.text_resultinfo);
 
+        Interaction interaction = pr.getInteraction();
+        String val = interaction != null ? interaction.getCode() : null;
+        setText(val, R.id.label_interactioncode, R.id.text_interactioncode);        
+
+        val = interaction != null ? interaction.getReason() : null;
+        setText(val, R.id.label_interactionreason, R.id.text_interactionreason);                
+        
         PaymentError error = pr.getPaymentError();        
-        String val = error != null ? error.toString() : null;
+        val = error != null ? error.toString() : null;
         setText(val, R.id.label_paymenterror, R.id.text_paymenterror);        
     }
 

@@ -82,6 +82,36 @@
         android:layout_marginBottom="@dimen/border_medium" />
 
     <TextView
+        android:id="@+id/label_interactioncode"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/response_interactioncode"
+        android:visibility="gone"
+        android:textAppearance="@android:style/TextAppearance.Material.Subhead" />
+
+    <TextView
+        android:id="@+id/text_interactioncode"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        android:layout_marginBottom="@dimen/border_medium" />        
+
+    <TextView
+        android:id="@+id/label_interactionreason"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/response_interactionreason"
+        android:visibility="gone"
+        android:textAppearance="@android:style/TextAppearance.Material.Subhead" />
+
+    <TextView
+        android:id="@+id/text_interactionreason"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        android:layout_marginBottom="@dimen/border_medium" />        
+    
+    <TextView
         android:id="@+id/label_paymenterror"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

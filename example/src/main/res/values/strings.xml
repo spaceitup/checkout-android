@@ -8,9 +8,11 @@
     <string name="request_button">Open PaymentPage</string>
     <string name="request_list_hint">Paste list URL here</string>    
 
-    <string name="response_resultcode">ResultCode</string>
-    <string name="response_resultinfo">Resultinfo</string>
-    <string name="response_paymenterror">PaymentError</string>
+    <string name="response_resultcode">Result Code</string>
+    <string name="response_resultinfo">Result Info</string>
+    <string name="response_interactioncode">Interaction Code</string>
+    <string name="response_interactionreason">Interaction Reason</string>
+    <string name="response_paymenterror">Payment Error</string>
     
     <string name="dialog_error_title">Checkout Error</string>
     <string name="dialog_error_message">A Checkout error occurred: %1$s</string>
