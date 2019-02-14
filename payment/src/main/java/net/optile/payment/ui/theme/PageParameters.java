@@ -1,16 +1,15 @@
 /*
- * Copyright(c) 2012-2018 optile GmbH. All Rights Reserved.
+ * Copyright (c) 2019 optile GmbH
  * https://www.optile.net
  *
- * This software is the property of optile GmbH. Distribution  of  this
- * software without agreement in writing is strictly prohibited.
- *
- * This software may not be copied, used or distributed unless agreement
- * has been received in full.
+ * This file is open source and available under the MIT license.
+ * See the LICENSE file for more information.
  */
 
 package net.optile.payment.ui.theme;
 
+import android.support.annotation.AnyRes;
+import android.support.annotation.StyleRes;
 import net.optile.payment.R;
 
 /**
@@ -18,6 +17,7 @@ import net.optile.payment.R;
  * These parameters may be used to theme the PaymentPage UI elements and text appearances.
  */
 public final class PageParameters {
+
     private final int pageTheme;
     private final int emptyListLabelStyle;
     private final int sectionHeaderLabelStyle;
@@ -107,47 +107,47 @@ public final class PageParameters {
         Builder() {
         }
 
-        public Builder setPageTheme(int pageTheme) {
+        public Builder setPageTheme(@StyleRes int pageTheme) {
             this.pageTheme = pageTheme;
             return this;
         }
 
-        public Builder setEmptyListLabelStyle(int emptyListLabelStyle) {
+        public Builder setEmptyListLabelStyle(@StyleRes int emptyListLabelStyle) {
             this.emptyListLabelStyle = emptyListLabelStyle;
             return this;
         }
 
-        public Builder setSectionHeaderLabelStyle(int sectionHeaderLabelStyle) {
+        public Builder setSectionHeaderLabelStyle(@StyleRes int sectionHeaderLabelStyle) {
             this.sectionHeaderLabelStyle = sectionHeaderLabelStyle;
             return this;
         }
 
-        public Builder setPresetCardTitleStyle(int presetCardTitleStyle) {
+        public Builder setPresetCardTitleStyle(@StyleRes int presetCardTitleStyle) {
             this.presetCardTitleStyle = presetCardTitleStyle;
             return this;
         }
 
-        public Builder setPresetCardSubtitleStyle(int presetCardSubtitleStyle) {
+        public Builder setPresetCardSubtitleStyle(@StyleRes int presetCardSubtitleStyle) {
             this.presetCardSubtitleStyle = presetCardSubtitleStyle;
             return this;
         }
 
-        public Builder setAccountCardTitleStyle(int accountCardTitleStyle) {
+        public Builder setAccountCardTitleStyle(@StyleRes int accountCardTitleStyle) {
             this.accountCardTitleStyle = accountCardTitleStyle;
             return this;
         }
 
-        public Builder setAccountCardSubtitleStyle(int accountCardSubtitleStyle) {
+        public Builder setAccountCardSubtitleStyle(@StyleRes int accountCardSubtitleStyle) {
             this.accountCardSubtitleStyle = accountCardSubtitleStyle;
             return this;
         }
 
-        public Builder setNetworkCardTitleStyle(int networkCardTitleStyle) {
+        public Builder setNetworkCardTitleStyle(@StyleRes int networkCardTitleStyle) {
             this.networkCardTitleStyle = networkCardTitleStyle;
             return this;
         }
 
-        public Builder setPaymentLogoBackground(int paymentLogoBackground) {
+        public Builder setPaymentLogoBackground(@AnyRes int paymentLogoBackground) {
             this.paymentLogoBackground = paymentLogoBackground;
             return this;
         }

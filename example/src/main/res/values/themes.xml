@@ -30,7 +30,7 @@
         <item name="android:windowNoTitle">true</item>
         <item name="android:bottomRightRadius">@dimen/custom_dialogradius</item>
         <item name="android:bottomLeftRadius">@dimen/custom_dialogradius</item>
-        <item name="android:topRightRadius">@dimen/custom_dialogradius</item>a
+        <item name="android:topRightRadius">@dimen/custom_dialogradius</item>
         <item name="android:topLeftRadius">@dimen/custom_dialogradius</item>
         <item name="android:windowFullscreen">false</item>
         <item name="android:windowIsFloating">true</item>

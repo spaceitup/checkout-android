@@ -8,7 +8,8 @@
             },
             {
                 "type": "verificationCode",
-                "regex": "^[0-9]{4}$"
+                "regex": "^[0-9]{4}$",
+                "maxLength": 4
             }
         ]
     },
@@ -21,7 +22,8 @@
             },
             {
                 "type": "verificationCode",
-                "regex": "^[0-9]{4}$"
+                "regex": "^[0-9]{4}$",
+                "maxLength": 4
             }
         ]
     },
@@ -34,7 +36,8 @@
             },
             {
                 "type": "verificationCode",
-                "regex": "^[0-9]{3}$"
+                "regex": "^[0-9]{3}$",
+                "maxLength": 3
             }
         ]
     },
@@ -47,7 +50,8 @@
             },
             {
                 "type": "verificationCode",
-                "regex": "^[0-9]{3}$"
+                "regex": "^[0-9]{3}$",
+                "maxLength": 3
             }
         ]
     },
@@ -60,7 +64,8 @@
             },
             {
                 "type": "verificationCode",
-                "regex": "^[0-9]{3}$"
+                "regex": "^[0-9]{3}$",
+                "maxLength": 3
             }
         ]
     },
@@ -73,7 +78,8 @@
             },
             {
                 "type": "verificationCode",
-                "regex": "^[0-9]{3}$"
+                "regex": "^[0-9]{3}$",
+                "maxLength": 3
             }
         ]
     },
@@ -86,7 +92,8 @@
             },
             {
                 "type": "verificationCode",
-                "regex": "^[0-9]{3}$"
+                "regex": "^[0-9]{3}$",
+                "maxLength": 3
             }
         ]
     },
@@ -99,7 +106,8 @@
             },
             {
                 "type": "verificationCode",
-                "regex": "^[0-9]{3}$"
+                "regex": "^[0-9]{3}$",
+                "maxLength": 3
             }
         ]
     },
@@ -112,7 +120,8 @@
             },
             {
                 "type": "verificationCode",
-                "regex": "^[0-9]{3}$"
+                "regex": "^[0-9]{3}$",
+                "maxLength": 3
             }
         ]
     },
@@ -122,19 +131,6 @@
             {
                 "type": "number",
                 "regex": "^(2|[4-6])[0-9]{10,16}"
-            },
-            {
-                "type": "verificationCode",
-                "regex": "^[0-9]*$"
-            }
-        ]
-    },
-    {
-        "code": "CARTEBLEUE",
-        "items": [
-            {
-                "type": "number",
-                "regex": "^(50|59|6[0-9])[0-9]{10,17}"
             },
             {
                 "type": "verificationCode",
@@ -169,28 +165,11 @@
         ]
     },
     {
-        "code": "POSTEPAY",
+        "code": "SEPADD",
         "items": [
             {
-                "type": "number",
-                "regex": "^(50|59|6[0-9])[0-9]{10,17}"
-            },
-            {
-                "type": "verificationCode",
-                "regex": "^[0-9]*$"
-            }
-        ]
-    },
-    {
-        "code": "SOLO",
-        "items": [
-            {
-                "type": "number",
-                "regex": "^(50|59|6[0-9])[0-9]{10,17}"
-            },
-            {
-                "type": "verificationCode",
-                "regex": "^[0-9]*$"
+                "type": "bic",
+                "hide": true
             }
         ]
     }

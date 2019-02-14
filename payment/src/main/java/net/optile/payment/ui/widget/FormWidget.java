@@ -1,16 +1,14 @@
 /*
- * Copyright(c) 2012-2018 optile GmbH. All Rights Reserved.
+ * Copyright (c) 2019 optile GmbH
  * https://www.optile.net
  *
- * This software is the property of optile GmbH. Distribution  of  this
- * software without agreement in writing is strictly prohibited.
- *
- * This software may not be copied, used or distributed unless agreement
- * has been received in full.
+ * This file is open source and available under the MIT license.
+ * See the LICENSE file for more information.
  */
 
 package net.optile.payment.ui.widget;
 
+import android.support.annotation.DrawableRes;
 import android.support.v4.content.ContextCompat;
 import android.view.View;
 import android.widget.ImageView;
@@ -21,7 +19,7 @@ import net.optile.payment.ui.theme.PaymentTheme;
 import net.optile.payment.ui.theme.WidgetParameters;
 
 /**
- * The base class for all widgets, i.e. Button, CheckBox, TextInput etc.
+ * Base class for all widgets, i.e. ButtonWidget, CheckBoxWidget, TextInputWidget etc.
  */
 public abstract class FormWidget {
 
@@ -45,19 +43,39 @@ public abstract class FormWidget {
         this.icon = rootView.findViewById(R.id.image_icon);
     }
 
-    public void setPresenter(WidgetPresenter presenter) {
+    /**
+     * Set the presenter in this widget, the presenter may be used by this widget i.e. to inform of events or validate input.
+     *
+     * @param presenter to be set in this widget
+     */
+    public final void setPresenter(WidgetPresenter presenter) {
         this.presenter = presenter;
     }
 
-    public View getRootView() {
+    /**
+     * Get the rootView of this Widget
+     *
+     * @return the root view of this widget
+     */
+    public final View getRootView() {
         return rootView;
     }
 
-    public String getName() {
+    /**
+     * Get the name of this widget, i.e. "number", "iban" or "bic"
+     *
+     * @return name of this widget
+     */
+    public final String getName() {
         return name;
     }
 
-    public void setIconResource(int resId) {
+    /**
+     * Set the resource ID of the validation icon in front of this widget
+     *
+     * @param resId resource id of the icon
+     */
+    public final void setIconResource(@DrawableRes int resId) {
 
         if (icon != null) {
             icon.setImageResource(resId);
@@ -65,33 +83,77 @@ public abstract class FormWidget {
         }
     }
 
-    void setVisible(boolean visible) {
-        rootView.setVisibility(visible ? View.VISIBLE : View.GONE);
-    }
-
+    /**
+     * Set this widget to be the last ImeOptions if it supports ImeOptions.
+     *
+     * @return true when set, false otherwise
+     */
     public boolean setLastImeOptionsWidget() {
         return false;
     }
 
-    public void clearInputErrors() {
+    /**
+     * Set the validation in this widget given the current input value.
+     */
+    public void setValidation() {
     }
 
+    /**
+     * Clear the focus of this widget if it supports focus i.e. the TextLayoutWidget.
+     */
+    public void clearFocus() {
+    }
+
+    /**
+     * Set a generic label in this widget, it is up to widget implementations how to show its label.
+     *
+     * @param label to be set
+     */
     public void setLabel(String label) {
     }
 
+    /**
+     * Check if the widget has been validated.
+     *
+     * @return true when valid, false otherwise
+     */
     public boolean isValid() {
         return this.state == VALIDATION_OK;
     }
 
+    /**
+     * Request the widget to inject its input value into the operation Object.
+     *
+     * @param operation in which the input value should be added
+     */
     public void putValue(Operation operation) throws PaymentException {
     }
 
+    /**
+     * Request the widget to validate itself given the current input value.
+     *
+     * @return true when validated, false otherwise
+     */
     public boolean validate() {
-        setState(VALIDATION_OK);
+        setValidationState(VALIDATION_OK);
         return true;
     }
 
-    void setState(int state) {
+    /**
+     * Set this widget visible or hide it.
+     *
+     * @param visible true when visible, false for hiding this widget
+     */
+    final void setVisible(boolean visible) {
+        rootView.setVisibility(visible ? View.VISIBLE : View.GONE);
+    }
+
+    /**
+     * Set the validation state of this widget
+     *
+     * @param state to be set
+     */
+    final void setValidationState(int state) {
         this.state = state;
         setIconColor(state);
     }

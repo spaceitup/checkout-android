@@ -1,12 +1,9 @@
 /*
- * Copyright(c) 2012-2018 optile GmbH. All Rights Reserved.
+ * Copyright (c) 2019 optile GmbH
  * https://www.optile.net
- * <p>
- * This software is the property of optile GmbH. Distribution  of  this
- * software without agreement in writing is strictly prohibited.
- * <p>
- * This software may not be copied, used or distributed unless agreement
- * has been received in full.
+ *
+ * This file is open source and available under the MIT license.
+ * See the LICENSE file for more information.
  */
 
 package net.optile.payment.ui.page;
@@ -284,6 +281,15 @@ public final class PaymentPageActivity extends AppCompatActivity implements Paym
         presenter.onActionClicked(item, widgets);
     }
 
+    /**
+     * Validate the input type value for the given PaymentCard
+     *
+     * @param card payment card containing the input type
+     * @param type type of the input field, i.e. number
+     * @param value1 mandatory value1
+     * @param value2 optional value2, mainly used to validate expiry month and year at the same time
+     * @return result of the validation
+     */
     public ValidationResult validate(PaymentCard card, String type, String value1, String value2) {
         Validator validator = presenter.getValidator();
         ValidationResult result = validator.validate(card.getPaymentMethod(), card.getCode(), type, value1, value2);
@@ -298,5 +304,29 @@ public final class PaymentPageActivity extends AppCompatActivity implements Paym
         }
         result.setMessage(msg);
         return result;
+    }
+
+    /**
+     * Check if the input type is hidden for the given payment card
+     *
+     * @param code the code of the payment method the input type belongs to, i.e. SEPA
+     * @param type of the input field, i.e. bic
+     * @return true when the input field should be hidden, false otherwise
+     */
+    public boolean isHidden(String code, String type) {
+        Validator validator = presenter.getValidator();
+        return validator.isHidden(code, type);
+    }
+
+    /**
+     * Get the max length for the given input type.
+     *
+     * @param code the code of the payment method the input type belongs to, i.e. SEPA
+     * @param type of the input field, i.e. number
+     * @return maxLength of the input field
+     */
+    public int getMaxLength(String code, String type) {
+        Validator validator = presenter.getValidator();
+        return validator.getMaxLength(code, type);
     }
 }

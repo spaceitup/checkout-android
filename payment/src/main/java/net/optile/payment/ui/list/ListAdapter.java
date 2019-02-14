@@ -1,12 +1,9 @@
 /*
- * Copyright(c) 2012-2018 optile GmbH. All Rights Reserved.
+ * Copyright (c) 2019 optile GmbH
  * https://www.optile.net
  *
- * This software is the property of optile GmbH. Distribution  of  this
- * software without agreement in writing is strictly prohibited.
- *
- * This software may not be copied, used or distributed unless agreement
- * has been received in full.
+ * This file is open source and available under the MIT license.
+ * See the LICENSE file for more information.
  */
 
 package net.optile.payment.ui.list;
@@ -160,6 +157,14 @@ final class ListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
             return null;
         }
         return list.validate(position, type, value1, value2);
+    }
+
+    boolean isHidden(String code, String type) {
+        return list.isHidden(code, type);
+    }
+
+    int getMaxLength(String code, String type) {
+        return list.getMaxLength(code, type);
     }
 
     PaymentTheme getPaymentTheme() {

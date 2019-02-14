@@ -1,12 +1,9 @@
 /*
- * Copyright(c) 2012-2018 optile GmbH. All Rights Reserved.
+ * Copyright (c) 2019 optile GmbH
  * https://www.optile.net
  *
- * This software is the property of optile GmbH. Distribution  of  this
- * software without agreement in writing is strictly prohibited.
- *
- * This software may not be copied, used or distributed unless agreement
- * has been received in full.
+ * This file is open source and available under the MIT license.
+ * See the LICENSE file for more information.
  */
 
 package net.optile.payment.form;
@@ -14,11 +11,11 @@ package net.optile.payment.form;
 import static io.github.jsonSnapshot.SnapshotMatcher.expect;
 import static io.github.jsonSnapshot.SnapshotMatcher.start;
 import static io.github.jsonSnapshot.SnapshotMatcher.validateSnapshots;
-
 import static org.junit.Assert.assertNotNull;
 
-import java.net.URL;
 import java.net.MalformedURLException;
+import java.net.URL;
+
 import org.json.JSONException;
 import org.junit.AfterClass;
 import org.junit.BeforeClass;

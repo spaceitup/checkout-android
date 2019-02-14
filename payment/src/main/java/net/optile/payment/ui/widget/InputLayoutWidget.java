@@ -1,16 +1,14 @@
 /*
- * Copyright(c) 2012-2018 optile GmbH. All Rights Reserved.
+ * Copyright (c) 2019 optile GmbH
  * https://www.optile.net
  *
- * This software is the property of optile GmbH. Distribution  of  this
- * software without agreement in writing is strictly prohibited.
- *
- * This software may not be copied, used or distributed unless agreement
- * has been received in full.
+ * This file is open source and available under the MIT license.
+ * See the LICENSE file for more information.
  */
 
 package net.optile.payment.ui.widget;
 
+import android.support.annotation.DrawableRes;
 import android.support.design.widget.TextInputEditText;
 import android.support.design.widget.TextInputLayout;
 import android.text.InputFilter;
@@ -24,6 +22,7 @@ import net.optile.payment.R;
 import net.optile.payment.core.PaymentInputType;
 import net.optile.payment.ui.theme.PaymentTheme;
 import net.optile.payment.util.PaymentUtils;
+import net.optile.payment.validation.ValidationResult;
 
 /**
  * Base class for widgets using the TextInputLayout and TextInputEditText
@@ -64,7 +63,7 @@ abstract class InputLayoutWidget extends FormWidget {
             }
         });
 
-        hintLayout.setOnClickListener(new View.OnClickListener() {
+        hintImage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 presenter.onHintClicked(name);
@@ -72,6 +71,10 @@ abstract class InputLayoutWidget extends FormWidget {
         });
     }
 
+    /**
+     * {@inheritDoc}
+     */
+    @Override
     public void setLabel(String label) {
         this.label = label;
         textLayout.setHintAnimationEnabled(false);
@@ -79,18 +82,39 @@ abstract class InputLayoutWidget extends FormWidget {
         textLayout.setHintAnimationEnabled(true);
     }
 
+    /**
+     * {@inheritDoc}
+     */
+    @Override
     public boolean setLastImeOptionsWidget() {
         textInput.setImeOptions(EditorInfo.IME_ACTION_DONE);
         return true;
     }
 
-    public void clearInputErrors() {
-        if (TextUtils.isEmpty(getNormalizedValue())) {
-            setValidation(VALIDATION_UNKNOWN, false, null);
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void clearFocus() {
+        if (textInput.hasFocus()) {
+            textInput.clearFocus();
         }
     }
 
-    public void setHint(boolean visible, int hintDrawable) {
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void setValidation() {
+
+        if (textInput.hasFocus() || TextUtils.isEmpty(getNormalizedValue())) {
+            setInputLayoutState(VALIDATION_UNKNOWN, false, null);
+            return;
+        }
+        validate();
+    }
+
+    public void setHint(boolean visible, @DrawableRes int hintDrawable) {
 
         if (visible) {
             hintLayout.setVisibility(View.VISIBLE);
@@ -98,6 +122,12 @@ abstract class InputLayoutWidget extends FormWidget {
         } else {
             hintLayout.setVisibility(View.GONE);
         }
+    }
+
+    public void setMaxLength(int length) {
+        InputFilter[] filters = new InputFilter[1];
+        filters[0] = new InputFilter.LengthFilter(length);
+        textInput.setFilters(filters);
     }
 
     void handleOnFocusChange(boolean hasFocus) {
@@ -109,13 +139,7 @@ abstract class InputLayoutWidget extends FormWidget {
         setReducedWidth(hintLayout, landscape ? REDUCED_LANDSCAPE_HINT : REDUCED_PORTRAIT_HINT);
     }
 
-    void setMaxLength(int length) {
-        InputFilter[] filters = new InputFilter[1];
-        filters[0] = new InputFilter.LengthFilter(length);
-        textInput.setFilters(filters);
-    }
-
-    void setInputType(int type, String digits) {
+    void setTextInputType(int type, String digits) {
         textInput.setInputType(type);
 
         if (!TextUtils.isEmpty(digits)) {
@@ -137,8 +161,21 @@ abstract class InputLayoutWidget extends FormWidget {
         return val;
     }
 
-    void setValidation(int state, boolean errorEnabled, String message) {
-        setState(state);
+    boolean setValidationResult(ValidationResult result) {
+
+        if (result == null) {
+            return false;
+        }
+        if (result.isError()) {
+            setInputLayoutState(VALIDATION_ERROR, true, result.getMessage());
+            return false;
+        }
+        setInputLayoutState(VALIDATION_OK, false, null);
+        return true;
+    }
+
+    void setInputLayoutState(int state, boolean errorEnabled, String message) {
+        setValidationState(state);
         textLayout.setErrorEnabled(errorEnabled);
         textLayout.setError(message);
     }

@@ -1,12 +1,9 @@
 /*
- * Copyright(c) 2012-2018 optile GmbH. All Rights Reserved.
+ * Copyright (c) 2019 optile GmbH
  * https://www.optile.net
- * <p>
- * This software is the property of optile GmbH. Distribution  of  this
- * software without agreement in writing is strictly prohibited.
- * <p>
- * This software may not be copied, used or distributed unless agreement
- * has been received in full.
+ *
+ * This file is open source and available under the MIT license.
+ * See the LICENSE file for more information.
  */
 
 package net.optile.payment.ui.list;
@@ -183,6 +180,14 @@ public final class PaymentList {
             return null;
         }
         return activity.validate(item.getPaymentCard(), type, value1, value2);
+    }
+
+    boolean isHidden(String code, String type) {
+        return activity.isHidden(code, type);
+    }
+
+    int getMaxLength(String code, String type) {
+        return activity.getMaxLength(code, type);
     }
 
     private int nextViewType() {

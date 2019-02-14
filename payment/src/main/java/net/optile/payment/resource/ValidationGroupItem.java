@@ -1,12 +1,9 @@
 /*
- * Copyright(c) 2012-2018 optile GmbH. All Rights Reserved.
+ * Copyright (c) 2019 optile GmbH
  * https://www.optile.net
  *
- * This software is the property of optile GmbH. Distribution  of  this
- * software without agreement in writing is strictly prohibited.
- *
- * This software may not be copied, used or distributed unless agreement
- * has been received in full.
+ * This file is open source and available under the MIT license.
+ * See the LICENSE file for more information.
  */
 
 package net.optile.payment.resource;
@@ -18,8 +15,14 @@ public class ValidationGroupItem {
 
     private String type;
     private String regex;
+    private boolean hide;
+    private int maxLength;
 
-    public ValidationGroupItem() {
+    private ValidationGroupItem() {
+    }
+
+    public int getMaxLength() {
+        return maxLength;
     }
 
     public String getType() {
@@ -28,5 +31,9 @@ public class ValidationGroupItem {
 
     public String getRegex() {
         return regex;
+    }
+
+    public boolean getHide() {
+        return hide;
     }
 }

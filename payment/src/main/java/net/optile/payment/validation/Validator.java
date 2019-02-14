@@ -1,12 +1,9 @@
 /*
- * Copyright(c) 2012-2018 optile GmbH. All Rights Reserved.
+ * Copyright (c) 2019 optile GmbH
  * https://www.optile.net
  *
- * This software is the property of optile GmbH. Distribution  of  this
- * software without agreement in writing is strictly prohibited.
- *
- * This software may not be copied, used or distributed unless agreement
- * has been received in full.
+ * This file is open source and available under the MIT license.
+ * See the LICENSE file for more information.
  */
 
 package net.optile.payment.validation;
@@ -30,7 +27,15 @@ public class Validator {
     public final static String REGEX_BIC = "([a-zA-Z]{4}[a-zA-Z]{2}[a-zA-Z0-9]{2}([a-zA-Z0-9]{3})?)";
     public final static String REGEX_ACCOUNT_NUMBER = "^[0-9]+$";
     public final static String REGEX_VERIFICATION_CODE = "^[0-9]*$";
-    private final static String TAG = "pay_Validator";
+    public final static String REGEX_HOLDER_NAME = "^.{3,}$";
+    public final static String REGEX_BANK_CODE = "^.{1,}$";
+
+    public final static int MAXLENGTH_DEFAULT = 128;
+    public final static int MAXLENGTH_ACCOUNT_NUMBER = 34;
+    public final static int MAXLENGTH_VERIFICATION_CODE = 4;
+    public final static int MAXLENGTH_IBAN = 34;
+    public final static int MAXLENGTH_BIC = 11;
+
     private final Map<String, ValidationGroup> validations;
 
     /**
@@ -54,18 +59,56 @@ public class Validator {
      */
     public String getValidationRegex(String code, String type) {
 
-        if (code == null || !validations.containsKey(code)) {
+        if (code == null || type == null || !validations.containsKey(code)) {
             return null;
         }
+        return validations.get(code).getValidationRegex(type);
+    }
+
+    public int getMaxLength(String code, String type) {
+
+        if (code == null || type == null) {
+            return MAXLENGTH_DEFAULT;
+        }
+        int maxLength = 0;
+
+        if (validations.containsKey(code)) {
+            maxLength = validations.get(code).getMaxLength(type);
+        }
+        if (maxLength > 0) {
+            return maxLength;
+        }
+        switch (type) {
+            case PaymentInputType.ACCOUNT_NUMBER:
+                return MAXLENGTH_ACCOUNT_NUMBER;
+            case PaymentInputType.VERIFICATION_CODE:
+                return MAXLENGTH_VERIFICATION_CODE;
+            case PaymentInputType.IBAN:
+                return MAXLENGTH_IBAN;
+            case PaymentInputType.BIC:
+                return MAXLENGTH_BIC;
+            default:
+                return MAXLENGTH_DEFAULT;
+        }
+    }
+
+    public boolean isHidden(String code, String type) {
+
+        if (code == null || type == null) {
+            return false;
+        }
+        if (!validations.containsKey(code)) {
+            return false;
+        }
         ValidationGroup group = validations.get(code);
-        return group.getValidationRegex(type);
+        return group.isHidden(type);
     }
 
     /**
      * Validate the given input values defined by its type
      *
      * @param method the Payment method like CREDIT_CARD
-     * @param code the optional payment code like VISA
+     * @param code the payment code like VISA
      * @param type the PaymentInputType like "number"
      * @param value1 holding the mandatory first value for the given input type, may be empty
      * @param value2 holding the optional second value for the given input type
@@ -73,10 +116,13 @@ public class Validator {
     public ValidationResult validate(String method, String code, String type, String value1, String value2) {
 
         if (TextUtils.isEmpty(method)) {
-            throw new IllegalArgumentException("validate method may not be null or empty");
+            throw new IllegalArgumentException("method may not be null or empty");
+        }
+        if (TextUtils.isEmpty(code)) {
+            throw new IllegalArgumentException("code may not be null or empty");
         }
         if (TextUtils.isEmpty(type)) {
-            throw new IllegalArgumentException("validate type may not be null or empty");
+            throw new IllegalArgumentException("type may not be null or empty");
         }
         value1 = value1 == null ? "" : value1;
         value2 = value2 == null ? "" : value2;
@@ -88,15 +134,15 @@ public class Validator {
             case PaymentInputType.VERIFICATION_CODE:
                 return validateVerificationCode(value1, regex);
             case PaymentInputType.HOLDER_NAME:
-                return validateHolderName(value1);
+                return validateHolderName(value1, regex);
+            case PaymentInputType.BANK_CODE:
+                return validateBankCode(value1, regex);
             case PaymentInputType.EXPIRY_DATE:
                 return validateExpiryDate(value1, value2);
             case PaymentInputType.EXPIRY_MONTH:
                 return validateExpiryMonth(value1);
             case PaymentInputType.EXPIRY_YEAR:
                 return validateExpiryYear(value1);
-            case PaymentInputType.BANK_CODE:
-                return validateBankCode(value1);
             case PaymentInputType.IBAN:
                 return validateIban(value1);
             case PaymentInputType.BIC:
@@ -107,13 +153,14 @@ public class Validator {
     }
 
     private ValidationResult validateAccountNumber(String method, String number, String regex) {
+        regex = regex != null ? regex : REGEX_ACCOUNT_NUMBER;
 
         switch (method) {
             case PaymentMethod.CREDIT_CARD:
             case PaymentMethod.DEBIT_CARD:
                 return validateCardNumber(number, regex);
             default:
-                if (!number.matches(REGEX_ACCOUNT_NUMBER)) {
+                if (!number.matches(regex)) {
                     if (TextUtils.isEmpty(number)) {
                         return new ValidationResult(ValidationResult.MISSING_ACCOUNT_NUMBER);
                     }
@@ -124,7 +171,6 @@ public class Validator {
     }
 
     private ValidationResult validateCardNumber(String number, String regex) {
-        regex = regex != null ? regex : REGEX_ACCOUNT_NUMBER;
 
         if (!number.matches(regex)) {
             if (TextUtils.isEmpty(number)) {
@@ -150,13 +196,17 @@ public class Validator {
         return new ValidationResult(null);
     }
 
-    private ValidationResult validateHolderName(String holderName) {
+    private ValidationResult validateHolderName(String holderName, String regex) {
+        regex = regex != null ? regex : REGEX_HOLDER_NAME;
         String error = null;
 
-        if (TextUtils.isEmpty(holderName)) {
-            error = ValidationResult.MISSING_HOLDER_NAME;
+        if (!holderName.matches(regex)) {
+            if (TextUtils.isEmpty(holderName)) {
+                return new ValidationResult(ValidationResult.MISSING_HOLDER_NAME);
+            }
+            return new ValidationResult(ValidationResult.INVALID_HOLDER_NAME);
         }
-        return new ValidationResult(error);
+        return new ValidationResult(null);
     }
 
     private ValidationResult validateExpiryDate(String month, String year) {
@@ -192,13 +242,16 @@ public class Validator {
         return new ValidationResult(error);
     }
 
-    private ValidationResult validateBankCode(String bankCode) {
-        String error = null;
+    private ValidationResult validateBankCode(String bankCode, String regex) {
+        regex = regex != null ? regex : REGEX_BANK_CODE;
 
-        if (TextUtils.isEmpty(bankCode)) {
-            error = ValidationResult.MISSING_BANK_CODE;
+        if (!bankCode.matches(regex)) {
+            if (TextUtils.isEmpty(bankCode)) {
+                return new ValidationResult(ValidationResult.MISSING_BANK_CODE);
+            }
+            return new ValidationResult(ValidationResult.INVALID_BANK_CODE);
         }
-        return new ValidationResult(error);
+        return new ValidationResult(null);
     }
 
     private ValidationResult validateIban(String iban) {

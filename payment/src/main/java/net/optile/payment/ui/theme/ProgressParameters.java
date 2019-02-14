@@ -1,16 +1,16 @@
 /*
- * Copyright(c) 2012-2018 optile GmbH. All Rights Reserved.
+ * Copyright (c) 2019 optile GmbH
  * https://www.optile.net
  *
- * This software is the property of optile GmbH. Distribution  of  this
- * software without agreement in writing is strictly prohibited.
- *
- * This software may not be copied, used or distributed unless agreement
- * has been received in full.
+ * This file is open source and available under the MIT license.
+ * See the LICENSE file for more information.
  */
 
 package net.optile.payment.ui.theme;
 
+import android.support.annotation.AnyRes;
+import android.support.annotation.ColorRes;
+import android.support.annotation.StyleRes;
 import net.optile.payment.R;
 
 /**
@@ -18,6 +18,7 @@ import net.optile.payment.R;
  * These parameters may be used to theme the progress (loading) UI elements and text appearances.
  */
 public final class ProgressParameters {
+
     private final int loadBackground;
     private final int loadProgressBarColor;
     private final int sendBackground;
@@ -92,37 +93,37 @@ public final class ProgressParameters {
         Builder() {
         }
 
-        public Builder setLoadBackground(int loadBackground) {
+        public Builder setLoadBackground(@AnyRes int loadBackground) {
             this.loadBackground = loadBackground;
             return this;
         }
 
-        public Builder setLoadProgressBarColor(int loadProgressBarColor) {
+        public Builder setLoadProgressBarColor(@ColorRes int loadProgressBarColor) {
             this.loadProgressBarColor = loadProgressBarColor;
             return this;
         }
 
-        public Builder setSendBackground(int sendBackground) {
+        public Builder setSendBackground(@AnyRes int sendBackground) {
             this.sendBackground = sendBackground;
             return this;
         }
 
-        public Builder setSendProgressBarColorFront(int sendProgressBarColorFront) {
+        public Builder setSendProgressBarColorFront(@ColorRes int sendProgressBarColorFront) {
             this.sendProgressBarColorFront = sendProgressBarColorFront;
             return this;
         }
 
-        public Builder setSendProgressBarColorBack(int sendProgressBarColorBack) {
+        public Builder setSendProgressBarColorBack(@ColorRes int sendProgressBarColorBack) {
             this.sendProgressBarColorBack = sendProgressBarColorBack;
             return this;
         }
 
-        public Builder setHeaderStyle(int headerStyle) {
+        public Builder setHeaderStyle(@StyleRes int headerStyle) {
             this.headerStyle = headerStyle;
             return this;
         }
 
-        public Builder setInfoStyle(int infoStyle) {
+        public Builder setInfoStyle(@StyleRes int infoStyle) {
             this.infoStyle = infoStyle;
             return this;
         }

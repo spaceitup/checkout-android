@@ -1,12 +1,9 @@
 /*
- * Copyright(c) 2012-2018 optile GmbH. All Rights Reserved.
+ * Copyright (c) 2019 optile GmbH
  * https://www.optile.net
  *
- * This software is the property of optile GmbH. Distribution  of  this
- * software without agreement in writing is strictly prohibited.
- *
- * This software may not be copied, used or distributed unless agreement
- * has been received in full.
+ * This file is open source and available under the MIT license.
+ * See the LICENSE file for more information.
  */
 
 package net.optile.payment.core;
@@ -35,7 +32,7 @@ public class PaymentMethodCodes {
     public final static String MAESTRO = "MAESTRO";
     public final static String MAESTROUK = "MAESTROUK";
     public final static String POSTEPAY = "POSTEPAY";
-    public final static String SOLO = "SOLO";
+    public final static String SEPADD = "SEPADD";
 
     /**
      * Check if the given type is a valid payment input type
@@ -60,7 +57,7 @@ public class PaymentMethodCodes {
                 case MAESTRO:
                 case MAESTROUK:
                 case POSTEPAY:
-                case SOLO:
+                case SEPADD:
                     return true;
             }
         }
@@ -82,7 +79,7 @@ public class PaymentMethodCodes {
         MAESTRO,
         MAESTROUK,
         POSTEPAY,
-        SOLO
+        SEPADD
     })
     public @interface Definition { }
 }

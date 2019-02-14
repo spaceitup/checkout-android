@@ -1,12 +1,9 @@
 /*
- * Copyright(c) 2012-2018 optile GmbH. All Rights Reserved.
+ * Copyright (c) 2019 optile GmbH
  * https://www.optile.net
  *
- * This software is the property of optile GmbH. Distribution  of  this
- * software without agreement in writing is strictly prohibited.
- *
- * This software may not be copied, used or distributed unless agreement
- * has been received in full.
+ * This file is open source and available under the MIT license.
+ * See the LICENSE file for more information.
  */
 
 package net.optile.payment.ui.widget;
@@ -31,9 +28,6 @@ import net.optile.payment.validation.ValidationResult;
 public final class TextInputWidget extends InputLayoutWidget {
 
     private final static String NUMERIC_DIGITS = "0123456789 -";
-    private final static int MAXLENGTH_INTEGER = 4;
-    private final static int MAXLENGTH_NUMERIC = 56;
-    private final static int MAXLENGTH_DEFAULT = 256;
 
     /**
      * Construct a new TextInputWidget
@@ -66,42 +60,19 @@ public final class TextInputWidget extends InputLayoutWidget {
         });
     }
 
-    public void setInputType(String type) {
-
-        switch (type) {
-            case InputElementType.NUMERIC:
-                setInputType(InputType.TYPE_CLASS_NUMBER, NUMERIC_DIGITS);
-                setMaxLength(MAXLENGTH_NUMERIC);
-                break;
-            case InputElementType.INTEGER:
-                setInputType(InputType.TYPE_CLASS_NUMBER, null);
-                setMaxLength(MAXLENGTH_INTEGER);
-                setReducedView();
-                break;
-            default:
-                setMaxLength(MAXLENGTH_DEFAULT);
-        }
-    }
-
+    /**
+     * {@inheritDoc}
+     */
+    @Override
     public boolean validate() {
         ValidationResult result = presenter.validate(name, getNormalizedValue(), null);
-
-        if (result == null) {
-            return false;
-        }
-        boolean validated = false;
-        if (result.isError()) {
-            setValidation(VALIDATION_ERROR, true, result.getMessage());
-        } else {
-            setValidation(VALIDATION_OK, false, null);
-            validated = true;
-        }
-        if (textInput.hasFocus()) {
-            textInput.clearFocus();
-        }
-        return validated;
+        return setValidationResult(result);
     }
 
+    /**
+     * {@inheritDoc}
+     */
+    @Override
     public void putValue(Operation operation) throws PaymentException {
         String val = getNormalizedValue();
 
@@ -110,9 +81,22 @@ public final class TextInputWidget extends InputLayoutWidget {
         }
     }
 
+    public void setInputElementType(String type) {
+
+        switch (type) {
+            case InputElementType.NUMERIC:
+                setTextInputType(InputType.TYPE_CLASS_NUMBER, NUMERIC_DIGITS);
+                break;
+            case InputElementType.INTEGER:
+                setTextInputType(InputType.TYPE_CLASS_NUMBER, null);
+                setReducedView();
+        }
+    }
+
     void handleOnFocusChange(boolean hasFocus) {
+
         if (hasFocus) {
-            setValidation(VALIDATION_UNKNOWN, false, null);
+            setInputLayoutState(VALIDATION_UNKNOWN, false, null);
         } else if (state == VALIDATION_UNKNOWN && !TextUtils.isEmpty(getNormalizedValue())) {
             validate();
         }

@@ -1,13 +1,11 @@
 /*
- * Copyright(c) 2012-2019 optile GmbH. All Rights Reserved.
+ * Copyright (c) 2019 optile GmbH
  * https://www.optile.net
  *
- * This software is the property of optile GmbH. Distribution  of  this
- * software without agreement in writing is strictly prohibited.
- *
- * This software may not be copied, used or distributed unless agreement
- * has been received in full.
+ * This file is open source and available under the MIT license.
+ * See the LICENSE file for more information.
  */
+
 package net.optile.payment.resource;
 
 import static org.junit.Assert.assertNotNull;
@@ -62,11 +60,8 @@ public class ResourceLoaderTest {
         validateGroup(validations, "VISA_DANKORT");
         validateGroup(validations, "VISAELECTRON");
         validateGroup(validations, "CARTEBANCAIRE");
-        validateGroup(validations, "CARTEBLEUE");
         validateGroup(validations, "MAESTRO");
         validateGroup(validations, "MAESTROUK");
-        validateGroup(validations, "POSTEPAY");
-        validateGroup(validations, "SOLO");
     }
 
     @Test(expected = IOException.class)

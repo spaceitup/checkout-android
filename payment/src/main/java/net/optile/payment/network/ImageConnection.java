@@ -1,12 +1,9 @@
 /*
- * Copyright(c) 2012-2018 optile GmbH. All Rights Reserved.
+ * Copyright (c) 2019 optile GmbH
  * https://www.optile.net
- * <p>
- * This software is the property of optile GmbH. Distribution  of  this
- * software without agreement in writing is strictly prohibited.
- * <p>
- * This software may not be copied, used or distributed unless agreement
- * has been received in full.
+ *
+ * This file is open source and available under the MIT license.
+ * See the LICENSE file for more information.
  */
 
 package net.optile.payment.network;
@@ -39,7 +36,7 @@ public final class ImageConnection extends BaseConnection {
      * @return Bitmap drawable
      */
     public Bitmap loadBitmap(final URL url) throws PaymentException {
-        final String source = "ListConnection[loadBitmap]";
+        final String source = "ImageConnection[loadBitmap]";
 
         if (url == null) {
             throw new IllegalArgumentException(source + " - url cannot be null");
