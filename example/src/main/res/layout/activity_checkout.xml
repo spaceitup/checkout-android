@@ -59,7 +59,7 @@
             android:id="@+id/label_resultcode"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textAppearance="@android:style/TextAppearance.Material.Subhead"
+            android:textAppearance="@style/AppLabelText"
             android:visibility="gone"
             android:text="@string/response_resultcode" />
 
@@ -76,7 +76,7 @@
             android:layout_height="wrap_content"
             android:text="@string/response_resultinfo"
             android:visibility="gone"
-            android:textAppearance="@android:style/TextAppearance.Material.Subhead" />
+            android:textAppearance="@style/AppLabelText" />
 
         <TextView
             android:id="@+id/text_resultinfo"
@@ -91,7 +91,7 @@
             android:layout_height="wrap_content"
             android:text="@string/response_interactioncode"
             android:visibility="gone"
-            android:textAppearance="@android:style/TextAppearance.Material.Subhead" />
+            android:textAppearance="@style/AppLabelText" />
 
         <TextView
             android:id="@+id/text_interactioncode"
@@ -106,7 +106,7 @@
             android:layout_height="wrap_content"
             android:text="@string/response_interactionreason"
             android:visibility="gone"
-            android:textAppearance="@android:style/TextAppearance.Material.Subhead" />
+            android:textAppearance="@style/AppLabelText" />
 
         <TextView
             android:id="@+id/text_interactionreason"
@@ -121,7 +121,7 @@
             android:layout_height="wrap_content"
             android:text="@string/response_paymenterror"
             android:visibility="gone"
-            android:textAppearance="@android:style/TextAppearance.Material.Subhead" />
+            android:textAppearance="@style/AppLabelText" />
 
         <TextView
             android:id="@+id/text_paymenterror"
