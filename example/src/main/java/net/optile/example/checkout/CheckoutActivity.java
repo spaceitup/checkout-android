@@ -7,6 +7,7 @@
  */
 package net.optile.example.checkout;
 
+import android.util.Patterns;
 import android.util.Log;
 import android.text.TextUtils;
 import android.app.AlertDialog;
@@ -152,8 +153,8 @@ public final class CheckoutActivity extends AppCompatActivity {
     private void openPaymentPage() {
         String listUrl = listInput.getText().toString().trim();        
 
-        if (TextUtils.isEmpty(listUrl)) {
-            showPaymentError(getString(R.string.dialog_error_listurl_empty));
+        if (TextUtils.isEmpty(listUrl) || !Patterns.WEB_URL.matcher(listUrl).matches()) {
+            showPaymentError(getString(R.string.dialog_error_listurl_invalid));
             return;
         }
         PaymentUI paymentUI = PaymentUI.getInstance();
