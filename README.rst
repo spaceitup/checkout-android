@@ -129,14 +129,35 @@ Part of the list result containing the “self” URL:
 2 - Install Android SDK
 -----------------------
 
-Installing the Android SDK is easy and requires only adding the optile
-Android SDK module to your build.gradle file. 
+Installing the Android SDK is easy and requires only adding the optile Android SDK module to your build.gradle file. 
 
-    Note: the Android SDK is currently only available through optile internal Nexus repository.
-    
+Repository
+~~~~~~~~~~~
+
+Add the packagecloud.io repository to the top level build.gradle file.
+
 ::
 
-   implementation "com.oscato.mobile:android-sdk:1.1.0"
+    allprojects {
+        repositories {
+            ...
+	    maven {
+	        url "https://packagecloud.io/optile/repo/maven2"
+	    }
+        }
+    }
+
+Dependency
+~~~~~~~~~~
+
+Add the android-sdk dependency to the build.gradle dependency section.
+
+::
+
+    dependencies {
+        ...
+        implementation "com.oscato.mobile:android-sdk:1.1.3"
+    }
 
 3 - Show Payment Page
 ---------------------

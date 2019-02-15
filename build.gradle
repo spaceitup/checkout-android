@@ -42,7 +42,8 @@ ext {
     compileSdkVersion = 28
     targetSdkVersion = 28
     buildToolsVersion = "28.0.3"
-
+    packagecloudWagonVersion = "0.0.6"
+    
     gsonVersion = "2.8.5"
     bumptechGlideVersion = "4.8.0"
     supportLibVersion = "28.0.0"
@@ -57,5 +58,14 @@ ext {
 }
 
 task buildci(type: GradleBuild) {
-     tasks = ['clean', ':payment:test', ':payment:assemble', ':payment:upload']
+
+    if ( versionName.endsWith('SNAPSHOT')) {
+        // tasks for SNAPSHOT builds
+	printf "Task for SNAPSHOT builds, uploading only to Nexus." 
+        tasks = ['clean', ':payment:test', ':payment:assemble', ':payment:uploadArchives']
+    } else {
+        // tasks for RELEASE builds, this will also upload to the external packagecloud.io
+	printf "Task for RELEASE builds, uploading to Nexus and packagecloud.io." 
+        tasks = ['clean', ':payment:test', ':payment:assemble', ':payment:uploadArchives', 'payment:uploadExternal']
+    } 
 }
