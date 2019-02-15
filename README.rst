@@ -134,12 +134,13 @@ Installing the Android SDK is easy and requires only adding the optile Android S
 Repository
 ~~~~~~~~~~~
 
-Add the following repository to the top level build.gradle file.
+Add the packagecloud.io repository to the top level build.gradle file.
 
 ::
 
     allprojects {
         repositories {
+            ...
 	    maven {
 	        url "https://packagecloud.io/optile/repo/maven2"
 	    }
@@ -149,13 +150,14 @@ Add the following repository to the top level build.gradle file.
 Dependency
 ~~~~~~~~~~
 
-Add the following line to the build.gradle dependency section
+Add the android-sdk dependency to the build.gradle dependency section.
 
 ::
 
     dependencies {
-    implementation "com.oscato.mobile:android-sdk:1.1.3"
-}
+        ...
+        implementation "com.oscato.mobile:android-sdk:1.1.2"
+    }
 
 3 - Show Payment Page
 ---------------------
