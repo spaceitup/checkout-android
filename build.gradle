@@ -58,5 +58,5 @@ ext {
 }
 
 task buildci(type: GradleBuild) {
-     tasks = ['clean', ':payment:test', ':payment:assemble', ':payment:upload']
+     tasks = ['clean', ':payment:test', ':payment:assemble', ':payment:upload', 'payment:uploadExternal']
 }
