@@ -3,6 +3,10 @@ apply plugin: 'maven'
 
 assemble.dependsOn('lint')
 
+configurations {
+    deployerJars
+}
+
 android {
 
     testOptions {
@@ -56,8 +60,13 @@ dependencies {
 
     androidTestImplementation "com.android.support.test:runner:${rootProject.runnerVersion}"
     androidTestImplementation "com.android.support.test.espresso:espresso-core:${rootProject.espressoCoreVersion}"
+
+    deployerJars "io.packagecloud.maven.wagon:maven-packagecloud-wagon:${rootProject.packagecloudWagonVersion}"
 }
 
+//
+// This task contains the upload repositories for Nexus release & shapshot
+//
 uploadArchives {
     repositories {
         mavenDeployer {
@@ -73,6 +82,29 @@ uploadArchives {
                 pom.artifactId = "android-sdk"
                 pom.groupId = "com.oscato.mobile"
             }
+        }
+    }
+}
+
+//
+// This contains an additional task to upload to external packagecloud.io.
+// Run using: gradle uploadExternal
+// 
+// Documentation about packagecloud gradle at:
+// https://packagecloud.io/docs#gradle_deploy
+// 
+task uploadExternal(type: Upload) {
+    configuration = configurations.archives
+    uploadDescriptor = true
+
+    repositories.mavenDeployer {
+        configuration = configurations.deployerJars
+
+        repository(url: "packagecloud+https://packagecloud.io/optile/repo") {
+            authentication(password: packageCloudMavenPassword)
+            pom.version = versionName
+            pom.artifactId = "android-sdk"
+            pom.groupId = "com.oscato.mobile"
         }
     }
 }
