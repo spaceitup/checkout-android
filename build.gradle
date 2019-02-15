@@ -58,5 +58,12 @@ ext {
 }
 
 task buildci(type: GradleBuild) {
-     tasks = ['clean', ':payment:test', ':payment:assemble', ':payment:upload', 'payment:uploadExternal']
+
+    if ( versionName.endsWith('SNAPSHOT')) {
+        // tasks for SNAPSHOT builds
+        tasks = ['clean', ':payment:test', ':payment:assemble', ':payment:upload']
+    } else {
+        // tasks for RELEASE builds, this will also upload to the external packagecloud.io
+        tasks = ['clean', ':payment:test', ':payment:assemble', ':payment:upload', 'payment:uploadExternal']
+    } 
 }
