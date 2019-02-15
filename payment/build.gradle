@@ -65,33 +65,38 @@ dependencies {
 }
 
 //
-// This is the original uploadArchives we use to upload to nexus release/shapshot
-//
-// uploadArchives {
-//    repositories {
-//        mavenDeployer {
-//            repository(url: "https://nexus.mgmt.oscato.com/repository/releases/") {
-//                authentication(userName: mavenUser, password: mavenPassword)
-//                pom.version = versionName
-//                pom.artifactId = "android-sdk"
-//                pom.groupId = "com.oscato.mobile"
-//            }
-//            snapshotRepository(url: "https://nexus.mgmt.oscato.com/repository/snapshots/") {
-//                authentication(userName: mavenUser, password: mavenPassword)
-//                pom.version = versionName
-//               pom.artifactId = "android-sdk"
-//                pom.groupId = "com.oscato.mobile"
-//            }
-//        }
-//    }
-//}
-
-
-//
-// This contains the setup to upload to packagecloud
-// Documentation at: https://packagecloud.io/docs#gradle_deploy
+// This task contains the upload repositories for Nexus release & shapshot
 //
 uploadArchives {
+    repositories {
+        mavenDeployer {
+            repository(url: "https://nexus.mgmt.oscato.com/repository/releases/") {
+                authentication(userName: mavenUser, password: mavenPassword)
+                pom.version = versionName
+                pom.artifactId = "android-sdk"
+                pom.groupId = "com.oscato.mobile"
+            }
+            snapshotRepository(url: "https://nexus.mgmt.oscato.com/repository/snapshots/") {
+                authentication(userName: mavenUser, password: mavenPassword)
+                pom.version = versionName
+                pom.artifactId = "android-sdk"
+                pom.groupId = "com.oscato.mobile"
+            }
+        }
+    }
+}
+
+//
+// This contains an additional task to upload to external packagecloud.io.
+// Run using: gradle uploadExternal
+// 
+// Documentation about packagecloud gradle at:
+// https://packagecloud.io/docs#gradle_deploy
+// 
+task uploadExternal(type: Upload) {
+    configuration = configurations.archives
+    uploadDescriptor = true
+
     repositories.mavenDeployer {
         configuration = configurations.deployerJars
 
