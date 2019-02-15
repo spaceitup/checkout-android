@@ -42,7 +42,8 @@ ext {
     compileSdkVersion = 28
     targetSdkVersion = 28
     buildToolsVersion = "28.0.3"
-
+    packagecloudWagonVersion = "0.0.6"
+    
     gsonVersion = "2.8.5"
     bumptechGlideVersion = "4.8.0"
     supportLibVersion = "28.0.0"

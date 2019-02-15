@@ -3,6 +3,10 @@ apply plugin: 'maven'
 
 assemble.dependsOn('lint')
 
+configurations {
+    deployerJars
+}
+
 android {
 
     testOptions {
@@ -56,23 +60,46 @@ dependencies {
 
     androidTestImplementation "com.android.support.test:runner:${rootProject.runnerVersion}"
     androidTestImplementation "com.android.support.test.espresso:espresso-core:${rootProject.espressoCoreVersion}"
+
+    deployerJars "io.packagecloud.maven.wagon:maven-packagecloud-wagon:${rootProject.packagecloudWagonVersion}"
 }
 
+//
+// This is the original uploadArchives we use to upload to nexus release/shapshot
+//
+// uploadArchives {
+//    repositories {
+//        mavenDeployer {
+//            repository(url: "https://nexus.mgmt.oscato.com/repository/releases/") {
+//                authentication(userName: mavenUser, password: mavenPassword)
+//                pom.version = versionName
+//                pom.artifactId = "android-sdk"
+//                pom.groupId = "com.oscato.mobile"
+//            }
+//            snapshotRepository(url: "https://nexus.mgmt.oscato.com/repository/snapshots/") {
+//                authentication(userName: mavenUser, password: mavenPassword)
+//                pom.version = versionName
+//               pom.artifactId = "android-sdk"
+//                pom.groupId = "com.oscato.mobile"
+//            }
+//        }
+//    }
+//}
+
+
+//
+// This contains the setup to upload to packagecloud
+// Documentation at: https://packagecloud.io/docs#gradle_deploy
+//
 uploadArchives {
-    repositories {
-        mavenDeployer {
-            repository(url: "https://nexus.mgmt.oscato.com/repository/releases/") {
-                authentication(userName: mavenUser, password: mavenPassword)
-                pom.version = versionName
-                pom.artifactId = "android-sdk"
-                pom.groupId = "com.oscato.mobile"
-            }
-            snapshotRepository(url: "https://nexus.mgmt.oscato.com/repository/snapshots/") {
-                authentication(userName: mavenUser, password: mavenPassword)
-                pom.version = versionName
-                pom.artifactId = "android-sdk"
-                pom.groupId = "com.oscato.mobile"
-            }
+    repositories.mavenDeployer {
+        configuration = configurations.deployerJars
+
+        repository(url: "packagecloud+https://packagecloud.io/optile/repo") {
+            authentication(password: packageCloudMavenPassword)
+            pom.version = versionName
+            pom.artifactId = "android-sdk"
+            pom.groupId = "com.oscato.mobile"
         }
     }
 }
