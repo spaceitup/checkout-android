@@ -61,9 +61,11 @@ task buildci(type: GradleBuild) {
 
     if ( versionName.endsWith('SNAPSHOT')) {
         // tasks for SNAPSHOT builds
+	printf "Task for SNAPSHOT builds, uploading only to Nexus." 
         tasks = ['clean', ':payment:test', ':payment:assemble', ':payment:upload']
     } else {
         // tasks for RELEASE builds, this will also upload to the external packagecloud.io
+	printf "Task for RELEASE builds, uploading to Nexus and packagecloud.io." 
         tasks = ['clean', ':payment:test', ':payment:assemble', ':payment:upload', 'payment:uploadExternal']
     } 
 }
