@@ -156,7 +156,7 @@ Add the android-sdk dependency to the build.gradle dependency section.
 
     dependencies {
         ...
-        implementation "com.oscato.mobile:android-sdk:1.1.2"
+        implementation "com.oscato.mobile:android-sdk:1.1.3"
     }
 
 3 - Show Payment Page
