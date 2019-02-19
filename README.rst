@@ -182,9 +182,9 @@ Code sample how to initialise and display the Payment Page:
 Payment Result
 ==============
 
-Payment results are returned through the onActivityResult() method in your Activity. When the page is closed, the returned PaymentResult contains information why the page was closed. I.e. because a charge/preset operation was successful or the user closed the page.
+Payment results are returned through the onActivityResult() method in your Activity. When the page is closed, the returned PaymentResult class contains information about the performed operation. I.e. it may contain an Interaction and OperationResult Object describing the state of the latest Charge operation.
 
-All instances of SDK Classes from the net.optile.payment.model package are originated from the Optile Payment API. This means that when the PaymentResult contains an Interaction and/or OperationResult Object then these are received from the Optile Payment API. The PaymentError inside the PaymentResult is created by the Android SDK and describes an internal Android SDK error. 
+The Interaction and OperationResult parameters inside the PaymentResult class are not created by the Android SDK but instead come from the Optile Payment API. The PaymentError parameter inside the PaymentResult class is created by the Android SDK and contains information about an error that happened inside the Android SDK. 
 
 Code sample how to obtain the PaymentResult inside the onActivityResult() method:
 
