@@ -184,7 +184,7 @@ Payment Result
 
 Payment results are returned through the onActivityResult() method in your Activity. When the page is closed, the returned PaymentResult class contains information about the performed operation. I.e. it may contain an Interaction and OperationResult object describing the state of the latest Charge operation.
 
-The Interaction and OperationResult objects are not created by the Android SDK but instead come from the Optile Payment API. The PaymentError object inside the PaymentResult class is created by the Android SDK and contains information about an error that happened inside the Android SDK. 
+The Interaction and OperationResult objects are never created by the Android SDK but instead originate from the Optile Payment API. The PaymentError object inside the PaymentResult class is created by the Android SDK and contains information about an error that happened inside the Android SDK. 
 
 Code sample how to obtain the PaymentResult inside the onActivityResult() method:
 
@@ -206,8 +206,8 @@ Code sample how to obtain the PaymentResult inside the onActivityResult() method
            // an Interaction and optional OperationResult describing the operation result
        } 
        if (resultCode == PaymentUI.RESULT_CODE_CANCELED) {
-           "result" contains a resultInfo and an optional Interaction and optional OperationResult. 
-	   If the Interaction is null then the user closed the page before any request was made.
+           //"result" contains a resultInfo and an optional Interaction and optional OperationResult. 
+	   //If the Interaction is null then the user closed the page before any request was made.
        }
        if (resultCode == PaymentUI.RESULT_CODE_ERROR) {
            // "result" contains a PaymentError explaining the error that occurred i.e. connection error.
