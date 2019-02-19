@@ -95,36 +95,11 @@ Your first payment
 In order to make a successful payment you must complete the following
 steps:
 
-1. Create a payment session and obtain the "self" URL from the List Result in your app
-2. Install Android SDK in your app
+1. Install Android SDK in your app
+2. Create a payment session and obtain the "self" URL from the List Result in your app
 3. Initialise and show the Payment Page with the list URL
 
-1 - Create payment session
---------------------------
-
-The documentation at `optile.io <https://optile.io>`_ will guide you through optile’s Open
-Payment Gateway (OPG) features for frontend checkout and backend use
-cases. It provides important information about integration scenarios,
-testing possibilities, and references. The documentation will help you
-create a payment session that can be used by the Android Payment SDK.
-
-After you have created a payment session you will receive a response containing the List Result in Json format.
-This List Result contains a “self” URL which is used to initialise the Payment Page.
-
-Part of the list result containing the “self” URL:
-
-::
-
-   {
-     "links": {
-       "self": "https://api.integration.oscato.com/pci/v1/5c17b47e7862056fa0755e66lrui4dvavak9ehlvh4n3abcde9",
-       "customer": "https://api.integration.oscato.com/api/customers/123456789862053ccf15479eu"
-     },
-     "timestamp": "2018-12-17T14:36:46.105+0000",
-     "operation": "LIST",
-     ...
-
-2 - Install Android SDK
+1 - Install Android SDK
 -----------------------
 
 Installing the Android SDK is easy and requires only adding the optile Android SDK module to your build.gradle file. 
@@ -156,6 +131,31 @@ Add the android-sdk dependency to the build.gradle dependency section.
         ...
         implementation "com.oscato.mobile:android-sdk:1.1.4"
     }
+
+2 - Create payment session
+--------------------------
+
+The documentation at `optile.io <https://optile.io>`_ will guide you through optile’s Open
+Payment Gateway (OPG) features for frontend checkout and backend use
+cases. It provides important information about integration scenarios,
+testing possibilities, and references. The documentation will help you
+create a payment session that can be used by the Android Payment SDK.
+
+After you have created a payment session you will receive a response containing the List Result in Json format.
+This List Result contains a “self” URL which is used to initialise the Payment Page.
+
+Part of the list result containing the “self” URL:
+
+::
+
+   {
+     "links": {
+       "self": "https://api.integration.oscato.com/pci/v1/5c17b47e7862056fa0755e66lrui4dvavak9ehlvh4n3abcde9",
+       "customer": "https://api.integration.oscato.com/api/customers/123456789862053ccf15479eu"
+     },
+     "timestamp": "2018-12-17T14:36:46.105+0000",
+     "operation": "LIST",
+     ...
 
 3 - Show Payment Page
 ---------------------
