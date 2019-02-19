@@ -123,7 +123,7 @@ Add the packagecloud.io repository to the top level build.gradle file.
 Dependency
 ~~~~~~~~~~
 
-Add the android-sdk dependency to the build.gradle dependency section.
+Add the android-sdk dependency to the build.gradle dependencies section.
 
 ::
 
