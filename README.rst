@@ -95,7 +95,7 @@ Your first payment
 In order to make a successful payment you must complete the following
 steps:
 
-1. Create a payment session and obtain the "self" list URL from the ListResult in your app
+1. Create a payment session and obtain the "self" URL from the List Result in your app
 2. Install Android SDK in your app
 3. Initialise and show the Payment Page with the list URL
 
