@@ -95,8 +95,7 @@ Your first payment
 In order to make a successful payment you must complete the following
 steps:
 
-1. Create a payment session on your server and retrieve the list URL in
-   your app
+1. Create a payment session and obtain the "self" list URL from the ListResult in your app
 2. Install Android SDK in your app
 3. Initialise and show the Payment Page with the list URL
 
@@ -109,9 +108,8 @@ cases. It provides important information about integration scenarios,
 testing possibilities, and references. The documentation will help you
 create a payment session that can be used by the Android Payment SDK.
 
-After you have created a payment session on your server you will receive
-a response containing the List Result in Json format. This List Result
-contains a “self” URL which is used to initialise the Payment Page.
+After you have created a payment session you will receive a response containing the List Result in Json format.
+This List Result contains a “self” URL which is used to initialise the Payment Page.
 
 Part of the list result containing the “self” URL:
 
