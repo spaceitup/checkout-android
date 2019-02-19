@@ -8,6 +8,10 @@
         <item name="android:textSize">14sp</item>
         <item name="android:textStyle">bold</item>
     </style>
+
+    <style name="AppHeaderText" parent="TextAppearance.AppCompat">
+        <item name="android:textSize">14sp</item>
+    </style>
     
     <style name="CustomText" parent="TextAppearance.AppCompat">
         <item name="android:textColor">@color/custom_textdark</item>

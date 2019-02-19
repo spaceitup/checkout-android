@@ -156,7 +156,7 @@ Add the android-sdk dependency to the build.gradle dependency section.
 
     dependencies {
         ...
-        implementation "com.oscato.mobile:android-sdk:1.1.3"
+        implementation "com.oscato.mobile:android-sdk:1.1.4"
     }
 
 3 - Show Payment Page
@@ -182,7 +182,9 @@ Code sample how to initialise and display the Payment Page:
 Payment Result
 ==============
 
-Payment results are returned through the onActivityResult() method in your Activity. When the page is closed, the returned PaymentResult contains the reason why the page was closed. I.e. because a charge operation was successful or the user closed the page.
+Payment results are returned through the onActivityResult() method in your Activity. When the page is closed, the returned PaymentResult contains information why the page was closed. I.e. because a charge/preset operation was successful or the user closed the page.
+
+All instances of SDK Classes from the net.optile.payment.model package are originated from the Optile Payment API. This means that when the PaymentResult contains an Interaction and/or OperationResult Object then these are received from the Optile Payment API. The PaymentError inside the PaymentResult is created by the Android SDK and describes an internal Android SDK error. 
 
 Code sample how to obtain the PaymentResult inside the onActivityResult() method:
 
@@ -224,7 +226,7 @@ The RESULT_CODE_OK code indicates that the operation request was successful, the
 Cancelled
 ---------
 
-The RESULT_CODE_CANCELED code indicates that the Payment Page did not perform a successful operation. This may happen for different reasons, i.e. the user clicked the back button. The PaymentResult may contain an Interaction and an OperationResult with details about the failed operation. If both Interaction and OperationResult are null then the user closed the page before any request was made. 
+The RESULT_CODE_CANCELED code indicates that the Android SDK did not perform a successful operation. This may happen for different reasons, i.e. the user clicked the back button. The PaymentResult may contain an Interaction and an OperationResult with details about the failed operation. If both Interaction and OperationResult are null then the user closed the page before any request was made. 
     
 Error
 -----
