@@ -40,6 +40,8 @@ public final class CheckoutActivity extends AppCompatActivity {
     private CheckoutResult checkoutResult;
     private RadioGroup themeGroup;
     private EditText listInput; 
+    private View sdkResponseLayout;
+    private View apiResponseLayout;
     
     /**
      * Create an Intent to launch this checkout activity
@@ -60,8 +62,10 @@ public final class CheckoutActivity extends AppCompatActivity {
         setContentView(R.layout.activity_checkout);
         themeGroup = findViewById(R.id.radio_themes);
         listInput = findViewById(R.id.input_listurl);
+        sdkResponseLayout = findViewById(R.id.layout_sdkresponse);
+        apiResponseLayout = findViewById(R.id.layout_apiresponse);
         
-        Button button = findViewById(R.id.button_checkout);
+        Button button = findViewById(R.id.button_action);
         button.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 openPaymentPage();
@@ -85,7 +89,8 @@ public final class CheckoutActivity extends AppCompatActivity {
         super.onResume();
 
         if (checkoutResult != null) {
-            showCheckoutResult(checkoutResult);
+            showSdkResponse(checkoutResult);
+            showApiResponse(checkoutResult);
             this.checkoutResult = null;
         }
     }
@@ -105,22 +110,34 @@ public final class CheckoutActivity extends AppCompatActivity {
         }
     }
 
-    private void showCheckoutResult(CheckoutResult result) {
+    private void showSdkResponse(CheckoutResult result) {
         PaymentResult pr = result.paymentResult;
 
-        setText(result.getResultCodeString(), R.id.label_resultcode, R.id.text_resultcode);
-        setText(pr.getResultInfo(), R.id.label_resultinfo, R.id.text_resultinfo);
+        apiResponseLayout.setVisibility(View.VISIBLE);        
+        setText(result.getResultCodeString(), R.id.label_activityresultcode, R.id.text_activityresultcode);
 
+        sdkResponseLayout.setVisibility(View.VISIBLE);
         Interaction interaction = pr.getInteraction();
-        String val = interaction != null ? interaction.getCode() : null;
-        setText(val, R.id.label_interactioncode, R.id.text_interactioncode);        
+        String val = interaction == null ? pr.getResultInfo() : null;
+        setText(val, R.id.label_sdkresultinfo, R.id.text_sdkresultinfo);
 
-        val = interaction != null ? interaction.getReason() : null;
-        setText(val, R.id.label_interactionreason, R.id.text_interactionreason);                
-        
         PaymentError error = pr.getPaymentError();        
         val = error != null ? error.toString() : null;
-        setText(val, R.id.label_paymenterror, R.id.text_paymenterror);        
+        setText(val, R.id.label_sdkpaymenterror, R.id.text_sdkpaymenterror);        
+    }
+
+    private void showApiResponse(CheckoutResult result) {
+        PaymentResult pr = result.paymentResult;
+        Interaction interaction = pr.getInteraction();
+
+        if (interaction == null) {
+            apiResponseLayout.setVisibility(View.GONE);
+            return;
+        }
+        apiResponseLayout.setVisibility(View.VISIBLE);        
+        setText(pr.getResultInfo(), R.id.label_apiresultinfo, R.id.text_apiresultinfo);
+        setText(interaction.getCode(), R.id.label_apiinteractioncode, R.id.text_apiinteractioncode);        
+        setText(interaction.getReason(), R.id.label_apiinteractionreason, R.id.text_apiinteractionreason);                
     }
 
     private void setText(String text, int labelResId, int textResId) {

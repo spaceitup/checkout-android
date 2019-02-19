@@ -3,19 +3,18 @@
     <color name="colorPrimary">#299928</color>
     <color name="colorPrimaryDark">#298226</color>
     <color name="colorAccent">#207a20</color>
-
+    <color name="responsecard_background">#FFFFFF</color>
+    <color name="responsecard_border">#A0A0A0</color>
+    
     <color name="customColorPrimary">#F07D1B</color>
     <color name="customColorPrimaryDark">#F07D1B</color>
     <color name="customColorAccent">#FFFFFF</color>
-
     <color name="custom_cardbackground">#ffffff</color>
     <color name="custom_accent">#D6D6D6</color>
-
     <color name="custom_textgray">#B6B6B6</color>
     <color name="custom_textlight">#FFFFFF</color>
     <color name="custom_textdark">#424242</color>
     <color name="custom_textprimary">#F07D1B</color>
-
     <color name="custom_validationok">#F07D1B</color>
     <color name="custom_validationerror">#FD1744</color>
     <color name="custom_validationunknown">#FAD7B9</color>
