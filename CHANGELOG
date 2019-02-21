@@ -1,8 +1,6 @@
 Release notes - Version android-sdk-1.1.0
-<h2>        Story
-</h2>
-<ul>
-<li>[<a href='https://optile.atlassian.net/browse/PCX-33'>PCX-33</a>] - Smart selection of credit card forms
+
+`PCX-33 <https://optile.atlassian.net/browse/PCX-33>`_ - Smart selection of credit card forms
 </li>
 <li>[<a href='https://optile.atlassian.net/browse/PCX-34'>PCX-34</a>] - Client-side theming of PaymentPage
 </li>
