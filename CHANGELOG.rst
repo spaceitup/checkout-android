@@ -1,5 +1,5 @@
 Changelog - Android SDK
-~~~~~~~~~~~~~~~~~~~~~~~~~
+-----------------------
 
 **Version android-sdk-1.1.3**
 
