@@ -18,6 +18,16 @@ Android Version
 Android API versions 19 - 28 (Kitkat 4.4 - Pie 9.0) are supported by the
 Android Payment SDK. TLS1.2 is enabled for Android version 19 (Kitkat).
 
+AndroidX
+--------
+
+The Android SDK is build with the AppCompat Design library. In order to use the Android SDK with an AndroidX app the following two lines must be added to the gradle.properties file:
+
+::
+   
+   android.enableJetifier=true
+   android.useAndroidX=true
+
 Proguard
 --------
 
