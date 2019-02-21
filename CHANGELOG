@@ -1,0 +1,19 @@
+Release notes - Version android-sdk-1.1.0
+<h2>        Story
+</h2>
+<ul>
+<li>[<a href='https://optile.atlassian.net/browse/PCX-33'>PCX-33</a>] - Smart selection of credit card forms
+</li>
+<li>[<a href='https://optile.atlassian.net/browse/PCX-34'>PCX-34</a>] - Client-side theming of PaymentPage
+</li>
+<li>[<a href='https://optile.atlassian.net/browse/PCX-54'>PCX-54</a>] - Setup automated build environment for Android Payment SDK
+</li>
+<li>[<a href='https://optile.atlassian.net/browse/PCX-56'>PCX-56</a>] - CHARGE operation request timeout handling
+</li>
+<li>[<a href='https://optile.atlassian.net/browse/PCX-59'>PCX-59</a>] - Apply official optile UI design
+</li>
+<li>[<a href='https://optile.atlassian.net/browse/PCX-161'>PCX-161</a>] - Support PRESET Flow
+</li>
+<li>[<a href='https://optile.atlassian.net/browse/PCX-162'>PCX-162</a>] - Display preset account in the Payment Page
+</li>
+</ul>
