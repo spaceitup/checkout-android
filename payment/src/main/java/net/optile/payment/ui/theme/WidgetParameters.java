@@ -113,11 +113,8 @@ public final class WidgetParameters {
     }
 
     public int getInputTypeIcon(String inputType) {
-
-        if (iconMapping.containsKey(inputType)) {
-            return iconMapping.get(inputType);
-        }
-        return R.drawable.ic_default;
+        Integer val = iconMapping.get(inputType);
+        return val != null ? val : R.drawable.ic_default;
     }
 
     public int getHintDrawable() {
@@ -141,6 +138,7 @@ public final class WidgetParameters {
     }
 
     public final static class Builder {
+        final Map<String, Integer> iconMapping;
         int textInputTheme;
         int buttonTheme;
         int buttonLabelStyle;
@@ -149,7 +147,6 @@ public final class WidgetParameters {
         int checkBoxLabelCheckedStyle;
         int checkBoxLabelUncheckedStyle;
         int selectLabelStyle;
-        Map<String, Integer> iconMapping;
         int validationColorUnknown;
         int validationColorOk;
         int validationColorError;

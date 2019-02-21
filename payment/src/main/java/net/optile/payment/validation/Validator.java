@@ -28,7 +28,7 @@ public class Validator {
     public final static String REGEX_ACCOUNT_NUMBER = "^[0-9]+$";
     public final static String REGEX_VERIFICATION_CODE = "^[0-9]*$";
     public final static String REGEX_HOLDER_NAME = "^.{3,}$";
-    public final static String REGEX_BANK_CODE = "^.{1,}$";
+    public final static String REGEX_BANK_CODE = "^.+$";
 
     public final static int MAXLENGTH_DEFAULT = 128;
     public final static int MAXLENGTH_ACCOUNT_NUMBER = 34;
@@ -59,10 +59,11 @@ public class Validator {
      */
     public String getValidationRegex(String code, String type) {
 
-        if (code == null || type == null || !validations.containsKey(code)) {
+        if (code == null || type == null) {
             return null;
         }
-        return validations.get(code).getValidationRegex(type);
+        ValidationGroup group = validations.get(code);
+        return group != null ? group.getValidationRegex(type) : null;
     }
 
     public int getMaxLength(String code, String type) {
@@ -72,8 +73,9 @@ public class Validator {
         }
         int maxLength = 0;
 
-        if (validations.containsKey(code)) {
-            maxLength = validations.get(code).getMaxLength(type);
+        ValidationGroup group = validations.get(code);
+        if (group != null) {
+            maxLength = group.getMaxLength(type);
         }
         if (maxLength > 0) {
             return maxLength;
@@ -101,7 +103,7 @@ public class Validator {
             return false;
         }
         ValidationGroup group = validations.get(code);
-        return group.isHidden(type);
+        return group != null && group.isHidden(type);
     }
 
     /**
@@ -198,7 +200,6 @@ public class Validator {
 
     private ValidationResult validateHolderName(String holderName, String regex) {
         regex = regex != null ? regex : REGEX_HOLDER_NAME;
-        String error = null;
 
         if (!holderName.matches(regex)) {
             if (TextUtils.isEmpty(holderName)) {

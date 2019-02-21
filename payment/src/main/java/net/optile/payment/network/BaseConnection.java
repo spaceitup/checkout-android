@@ -50,7 +50,6 @@ abstract class BaseConnection {
     private final static int TIMEOUT_CONNECT = 5000;
     private final static int TIMEOUT_READ = 30000;
     private final static String HEADER_USER_AGENT = "User-Agent";
-    private final static String UTF8 = "UTF-8";
     private final static String HTTP_GET = "GET";
     private final static String HTTP_POST = "POST";
     private final static String CONTENTTYPE_JSON = "application/json";
