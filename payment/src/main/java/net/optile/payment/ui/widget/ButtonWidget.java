@@ -47,10 +47,6 @@ public final class ButtonWidget extends FormWidget {
         });
     }
 
-    /**
-     * {@inheritDoc}
-     */
-    @Override
     public void setLabel(String label) {
         button.setText(label);
     }

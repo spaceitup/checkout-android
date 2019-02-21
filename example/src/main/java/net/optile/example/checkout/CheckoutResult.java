@@ -17,10 +17,10 @@ import net.optile.payment.ui.PaymentUI;
 class CheckoutResult {
 
     /** The PaymentPage resultCode */
-    public int resultCode;
+    public final int resultCode;
 
     /** The PaymentResult received from the Payment SDK, this may be null */
-    public PaymentResult paymentResult;
+    public final PaymentResult paymentResult;
 
     /**
      * Construct a new TestAppResult
@@ -33,10 +33,10 @@ class CheckoutResult {
         this.paymentResult = paymentResult;
     }
 
-    /** 
+    /**
      * Get a string representation of the resultCode
-     * 
-     * @return the String representation of the resultCode 
+     *
+     * @return the String representation of the resultCode
      */
     public String getResultCodeString() {
         switch (resultCode) {
@@ -45,7 +45,7 @@ class CheckoutResult {
             case PaymentUI.RESULT_CODE_CANCELED:
                 return "RESULT_CODE_CANCELED";
             case PaymentUI.RESULT_CODE_ERROR:
-                return "RESULT_CODE_ERROR"; 
+                return "RESULT_CODE_ERROR";
             default:
                 return "Unknown";
         }

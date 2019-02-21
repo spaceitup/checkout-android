@@ -128,10 +128,6 @@ public final class PaymentList {
         return this.session;
     }
 
-    LayoutInflater getLayoutInflater() {
-        return activity.getLayoutInflater();
-    }
-
     void showDialogFragment(DialogFragment dialog, String tag) {
         dialog.show(activity.getSupportFragmentManager(), tag);
     }
@@ -260,6 +256,10 @@ public final class PaymentList {
             }
         };
         smoothScroller.setTargetPosition(position);
-        recyclerView.getLayoutManager().startSmoothScroll(smoothScroller);
+        RecyclerView.LayoutManager manager = recyclerView.getLayoutManager();
+
+        if (manager != null) {
+            manager.startSmoothScroll(smoothScroller);
+        }
     }
 }

@@ -32,16 +32,13 @@ public class PaymentGroup {
 
     /**
      * populate the lookup table with each PaymentGroupItem code mapping to this group
-     *
-     * @param map the lookup table to fill
      */
-    public Map<String, PaymentGroup> populate(Map<String, PaymentGroup> map) {
+    public void populate(Map<String, PaymentGroup> map) {
 
         for (PaymentGroupItem item : items) {
             map.put(item.getCode(), this);
         }
-        return map;
-    }
+     }
 
     /**
      * Get the smart selection regex given the payment code.

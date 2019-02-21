@@ -12,7 +12,7 @@
     <style name="AppHeaderText" parent="TextAppearance.AppCompat">
         <item name="android:textSize">14sp</item>
     </style>
-    
+
     <style name="CustomText" parent="TextAppearance.AppCompat">
         <item name="android:textColor">@color/custom_textdark</item>
         <item name="android:fontFamily">@font/lato_regular</item>
@@ -29,7 +29,7 @@
     <style name="CustomText.Small.Light">
         <item name="android:textColor">@color/custom_textlight</item>
     </style>
-    
+
     <style name="CustomText.Small.Bold">
         <item name="android:fontFamily">@font/avenir_next_bold</item>
     </style>
@@ -50,7 +50,7 @@
         <item name="android:textColor">@color/custom_textlight</item>
     </style>
 
-    <style name="CustomText.Medium.Bold">        
+    <style name="CustomText.Medium.Bold">
         <item name="android:fontFamily">@font/avenir_next_bold</item>
     </style>
 
@@ -73,7 +73,7 @@
     <style name="CustomText.XLarge.Bold">
         <item name="android:fontFamily">@font/avenir_next_bold</item>
     </style>
-    
+
     <style name="CustomTextInputLayoutError" parent="TextAppearance.Design.Error">
         <item name="android:textColor">@color/custom_validationerror</item>
         <item name="android:fontFamily">@font/lato_regular</item>

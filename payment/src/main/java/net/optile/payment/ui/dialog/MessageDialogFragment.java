@@ -135,14 +135,4 @@ public final class MessageDialogFragment extends ThemedDialogFragment {
         textView.setVisibility(View.VISIBLE);
         textView.setText(message);
     }
-
-    private void setTextView(final View rootView, final int resId, final String value) {
-        TextView tv = rootView.findViewById(resId);
-        if (TextUtils.isEmpty(value)) {
-            tv.setVisibility(View.GONE);
-            return;
-        }
-        tv.setVisibility(View.VISIBLE);
-        tv.setText(value);
-    }
 }

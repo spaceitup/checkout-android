@@ -36,7 +36,7 @@
         <item name="android:windowIsFloating">true</item>
         <item name="android:windowCloseOnTouchOutside">true</item>
     </style>
-    
+
     <style name="CustomThemeCardView" parent="CardView.Light">
         <item name="cardBackgroundColor">@color/custom_cardbackground</item>
         <item name="cardUseCompatPadding">false</item>

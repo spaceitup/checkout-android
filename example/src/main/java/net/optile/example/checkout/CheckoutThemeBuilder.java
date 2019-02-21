@@ -11,32 +11,32 @@ package net.optile.example.checkout;
 import net.optile.payment.ui.theme.DialogParameters;
 import net.optile.payment.ui.theme.PageParameters;
 import net.optile.payment.ui.theme.PaymentTheme;
-import net.optile.payment.ui.theme.WidgetParameters;
 import net.optile.payment.ui.theme.ProgressParameters;
+import net.optile.payment.ui.theme.WidgetParameters;
 
 /**
  * Class used to create a custom PaymentTheme for skinning the Android SDK Payment page
  */
 final class CheckoutThemeBuilder {
 
-    /** 
+    /**
      * Create an empty payment theme
-     * 
-     * @return the empty theme 
+     *
+     * @return the empty theme
      */
     public static PaymentTheme createEmptyTheme() {
         return PaymentTheme.createBuilder().build();
     }
 
-    /** 
+    /**
      * Create a default payment theme
-     * 
-     * @return the default theme 
+     *
+     * @return the default theme
      */
     public static PaymentTheme createDefaultTheme() {
         return PaymentTheme.createDefault();
     }
-    
+
     /**
      * Construct a new PaymentTheme with the custom dark skin for the Android SDK payment page
      *
@@ -96,10 +96,10 @@ final class CheckoutThemeBuilder {
             setSendProgressBarColorFront(R.color.customColorPrimary).
             setSendProgressBarColorBack(R.color.custom_validationunknown).
             setHeaderStyle(R.style.CustomText_XLarge_Bold).
-            setInfoStyle(R.style.CustomText_Medium).            
+            setInfoStyle(R.style.CustomText_Medium).
             build();
-        builder.setProgressParameters(progressParams);        
-        
+        builder.setProgressParameters(progressParams);
+
         return builder.build();
     }
 }

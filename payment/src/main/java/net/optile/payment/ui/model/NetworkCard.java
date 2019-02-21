@@ -92,7 +92,6 @@ public final class NetworkCard implements PaymentCard {
     /**
      * {@inheritDoc}
      */
-    @Override
     public boolean isPreselected() {
 
         for (PaymentNetwork network : networks) {
@@ -175,15 +174,6 @@ public final class NetworkCard implements PaymentCard {
             return smartSelected.get(0);
         }
         return networks.get(0);
-    }
-
-    /**
-     * The NetworkCard supports smart selection when it has more than 1 PaymentNetwork.
-     *
-     * @return true when this network card supports smart selection, false otherwise.
-     */
-    public boolean supportSmartSelection() {
-        return networks.size() > 1;
     }
 
     /**
