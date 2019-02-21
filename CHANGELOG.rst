@@ -1,17 +1,16 @@
-Release notes - Version android-sdk-1.1.0
+Version android-sdk-1.1.0
+~~~~~~~~~~~~~~~~~~~~~~~~~
 
-`PCX-33 <https://optile.atlassian.net/browse/PCX-33>`_ - Smart selection of credit card forms
-</li>
-<li>[<a href='https://optile.atlassian.net/browse/PCX-34'>PCX-34</a>] - Client-side theming of PaymentPage
-</li>
-<li>[<a href='https://optile.atlassian.net/browse/PCX-54'>PCX-54</a>] - Setup automated build environment for Android Payment SDK
-</li>
-<li>[<a href='https://optile.atlassian.net/browse/PCX-56'>PCX-56</a>] - CHARGE operation request timeout handling
-</li>
-<li>[<a href='https://optile.atlassian.net/browse/PCX-59'>PCX-59</a>] - Apply official optile UI design
-</li>
-<li>[<a href='https://optile.atlassian.net/browse/PCX-161'>PCX-161</a>] - Support PRESET Flow
-</li>
-<li>[<a href='https://optile.atlassian.net/browse/PCX-162'>PCX-162</a>] - Display preset account in the Payment Page
-</li>
-</ul>
+Release notes - Payment Customer Experience - Version android-sdk-1.1.0
+
+** Story
+    * [PCX-33] - Smart selection of credit card forms
+    * [PCX-34] - Client-side theming of PaymentPage
+    * [PCX-54] - [Tech Story] Setup build environment for Android Payment SDK
+    * [PCX-56] - CHARGE timeout handling
+    * [PCX-59] - [Android SDK] Apply official optile UI design
+    * [PCX-161] - [Android SDK] Support PRESET Flow
+    * [PCX-162] - Display preset account [Android SDK]
+    * [PCX-182] - [Android SDK] Create demo app for Android SDK with summary page
+
+
