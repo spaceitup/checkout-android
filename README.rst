@@ -63,7 +63,7 @@ Payment SDK.
 
 Example list request Json body:
 
-::
+.. code-block:: json
 
    {
        "transactionId": "tr1",
@@ -174,7 +174,7 @@ The Android SDK provides a class called PaymentUI which is used to initialise an
 
 Code sample how to initialise and display the Payment Page:
 
-::
+.. code-block:: java
 
    // Request code to identify the response in onActivityResult()
    int PAYMENT_REQUEST_CODE = 1;
@@ -196,31 +196,30 @@ The Interaction and OperationResult objects are never created by the Android SDK
 
 Code sample how to obtain the PaymentResult inside the onActivityResult() method:
 
-::
+.. code-block:: java
 
-   @Override
-   public void onActivityResult(int requestCode, int resultCode, Intent data) {
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode != PAYMENT_REQUEST_CODE) {
+            return;
+        }
+        PaymentResult result = null;
 
-       if (requestCode != PAYMENT_REQUEST_CODE) {
-           return;
-       }
-       PaymentResult result = null;
-
-       if (data != null && data.hasExtra(PaymentUI.EXTRA_PAYMENT_RESULT)) {
-           result = data.getParcelableExtra(PaymentUI.EXTRA_PAYMENT_RESULT);
-       }
-       if (resultCode == PaymentUI.RESULT_CODE_OK) {
-           // Operation request has been made and "result" contains
-           // an Interaction and optional OperationResult describing the operation result
-       } 
-       if (resultCode == PaymentUI.RESULT_CODE_CANCELED) {
-           //"result" contains a resultInfo and an optional Interaction and optional OperationResult. 
-	   //If the Interaction is null then the user closed the page before any request was made.
-       }
-       if (resultCode == PaymentUI.RESULT_CODE_ERROR) {
-           // "result" contains a PaymentError explaining the error that occurred i.e. connection error.
-       }
-   }
+        if (data != null && data.hasExtra(PaymentUI.EXTRA_PAYMENT_RESULT)) {
+            result = data.getParcelableExtra(PaymentUI.EXTRA_PAYMENT_RESULT);
+        }
+        if (resultCode == PaymentUI.RESULT_CODE_OK) {
+            // Operation request has been made and "result" contains
+            // an Interaction and optional OperationResult describing the operation result
+        } 
+        if (resultCode == PaymentUI.RESULT_CODE_CANCELED) {
+            //"result" contains a resultInfo and an optional Interaction and optional OperationResult. 
+            //If the Interaction is null then the user closed the page before any request was made.
+        }
+        if (resultCode == PaymentUI.RESULT_CODE_ERROR) {
+            // "result" contains a PaymentError explaining the error that occurred i.e. connection error.
+        }
+    }
 
 Successful
 ----------
@@ -258,18 +257,18 @@ landscape mode but cannot be changed anymore by rotating the phone.
 
 Code sample how to set the fixed orientation mode:
 
-::
+.. code-block:: java
 
-   //
-   // Orientation modes supported by the Payment Page
-   // ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE
-   // ActivityInfo.SCREEN_ORIENTATION_PORTRAIT
-   // ActivityInfo.SCREEN_ORIENTATION_REVERSE_LANDSCAPE
-   // ActivityInfo.SCREEN_ORIENTATION_REVERSE_PORTRAIT
-   //
-   PaymentUI paymentUI = PaymentUI.getInstance();
-   paymentUI.setOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
-   paymentUI.showPaymentPage(this, PAYMENT_REQUEST_CODE);
+    //
+    // Orientation modes supported by the Payment Page
+    // ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE
+    // ActivityInfo.SCREEN_ORIENTATION_PORTRAIT
+    // ActivityInfo.SCREEN_ORIENTATION_REVERSE_LANDSCAPE
+    // ActivityInfo.SCREEN_ORIENTATION_REVERSE_PORTRAIT
+    //
+    PaymentUI paymentUI = PaymentUI.getInstance();
+    paymentUI.setOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
+    paymentUI.showPaymentPage(this, PAYMENT_REQUEST_CODE);
 
 Page Theming
 ------------
@@ -280,13 +279,13 @@ must be set in the PaymentUI class prior to opening the Payment Page.
 
 Code sample how to create and set a custom PaymentTheme:
 
-::
+.. code-block:: java
 
-   PaymentTheme.Builder builder = PaymentTheme.createBuilder();
-   ...  
-   PaymentUI paymentUI = PaymentUI.getInstance();
-   paymentUI.setPaymentTheme(builder.build());
-   paymentUI.showPaymentPage(this, PAYMENT_REQUEST_CODE);
+    PaymentTheme.Builder builder = PaymentTheme.createBuilder();
+    // ...  
+    PaymentUI paymentUI = PaymentUI.getInstance();
+    paymentUI.setPaymentTheme(builder.build());
+    paymentUI.showPaymentPage(this, PAYMENT_REQUEST_CODE);
 
 The PaymentTheme contains a set of parameters defining the customised
 theming. When a parameter name ends with Style, the parameter holds a
@@ -302,13 +301,13 @@ theme the page and list.
 
 Code sample how to set the PageParameters in the PaymentTheme:
 
-::
+.. code-block:: java
 
-   PageParameters pageParams = PageParameters.createBuilder().
-   setPageTheme(R.style.CustomThemePaymentPage).
-   ...
-   build();
-   builder.setPageParameters(pageParams);
+    PageParameters pageParams = PageParameters.createBuilder().
+    setPageTheme(R.style.CustomThemePaymentPage).
+    // ...
+    build();
+    builder.setPageParameters(pageParams);
 
 Table explaining each page parameter:
 
@@ -350,13 +349,13 @@ SDK.
 
 Code sample how to set the WidgetParameters in the PaymentTheme:
 
-::
+.. code-block:: java
 
-   WidgetParameters widgetParams = WidgetParameters.createBuilder().
-   setTextInputTheme(R.style.CustomThemeTextInput).
-   ...
-   build();
-   builder.setWidgetParameters(widgetParams);
+    WidgetParameters widgetParams = WidgetParameters.createBuilder().
+    setTextInputTheme(R.style.CustomThemeTextInput).
+    // ...
+    build();
+    builder.setWidgetParameters(widgetParams);
 
 Table explaining each widget parameter:
 
@@ -407,13 +406,13 @@ and errors.
 
 Code sample how to set the DialogParameters in the PaymentTheme:
 
-::
+.. code-block:: java
 
-   DialogParameters dialogParams = DialogParameters.createBuilder().
-   setDateTitleStyle(R.style.CustomText_Medium).
-   ...
-   build();
-   builder.setDialogParameters(dialogParams);
+    DialogParameters dialogParams = DialogParameters.createBuilder().
+    setDateTitleStyle(R.style.CustomText_Medium).
+    // ...
+    build();
+    builder.setDialogParameters(dialogParams);
 
 Table explaining each dialog parameter:
 
@@ -453,13 +452,13 @@ to the Payment API.
 
 Code sample how to set the ProgressParameters in the PaymentTheme:
 
-::
+.. code-block:: java
 
-   ProgressParameters progressParams = ProgressParameters.createBuilder().
-   setLoadProgressBarColor(R.color.customColorPrimary).
-   ...
-   build();
-   builder.setProgressParameters(progressParams);
+    ProgressParameters progressParams = ProgressParameters.createBuilder().
+    setLoadProgressBarColor(R.color.customColorPrimary).
+    // ...
+    build();
+    builder.setProgressParameters(progressParams);
 
 Table explaining each progress parameter:
 
@@ -509,38 +508,38 @@ contains Visa and Visa Electron.
 
 Example customgroups.json file:
 
-::
+.. code-block:: json
 
-   [
-       {
-           "items": [
-               {
-                   "code": "MASTERCARD",
-                   "regex": "^5[0-9]*$"
-               },
-               {
-                   "code": "AMEX",
-                   "regex": "^3[47][0-9]*$"
-               }
-           ]
-       },
-       {
-           "items": [
-               {
-                   "code": "VISA",
-                   "regex": "^4[0-9]*$"
-               },
-               {
-                   "code": "VISAELECTRON",
-                   "regex": "^4[0-9]*$"
-               }
-           ]
-       }
-   ]
+    [
+        {
+            "items": [
+                {
+                    "code": "MASTERCARD",
+                    "regex": "^5[0-9]*$"
+                },
+                {
+                    "code": "AMEX",
+                    "regex": "^3[47][0-9]*$"
+                }
+            ]
+        },
+        {
+            "items": [
+                {
+                    "code": "VISA",
+                    "regex": "^4[0-9]*$"
+                },
+                {
+                    "code": "VISAELECTRON",
+                    "regex": "^4[0-9]*$"
+                }
+            ]
+        }
+    ]
 
 Code sample how to set a customgroups.json file:
 
-::
+.. code-block:: java
 
    PaymentUI paymentUI = PaymentUI.getInstance();
    paymentUI.setGroupResId(R.raw.customgroups);
@@ -555,17 +554,17 @@ array.
 
 Example disablegroups.json file:
 
-::
+.. code-block:: json
 
-   []
+    []
 
 Code sample how to set the disabledgroups.json file:
 
-::
+.. code-block:: java
 
-   PaymentUI paymentUI = PaymentUI.getInstance();
-   paymentUI.setGroupResId(R.raw.disablegroups);
-   paymentUI.showPaymentPage(this, PAYMENT_REQUEST_CODE);
+    PaymentUI paymentUI = PaymentUI.getInstance();
+    paymentUI.setGroupResId(R.raw.disablegroups);
+    paymentUI.showPaymentPage(this, PAYMENT_REQUEST_CODE);
 
 Smart Selection
 ---------------
@@ -648,8 +647,8 @@ Example customvalidations.json file:
 
 Code sample how to set the customvalidations.json file:
 
-::
+.. code-block:: java
 
-   PaymentUI paymentUI = PaymentUI.getInstance();
-   paymentUI.setValidationResId(R.raw.customvalidations);
-   paymentUI.showPaymentPage(this, PAYMENT_REQUEST_CODE);
+    PaymentUI paymentUI = PaymentUI.getInstance();
+    paymentUI.setValidationResId(R.raw.customvalidations);
+    paymentUI.showPaymentPage(this, PAYMENT_REQUEST_CODE);
