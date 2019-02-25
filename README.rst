@@ -237,10 +237,10 @@ Error
 
 The RESULT_CODE_ERROR code indicates that an unrecoverable error has occurred, i.e. a SecurityException has been thrown inside the Android SDK. The PaymentResult contains a PaymentError Object with the error details.
     
-Customise Payment Page
+Customize Payment Page
 ======================
 
-The look & feel of the Payment Page may be customised, i.e. colors, font
+The look & feel of the Payment Page may be customized, i.e. colors, font
 style and icons can be changed so that it matches the look & feel of your
 mobile app.
 
@@ -271,7 +271,7 @@ Page Theming
 ------------
 
 Theming of the Payment Page is done using the PaymentTheme class and in
-order for theming to take effect, the customised PaymentTheme instance
+order for theming to take effect, the customized PaymentTheme instance
 must be set in the PaymentUI class prior to opening the Payment Page.
 
 Code sample how to create and set a custom PaymentTheme:
@@ -279,13 +279,13 @@ Code sample how to create and set a custom PaymentTheme:
 .. code-block:: java
 
     PaymentTheme.Builder builder = PaymentTheme.createBuilder();
-    // Initialize here the theme parameters in the builder
+    // Set here the different theme parameters in the builder
     
     PaymentUI paymentUI = PaymentUI.getInstance();
     paymentUI.setPaymentTheme(builder.build());
     paymentUI.showPaymentPage(this, PAYMENT_REQUEST_CODE);
 
-The PaymentTheme contains a set of parameters defining the customised
+The PaymentTheme contains a set of parameters defining the customized
 theming. When a parameter name ends with Style, the parameter holds a
 TextAppearance style resource id used for TextView elements. If the
 parameter name ends with Theme then the parameter holds a theme resource
@@ -303,7 +303,6 @@ Code sample how to set the PageParameters in the PaymentTheme:
 
     PageParameters pageParams = PageParameters.createBuilder().
     setPageTheme(R.style.CustomThemePaymentPage).
-    // ...
     build();
     builder.setPageParameters(pageParams);
 
@@ -351,7 +350,6 @@ Code sample how to set the WidgetParameters in the PaymentTheme:
 
     WidgetParameters widgetParams = WidgetParameters.createBuilder().
     setTextInputTheme(R.style.CustomThemeTextInput).
-    // ...
     build();
     builder.setWidgetParameters(widgetParams);
 
@@ -408,7 +406,6 @@ Code sample how to set the DialogParameters in the PaymentTheme:
 
     DialogParameters dialogParams = DialogParameters.createBuilder().
     setDateTitleStyle(R.style.CustomText_Medium).
-    // ...
     build();
     builder.setDialogParameters(dialogParams);
 
@@ -454,7 +451,6 @@ Code sample how to set the ProgressParameters in the PaymentTheme:
 
     ProgressParameters progressParams = ProgressParameters.createBuilder().
     setLoadProgressBarColor(R.color.customColorPrimary).
-    // ...
     build();
     builder.setProgressParameters(progressParams);
 
@@ -491,10 +487,10 @@ By default the SDK supports one group which contains the payment methods Visa,
 Mastercard and American Express.
 The default grouping of payment methods in the Payment SDK is defined in `groups.json <./payment/src/main/res/raw/groups.json>`_.
 
-Customise grouping
+Customize grouping
 ------------------
 
-The SDK allow customisation which payment methods are grouped
+The SDK allow customization which payment methods are grouped
 together in a card. Customisation is done by setting the resource ID of
 a grouping Json settings file in the SDK prior to showing the payment
 page. Payment methods can only be grouped together when they
@@ -599,16 +595,16 @@ The file `validations.json <./payment/src/main/res/raw/validations.json>`_ conta
 definitions that the Payment SDK uses to validate numbers, verificationCodes, bankCodes and holderNames. 
 Validations for other input values i.e. expiryMonth and expiryYear are defined by the `Validator.java <./payment/src/main/java/net/optile/payment/validation/Validator.java>`_.
 
-Customise validations
+Customize validations
 ---------------------
 
 The Payment SDK allow customisation of validations applied to certain input types. 
 
-- Validation for number, bankCode, holderName and verificationCode can be customised with the "regex" parameter.
+- Validation for number, bankCode, holderName and verificationCode can be customized with the "regex" parameter.
 - Input fields can be hidden by setting the "hide" parameter is true.
 - The maximum input length can be set with the "maxLength" parameter.
 
-Customised validations can be set by providing the resource ID of the validation Json file to the
+Customized validations can be set by providing the resource ID of the validation Json file to the
 PaymentUI class prior to showing the payment page. The default validation provided by the Android Payment SDK are sufficient in most cases.
 
 Example customvalidations.json file:
