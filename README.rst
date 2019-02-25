@@ -539,23 +539,23 @@ Code sample how to set a customgroups.json file:
     paymentUI.setGroupResId(R.raw.customgroups);
     paymentUI.showPaymentPage(this, PAYMENT_REQUEST_CODE);
 
-Disable default group
+Remove default group
 ----------------
 
-By default the Android SDK groups together payment methods VISA, Mastercard and AMEX into one card. To disable this default group the Android SDK must be told that no groups are desired. This can be achieved by initializing the Android SDK with a group json file containing an empty array.
+By default the Android SDK groups together payment methods VISA, Mastercard and AMEX into one card. To remove this default group the Android SDK must be told that it should not group any payment methods. This is done by initializing the Android SDK with a group json file containing an empty array.
 
-Example disabledefaultgroup.json file:
+Example removedefaultgroup.json file:
 
 .. code-block:: json
 
     []
 
-Code sample how to set the disabledefaultgroup.json file:
+Code sample how to set the removedefaultgroup.json file:
 
 .. code-block:: java
 
     PaymentUI paymentUI = PaymentUI.getInstance();
-    paymentUI.setGroupResId(R.raw.disabledefaultgroup);
+    paymentUI.setGroupResId(R.raw.removedefaultgroup);
     paymentUI.showPaymentPage(this, PAYMENT_REQUEST_CODE);
 
 Smart Selection
