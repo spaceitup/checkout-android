@@ -25,8 +25,8 @@ The Android SDK is build with the AppCompat Design library. In order to use the 
 
 ::
    
-   android.enableJetifier=true
-   android.useAndroidX=true
+    android.enableJetifier=true
+    android.useAndroidX=true
 
 Proguard
 --------
@@ -65,30 +65,30 @@ Example list request Json body:
 
 .. code-block:: json
 
-   {
-       "transactionId": "tr1",
-       "integration": "DISPLAY_NATIVE",
-       "presetFirst": "false",
-       "country": "DE",
-       "customer": {
-           "number": "1",
-           "email": "john.doe@example.com"
-       },
-       "payment": {
-           "amount": 9.99,
-           "currency": "EUR",
-           "reference": "Shop optile/03-12-2018"
-       },
-       "style": {
-           "language": "en_US"
-       },
-       "callback": {
-           "returnUrl": "https://example.com/shop/success.html",
-           "summaryUrl": "https://example.com/shop/summary.html",
-           "cancelUrl": "https://example.com/shop/cancel.html",
-           "notificationUrl": "https://example.com/shop/notify.html"
-       }
-   }
+    {
+        "transactionId": "tr1",
+        "integration": "DISPLAY_NATIVE",
+        "presetFirst": "false",
+        "country": "DE",
+        "customer": {
+            "number": "1",
+            "email": "john.doe@example.com"
+        },
+        "payment": {
+            "amount": 9.99,
+            "currency": "EUR",
+            "reference": "Shop optile/03-12-2018"
+        },
+        "style": {
+            "language": "en_US"
+        },
+        "callback": {
+            "returnUrl": "https://example.com/shop/success.html",
+            "summaryUrl": "https://example.com/shop/summary.html",
+            "cancelUrl": "https://example.com/shop/cancel.html",
+            "notificationUrl": "https://example.com/shop/notify.html"
+        }
+    }
 
 Registration
 ------------
@@ -123,10 +123,9 @@ Add the packagecloud.io repository to the top level build.gradle file.
 
     allprojects {
         repositories {
-            ...
-	    maven {
-	        url "https://packagecloud.io/optile/repo/maven2"
-	    }
+            maven {
+                url "https://packagecloud.io/optile/repo/maven2"
+            }
         }
     }
 
@@ -138,7 +137,6 @@ Add the android-sdk dependency to the build.gradle dependencies section.
 ::
 
     dependencies {
-        ...
         implementation "com.oscato.mobile:android-sdk:1.1.4"
     }
 
@@ -154,19 +152,18 @@ create a payment session that can be used by the Android Payment SDK.
 After you have created a payment session you will receive a response containing the List Result in Json format.
 This List Result contains a “self” URL which is used to initialise the Payment Page.
 
-Part of the list result containing the “self” URL:
+Top part of the list result containing the “self” URL:
 
-::
+.. code-block:: json
 
-   {
-     "links": {
-       "self": "https://api.integration.oscato.com/pci/v1/5c17b47e7862056fa0755e66lrui4dvavak9ehlvh4n3abcde9",
-       "customer": "https://api.integration.oscato.com/api/customers/123456789862053ccf15479eu"
-     },
-     "timestamp": "2018-12-17T14:36:46.105+0000",
-     "operation": "LIST",
-     ...
-
+    {
+        "links": {
+            "self": "https://api.integration.oscato.com/pci/v1/5c17b47e7862056fa0755e66lrui4dvavak9ehlvh4n3abcde9",
+            "customer": "https://api.integration.oscato.com/api/customers/123456789862053ccf15479eu"
+        },
+        "timestamp": "2018-12-17T14:36:46.105+0000",
+        "operation": "LIST"
+    
 3 - Show Payment Page
 ---------------------
 
@@ -176,16 +173,16 @@ Code sample how to initialise and display the Payment Page:
 
 .. code-block:: java
 
-   // Request code to identify the response in onActivityResult()
-   int PAYMENT_REQUEST_CODE = 1;
+    // Request code to identify the response in onActivityResult()
+    int PAYMENT_REQUEST_CODE = 1;
 
-   // list URL obtained from your backend
-   String listUrl = "<https://...>";
+    // list URL obtained from your backend
+    String listUrl = "<https://...>";
 
-   // Show the Payment Page
-   PaymentUI paymentUI = PaymentUI.getInstance();
-   paymentUI.setListUrl(listUrl);
-   paymentUI.showPaymentPage(this, PAYMENT_REQUEST_CODE);
+    // Show the Payment Page
+    PaymentUI paymentUI = PaymentUI.getInstance();
+    paymentUI.setListUrl(listUrl);
+    paymentUI.showPaymentPage(this, PAYMENT_REQUEST_CODE);
 
 Payment Result
 ==============
@@ -282,7 +279,8 @@ Code sample how to create and set a custom PaymentTheme:
 .. code-block:: java
 
     PaymentTheme.Builder builder = PaymentTheme.createBuilder();
-    // ...  
+    // Initialize here the theme parameters in the builder
+    
     PaymentUI paymentUI = PaymentUI.getInstance();
     paymentUI.setPaymentTheme(builder.build());
     paymentUI.showPaymentPage(this, PAYMENT_REQUEST_CODE);
@@ -541,29 +539,27 @@ Code sample how to set a customgroups.json file:
 
 .. code-block:: java
 
-   PaymentUI paymentUI = PaymentUI.getInstance();
-   paymentUI.setGroupResId(R.raw.customgroups);
-   paymentUI.showPaymentPage(this, PAYMENT_REQUEST_CODE);
+    PaymentUI paymentUI = PaymentUI.getInstance();
+    paymentUI.setGroupResId(R.raw.customgroups);
+    paymentUI.showPaymentPage(this, PAYMENT_REQUEST_CODE);
 
-Disable grouping
+Disable default group
 ----------------
 
-If each payment method should be placed in a separate card then this can
-be achieved by providing a grouping Json settings file with an empty
-array.
+By default the Android SDK groups together payment methods VISA, Mastercard and AMEX into one card. To disable this default group the Android SDK must be told that no groups are desired. This can be achieved by initializing the Android SDK with a group json file containing an empty array.
 
-Example disablegroups.json file:
+Example disabledefaultgroup.json file:
 
 .. code-block:: json
 
     []
 
-Code sample how to set the disabledgroups.json file:
+Code sample how to set the disabledefaultgroup.json file:
 
 .. code-block:: java
 
     PaymentUI paymentUI = PaymentUI.getInstance();
-    paymentUI.setGroupResId(R.raw.disablegroups);
+    paymentUI.setGroupResId(R.raw.disabledefaultgroup);
     paymentUI.showPaymentPage(this, PAYMENT_REQUEST_CODE);
 
 Smart Selection
@@ -617,7 +613,7 @@ PaymentUI class prior to showing the payment page. The default validation provid
 
 Example customvalidations.json file:
 
-::
+.. code-block:: json
 
     [{
         "code": "VISA",
@@ -636,14 +632,12 @@ Example customvalidations.json file:
     {
         "code": "SEPADD",
         "items": [
-             {
-                 "type": "bic",
-                 "hide": true
-             }
-         ]
-     }
-    ...
-   ]
+            {
+                "type": "bic",
+                "hide": true
+            }
+        ]
+    }]
 
 Code sample how to set the customvalidations.json file:
 
