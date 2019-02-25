@@ -107,7 +107,7 @@ steps:
 
 1. Install Android SDK in your app
 2. Create a payment session and obtain the "self" URL from the List Result in your app
-3. Initialise and show the Payment Page with the list URL
+3. Initialize and show the Payment Page with the list URL
 
 1 - Install Android SDK
 -----------------------
@@ -150,7 +150,7 @@ testing possibilities, and references. The documentation will help you
 create a payment session that can be used by the Android Payment SDK.
 
 After you have created a payment session you will receive a response containing the List Result in Json format.
-This List Result contains a “self” URL which is used to initialise the Payment Page.
+This List Result contains a “self” URL which is used to initialize the Payment Page.
 
 Top part of the list result containing the “self” URL:
 
@@ -167,9 +167,9 @@ Top part of the list result containing the “self” URL:
 3 - Show Payment Page
 ---------------------
 
-The Android SDK provides a class called PaymentUI which is used to initialise and launch the Payment Page.
+The Android SDK provides a class called PaymentUI which is used to initialize and launch the Payment Page.
 
-Code sample how to initialise and display the Payment Page:
+Code sample how to initialize and display the Payment Page:
 
 .. code-block:: java
 
