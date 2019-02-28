@@ -71,10 +71,6 @@ abstract class InputLayoutWidget extends FormWidget {
         });
     }
 
-    /**
-     * {@inheritDoc}
-     */
-    @Override
     public void setLabel(String label) {
         this.label = label;
         textLayout.setHintAnimationEnabled(false);
@@ -148,7 +144,8 @@ abstract class InputLayoutWidget extends FormWidget {
     }
 
     String getNormalizedValue() {
-        String val = textInput.getText().toString().trim();
+        CharSequence cs = textInput.getText();
+        String val = cs != null ? cs.toString().trim() : "";
 
         switch (name) {
             case PaymentInputType.ACCOUNT_NUMBER:

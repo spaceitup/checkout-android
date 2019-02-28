@@ -61,10 +61,6 @@ public final class SelectWidget extends FormWidget {
         });
     }
 
-    /**
-     * {@inheritDoc}
-     */
-    @Override
     public void setLabel(String label) {
         this.label.setText(label);
     }

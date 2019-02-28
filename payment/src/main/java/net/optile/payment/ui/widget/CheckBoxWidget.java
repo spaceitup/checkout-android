@@ -53,10 +53,6 @@ public class CheckBoxWidget extends FormWidget {
         });
     }
 
-    /**
-     * {@inheritDoc}
-     */
-    @Override
     public void setLabel(String label) {
         this.labelUnchecked.setText(label);
         this.labelChecked.setText(label);

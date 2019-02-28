@@ -30,11 +30,10 @@ public abstract class FormWidget {
     final View rootView;
     final String name;
     final ImageView icon;
+    final PaymentTheme theme;
 
     WidgetPresenter presenter;
     int state;
-    String error;
-    PaymentTheme theme;
 
     FormWidget(String name, View rootView, PaymentTheme theme) {
         this.name = name;
@@ -102,23 +101,6 @@ public abstract class FormWidget {
      * Clear the focus of this widget if it supports focus i.e. the TextLayoutWidget.
      */
     public void clearFocus() {
-    }
-
-    /**
-     * Set a generic label in this widget, it is up to widget implementations how to show its label.
-     *
-     * @param label to be set
-     */
-    public void setLabel(String label) {
-    }
-
-    /**
-     * Check if the widget has been validated.
-     *
-     * @return true when valid, false otherwise
-     */
-    public boolean isValid() {
-        return this.state == VALIDATION_OK;
     }
 
     /**

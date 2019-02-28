@@ -8,6 +8,7 @@
 
 package net.optile.payment.ui.dialog;
 
+import android.app.Activity;
 import android.app.Dialog;
 import android.content.DialogInterface;
 import android.os.Bundle;
@@ -52,7 +53,11 @@ public abstract class ThemedDialogFragment extends DialogFragment {
     @NonNull
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
-        return new Dialog(getActivity(), getTheme()) {
+        Activity activity = getActivity();
+        if (activity == null) {
+            return super.onCreateDialog(savedInstanceState);
+        }
+        return new Dialog(activity, getTheme()) {
             @Override
             public void onBackPressed() {
                 dismiss();
@@ -116,10 +121,6 @@ public abstract class ThemedDialogFragment extends DialogFragment {
             listener.onButtonClicked(this, which);
         }
         closedByButton = true;
-        dismiss();
-    }
-
-    private void handleOnBackPressed() {
         dismiss();
     }
 

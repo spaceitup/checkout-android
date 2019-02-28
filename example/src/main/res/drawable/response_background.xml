@@ -6,5 +6,5 @@
         android:radius="@dimen/responsecard_radius"/>
     <stroke
         android:width="@dimen/responsecard_stroke"
-        android:color="@color/responsecard_border" />
+        android:color="@color/responsecard_border"/>
 </shape>

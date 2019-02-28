@@ -11,7 +11,6 @@ package net.optile.payment.ui.list;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.RecyclerView.ViewHolder;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.TextView;
 import net.optile.payment.R;
 import net.optile.payment.ui.theme.PageParameters;
@@ -30,7 +29,7 @@ final class HeaderViewHolder extends RecyclerView.ViewHolder {
         this.title = parent.findViewById(R.id.text_title);
     }
 
-    static ViewHolder createInstance(ListAdapter adapter, ViewGroup parent) {
+    static ViewHolder createInstance(ListAdapter adapter) {
         View view = View.inflate(adapter.getContext(), R.layout.list_item_header, null);
         HeaderViewHolder holder = new HeaderViewHolder(view);
         holder.applyTheme(adapter.getPaymentTheme());

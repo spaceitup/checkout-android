@@ -35,8 +35,8 @@ public class PaymentUtilsTest {
 
     @Test
     public void isTrue() {
-        assertTrue(PaymentUtils.isTrue(new Boolean(true)));
-        assertFalse(PaymentUtils.isTrue(new Boolean(false)));
+        assertTrue(PaymentUtils.isTrue(Boolean.TRUE));
+        assertFalse(PaymentUtils.isTrue(Boolean.FALSE));
         assertFalse(PaymentUtils.isTrue(null));
     }
 

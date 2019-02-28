@@ -48,13 +48,6 @@ public interface PaymentCard {
     LanguageFile getLang();
 
     /**
-     * Is this card preselected by the Payment API
-     *
-     * @return true when preselected, false otherwise
-     */
-    boolean isPreselected();
-
-    /**
      * Get the action button label
      *
      * @return the action button label or null if not found
