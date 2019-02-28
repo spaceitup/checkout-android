@@ -18,6 +18,16 @@ Android Version
 Android API versions 19 - 28 (Kitkat 4.4 - Pie 9.0) are supported by the
 Android Payment SDK. TLS1.2 is enabled for Android version 19 (Kitkat).
 
+AndroidX
+--------
+
+The Android SDK is build with the AppCompat Design library. In order to use the Android SDK with an AndroidX app the following two lines must be added to the gradle.properties file:
+
+::
+   
+    android.enableJetifier=true
+    android.useAndroidX=true
+
 Proguard
 --------
 
@@ -53,32 +63,32 @@ Payment SDK.
 
 Example list request Json body:
 
-::
+.. code-block:: json
 
-   {
-       "transactionId": "tr1",
-       "integration": "DISPLAY_NATIVE",
-       "presetFirst": "false",
-       "country": "DE",
-       "customer": {
-           "number": "1",
-           "email": "john.doe@example.com"
-       },
-       "payment": {
-           "amount": 9.99,
-           "currency": "EUR",
-           "reference": "Shop optile/03-12-2018"
-       },
-       "style": {
-           "language": "en_US"
-       },
-       "callback": {
-           "returnUrl": "https://example.com/shop/success.html",
-           "summaryUrl": "https://example.com/shop/summary.html",
-           "cancelUrl": "https://example.com/shop/cancel.html",
-           "notificationUrl": "https://example.com/shop/notify.html"
-       }
-   }
+    {
+        "transactionId": "tr1",
+        "integration": "DISPLAY_NATIVE",
+        "presetFirst": "false",
+        "country": "DE",
+        "customer": {
+            "number": "1",
+            "email": "john.doe@example.com"
+        },
+        "payment": {
+            "amount": 9.99,
+            "currency": "EUR",
+            "reference": "Shop optile/03-12-2018"
+        },
+        "style": {
+            "language": "en_US"
+        },
+        "callback": {
+            "returnUrl": "https://example.com/shop/success.html",
+            "summaryUrl": "https://example.com/shop/summary.html",
+            "cancelUrl": "https://example.com/shop/cancel.html",
+            "notificationUrl": "https://example.com/shop/notify.html"
+        }
+    }
 
 Registration
 ------------
@@ -95,38 +105,11 @@ Your first payment
 In order to make a successful payment you must complete the following
 steps:
 
-1. Create a payment session on your server and retrieve the list URL in
-   your app
-2. Install Android SDK in your app
-3. Initialise and show the Payment Page with the list URL
+1. Install Android SDK in your app
+2. Create a payment session and obtain the "self" URL from the List Result in your app
+3. Initialize and show the Payment Page with the list URL
 
-1 - Create payment session
---------------------------
-
-The documentation at `optile.io <https://optile.io>`_ will guide you through optile’s Open
-Payment Gateway (OPG) features for frontend checkout and backend use
-cases. It provides important information about integration scenarios,
-testing possibilities, and references. The documentation will help you
-create a payment session that can be used by the Android Payment SDK.
-
-After you have created a payment session on your server you will receive
-a response containing the List Result in Json format. This List Result
-contains a “self” URL which is used to initialise the Payment Page.
-
-Part of the list result containing the “self” URL:
-
-::
-
-   {
-     "links": {
-       "self": "https://api.integration.oscato.com/pci/v1/5c17b47e7862056fa0755e66lrui4dvavak9ehlvh4n3abcde9",
-       "customer": "https://api.integration.oscato.com/api/customers/123456789862053ccf15479eu"
-     },
-     "timestamp": "2018-12-17T14:36:46.105+0000",
-     "operation": "LIST",
-     ...
-
-2 - Install Android SDK
+1 - Install Android SDK
 -----------------------
 
 Installing the Android SDK is easy and requires only adding the optile Android SDK module to your build.gradle file. 
@@ -140,77 +123,100 @@ Add the packagecloud.io repository to the top level build.gradle file.
 
     allprojects {
         repositories {
-            ...
-	    maven {
-	        url "https://packagecloud.io/optile/repo/maven2"
-	    }
+            maven {
+                url "https://packagecloud.io/optile/repo/maven2"
+            }
         }
     }
 
 Dependency
 ~~~~~~~~~~
 
-Add the android-sdk dependency to the build.gradle dependency section.
+Add the android-sdk dependency to the build.gradle dependencies section.
 
 ::
 
     dependencies {
-        ...
-        implementation "com.oscato.mobile:android-sdk:1.1.3"
+        implementation "com.oscato.mobile:android-sdk:1.1.4"
     }
 
+2 - Create payment session
+--------------------------
+
+The documentation at `optile.io <https://optile.io>`_ will guide you through optile’s Open
+Payment Gateway (OPG) features for frontend checkout and backend use
+cases. It provides important information about integration scenarios,
+testing possibilities, and references. The documentation will help you
+create a payment session that can be used by the Android Payment SDK.
+
+After you have created a payment session you will receive a response containing the List Result in Json format.
+This List Result contains a “self” URL which is used to initialize the Payment Page.
+
+Top part of the list result containing the “self” URL:
+
+.. code-block:: json
+
+    {
+        "links": {
+            "self": "https://api.integration.oscato.com/pci/v1/5c17b47e7862056fa0755e66lrui4dvavak9ehlvh4n3abcde9",
+            "customer": "https://api.integration.oscato.com/api/customers/123456789862053ccf15479eu"
+        },
+        "timestamp": "2018-12-17T14:36:46.105+0000",
+        "operation": "LIST"
+    
 3 - Show Payment Page
 ---------------------
 
-The Android SDK provides a class called PaymentUI which is used to initialise and launch the Payment Page.
+The Android SDK provides a class called PaymentUI which is used to initialize and launch the Payment Page.
 
-Code sample how to initialise and display the Payment Page:
+Code sample how to initialize and display the Payment Page:
 
-::
+.. code-block:: java
 
-   // Request code to identify the response in onActivityResult()
-   int PAYMENT_REQUEST_CODE = 1;
+    // Request code to identify the response in onActivityResult()
+    int PAYMENT_REQUEST_CODE = 1;
 
-   // list URL obtained from your backend
-   String listUrl = "<https://...>";
+    // list URL obtained from your backend
+    String listUrl = "<https://...>";
 
-   // Show the Payment Page
-   PaymentUI paymentUI = PaymentUI.getInstance();
-   paymentUI.setListUrl(listUrl);
-   paymentUI.showPaymentPage(this, PAYMENT_REQUEST_CODE);
+    // Show the Payment Page
+    PaymentUI paymentUI = PaymentUI.getInstance();
+    paymentUI.setListUrl(listUrl);
+    paymentUI.showPaymentPage(this, PAYMENT_REQUEST_CODE);
 
 Payment Result
 ==============
 
-Payment results are returned through the onActivityResult() method in your Activity. When the page is closed, the returned PaymentResult contains the reason why the page was closed. I.e. because a charge operation was successful or the user closed the page.
+Payment results are returned through the onActivityResult() method in your Activity. When the page is closed, the returned PaymentResult class contains information about the performed operation. I.e. it may contain an Interaction and OperationResult object describing the state of the latest Charge operation.
+
+The Interaction and OperationResult objects are never created by the Android SDK but instead come from the Optile Payment API. The PaymentError object inside the PaymentResult class is created by the Android SDK and contains information about an error that happened inside the Android SDK. 
 
 Code sample how to obtain the PaymentResult inside the onActivityResult() method:
 
-::
+.. code-block:: java
 
-   @Override
-   public void onActivityResult(int requestCode, int resultCode, Intent data) {
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode != PAYMENT_REQUEST_CODE) {
+            return;
+        }
+        PaymentResult result = null;
 
-       if (requestCode != PAYMENT_REQUEST_CODE) {
-           return;
-       }
-       PaymentResult result = null;
-
-       if (data != null && data.hasExtra(PaymentUI.EXTRA_PAYMENT_RESULT)) {
-           result = data.getParcelableExtra(PaymentUI.EXTRA_PAYMENT_RESULT);
-       }
-       if (resultCode == PaymentUI.RESULT_CODE_OK) {
-           // Operation request has been made and "result" contains
-           // an Interaction and optional OperationResult describing the operation result
-       } 
-       if (resultCode == PaymentUI.RESULT_CODE_CANCELED) {
-           "result" contains a resultInfo and an optional Interaction and optional OperationResult. 
-	   If the Interaction is null then the user closed the page before any request was made.
-       }
-       if (resultCode == PaymentUI.RESULT_CODE_ERROR) {
-           // "result" contains a PaymentError explaining the error that occurred i.e. connection error.
-       }
-   }
+        if (data != null && data.hasExtra(PaymentUI.EXTRA_PAYMENT_RESULT)) {
+            result = data.getParcelableExtra(PaymentUI.EXTRA_PAYMENT_RESULT);
+        }
+        if (resultCode == PaymentUI.RESULT_CODE_OK) {
+            // Operation request has been made and "result" contains
+            // an Interaction and optional OperationResult describing the operation result
+        } 
+        if (resultCode == PaymentUI.RESULT_CODE_CANCELED) {
+            //"result" contains a resultInfo and an optional Interaction and optional OperationResult. 
+            //If the Interaction is null then the user closed the page before any request was made.
+        }
+        if (resultCode == PaymentUI.RESULT_CODE_ERROR) {
+            // "result" contains a PaymentError explaining the error that occurred i.e. connection error.
+        }
+    }
 
 Successful
 ----------
@@ -224,17 +230,17 @@ The RESULT_CODE_OK code indicates that the operation request was successful, the
 Cancelled
 ---------
 
-The RESULT_CODE_CANCELED code indicates that the Payment Page did not perform a successful operation. This may happen for different reasons, i.e. the user clicked the back button. The PaymentResult may contain an Interaction and an OperationResult with details about the failed operation. If both Interaction and OperationResult are null then the user closed the page before any request was made. 
+The RESULT_CODE_CANCELED code indicates that the Android SDK did not perform a successful operation. This may happen for different reasons, i.e. the user clicked the back button. The PaymentResult may contain an Interaction and an OperationResult with details about the failed operation. If both Interaction and OperationResult are null then the user closed the page before any request was made. 
     
 Error
 -----
 
 The RESULT_CODE_ERROR code indicates that an unrecoverable error has occurred, i.e. a SecurityException has been thrown inside the Android SDK. The PaymentResult contains a PaymentError Object with the error details.
     
-Customise Payment Page
+Customize Payment Page
 ======================
 
-The look & feel of the Payment Page may be customised, i.e. colors, font
+The look & feel of the Payment Page may be customized, i.e. colors, font
 style and icons can be changed so that it matches the look & feel of your
 mobile app.
 
@@ -248,37 +254,38 @@ landscape mode but cannot be changed anymore by rotating the phone.
 
 Code sample how to set the fixed orientation mode:
 
-::
+.. code-block:: java
 
-   //
-   // Orientation modes supported by the Payment Page
-   // ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE
-   // ActivityInfo.SCREEN_ORIENTATION_PORTRAIT
-   // ActivityInfo.SCREEN_ORIENTATION_REVERSE_LANDSCAPE
-   // ActivityInfo.SCREEN_ORIENTATION_REVERSE_PORTRAIT
-   //
-   PaymentUI paymentUI = PaymentUI.getInstance();
-   paymentUI.setOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
-   paymentUI.showPaymentPage(this, PAYMENT_REQUEST_CODE);
+    //
+    // Orientation modes supported by the Payment Page
+    // ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE
+    // ActivityInfo.SCREEN_ORIENTATION_PORTRAIT
+    // ActivityInfo.SCREEN_ORIENTATION_REVERSE_LANDSCAPE
+    // ActivityInfo.SCREEN_ORIENTATION_REVERSE_PORTRAIT
+    //
+    PaymentUI paymentUI = PaymentUI.getInstance();
+    paymentUI.setOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
+    paymentUI.showPaymentPage(this, PAYMENT_REQUEST_CODE);
 
 Page Theming
 ------------
 
 Theming of the Payment Page is done using the PaymentTheme class and in
-order for theming to take effect, the customised PaymentTheme instance
+order for theming to take effect, the customized PaymentTheme instance
 must be set in the PaymentUI class prior to opening the Payment Page.
 
 Code sample how to create and set a custom PaymentTheme:
 
-::
+.. code-block:: java
 
-   PaymentTheme.Builder builder = PaymentTheme.createBuilder();
-   ...  
-   PaymentUI paymentUI = PaymentUI.getInstance();
-   paymentUI.setPaymentTheme(builder.build());
-   paymentUI.showPaymentPage(this, PAYMENT_REQUEST_CODE);
+    PaymentTheme.Builder builder = PaymentTheme.createBuilder();
+    // Set here the different theme parameters in the builder
+    
+    PaymentUI paymentUI = PaymentUI.getInstance();
+    paymentUI.setPaymentTheme(builder.build());
+    paymentUI.showPaymentPage(this, PAYMENT_REQUEST_CODE);
 
-The PaymentTheme contains a set of parameters defining the customised
+The PaymentTheme contains a set of parameters defining the customized
 theming. When a parameter name ends with Style, the parameter holds a
 TextAppearance style resource id used for TextView elements. If the
 parameter name ends with Theme then the parameter holds a theme resource
@@ -292,13 +299,12 @@ theme the page and list.
 
 Code sample how to set the PageParameters in the PaymentTheme:
 
-::
+.. code-block:: java
 
-   PageParameters pageParams = PageParameters.createBuilder().
-   setPageTheme(R.style.CustomThemePaymentPage).
-   ...
-   build();
-   builder.setPageParameters(pageParams);
+    PageParameters pageParams = PageParameters.createBuilder().
+    setPageTheme(R.style.CustomThemePaymentPage).
+    build();
+    builder.setPageParameters(pageParams);
 
 Table explaining each page parameter:
 
@@ -340,13 +346,12 @@ SDK.
 
 Code sample how to set the WidgetParameters in the PaymentTheme:
 
-::
+.. code-block:: java
 
-   WidgetParameters widgetParams = WidgetParameters.createBuilder().
-   setTextInputTheme(R.style.CustomThemeTextInput).
-   ...
-   build();
-   builder.setWidgetParameters(widgetParams);
+    WidgetParameters widgetParams = WidgetParameters.createBuilder().
+    setTextInputTheme(R.style.CustomThemeTextInput).
+    build();
+    builder.setWidgetParameters(widgetParams);
 
 Table explaining each widget parameter:
 
@@ -397,13 +402,12 @@ and errors.
 
 Code sample how to set the DialogParameters in the PaymentTheme:
 
-::
+.. code-block:: java
 
-   DialogParameters dialogParams = DialogParameters.createBuilder().
-   setDateTitleStyle(R.style.CustomText_Medium).
-   ...
-   build();
-   builder.setDialogParameters(dialogParams);
+    DialogParameters dialogParams = DialogParameters.createBuilder().
+    setDateTitleStyle(R.style.CustomText_Medium).
+    build();
+    builder.setDialogParameters(dialogParams);
 
 Table explaining each dialog parameter:
 
@@ -443,13 +447,12 @@ to the Payment API.
 
 Code sample how to set the ProgressParameters in the PaymentTheme:
 
-::
+.. code-block:: java
 
-   ProgressParameters progressParams = ProgressParameters.createBuilder().
-   setLoadProgressBarColor(R.color.customColorPrimary).
-   ...
-   build();
-   builder.setProgressParameters(progressParams);
+    ProgressParameters progressParams = ProgressParameters.createBuilder().
+    setLoadProgressBarColor(R.color.customColorPrimary).
+    build();
+    builder.setProgressParameters(progressParams);
 
 Table explaining each progress parameter:
 
@@ -484,10 +487,10 @@ By default the SDK supports one group which contains the payment methods Visa,
 Mastercard and American Express.
 The default grouping of payment methods in the Payment SDK is defined in `groups.json <./payment/src/main/res/raw/groups.json>`_.
 
-Customise grouping
+Customize grouping
 ------------------
 
-The SDK allow customisation which payment methods are grouped
+The SDK allow customization which payment methods are grouped
 together in a card. Customisation is done by setting the resource ID of
 a grouping Json settings file in the SDK prior to showing the payment
 page. Payment methods can only be grouped together when they
@@ -499,63 +502,61 @@ contains Visa and Visa Electron.
 
 Example customgroups.json file:
 
-::
+.. code-block:: json
 
-   [
-       {
-           "items": [
-               {
-                   "code": "MASTERCARD",
-                   "regex": "^5[0-9]*$"
-               },
-               {
-                   "code": "AMEX",
-                   "regex": "^3[47][0-9]*$"
-               }
-           ]
-       },
-       {
-           "items": [
-               {
-                   "code": "VISA",
-                   "regex": "^4[0-9]*$"
-               },
-               {
-                   "code": "VISAELECTRON",
-                   "regex": "^4[0-9]*$"
-               }
-           ]
-       }
-   ]
+    [
+        {
+            "items": [
+                {
+                    "code": "MASTERCARD",
+                    "regex": "^5[0-9]*$"
+                },
+                {
+                    "code": "AMEX",
+                    "regex": "^3[47][0-9]*$"
+                }
+            ]
+        },
+        {
+            "items": [
+                {
+                    "code": "VISA",
+                    "regex": "^4[0-9]*$"
+                },
+                {
+                    "code": "VISAELECTRON",
+                    "regex": "^4[0-9]*$"
+                }
+            ]
+        }
+    ]
 
 Code sample how to set a customgroups.json file:
 
-::
+.. code-block:: java
 
-   PaymentUI paymentUI = PaymentUI.getInstance();
-   paymentUI.setGroupResId(R.raw.customgroups);
-   paymentUI.showPaymentPage(this, PAYMENT_REQUEST_CODE);
+    PaymentUI paymentUI = PaymentUI.getInstance();
+    paymentUI.setGroupResId(R.raw.customgroups);
+    paymentUI.showPaymentPage(this, PAYMENT_REQUEST_CODE);
 
-Disable grouping
+Remove default group
 ----------------
 
-If each payment method should be placed in a separate card then this can
-be achieved by providing a grouping Json settings file with an empty
-array.
+By default the Android SDK groups together payment methods VISA, Mastercard and AMEX into one card. To remove this default group the Android SDK must be told that it should not group any payment methods. This is done by initializing the Android SDK with a group json file containing an empty array.
 
-Example disablegroups.json file:
+Example removedefaultgroup.json file:
 
-::
+.. code-block:: json
 
-   []
+    []
 
-Code sample how to set the disabledgroups.json file:
+Code sample how to set the removedefaultgroup.json file:
 
-::
+.. code-block:: java
 
-   PaymentUI paymentUI = PaymentUI.getInstance();
-   paymentUI.setGroupResId(R.raw.disablegroups);
-   paymentUI.showPaymentPage(this, PAYMENT_REQUEST_CODE);
+    PaymentUI paymentUI = PaymentUI.getInstance();
+    paymentUI.setGroupResId(R.raw.removedefaultgroup);
+    paymentUI.showPaymentPage(this, PAYMENT_REQUEST_CODE);
 
 Smart Selection
 ---------------
@@ -594,21 +595,21 @@ The file `validations.json <./payment/src/main/res/raw/validations.json>`_ conta
 definitions that the Payment SDK uses to validate numbers, verificationCodes, bankCodes and holderNames. 
 Validations for other input values i.e. expiryMonth and expiryYear are defined by the `Validator.java <./payment/src/main/java/net/optile/payment/validation/Validator.java>`_.
 
-Customise validations
+Customize validations
 ---------------------
 
 The Payment SDK allow customisation of validations applied to certain input types. 
 
-- Validation for number, bankCode, holderName and verificationCode can be customised with the "regex" parameter.
+- Validation for number, bankCode, holderName and verificationCode can be customized with the "regex" parameter.
 - Input fields can be hidden by setting the "hide" parameter is true.
 - The maximum input length can be set with the "maxLength" parameter.
 
-Customised validations can be set by providing the resource ID of the validation Json file to the
+Customized validations can be set by providing the resource ID of the validation Json file to the
 PaymentUI class prior to showing the payment page. The default validation provided by the Android Payment SDK are sufficient in most cases.
 
 Example customvalidations.json file:
 
-::
+.. code-block:: json
 
     [{
         "code": "VISA",
@@ -627,19 +628,17 @@ Example customvalidations.json file:
     {
         "code": "SEPADD",
         "items": [
-             {
-                 "type": "bic",
-                 "hide": true
-             }
-         ]
-     }
-    ...
-   ]
+            {
+                "type": "bic",
+                "hide": true
+            }
+        ]
+    }]
 
 Code sample how to set the customvalidations.json file:
 
-::
+.. code-block:: java
 
-   PaymentUI paymentUI = PaymentUI.getInstance();
-   paymentUI.setValidationResId(R.raw.customvalidations);
-   paymentUI.showPaymentPage(this, PAYMENT_REQUEST_CODE);
+    PaymentUI paymentUI = PaymentUI.getInstance();
+    paymentUI.setValidationResId(R.raw.customvalidations);
+    paymentUI.showPaymentPage(this, PAYMENT_REQUEST_CODE);

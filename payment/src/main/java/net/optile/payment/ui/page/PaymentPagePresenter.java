@@ -249,7 +249,6 @@ final class PaymentPagePresenter {
     private void handleLoadPaymentError(PaymentException cause) {
         PaymentError error = cause.error;
         ErrorInfo info = error.errorInfo;
-        PaymentResult result;
 
         if (info != null) {
             closeSessionWithCanceledCode(new PaymentResult(info.getResultInfo(), info.getInteraction()));
@@ -288,15 +287,6 @@ final class PaymentPagePresenter {
         loadPaymentSession(this.listUrl);
     }
 
-    private void callbackOperationError(Throwable cause) {
-
-        if (cause instanceof PaymentException) {
-            handleOperationPaymentError((PaymentException) cause);
-            return;
-        }
-        closeSessionWithErrorCode(R.string.pmdialog_error_unknown, cause);
-    }
-
     private void handleOperationPaymentError(PaymentException cause) {
         PaymentError error = cause.error;
         ErrorInfo info = error.errorInfo;
@@ -304,7 +294,7 @@ final class PaymentPagePresenter {
         if (info != null) {
             handleOperationInteractionError(new PaymentResult(info.getResultInfo(), info.getInteraction()));
         } else if (error.isError(PaymentError.CONN_ERROR)) {
-            handleOperationConnError(cause);
+            handleOperationConnError();
         } else {
             closeSessionWithErrorCode(R.string.pmdialog_error_unknown, cause);
         }
@@ -418,7 +408,7 @@ final class PaymentPagePresenter {
         view.showDialog(dialog);
     }
 
-    private void handleOperationConnError(PaymentException pe) {
+    private void handleOperationConnError() {
         view.showPaymentSession(this.session);
         MessageDialogFragment dialog = createMessageDialog(view.getStringRes(R.string.pmdialog_error_connection), true);
 

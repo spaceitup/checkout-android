@@ -1,7 +1,9 @@
 <resources>
     <dimen name="border_small">8dp</dimen>
     <dimen name="border_medium">12dp</dimen>
-    <dimen name="border_large">16dp</dimen>    
+    <dimen name="border_large">16dp</dimen>
+    <dimen name="responsecard_radius">10dp</dimen>
+    <dimen name="responsecard_stroke">1dp</dimen>
 
     <dimen name="custom_logopadding">6dp</dimen>
     <dimen name="custom_logostroke">1dp</dimen>

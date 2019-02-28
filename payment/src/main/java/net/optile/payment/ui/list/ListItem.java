@@ -15,7 +15,7 @@ import net.optile.payment.ui.model.PaymentCard;
  */
 abstract class ListItem {
 
-    int viewType;
+    final int viewType;
 
     ListItem(int viewType) {
         this.viewType = viewType;

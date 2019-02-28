@@ -15,7 +15,6 @@ import android.support.annotation.NonNull;
 import android.support.v4.app.DialogFragment;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.RecyclerView.ViewHolder;
-import android.view.LayoutInflater;
 import android.view.ViewGroup;
 import net.optile.payment.core.LanguageFile;
 import net.optile.payment.ui.PaymentUI;
@@ -45,7 +44,8 @@ final class ListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     @Override
     public @NonNull
     ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        PaymentCard card = getItemWithViewType(viewType).getPaymentCard();
+        ListItem item = getItemWithViewType(viewType);
+        PaymentCard card = item != null ? item.getPaymentCard() : null;
 
         if (card instanceof NetworkCard) {
             return NetworkCardViewHolder.createInstance(this, (NetworkCard) card, parent);
@@ -54,7 +54,7 @@ final class ListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         } else if (card instanceof PresetCard) {
             return PresetCardViewHolder.createInstance(this, (PresetCard) card, parent);
         } else {
-            return HeaderViewHolder.createInstance(this, parent);
+            return HeaderViewHolder.createInstance(this);
         }
     }
 
@@ -173,14 +173,6 @@ final class ListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     LanguageFile getPageLanguageFile() {
         return list.getPaymentSession().getLang();
-    }
-
-    LayoutInflater getLayoutInflater() {
-        return list.getLayoutInflater();
-    }
-
-    ListItem getItemFromIndex(int index) {
-        return index >= 0 && index < items.size() ? items.get(index) : null;
     }
 
     private ListItem getItemWithViewType(int viewType) {

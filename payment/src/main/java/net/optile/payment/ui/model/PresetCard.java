@@ -89,14 +89,6 @@ public final class PresetCard implements PaymentCard {
      * {@inheritDoc}
      */
     @Override
-    public boolean isPreselected() {
-        return false;
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
     public String getButton() {
         return network.getButton();
     }

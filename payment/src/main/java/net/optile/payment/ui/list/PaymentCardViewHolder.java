@@ -215,10 +215,6 @@ abstract class PaymentCardViewHolder extends RecyclerView.ViewHolder {
         }
     }
 
-    boolean isExpanded() {
-        return formLayout.getVisibility() == View.VISIBLE;
-    }
-
     void expand(boolean expand) {
         formLayout.setVisibility(expand ? View.VISIBLE : View.GONE);
 
@@ -253,7 +249,7 @@ abstract class PaymentCardViewHolder extends RecyclerView.ViewHolder {
             widget = getFormWidget(element.getName());
 
             if (widget instanceof SelectWidget) {
-                bindSelectWidget((SelectWidget) widget, element, lang);
+                bindSelectWidget((SelectWidget) widget, element);
             } else if (widget instanceof TextInputWidget) {
                 bindTextInputWidget((TextInputWidget) widget, card.getCode(), element, lang);
             }
@@ -285,7 +281,7 @@ abstract class PaymentCardViewHolder extends RecyclerView.ViewHolder {
     }
 
 
-    void bindSelectWidget(SelectWidget widget, InputElement element, LanguageFile lang) {
+    void bindSelectWidget(SelectWidget widget, InputElement element) {
         bindIconResource(widget);
         widget.setLabel(element.getLabel());
         widget.setSelectOptions(element.getOptions());
@@ -352,7 +348,7 @@ abstract class PaymentCardViewHolder extends RecyclerView.ViewHolder {
 
         for (String key : keys) {
             FormWidget widget = widgets.get(key);
-            if (widget.setLastImeOptionsWidget()) {
+            if (widget != null && widget.setLastImeOptionsWidget()) {
                 break;
             }
         }

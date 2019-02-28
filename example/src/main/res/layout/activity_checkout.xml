@@ -24,110 +24,153 @@
                 android:layout_height="wrap_content"
                 android:checked="true"
                 android:layout_marginBottom="@dimen/border_small"
-                android:text="@string/request_theme_default" />
+                android:text="@string/theme_default"/>
             <RadioButton
                 android:id="@+id/radio_theme_custom"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="@dimen/border_small"
-                android:text="@string/request_theme_custom" />
+                android:text="@string/theme_custom"/>
             <RadioButton
                 android:id="@+id/radio_theme_empty"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/request_theme_empty" />
+                android:text="@string/theme_empty"/>
         </RadioGroup>
 
         <EditText
             android:id="@+id/input_listurl"
             android:layout_width="match_parent"
-            android:hint="@string/request_list_hint"
+            android:hint="@string/list_hint"
+            android:inputType="textWebEmailAddress"
             android:layout_height="wrap_content"
             android:layout_marginBottom="@dimen/border_medium"/>
 
         <Button
             style="@style/AppButton"
             app:backgroundTint="@color/colorPrimary"
-            android:id="@+id/button_checkout"
+            android:id="@+id/button_action"
             android:padding="@dimen/border_large"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="@dimen/border_large"
-            android:text="@string/request_button" />
+            android:text="@string/actionbutton"/>
 
-        <TextView
-            android:id="@+id/label_resultcode"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textAppearance="@style/AppLabelText"
+        <LinearLayout
+            android:id="@+id/layout_sdkresponse"
+            android:background="@drawable/response_background"
+            android:orientation="vertical"
             android:visibility="gone"
-            android:text="@string/response_resultcode" />
+            android:padding="@dimen/border_medium"
+            android:layout_marginBottom="@dimen/border_large"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
 
-        <TextView
-            android:id="@+id/text_resultcode"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:visibility="gone"
-            android:layout_marginBottom="@dimen/border_medium" />
+            <TextView
+                android:id="@+id/label_sdkheader"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/sdkheader"
+                android:layout_marginBottom="@dimen/border_medium"
+                android:textAppearance="@style/AppHeaderText"/>
 
-        <TextView
-            android:id="@+id/label_resultinfo"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/response_resultinfo"
-            android:visibility="gone"
-            android:textAppearance="@style/AppLabelText" />
+            <TextView
+                android:id="@+id/label_activityresultcode"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textAppearance="@style/AppLabelText"
+                android:text="@string/activityresultcode"/>
 
-        <TextView
-            android:id="@+id/text_resultinfo"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:visibility="gone"
-            android:layout_marginBottom="@dimen/border_medium" />
+            <TextView
+                android:id="@+id/text_activityresultcode"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/border_medium"/>
 
-        <TextView
-            android:id="@+id/label_interactioncode"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/response_interactioncode"
-            android:visibility="gone"
-            android:textAppearance="@style/AppLabelText" />
+            <TextView
+                android:id="@+id/label_sdkresultinfo"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/sdkresultinfo"
+                android:textAppearance="@style/AppLabelText"/>
 
-        <TextView
-            android:id="@+id/text_interactioncode"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:visibility="gone"
-            android:layout_marginBottom="@dimen/border_medium" />
+            <TextView
+                android:id="@+id/text_sdkresultinfo"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/border_medium"/>
 
-        <TextView
-            android:id="@+id/label_interactionreason"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/response_interactionreason"
-            android:visibility="gone"
-            android:textAppearance="@style/AppLabelText" />
+            <TextView
+                android:id="@+id/label_sdkpaymenterror"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/sdkpaymenterror"
+                android:textAppearance="@style/AppLabelText"/>
 
-        <TextView
-            android:id="@+id/text_interactionreason"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:visibility="gone"
-            android:layout_marginBottom="@dimen/border_medium" />
+            <TextView
+                android:id="@+id/text_sdkpaymenterror"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/border_medium"
+                android:visibility="gone"/>
+        </LinearLayout>
 
-        <TextView
-            android:id="@+id/label_paymenterror"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/response_paymenterror"
+        <LinearLayout
+            android:id="@+id/layout_apiresponse"
+            android:background="@drawable/response_background"
+            android:padding="@dimen/border_medium"
+            android:orientation="vertical"
             android:visibility="gone"
-            android:textAppearance="@style/AppLabelText" />
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
 
-        <TextView
-            android:id="@+id/text_paymenterror"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:visibility="gone"
-            />
+            <TextView
+                android:id="@+id/label_apiheader"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/apiheader"
+                android:layout_marginBottom="@dimen/border_medium"
+                android:textAppearance="@style/AppHeaderText"/>
+
+            <TextView
+                android:id="@+id/label_apiresultinfo"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/apiresultinfo"
+                android:textAppearance="@style/AppLabelText"/>
+
+            <TextView
+                android:id="@+id/text_apiresultinfo"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/border_medium"/>
+
+            <TextView
+                android:id="@+id/label_apiinteractioncode"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/apiinteractioncode"
+                android:textAppearance="@style/AppLabelText"/>
+
+            <TextView
+                android:id="@+id/text_apiinteractioncode"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/border_medium"/>
+
+            <TextView
+                android:id="@+id/label_apiinteractionreason"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/apiinteractionreason"
+                android:textAppearance="@style/AppLabelText"/>
+
+            <TextView
+                android:id="@+id/text_apiinteractionreason"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/border_medium"/>
+
+        </LinearLayout>
     </LinearLayout>
 </ScrollView>
