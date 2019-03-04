@@ -26,6 +26,7 @@ android {
         }
     }
 
+    sourceSets { main { res.srcDirs = ['src/main/res', 'src/androidTest/'] } }
 }
 
 dependencies {
@@ -37,4 +38,7 @@ dependencies {
     androidTestImplementation "com.android.support.test:runner:${rootProject.runnerVersion}"
     androidTestImplementation "com.android.support.test.espresso:espresso-core:${rootProject.espressoCoreVersion}"
     androidTestImplementation 'com.android.support.test:rules:1.0.2'
+    // https://mvnrepository.com/artifact/com.googlecode.json-simple/json-simple
+    implementation group: 'com.googlecode.json-simple', name: 'json-simple', version: '1.1'
+
 }

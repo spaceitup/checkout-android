@@ -1,4 +1,4 @@
-package net.optile.payment;
+package net.optile.payment.tests;
 
 
 import net.optile.example.checkout.CheckoutActivity;
