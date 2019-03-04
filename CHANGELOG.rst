@@ -1,6 +1,10 @@
 Changelog - Android SDK
 -----------------------
 
+**Version android-sdk-1.1.4**
+
+* [PCX-173] - Make Android SDK publicly available
+
 **Version android-sdk-1.1.3**
 
 * [PCX-178] - Update build scripts for public hosting of Android SDK artifact
