@@ -35,16 +35,12 @@ import java.io.IOException;
 @LargeTest
 
 public class PaymentPageTests {
-
-    String uri = "https://api.sandbox.oscato.com";
-    String auth = "Basic U1BBQ0VJVFVQOmFxYTZmZGpyMDgyYzBxbzJmODFndG1xdXU4YW81ZnBiZGpxbjhoam8=";
-
     @Rule
     public ActivityTestRule<CheckoutActivity> activityRule = new ActivityTestRule<>(
             CheckoutActivity.class);
 
     @Test
-    public void openPaymentPage() throws  IOException {
+    public void openPaymentPageTest() throws  IOException {
         ListUrlGen listUrlGen = new ListUrlGen();
         String listUrl = listUrlGen.createNewListUrl();
         onView(withId(R.id.input_listurl)).perform(typeText(listUrl));

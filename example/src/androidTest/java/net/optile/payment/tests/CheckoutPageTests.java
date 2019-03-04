@@ -1,4 +1,4 @@
-package net.optile.payment;
+package net.optile.payment.tests;
 
 
 import net.optile.example.checkout.CheckoutActivity;
@@ -25,13 +25,12 @@ import static android.support.test.espresso.matcher.ViewMatchers.withText;
 @RunWith(AndroidJUnit4.class)
 @LargeTest
 public class CheckoutPageTests {
-
     @Rule
     public ActivityTestRule<CheckoutActivity> activityRule = new ActivityTestRule<>(
             CheckoutActivity.class);
 
     @Test
-    public void checkTest(){
+    public void defaultThemeLabelTest(){
         onView(withText("Default Theme")).check(matches(isDisplayed()));
 
     }
