@@ -24,10 +24,10 @@ import static android.support.test.espresso.matcher.ViewMatchers.withText;
 
 @RunWith(AndroidJUnit4.class)
 @LargeTest
-public class HomePageTests {
+public class CheckoutPageTests {
 
     @Rule
-    public ActivityTestRule<CheckoutActivity> mActivityRule = new ActivityTestRule<>(
+    public ActivityTestRule<CheckoutActivity> activityRule = new ActivityTestRule<>(
             CheckoutActivity.class);
 
     @Test
