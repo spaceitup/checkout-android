@@ -28,7 +28,14 @@ public class InstallmentsPlan {
 
     /** The interest amount. */
     private BigDecimal interestAmount;
-    /** The fee for the installment payment (or serviceChargeAmount) (mandatory) */
+    /** Fee for opening up an installment plan (optional) */
+    private BigDecimal installmentSetupFee;
+    /** Constant periodic fee for each installment item  (optional) */
+    private BigDecimal installmentPeriodicFee;
+    /**
+     * The total fee for the installment payment (or serviceChargeAmount) (mandatory).
+     * Includes all periodic fees and the installment set-up fee.
+     */
     private BigDecimal installmentFee;
     /** The total transaction amount after calculation including all fees and interest (mandatory) */
     private BigDecimal totalAmount;
@@ -44,6 +51,12 @@ public class InstallmentsPlan {
     private URL termsAndConditionsUrl;
     /** An URL to the data privacy consent document (optional) */
     private URL dataPrivacyConsentUrl;
+    /** An URL to the installment plan logo (optional) */
+    private URL logoUrl;
+    /** Description of the installments plan (optional) */
+    private String description;
+    /** Number of installments in the installments plan (optional) */
+    private Integer numberOfInstallments;
 
     /**
      * Gets plan id.
@@ -116,6 +129,42 @@ public class InstallmentsPlan {
      */
     public void setTotalAmount(final BigDecimal totalAmount) {
         this.totalAmount = totalAmount;
+    }
+
+    /**
+     * Gets a set-up fee of the installments plan.
+     *
+     * @return installments setup fee
+     */
+    public BigDecimal getInstallmentSetupFee() {
+        return installmentSetupFee;
+    }
+
+    /**
+     * Sets a set-up fee of the installments plan.
+     *
+     * @param installmentSetupFee startup fee of the installments plan
+     */
+    public void setInstallmentSetupFee(final BigDecimal installmentSetupFee) {
+        this.installmentSetupFee = installmentSetupFee;
+    }
+
+    /**
+     * Gets a constant periodic fee for each installment item
+     *
+     * @return installment periodic fee
+     */
+    public BigDecimal getInstallmentPeriodicFee() {
+        return installmentPeriodicFee;
+    }
+
+    /**
+     * Sets a constant periodic fee for each installment item.
+     *
+     * @param installmentPeriodicFee installment periodic fee
+     */
+    public void setInstallmentPeriodicFee(final BigDecimal installmentPeriodicFee) {
+        this.installmentPeriodicFee = installmentPeriodicFee;
     }
 
     /**
@@ -260,5 +309,59 @@ public class InstallmentsPlan {
      */
     public void setDueDays(final List<Integer> dueDays) {
         this.dueDays = dueDays;
+    }
+
+    /**
+     * Gets an URL to logo of the installments plan.
+     *
+     * @return URL object.
+     */
+    public URL getLogoUrl() {
+        return logoUrl;
+    }
+
+    /**
+     * Sets an URL to a logo of the installments plan. (Optional)
+     *
+     * @param logoUrl URL object.
+     */
+    public void setLogoUrl(final URL logoUrl) {
+        this.logoUrl = logoUrl;
+    }
+
+    /**
+     * Gets a description of the installments plan.
+     *
+     * @return description
+     */
+    public String getDescription() {
+        return description;
+    }
+
+    /**
+     * Sets a description of the installments plan. (Optional)
+     *
+     * @param description
+     */
+    public void setDescription(final String description) {
+        this.description = description;
+    }
+
+    /**
+     * Gets a number of installments in the installment plan.
+     *
+     * @return number of installments
+     */
+    public Integer getNumberOfInstallments() {
+        return numberOfInstallments;
+    }
+
+    /**
+     * Sets a number of installments in the installment plan. (Optional)
+     *
+     * @param numberOfInstallments number of installments
+     */
+    public void setNumberOfInstallments(final Integer numberOfInstallments) {
+        this.numberOfInstallments = numberOfInstallments;
     }
 }
