@@ -1,4 +1,4 @@
-package net.optile.payment.network;
+package net.optile.payment.list;
 
 import java.io.IOException;
 import java.net.InetAddress;

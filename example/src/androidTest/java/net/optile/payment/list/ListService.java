@@ -1,4 +1,4 @@
-package net.optile.payment.network;
+package net.optile.payment.list;
 
 import android.content.Context;
 import android.support.test.InstrumentationRegistry;
@@ -9,22 +9,37 @@ import net.optile.payment.core.PaymentException;
 import net.optile.payment.model.ListResult;
 import net.optile.payment.util.PaymentUtils;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.io.IOException;
 import java.net.URL;
 import java.util.Map;
 
-import static android.support.test.espresso.Espresso.onView;
 import static android.support.test.espresso.action.ViewActions.click;
-import static android.support.test.espresso.action.ViewActions.typeText;
 import static android.support.test.espresso.matcher.ViewMatchers.withId;
 
-public class ListUrlGen {
+public class ListService {
     public String createNewListUrl() throws IOException {
         Context context = InstrumentationRegistry.getTargetContext();
         String url = context.getString(R.string.payment_url);
         String auth = context.getString(R.string.payment_authorization);
         String jsonBody = loadJsonBody();
         return getListUrl(url, auth, jsonBody);
+    }
+
+    public ListConfig createNewBodyConfig() throws JSONException, IOException {
+        String fileContent = PaymentUtils.readRawResource(InstrumentationRegistry.getContext().getResources(),
+                net.optile.example.checkout.test.R.raw.preset);
+        JSONObject obj = new JSONObject(fileContent);
+        return new ListConfig(obj);
+    }
+
+    public String createConfigListUrl(ListConfig config) throws IOException {
+        Context context = InstrumentationRegistry.getTargetContext();
+        String url = context.getString(R.string.payment_url);
+        String auth = context.getString(R.string.payment_authorization);
+        return getListUrl(url, auth, config.toJsonString());
     }
 
     private String getListUrl(String url, String authorization, String listData) throws IOException {

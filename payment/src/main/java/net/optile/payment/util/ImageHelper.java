@@ -23,7 +23,7 @@ import net.optile.payment.core.PaymentException;
 import net.optile.payment.core.WorkerSubscriber;
 import net.optile.payment.core.WorkerTask;
 import net.optile.payment.core.Workers;
-import net.optile.payment.network.ImageConnection;
+import net.optile.payment.list.ImageConnection;
 
 /**
  * Class for loading images into an ImageView either by using Glide or own network library.

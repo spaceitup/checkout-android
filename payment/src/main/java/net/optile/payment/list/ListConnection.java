@@ -6,7 +6,7 @@
  * See the LICENSE file for more information.
  */
 
-package net.optile.payment.network;
+package net.optile.payment.list;
 
 import static net.optile.payment.core.PaymentError.API_ERROR;
 import static net.optile.payment.core.PaymentError.CONN_ERROR;
