@@ -25,6 +25,8 @@ public class Redirect {
     private List<Parameter> parameters;
     /** Simple API, optional */
     private Boolean suppressIFrame;
+    /** Simple API, always present in new transactions */
+    private String type;
 
     /**
      * Gets value of url.
@@ -99,4 +101,31 @@ public class Redirect {
         this.suppressIFrame = suppressIFrame;
     }
 
+    /**
+     * Gets type of this redirect.
+     * <p>
+     * Possible values are:
+     * <ul>
+     * <li><code>SUMMARY</code> - redirect points to the session's <code>summaryUrl</code>
+     * <li><code>RETURN</code> - redirect points to the session's <code>returnUrl</code>
+     * <li><code>CANCEL</code> - redirect points to the session's <code>cancelUrl</code>
+     * <li><code>PROVIDER</code> - redirect to the external page of a provider (redirect method such as PayPal, Sofort, iDeal, etc.) or 3D
+     * Secure pages in case of credit/debit card processing.
+     * </ul>
+     * Note: new types of redirect may appear in the future for new payment use cases.
+     *
+     * @return the redirect type.
+     */
+    public String getType() {
+        return type;
+    }
+
+    /**
+     * Sets type of this redirect.
+     *
+     * @param type the redirect type to set.
+     */
+    public void setType(final String type) {
+        this.type = type;
+    }
 }
