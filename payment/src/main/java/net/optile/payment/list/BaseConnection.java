@@ -6,7 +6,7 @@
  * See the LICENSE file for more information.
  */
 
-package net.optile.payment.network;
+package net.optile.payment.list;
 
 import java.io.BufferedReader;
 import java.io.IOException;
