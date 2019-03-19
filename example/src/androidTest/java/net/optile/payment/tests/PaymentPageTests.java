@@ -42,15 +42,7 @@ public class PaymentPageTests {
         CheckoutActivity.class);
 
     @Test
-    public void openPaymentPageTest() throws IOException {
-        ListService listService = new ListService();
-        String listUrl = listService.createNewListUrl();
-        onView(withId(R.id.input_listurl)).perform(typeText(listUrl));
-        onView(withId(R.id.button_action)).perform(click());
-    }
-
-    @Test
-    public void configBodyTests() throws JSONException, IOException {
+    public void openPaymentPageTest() throws JSONException, IOException {
         Intents.init();
         ListService listService = new ListService();
         ListConfig config = listService.createNewBodyConfig();
