@@ -30,7 +30,7 @@ import static android.support.test.espresso.matcher.ViewMatchers.withText;
 public class PaymentPageTests {
     @Rule
     public ActivityTestRule<CheckoutActivity> activityRule = new ActivityTestRule<>(
-            CheckoutActivity.class);
+        CheckoutActivity.class);
 
     @Test
     public void openPaymentPageTest() throws IOException {
@@ -41,9 +41,9 @@ public class PaymentPageTests {
     }
 
     @Test
-    public void configBodyTests() throws JSONException, IOException{
+    public void configBodyTests() throws JSONException, IOException {
         ListService listService = new ListService();
-        ListConfig config =   listService.createNewBodyConfig();
+        ListConfig config = listService.createNewBodyConfig();
         config.setPrice("1.0");
         String listUrl = listService.createConfigListUrl(config);
         onView(withId(R.id.input_listurl)).perform(typeText(listUrl));

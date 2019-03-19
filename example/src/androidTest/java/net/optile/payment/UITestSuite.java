@@ -9,5 +9,5 @@ import org.junit.runners.Suite;
 
 //Runs all UI Tests
 @RunWith(Suite.class)
-@Suite.SuiteClasses({CheckoutPageTests.class, PaymentPageTests.class})
-public class UITestSuite {}
+@Suite.SuiteClasses({ CheckoutPageTests.class, PaymentPageTests.class })
+public class UITestSuite { }

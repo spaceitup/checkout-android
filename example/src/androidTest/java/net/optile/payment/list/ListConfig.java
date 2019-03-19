@@ -15,12 +15,12 @@ public class ListConfig {
         this.source = source;
     }
 
-    public void setPrice (String price) throws JSONException {
+    public void setPrice(String price) throws JSONException {
         JSONObject payment = source.getJSONObject("payment");
         payment.put("amount", price);
     }
 
-    public void setLanguage (String lang) throws JSONException{
+    public void setLanguage(String lang) throws JSONException {
         JSONObject language = source.getJSONObject("style");
         language.put("language", lang);
     }
