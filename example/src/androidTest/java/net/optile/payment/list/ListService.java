@@ -1,23 +1,18 @@
 package net.optile.payment.list;
 
-import android.content.Context;
-import android.support.test.InstrumentationRegistry;
-import android.util.Log;
-
-import net.optile.example.checkout.R;
-import net.optile.payment.core.PaymentException;
-import net.optile.payment.model.ListResult;
-import net.optile.payment.util.PaymentUtils;
-
-import org.json.JSONException;
-import org.json.JSONObject;
-
 import java.io.IOException;
 import java.net.URL;
 import java.util.Map;
 
-import static android.support.test.espresso.action.ViewActions.click;
-import static android.support.test.espresso.matcher.ViewMatchers.withId;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import android.content.Context;
+import android.support.test.InstrumentationRegistry;
+import net.optile.example.checkout.R;
+import net.optile.payment.core.PaymentException;
+import net.optile.payment.model.ListResult;
+import net.optile.payment.util.PaymentUtils;
 
 public class ListService {
     public String createNewListUrl() throws IOException {
@@ -30,7 +25,7 @@ public class ListService {
 
     public ListConfig createNewBodyConfig() throws JSONException, IOException {
         String fileContent = PaymentUtils.readRawResource(InstrumentationRegistry.getContext().getResources(),
-                net.optile.example.checkout.test.R.raw.preset);
+            net.optile.example.checkout.test.R.raw.preset);
         JSONObject obj = new JSONObject(fileContent);
         return new ListConfig(obj);
     }
@@ -62,7 +57,7 @@ public class ListService {
 
     private String loadJsonBody() throws IOException {
         String json = PaymentUtils.readRawResource(InstrumentationRegistry.getContext().getResources(),
-                net.optile.example.checkout.test.R.raw.preset);
+            net.optile.example.checkout.test.R.raw.preset);
         return json;
     }
 }

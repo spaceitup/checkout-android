@@ -1,9 +1,5 @@
 package net.optile.payment.list;
 
-import android.support.test.InstrumentationRegistry;
-
-import net.optile.payment.util.PaymentUtils;
-
 import org.json.JSONException;
 import org.json.JSONObject;
 
