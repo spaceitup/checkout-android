@@ -2,10 +2,10 @@
 Introduction
 ============
 
-The optile Android SDK makes it easy to integrate with optile
+The Android SDK makes it easy to integrate with optile
 and provides a great looking payment experience in your Android app. The
-SDK comes with a ready made, easy to use Payment Page which takes care
-of showing supported payment methods and handling payments. The SDK also
+Android SDK comes with a ready made, easy to use Payment Page which takes care
+of showing supported payment methods and handling payments. The Android SDK also
 provide low-level packages that can be used to build your own custom
 payment experience in your app.
 
@@ -16,7 +16,7 @@ Android Version
 ---------------
 
 Android API versions 19 - 28 (Kitkat 4.4 - Pie 9.0) are supported by the
-Android Payment SDK. TLS1.2 is enabled for Android version 19 (Kitkat).
+Android SDK. TLS1.2 is enabled for Android version 19 (Kitkat).
 
 AndroidX
 --------
@@ -31,7 +31,7 @@ The Android SDK is build with the AppCompat Design library. In order to use the 
 Proguard
 --------
 
-If you intend to obfuscate your mobile app then please make sure to exclude the optile Android SDK classes from being obfuscated as well. Excluding the Android SDK from being obfuscated can be done by adding the following to your proguard-rules.pro file:
+If you intend to obfuscate your mobile app then please make sure to exclude the Android SDK classes from being obfuscated as well. Excluding the Android SDK from being obfuscated can be done by adding the following to your proguard-rules.pro file:
 
 ::
 
@@ -49,17 +49,16 @@ Payment Methods
 
 All “direct” payment methods are supported, this includes Credit, Debit
 cards and Sepa. Payments that require “redirects” (external WebView) like
-Paypal and Sofort are not supported by this SDK. The option “presetFirst”
+Paypal and Sofort are not supported. The option “presetFirst”
 is also supported and provides the option to show a summary page to your users
 before finalizing the payment.
 
 Integration Scenario
 --------------------
 
-The SDK requires payment sessions created using the DISPLAY_NATIVE
+The Android SDK requires payment sessions created using the DISPLAY_NATIVE
 integration scenario. Below is a sample list request object that can be
-used to create a payment session that is supported by the Android
-Payment SDK.
+used to create a payment session that is supported by the Android SDK.
 
 Example list request Json body:
 
@@ -96,8 +95,8 @@ Registration
 There are two kind of registrations: Regular and Recurring. Both types
 are supported and depending on registration settings in the List Result
 a checkbox may show for either type of registration. Please see
-documentation at `optile.io <https://optile.io>`_ for more information 
-about the registration types.
+documentation at `optile.io <https://www.optile.io/opg#291077>`_ for more information 
+about registration types.
 
 Your first payment
 ==================
@@ -112,7 +111,7 @@ steps:
 1 - Install Android SDK
 -----------------------
 
-Installing the Android SDK is easy and requires only adding the optile Android SDK module to your build.gradle file. 
+Installing the Android SDK is easy and requires only adding the Android SDK module to your build.gradle file. 
 
 Repository
 ~~~~~~~~~~~
@@ -132,7 +131,7 @@ Add the packagecloud.io repository to the top level build.gradle file.
 Dependency
 ~~~~~~~~~~
 
-Add the android-sdk dependency to the build.gradle dependencies section.
+Add the android-sdk dependency to the app’s level build.gradle dependencies section.
 
 ::
 
@@ -146,8 +145,7 @@ Add the android-sdk dependency to the build.gradle dependencies section.
 The documentation at `optile.io <https://optile.io>`_ will guide you through optile’s Open
 Payment Gateway (OPG) features for frontend checkout and backend use
 cases. It provides important information about integration scenarios,
-testing possibilities, and references. The documentation will help you
-create a payment session that can be used by the Android Payment SDK.
+testing possibilities, and references. Click `here <https://https://www.optile.io/reference#tag/list>`_ for the API reference documentation that will help you create a payment session supported by the Android SDK.
 
 After you have created a payment session you will receive a response containing the List Result in Json format.
 This List Result contains a “self” URL which is used to initialize the Payment Page.
@@ -167,7 +165,7 @@ Top part of the list result containing the “self” URL:
 3 - Show Payment Page
 ---------------------
 
-The Android SDK provides a class called PaymentUI which is used to initialize and launch the Payment Page.
+The Android SDK provides a class called PaymentUI which is used to initialize and launch the Payment Page. There is no need to create an Activity to show the Payment Page since the Android SDK takes care of initializing and creating the Payment Page Activity. The onActivityResult() method must be implemented to receive the result from the Payment Page Activity, this will be explained in the next section.
 
 Code sample how to initialize and display the Payment Page:
 
@@ -341,8 +339,7 @@ CheckBoxes Select options. Below is a table explaining each parameter.
 
 The WidgetParameters class allow setting individual drawable resource
 ids for icons by using the putInputTypeIcon() method, use the
-setDefaultIconMapping() method to use the icons provided by the Payment
-SDK.
+setDefaultIconMapping() method to use the icons provided by the Android SDK.
 
 Code sample how to set the WidgetParameters in the PaymentTheme:
 
@@ -396,7 +393,7 @@ DialogParameters
 ~~~~~~~~~~~~~~~~
 
 The DialogParameters in the PaymentTheme holds parameters to theme popup
-dialog windows. The SDK contain two different dialogs, the
+dialog windows. The Android SDK contain two different dialogs, the
 DateDialog for setting expiry dates and MessageDialog to show warnings
 and errors.
 
@@ -482,18 +479,18 @@ Table explaining each progress parameter:
 Grouping of Payment Methods
 ===========================
 
-The SDK supports grouping of payment methods within a card in the payment page. 
-By default the SDK supports one group which contains the payment methods Visa, 
+Grouping of payment methods within a card in the payment page is supported. 
+By default the Android SDK supports one group which contains the payment methods Visa, 
 Mastercard and American Express.
-The default grouping of payment methods in the Payment SDK is defined in `groups.json <./payment/src/main/res/raw/groups.json>`_.
+The default grouping of payment methods is defined in `groups.json <./payment/src/main/res/raw/groups.json>`_.
 
 Customize grouping
 ------------------
 
-The SDK allow customization which payment methods are grouped
-together in a card. Customisation is done by setting the resource ID of
-a grouping Json settings file in the SDK prior to showing the payment
-page. Payment methods can only be grouped together when they
+Customization which payment methods are grouped together in a card is allowed. 
+Customisation is done by setting the resource ID of a grouping Json settings 
+file prior to showing the payment page. 
+Payment methods can only be grouped together when they
 have the same set of InputElements. If InputElements of grouped
 Payment Methods differ then each Payment Method will be shown in its own
 card in the payment page. The following example shows how to create two
@@ -542,7 +539,7 @@ Code sample how to set a customgroups.json file:
 Remove default group
 ----------------
 
-By default the Android SDK groups together payment methods VISA, Mastercard and AMEX into one card. To remove this default group the Android SDK must be told that it should not group any payment methods. This is done by initializing the Android SDK with a group json file containing an empty array.
+By default the Android SDK groups together payment methods VISA, Mastercard and AMEX into one card. Removing this default group is done by initializing the Android SDK with a group json file containing an empty array.
 
 Example removedefaultgroup.json file:
 
@@ -565,7 +562,7 @@ The choice which payment method in a group is displayed and used for
 charge requests is done by “Smart Selection”. Each payment method in a
 group contains a Regular Expression that is used to “smart select” this
 method based on the partially entered card number. While the
-user types the number, the SDK will validate the partial number with the
+user types the number, the Android SDK will validate the partial number with the
 regular expression. When one or more payment methods match the number
 input they will be highlighted.
 
@@ -592,13 +589,13 @@ Input Validation
 
 The Android SDK validates all input values provided by the user before all charge/preset requests. 
 The file `validations.json <./payment/src/main/res/raw/validations.json>`_ contains the regular expression
-definitions that the Payment SDK uses to validate numbers, verificationCodes, bankCodes and holderNames. 
+definitions that the Android SDK uses to validate numbers, verificationCodes, bankCodes and holderNames. 
 Validations for other input values i.e. expiryMonth and expiryYear are defined by the `Validator.java <./payment/src/main/java/net/optile/payment/validation/Validator.java>`_.
 
 Customize validations
 ---------------------
 
-The Payment SDK allow customisation of validations applied to certain input types. 
+Customization of validations applied to certain input types is allowed. 
 
 - Validation for number, bankCode, holderName and verificationCode can be customized with the "regex" parameter.
 - Input fields can be hidden by setting the "hide" parameter is true.
