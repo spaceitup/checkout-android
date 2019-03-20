@@ -224,6 +224,11 @@ Code sample how to obtain the PaymentResult inside the onActivityResult() method
             Interaction interaction = result.getInteraction();
             OperationResult operationResult = result.getOperationResult();
         }
+       
+        // "result" contains a PaymentError explaining the error that occurred i.e. connection error.
+        if (resultCode == PaymentUI.RESULT_CODE_ERROR) {
+            PaymentError error = result.getPaymentError();
+        }
     }
 
 Successful
