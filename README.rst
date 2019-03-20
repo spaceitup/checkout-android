@@ -98,7 +98,7 @@ Registration
 ------------
 
 There are two kind of registrations: Regular and Recurring. Both types
-are supported and depending on registration settings in the List Result
+are supported and depending on registration settings in the list result
 a checkbox may show for either type of registration. Please see
 documentation at `optile.io <https://www.optile.io/opg#291077>`_ for more information 
 about registration types.
@@ -110,7 +110,7 @@ In order to make a successful payment you must complete the following
 steps:
 
 1. Install Android SDK in your app
-2. Create a payment session and obtain the "self" URL from the List Result in your app
+2. Create a payment session and obtain the "self" URL from the list result in your app
 3. Initialize and show the Payment Page with the list URL
 
 1 - Install Android SDK
@@ -152,8 +152,8 @@ Payment Gateway (OPG) features for frontend checkout and backend use
 cases. It provides important information about integration scenarios,
 testing possibilities, and references. Click `here <https://https://www.optile.io/reference#tag/list>`_ for the API reference documentation describing how to construct a payment session request.
 
-After you have created a payment session you will receive a response containing the List Result in Json format.
-This List Result contains a “self” URL which is used to initialize the Payment Page.
+After you have created a payment session you will receive a response containing the list result in Json format.
+This list result contains a “self” URL which is used to initialize the Payment Page.
 
 Top part of the list result containing the “self” URL:
 
@@ -238,7 +238,7 @@ The RESULT_CODE_OK code indicates that the operation request was successful, the
 
 1. InteractionCode is PROCEED - the PaymentResult contains an OperationResult with detailed information about the operation. 
 
-2. InteractionCode is ABORT and InteractionReason is DUPLICATE_OPERATION, this means that a previous operation on the same List has already been performed. This may happen if there was a network error during the first operation and the Android SDK was unable to receive a proper response from the Payment API.
+2. InteractionCode is ABORT and InteractionReason is DUPLICATE_OPERATION, this means that a previous operation on the same list has already been performed. This may happen if there was a network error during the first operation and the Android SDK was unable to receive a proper response from the Payment API.
 
 Cancelled
 ---------
