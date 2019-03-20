@@ -12,6 +12,11 @@ payment experience in your app.
 Supported Features
 ==================
 
+Example App
+-----------
+
+The Android SDK repository contains an Example app explaining i.e. how to open the Payment Page and obtain the payment result after a charge has been completed. The sources of this Example app can be found `here <./example>`_.
+
 Android Version
 ---------------
 
@@ -131,7 +136,7 @@ Add the packagecloud.io repository to the top level build.gradle file.
 Dependency
 ~~~~~~~~~~
 
-Add the android-sdk dependency to the app’s level build.gradle dependencies section.
+Add the android-sdk dependency to the dependencies section of the app’s level build.gradle file.
 
 ::
 
@@ -145,7 +150,7 @@ Add the android-sdk dependency to the app’s level build.gradle dependencies se
 The documentation at `optile.io <https://optile.io>`_ will guide you through optile’s Open
 Payment Gateway (OPG) features for frontend checkout and backend use
 cases. It provides important information about integration scenarios,
-testing possibilities, and references. Click `here <https://https://www.optile.io/reference#tag/list>`_ for the API reference documentation that will help you create a payment session supported by the Android SDK.
+testing possibilities, and references. Click `here <https://https://www.optile.io/reference#tag/list>`_ for the API reference documentation describing how to construct a payment session request.
 
 After you have created a payment session you will receive a response containing the List Result in Json format.
 This List Result contains a “self” URL which is used to initialize the Payment Page.
@@ -165,7 +170,7 @@ Top part of the list result containing the “self” URL:
 3 - Show Payment Page
 ---------------------
 
-The Android SDK provides a class called PaymentUI which is used to initialize and launch the Payment Page. There is no need to create an Activity to show the Payment Page since the Android SDK takes care of initializing and creating the Payment Page Activity. The onActivityResult() method must be implemented to receive the result from the Payment Page Activity, this will be explained in the next section.
+The Android SDK provides a class called PaymentUI which is used to initialize and open the Payment Page. There is no need to create an Activity to show the Payment Page since the Android SDK takes care of initializing and creating the Payment Page Activity. The onActivityResult() method must be implemented to receive the result from the Payment Page Activity, this will be explained in the chapter "Payment Result".
 
 Code sample how to initialize and display the Payment Page:
 
@@ -195,24 +200,29 @@ Code sample how to obtain the PaymentResult inside the onActivityResult() method
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (requestCode != PAYMENT_REQUEST_CODE) {
+    
+        if (requestCode != PAYMENT_REQUEST_CODE || data == null) {
             return;
         }
-        PaymentResult result = null;
+        PaymentResult result = data.getParcelableExtra(PaymentUI.EXTRA_PAYMENT_RESULT);
+        
+        if (result == null) {
+            return;
+        }
+        String resultInfo = result.getResultInfo();
 
-        if (data != null && data.hasExtra(PaymentUI.EXTRA_PAYMENT_RESULT)) {
-            result = data.getParcelableExtra(PaymentUI.EXTRA_PAYMENT_RESULT);
-        }
+        // Operation request has been made and "result" contains
+        // an Interaction and optional OperationResult describing the operation result
         if (resultCode == PaymentUI.RESULT_CODE_OK) {
-            // Operation request has been made and "result" contains
-            // an Interaction and optional OperationResult describing the operation result
+            Interaction interaction = result.getInteraction();
+            OperationResult operationResult = result.getOperationResult();
         } 
+
+        //"result" contains a resultInfo and an optional Interaction and optional OperationResult. 
+        //If the Interaction is null then the user closed the page before any request was made.
         if (resultCode == PaymentUI.RESULT_CODE_CANCELED) {
-            //"result" contains a resultInfo and an optional Interaction and optional OperationResult. 
-            //If the Interaction is null then the user closed the page before any request was made.
-        }
-        if (resultCode == PaymentUI.RESULT_CODE_ERROR) {
-            // "result" contains a PaymentError explaining the error that occurred i.e. connection error.
+            Interaction interaction = result.getInteraction();
+            OperationResult operationResult = result.getOperationResult();
         }
     }
 
