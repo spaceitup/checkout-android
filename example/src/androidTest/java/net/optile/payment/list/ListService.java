@@ -20,8 +20,8 @@ import android.support.test.InstrumentationRegistry;
 import net.optile.example.checkout.R;
 import net.optile.payment.core.PaymentException;
 import net.optile.payment.model.ListResult;
-import net.optile.payment.util.PaymentUtils;
 import net.optile.payment.network.ListConnection;
+import net.optile.payment.util.PaymentUtils;
 
 public class ListService {
 
