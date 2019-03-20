@@ -94,14 +94,14 @@ Example list request Json body:
         }
     }
 
-Registration
+Account Registration
 ------------
 
-There are two kind of registrations: Regular and Recurring. Both types
+There are two types of account registrations: Regular and Recurring. Both types
 are supported and depending on registration settings in the list result
 a checkbox may show for either type of registration. Please see
 documentation at `optile.io <https://www.optile.io/opg#291077>`_ for more information 
-about registration types.
+about account registration types.
 
 Your first payment
 ==================
