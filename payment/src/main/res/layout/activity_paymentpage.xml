@@ -12,10 +12,9 @@
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/recyclerview_paymentlist"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
         android:layout_alignParentTop="true"
-        android:layout_marginTop="0dp" />
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
 
     <TextView
         android:id="@+id/label_empty"
