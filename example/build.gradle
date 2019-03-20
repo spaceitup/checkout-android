@@ -17,6 +17,8 @@ android {
         versionCode rootProject.versionCode
         versionName rootProject.versionName
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+        resValue "string", "payment_authorization", "$System.env.PAYMENT_AUTHORIZATION"
+        resValue "string", "payment_url", "$System.env.PAYMENT_URL"
     }
 
     buildTypes {
@@ -25,6 +27,7 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
+    sourceSets { main { res.srcDirs = ['src/main/res', 'src/androidTest/'] } }
 }
 
 dependencies {
@@ -33,7 +36,9 @@ dependencies {
     implementation project(":payment")
 
     testImplementation "junit:junit:${rootProject.junitVersion}"
+
     androidTestImplementation "com.android.support.test:runner:${rootProject.runnerVersion}"
     androidTestImplementation "com.android.support.test.espresso:espresso-core:${rootProject.espressoCoreVersion}"
     androidTestImplementation "com.android.support.test:rules:${rootProject.rulesVersion}"
+    androidTestImplementation "com.android.support.test.espresso:espresso-intents:${rootProject.espressoIntentsVersion}"
 }
