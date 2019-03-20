@@ -150,7 +150,7 @@ Add the android-sdk dependency to the dependencies section of the app’s level 
 The documentation at `optile.io <https://optile.io>`_ will guide you through optile’s Open
 Payment Gateway (OPG) features for frontend checkout and backend use
 cases. It provides important information about integration scenarios,
-testing possibilities, and references. Click `here <https://https://www.optile.io/reference#tag/list>`_ for the API reference documentation describing how to construct a payment session request.
+testing possibilities, and references. Click `here <https://www.optile.io/reference#tag/list>`_ for the API reference documentation describing how to construct a payment session request.
 
 After you have created a payment session you will receive a response containing the list result in Json format.
 This list result contains a “self” URL which is used to initialize the Payment Page.
