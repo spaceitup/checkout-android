@@ -12,10 +12,10 @@ payment experience in your app.
 Supported Features
 ==================
 
-Example App
+Examples
 -----------
 
-The Android SDK repository contains an Example app explaining i.e. how to open the Payment Page and obtain the payment result after a charge has been completed. The sources of this Example app can be found `here <./example>`_.
+The Android SDK repository contains an example app explaining i.e. how to open the Payment Page and receive operation results after a charge has been completed. The sources of this example app can be found `here <./example>`_.
 
 Android Version
 ---------------
@@ -240,7 +240,7 @@ The RESULT_CODE_OK code indicates that the operation request was successful, the
 
 2. InteractionCode is ABORT and InteractionReason is DUPLICATE_OPERATION, this means that a previous operation on the same list has already been performed. This may happen if there was a network error during the first operation and the Android SDK was unable to receive a proper response from the Payment API.
 
-Cancelled
+Canceled
 ---------
 
 The RESULT_CODE_CANCELED code indicates that the Android SDK did not perform a successful operation. This may happen for different reasons, i.e. the user clicked the back button. The PaymentResult may contain an Interaction and an OperationResult with details about the failed operation. If both Interaction and OperationResult are null then the user closed the page before any request was made. 
