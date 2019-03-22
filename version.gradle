@@ -1,44 +1,60 @@
 //
 // File for increasing the Android version patch, minor and major
 //
-ext.versionProps = new Properties()
-file("version.properties").withInputStream { versionProps.load(it) }
+ext.VERSIONCODE = file('VERSIONCODE').text.trim().toInteger()
+ext.VERSIONNAME = file('VERSIONNAME').text.trim()
 
-ext.increaseVersion = { index ->
+ext.increaseVersionName = { index ->
+    def curName = VERSION_NAME.split("\\-")
+    def newName = curName[0].split("\\.")
 
-    def versionCode = Integer.parseInt(versionProps.VERSION_CODE) + 1
-    def versionName = versionProps.VERSION_NAME.split("\\.")
-
-    if (versionName.length != 3) {
-        throw new GradleException("versionName has invalid format, should be: <major>.<minor>.<patch> ")
+    if (newName.length != 3) {
+        throw new GradleException("versionName has invalid format, should be: <major>.<minor>.<patch> with optional -SNAPSHOT")
     }
-    def val = Integer.parseInt(versionName[index])
-    versionName[index] = Integer.toString(val + 1)
-    versionName = versionName.join(".")
+    def val = Integer.parseInt(newName[index])
+    newName[index] = Integer.toString(val + 1)
+    newName = newName.join(".")
 
-    ant.propertyfile(file: "version.properties") {
-        entry(key: "VERSION_CODE", value: versionCode)
-        entry(key: "VERSION_NAME", value: versionName)
-    }    
+    if (curName.length == 2) {
+        newName += "-" + curName[1]
+    }
+    file('VERSIONNAME').text = newName
+}
+
+ext.increaseVersionCode = { ->
+    def versionCode = Integer.parseInt(VERSION_CODE) + 1
+    file('VERSIONCODE').text = versionCode
 }
 
 task('versionMajor') {
     doLast {
-        increaseVersion(0)
+        print "Increasing major of versionName and versionCode"
+        increaseVersionName(0)
+	increaseVersionCode()
     }
 }
 
 task('versionMinor') {
     doLast {
-        increaseVersion(1)
+        print "Increasing minor of versionName and versionCode"
+        increaseVersionName(1)
+	increaseVersionCode()
     }
 }
 
 task('versionPatch') {
     doLast {
-        increaseVersion(2)
+        print "Increasing patch of versionName and versionCode"    
+        increaseVersionName(2)
+	increaseVersionCode()
     }
 }
 
+task('versionCode') {
+    doLast {
+        print "Increasing versionCode"        
+        increaseVersionCode()
+    }
+}
 
 
