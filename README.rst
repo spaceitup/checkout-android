@@ -97,11 +97,9 @@ Example list request Json body:
 Account Registration
 ------------
 
-There are two types of account registrations: Regular and Recurring. Both types
-are supported and depending on registration settings in the list result
-a checkbox may show for either type of registration. Please see
-documentation at `optile.io <https://www.optile.io/opg#291077>`_ for more information 
-about account registration types.
+Optile offers two account registration types, both of which are supported by the Android SDK: Regular and Recurring.
+Depending on the registration settings returned in a LIST response, checkboxes may be displayed for either registration type.
+Please see documentation at `optile.io <https://www.optile.io/opg#291077>`_ for more information about account registration types.
 
 Your first payment
 ==================
@@ -617,7 +615,7 @@ Customization of validations applied to certain input types is allowed.
 - The maximum input length can be set with the "maxLength" parameter.
 
 Customized validations can be set by providing the resource ID of the validation Json file to the
-PaymentUI class prior to showing the payment page. The default validation provided by the Android Payment SDK are sufficient in most cases.
+PaymentUI class prior to showing the payment page. The default validation provided by the Android SDK are sufficient in most cases.
 
 Example customvalidations.json file:
 
