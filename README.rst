@@ -97,7 +97,7 @@ Example list request Json body:
 Account Registration
 ------------
 
-Optile offers two registration types, both of which are supported by the Android SDK: Regular and Recurring.
+Optile offers two account registration types, both of which are supported by the Android SDK: Regular and Recurring.
 Depending on the registration settings returned in a LIST response, checkboxes may be displayed for either registration type.
 Please see documentation at `optile.io <https://www.optile.io/opg#291077>`_ for more information about account registration types.
 
