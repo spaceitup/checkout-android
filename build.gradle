@@ -33,8 +33,8 @@ task clean(type: Delete) {
 }
 
 ext {
-    versionCode = versionProps.VERSION_CODE.toInteger()
-    versionName = versionProps.VERSION_NAME
+    versionCode = VERSIONCODE
+    versionName = VERSIONNAME
 
     javaCompatVersion = JavaVersion.VERSION_1_8
 
