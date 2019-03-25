@@ -33,8 +33,8 @@ task clean(type: Delete) {
 }
 
 ext {
-    versionCode = versionProps.VERSION_CODE.toInteger()
-    versionName = versionProps.VERSION_NAME
+    versionCode = VERSIONCODE
+    versionName = VERSIONNAME
 
     javaCompatVersion = JavaVersion.VERSION_1_8
 
@@ -52,9 +52,11 @@ ext {
     mockitoCoreVersion = "2.21.0"
     robolectricVersion = "4.0"
     runnerVersion = "1.0.2"
+    rulesVersion = "1.0.2"
     espressoCoreVersion = "3.0.2"
-    jsonsnapshotVersion= "1.0.12"
-    androidxTestCoreVersion="1.0.0"
+    jsonsnapshotVersion = "1.0.12"
+    androidxTestCoreVersion = "1.0.0"
+    espressoIntentsVersion = "3.0.1"
 }
 
 task buildci(type: GradleBuild) {
