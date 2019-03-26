@@ -1,6 +1,19 @@
 Changelog - Android SDK
 -----------------------
 
+**Version android-sdk-1.1.11**
+
+* [PCX-210] - Update model classes Redirect and Installment Plan
+* [PCX-213] - Update Android versioning with GoCD
+* [PCX-193] - Set Up Test Framework for Android Payment SDK Automated Testing
+* [PCX-194] - Make LIST request for different environments
+* [PCX-211] - Improve Android SDK Documentation
+
+**Version android-sdk-1.1.5 - 1.1.10**
+
+Versions created during development & testing of GoCD scripts for Android projects.  
+These versions do not include changes / updates of the Android SDK.
+
 **Version android-sdk-1.1.4**
 
 * [PCX-173] - Make Android SDK publicly available
