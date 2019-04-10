@@ -379,14 +379,15 @@ final class PaymentPagePresenter {
 
     private void postOperation(final Operation operation) {
         this.operation = operation;
-        view.showProgress(true, PaymentProgressView.SEND);
+        int progressType = operation.isType(Operation.PRESET) ? PaymentProgressView.LOAD : PaymentProgressView.SEND; 
+        view.showProgress(true, progressType);
         service.postOperation(operation);
     }
 
     private void handleLoadConnError(final PaymentException pe) {
         MessageDialogFragment dialog = createMessageDialog(view.getStringRes(R.string.pmdialog_error_connection), true);
         PaymentResult result = new PaymentResult(pe.getMessage(), pe.error);
-        view.setPaymentResult(PaymentUI.RESULT_CODE_ERROR, result);
+        view.setPaymentResult(PaymentUI.RESULT_CODE_CANCELED, result);
 
         dialog.setListener(new ThemedDialogListener() {
             @Override
