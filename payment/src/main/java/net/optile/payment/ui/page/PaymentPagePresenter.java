@@ -309,6 +309,8 @@ final class PaymentPagePresenter {
                 reloadPaymentSession(result);
                 break;
             case InteractionCode.RETRY:
+                handleOperationInteractionRetry(result);
+                break;
             case InteractionCode.TRY_OTHER_ACCOUNT:
                 continueSessionWithWarning(result);
                 break;
@@ -332,6 +334,18 @@ final class PaymentPagePresenter {
         }
     }
 
+    private void handleOperationInteractionRetry(PaymentResult result) {
+        Interaction interaction = result.getInteraction();
+
+        switch (interaction.getReason()) {
+            case InteractionReason.EXPIRED_SESSION:
+                closeSessionWithCanceledCode(result);
+                break;
+            default:
+                continueSessionWithWarning(result);
+        }
+    }
+    
     private void showInteractionMessage(Interaction interaction) {
         String msg = translateInteraction(interaction, null);
 
