@@ -37,9 +37,10 @@ import net.optile.payment.validation.Validator;
  * The PaymentPagePresenter implementing the presenter part of the MVP
  */
 final class PaymentPagePresenter {
+
     private final PaymentPageView view;
     private final PaymentPageService service;
-    private Validator validator;
+
     private PaymentSession session;
     private String listUrl;
     private Interaction reloadInteraction;
@@ -92,18 +93,12 @@ final class PaymentPagePresenter {
         this.listUrl = listUrl;
         this.context = context;
 
-        if (validator != null && session != null && session.isListUrl(listUrl)) {
-            // show the cached payment session
+        if (session != null && session.isListUrl(listUrl)) {
             view.showPaymentSession(session);
             return;
         }
-        view.showProgress(true, PaymentProgressView.LOAD);
-
-        if (validator == null) {
-            service.loadValidator();
-        } else {
-            loadPaymentSession(listUrl);
-        }
+        view.showProgress(true, ProgressView.LOAD);
+        loadPaymentSession(listUrl);
     }
 
     /**
@@ -143,35 +138,12 @@ final class PaymentPagePresenter {
     }
 
     /**
-     * Return the Validator stored in this presenter.
+     * Return the Validator loaded by the service.
      *
      * @return validator validator used to validate user input values
      */
     Validator getValidator() {
-        return validator;
-    }
-
-    /**
-     * Callback from the service when the validator has been successfully loaded
-     *
-     * @param validator that has been loaded
-     */
-    void onValidatorSuccess(Validator validator) {
-
-        if (!view.isActive()) {
-            return;
-        }
-        this.validator = validator;
-        loadPaymentSession(this.listUrl);
-    }
-
-    /**
-     * Callback from the service that the validator could not be loaded
-     *
-     * @param cause containing the error
-     */
-    void onValidatorError(Throwable cause) {
-        closeSessionWithErrorCode(R.string.pmdialog_error_unknown, cause);
+        return service.getValidator();
     }
 
     /**
@@ -345,7 +317,7 @@ final class PaymentPagePresenter {
                 continueSessionWithWarning(result);
         }
     }
-    
+
     private void showInteractionMessage(Interaction interaction) {
         String msg = translateInteraction(interaction, null);
 
@@ -369,7 +341,7 @@ final class PaymentPagePresenter {
         view.setPaymentResult(PaymentUI.RESULT_CODE_CANCELED, result);
         closePageWithMessage(msg);
     }
-    
+
     private void closeSessionWithErrorCode(int msgResId, Throwable cause) {
         PaymentResult result;
 
@@ -393,7 +365,7 @@ final class PaymentPagePresenter {
 
     private void postOperation(final Operation operation) {
         this.operation = operation;
-        int progressType = operation.isType(Operation.PRESET) ? PaymentProgressView.LOAD : PaymentProgressView.SEND; 
+        int progressType = operation.isType(Operation.PRESET) ? ProgressView.LOAD : ProgressView.SEND;
         view.showProgress(true, progressType);
         service.postOperation(operation);
     }

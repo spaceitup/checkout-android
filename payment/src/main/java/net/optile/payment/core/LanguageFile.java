@@ -9,7 +9,7 @@
 package net.optile.payment.core;
 
 import java.util.Properties;
-
+import java.net.URL;
 import android.text.TextUtils;
 import net.optile.payment.model.Interaction;
 
@@ -25,15 +25,31 @@ public final class LanguageFile {
 
     public final static String TITLE = "title";
     public final static String TEXT = "text";
+
     private final Properties lang;
+    private final String name;
+    private final URL url;
 
     /**
      * Construct an empty LanguageFile
+     *
+     * @param name the unique name of this language file 
+     * @param url pointing to the location of this language file
      */
-    public LanguageFile() {
+    public LanguageFile(String name, URL url) {
+        this.name = name;
+        this.url = url;
         this.lang = new Properties();
     }
 
+    public String getName() {
+        return name;
+    }
+
+    public URL getURL() {
+        return url;
+    }
+    
     public String translate(String key) {
         return translate(key, null);
     }

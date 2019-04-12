@@ -151,18 +151,15 @@ public final class ListConnection extends BaseConnection {
      * @param file store the loaded language entries in this LanguageFile
      * @return LanguageFile object containing the language entries
      */
-    public LanguageFile loadLanguageFile(final URL url, LanguageFile file) throws PaymentException {
+    public LanguageFile loadLanguageFile(final LanguageFile file) throws PaymentException {
         final String source = "ListConnection[loadLanguageFile]";
 
-        if (url == null) {
-            throw new IllegalArgumentException(source + " - url cannot be null");
-        }
         if (file == null) {
             throw new IllegalArgumentException(source + " - file cannot be null");
         }
         HttpURLConnection conn = null;
         try {
-            conn = createGetConnection(url);
+            conn = createGetConnection(file.getURL());
 
             try (InputStream in = conn.getInputStream();
                 InputStreamReader ir = new InputStreamReader(in)) {

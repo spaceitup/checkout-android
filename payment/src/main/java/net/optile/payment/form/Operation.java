@@ -13,7 +13,6 @@ import java.net.URL;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import android.util.Log;
 import android.text.TextUtils;
 import net.optile.payment.core.PaymentError;
 import net.optile.payment.core.PaymentException;
@@ -74,10 +73,10 @@ public class Operation {
         }
     }
 
-    /** 
+    /**
      * Get the type of this operation, this will either be PRESET, CHARGE, UPDATE or PAYOUT.
      * If the type cannot be determined from the URl then null will be returned.
-     * 
+     *
      * @return the type of the operation or null if it cannot be determined.
      */
     public String getType() {
@@ -85,29 +84,26 @@ public class Operation {
 
         if (path.endsWith("preset")) {
             return PRESET;
-        }
-        else if (path.endsWith("charge")) {
+        } else if (path.endsWith("charge")) {
             return CHARGE;
-        }
-        else if (path.endsWith("update")) {
+        } else if (path.endsWith("update")) {
             return UPDATE;
-        }
-        else if (path.endsWith("payout")) {
+        } else if (path.endsWith("payout")) {
             return PAYOUT;
         }
         return null;
     }
 
-    /** 
+    /**
      * Check if the type of this operation matches the given type.
-     * 
+     *
      * @param type to match with the type of this operation.
      * @return true when the types matches, false otherwise.
      */
     public boolean isType(String type) {
         return type != null && type.equals(getType());
     }
-    
+
     public String toJson() throws JSONException {
         form.put("account", account);
         return form.toString();

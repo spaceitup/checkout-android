@@ -18,6 +18,7 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.TextView;
 import net.optile.payment.R;
 import net.optile.payment.ui.PaymentResult;
@@ -44,7 +45,7 @@ public final class PaymentPageActivity extends AppCompatActivity implements Paym
     private boolean active;
     private PaymentList paymentList;
     private int cachedListIndex;
-    private PaymentProgressView progress;
+    private ProgressView progress;
 
     /**
      * Create the start intent for this Activity
@@ -83,9 +84,16 @@ public final class PaymentPageActivity extends AppCompatActivity implements Paym
 
         initActionBar(getString(R.string.pmpage_title), true);
         initList(theme);
+        initProgressView(theme);
 
-        this.progress = new PaymentProgressView(this, theme);
         this.presenter = new PaymentPagePresenter(this);
+    }
+
+    private void initProgressView(PaymentTheme theme) {
+        View rootView = findViewById(R.id.layout_paymentpage);
+        progress = new ProgressView(rootView, theme);
+        progress.setSendLabels(getString(R.string.pmprogress_sendheader),
+            getString(R.string.pmprogress_sendinfo));
     }
 
     private void initPageTheme(PaymentTheme theme) {
@@ -223,7 +231,7 @@ public final class PaymentPageActivity extends AppCompatActivity implements Paym
         }
         if (show) {
 
-            if (style == PaymentProgressView.SEND) {
+            if (style == ProgressView.SEND) {
                 initActionBar(getString(R.string.pmprogress_sendtitle), false);
             }
             paymentList.setVisible(false);
@@ -336,7 +344,7 @@ public final class PaymentPageActivity extends AppCompatActivity implements Paym
         PaymentResult result = new PaymentResult("Payment Page closed by user.");
         setActivityResult(PaymentUI.RESULT_CODE_CANCELED, result);
     }
-    
+
     private void setActivityResult(int resultCode, PaymentResult result) {
         Intent intent = new Intent();
         intent.putExtra(PaymentUI.EXTRA_PAYMENT_RESULT, result);

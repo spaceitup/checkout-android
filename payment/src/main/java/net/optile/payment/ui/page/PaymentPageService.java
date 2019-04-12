@@ -36,6 +36,9 @@ import net.optile.payment.network.ListConnection;
 import net.optile.payment.network.PaymentConnection;
 import net.optile.payment.resource.PaymentGroup;
 import net.optile.payment.resource.ResourceLoader;
+import net.optile.payment.service.ListService;
+import net.optile.payment.service.PaymentService;
+import net.optile.payment.service.ValidatorService;
 import net.optile.payment.ui.PaymentUI;
 import net.optile.payment.ui.model.AccountCard;
 import net.optile.payment.ui.model.NetworkCard;
@@ -48,153 +51,106 @@ import net.optile.payment.validation.Validator;
  * The PaymentPageService providing asynchronize initializing of the PaymentPage and communication with the Payment API .
  * This service makes callbacks in the presenter to notify of request completions.
  */
-final class PaymentPageService {
+final class PaymentPageService implements ValidatorService.ValidatorListener, PaymentService.PaymentListener, ListService.ListListener {
 
-    private final static String TAG = "pay_Service";
     private final PaymentPagePresenter presenter;
-    private final ListConnection listConnection;
-    private final PaymentConnection paymentConnection;
-
-    private WorkerTask<OperationResult> operationTask;
-    private WorkerTask<PaymentSession> loadTask;
-    private WorkerTask<Validator> validatorTask;
-
+    private final ValidatorService validatorService;
+    private final PaymentService paymentService;
+    private final ListService listService;
+    private Validator validator;
+    
     /**
      * Create a new PaymentPageService, this service is used to communicate with the Payment API
      */
     PaymentPageService(PaymentPagePresenter presenter) {
         this.presenter = presenter;
-        this.listConnection = new ListConnection();
-        this.paymentConnection = new PaymentConnection();
+        paymentService = new PaymentService();
+        paymentService.setListener(this);
+        
+        listService = new ListService();
+        listService.setListener(this);
+
+        validatorService = new ValidatorService();
+        validatorService.setListener(this);
     }
 
     /**
-     * Stop and unsubscribe from tasks that are currently active in this service.
+     * {@inheritDoc}
      */
-    void stop() {
-
-        if (loadTask != null) {
-            loadTask.unsubscribe();
-            loadTask = null;
-        }
-        if (operationTask != null) {
-            operationTask.unsubscribe();
-            operationTask = null;
-        }
-        if (validatorTask != null) {
-            validatorTask.unsubscribe();
-            validatorTask = null;
-        }
+    @Override
+    public void onValidatorSuccess(Validator validator) {
+        this.validator = validator;
+        asyncLoadPaymentSession(this.listUrl);
     }
 
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void onValidatorError(Throwable cause) {
+        presenter.onPaymentSessionError(cause);
+    }
+
+    
+    void stop() {
+        validatorService.stop();
+        paymentService.stop();
+        listService.stop();
+    }
+
+    Validator getValidator() {
+        return validator;
+    }
+    
     boolean isPerformingOperation() {
-        return operationTask != null && operationTask.isSubscribed();
+        return paymentService.isActive();
     }
 
     boolean isActive() {
-        return validatorTask != null || loadTask != null || operationTask != null;
+        return validatorService.isActive() || paymentService.isActive() || listService.isActive();
     }
 
-    void loadValidator() {
+    void loadPaymentSession(String listUrl) {
 
-        if (validatorTask != null) {
-            throw new IllegalStateException("Already loading validator, stop first");
+        if (isActive()) {
+            throw new IllegalStateException("Already active, stop first");
         }
-        validatorTask = WorkerTask.fromCallable(new Callable<Validator>() {
-            @Override
-            public Validator call() throws PaymentException {
-                return asyncLoadValidator();
-            }
-        });
-        validatorTask.subscribe(new WorkerSubscriber<Validator>() {
-            @Override
-            public void onSuccess(Validator validator) {
-                validatorTask = null;
-                presenter.onValidatorSuccess(validator);
-            }
-
-            @Override
-            public void onError(Throwable cause) {
-                validatorTask = null;
-                presenter.onValidatorError(cause);
-            }
-        });
-        Workers.getInstance().forNetworkTasks().execute(validatorTask);
-    }
-
-    void loadPaymentSession(final String listUrl) {
-
-        if (loadTask != null) {
-            throw new IllegalStateException("Already loading payment session, stop first");
+        if (validator == null) {
+            initializeValidator(listUrl);
+        } else {
+            asyncLoadPaymentSession(listUrl);
         }
-        loadTask = WorkerTask.fromCallable(new Callable<PaymentSession>() {
-            @Override
-            public PaymentSession call() throws PaymentException {
-                return asyncLoadPaymentSession(listUrl);
-            }
-        });
-        loadTask.subscribe(new WorkerSubscriber<PaymentSession>() {
-            @Override
-            public void onSuccess(PaymentSession paymentSession) {
-                loadTask = null;
-                presenter.onPaymentSessionSuccess(paymentSession);
-            }
-
-            @Override
-            public void onError(Throwable cause) {
-                Log.w(TAG, cause);
-                loadTask = null;
-                presenter.onPaymentSessionError(cause);
-            }
-        });
-        Workers.getInstance().forNetworkTasks().execute(loadTask);
     }
 
-    void postOperation(final Operation operation) {
-
-        if (operationTask != null) {
-            throw new IllegalStateException("Already posting operation, stop first");
-        }
-        operationTask = WorkerTask.fromCallable(new Callable<OperationResult>() {
-            @Override
-            public OperationResult call() throws PaymentException {
-                return asyncPostOperation(operation);
-            }
-        });
-        operationTask.subscribe(new WorkerSubscriber<OperationResult>() {
-            @Override
-            public void onSuccess(OperationResult result) {
-                operationTask = null;
-                presenter.onOperationSuccess(result);
-            }
-
-            @Override
-            public void onError(Throwable cause) {
-                operationTask = null;
-                presenter.onOperationError(cause);
-            }
-        });
-        Workers.getInstance().forNetworkTasks().execute(operationTask);
+    void postOperation(Operation operation) {
     }
-
+    
     /**
-     * Load the Validator in the background including the validations settings file.
+     * Initialize the validator
      *
      * @return the validator
      */
-    private Validator asyncLoadValidator() throws PaymentException {
-        int validationResId = PaymentUI.getInstance().getValidationResId();
-        Resources res = presenter.getContext().getResources();
-        return new Validator(ResourceLoader.loadValidations(res, validationResId));
+    private void initializeValidator(final String listUrl) {
+
+        validatorService.setListener(new ValidatorService.ValidatorListener() {
+                @Override
+                public void onValidatorSuccess(Validator validator) {
+                    PaymentPageService.this.validator = validator;
+                    asyncLoadPaymentSession(listUrl);
+                }
+                @Override
+                public void onValidatorError(Throwable cause) {
+                    presenter.onPaymentSessionError(cause);
+                }
+            });
     }
 
-    /**
-     * Load the PaymentSession from the Payment API
-     *
-     * @param listUrl unique list url of the payment session
-     * @return the payment session obtained from the Payment API
-     */
-    private PaymentSession asyncLoadPaymentSession(String listUrl) throws PaymentException {
+    private void asyncLoadPaymentSession(String listUrl) {
+
+        
+    }
+    
+    private PaymentSession asyncLoadPaymentSession0(String listUrl) throws PaymentException {
         ListResult listResult = listConnection.getListResult(listUrl);
         Map<String, PaymentNetwork> networks = loadPaymentNetworks(listResult);
 
@@ -207,12 +163,6 @@ final class PaymentPageService {
         return session;
     }
 
-    /**
-     * Post an Operation to the Payment API
-     *
-     * @param operation the object containing the operation details
-     * @return operation result containing information about the operation request
-     */
     private OperationResult asyncPostOperation(Operation operation) throws PaymentException {
         return paymentConnection.postOperation(operation);
     }
