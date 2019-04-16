@@ -23,14 +23,14 @@ import net.optile.payment.model.PresetAccount;
  * Class for holding the data of a PresetCard in the list
  */
 public final class PresetCard implements PaymentCard {
-
     private final PresetAccount account;
     private final ApplicableNetwork network;
-    private LanguageFile lang;
+    private final LanguageFile lang;
 
-    public PresetCard(PresetAccount account, ApplicableNetwork network) {
+    public PresetCard(PresetAccount account, ApplicableNetwork network, LanguageFile lang) {
         this.account = account;
         this.network = network;
+        this.lang = lang;
     }
 
     /**
@@ -63,10 +63,6 @@ public final class PresetCard implements PaymentCard {
     @Override
     public LanguageFile getLang() {
         return lang;
-    }
-
-    public void setLang(LanguageFile lang) {
-        this.lang = lang;
     }
 
     /**

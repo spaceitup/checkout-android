@@ -30,7 +30,7 @@ task('versionMajor') {
     doLast {
         print "Increasing major of versionName and versionCode"
         increaseVersionName(0)
-	increaseVersionCode()
+        increaseVersionCode()
     }
 }
 
@@ -38,21 +38,21 @@ task('versionMinor') {
     doLast {
         print "Increasing minor of versionName and versionCode"
         increaseVersionName(1)
-	increaseVersionCode()
+        increaseVersionCode()
     }
 }
 
 task('versionPatch') {
     doLast {
-        print "Increasing patch of versionName and versionCode"    
+        print "Increasing patch of versionName and versionCode"
         increaseVersionName(2)
-	increaseVersionCode()
+        increaseVersionCode()
     }
 }
 
 task('versionCode') {
     doLast {
-        print "Increasing versionCode"        
+        print "Increasing versionCode"
         increaseVersionCode()
     }
 }

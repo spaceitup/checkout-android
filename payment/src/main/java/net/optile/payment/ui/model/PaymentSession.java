@@ -13,6 +13,7 @@ import java.util.List;
 import java.util.Map;
 
 import net.optile.payment.core.LanguageFile;
+import net.optile.payment.validation.Validator;
 import net.optile.payment.model.ApplicableNetwork;
 import net.optile.payment.model.ListResult;
 import net.optile.payment.model.Networks;
@@ -21,13 +22,13 @@ import net.optile.payment.model.Networks;
  * Class for storing the ListResult and the list of supported PaymentMethods
  */
 public final class PaymentSession {
-
-    public final ListResult listResult;
-    public final PresetCard presetCard;
-    public final List<AccountCard> accounts;
-    public final List<NetworkCard> networks;
-    private LanguageFile lang;
-
+    private final ListResult listResult;
+    private final PresetCard presetCard;
+    private final List<AccountCard> accounts;
+    private final List<NetworkCard> networks;
+    private final Validator validator;
+    private final LanguageFile lang;
+    
     /**
      * Construct a new PaymentSession object
      *
@@ -35,14 +36,42 @@ public final class PaymentSession {
      * @param presetCard the optional PresetCard with the PresetAccount
      * @param accounts list of AccountCards supported by this PaymentSession
      * @param networks list of NetworkCards supported by this PaymentSession
+     * @param validator used to validate input values for this payment session
+     * @param lang payment page language file
      */
-    public PaymentSession(ListResult listResult, PresetCard presetCard, List<AccountCard> accounts, List<NetworkCard> networks) {
+    public PaymentSession(ListResult listResult, PresetCard presetCard, List<AccountCard> accounts, List<NetworkCard> networks, Validator validator, LanguageFile lang) {
         this.listResult = listResult;
         this.presetCard = presetCard;
         this.accounts = accounts;
         this.networks = networks;
+        this.validator = validator;
+        this.lang = lang;
     }
 
+    public ListResult getListResult() {
+        return listResult;
+    }
+
+    public PresetCard getPresetCard() {
+        return presetCard;
+    }
+
+    public List<AccountCard> getAccountCards() {
+        return accounts;
+    }
+
+    public List<NetworkCard> getNetworkCards() {
+        return networks;
+    }
+
+    public Validator getValidator() {
+        return validator;
+    }
+
+    public LanguageFile getLang() {
+        return lang;
+    }
+    
     public URL getLink(String name) {
         Map<String, URL> links = listResult.getLinks();
         return links != null ? links.get(name) : null;
@@ -53,18 +82,22 @@ public final class PaymentSession {
         return url != null && url.toString().equals(listUrl);
     }
 
-    public LanguageFile getLang() {
-        return lang;
-    }
-
-    public void setLang(LanguageFile lang) {
-        this.lang = lang;
-    }
-
     public String getOperationType() {
         return listResult.getOperationType();
     }
 
+    public boolean hasPresetCard() {
+        return presetCard != null;
+    }
+    
+    public int getNetworkCardSize() {
+        return networks != null ? networks.size() : 0;
+    }
+
+    public int getAccountCardSize() {
+        return accounts != null ? accounts.size() : 0;
+    }
+    
     public int getApplicableNetworkSize() {
         Networks nw = listResult.getNetworks();
         if (nw == null) {

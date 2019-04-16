@@ -14,6 +14,8 @@ import static net.optile.payment.core.PaymentError.INTERNAL_ERROR;
 import static net.optile.payment.core.PaymentError.PROTOCOL_ERROR;
 import static net.optile.payment.core.PaymentError.SECURITY_ERROR;
 
+import java.util.Map;
+import java.util.HashMap;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -39,6 +41,9 @@ import net.optile.payment.model.ListResult;
  */
 public final class ListConnection extends BaseConnection {
 
+    private final static Object cacheLock = new Object();
+    private final static Map<String, LanguageFile> languageCache = new HashMap<>();
+    
     /**
      * Create a new payment session through the Payment API. Remind this is not
      * a request mobile apps should be making as this call is normally executed
@@ -147,25 +152,39 @@ public final class ListConnection extends BaseConnection {
     /**
      * Load the language file given the URL
      *
-     * @param url the pointing to the language entries
-     * @param file store the loaded language entries in this LanguageFile
+     * @param url containing the address of the remote language file 
+     * @param cache when set to true, obtain from and cache the LanguageFile for recurring use
      * @return LanguageFile object containing the language entries
      */
-    public LanguageFile loadLanguageFile(final LanguageFile file) throws PaymentException {
+    public LanguageFile loadLanguageFile(URL url, boolean cache) throws PaymentException {
         final String source = "ListConnection[loadLanguageFile]";
 
-        if (file == null) {
-            throw new IllegalArgumentException(source + " - file cannot be null");
+        if (url == null) {
+            throw new IllegalArgumentException(source + " - url cannot be null");
         }
+        LanguageFile lang = null;
+
+        if (cache) {
+            lang = getCachedLanguageFile(url.toString());
+
+            if (lang != null) {
+                return lang;
+            }
+        }
+        lang = new LanguageFile();
         HttpURLConnection conn = null;
+
         try {
-            conn = createGetConnection(file.getURL());
+            conn = createGetConnection(url);
 
             try (InputStream in = conn.getInputStream();
                 InputStreamReader ir = new InputStreamReader(in)) {
-                file.getProperties().load(ir);
+                lang.getProperties().load(ir);
             }
-            return file;
+            if (cache) {
+                cacheLanguageFile(url.toString(), lang);
+            }
+            return lang;
         } catch (IOException e) {
             throw createPaymentException(source, CONN_ERROR, e);
         } finally {
@@ -191,5 +210,17 @@ public final class ListConnection extends BaseConnection {
      */
     private ListResult handleGetListResultOk(final String data) throws JsonParseException {
         return gson.fromJson(data, ListResult.class);
+    }
+
+    private static void cacheLanguageFile(String key, LanguageFile file) {
+        synchronized (cacheLock) {
+            languageCache.put(key, file);
+        }
+    }
+    
+    private static LanguageFile getCachedLanguageFile(String key) {
+        synchronized (cacheLock) {
+            return languageCache.get(key);
+        }
     }
 }

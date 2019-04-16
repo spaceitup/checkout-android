@@ -26,6 +26,7 @@ import net.optile.payment.core.LanguageFile;
 import net.optile.payment.ui.dialog.DialogHelper;
 import net.optile.payment.ui.model.AccountCard;
 import net.optile.payment.ui.model.NetworkCard;
+import net.optile.payment.ui.model.PaymentCard;
 import net.optile.payment.ui.model.PaymentSession;
 import net.optile.payment.ui.page.PaymentPageActivity;
 import net.optile.payment.validation.ValidationResult;
@@ -85,10 +86,10 @@ public final class PaymentList {
 
         if (session.getApplicableNetworkSize() == 0) {
             msg = activity.getString(R.string.pmpage_error_empty);
-        } else if (session.networks.size() == 0) {
+        } else if (session.getNetworkCardSize() == 0) {
             msg = activity.getString(R.string.pmpage_error_notsupported);
         } else {
-            int startIndex = session.presetCard != null ? 0 : selIndex;
+            int startIndex = session.hasPresetCard() ? 0 : selIndex;
             recyclerView.scrollToPosition(startIndex);
         }
         emptyMessage.setText(msg);
@@ -169,22 +170,6 @@ public final class PaymentList {
         }
     }
 
-    ValidationResult validate(int position, String type, String value1, String value2) {
-        ListItem item = items.get(position);
-        if (!item.hasPaymentCard()) {
-            return null;
-        }
-        return activity.validate(item.getPaymentCard(), type, value1, value2);
-    }
-
-    boolean isHidden(String code, String type) {
-        return activity.isHidden(code, type);
-    }
-
-    int getMaxLength(String code, String type) {
-        return activity.getMaxLength(code, type);
-    }
-
     private int nextViewType() {
         return viewType++;
     }
@@ -194,12 +179,12 @@ public final class PaymentList {
         this.selIndex = cachedListIndex;
 
         int index = 0;
-        int accountSize = session.accounts.size();
-        int networkSize = session.networks.size();
+        int accountSize = session.getAccountCardSize();
+        int networkSize = session.getNetworkCardSize();
 
-        if (session.presetCard != null) {
+        if (session.hasPresetCard()) {
             items.add(new HeaderItem(nextViewType(), activity.getString(R.string.pmlist_preset_header)));
-            items.add(new PaymentCardItem(nextViewType(), session.presetCard));
+            items.add(new PaymentCardItem(nextViewType(), session.getPresetCard()));
             this.selIndex = 1;
             index += 2;
         }
@@ -208,7 +193,7 @@ public final class PaymentList {
             items.add(new HeaderItem(nextViewType(), activity.getString(R.string.pmlist_account_header)));
             index++;
         }
-        for (AccountCard card : session.accounts) {
+        for (AccountCard card : session.getAccountCards()) {
             items.add(new PaymentCardItem(nextViewType(), card));
             if (this.selIndex == -1 && card.isPreselected()) {
                 this.selIndex = index;
@@ -219,7 +204,7 @@ public final class PaymentList {
             int resId = accountSize == 0 ? R.string.pmlist_networkonly_header : R.string.pmlist_network_header;
             items.add(new HeaderItem(nextViewType(), activity.getString(resId)));
         }
-        for (NetworkCard card : session.networks) {
+        for (NetworkCard card : session.getNetworkCards()) {
             items.add(new PaymentCardItem(nextViewType(), card));
             if (this.selIndex == -1 && card.isPreselected()) {
                 this.selIndex = index;

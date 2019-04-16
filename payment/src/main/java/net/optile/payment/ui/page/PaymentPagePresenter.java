@@ -22,6 +22,7 @@ import net.optile.payment.model.ErrorInfo;
 import net.optile.payment.model.Interaction;
 import net.optile.payment.model.InteractionCode;
 import net.optile.payment.model.InteractionReason;
+import net.optile.payment.model.ListResult;
 import net.optile.payment.model.OperationResult;
 import net.optile.payment.ui.PaymentResult;
 import net.optile.payment.ui.PaymentUI;
@@ -30,16 +31,17 @@ import net.optile.payment.ui.dialog.ThemedDialogFragment;
 import net.optile.payment.ui.dialog.ThemedDialogFragment.ThemedDialogListener;
 import net.optile.payment.ui.model.PaymentCard;
 import net.optile.payment.ui.model.PaymentSession;
+import net.optile.payment.ui.service.PaymentSessionService;
+import net.optile.payment.ui.service.PaymentSessionListener;
 import net.optile.payment.ui.widget.FormWidget;
-import net.optile.payment.validation.Validator;
 
 /**
  * The PaymentPagePresenter implementing the presenter part of the MVP
  */
-final class PaymentPagePresenter {
+final class PaymentPagePresenter implements PaymentSessionListener {
 
     private final PaymentPageView view;
-    private final PaymentPageService service;
+    private final PaymentSessionService service;
 
     private PaymentSession session;
     private String listUrl;
@@ -54,7 +56,8 @@ final class PaymentPagePresenter {
      */
     PaymentPagePresenter(PaymentPageView view) {
         this.view = view;
-        this.service = new PaymentPageService(this);
+        service = new PaymentSessionService();
+        service.setListener(this);
     }
 
     /**
@@ -70,7 +73,7 @@ final class PaymentPagePresenter {
      * @return true when this presenter handles the back press, false otherwise
      */
     boolean onBackPressed() {
-        if (service.isPerformingOperation()) {
+        if (service.isPostingOperation()) {
             view.showSnackbar(view.getStringRes(R.string.pmsnackbar_operation_interrupted));
             return true;
         }
@@ -87,7 +90,7 @@ final class PaymentPagePresenter {
 
     void load(Context context, String listUrl) {
 
-        if (service.isActive()) {
+        if (service.isLoadingPaymentSession()) {
             return;
         }
         this.listUrl = listUrl;
@@ -102,15 +105,6 @@ final class PaymentPagePresenter {
     }
 
     /**
-     * Get the context in which this presenter is running.
-     *
-     * @return context
-     */
-    Context getContext() {
-        return this.context;
-    }
-
-    /**
      * Notify this presenter that the user has clicked the action button in the PaymentCard.
      * The presenter will validate if the operation is supported and then post it to the Payment API.
      *
@@ -122,7 +116,7 @@ final class PaymentPagePresenter {
         if (service.isActive()) {
             return;
         }
-        if (session.presetCard == card) {
+        if (session.getPresetCard() == card) {
             PaymentResult result = new PaymentResult("Same presetAccount selected");
             closeSessionWithOkCode(result);
             return;
@@ -138,38 +132,28 @@ final class PaymentPagePresenter {
     }
 
     /**
-     * Return the Validator loaded by the service.
-     *
-     * @return validator validator used to validate user input values
+     * {@inheritDoc}
      */
-    Validator getValidator() {
-        return service.getValidator();
-    }
-
-    /**
-     * Callback from the service that the PaymentSession has successfully been loaded
-     *
-     * @param session that has been loaded from the Payment API
-     */
-    void onPaymentSessionSuccess(PaymentSession session) {
-        Interaction interaction = session.listResult.getInteraction();
+    @Override
+    public void onPaymentSessionSuccess(PaymentSession session) {
+        ListResult listResult = session.getListResult();
+        Interaction interaction = listResult.getInteraction();
 
         switch (interaction.getCode()) {
             case InteractionCode.PROCEED:
                 handleLoadInteractionProceed(session);
                 break;
             default:
-                PaymentResult result = new PaymentResult(session.listResult.getResultInfo(), interaction);
+                PaymentResult result = new PaymentResult(listResult.getResultInfo(), interaction);
                 closeSessionWithCanceledCode(result);
         }
     }
 
     /**
-     * Callback from the service that the PaymentSession failed to load
-     *
-     * @param cause containing the reason why the loading failed
+     * {@inheritDoc}
      */
-    void onPaymentSessionError(Throwable cause) {
+    @Override
+    public void onPaymentSessionError(Throwable cause) {
         if (cause instanceof PaymentException) {
             handleLoadPaymentError((PaymentException) cause);
             return;
@@ -178,11 +162,10 @@ final class PaymentPagePresenter {
     }
 
     /**
-     * Callback from the service that the operation request was successful.
-     *
-     * @param operation containing the result of the operation
+     * {@inheritDoc}
      */
-    void onOperationSuccess(OperationResult operation) {
+    @Override
+    public void onOperationSuccess(OperationResult operation) {
         PaymentResult result = new PaymentResult(operation);
 
         switch (operation.getInteraction().getCode()) {
@@ -195,11 +178,10 @@ final class PaymentPagePresenter {
     }
 
     /**
-     * Callback from the service that the operation request failed
-     *
-     * @param cause containing the details why the operation failed
+     * {@inheritDoc}
      */
-    void onOperationError(Throwable cause) {
+    @Override
+    public void onOperationError(Throwable cause) {
 
         if (cause instanceof PaymentException) {
             handleOperationPaymentError((PaymentException) cause);
@@ -360,7 +342,7 @@ final class PaymentPagePresenter {
     private void loadPaymentSession(final String listUrl) {
         this.session = null;
         view.clear();
-        service.loadPaymentSession(listUrl);
+        service.loadPaymentSession(listUrl, context);
     }
 
     private void postOperation(final Operation operation) {

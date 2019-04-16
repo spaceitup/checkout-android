@@ -27,27 +27,12 @@ public final class LanguageFile {
     public final static String TEXT = "text";
 
     private final Properties lang;
-    private final String name;
-    private final URL url;
 
     /**
      * Construct an empty LanguageFile
-     *
-     * @param name the unique name of this language file 
-     * @param url pointing to the location of this language file
      */
-    public LanguageFile(String name, URL url) {
-        this.name = name;
-        this.url = url;
+    public LanguageFile() {
         this.lang = new Properties();
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public URL getURL() {
-        return url;
     }
     
     public String translate(String key) {

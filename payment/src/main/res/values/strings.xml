@@ -2,7 +2,6 @@
     <string name="pmpage_title">Payment methods</string>
     <string name="pmpage_error_empty">There are no payment methods available.</string>
     <string name="pmpage_error_notsupported">The payment methods in the current payment session are not supported by this app.</string>
-    <string name="pmpage_error_validation">Invalid input value</string>
     <string name="pmpage_contentdescription">PaymentImage</string>
 
     <string name="pmlist_preset_header">Previously selected account</string>
