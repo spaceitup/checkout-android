@@ -9,7 +9,7 @@
 package net.optile.payment.core;
 
 import java.util.Properties;
-import java.net.URL;
+
 import android.text.TextUtils;
 import net.optile.payment.model.Interaction;
 
@@ -34,7 +34,7 @@ public final class LanguageFile {
     public LanguageFile() {
         this.lang = new Properties();
     }
-    
+
     public String translate(String key) {
         return translate(key, null);
     }

@@ -117,8 +117,8 @@ public final class ListConnection extends BaseConnection {
         if (TextUtils.isEmpty(url)) {
             throw new IllegalArgumentException(source + " - url cannot be null or empty");
         }
-
         HttpURLConnection conn = null;
+
         try {
             final String requestUrl = Uri.parse(url).buildUpon()
                 .appendQueryParameter(URI_PARAM_VIEW, VALUE_VIEW)

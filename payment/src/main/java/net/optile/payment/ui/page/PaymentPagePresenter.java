@@ -31,8 +31,8 @@ import net.optile.payment.ui.dialog.ThemedDialogFragment;
 import net.optile.payment.ui.dialog.ThemedDialogFragment.ThemedDialogListener;
 import net.optile.payment.ui.model.PaymentCard;
 import net.optile.payment.ui.model.PaymentSession;
-import net.optile.payment.ui.service.PaymentSessionService;
 import net.optile.payment.ui.service.PaymentSessionListener;
+import net.optile.payment.ui.service.PaymentSessionService;
 import net.optile.payment.ui.widget.FormWidget;
 
 /**
@@ -45,6 +45,7 @@ final class PaymentPagePresenter implements PaymentSessionListener {
 
     private PaymentSession session;
     private String listUrl;
+    private String operationUrl;
     private Interaction reloadInteraction;
     private Context context;
     private Operation operation;
@@ -85,23 +86,22 @@ final class PaymentPagePresenter implements PaymentSessionListener {
      * If a previous session with the same listUrl is available then reuse the existing one.
      *
      * @param context context in which this presenter is running
-     * @param listUrl the url pointing to the ListResult in the Payment API
+     * @param chargePresetAccount if true charge the preset account after the payment session has been loaded
      */
+    void onStart(Context context, boolean chargePresetAccount) {
 
-    void load(Context context, String listUrl) {
-
-        if (service.isLoadingPaymentSession()) {
+        if (service.isActive()) {
             return;
         }
-        this.listUrl = listUrl;
         this.context = context;
-
-        if (session != null && session.isListUrl(listUrl)) {
+        this.listUrl = PaymentUI.getInstance().getListUrl();
+        
+        if (session != null && session.isListUrl(this.listUrl)) {
             view.showPaymentSession(session);
             return;
         }
         view.showProgress(true, ProgressView.LOAD);
-        loadPaymentSession(listUrl);
+        loadPaymentSession(this.listUrl);
     }
 
     /**
@@ -197,9 +197,19 @@ final class PaymentPagePresenter implements PaymentSessionListener {
             showInteractionMessage(reloadInteraction);
             reloadInteraction = null;
         }
-        view.showPaymentSession(session);
+
+        if (chargePresetAccount) {
+            handleChargePresetAccount(session);
+        } else {
+            view.showPaymentSession(session);
+        }
     }
 
+    private void handleChargePresetAccount(PaymentSession session) {
+
+        
+    }
+    
     private void handleLoadPaymentError(PaymentException cause) {
         PaymentError error = cause.error;
         ErrorInfo info = error.errorInfo;

@@ -31,31 +31,30 @@ import net.optile.payment.ui.model.PaymentSession;
 import net.optile.payment.ui.theme.PaymentTheme;
 import net.optile.payment.ui.widget.FormWidget;
 import net.optile.payment.util.PaymentUtils;
-import net.optile.payment.validation.ValidationResult;
-import net.optile.payment.validation.Validator;
 
 /**
  * The PaymentPageActivity showing available payment methods
  */
 public final class PaymentPageActivity extends AppCompatActivity implements PaymentPageView {
 
-    private static final String EXTRA_LISTURL = "extra_listurl";
+    private static final String EXTRA_CHARGEPRESETACCOUNT = "extra_chargepresetaccount";
     private PaymentPagePresenter presenter;
-    private String listUrl;
     private boolean active;
     private PaymentList paymentList;
     private int cachedListIndex;
     private ProgressView progress;
-
+    private boolean chargePresetAccount;
+        
     /**
      * Create the start intent for this Activity
      *
      * @param context Context to create the intent
+     * @param chargePresetAccount if true charge the PresetAccount, false show the available payment methods
      * @return newly created start intent
      */
-    public static Intent createStartIntent(Context context, String listUrl) {
+    public static Intent createStartIntent(Context context, boolean chargePresetAccount) {
         final Intent intent = new Intent(context, PaymentPageActivity.class);
-        intent.putExtra(EXTRA_LISTURL, listUrl);
+        intent.putExtra(EXTRA_CHARGEPRESETACCOUNT, chargePresetAccount);
         return intent;
     }
 
@@ -71,10 +70,10 @@ public final class PaymentPageActivity extends AppCompatActivity implements Paym
         this.cachedListIndex = -1;
 
         if (savedInstanceState != null) {
-            this.listUrl = savedInstanceState.getString(EXTRA_LISTURL);
+            this.chargePresetAccount = savedInstanceState.getBoolean(EXTRA_CHARGEPRESETACCOUNT, false);
         } else {
             Intent intent = getIntent();
-            this.listUrl = intent.getStringExtra(EXTRA_LISTURL);
+            this.chargePresetAccount = intent.getBooleanExtra(EXTRA_CHARGEPRESETACCOUNT, false);
         }
         PaymentTheme theme = PaymentUI.getInstance().getPaymentTheme();
         initPageTheme(theme);
@@ -128,7 +127,7 @@ public final class PaymentPageActivity extends AppCompatActivity implements Paym
     public void onSaveInstanceState(Bundle savedInstanceState) {
         super.onSaveInstanceState(savedInstanceState);
         this.cachedListIndex = paymentList.getSelected();
-        savedInstanceState.putString(EXTRA_LISTURL, listUrl);
+        savedInstanceState.putBoolean(EXTRA_CHARGEPRESETACCOUNT, chargePresetAccount);
     }
 
     /**
@@ -149,7 +148,7 @@ public final class PaymentPageActivity extends AppCompatActivity implements Paym
     public void onResume() {
         super.onResume();
         this.active = true;
-        presenter.load(this, this.listUrl);
+        presenter.load(this, this.chargePresetAccount);
     }
 
     /**

@@ -66,15 +66,15 @@ public final class PaymentSessionService {
         this.paymentConnection = new PaymentConnection();
     }
 
-    /** 
+    /**
      * Set the session listener which will be informed about the state of a payment session being loaded.
-     * 
+     *
      * @param listener to be informed about the payment session being loaded
      */
     public void setListener(PaymentSessionListener listener) {
         this.listener = listener;
     }
-    
+
     /**
      * Stop and unsubscribe from tasks that are currently active in this service.
      */
@@ -89,36 +89,36 @@ public final class PaymentSessionService {
         }
     }
 
-    /** 
+    /**
      * Check if this service is currently active, i.e. is is loading a payment session or posting an operation.
-     * 
+     *
      * @return true when active, false otherwise
      */
     public boolean isActive() {
         return isLoadingPaymentSession() || isPostingOperation();
     }
-    
-    /** 
+
+    /**
      * Check if this service is currently loading a payment session from the Payment API
-     * 
-     * @return true when loading, false otherwise 
+     *
+     * @return true when loading, false otherwise
      */
     public boolean isLoadingPaymentSession() {
         return sessionTask != null && sessionTask.isSubscribed();
     }
 
-    /** 
+    /**
      * Check if this service is currently posting an operation to the Payment API
-     * 
+     *
      * @return true when posting, false otherwise
      */
     public boolean isPostingOperation() {
         return operationTask != null && operationTask.isSubscribed();
     }
-    
-    /** 
+
+    /**
      * Load the PaymentSession with the given listUrl, this will load the list result, languages and validator.
-     * 
+     *
      * @param listUrl URL pointing to the list on the Payment API
      * @param context Android context in which this service is used
      */
@@ -142,6 +142,7 @@ public final class PaymentSessionService {
                     listener.onPaymentSessionSuccess(paymentSession);
                 }
             }
+
             @Override
             public void onError(Throwable cause) {
                 sessionTask = null;
@@ -154,9 +155,9 @@ public final class PaymentSessionService {
         Workers.getInstance().forNetworkTasks().execute(sessionTask);
     }
 
-    /** 
+    /**
      * Post an operation to the Payment API
-     * 
+     *
      * @param operation to be posted to the Payment API
      */
     public void postOperation(final Operation operation) {
@@ -201,18 +202,18 @@ public final class PaymentSessionService {
     private OperationResult asyncPostOperation(Operation operation) throws PaymentException {
         return paymentConnection.postOperation(operation);
     }
-    
+
     private PaymentSession asyncLoadPaymentSession(String listUrl, Context context) throws PaymentException {
         ListResult listResult = listConnection.getListResult(listUrl);
         Map<String, PaymentNetwork> networks = loadPaymentNetworks(listResult);
         Map<String, PaymentGroup> groups = loadPaymentGroups(context);
         LanguageFile lang = loadPaymentPageLanguageFile(networks);
         Validator validator = loadValidator(context);
-        
+
         PresetCard presetCard = createPresetCard(listResult, networks);
         List<AccountCard> accountCards = createAccountCards(listResult, networks);
         List<NetworkCard> networkCards = createNetworkCards(networks, groups);
-        
+
         return new PaymentSession(listResult, presetCard, accountCards, networkCards, validator, lang);
     }
 
@@ -246,7 +247,8 @@ public final class PaymentSessionService {
         return new PaymentNetwork(network, lang);
     }
 
-    private List<NetworkCard> createNetworkCards(Map<String, PaymentNetwork> networks, Map<String, PaymentGroup> groups) throws PaymentException {
+    private List<NetworkCard> createNetworkCards(Map<String, PaymentNetwork> networks, Map<String, PaymentGroup> groups)
+        throws PaymentException {
         Map<String, NetworkCard> cards = new LinkedHashMap<>();
         NetworkCard card;
         PaymentGroup group;
@@ -280,12 +282,12 @@ public final class PaymentSessionService {
     private List<AccountCard> createAccountCards(ListResult listResult, Map<String, PaymentNetwork> networks) {
         List<AccountCard> cards = new ArrayList<>();
         List<AccountRegistration> accounts = listResult.getAccounts();
-        
+
         if (accounts == null || accounts.size() == 0) {
             return cards;
         }
         AccountCard card;
-        
+
         for (AccountRegistration account : accounts) {
             PaymentNetwork pn = networks.get(account.getCode());
 
@@ -351,7 +353,7 @@ public final class PaymentSessionService {
 
     private Validator loadValidator(Context context) throws PaymentException {
         int validationResId = PaymentUI.getInstance().getValidationResId();
-        return new Validator(ResourceLoader.loadValidations(context.getResources(), validationResId));        
+        return new Validator(ResourceLoader.loadValidations(context.getResources(), validationResId));
     }
 
     private URL getNetworkLink(ApplicableNetwork network, String name) {

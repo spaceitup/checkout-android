@@ -13,10 +13,10 @@ import java.util.List;
 import java.util.Map;
 
 import net.optile.payment.core.LanguageFile;
-import net.optile.payment.validation.Validator;
 import net.optile.payment.model.ApplicableNetwork;
 import net.optile.payment.model.ListResult;
 import net.optile.payment.model.Networks;
+import net.optile.payment.validation.Validator;
 
 /**
  * Class for storing the ListResult and the list of supported PaymentMethods
@@ -28,7 +28,7 @@ public final class PaymentSession {
     private final List<NetworkCard> networks;
     private final Validator validator;
     private final LanguageFile lang;
-    
+
     /**
      * Construct a new PaymentSession object
      *
@@ -39,7 +39,8 @@ public final class PaymentSession {
      * @param validator used to validate input values for this payment session
      * @param lang payment page language file
      */
-    public PaymentSession(ListResult listResult, PresetCard presetCard, List<AccountCard> accounts, List<NetworkCard> networks, Validator validator, LanguageFile lang) {
+    public PaymentSession(ListResult listResult, PresetCard presetCard, List<AccountCard> accounts, List<NetworkCard> networks,
+        Validator validator, LanguageFile lang) {
         this.listResult = listResult;
         this.presetCard = presetCard;
         this.accounts = accounts;
@@ -71,7 +72,7 @@ public final class PaymentSession {
     public LanguageFile getLang() {
         return lang;
     }
-    
+
     public URL getLink(String name) {
         Map<String, URL> links = listResult.getLinks();
         return links != null ? links.get(name) : null;
@@ -89,7 +90,7 @@ public final class PaymentSession {
     public boolean hasPresetCard() {
         return presetCard != null;
     }
-    
+
     public int getNetworkCardSize() {
         return networks != null ? networks.size() : 0;
     }
@@ -97,7 +98,7 @@ public final class PaymentSession {
     public int getAccountCardSize() {
         return accounts != null ? accounts.size() : 0;
     }
-    
+
     public int getApplicableNetworkSize() {
         Networks nw = listResult.getNetworks();
         if (nw == null) {

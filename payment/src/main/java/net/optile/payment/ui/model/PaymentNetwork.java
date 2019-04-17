@@ -39,9 +39,9 @@ public class PaymentNetwork {
     }
 
     public ApplicableNetwork getApplicableNetwork() {
-        return  network;
+        return network;
     }
-    
+
     public String getPaymentMethod() {
         return network.getMethod();
     }

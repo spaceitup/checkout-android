@@ -83,6 +83,28 @@ public final class PaymentUI {
     }
 
     /**
+     * Get the operationUrl in this PaymentUI
+     *
+     * @return the operationUrl or null if not previously set
+     */
+    public String getOperationUrl() {
+        return operationUrl;
+    }
+    
+    /**
+     * Set the optional operation url in this PaymentUI. If set the PaymentPage will post immediately the operation to the Payment API without first showing the payment methods.
+     *
+     * @param operationUrl the operation url to be set in this paymentUI
+     */
+    public void setOperationUrl(String operationUrl) {
+
+        if (!(TextUtils.isEmpty(operationUrl) || Patterns.WEB_URL.matcher(operationUrl).matches())) {
+            throw new IllegalArgumentException("operationUrl does not have a valid url format");
+        }
+        this.operationUrl = operationUrl;
+    }
+    
+    /**
      * Get the orientation mode for the PaymentPage, by default the ActivityInfo.SCREEN_ORIENTATION_LOCKED is used.
      *
      * @return orientation mode
@@ -174,12 +196,34 @@ public final class PaymentUI {
     }
 
     /**
-     * Show the PaymentPage with the PaymentTheme for the look and feel.
+     * Open the PaymentPage and instruct the page to immediately charge the PresetAccount. 
+     * If no PresetAccount is set in the ListResult then an error will be returned. 
+     *
+     * @param activity the activity that will be notified when this PaymentPage is finished
+     * @param requestCode the requestCode to be used for identifying results in the parent activity
+     */
+    public void chargePresetAccount(Activity activity, int requestCode) {
+        launchActivity(activity, requestCode, true);
+    }
+    
+    /**
+     * Open the PaymentPage containing the list of supported payment methods. 
      *
      * @param activity the activity that will be notified when this PaymentPage is finished
      * @param requestCode the requestCode to be used for identifying results in the parent activity
      */
     public void showPaymentPage(Activity activity, int requestCode) {
+        launchActivity(activity, requestCode, false);
+    }
+
+    /**
+     * Show the PaymentPageActivity, depending on the chargePresetAccount flag it will either show all supported payment methods or post the operation URL specified in the PresetAccount.
+     *
+     * @param activity the activity that will be notified when this PaymentPage is finished
+     * @param requestCode the requestCode to be used for identifying results in the parent activity
+     * @param chargePresetAccount set to true if the preset account should be charged
+     */
+    private void launchActivity(Activity activity, int requestCode, boolean chargePresetAccount) {
 
         if (listUrl == null) {
             throw new IllegalStateException("listUrl must be set before showing the PaymentPage");
@@ -197,11 +241,11 @@ public final class PaymentUI {
             setGroupResId(R.raw.groups);
         }
         activity.finishActivity(requestCode);
-        Intent intent = PaymentPageActivity.createStartIntent(activity, listUrl);
+        Intent intent = PaymentPageActivity.createStartIntent(activity, chargePresetAccount);
         activity.startActivityForResult(intent, requestCode);
         activity.overridePendingTransition(0, 0);
     }
-
+    
     private static class InstanceHolder {
         static final PaymentUI INSTANCE = new PaymentUI();
     }
