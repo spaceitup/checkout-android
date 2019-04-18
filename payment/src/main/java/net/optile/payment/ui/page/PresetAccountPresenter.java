@@ -36,11 +36,11 @@ import net.optile.payment.ui.service.PaymentSessionService;
 import net.optile.payment.ui.widget.FormWidget;
 
 /**
- * The PaymentPagePresenter implementing the presenter part of the MVP
+ * The PresetAccountPresenter implementing the presenter part of the MVP
  */
-final class PaymentPagePresenter implements PaymentSessionListener {
+final class PresetAccountPresenter implements PaymentSessionListener {
 
-    private final PaymentPageView view;
+    private final PresetAccountView view;
     private final PaymentSessionService service;
 
     private PaymentSession session;
@@ -49,11 +49,11 @@ final class PaymentPagePresenter implements PaymentSessionListener {
     private Operation operation;
     
     /**
-     * Create a new PaymentPagePresenter
+     * Create a new PresetAccountPresenter
      *
-     * @param view The PaymentPageView displaying the payment list
+     * @param view The PresetAccountView displaying the payment list
      */
-    PaymentPagePresenter(PaymentPageView view) {
+    PresetAccountPresenter(PresetAccountView view) {
         this.view = view;
         service = new PaymentSessionService();
         service.setListener(this);
@@ -74,7 +74,7 @@ final class PaymentPagePresenter implements PaymentSessionListener {
         this.listUrl = PaymentUI.getInstance().getListUrl();
         
         if (session != null && session.isListUrl(this.listUrl)) {
-            view.showPaymentSession(session);
+            //view.showPaymentSession(session);
             return;
         }
         view.showProgress(true, ProgressView.LOAD);
@@ -330,7 +330,7 @@ final class PaymentPagePresenter implements PaymentSessionListener {
             result = new PaymentResult(pe.getMessage(), pe.error);
         } else {
             String resultInfo = cause.toString();
-            PaymentError error = new PaymentError("PaymentPage", PaymentError.INTERNAL_ERROR, resultInfo);
+            PaymentError error = new PaymentError("PresetAccount", PaymentError.INTERNAL_ERROR, resultInfo);
             result = new PaymentResult(resultInfo, error);
         }
         view.setPaymentResult(PaymentUI.RESULT_CODE_ERROR, result);

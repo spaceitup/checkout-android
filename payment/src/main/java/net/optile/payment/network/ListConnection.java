@@ -14,14 +14,14 @@ import static net.optile.payment.core.PaymentError.INTERNAL_ERROR;
 import static net.optile.payment.core.PaymentError.PROTOCOL_ERROR;
 import static net.optile.payment.core.PaymentError.SECURITY_ERROR;
 
-import java.util.Map;
-import java.util.HashMap;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.HashMap;
+import java.util.Map;
 
 import com.google.gson.JsonParseException;
 
@@ -43,7 +43,19 @@ public final class ListConnection extends BaseConnection {
 
     private final static Object cacheLock = new Object();
     private final static Map<String, LanguageFile> languageCache = new HashMap<>();
-    
+
+    private static void cacheLanguageFile(String key, LanguageFile file) {
+        synchronized (cacheLock) {
+            languageCache.put(key, file);
+        }
+    }
+
+    private static LanguageFile getCachedLanguageFile(String key) {
+        synchronized (cacheLock) {
+            return languageCache.get(key);
+        }
+    }
+
     /**
      * Create a new payment session through the Payment API. Remind this is not
      * a request mobile apps should be making as this call is normally executed
@@ -152,7 +164,7 @@ public final class ListConnection extends BaseConnection {
     /**
      * Load the language file given the URL
      *
-     * @param url containing the address of the remote language file 
+     * @param url containing the address of the remote language file
      * @param cache when set to true, obtain from and cache the LanguageFile for recurring use
      * @return LanguageFile object containing the language entries
      */
@@ -210,17 +222,5 @@ public final class ListConnection extends BaseConnection {
      */
     private ListResult handleGetListResultOk(final String data) throws JsonParseException {
         return gson.fromJson(data, ListResult.class);
-    }
-
-    private static void cacheLanguageFile(String key, LanguageFile file) {
-        synchronized (cacheLock) {
-            languageCache.put(key, file);
-        }
-    }
-    
-    private static LanguageFile getCachedLanguageFile(String key) {
-        synchronized (cacheLock) {
-            return languageCache.get(key);
-        }
     }
 }

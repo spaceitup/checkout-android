@@ -33,24 +33,22 @@ import net.optile.payment.ui.widget.FormWidget;
 import net.optile.payment.util.PaymentUtils;
 
 /**
- * The PaymentPageActivity showing available payment methods
+ * The PresetAccountActivity showing available payment methods
  */
-public final class PaymentPageActivity extends AppCompatActivity implements PaymentPageView {
+public final class PresetAccountActivity extends AppCompatActivity implements PresetAccountView {
 
-    private PaymentPagePresenter presenter;
+    private PresetAccountPresenter presenter;
     private boolean active;
-    private PaymentList paymentList;
-    private int cachedListIndex;
     private ProgressView progress;
     
     /**
-     * Create the start intent for this PaymentPageActivity.
+     * Create the start intent for this PresetAccountActivity.
      *
      * @param context Context to create the intent
      * @return newly created start intent
      */
     public static Intent createStartIntent(Context context) {
-        return new Intent(context, PaymentPageActivity.class);
+        return new Intent(context, PresetAccountActivity.class);
     }
 
     /**
@@ -62,18 +60,16 @@ public final class PaymentPageActivity extends AppCompatActivity implements Paym
 
         PaymentResult result = new PaymentResult("Inializing Payment Page.");
         setActivityResult(PaymentUI.RESULT_CODE_CANCELED, result);
-        this.cachedListIndex = -1;
 
         PaymentTheme theme = PaymentUI.getInstance().getPaymentTheme();
         initPageTheme(theme);
 
-        setContentView(R.layout.activity_paymentpage);
+        setContentView(R.layout.activity_presetaccount);
         setRequestedOrientation(PaymentUI.getInstance().getOrientation());
 
         initActionBar(getString(R.string.pmpage_title), true);
-        initList(theme);
         initProgressView(theme);
-        this.presenter = new PaymentPagePresenter(this);
+        this.presenter = new PresetAccountPresenter(this);
     }
 
     private void initProgressView(PaymentTheme theme) {
@@ -91,12 +87,6 @@ public final class PaymentPageActivity extends AppCompatActivity implements Paym
         }
     }
 
-    private void initList(PaymentTheme theme) {
-        TextView empty = findViewById(R.id.label_empty);
-        PaymentUtils.setTextAppearance(empty, theme.getPageParameters().getEmptyListLabelStyle());
-        this.paymentList = new PaymentList(this, findViewById(R.id.recyclerview_paymentlist), empty);
-    }
-
     private void initActionBar(String title, boolean homeEnabled) {
         ActionBar actionBar = getSupportActionBar();
 
@@ -106,15 +96,6 @@ public final class PaymentPageActivity extends AppCompatActivity implements Paym
             actionBar.setDisplayHomeAsUpEnabled(homeEnabled);
             actionBar.setDisplayShowHomeEnabled(true);
         }
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public void onSaveInstanceState(Bundle savedInstanceState) {
-        super.onSaveInstanceState(savedInstanceState);
-        this.cachedListIndex = paymentList.getSelected();
     }
 
     /**
@@ -136,21 +117,6 @@ public final class PaymentPageActivity extends AppCompatActivity implements Paym
         super.onResume();
         this.active = true;
         presenter.onStart();
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-
-        switch (item.getItemId()) {
-            case android.R.id.home:
-                setUserClosedPageResult();
-                supportFinishAfterTransition();
-                return true;
-        }
-        return false;
     }
 
     /**
@@ -193,47 +159,18 @@ public final class PaymentPageActivity extends AppCompatActivity implements Paym
      * {@inheritDoc}
      */
     @Override
-    public void clear() {
-        if (!isActive()) {
-            return;
-        }
-        paymentList.clear();
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public void showPaymentSession(PaymentSession session) {
-
-        if (!isActive()) {
-            return;
-        }
-        initActionBar(getString(R.string.pmpage_title), true);
-        progress.setVisible(false);
-        paymentList.showPaymentSession(session, cachedListIndex);
-        this.cachedListIndex = -1;
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
     public void showProgress(boolean show, int style) {
         if (!isActive()) {
             return;
         }
         if (show) {
-
             if (style == ProgressView.SEND) {
                 initActionBar(getString(R.string.pmprogress_sendtitle), false);
             }
-            paymentList.setVisible(false);
             progress.setStyle(style);
             progress.setVisible(true);
         } else {
             initActionBar(getString(R.string.pmpage_title), true);
-            paymentList.setVisible(true);
             progress.setVisible(false);
         }
     }

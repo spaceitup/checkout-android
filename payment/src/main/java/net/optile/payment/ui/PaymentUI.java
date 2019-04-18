@@ -16,6 +16,7 @@ import android.text.TextUtils;
 import android.util.Patterns;
 import net.optile.payment.R;
 import net.optile.payment.ui.page.PaymentPageActivity;
+import net.optile.payment.ui.page.PresetAccountActivity;
 import net.optile.payment.ui.theme.PaymentTheme;
 
 /**
@@ -82,28 +83,6 @@ public final class PaymentUI {
         this.listUrl = listUrl;
     }
 
-    /**
-     * Get the operationUrl in this PaymentUI
-     *
-     * @return the operationUrl or null if not previously set
-     */
-    public String getOperationUrl() {
-        return operationUrl;
-    }
-    
-    /**
-     * Set the optional operation url in this PaymentUI. If set the PaymentPage will post immediately the operation to the Payment API without first showing the payment methods.
-     *
-     * @param operationUrl the operation url to be set in this paymentUI
-     */
-    public void setOperationUrl(String operationUrl) {
-
-        if (!(TextUtils.isEmpty(operationUrl) || Patterns.WEB_URL.matcher(operationUrl).matches())) {
-            throw new IllegalArgumentException("operationUrl does not have a valid url format");
-        }
-        this.operationUrl = operationUrl;
-    }
-    
     /**
      * Get the orientation mode for the PaymentPage, by default the ActivityInfo.SCREEN_ORIENTATION_LOCKED is used.
      *
@@ -196,40 +175,44 @@ public final class PaymentUI {
     }
 
     /**
-     * Open the PaymentPage and instruct the page to immediately charge the PresetAccount. 
-     * If no PresetAccount is set in the ListResult then an error will be returned. 
+     * Open the PaymentPage and instruct the page to immediately charge the PresetAccount.
+     * If no PresetAccount is set in the ListResult then an error will be returned.
      *
      * @param activity the activity that will be notified when this PaymentPage is finished
      * @param requestCode the requestCode to be used for identifying results in the parent activity
      */
     public void chargePresetAccount(Activity activity, int requestCode) {
-        launchActivity(activity, requestCode, true);
+        Intent intent = PresetAccountActivity.createStartIntent(activity);
+        launchActivity(activity, intent, requestCode);
     }
-    
+
     /**
-     * Open the PaymentPage containing the list of supported payment methods. 
+     * Open the PaymentPage containing the list of supported payment methods.
      *
      * @param activity the activity that will be notified when this PaymentPage is finished
      * @param requestCode the requestCode to be used for identifying results in the parent activity
      */
     public void showPaymentPage(Activity activity, int requestCode) {
-        launchActivity(activity, requestCode, false);
+        Intent intent = PaymentPageActivity.createStartIntent(activity);
+        launchActivity(activity, intent, requestCode);
     }
 
-    /**
-     * Show the PaymentPageActivity, depending on the chargePresetAccount flag it will either show all supported payment methods or post the operation URL specified in the PresetAccount.
+    /** 
+     * Validate Android SDK Settings before launching the Activity. 
      *
      * @param activity the activity that will be notified when this PaymentPage is finished
      * @param requestCode the requestCode to be used for identifying results in the parent activity
-     * @param chargePresetAccount set to true if the preset account should be charged
      */
-    private void launchActivity(Activity activity, int requestCode, boolean chargePresetAccount) {
+    private void launchActivity(Activity activity, Intent intent, int requestCode) {
 
         if (listUrl == null) {
             throw new IllegalStateException("listUrl must be set before showing the PaymentPage");
         }
         if (activity == null) {
             throw new IllegalArgumentException("activity may not be null");
+        }
+        if (intent == null) {
+            throw new IllegalArgumentException("intent may not be null");
         }
         if (theme == null) {
             setPaymentTheme(PaymentTheme.createDefault());
@@ -241,11 +224,10 @@ public final class PaymentUI {
             setGroupResId(R.raw.groups);
         }
         activity.finishActivity(requestCode);
-        Intent intent = PaymentPageActivity.createStartIntent(activity, chargePresetAccount);
         activity.startActivityForResult(intent, requestCode);
         activity.overridePendingTransition(0, 0);
     }
-    
+
     private static class InstanceHolder {
         static final PaymentUI INSTANCE = new PaymentUI();
     }

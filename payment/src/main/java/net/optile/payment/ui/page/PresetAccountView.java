@@ -14,9 +14,9 @@ import net.optile.payment.ui.dialog.ThemedDialogFragment;
 import net.optile.payment.ui.model.PaymentSession;
 
 /**
- * The PaymentPageView interface is the View part of the MVP, this is implemented by the PaymentPageActivity
+ * The PresetAccountView interface is the View part of the MVP, this is implemented by the PresetAccountActivity
  */
-interface PaymentPageView {
+interface PresetAccountView {
 
     /**
      * Is the view currently active
@@ -33,24 +33,12 @@ interface PaymentPageView {
     String getStringRes(int resId);
 
     /**
-     * Clear the list and clear the center message
-     */
-    void clear();
-
-    /**
      * Show or hide the progress animation, progress animations are shown when lists are loaded or operation requests are performed.
      *
      * @param show if true show the progress animation, hide otherwise
      * @param style the style of progress animation to be used
      */
     void showProgress(boolean show, int style);
-
-    /**
-     * Stop loading and show the PaymentSession
-     *
-     * @param session the payment session to be shown to the user
-     */
-    void showPaymentSession(PaymentSession session);
 
     /**
      * Show a snackbar message to the user
