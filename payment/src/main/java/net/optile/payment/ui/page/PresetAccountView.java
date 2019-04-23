@@ -36,9 +36,8 @@ interface PresetAccountView {
      * Show or hide the progress animation, progress animations are shown when lists are loaded or operation requests are performed.
      *
      * @param show if true show the progress animation, hide otherwise
-     * @param style the style of progress animation to be used
      */
-    void showProgress(boolean show, int style);
+    void showProgress(boolean show);
 
     /**
      * Show a snackbar message to the user

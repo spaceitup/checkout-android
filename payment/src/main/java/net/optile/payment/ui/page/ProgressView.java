@@ -119,11 +119,19 @@ class ProgressView {
     }
 
     private void setLoadVisible() {
+
+        if (loadLayout.getVisibility() == View.VISIBLE) {
+            return;
+        }
         sendLayout.setVisibility(View.GONE);
         loadLayout.setVisibility(View.VISIBLE);
     }
 
     private void setSendVisible() {
+
+        if (sendLayout.getVisibility() == View.VISIBLE) {
+            return;
+        }
         loadLayout.setVisibility(View.GONE);
         sendLayout.setVisibility(View.VISIBLE);
         startSendProgress();

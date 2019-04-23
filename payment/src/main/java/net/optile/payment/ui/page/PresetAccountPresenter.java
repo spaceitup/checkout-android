@@ -30,13 +30,15 @@ import net.optile.payment.ui.dialog.MessageDialogFragment;
 import net.optile.payment.ui.dialog.ThemedDialogFragment;
 import net.optile.payment.ui.dialog.ThemedDialogFragment.ThemedDialogListener;
 import net.optile.payment.ui.model.PaymentCard;
+import net.optile.payment.ui.model.PresetCard;
 import net.optile.payment.ui.model.PaymentSession;
 import net.optile.payment.ui.service.PaymentSessionListener;
 import net.optile.payment.ui.service.PaymentSessionService;
 import net.optile.payment.ui.widget.FormWidget;
 
 /**
- * The PresetAccountPresenter implementing the presenter part of the MVP
+ * The PresetAccountPresenter takes care of finalizing the payment of a PresetAccount.
+ * First this presenter will load the current list and perform the operation of the PresetAccount.
  */
 final class PresetAccountPresenter implements PaymentSessionListener {
 
@@ -45,7 +47,6 @@ final class PresetAccountPresenter implements PaymentSessionListener {
 
     private PaymentSession session;
     private String listUrl;
-    private Interaction reloadInteraction;
     private Operation operation;
     
     /**
@@ -60,8 +61,7 @@ final class PresetAccountPresenter implements PaymentSessionListener {
     }
 
     /**
-     * Load the PaymentSession from the Payment API. once loaded, populate the View with the newly loaded groups of payment methods.
-     * If a previous session with the same listUrl is available then reuse the existing one.
+     * Start the PresetAccount presenter. 
      *
      * @param context context in which this presenter is running
      * @param chargePresetAccount if true charge the preset account after the payment session has been loaded
@@ -72,12 +72,7 @@ final class PresetAccountPresenter implements PaymentSessionListener {
             return;
         }
         this.listUrl = PaymentUI.getInstance().getListUrl();
-        
-        if (session != null && session.isListUrl(this.listUrl)) {
-            //view.showPaymentSession(session);
-            return;
-        }
-        view.showProgress(true, ProgressView.LOAD);
+        view.showProgress(true);
         loadPaymentSession(this.listUrl);
     }
     
@@ -89,44 +84,16 @@ final class PresetAccountPresenter implements PaymentSessionListener {
     }
 
     /**
-     * Let the Presenter handle the back press, i.e. if the presenter is currently performing an operation, the presenter may disable the back button press.
+     * Let the Presenter handle the back press.
      *
      * @return true when this presenter handles the back press, false otherwise
      */
     boolean onBackPressed() {
-        if (service.isPostingOperation()) {
+        if (service.isActive()) {
             view.showSnackbar(view.getStringRes(R.string.pmsnackbar_operation_interrupted));
             return true;
         }
         return false;
-    }
-
-
-    /**
-     * Notify this presenter that the user has clicked the action button in the PaymentCard.
-     * The presenter will validate if the operation is supported and then post it to the Payment API.
-     *
-     * @param card the PaymentCard containing the operation URL
-     * @param widgets containing the user input data
-     */
-    void onActionClicked(PaymentCard card, Map<String, FormWidget> widgets) {
-
-        if (service.isActive()) {
-            return;
-        }
-        if (session.getPresetCard() == card) {
-            PaymentResult result = new PaymentResult("Same presetAccount selected");
-            closeSessionWithOkCode(result);
-            return;
-        }
-        switch (session.getOperationType()) {
-            case Operation.CHARGE:
-            case Operation.PRESET:
-                postOperation(card, widgets);
-                break;
-            default:
-                Log.w("pay_Presenter", "OperationType not supported");
-        }
     }
 
     /**
@@ -191,11 +158,12 @@ final class PresetAccountPresenter implements PaymentSessionListener {
     private void handleLoadInteractionProceed(PaymentSession session) {
         this.session = session;
 
-        if (reloadInteraction != null) {
-            showInteractionMessage(reloadInteraction);
-            reloadInteraction = null;
+        if (!session.hasPresetCard()) {
+            closeSessionWithErrorCode(R.string.pmdialog_error_missingpresetaccount, null);
+            return;
         }
-        view.showPaymentSession(session);
+        PresetCard card = session.getPresetCard();
+        postOperation(new Operation(card.getOperationLink()));
     }
 
     private void handleLoadPaymentError(PaymentException cause) {
@@ -211,34 +179,6 @@ final class PresetAccountPresenter implements PaymentSessionListener {
         }
     }
 
-    private void postOperation(PaymentCard card, Map<String, FormWidget> widgets) {
-        URL url = card.getOperationLink();
-        Operation operation = new Operation(url);
-
-        try {
-            boolean error = false;
-            for (FormWidget widget : widgets.values()) {
-
-                if (widget.validate()) {
-                    widget.putValue(operation);
-                } else {
-                    error = true;
-                }
-                widget.clearFocus();
-            }
-            if (!error) {
-                postOperation(operation);
-            }
-        } catch (PaymentException e) {
-            closeSessionWithErrorCode(R.string.pmdialog_error_unknown, e);
-        }
-    }
-
-    private void reloadPaymentSession(PaymentResult result) {
-        this.reloadInteraction = result.getInteraction();
-        loadPaymentSession(this.listUrl);
-    }
-
     private void handleOperationPaymentError(PaymentException cause) {
         PaymentError error = cause.error;
         ErrorInfo info = error.errorInfo;
@@ -246,7 +186,7 @@ final class PresetAccountPresenter implements PaymentSessionListener {
         if (info != null) {
             handleOperationInteractionError(new PaymentResult(info.getResultInfo(), info.getInteraction()));
         } else if (error.isError(PaymentError.CONN_ERROR)) {
-            handleOperationConnError();
+            handleOperationConnError(cause);
         } else {
             closeSessionWithErrorCode(R.string.pmdialog_error_unknown, cause);
         }
@@ -256,16 +196,6 @@ final class PresetAccountPresenter implements PaymentSessionListener {
         Interaction interaction = result.getInteraction();
 
         switch (interaction.getCode()) {
-            case InteractionCode.RELOAD:
-            case InteractionCode.TRY_OTHER_NETWORK:
-                reloadPaymentSession(result);
-                break;
-            case InteractionCode.RETRY:
-                handleOperationInteractionRetry(result);
-                break;
-            case InteractionCode.TRY_OTHER_ACCOUNT:
-                continueSessionWithWarning(result);
-                break;
             case InteractionCode.ABORT:
                 handleOperationInteractionAbort(result);
                 break;
@@ -286,29 +216,12 @@ final class PresetAccountPresenter implements PaymentSessionListener {
         }
     }
 
-    private void handleOperationInteractionRetry(PaymentResult result) {
-        Interaction interaction = result.getInteraction();
-
-        switch (interaction.getReason()) {
-            case InteractionReason.EXPIRED_SESSION:
-                closeSessionWithCanceledCode(result);
-                break;
-            default:
-                continueSessionWithWarning(result);
-        }
-    }
-
     private void showInteractionMessage(Interaction interaction) {
         String msg = translateInteraction(interaction, null);
 
         if (!TextUtils.isEmpty(msg)) {
             showMessage(msg);
         }
-    }
-
-    private void continueSessionWithWarning(PaymentResult result) {
-        view.showPaymentSession(this.session);
-        showInteractionMessage(result.getInteraction());
     }
 
     private void closeSessionWithOkCode(PaymentResult result) {
@@ -329,7 +242,7 @@ final class PresetAccountPresenter implements PaymentSessionListener {
             PaymentException pe = (PaymentException) cause;
             result = new PaymentResult(pe.getMessage(), pe.error);
         } else {
-            String resultInfo = cause.toString();
+            String resultInfo = cause != null ? cause.toString() : view.getStringRes(msgResId);
             PaymentError error = new PaymentError("PresetAccount", PaymentError.INTERNAL_ERROR, resultInfo);
             result = new PaymentResult(resultInfo, error);
         }
@@ -339,14 +252,12 @@ final class PresetAccountPresenter implements PaymentSessionListener {
 
     private void loadPaymentSession(final String listUrl) {
         this.session = null;
-        view.clear();
         service.loadPaymentSession(listUrl, view.getContext());
     }
 
     private void postOperation(final Operation operation) {
         this.operation = operation;
-        int progressType = operation.isType(Operation.PRESET) ? ProgressView.LOAD : ProgressView.SEND;
-        view.showProgress(true, progressType);
+        view.showProgress(true);
         service.postOperation(operation);
     }
 
@@ -375,20 +286,26 @@ final class PresetAccountPresenter implements PaymentSessionListener {
         view.showDialog(dialog);
     }
 
-    private void handleOperationConnError() {
-        view.showPaymentSession(this.session);
+    private void handleOperationConnError(final PaymentException pe) {
         MessageDialogFragment dialog = createMessageDialog(view.getStringRes(R.string.pmdialog_error_connection), true);
+        PaymentResult result = new PaymentResult(pe.getMessage(), pe.error);
+        view.setPaymentResult(PaymentUI.RESULT_CODE_CANCELED, result);
 
         dialog.setListener(new ThemedDialogListener() {
             @Override
             public void onButtonClicked(ThemedDialogFragment dialog, int which) {
-                if (which == ThemedDialogFragment.BUTTON_POSITIVE) {
-                    postOperation(operation);
+                switch (which) {
+                    case ThemedDialogFragment.BUTTON_NEUTRAL:
+                        view.closePage();
+                        break;
+                    case ThemedDialogFragment.BUTTON_POSITIVE:
+                        postOperation(operation);
                 }
             }
 
             @Override
             public void onDismissed(ThemedDialogFragment dialog) {
+                view.closePage();
             }
         });
         view.showDialog(dialog);

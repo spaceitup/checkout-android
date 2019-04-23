@@ -33,7 +33,8 @@ import net.optile.payment.ui.widget.FormWidget;
 import net.optile.payment.util.PaymentUtils;
 
 /**
- * The PresetAccountActivity showing available payment methods
+ * The PresetAccountActivity is the view to visualize the charge operation of a PresetAccount. 
+ * The presenter of this View will post the PresetAccount operation to the Payment API.
  */
 public final class PresetAccountActivity extends AppCompatActivity implements PresetAccountView {
 
@@ -58,7 +59,7 @@ public final class PresetAccountActivity extends AppCompatActivity implements Pr
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        PaymentResult result = new PaymentResult("Inializing Payment Page.");
+        PaymentResult result = new PaymentResult("Inializing payment page.");
         setActivityResult(PaymentUI.RESULT_CODE_CANCELED, result);
 
         PaymentTheme theme = PaymentUI.getInstance().getPaymentTheme();
@@ -67,16 +68,17 @@ public final class PresetAccountActivity extends AppCompatActivity implements Pr
         setContentView(R.layout.activity_presetaccount);
         setRequestedOrientation(PaymentUI.getInstance().getOrientation());
 
-        initActionBar(getString(R.string.pmpage_title), true);
+        initActionBar(getString(R.string.pmprogress_sendtitle), false);
         initProgressView(theme);
         this.presenter = new PresetAccountPresenter(this);
     }
 
     private void initProgressView(PaymentTheme theme) {
-        View rootView = findViewById(R.id.layout_paymentpage);
+        View rootView = findViewById(R.id.layout_parent);
         progress = new ProgressView(rootView, theme);
+        progress.setStyle(ProgressView.SEND);
         progress.setSendLabels(getString(R.string.pmprogress_sendheader),
-            getString(R.string.pmprogress_sendinfo));
+                               getString(R.string.pmprogress_sendinfo));
     }
 
     private void initPageTheme(PaymentTheme theme) {
@@ -124,7 +126,7 @@ public final class PresetAccountActivity extends AppCompatActivity implements Pr
      */
     @Override
     public void onBackPressed() {
-        if (presenter.onBackPressed()) {
+        if (!presenter.onBackPressed()) {
             return;
         }
         setUserClosedPageResult();
@@ -159,20 +161,11 @@ public final class PresetAccountActivity extends AppCompatActivity implements Pr
      * {@inheritDoc}
      */
     @Override
-    public void showProgress(boolean show, int style) {
+    public void showProgress(boolean show) {
         if (!isActive()) {
             return;
         }
-        if (show) {
-            if (style == ProgressView.SEND) {
-                initActionBar(getString(R.string.pmprogress_sendtitle), false);
-            }
-            progress.setStyle(style);
-            progress.setVisible(true);
-        } else {
-            initActionBar(getString(R.string.pmpage_title), true);
-            progress.setVisible(false);
-        }
+        progress.setVisible(show);
     }
 
     /**
@@ -214,16 +207,12 @@ public final class PresetAccountActivity extends AppCompatActivity implements Pr
         if (TextUtils.isEmpty(message)) {
             return;
         }
-        Snackbar snackbar = DialogHelper.createSnackbar(findViewById(R.id.layout_paymentpage), message);
+        Snackbar snackbar = DialogHelper.createSnackbar(findViewById(R.id.layout_parent), message);
         snackbar.show();
     }
 
-    public void onActionClicked(PaymentCard item, Map<String, FormWidget> widgets) {
-        presenter.onActionClicked(item, widgets);
-    }
-
     private void setUserClosedPageResult() {
-        PaymentResult result = new PaymentResult("Payment Page closed by user.");
+        PaymentResult result = new PaymentResult("Payment page closed by user.");
         setActivityResult(PaymentUI.RESULT_CODE_CANCELED, result);
     }
 
