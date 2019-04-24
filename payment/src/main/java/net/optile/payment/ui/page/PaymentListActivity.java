@@ -33,24 +33,24 @@ import net.optile.payment.ui.widget.FormWidget;
 import net.optile.payment.util.PaymentUtils;
 
 /**
- * The PaymentPageActivity showing available payment methods
+ * The PaymentListActivity showing available payment methods
  */
-public final class PaymentPageActivity extends AppCompatActivity implements PaymentPageView {
+public final class PaymentListActivity extends AppCompatActivity implements PaymentListView {
 
-    private PaymentPagePresenter presenter;
+    private PaymentListPresenter presenter;
     private boolean active;
     private PaymentList paymentList;
     private int cachedListIndex;
-    private ProgressView progress;
+    private ProgressView progressView;
     
     /**
-     * Create the start intent for this PaymentPageActivity.
+     * Create the start intent for this PaymentListActivity.
      *
      * @param context Context to create the intent
      * @return newly created start intent
      */
     public static Intent createStartIntent(Context context) {
-        return new Intent(context, PaymentPageActivity.class);
+        return new Intent(context, PaymentListActivity.class);
     }
 
     /**
@@ -73,13 +73,13 @@ public final class PaymentPageActivity extends AppCompatActivity implements Paym
         initActionBar(getString(R.string.pmpage_title), true);
         initList(theme);
         initProgressView(theme);
-        this.presenter = new PaymentPagePresenter(this);
+        this.presenter = new PaymentListPresenter(this);
     }
 
     private void initProgressView(PaymentTheme theme) {
         View rootView = findViewById(R.id.layout_paymentpage);
-        progress = new ProgressView(rootView, theme);
-        progress.setSendLabels(getString(R.string.pmprogress_sendheader),
+        progressView = new ProgressView(rootView, theme);
+        progressView.setSendLabels(getString(R.string.pmprogress_sendheader),
             getString(R.string.pmprogress_sendinfo));
     }
 
@@ -123,9 +123,9 @@ public final class PaymentPageActivity extends AppCompatActivity implements Paym
     @Override
     public void onPause() {
         super.onPause();
-        this.active = false;
-        this.presenter.onStop();
-        this.progress.onStop();
+        active = false;
+        presenter.onStop();
+        progressView.onStop();
     }
 
     /**
@@ -134,7 +134,7 @@ public final class PaymentPageActivity extends AppCompatActivity implements Paym
     @Override
     public void onResume() {
         super.onResume();
-        this.active = true;
+        active = true;
         presenter.onStart();
     }
 
@@ -169,14 +169,6 @@ public final class PaymentPageActivity extends AppCompatActivity implements Paym
      * {@inheritDoc}
      */
     @Override
-    public boolean isActive() {
-        return this.active;
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
     public Context getContext() {
         return this;
     }
@@ -193,8 +185,8 @@ public final class PaymentPageActivity extends AppCompatActivity implements Paym
      * {@inheritDoc}
      */
     @Override
-    public void clear() {
-        if (!isActive()) {
+    public void clearList() {
+        if (!active) {
             return;
         }
         paymentList.clear();
@@ -205,12 +197,11 @@ public final class PaymentPageActivity extends AppCompatActivity implements Paym
      */
     @Override
     public void showPaymentSession(PaymentSession session) {
-
-        if (!isActive()) {
+        if (!active) {
             return;
         }
+        progressView.setVisible(false);
         initActionBar(getString(R.string.pmpage_title), true);
-        progress.setVisible(false);
         paymentList.showPaymentSession(session, cachedListIndex);
         this.cachedListIndex = -1;
     }
@@ -219,22 +210,16 @@ public final class PaymentPageActivity extends AppCompatActivity implements Paym
      * {@inheritDoc}
      */
     @Override
-    public void showProgress(boolean show, int style) {
-        if (!isActive()) {
+    public void showProgressView(int style) {
+        if (!active) {
             return;
         }
-        if (show) {
+        paymentList.setVisible(false);
+        progressView.setStyle(style);
+        progressView.setVisible(true);
 
-            if (style == ProgressView.SEND) {
-                initActionBar(getString(R.string.pmprogress_sendtitle), false);
-            }
-            paymentList.setVisible(false);
-            progress.setStyle(style);
-            progress.setVisible(true);
-        } else {
-            initActionBar(getString(R.string.pmpage_title), true);
-            paymentList.setVisible(true);
-            progress.setVisible(false);
+        if (style == ProgressView.SEND) {
+            initActionBar(getString(R.string.pmprogress_sendtitle), false);
         }
     }
 
@@ -243,7 +228,7 @@ public final class PaymentPageActivity extends AppCompatActivity implements Paym
      */
     @Override
     public void closePage() {
-        if (!isActive()) {
+        if (!active) {
             return;
         }
         finish();
@@ -254,7 +239,7 @@ public final class PaymentPageActivity extends AppCompatActivity implements Paym
      */
     @Override
     public void setPaymentResult(int resultCode, PaymentResult result) {
-        if (!isActive()) {
+        if (!active) {
             return;
         }
         setActivityResult(resultCode, result);
@@ -264,7 +249,11 @@ public final class PaymentPageActivity extends AppCompatActivity implements Paym
      * {@inheritDoc}
      */
     @Override
-    public void showDialog(ThemedDialogFragment dialog) {
+    public void showProgressDialog(ThemedDialogFragment dialog) {
+        if (!active) {
+            return;
+        }
+        progressView.setVisible(false);
         dialog.show(getSupportFragmentManager(), "paymentpage_dialog");
     }
 
@@ -273,8 +262,7 @@ public final class PaymentPageActivity extends AppCompatActivity implements Paym
      */
     @Override
     public void showSnackbar(String message) {
-
-        if (TextUtils.isEmpty(message)) {
+        if (!active || TextUtils.isEmpty(message)) {
             return;
         }
         Snackbar snackbar = DialogHelper.createSnackbar(findViewById(R.id.layout_paymentpage), message);

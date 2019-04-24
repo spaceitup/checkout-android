@@ -15,7 +15,7 @@ import android.support.annotation.RawRes;
 import android.text.TextUtils;
 import android.util.Patterns;
 import net.optile.payment.R;
-import net.optile.payment.ui.page.PaymentPageActivity;
+import net.optile.payment.ui.page.PaymentListActivity;
 import net.optile.payment.ui.page.PresetAccountActivity;
 import net.optile.payment.ui.theme.PaymentTheme;
 
@@ -193,7 +193,7 @@ public final class PaymentUI {
      * @param requestCode the requestCode to be used for identifying results in the parent activity
      */
     public void showPaymentPage(Activity activity, int requestCode) {
-        Intent intent = PaymentPageActivity.createStartIntent(activity);
+        Intent intent = PaymentListActivity.createStartIntent(activity);
         launchActivity(activity, intent, requestCode);
     }
 

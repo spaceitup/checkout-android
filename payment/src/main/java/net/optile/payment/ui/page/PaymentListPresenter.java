@@ -11,7 +11,6 @@ package net.optile.payment.ui.page;
 import java.net.URL;
 import java.util.Map;
 
-import android.content.Context;
 import android.text.TextUtils;
 import android.util.Log;
 import net.optile.payment.R;
@@ -36,11 +35,11 @@ import net.optile.payment.ui.service.PaymentSessionService;
 import net.optile.payment.ui.widget.FormWidget;
 
 /**
- * The PaymentPagePresenter implementing the presenter part of the MVP
+ * The PaymentListPresenter implementing the presenter part of the MVP
  */
-final class PaymentPagePresenter implements PaymentSessionListener {
+final class PaymentListPresenter implements PaymentSessionListener {
 
-    private final PaymentPageView view;
+    private final PaymentListView view;
     private final PaymentSessionService service;
 
     private PaymentSession session;
@@ -49,11 +48,11 @@ final class PaymentPagePresenter implements PaymentSessionListener {
     private Operation operation;
     
     /**
-     * Create a new PaymentPagePresenter
+     * Create a new PaymentListPresenter
      *
-     * @param view The PaymentPageView displaying the payment list
+     * @param view The PaymentListView displaying the payment list
      */
-    PaymentPagePresenter(PaymentPageView view) {
+    PaymentListPresenter(PaymentListView view) {
         this.view = view;
         service = new PaymentSessionService();
         service.setListener(this);
@@ -77,7 +76,6 @@ final class PaymentPagePresenter implements PaymentSessionListener {
             view.showPaymentSession(session);
             return;
         }
-        view.showProgress(true, ProgressView.LOAD);
         loadPaymentSession(this.listUrl);
     }
     
@@ -302,7 +300,7 @@ final class PaymentPagePresenter implements PaymentSessionListener {
         String msg = translateInteraction(interaction, null);
 
         if (!TextUtils.isEmpty(msg)) {
-            showMessage(msg);
+            view.showProgressDialog(createMessageDialog(msg, false));
         }
     }
 
@@ -339,14 +337,15 @@ final class PaymentPagePresenter implements PaymentSessionListener {
 
     private void loadPaymentSession(final String listUrl) {
         this.session = null;
-        view.clear();
+        view.clearList();
+        view.showProgressView(ProgressView.LOAD);
         service.loadPaymentSession(listUrl, view.getContext());
     }
 
     private void postOperation(final Operation operation) {
         this.operation = operation;
         int progressType = operation.isType(Operation.PRESET) ? ProgressView.LOAD : ProgressView.SEND;
-        view.showProgress(true, progressType);
+        view.showProgressView(progressType);
         service.postOperation(operation);
     }
 
@@ -372,7 +371,7 @@ final class PaymentPagePresenter implements PaymentSessionListener {
                 view.closePage();
             }
         });
-        view.showDialog(dialog);
+        view.showProgressDialog(dialog);
     }
 
     private void handleOperationConnError() {
@@ -391,7 +390,7 @@ final class PaymentPagePresenter implements PaymentSessionListener {
             public void onDismissed(ThemedDialogFragment dialog) {
             }
         });
-        view.showDialog(dialog);
+        view.showProgressDialog(dialog);
     }
 
     private String translateInteraction(Interaction interaction, String defMessage) {
@@ -401,10 +400,6 @@ final class PaymentPagePresenter implements PaymentSessionListener {
         }
         String msg = session.getLang().translateInteraction(interaction);
         return TextUtils.isEmpty(msg) ? defMessage : msg;
-    }
-
-    private void showMessage(String message) {
-        view.showDialog(createMessageDialog(message, false));
     }
 
     private void closePageWithMessage(String message) {
@@ -420,7 +415,7 @@ final class PaymentPagePresenter implements PaymentSessionListener {
                 view.closePage();
             }
         });
-        view.showDialog(dialog);
+        view.showProgressDialog(dialog);
     }
 
     private MessageDialogFragment createMessageDialog(String message, boolean hasRetry) {

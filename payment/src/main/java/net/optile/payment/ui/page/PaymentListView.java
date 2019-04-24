@@ -14,16 +14,9 @@ import net.optile.payment.ui.dialog.ThemedDialogFragment;
 import net.optile.payment.ui.model.PaymentSession;
 
 /**
- * The PaymentPageView interface is the View part of the MVP, this is implemented by the PaymentPageActivity
+ * The PaymentListView is the interface is the View part of the MVP, this is implemented by the PaymentListActivity
  */
-interface PaymentPageView {
-
-    /**
-     * Is the view currently active
-     *
-     * @return true when active, false otherwise
-     */
-    boolean isActive();
+interface PaymentListView {
 
     /**
      * Get the String value given the resource id
@@ -33,17 +26,16 @@ interface PaymentPageView {
     String getStringRes(int resId);
 
     /**
-     * Clear the list and clear the center message
+     * Clear the list
      */
-    void clear();
+    void clearList();
 
     /**
-     * Show or hide the progress animation, progress animations are shown when lists are loaded or operation requests are performed.
+     * Show the ProgressView either in SEND or LOAD mode.
      *
-     * @param show if true show the progress animation, hide otherwise
      * @param style the style of progress animation to be used
      */
-    void showProgress(boolean show, int style);
+    void showProgressView(int style);
 
     /**
      * Stop loading and show the PaymentSession
@@ -65,11 +57,11 @@ interface PaymentPageView {
     void closePage();
 
     /**
-     * Show the Themed Dialog
+     * Show a Dialog with a message about the progress (send or load)
      *
      * @param dialog to be shown
      */
-    void showDialog(ThemedDialogFragment dialog);
+    void showProgressDialog(ThemedDialogFragment dialog);
 
     /**
      * Set the current activity payment result, this is either PaymentUI.RESULT_CODE_OK,

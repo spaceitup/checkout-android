@@ -19,13 +19,6 @@ import net.optile.payment.ui.model.PaymentSession;
 interface PresetAccountView {
 
     /**
-     * Is the view currently active
-     *
-     * @return true when active, false otherwise
-     */
-    boolean isActive();
-
-    /**
      * Get the String value given the resource id
      *
      * @return the string value or null if not found
@@ -33,12 +26,17 @@ interface PresetAccountView {
     String getStringRes(int resId);
 
     /**
-     * Show or hide the progress animation, progress animations are shown when lists are loaded or operation requests are performed.
-     *
-     * @param show if true show the progress animation, hide otherwise
+     * Show the progress view animation.
      */
-    void showProgress(boolean show);
+    void showProgressView();
 
+    /**
+     * Show the Themed Dialog with a message about the progress
+     *
+     * @param dialog to be shown
+     */
+    void showProgressDialog(ThemedDialogFragment dialog);
+    
     /**
      * Show a snackbar message to the user
      *
@@ -50,13 +48,6 @@ interface PresetAccountView {
      * Close the payment page
      */
     void closePage();
-
-    /**
-     * Show the Themed Dialog
-     *
-     * @param dialog to be shown
-     */
-    void showDialog(ThemedDialogFragment dialog);
 
     /**
      * Set the current activity payment result, this is either PaymentUI.RESULT_CODE_OK,

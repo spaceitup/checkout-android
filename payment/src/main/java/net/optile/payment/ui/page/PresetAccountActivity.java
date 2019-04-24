@@ -33,17 +33,17 @@ import net.optile.payment.ui.widget.FormWidget;
 import net.optile.payment.util.PaymentUtils;
 
 /**
- * The PresetAccountActivity is the view to visualize the charge operation of a PresetAccount. 
- * The presenter of this View will post the PresetAccount operation to the Payment API.
+ * The PresetAccountActivity is the view displaying the loading animation while posting the operation. 
+ * The presenter of this view will post the PresetAccount operation to the Payment API.
  */
 public final class PresetAccountActivity extends AppCompatActivity implements PresetAccountView {
 
     private PresetAccountPresenter presenter;
     private boolean active;
-    private ProgressView progress;
+    private ProgressView progressView;
     
     /**
-     * Create the start intent for this PresetAccountActivity.
+     * Create the start intent for this PresetAccountActivity
      *
      * @param context Context to create the intent
      * @return newly created start intent
@@ -75,10 +75,10 @@ public final class PresetAccountActivity extends AppCompatActivity implements Pr
 
     private void initProgressView(PaymentTheme theme) {
         View rootView = findViewById(R.id.layout_parent);
-        progress = new ProgressView(rootView, theme);
-        progress.setStyle(ProgressView.SEND);
-        progress.setSendLabels(getString(R.string.pmprogress_sendheader),
-                               getString(R.string.pmprogress_sendinfo));
+        progressView = new ProgressView(rootView, theme);
+        progressView.setStyle(ProgressView.SEND);
+        progressView.setSendLabels(getString(R.string.pmprogress_sendheader),
+                                   getString(R.string.pmprogress_sendinfo));
     }
 
     private void initPageTheme(PaymentTheme theme) {
@@ -106,9 +106,9 @@ public final class PresetAccountActivity extends AppCompatActivity implements Pr
     @Override
     public void onPause() {
         super.onPause();
-        this.active = false;
-        this.presenter.onStop();
-        this.progress.onStop();
+        active = false;
+        presenter.onStop();
+        progressView.onStop();
     }
 
     /**
@@ -117,7 +117,7 @@ public final class PresetAccountActivity extends AppCompatActivity implements Pr
     @Override
     public void onResume() {
         super.onResume();
-        this.active = true;
+        active = true;
         presenter.onStart();
     }
 
@@ -131,14 +131,6 @@ public final class PresetAccountActivity extends AppCompatActivity implements Pr
         }
         setUserClosedPageResult();
         super.onBackPressed();
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public boolean isActive() {
-        return this.active;
     }
 
     /**
@@ -161,11 +153,11 @@ public final class PresetAccountActivity extends AppCompatActivity implements Pr
      * {@inheritDoc}
      */
     @Override
-    public void showProgress(boolean show) {
-        if (!isActive()) {
+    public void showProgressView() {
+        if (!active) {
             return;
         }
-        progress.setVisible(show);
+        progressView.setVisible(true);
     }
 
     /**
@@ -173,7 +165,7 @@ public final class PresetAccountActivity extends AppCompatActivity implements Pr
      */
     @Override
     public void closePage() {
-        if (!isActive()) {
+        if (!active) {
             return;
         }
         finish();
@@ -184,7 +176,7 @@ public final class PresetAccountActivity extends AppCompatActivity implements Pr
      */
     @Override
     public void setPaymentResult(int resultCode, PaymentResult result) {
-        if (!isActive()) {
+        if (!active) {
             return;
         }
         setActivityResult(resultCode, result);
@@ -194,7 +186,12 @@ public final class PresetAccountActivity extends AppCompatActivity implements Pr
      * {@inheritDoc}
      */
     @Override
-    public void showDialog(ThemedDialogFragment dialog) {
+    public void showProgressDialog(ThemedDialogFragment dialog) {
+
+        if (!active) {
+            return;
+        }
+        progressView.setVisible(false);
         dialog.show(getSupportFragmentManager(), "paymentpage_dialog");
     }
 
@@ -204,7 +201,7 @@ public final class PresetAccountActivity extends AppCompatActivity implements Pr
     @Override
     public void showSnackbar(String message) {
 
-        if (TextUtils.isEmpty(message)) {
+        if (!active || TextUtils.isEmpty(message)) {
             return;
         }
         Snackbar snackbar = DialogHelper.createSnackbar(findViewById(R.id.layout_parent), message);

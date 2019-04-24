@@ -27,14 +27,14 @@ import net.optile.payment.ui.dialog.DialogHelper;
 import net.optile.payment.ui.model.AccountCard;
 import net.optile.payment.ui.model.NetworkCard;
 import net.optile.payment.ui.model.PaymentSession;
-import net.optile.payment.ui.page.PaymentPageActivity;
+import net.optile.payment.ui.page.PaymentListActivity;
 
 /**
  * The PaymentList showing available payment methods and accounts in a list
  */
 public final class PaymentList {
 
-    private final PaymentPageActivity activity;
+    private final PaymentListActivity activity;
     private final ListAdapter adapter;
     private final RecyclerView recyclerView;
     private final TextView emptyMessage;
@@ -44,7 +44,7 @@ public final class PaymentList {
     private int selIndex;
     private int viewType;
 
-    public PaymentList(PaymentPageActivity activity, RecyclerView recyclerView, TextView emptyMessage) {
+    public PaymentList(PaymentListActivity activity, RecyclerView recyclerView, TextView emptyMessage) {
         this.activity = activity;
         this.items = new ArrayList<>();
         this.adapter = new ListAdapter(this, items);

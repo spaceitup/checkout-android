@@ -37,8 +37,8 @@ import net.optile.payment.ui.service.PaymentSessionService;
 import net.optile.payment.ui.widget.FormWidget;
 
 /**
- * The PresetAccountPresenter takes care of finalizing the payment of a PresetAccount.
- * First this presenter will load the current list and perform the operation of the PresetAccount.
+ * The PresetAccountPresenter takes care of posting the operation of the PresetAccount to the Payment API.
+ * First this presenter will load the list, checks if a PresetAccount is available and post the operation to the Payment API.
  */
 final class PresetAccountPresenter implements PaymentSessionListener {
 
@@ -52,7 +52,7 @@ final class PresetAccountPresenter implements PaymentSessionListener {
     /**
      * Create a new PresetAccountPresenter
      *
-     * @param view The PresetAccountView displaying the payment list
+     * @param view The PresetAccountView
      */
     PresetAccountPresenter(PresetAccountView view) {
         this.view = view;
@@ -61,10 +61,7 @@ final class PresetAccountPresenter implements PaymentSessionListener {
     }
 
     /**
-     * Start the PresetAccount presenter. 
-     *
-     * @param context context in which this presenter is running
-     * @param chargePresetAccount if true charge the preset account after the payment session has been loaded
+     * Start the PresetAccount presenter 
      */
     void onStart() {
 
@@ -72,7 +69,6 @@ final class PresetAccountPresenter implements PaymentSessionListener {
             return;
         }
         this.listUrl = PaymentUI.getInstance().getListUrl();
-        view.showProgress(true);
         loadPaymentSession(this.listUrl);
     }
     
@@ -84,9 +80,9 @@ final class PresetAccountPresenter implements PaymentSessionListener {
     }
 
     /**
-     * Let the Presenter handle the back press.
+     * Let this presenter handle the back pressed. 
      *
-     * @return true when this presenter handles the back press, false otherwise
+     * @return true when this presenter handled the back press, false otherwise
      */
     boolean onBackPressed() {
         if (service.isActive()) {
@@ -252,12 +248,13 @@ final class PresetAccountPresenter implements PaymentSessionListener {
 
     private void loadPaymentSession(final String listUrl) {
         this.session = null;
+        view.showProgressView();
         service.loadPaymentSession(listUrl, view.getContext());
     }
 
     private void postOperation(final Operation operation) {
         this.operation = operation;
-        view.showProgress(true);
+        view.showProgressView();
         service.postOperation(operation);
     }
 
@@ -283,7 +280,7 @@ final class PresetAccountPresenter implements PaymentSessionListener {
                 view.closePage();
             }
         });
-        view.showDialog(dialog);
+        view.showProgressDialog(dialog);
     }
 
     private void handleOperationConnError(final PaymentException pe) {
@@ -308,7 +305,7 @@ final class PresetAccountPresenter implements PaymentSessionListener {
                 view.closePage();
             }
         });
-        view.showDialog(dialog);
+        view.showProgressDialog(dialog);
     }
 
     private String translateInteraction(Interaction interaction, String defMessage) {
@@ -321,7 +318,7 @@ final class PresetAccountPresenter implements PaymentSessionListener {
     }
 
     private void showMessage(String message) {
-        view.showDialog(createMessageDialog(message, false));
+        view.showProgressDialog(createMessageDialog(message, false));
     }
 
     private void closePageWithMessage(String message) {
@@ -337,7 +334,7 @@ final class PresetAccountPresenter implements PaymentSessionListener {
                 view.closePage();
             }
         });
-        view.showDialog(dialog);
+        view.showProgressDialog(dialog);
     }
 
     private MessageDialogFragment createMessageDialog(String message, boolean hasRetry) {
