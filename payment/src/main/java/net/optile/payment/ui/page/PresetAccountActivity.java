@@ -192,7 +192,7 @@ public final class PresetAccountActivity extends AppCompatActivity implements Pr
             return;
         }
         progressView.setVisible(false);
-        dialog.show(getSupportFragmentManager(), "paymentpage_dialog");
+        dialog.show(getSupportFragmentManager(), "presetaccount_dialog");
     }
 
     /**

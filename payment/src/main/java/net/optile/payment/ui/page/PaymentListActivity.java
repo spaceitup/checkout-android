@@ -33,7 +33,7 @@ import net.optile.payment.ui.widget.FormWidget;
 import net.optile.payment.util.PaymentUtils;
 
 /**
- * The PaymentListActivity showing available payment methods
+ * The PaymentListActivity showing available payment methods in a list.
  */
 public final class PaymentListActivity extends AppCompatActivity implements PaymentListView {
 
@@ -60,14 +60,14 @@ public final class PaymentListActivity extends AppCompatActivity implements Paym
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        PaymentResult result = new PaymentResult("Inializing Payment Page.");
+        PaymentResult result = new PaymentResult("Inializing payment page.");
         setActivityResult(PaymentUI.RESULT_CODE_CANCELED, result);
         this.cachedListIndex = -1;
 
         PaymentTheme theme = PaymentUI.getInstance().getPaymentTheme();
         initPageTheme(theme);
 
-        setContentView(R.layout.activity_paymentpage);
+        setContentView(R.layout.activity_paymentlist);
         setRequestedOrientation(PaymentUI.getInstance().getOrientation());
 
         initActionBar(getString(R.string.pmpage_title), true);
@@ -77,7 +77,7 @@ public final class PaymentListActivity extends AppCompatActivity implements Paym
     }
 
     private void initProgressView(PaymentTheme theme) {
-        View rootView = findViewById(R.id.layout_paymentpage);
+        View rootView = findViewById(R.id.layout_parent);
         progressView = new ProgressView(rootView, theme);
         progressView.setSendLabels(getString(R.string.pmprogress_sendheader),
             getString(R.string.pmprogress_sendinfo));
@@ -254,7 +254,7 @@ public final class PaymentListActivity extends AppCompatActivity implements Paym
             return;
         }
         progressView.setVisible(false);
-        dialog.show(getSupportFragmentManager(), "paymentpage_dialog");
+        dialog.show(getSupportFragmentManager(), "paymentlist_dialog");
     }
 
     /**
@@ -265,7 +265,7 @@ public final class PaymentListActivity extends AppCompatActivity implements Paym
         if (!active || TextUtils.isEmpty(message)) {
             return;
         }
-        Snackbar snackbar = DialogHelper.createSnackbar(findViewById(R.id.layout_paymentpage), message);
+        Snackbar snackbar = DialogHelper.createSnackbar(findViewById(R.id.layout_parent), message);
         snackbar.show();
     }
 
@@ -274,7 +274,7 @@ public final class PaymentListActivity extends AppCompatActivity implements Paym
     }
 
     private void setUserClosedPageResult() {
-        PaymentResult result = new PaymentResult("Payment Page closed by user.");
+        PaymentResult result = new PaymentResult("Payment page closed by user.");
         setActivityResult(PaymentUI.RESULT_CODE_CANCELED, result);
     }
 

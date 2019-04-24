@@ -77,16 +77,7 @@ public class ListConnectionTest {
     @Test(expected = IllegalArgumentException.class)
     public void loadLanguageFile_invalidURL_IllegalArgumentException() throws PaymentException {
         ListConnection conn = new ListConnection();
-        LanguageFile lang = conn.loadLanguageFile(null, new LanguageFile());
-    }
-
-    /**
-     * Gets language Properties invalid properties
-     */
-    @Test(expected = IllegalArgumentException.class)
-    public void loadLanguageFile_invalidProperties_IllegalArgumentException() throws PaymentException {
-        ListConnection conn = new ListConnection();
-        LanguageFile lang = conn.loadLanguageFile(createTestURL(), null);
+        LanguageFile lang = conn.loadLanguageFile(null, false);
     }
 
     private URL createTestURL() {
