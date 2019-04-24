@@ -19,13 +19,6 @@ import net.optile.payment.ui.model.PaymentSession;
 interface PaymentListView {
 
     /**
-     * Get the String value given the resource id
-     *
-     * @return the string value or null if not found
-     */
-    String getStringRes(int resId);
-
-    /**
      * Clear the list
      */
     void clearList();
@@ -45,11 +38,11 @@ interface PaymentListView {
     void showPaymentSession(PaymentSession session);
 
     /**
-     * Show a snackbar message to the user
+     * Show a warning message to the user
      *
      * @param message The message to be shown
      */
-    void showSnackbar(String message);
+    void showWarningMessage(String message);
 
     /**
      * Close the payment page
@@ -71,11 +64,4 @@ interface PaymentListView {
      * @param result containing the Payment result state
      */
     void setPaymentResult(int resultCode, PaymentResult result);
-
-    /**
-     * Get the context from this view
-     *
-     * @return the context of this view
-     */
-    Context getContext();
 }

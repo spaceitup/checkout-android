@@ -197,8 +197,8 @@ public final class PaymentUI {
         launchActivity(activity, intent, requestCode);
     }
 
-    /** 
-     * Validate Android SDK Settings before launching the Activity. 
+    /**
+     * Validate Android SDK Settings before launching the Activity.
      *
      * @param activity the activity that will be notified when this PaymentPage is finished
      * @param requestCode the requestCode to be used for identifying results in the parent activity

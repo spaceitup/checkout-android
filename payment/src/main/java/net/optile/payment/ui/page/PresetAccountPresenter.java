@@ -43,25 +43,28 @@ import net.optile.payment.ui.widget.FormWidget;
 final class PresetAccountPresenter implements PaymentSessionListener {
 
     private final PresetAccountView view;
+    private final Context context;
     private final PaymentSessionService service;
 
     private PaymentSession session;
     private String listUrl;
     private Operation operation;
-    
+
     /**
      * Create a new PresetAccountPresenter
      *
      * @param view The PresetAccountView
+     * @param context the context in which this presenter is initialized
      */
-    PresetAccountPresenter(PresetAccountView view) {
+    PresetAccountPresenter(PresetAccountView view, Context context) {
         this.view = view;
+        this.context = context;
         service = new PaymentSessionService();
         service.setListener(this);
     }
 
     /**
-     * Start the PresetAccount presenter 
+     * Start the PresetAccount presenter
      */
     void onStart() {
 
@@ -71,7 +74,7 @@ final class PresetAccountPresenter implements PaymentSessionListener {
         this.listUrl = PaymentUI.getInstance().getListUrl();
         loadPaymentSession(this.listUrl);
     }
-    
+
     /**
      * Notify this presenter that it should stop and cleanup its resources
      */
@@ -80,13 +83,13 @@ final class PresetAccountPresenter implements PaymentSessionListener {
     }
 
     /**
-     * Let this presenter handle the back pressed. 
+     * Let this presenter handle the back pressed.
      *
      * @return true when this presenter handled the back press, false otherwise
      */
     boolean onBackPressed() {
         if (service.isActive()) {
-            view.showSnackbar(view.getStringRes(R.string.pmsnackbar_operation_interrupted));
+            view.showWarningMessage(context.getString(R.string.pmsnackbar_operation_interrupted));
             return true;
         }
         return false;
@@ -216,7 +219,7 @@ final class PresetAccountPresenter implements PaymentSessionListener {
         String msg = translateInteraction(interaction, null);
 
         if (!TextUtils.isEmpty(msg)) {
-            showMessage(msg);
+            view.showProgressDialog(createMessageDialog(msg, false));
         }
     }
 
@@ -226,7 +229,7 @@ final class PresetAccountPresenter implements PaymentSessionListener {
     }
 
     private void closeSessionWithCanceledCode(PaymentResult result) {
-        String msg = translateInteraction(result.getInteraction(), view.getStringRes(R.string.pmdialog_error_unknown));
+        String msg = translateInteraction(result.getInteraction(), context.getString(R.string.pmdialog_error_unknown));
         view.setPaymentResult(PaymentUI.RESULT_CODE_CANCELED, result);
         closePageWithMessage(msg);
     }
@@ -238,18 +241,18 @@ final class PresetAccountPresenter implements PaymentSessionListener {
             PaymentException pe = (PaymentException) cause;
             result = new PaymentResult(pe.getMessage(), pe.error);
         } else {
-            String resultInfo = cause != null ? cause.toString() : view.getStringRes(msgResId);
+            String resultInfo = cause != null ? cause.toString() : context.getString(msgResId);
             PaymentError error = new PaymentError("PresetAccount", PaymentError.INTERNAL_ERROR, resultInfo);
             result = new PaymentResult(resultInfo, error);
         }
         view.setPaymentResult(PaymentUI.RESULT_CODE_ERROR, result);
-        closePageWithMessage(view.getStringRes(msgResId));
+        closePageWithMessage(context.getString(msgResId));
     }
 
     private void loadPaymentSession(final String listUrl) {
         this.session = null;
         view.showProgressView();
-        service.loadPaymentSession(listUrl, view.getContext());
+        service.loadPaymentSession(listUrl, context);
     }
 
     private void postOperation(final Operation operation) {
@@ -259,7 +262,7 @@ final class PresetAccountPresenter implements PaymentSessionListener {
     }
 
     private void handleLoadConnError(final PaymentException pe) {
-        MessageDialogFragment dialog = createMessageDialog(view.getStringRes(R.string.pmdialog_error_connection), true);
+        MessageDialogFragment dialog = createMessageDialog(context.getString(R.string.pmdialog_error_connection), true);
         PaymentResult result = new PaymentResult(pe.getMessage(), pe.error);
         view.setPaymentResult(PaymentUI.RESULT_CODE_CANCELED, result);
 
@@ -284,7 +287,7 @@ final class PresetAccountPresenter implements PaymentSessionListener {
     }
 
     private void handleOperationConnError(final PaymentException pe) {
-        MessageDialogFragment dialog = createMessageDialog(view.getStringRes(R.string.pmdialog_error_connection), true);
+        MessageDialogFragment dialog = createMessageDialog(context.getString(R.string.pmdialog_error_connection), true);
         PaymentResult result = new PaymentResult(pe.getMessage(), pe.error);
         view.setPaymentResult(PaymentUI.RESULT_CODE_CANCELED, result);
 
@@ -317,10 +320,6 @@ final class PresetAccountPresenter implements PaymentSessionListener {
         return TextUtils.isEmpty(msg) ? defMessage : msg;
     }
 
-    private void showMessage(String message) {
-        view.showProgressDialog(createMessageDialog(message, false));
-    }
-
     private void closePageWithMessage(String message) {
         MessageDialogFragment dialog = createMessageDialog(message, false);
         dialog.setListener(new ThemedDialogListener() {
@@ -340,10 +339,10 @@ final class PresetAccountPresenter implements PaymentSessionListener {
     private MessageDialogFragment createMessageDialog(String message, boolean hasRetry) {
         MessageDialogFragment dialog = new MessageDialogFragment();
         dialog.setMessage(message);
-        dialog.setNeutralButton(view.getStringRes(R.string.pmdialog_cancel_button));
+        dialog.setNeutralButton(context.getString(R.string.pmdialog_cancel_button));
 
         if (hasRetry) {
-            dialog.setPositiveButton(view.getStringRes(R.string.pmdialog_retry_button));
+            dialog.setPositiveButton(context.getString(R.string.pmdialog_retry_button));
         }
         return dialog;
     }

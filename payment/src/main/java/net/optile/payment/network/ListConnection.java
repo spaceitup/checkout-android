@@ -174,7 +174,7 @@ public final class ListConnection extends BaseConnection {
         if (url == null) {
             throw new IllegalArgumentException(source + " - url cannot be null");
         }
-        LanguageFile lang = null;
+        LanguageFile lang;
 
         if (cache) {
             lang = getCachedLanguageFile(url.toString());
