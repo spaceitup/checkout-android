@@ -20,8 +20,8 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
-import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
 import com.google.gson.JsonParseException;
 
@@ -41,20 +41,7 @@ import net.optile.payment.model.ListResult;
  */
 public final class ListConnection extends BaseConnection {
 
-    private final static Object cacheLock = new Object();
-    private final static Map<String, LanguageFile> languageCache = new HashMap<>();
-
-    private static void cacheLanguageFile(String key, LanguageFile file) {
-        synchronized (cacheLock) {
-            languageCache.put(key, file);
-        }
-    }
-
-    private static LanguageFile getCachedLanguageFile(String key) {
-        synchronized (cacheLock) {
-            return languageCache.get(key);
-        }
-    }
+    private final static Map<String, LanguageFile> languageCache = new ConcurrentHashMap<>();
 
     /**
      * Create a new payment session through the Payment API. Remind this is not
@@ -177,7 +164,7 @@ public final class ListConnection extends BaseConnection {
         LanguageFile lang;
 
         if (cache) {
-            lang = getCachedLanguageFile(url.toString());
+            lang = languageCache.get(url.toString());
 
             if (lang != null) {
                 return lang;
@@ -194,7 +181,7 @@ public final class ListConnection extends BaseConnection {
                 lang.getProperties().load(ir);
             }
             if (cache) {
-                cacheLanguageFile(url.toString(), lang);
+                languageCache.putIfAbsent(url.toString(), lang);
             }
             return lang;
         } catch (IOException e) {

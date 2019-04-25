@@ -265,6 +265,7 @@ final class PresetAccountPresenter implements PaymentSessionListener {
                         break;
                     case ThemedDialogFragment.BUTTON_POSITIVE:
                         loadPaymentSession(listUrl);
+                        break;
                 }
             }
 
@@ -290,6 +291,7 @@ final class PresetAccountPresenter implements PaymentSessionListener {
                         break;
                     case ThemedDialogFragment.BUTTON_POSITIVE:
                         postOperation(operation);
+                        break;
                 }
             }
 

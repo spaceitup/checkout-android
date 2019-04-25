@@ -360,6 +360,7 @@ final class PaymentListPresenter implements PaymentSessionListener {
                         break;
                     case ThemedDialogFragment.BUTTON_POSITIVE:
                         loadPaymentSession(listUrl);
+                        break;
                 }
             }
 
