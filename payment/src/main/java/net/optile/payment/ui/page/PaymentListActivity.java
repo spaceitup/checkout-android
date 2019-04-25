@@ -56,7 +56,7 @@ public final class PaymentListActivity extends BasePaymentActivity implements Pa
 
         initProgressView();
         initPaymentList();
-        this.presenter = new PaymentListPresenter(this, this);
+        this.presenter = new PaymentListPresenter(this);
     }
 
     /**
@@ -187,6 +187,14 @@ public final class PaymentListActivity extends BasePaymentActivity implements Pa
         }
         progressView.setVisible(false);
         dialog.show(getSupportFragmentManager(), "paymentlist_dialog");
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public Context getContext() {
+        return this;
     }
 
     /**

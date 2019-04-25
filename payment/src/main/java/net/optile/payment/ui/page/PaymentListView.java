@@ -64,4 +64,12 @@ interface PaymentListView {
      * @param result containing the Payment result state
      */
     void setPaymentResult(int resultCode, PaymentResult result);
+
+    /**
+     * Get the Android Context of this view.
+     *
+     * @return the Context of this view
+     */
+    Context getContext();
+
 }

@@ -9,6 +9,7 @@
 package net.optile.payment.form;
 
 import java.net.URL;
+import java.util.Objects;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -27,7 +28,8 @@ public class Operation {
     public final static String PRESET = "PRESET";
     public final static String PAYOUT = "PAYOUT";
     public final static String UPDATE = "UPDATE";
-
+    public final static String ACTIVATE = "ACTIVATE";
+    
     private final URL url;
     private final JSONObject form;
     private final JSONObject account;
@@ -90,6 +92,8 @@ public class Operation {
             return UPDATE;
         } else if (path.endsWith("payout")) {
             return PAYOUT;
+        } else if (path.endsWith("activate")) {
+            return ACTIVATE;
         }
         return null;
     }
@@ -101,7 +105,7 @@ public class Operation {
      * @return true when the types matches, false otherwise.
      */
     public boolean isType(String type) {
-        return type != null && type.equals(getType());
+        return Objects.equals(type, getType());
     }
 
     public String toJson() throws JSONException {

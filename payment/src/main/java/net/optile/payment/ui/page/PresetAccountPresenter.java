@@ -8,12 +8,7 @@
 
 package net.optile.payment.ui.page;
 
-import java.net.URL;
-import java.util.Map;
-
-import android.content.Context;
 import android.text.TextUtils;
-import android.util.Log;
 import net.optile.payment.R;
 import net.optile.payment.core.PaymentError;
 import net.optile.payment.core.PaymentException;
@@ -29,12 +24,10 @@ import net.optile.payment.ui.PaymentUI;
 import net.optile.payment.ui.dialog.MessageDialogFragment;
 import net.optile.payment.ui.dialog.ThemedDialogFragment;
 import net.optile.payment.ui.dialog.ThemedDialogFragment.ThemedDialogListener;
-import net.optile.payment.ui.model.PaymentCard;
-import net.optile.payment.ui.model.PresetCard;
 import net.optile.payment.ui.model.PaymentSession;
+import net.optile.payment.ui.model.PresetCard;
 import net.optile.payment.ui.service.PaymentSessionListener;
 import net.optile.payment.ui.service.PaymentSessionService;
-import net.optile.payment.ui.widget.FormWidget;
 
 /**
  * The PresetAccountPresenter takes care of posting the operation of the PresetAccount to the Payment API.
@@ -43,7 +36,6 @@ import net.optile.payment.ui.widget.FormWidget;
 final class PresetAccountPresenter implements PaymentSessionListener {
 
     private final PresetAccountView view;
-    private final Context context;
     private final PaymentSessionService service;
 
     private PaymentSession session;
@@ -54,11 +46,9 @@ final class PresetAccountPresenter implements PaymentSessionListener {
      * Create a new PresetAccountPresenter
      *
      * @param view The PresetAccountView
-     * @param context the context in which this presenter is initialized
      */
-    PresetAccountPresenter(PresetAccountView view, Context context) {
+    PresetAccountPresenter(PresetAccountView view) {
         this.view = view;
-        this.context = context;
         service = new PaymentSessionService();
         service.setListener(this);
     }
@@ -89,7 +79,7 @@ final class PresetAccountPresenter implements PaymentSessionListener {
      */
     boolean onBackPressed() {
         if (service.isActive()) {
-            view.showWarningMessage(context.getString(R.string.pmsnackbar_operation_interrupted));
+            view.showWarningMessage(getString(R.string.pmsnackbar_operation_interrupted));
             return true;
         }
         return false;
@@ -229,7 +219,7 @@ final class PresetAccountPresenter implements PaymentSessionListener {
     }
 
     private void closeSessionWithCanceledCode(PaymentResult result) {
-        String msg = translateInteraction(result.getInteraction(), context.getString(R.string.pmdialog_error_unknown));
+        String msg = translateInteraction(result.getInteraction(), getString(R.string.pmdialog_error_unknown));
         view.setPaymentResult(PaymentUI.RESULT_CODE_CANCELED, result);
         closePageWithMessage(msg);
     }
@@ -241,18 +231,18 @@ final class PresetAccountPresenter implements PaymentSessionListener {
             PaymentException pe = (PaymentException) cause;
             result = new PaymentResult(pe.getMessage(), pe.error);
         } else {
-            String resultInfo = cause != null ? cause.toString() : context.getString(msgResId);
+            String resultInfo = cause != null ? cause.toString() : getString(msgResId);
             PaymentError error = new PaymentError("PresetAccount", PaymentError.INTERNAL_ERROR, resultInfo);
             result = new PaymentResult(resultInfo, error);
         }
         view.setPaymentResult(PaymentUI.RESULT_CODE_ERROR, result);
-        closePageWithMessage(context.getString(msgResId));
+        closePageWithMessage(getString(msgResId));
     }
 
     private void loadPaymentSession(final String listUrl) {
         this.session = null;
         view.showProgressView();
-        service.loadPaymentSession(listUrl, context);
+        service.loadPaymentSession(listUrl, view.getContext());
     }
 
     private void postOperation(final Operation operation) {
@@ -262,7 +252,7 @@ final class PresetAccountPresenter implements PaymentSessionListener {
     }
 
     private void handleLoadConnError(final PaymentException pe) {
-        MessageDialogFragment dialog = createMessageDialog(context.getString(R.string.pmdialog_error_connection), true);
+        MessageDialogFragment dialog = createMessageDialog(getString(R.string.pmdialog_error_connection), true);
         PaymentResult result = new PaymentResult(pe.getMessage(), pe.error);
         view.setPaymentResult(PaymentUI.RESULT_CODE_CANCELED, result);
 
@@ -287,7 +277,7 @@ final class PresetAccountPresenter implements PaymentSessionListener {
     }
 
     private void handleOperationConnError(final PaymentException pe) {
-        MessageDialogFragment dialog = createMessageDialog(context.getString(R.string.pmdialog_error_connection), true);
+        MessageDialogFragment dialog = createMessageDialog(getString(R.string.pmdialog_error_connection), true);
         PaymentResult result = new PaymentResult(pe.getMessage(), pe.error);
         view.setPaymentResult(PaymentUI.RESULT_CODE_CANCELED, result);
 
@@ -339,11 +329,15 @@ final class PresetAccountPresenter implements PaymentSessionListener {
     private MessageDialogFragment createMessageDialog(String message, boolean hasRetry) {
         MessageDialogFragment dialog = new MessageDialogFragment();
         dialog.setMessage(message);
-        dialog.setNeutralButton(context.getString(R.string.pmdialog_cancel_button));
+        dialog.setNeutralButton(getString(R.string.pmdialog_cancel_button));
 
         if (hasRetry) {
-            dialog.setPositiveButton(context.getString(R.string.pmdialog_retry_button));
+            dialog.setPositiveButton(getString(R.string.pmdialog_retry_button));
         }
         return dialog;
+    }
+
+    private String getString(int resId) {
+        return view.getContext().getString(resId);
     }
 }

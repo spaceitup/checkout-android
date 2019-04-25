@@ -43,7 +43,7 @@ public final class PresetAccountActivity extends BasePaymentActivity implements 
 
         setActionBar(getString(R.string.pmprogress_sendtitle), false);
         initProgressView();
-        this.presenter = new PresetAccountPresenter(this, this);
+        this.presenter = new PresetAccountPresenter(this);
     }
 
     /**
@@ -87,6 +87,14 @@ public final class PresetAccountActivity extends BasePaymentActivity implements 
         }
         progressView.setStyle(ProgressView.SEND);
         progressView.setVisible(true);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public Context getContext() {
+        return this;
     }
 
     /**

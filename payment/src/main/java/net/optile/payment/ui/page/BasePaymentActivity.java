@@ -8,7 +8,6 @@
 
 package net.optile.payment.ui.page;
 
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.ActionBar;
@@ -66,7 +65,7 @@ abstract class BasePaymentActivity extends AppCompatActivity {
         super.onResume();
         active = true;
     }
-    
+
     /**
      * Initialize the ProgressView, the UI elements needed by the ProgressView must be available in the root view of the activity.
      */
