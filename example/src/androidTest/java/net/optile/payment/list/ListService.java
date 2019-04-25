@@ -27,8 +27,8 @@ public class ListService {
 
     public String createNewListUrl() throws IOException {
         Context context = InstrumentationRegistry.getTargetContext();
-        String url = context.getString(R.string.payment_url);
-        String auth = context.getString(R.string.payment_authorization);
+        String url = context.getString(R.string.paymentapi_url);
+        String auth = context.getString(R.string.paymentapi_auth);
         String jsonBody = loadJsonBody();
         return getListUrl(url, auth, jsonBody);
     }
@@ -42,8 +42,8 @@ public class ListService {
 
     public String createConfigListUrl(ListConfig config) throws IOException {
         Context context = InstrumentationRegistry.getTargetContext();
-        String url = context.getString(R.string.payment_url);
-        String auth = context.getString(R.string.payment_authorization);
+        String url = context.getString(R.string.paymentapi_url);
+        String auth = context.getString(R.string.paymentapi_auth);
         return getListUrl(url, auth, config.toJsonString());
     }
 
