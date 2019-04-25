@@ -17,8 +17,8 @@ android {
         versionCode rootProject.versionCode
         versionName rootProject.versionName
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
-        resValue "string", "payment_authorization", "$System.env.PAYMENT_AUTHORIZATION"
-        resValue "string", "payment_url", "$System.env.PAYMENT_URL"
+        resValue "string", "paymentapi_auth", "$System.env.ANDROIDSDK_PAYMENTAPI_AUTH"
+        resValue "string", "paymentapi_url", "$System.env.ANDROIDSDK_PAYMENTAPI_URL"
     }
 
     buildTypes {
