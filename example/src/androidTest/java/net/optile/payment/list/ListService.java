@@ -66,8 +66,7 @@ public class ListService {
     }
 
     private String loadJsonBody() throws IOException {
-        String json = PaymentUtils.readRawResource(InstrumentationRegistry.getContext().getResources(),
+        return PaymentUtils.readRawResource(InstrumentationRegistry.getContext().getResources(),
             net.optile.example.checkout.test.R.raw.preset);
-        return json;
     }
 }

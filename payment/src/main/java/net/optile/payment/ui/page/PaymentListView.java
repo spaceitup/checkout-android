@@ -8,41 +8,27 @@
 
 package net.optile.payment.ui.page;
 
+import android.content.Context;
 import net.optile.payment.ui.PaymentResult;
 import net.optile.payment.ui.dialog.ThemedDialogFragment;
 import net.optile.payment.ui.model.PaymentSession;
 
 /**
- * The PaymentPageView interface is the View part of the MVP, this is implemented by the PaymentPageActivity
+ * The PaymentListView is the interface is the View part of the MVP, this is implemented by the PaymentListActivity
  */
-interface PaymentPageView {
+interface PaymentListView {
 
     /**
-     * Is the view currently active
-     *
-     * @return true when active, false otherwise
+     * Clear the list
      */
-    boolean isActive();
+    void clearList();
 
     /**
-     * Get the String value given the resource id
+     * Show the ProgressView either in SEND or LOAD mode.
      *
-     * @return the string value or null if not found
-     */
-    String getStringRes(int resId);
-
-    /**
-     * Clear the list and clear the center message
-     */
-    void clear();
-
-    /**
-     * Show or hide the progress animation, progress animations are shown when lists are loaded or operation requests are performed.
-     *
-     * @param show if true show the progress animation, hide otherwise
      * @param style the style of progress animation to be used
      */
-    void showProgress(boolean show, int style);
+    void showProgressView(int style);
 
     /**
      * Stop loading and show the PaymentSession
@@ -52,11 +38,11 @@ interface PaymentPageView {
     void showPaymentSession(PaymentSession session);
 
     /**
-     * Show a snackbar message to the user
+     * Show a warning message to the user
      *
      * @param message The message to be shown
      */
-    void showSnackbar(String message);
+    void showWarningMessage(String message);
 
     /**
      * Close the payment page
@@ -64,11 +50,11 @@ interface PaymentPageView {
     void closePage();
 
     /**
-     * Show the Themed Dialog
+     * Show a Dialog with a message about the progress (send or load)
      *
      * @param dialog to be shown
      */
-    void showDialog(ThemedDialogFragment dialog);
+    void showProgressDialog(ThemedDialogFragment dialog);
 
     /**
      * Set the current activity payment result, this is either PaymentUI.RESULT_CODE_OK,
@@ -78,4 +64,12 @@ interface PaymentPageView {
      * @param result containing the Payment result state
      */
     void setPaymentResult(int resultCode, PaymentResult result);
+
+    /**
+     * Get the Android Context of this view.
+     *
+     * @return the Context of this view
+     */
+    Context getContext();
+
 }

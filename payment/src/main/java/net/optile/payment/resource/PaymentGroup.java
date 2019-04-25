@@ -38,7 +38,7 @@ public class PaymentGroup {
         for (PaymentGroupItem item : items) {
             map.put(item.getCode(), this);
         }
-     }
+    }
 
     /**
      * Get the smart selection regex given the payment code.

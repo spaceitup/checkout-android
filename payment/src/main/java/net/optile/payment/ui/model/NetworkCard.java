@@ -21,7 +21,6 @@ import net.optile.payment.model.PaymentMethod;
  * Class for holding the data of a NetworkCard in the list
  */
 public final class NetworkCard implements PaymentCard {
-
     private final List<PaymentNetwork> networks;
     private final List<PaymentNetwork> smartSelected;
     private final List<PaymentNetwork> smartBuffer;

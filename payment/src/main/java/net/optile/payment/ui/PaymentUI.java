@@ -15,7 +15,8 @@ import android.support.annotation.RawRes;
 import android.text.TextUtils;
 import android.util.Patterns;
 import net.optile.payment.R;
-import net.optile.payment.ui.page.PaymentPageActivity;
+import net.optile.payment.ui.page.PaymentListActivity;
+import net.optile.payment.ui.page.PresetAccountActivity;
 import net.optile.payment.ui.theme.PaymentTheme;
 
 /**
@@ -174,18 +175,44 @@ public final class PaymentUI {
     }
 
     /**
-     * Show the PaymentPage with the PaymentTheme for the look and feel.
+     * Open the PaymentPage and instruct the page to immediately charge the PresetAccount.
+     * If no PresetAccount is set in the ListResult then an error will be returned.
+     *
+     * @param activity the activity that will be notified when this PaymentPage is finished
+     * @param requestCode the requestCode to be used for identifying results in the parent activity
+     */
+    public void chargePresetAccount(Activity activity, int requestCode) {
+        Intent intent = PresetAccountActivity.createStartIntent(activity);
+        launchActivity(activity, intent, requestCode);
+    }
+
+    /**
+     * Open the PaymentPage containing the list of supported payment methods.
      *
      * @param activity the activity that will be notified when this PaymentPage is finished
      * @param requestCode the requestCode to be used for identifying results in the parent activity
      */
     public void showPaymentPage(Activity activity, int requestCode) {
+        Intent intent = PaymentListActivity.createStartIntent(activity);
+        launchActivity(activity, intent, requestCode);
+    }
+
+    /**
+     * Validate Android SDK Settings before launching the Activity.
+     *
+     * @param activity the activity that will be notified when this PaymentPage is finished
+     * @param requestCode the requestCode to be used for identifying results in the parent activity
+     */
+    private void launchActivity(Activity activity, Intent intent, int requestCode) {
 
         if (listUrl == null) {
             throw new IllegalStateException("listUrl must be set before showing the PaymentPage");
         }
         if (activity == null) {
             throw new IllegalArgumentException("activity may not be null");
+        }
+        if (intent == null) {
+            throw new IllegalArgumentException("intent may not be null");
         }
         if (theme == null) {
             setPaymentTheme(PaymentTheme.createDefault());
@@ -197,7 +224,6 @@ public final class PaymentUI {
             setGroupResId(R.raw.groups);
         }
         activity.finishActivity(requestCode);
-        Intent intent = PaymentPageActivity.createStartIntent(activity, listUrl);
         activity.startActivityForResult(intent, requestCode);
         activity.overridePendingTransition(0, 0);
     }

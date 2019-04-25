@@ -341,7 +341,7 @@ public class InstallmentsPlan {
     /**
      * Sets a description of the installments plan. (Optional)
      *
-     * @param description
+     * @param description description
      */
     public void setDescription(final String description) {
         this.description = description;

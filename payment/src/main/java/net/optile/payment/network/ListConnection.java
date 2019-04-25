@@ -20,6 +20,8 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
 import com.google.gson.JsonParseException;
 
@@ -38,6 +40,8 @@ import net.optile.payment.model.ListResult;
  * at the same time.
  */
 public final class ListConnection extends BaseConnection {
+
+    private final static Map<String, LanguageFile> languageCache = new ConcurrentHashMap<>();
 
     /**
      * Create a new payment session through the Payment API. Remind this is not
@@ -112,8 +116,8 @@ public final class ListConnection extends BaseConnection {
         if (TextUtils.isEmpty(url)) {
             throw new IllegalArgumentException(source + " - url cannot be null or empty");
         }
-
         HttpURLConnection conn = null;
+
         try {
             final String requestUrl = Uri.parse(url).buildUpon()
                 .appendQueryParameter(URI_PARAM_VIEW, VALUE_VIEW)
@@ -147,28 +151,39 @@ public final class ListConnection extends BaseConnection {
     /**
      * Load the language file given the URL
      *
-     * @param url the pointing to the language entries
-     * @param file store the loaded language entries in this LanguageFile
+     * @param url containing the address of the remote language file
+     * @param cache when set to true, obtain from and cache the LanguageFile for recurring use
      * @return LanguageFile object containing the language entries
      */
-    public LanguageFile loadLanguageFile(final URL url, LanguageFile file) throws PaymentException {
+    public LanguageFile loadLanguageFile(URL url, boolean cache) throws PaymentException {
         final String source = "ListConnection[loadLanguageFile]";
 
         if (url == null) {
             throw new IllegalArgumentException(source + " - url cannot be null");
         }
-        if (file == null) {
-            throw new IllegalArgumentException(source + " - file cannot be null");
+        LanguageFile lang;
+
+        if (cache) {
+            lang = languageCache.get(url.toString());
+
+            if (lang != null) {
+                return lang;
+            }
         }
+        lang = new LanguageFile();
         HttpURLConnection conn = null;
+
         try {
             conn = createGetConnection(url);
 
             try (InputStream in = conn.getInputStream();
                 InputStreamReader ir = new InputStreamReader(in)) {
-                file.getProperties().load(ir);
+                lang.getProperties().load(ir);
             }
-            return file;
+            if (cache) {
+                languageCache.putIfAbsent(url.toString(), lang);
+            }
+            return lang;
         } catch (IOException e) {
             throw createPaymentException(source, CONN_ERROR, e);
         } finally {

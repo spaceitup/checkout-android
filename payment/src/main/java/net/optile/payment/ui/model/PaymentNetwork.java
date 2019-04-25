@@ -24,17 +24,22 @@ import net.optile.payment.util.PaymentUtils;
  */
 public class PaymentNetwork {
 
-    public final ApplicableNetwork network;
-    private LanguageFile lang;
+    private final ApplicableNetwork network;
+    private final LanguageFile lang;
     private String smartSelectionRegex;
 
-    public PaymentNetwork(ApplicableNetwork network) {
+    public PaymentNetwork(ApplicableNetwork network, LanguageFile lang) {
         this.network = network;
+        this.lang = lang;
     }
 
     public URL getLink(String name) {
         Map<String, URL> links = network.getLinks();
         return links != null ? links.get(name) : null;
+    }
+
+    public ApplicableNetwork getApplicableNetwork() {
+        return network;
     }
 
     public String getPaymentMethod() {
@@ -72,10 +77,6 @@ public class PaymentNetwork {
 
     public LanguageFile getLang() {
         return lang;
-    }
-
-    public void setLang(LanguageFile lang) {
-        this.lang = lang;
     }
 
     public void setSmartSelectionRegex(String regex) {

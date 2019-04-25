@@ -9,6 +9,7 @@
 package net.optile.payment.form;
 
 import java.net.URL;
+import java.util.Objects;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -27,7 +28,8 @@ public class Operation {
     public final static String PRESET = "PRESET";
     public final static String PAYOUT = "PAYOUT";
     public final static String UPDATE = "UPDATE";
-
+    public final static String ACTIVATE = "ACTIVATE";
+    
     private final URL url;
     private final JSONObject form;
     private final JSONObject account;
@@ -71,6 +73,39 @@ public class Operation {
             PaymentError error = new PaymentError("Operation", PaymentError.INTERNAL_ERROR, msg);
             throw new PaymentException(error, msg, e);
         }
+    }
+
+    /**
+     * Get the type of this operation, this will either be PRESET, CHARGE, UPDATE or PAYOUT.
+     * If the type cannot be determined from the URl then null will be returned.
+     *
+     * @return the type of the operation or null if it cannot be determined.
+     */
+    public String getType() {
+        String path = this.url.getPath();
+
+        if (path.endsWith("preset")) {
+            return PRESET;
+        } else if (path.endsWith("charge")) {
+            return CHARGE;
+        } else if (path.endsWith("update")) {
+            return UPDATE;
+        } else if (path.endsWith("payout")) {
+            return PAYOUT;
+        } else if (path.endsWith("activate")) {
+            return ACTIVATE;
+        }
+        return null;
+    }
+
+    /**
+     * Check if the type of this operation matches the given type.
+     *
+     * @param type to match with the type of this operation.
+     * @return true when the types matches, false otherwise.
+     */
+    public boolean isType(String type) {
+        return Objects.equals(type, getType());
     }
 
     public String toJson() throws JSONException {

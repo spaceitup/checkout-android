@@ -24,14 +24,14 @@ import net.optile.payment.util.PaymentUtils;
  * Class for holding the data of a AccountCard in the list
  */
 public final class AccountCard implements PaymentCard {
-
     private final AccountRegistration account;
     private final ApplicableNetwork network;
-    private LanguageFile lang;
+    private final LanguageFile lang;
 
-    public AccountCard(AccountRegistration account, ApplicableNetwork network) {
+    public AccountCard(AccountRegistration account, ApplicableNetwork network, LanguageFile lang) {
         this.account = account;
         this.network = network;
+        this.lang = lang;
     }
 
     /**
@@ -64,10 +64,6 @@ public final class AccountCard implements PaymentCard {
     @Override
     public LanguageFile getLang() {
         return lang;
-    }
-
-    public void setLang(LanguageFile lang) {
-        this.lang = lang;
     }
 
     /**
