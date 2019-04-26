@@ -248,6 +248,53 @@ Error
 
 The RESULT_CODE_ERROR code indicates that an unrecoverable error has occurred, i.e. a SecurityException has been thrown inside the Android SDK. The PaymentResult contains a PaymentError Object with the error details.
     
+Summary Page (Delayed Payment Submission)
+===========
+
+When it is desired to show a summary page before a user makes the final charge, i.e. the summary page shows a product image, price and payment method. This can be achieved by implementing the preset flow supported by the Android SDK in three simple steps. Please see documentation at `optile.io <https://www.optile.io/opg#292155>`_ for more information about Delayed Payment Submission.
+
+1. Enable presetFirst
+---------------------
+
+The first step is to set the presetFirst parameter in the list request body to true as shown in the example below. 
+
+Example list request Json body with presetFirst set to true:
+
+.. code-block:: json
+
+    {
+        "transactionId": "tr1",
+        "integration": "DISPLAY_NATIVE",
+        "presetFirst": "true",
+        "country": "DE",
+
+2. Show Payment Page
+--------------------
+
+Open the payment page with the listUrl as explained before, you will notice that the buttons for each payment method have changed from "Pay" to "Continue". When the user clicks a button the Android SDK will preselect the payment method instead of making a direct charge request. Once the user has preselected a payment method, the payment page will be closed and a PaymentResult is returned throught the onActivityResult() method.
+
+3. Charge PresetAccount
+-----------------------
+
+When reloading the ListResult from the Payment API, it now contains a PresetAccount. This PresetAccount represents the payment method previously selected by the user in the payment page. 
+
+The Android SDK can be used to charge this PresetAccount by using the chargePresetAccount() method in the PaymentUI class. After calling this method an Activity will be launched showing the sending progress and it will post the charge request to the Payment API. Once the charge is completed a PaymentResult is returned through the onActivityResult() method.
+
+Code sample how to charge a PresetAccount:
+
+.. code-block:: java
+
+    // Request code to identify the response in onActivityResult()
+    int PAYMENT_REQUEST_CODE = 1;
+
+    // list URL obtained from your backend
+    String listUrl = "<https://...>";
+
+    // Show the charge preset account page
+    PaymentUI paymentUI = PaymentUI.getInstance();
+    paymentUI.setListUrl(listUrl);
+    paymentUI.chargePresetAccount(this, PAYMENT_REQUEST_CODE);
+
 Customize Payment Page
 ======================
 
