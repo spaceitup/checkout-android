@@ -181,7 +181,7 @@ public final class ListConnection extends BaseConnection {
                 lang.getProperties().load(ir);
             }
             if (cache) {
-                languageCache.putIfAbsent(url.toString(), lang);
+                languageCache.put(url.toString(), lang);
             }
             return lang;
         } catch (IOException e) {
