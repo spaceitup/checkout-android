@@ -251,7 +251,7 @@ The RESULT_CODE_ERROR code indicates that an unrecoverable error has occurred, i
 Summary Page (Delayed Payment Submission)
 ===========
 
-When it is desired to show a summary page before a user makes the final charge, i.e. the summary page shows a product image, price and payment method. This can be achieved by implementing the preset flow supported by the Android SDK in three simple steps. Please see documentation at `optile.io <https://www.optile.io/opg#292155>`_ for more information about Delayed Payment Submission.
+Showing a summary page before a user makes the final charge (i.e. display the cart contents, final price, selected payment method etc.) can be achieved by implementing the Delayed Payment Submission flow supported by the Android SDK in three simple steps. Please see documentation at `optile.io <https://www.optile.io/opg#292155>`_ for more information about Delayed Payment Submission.
 
 1. Enable presetFirst
 ---------------------
@@ -271,12 +271,12 @@ Example list request Json body with presetFirst set to true:
 2. Show Payment Page
 --------------------
 
-Open the payment page with the listUrl as explained before, you will notice that the buttons for each payment method have changed from "Pay" to "Continue". When the user clicks a button the Android SDK will preselect the payment method instead of making a direct charge request. Once the user has preselected a payment method, the payment page will be closed and a PaymentResult is returned throught the onActivityResult() method.
+Open the payment page with the listUrl as explained earlier. Notice the buttons for each payment method have changed from "Pay" to "Continue". When the user clicks a button, the Android SDK will preselect the payment method instead of making a direct charge request. Once the user has preselected a payment method, the payment page will be closed and a PaymentResult is returned through the onActivityResult() method. This is the correct point to display a summary page to the user.
 
 3. Charge PresetAccount
 -----------------------
 
-When reloading the ListResult from the Payment API, it now contains a PresetAccount. This PresetAccount represents the payment method previously selected by the user in the payment page. 
+When reloading the ListResult from the Payment API, it now contains a PresetAccount. This PresetAccount represents the payment method previously selected by the user in the payment page.
 
 The Android SDK can be used to charge this PresetAccount by using the chargePresetAccount() method in the PaymentUI class. After calling this method an Activity will be launched showing the sending progress and it will post the charge request to the Payment API. Once the charge is completed a PaymentResult is returned through the onActivityResult() method.
 
