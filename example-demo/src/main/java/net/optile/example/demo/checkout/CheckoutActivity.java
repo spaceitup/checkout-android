@@ -28,7 +28,7 @@ import net.optile.payment.ui.PaymentResult;
 import net.optile.payment.ui.PaymentUI;
 
 /**
- * Activity displaying the checkout page, this will create a new PaymentSession and open the payment page of the Android SDK.
+ * Activity displaying the checkout page, this page will open the Android SDK payment page.
  */
 public final class CheckoutActivity extends BaseActivity implements CheckoutView {
 
@@ -72,14 +72,6 @@ public final class CheckoutActivity extends BaseActivity implements CheckoutView
             }
         });
         this.presenter = new CheckoutPresenter(this);
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public void onPause() {
-        super.onPause();
     }
 
     /**

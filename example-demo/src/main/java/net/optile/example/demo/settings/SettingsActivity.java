@@ -25,8 +25,6 @@ import net.optile.example.demo.shared.BaseActivity;
  */
 public final class SettingsActivity extends BaseActivity {
 
-    private EditText listInput;
-
     /**
      * Create an Intent to launch this settings activity
      *
@@ -49,7 +47,6 @@ public final class SettingsActivity extends BaseActivity {
     public void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_settings);
-        listInput = findViewById(R.id.input_listurl);
         Button button = findViewById(R.id.button_settings);
         button.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
@@ -60,6 +57,7 @@ public final class SettingsActivity extends BaseActivity {
 
     private void onButtonClicked() {
 
+        EditText listInput = findViewById(R.id.input_listurl);
         String listUrl = listInput.getText().toString().trim();
 
         if (TextUtils.isEmpty(listUrl) || !Patterns.WEB_URL.matcher(listUrl).matches()) {

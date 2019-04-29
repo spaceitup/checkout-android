@@ -39,7 +39,7 @@ import net.optile.payment.util.ImageHelper;
 import net.optile.payment.util.PaymentUtils;
 
 /**
- * Activity displaying the summary page with the Pay button.
+ * Activity displaying the summary page with the Pay and Edit button.
  */
 public final class SummaryActivity extends BaseActivity implements SummaryView {
 

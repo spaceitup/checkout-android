@@ -17,7 +17,7 @@ import android.view.MenuItem;
 import net.optile.example.demo.R;
 
 /**
- * Base Activity for Activities used in this demo, it stores and retrieves the commonly used demo settings and listUrl values.
+ * Base Activity for Activities used in this demo, it stores and retrieves the listUrl value.
  */
 public abstract class BaseActivity extends AppCompatActivity {
 

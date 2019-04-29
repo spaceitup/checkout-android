@@ -18,7 +18,7 @@ import net.optile.payment.ui.PaymentResult;
 import net.optile.payment.ui.PaymentUI;
 
 /**
- * CheckoutPresenter takes care of communicating with the Payment API and instructing the CheckoutView to display the proper information.
+ * CheckoutPresenter takes care of handling the response from the Android SDK payment page.
  */
 final class CheckoutPresenter {
 
@@ -60,7 +60,7 @@ final class CheckoutPresenter {
         if (op != null) {
             Redirect redirect = op.getRedirect();
 
-            if (Objects.equals("SUMMARY", redirect.getType())) {
+            if (redirect != null && Objects.equals("SUMMARY", redirect.getType())) {
                 view.showPaymentSummary();
                 return;
             }

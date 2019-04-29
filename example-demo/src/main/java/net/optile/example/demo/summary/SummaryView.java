@@ -11,7 +11,7 @@ package net.optile.example.demo.summary;
 import net.optile.payment.model.PresetAccount;
 
 /**
- * The interface Checkout view.
+ * The interface for the SummaryView.
  */
 interface SummaryView {
 

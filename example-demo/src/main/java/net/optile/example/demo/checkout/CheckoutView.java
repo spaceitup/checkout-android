@@ -14,12 +14,12 @@ package net.optile.example.demo.checkout;
 interface CheckoutView {
 
     /**
-     * Show the summary screen to the user
+     * Show the summary page to the user
      */
     void showPaymentSummary();
 
     /**
-     * Show the screen that the payment has been confirmed
+     * Show the confirmed page to the user
      */
     void showPaymentConfirmed();
 
