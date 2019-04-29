@@ -11,9 +11,9 @@ package net.optile.example.demo.summary;
 import java.util.List;
 import java.util.concurrent.Callable;
 
-import net.optile.payment.core.PaymentException;
 import net.optile.example.demo.shared.DemoException;
 import net.optile.example.demo.shared.SdkResult;
+import net.optile.payment.core.PaymentException;
 import net.optile.payment.model.ApplicableNetwork;
 import net.optile.payment.model.Interaction;
 import net.optile.payment.model.InteractionCode;

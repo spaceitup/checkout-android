@@ -12,13 +12,6 @@
         android:clipToPadding="false"
         android:orientation="vertical">
 
-        <TextView
-            style="@style/PaymentText.Medium.Bold"
-            android:layout_marginBottom="@dimen/pmborder_xxsmall"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/settings_header"/>
-
         <android.support.design.card.MaterialCardView
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
@@ -26,87 +19,20 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:paddingLeft="@dimen/pmborder_large"
-                android:paddingRight="@dimen/pmborder_large"
-                android:paddingBottom="@dimen/pmborder_large"
+                android:padding="@dimen/pmborder_large"
                 android:orientation="vertical">
 
-                <LinearLayout
+                <EditText
+                    android:id="@+id/input_listurl"
                     android:layout_width="match_parent"
+                    android:hint="@string/settings_hint"
+                    android:inputType="textWebEmailAddress"
                     android:layout_height="wrap_content"
-                    android:gravity="center"
-                    android:orientation="horizontal">
-
-                    <TextView
-                        style="@style/PaymentText.Medium"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:text="@string/settings_theme"/>
-
-                    <Switch
-                        android:id="@+id/switch_theme"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginBottom="@dimen/pmborder_large"
-                        android:layout_marginTop="@dimen/pmborder_large"/>
-                </LinearLayout>
-
-                <View
-                    style="@style/AppLineDivider"/>
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:gravity="center"
-                    android:orientation="horizontal">
-
-                    <TextView
-                        style="@style/PaymentText.Medium"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:text="@string/settings_registered"/>
-
-                    <Switch
-                        android:id="@+id/switch_registered"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginBottom="@dimen/pmborder_large"
-                        android:layout_marginTop="@dimen/pmborder_large"/>
-                </LinearLayout>
-
-                <View
-                    style="@style/AppLineDivider"/>
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:gravity="center"
-                    android:orientation="horizontal">
-
-                    <TextView
-                        style="@style/PaymentText.Medium"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:text="@string/settings_summary"/>
-
-                    <Switch
-                        android:id="@+id/switch_summary"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginBottom="@dimen/pmborder_large"
-                        android:layout_marginTop="@dimen/pmborder_large"/>
-                </LinearLayout>
-
-                <View
-                    style="@style/AppLineDivider"/>
+                    android:layout_marginBottom="@dimen/pmborder_large"/>
 
                 <Button
                     style="@style/AppButton"
                     android:id="@+id/button_settings"
-                    android:layout_marginTop="@dimen/pmborder_large"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="@string/button_settings"/>

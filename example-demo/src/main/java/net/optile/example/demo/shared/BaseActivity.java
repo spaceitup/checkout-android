@@ -21,14 +21,11 @@ import net.optile.example.demo.R;
  */
 public abstract class BaseActivity extends AppCompatActivity {
 
-    public final static String EXTRA_SETTINGS = "settings";
     public final static String EXTRA_LISTURL = "listurl";
-
     public final static int PAYMENT_REQUEST_CODE = 1;
     public final static int EDIT_REQUEST_CODE = 2;
 
     protected boolean active;
-    protected DemoSettings settings;
     protected String listUrl;
 
     /**
@@ -53,11 +50,9 @@ public abstract class BaseActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
 
         if (savedInstanceState != null) {
-            this.settings = savedInstanceState.getParcelable(EXTRA_SETTINGS);
             this.listUrl = savedInstanceState.getString(EXTRA_LISTURL);
         } else {
             Intent intent = getIntent();
-            this.settings = intent.getParcelableExtra(EXTRA_SETTINGS);
             this.listUrl = intent.getStringExtra(EXTRA_LISTURL);
         }
     }
@@ -68,7 +63,6 @@ public abstract class BaseActivity extends AppCompatActivity {
     @Override
     public void onSaveInstanceState(Bundle savedInstanceState) {
         super.onSaveInstanceState(savedInstanceState);
-        savedInstanceState.putParcelable(EXTRA_SETTINGS, settings);
         savedInstanceState.putString(EXTRA_LISTURL, listUrl);
     }
 

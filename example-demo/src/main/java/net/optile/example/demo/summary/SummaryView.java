@@ -8,7 +8,6 @@
 
 package net.optile.example.demo.summary;
 
-import android.content.Context;
 import net.optile.payment.model.PresetAccount;
 
 /**
@@ -43,10 +42,10 @@ interface SummaryView {
      */
     void showPaymentDetails(PresetAccount account, String method);
 
-    /** 
+    /**
      * Get the list url from the summary view
-     * 
-     * @return the list url 
+     *
+     * @return the list url
      */
     String getListUrl();
 }

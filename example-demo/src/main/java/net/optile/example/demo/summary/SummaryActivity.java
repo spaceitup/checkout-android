@@ -11,7 +11,6 @@ package net.optile.example.demo.summary;
 import java.net.URL;
 import java.util.Map;
 
-import android.text.TextUtils;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Typeface;
@@ -20,6 +19,7 @@ import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.v4.content.res.ResourcesCompat;
 import android.support.v7.app.ActionBar;
 import android.support.v7.widget.Toolbar;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -29,14 +29,12 @@ import net.optile.example.demo.R;
 import net.optile.example.demo.confirm.ConfirmActivity;
 import net.optile.example.demo.settings.SettingsActivity;
 import net.optile.example.demo.shared.BaseActivity;
-import net.optile.example.demo.shared.DemoSettings;
 import net.optile.example.demo.shared.SdkResult;
 import net.optile.payment.model.AccountMask;
 import net.optile.payment.model.PaymentMethod;
 import net.optile.payment.model.PresetAccount;
 import net.optile.payment.ui.PaymentResult;
 import net.optile.payment.ui.PaymentUI;
-import net.optile.payment.ui.theme.PaymentTheme;
 import net.optile.payment.util.ImageHelper;
 import net.optile.payment.util.PaymentUtils;
 
@@ -53,10 +51,9 @@ public final class SummaryActivity extends BaseActivity implements SummaryView {
      *
      * @param context the context
      * @param listUrl the URL pointing to the list
-     * @param settings the demo settings
      * @return the newly created intent
      */
-    public static Intent createStartIntent(Context context, String listUrl, DemoSettings settings) {
+    public static Intent createStartIntent(Context context, String listUrl) {
 
         if (context == null) {
             throw new IllegalArgumentException("context may not be null");
@@ -64,11 +61,7 @@ public final class SummaryActivity extends BaseActivity implements SummaryView {
         if (TextUtils.isEmpty(listUrl)) {
             throw new IllegalArgumentException("listUrl may not be null or empty");
         }
-        if (settings == null) {
-            throw new IllegalArgumentException("settings may not be null");
-        }
         Intent intent = new Intent(context, SummaryActivity.class);
-        intent.putExtra(EXTRA_SETTINGS, settings);
         intent.putExtra(EXTRA_LISTURL, listUrl);
         return intent;
     }
@@ -81,7 +74,7 @@ public final class SummaryActivity extends BaseActivity implements SummaryView {
         super.onCreate(savedInstanceState);
         setTheme(R.style.DefaultCollapsingToolbarTheme);
         setContentView(R.layout.activity_summary);
-        initToolbar(settings);
+        initToolbar();
 
         View edit = findViewById(R.id.text_edit);
         edit.setOnClickListener(new View.OnClickListener() {
@@ -129,7 +122,7 @@ public final class SummaryActivity extends BaseActivity implements SummaryView {
     public String getListUrl() {
         return listUrl;
     }
-    
+
     /**
      * {@inheritDoc}
      */
@@ -139,7 +132,7 @@ public final class SummaryActivity extends BaseActivity implements SummaryView {
         if (!active) {
             return;
         }
-        Intent intent = ConfirmActivity.createStartIntent(this, settings);
+        Intent intent = ConfirmActivity.createStartIntent(this);
         startActivity(intent);
     }
 
@@ -244,12 +237,12 @@ public final class SummaryActivity extends BaseActivity implements SummaryView {
     }
 
     private void openSettingsScreen() {
-        Intent intent = SettingsActivity.createStartIntent(this, settings);
+        Intent intent = SettingsActivity.createStartIntent(this);
         startActivity(intent);
     }
 
-    private void initToolbar(DemoSettings settings) {
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+    private void initToolbar() {
+        Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
         ActionBar actionBar = getSupportActionBar();

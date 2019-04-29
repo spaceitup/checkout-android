@@ -11,39 +11,34 @@ package net.optile.example.demo.settings;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.TextUtils;
+import android.util.Patterns;
 import android.view.View;
 import android.widget.Button;
-import android.widget.Switch;
+import android.widget.EditText;
 import net.optile.example.demo.R;
 import net.optile.example.demo.checkout.CheckoutActivity;
 import net.optile.example.demo.shared.BaseActivity;
-import net.optile.example.demo.shared.DemoSettings;
 
 /**
- * This is the main Activity of this demo app in which users can set the DemoSettings before starting the demo.
+ * This is the main Activity of this demo app in which users can paste a listUrl and start the demo.
  */
 public final class SettingsActivity extends BaseActivity {
 
-    private Switch themeSwitch;
-    private Switch registeredSwitch;
-    private Switch summarySwitch;
+    private EditText listInput;
 
     /**
      * Create an Intent to launch this settings activity
      *
      * @return the newly created intent
      */
-    public static Intent createStartIntent(final Context context, final DemoSettings settings) {
+    public static Intent createStartIntent(final Context context) {
 
         if (context == null) {
             throw new IllegalArgumentException("context may not be null");
         }
-        if (settings == null) {
-            throw new IllegalArgumentException("settings may not be null");
-        }
         Intent intent = new Intent(context, SettingsActivity.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-        intent.putExtra(EXTRA_SETTINGS, settings);
         return intent;
     }
 
@@ -53,28 +48,25 @@ public final class SettingsActivity extends BaseActivity {
     @Override
     public void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
         setContentView(R.layout.activity_settings);
+        listInput = findViewById(R.id.input_listurl);
         Button button = findViewById(R.id.button_settings);
         button.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 onButtonClicked();
             }
         });
-        themeSwitch = findViewById(R.id.switch_theme);
-        registeredSwitch = findViewById(R.id.switch_registered);
-        summarySwitch = findViewById(R.id.switch_summary);
-
-        if (settings != null) {
-            themeSwitch.setChecked(settings.getCustomTheme());
-            registeredSwitch.setChecked(settings.getRegistered());
-            summarySwitch.setChecked(settings.getSummary());
-        }
     }
 
     private void onButtonClicked() {
-        DemoSettings settings = new DemoSettings(themeSwitch.isChecked(), registeredSwitch.isChecked(), summarySwitch.isChecked());
-        Intent intent = CheckoutActivity.createStartIntent(this, settings);
+
+        String listUrl = listInput.getText().toString().trim();
+
+        if (TextUtils.isEmpty(listUrl) || !Patterns.WEB_URL.matcher(listUrl).matches()) {
+            showErrorDialog(getString(R.string.dialog_error_listurl_invalid));
+            return;
+        }
+        Intent intent = CheckoutActivity.createStartIntent(this, listUrl);
         startActivity(intent);
     }
 }

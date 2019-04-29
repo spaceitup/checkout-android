@@ -1,15 +1,13 @@
 <resources>
     <string name="app_name">Demo Example</string>
-    <string name="button_settings">Use these settings</string>
+    <string name="button_settings">Start demo</string>
     <string name="button_checkout">Continue to payment details</string>
     <string name="button_pay">Pay</string>
     <string name="button_neworder">Start new order</string>
     <string name="button_edit">Edit</string>
 
-    <string name="settings_header">Select your settings</string>
-    <string name="settings_theme">Use with custom theming</string>
-    <string name="settings_registered">Use as registered user with saved accounts</string>
-    <string name="settings_summary">Show summary page</string>
+    <string name="settings_header">Demo settings</string>
+    <string name="settings_hint">Paste list URL here</string>
 
     <string name="checkout_collapsed_title">Checkout details</string>
     <string name="checkout_personal_details">Enter your personal details</string>
@@ -46,5 +44,6 @@
     <string name="dialog_error_button">Close</string>
     <string name="dialog_error_list">Error loading list data for creating the PaymentSession</string>
     <string name="dialog_previous_missing">Please first create a new Charge or Preset Session</string>
+    <string name="dialog_error_listurl_invalid">Please paste a valid optile List Url in the input field.</string>
 
 </resources>

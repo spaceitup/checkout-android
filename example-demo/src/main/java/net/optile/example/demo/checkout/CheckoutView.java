@@ -8,43 +8,25 @@
 
 package net.optile.example.demo.checkout;
 
-import android.content.Context;
-
 /**
  * The interface Checkout view.
  */
 interface CheckoutView {
 
     /**
-     * Open the PaymentPage for the provided listUrl
-     *
-     * @param listUrl the current listUrl
+     * Show the summary screen to the user
      */
-    void openPaymentPage(String listUrl);
+    void showPaymentSummary();
 
     /**
-     * Show that the payment was successful, this will either show the confirm or summary screen
+     * Show the screen that the payment has been confirmed
      */
-    void showPaymentSuccess();
-
-    /**
-     * Show an error to the user
-     *
-     * @param error to be shown to the user
-     */
-    void showPaymentError(String error);
+    void showPaymentConfirmed();
 
     /**
      * Close the payment and return to the SettingsScreen
      */
     void closePayment();
-
-    /**
-     * Get the Context in which this View is running
-     *
-     * @return Context of this View
-     */
-    Context getContext();
 }
  
 

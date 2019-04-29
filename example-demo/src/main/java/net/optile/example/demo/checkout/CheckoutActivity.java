@@ -22,12 +22,10 @@ import android.widget.Button;
 import net.optile.example.demo.R;
 import net.optile.example.demo.confirm.ConfirmActivity;
 import net.optile.example.demo.shared.BaseActivity;
-import net.optile.example.demo.shared.DemoSettings;
 import net.optile.example.demo.shared.SdkResult;
 import net.optile.example.demo.summary.SummaryActivity;
 import net.optile.payment.ui.PaymentResult;
 import net.optile.payment.ui.PaymentUI;
-import net.optile.payment.ui.theme.PaymentTheme;
 
 /**
  * Activity displaying the checkout page, this will create a new PaymentSession and open the payment page of the Android SDK.
@@ -41,19 +39,19 @@ public final class CheckoutActivity extends BaseActivity implements CheckoutView
      * Create an Intent to launch this checkout activity
      *
      * @param context the context
-     * @param settings the demo settings
+     * @param listUrl url of the current list
      * @return the newly created intent
      */
-    public static Intent createStartIntent(Context context, DemoSettings settings) {
+    public static Intent createStartIntent(Context context, String listUrl) {
 
         if (context == null) {
             throw new IllegalArgumentException("context may not be null");
         }
-        if (settings == null) {
-            throw new IllegalArgumentException("settings may not be null");
+        if (TextUtils.isEmpty(listUrl)) {
+            throw new IllegalArgumentException("listUrl may not be null or empty");
         }
         Intent intent = new Intent(context, CheckoutActivity.class);
-        intent.putExtra(EXTRA_SETTINGS, settings);
+        intent.putExtra(EXTRA_LISTURL, listUrl);
         return intent;
     }
 
@@ -65,7 +63,7 @@ public final class CheckoutActivity extends BaseActivity implements CheckoutView
         super.onCreate(savedInstanceState);
         setTheme(R.style.DefaultCollapsingToolbarTheme);
         setContentView(R.layout.activity_checkout);
-        initToolbar(settings);
+        initToolbar();
 
         Button button = findViewById(R.id.button_checkout);
         button.setOnClickListener(new View.OnClickListener() {
@@ -82,7 +80,6 @@ public final class CheckoutActivity extends BaseActivity implements CheckoutView
     @Override
     public void onPause() {
         super.onPause();
-        this.presenter.onStop();
     }
 
     /**
@@ -102,29 +99,25 @@ public final class CheckoutActivity extends BaseActivity implements CheckoutView
      * {@inheritDoc}
      */
     @Override
-    public void showPaymentError(String error) {
+    public void showPaymentSummary() {
 
         if (!active) {
             return;
         }
-        showErrorDialog(error);
+        Intent intent = SummaryActivity.createStartIntent(this, listUrl);
+        startActivity(intent);
     }
 
     /**
      * {@inheritDoc}
      */
     @Override
-    public void showPaymentSuccess() {
+    public void showPaymentConfirmed() {
 
         if (!active) {
             return;
         }
-        Intent intent;
-        if (settings.getSummary()) {
-            intent = SummaryActivity.createStartIntent(this, listUrl, settings);
-        } else {
-            intent = ConfirmActivity.createStartIntent(this, settings);
-        }
+        Intent intent = ConfirmActivity.createStartIntent(this);
         startActivity(intent);
     }
 
@@ -155,31 +148,8 @@ public final class CheckoutActivity extends BaseActivity implements CheckoutView
         }
     }
 
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public void openPaymentPage(String listUrl) {
-
-        if (!active) {
-            return;
-        }
-        this.listUrl = listUrl;
-        PaymentUI paymentUI = PaymentUI.getInstance();
-        paymentUI.setListUrl(listUrl);
-        paymentUI.showPaymentPage(this, PAYMENT_REQUEST_CODE);
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public Context getContext() {
-        return this;
-    }
-
-    private void initToolbar(DemoSettings settings) {
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+    private void initToolbar() {
+        Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
         ActionBar actionBar = getSupportActionBar();
@@ -194,11 +164,8 @@ public final class CheckoutActivity extends BaseActivity implements CheckoutView
     }
 
     private void onButtonClicked() {
-
-        if (TextUtils.isEmpty(listUrl)) {
-            presenter.createPaymentSession(settings);
-        } else {
-            openPaymentPage(listUrl);
-        }
+        PaymentUI paymentUI = PaymentUI.getInstance();
+        paymentUI.setListUrl(listUrl);
+        paymentUI.showPaymentPage(this, PAYMENT_REQUEST_CODE);
     }
 }

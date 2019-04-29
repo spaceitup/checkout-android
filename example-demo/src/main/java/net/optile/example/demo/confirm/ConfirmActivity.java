@@ -16,7 +16,6 @@ import android.widget.Button;
 import net.optile.example.demo.R;
 import net.optile.example.demo.settings.SettingsActivity;
 import net.optile.example.demo.shared.BaseActivity;
-import net.optile.example.demo.shared.DemoSettings;
 
 /**
  * This is the confirm screen shown after a charge operation has been completed.
@@ -28,17 +27,12 @@ public final class ConfirmActivity extends BaseActivity {
      *
      * @return the newly created intent
      */
-    public static Intent createStartIntent(final Context context, DemoSettings settings) {
+    public static Intent createStartIntent(final Context context) {
 
         if (context == null) {
             throw new IllegalArgumentException("context may not be null");
         }
-        if (settings == null) {
-            throw new IllegalArgumentException("settings may not be null");
-        }
-        Intent intent = new Intent(context, ConfirmActivity.class);
-        intent.putExtra(EXTRA_SETTINGS, settings);
-        return intent;
+        return new Intent(context, ConfirmActivity.class);
     }
 
     /**
@@ -67,8 +61,7 @@ public final class ConfirmActivity extends BaseActivity {
     }
 
     private void openSettingsScreen() {
-        Intent intent = SettingsActivity.createStartIntent(this, settings);
+        Intent intent = SettingsActivity.createStartIntent(this);
         startActivity(intent);
     }
-
 }

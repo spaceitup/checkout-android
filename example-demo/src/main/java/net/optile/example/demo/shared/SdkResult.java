@@ -11,7 +11,7 @@ package net.optile.example.demo.shared;
 import net.optile.payment.ui.PaymentResult;
 
 /**
- * Class for holding the result data obtained from the Android SDK 
+ * Class for holding the result data obtained from the Android SDK
  */
 public class SdkResult {
 
