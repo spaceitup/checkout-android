@@ -45,7 +45,7 @@ public final class ProgressParameters {
         return createBuilder().
             setLoadBackground(R.color.pmcolor_list).
             setLoadProgressBarColor(R.color.pmcolor_primary).
-            setSendBackground(R.color.pmcolor_list).
+            setSendBackground(R.color.pmcolor_background).
             setSendProgressBarColorFront(R.color.pmcolor_primary).
             setSendProgressBarColorBack(R.color.pmvalidation_unknown).
             setHeaderStyle(R.style.PaymentText_XLarge_Bold).
