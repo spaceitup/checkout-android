@@ -24,6 +24,7 @@ import net.optile.payment.ui.model.PaymentCard;
 import net.optile.payment.ui.model.PresetCard;
 import net.optile.payment.ui.theme.PaymentTheme;
 import net.optile.payment.validation.ValidationResult;
+import net.optile.payment.validation.Validator;
 
 /**
  * The ListAdapter handling the items in this RecyclerView list
@@ -152,19 +153,34 @@ final class ListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         }
     }
 
+    boolean isHidden(String code, String type) {
+        Validator validator = list.getPaymentSession().getValidator();
+        return validator.isHidden(code, type);
+    }
+
+    int getMaxLength(String code, String type) {
+        Validator validator = list.getPaymentSession().getValidator();
+        return validator.getMaxLength(code, type);
+    }
+
     ValidationResult validate(int position, String type, String value1, String value2) {
         if (isInvalidPosition(position)) {
             return null;
         }
-        return list.validate(position, type, value1, value2);
-    }
+        ListItem item = items.get(position);
 
-    boolean isHidden(String code, String type) {
-        return list.isHidden(code, type);
-    }
+        if (!item.hasPaymentCard()) {
+            return null;
+        }
+        PaymentCard card = item.getPaymentCard();
+        Validator validator = list.getPaymentSession().getValidator();
+        ValidationResult result = validator.validate(card.getPaymentMethod(), card.getCode(), type, value1, value2);
 
-    int getMaxLength(String code, String type) {
-        return list.getMaxLength(code, type);
+        if (!result.isError()) {
+            return result;
+        }
+        result.setMessage(card.getLang().translateError(result.getError()));
+        return result;
     }
 
     PaymentTheme getPaymentTheme() {

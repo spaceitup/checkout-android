@@ -30,7 +30,7 @@ import net.optile.example.checkout.CheckoutActivity;
 import net.optile.example.checkout.R;
 import net.optile.payment.list.ListConfig;
 import net.optile.payment.list.ListService;
-import net.optile.payment.ui.page.PaymentPageActivity;
+import net.optile.payment.ui.page.PaymentListActivity;
 
 @RunWith(AndroidJUnit4.class)
 @LargeTest
@@ -49,7 +49,7 @@ public class PaymentPageTests {
         String listUrl = listService.createConfigListUrl(config);
         onView(withId(R.id.input_listurl)).perform(typeText(listUrl));
         onView(withId(R.id.button_action)).perform(click());
-        intended(hasComponent(PaymentPageActivity.class.getName()));
+        intended(hasComponent(PaymentListActivity.class.getName()));
         Intents.release();
     }
 }

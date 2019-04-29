@@ -25,6 +25,7 @@ public final class LanguageFile {
 
     public final static String TITLE = "title";
     public final static String TEXT = "text";
+
     private final Properties lang;
 
     /**

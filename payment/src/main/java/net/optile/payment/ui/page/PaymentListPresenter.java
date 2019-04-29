@@ -11,7 +11,6 @@ package net.optile.payment.ui.page;
 import java.net.URL;
 import java.util.Map;
 
-import android.content.Context;
 import android.text.TextUtils;
 import android.util.Log;
 import net.optile.payment.R;
@@ -22,6 +21,7 @@ import net.optile.payment.model.ErrorInfo;
 import net.optile.payment.model.Interaction;
 import net.optile.payment.model.InteractionCode;
 import net.optile.payment.model.InteractionReason;
+import net.optile.payment.model.ListResult;
 import net.optile.payment.model.OperationResult;
 import net.optile.payment.ui.PaymentResult;
 import net.optile.payment.ui.PaymentUI;
@@ -30,30 +30,50 @@ import net.optile.payment.ui.dialog.ThemedDialogFragment;
 import net.optile.payment.ui.dialog.ThemedDialogFragment.ThemedDialogListener;
 import net.optile.payment.ui.model.PaymentCard;
 import net.optile.payment.ui.model.PaymentSession;
+import net.optile.payment.ui.service.PaymentSessionListener;
+import net.optile.payment.ui.service.PaymentSessionService;
 import net.optile.payment.ui.widget.FormWidget;
-import net.optile.payment.validation.Validator;
 
 /**
- * The PaymentPagePresenter implementing the presenter part of the MVP
+ * The PaymentListPresenter implementing the presenter part of the MVP
  */
-final class PaymentPagePresenter {
-    private final PaymentPageView view;
-    private final PaymentPageService service;
-    private Validator validator;
+final class PaymentListPresenter implements PaymentSessionListener {
+
+    private final PaymentListView view;
+    private final PaymentSessionService service;
+
     private PaymentSession session;
     private String listUrl;
     private Interaction reloadInteraction;
-    private Context context;
     private Operation operation;
 
     /**
-     * Create a new PaymentPagePresenter
+     * Create a new PaymentListPresenter
      *
-     * @param view The PaymentPageView displaying the payment list
+     * @param view The PaymentListView displaying the payment list
      */
-    PaymentPagePresenter(PaymentPageView view) {
+    PaymentListPresenter(PaymentListView view) {
         this.view = view;
-        this.service = new PaymentPageService(this);
+        service = new PaymentSessionService();
+        service.setListener(this);
+    }
+
+    /**
+     * Load the PaymentSession from the Payment API. once loaded, populate the View with the newly loaded groups of payment methods.
+     * If a previous session with the same listUrl is available then reuse the existing one.
+     */
+    void onStart() {
+
+        if (service.isActive()) {
+            return;
+        }
+        this.listUrl = PaymentUI.getInstance().getListUrl();
+
+        if (session != null && session.isListUrl(this.listUrl)) {
+            view.showPaymentSession(session);
+            return;
+        }
+        loadPaymentSession(this.listUrl);
     }
 
     /**
@@ -69,51 +89,13 @@ final class PaymentPagePresenter {
      * @return true when this presenter handles the back press, false otherwise
      */
     boolean onBackPressed() {
-        if (service.isPerformingOperation()) {
-            view.showSnackbar(view.getStringRes(R.string.pmsnackbar_operation_interrupted));
+        if (service.isPostingOperation()) {
+            view.showWarningMessage(getString(R.string.pmsnackbar_operation_interrupted));
             return true;
         }
         return false;
     }
 
-    /**
-     * Load the PaymentSession from the Payment API. once loaded, populate the View with the newly loaded groups of payment methods.
-     * If a previous session with the same listUrl is available then reuse the existing one.
-     *
-     * @param context context in which this presenter is running
-     * @param listUrl the url pointing to the ListResult in the Payment API
-     */
-
-    void load(Context context, String listUrl) {
-
-        if (service.isActive()) {
-            return;
-        }
-        this.listUrl = listUrl;
-        this.context = context;
-
-        if (validator != null && session != null && session.isListUrl(listUrl)) {
-            // show the cached payment session
-            view.showPaymentSession(session);
-            return;
-        }
-        view.showProgress(true, PaymentProgressView.LOAD);
-
-        if (validator == null) {
-            service.loadValidator();
-        } else {
-            loadPaymentSession(listUrl);
-        }
-    }
-
-    /**
-     * Get the context in which this presenter is running.
-     *
-     * @return context
-     */
-    Context getContext() {
-        return this.context;
-    }
 
     /**
      * Notify this presenter that the user has clicked the action button in the PaymentCard.
@@ -127,7 +109,7 @@ final class PaymentPagePresenter {
         if (service.isActive()) {
             return;
         }
-        if (session.presetCard == card) {
+        if (session.getPresetCard() == card) {
             PaymentResult result = new PaymentResult("Same presetAccount selected");
             closeSessionWithOkCode(result);
             return;
@@ -143,61 +125,28 @@ final class PaymentPagePresenter {
     }
 
     /**
-     * Return the Validator stored in this presenter.
-     *
-     * @return validator validator used to validate user input values
+     * {@inheritDoc}
      */
-    Validator getValidator() {
-        return validator;
-    }
-
-    /**
-     * Callback from the service when the validator has been successfully loaded
-     *
-     * @param validator that has been loaded
-     */
-    void onValidatorSuccess(Validator validator) {
-
-        if (!view.isActive()) {
-            return;
-        }
-        this.validator = validator;
-        loadPaymentSession(this.listUrl);
-    }
-
-    /**
-     * Callback from the service that the validator could not be loaded
-     *
-     * @param cause containing the error
-     */
-    void onValidatorError(Throwable cause) {
-        closeSessionWithErrorCode(R.string.pmdialog_error_unknown, cause);
-    }
-
-    /**
-     * Callback from the service that the PaymentSession has successfully been loaded
-     *
-     * @param session that has been loaded from the Payment API
-     */
-    void onPaymentSessionSuccess(PaymentSession session) {
-        Interaction interaction = session.listResult.getInteraction();
+    @Override
+    public void onPaymentSessionSuccess(PaymentSession session) {
+        ListResult listResult = session.getListResult();
+        Interaction interaction = listResult.getInteraction();
 
         switch (interaction.getCode()) {
             case InteractionCode.PROCEED:
                 handleLoadInteractionProceed(session);
                 break;
             default:
-                PaymentResult result = new PaymentResult(session.listResult.getResultInfo(), interaction);
+                PaymentResult result = new PaymentResult(listResult.getResultInfo(), interaction);
                 closeSessionWithCanceledCode(result);
         }
     }
 
     /**
-     * Callback from the service that the PaymentSession failed to load
-     *
-     * @param cause containing the reason why the loading failed
+     * {@inheritDoc}
      */
-    void onPaymentSessionError(Throwable cause) {
+    @Override
+    public void onPaymentSessionError(Throwable cause) {
         if (cause instanceof PaymentException) {
             handleLoadPaymentError((PaymentException) cause);
             return;
@@ -206,11 +155,10 @@ final class PaymentPagePresenter {
     }
 
     /**
-     * Callback from the service that the operation request was successful.
-     *
-     * @param operation containing the result of the operation
+     * {@inheritDoc}
      */
-    void onOperationSuccess(OperationResult operation) {
+    @Override
+    public void onOperationSuccess(OperationResult operation) {
         PaymentResult result = new PaymentResult(operation);
 
         switch (operation.getInteraction().getCode()) {
@@ -223,11 +171,10 @@ final class PaymentPagePresenter {
     }
 
     /**
-     * Callback from the service that the operation request failed
-     *
-     * @param cause containing the details why the operation failed
+     * {@inheritDoc}
      */
-    void onOperationError(Throwable cause) {
+    @Override
+    public void onOperationError(Throwable cause) {
 
         if (cause instanceof PaymentException) {
             handleOperationPaymentError((PaymentException) cause);
@@ -309,6 +256,8 @@ final class PaymentPagePresenter {
                 reloadPaymentSession(result);
                 break;
             case InteractionCode.RETRY:
+                handleOperationInteractionRetry(result);
+                break;
             case InteractionCode.TRY_OTHER_ACCOUNT:
                 continueSessionWithWarning(result);
                 break;
@@ -332,11 +281,23 @@ final class PaymentPagePresenter {
         }
     }
 
+    private void handleOperationInteractionRetry(PaymentResult result) {
+        Interaction interaction = result.getInteraction();
+
+        switch (interaction.getReason()) {
+            case InteractionReason.EXPIRED_SESSION:
+                closeSessionWithCanceledCode(result);
+                break;
+            default:
+                continueSessionWithWarning(result);
+        }
+    }
+
     private void showInteractionMessage(Interaction interaction) {
         String msg = translateInteraction(interaction, null);
 
         if (!TextUtils.isEmpty(msg)) {
-            showMessage(msg);
+            view.showProgressDialog(createMessageDialog(msg, false));
         }
     }
 
@@ -351,11 +312,11 @@ final class PaymentPagePresenter {
     }
 
     private void closeSessionWithCanceledCode(PaymentResult result) {
-        String msg = translateInteraction(result.getInteraction(), view.getStringRes(R.string.pmdialog_error_unknown));
+        String msg = translateInteraction(result.getInteraction(), getString(R.string.pmdialog_error_unknown));
         view.setPaymentResult(PaymentUI.RESULT_CODE_CANCELED, result);
         closePageWithMessage(msg);
     }
-    
+
     private void closeSessionWithErrorCode(int msgResId, Throwable cause) {
         PaymentResult result;
 
@@ -368,25 +329,27 @@ final class PaymentPagePresenter {
             result = new PaymentResult(resultInfo, error);
         }
         view.setPaymentResult(PaymentUI.RESULT_CODE_ERROR, result);
-        closePageWithMessage(view.getStringRes(msgResId));
+        closePageWithMessage(getString(msgResId));
     }
 
     private void loadPaymentSession(final String listUrl) {
         this.session = null;
-        view.clear();
-        service.loadPaymentSession(listUrl);
+        view.clearList();
+        view.showProgressView(ProgressView.LOAD);
+        service.loadPaymentSession(listUrl, view.getContext());
     }
 
     private void postOperation(final Operation operation) {
         this.operation = operation;
-        view.showProgress(true, PaymentProgressView.SEND);
+        int progressType = operation.isType(Operation.PRESET) ? ProgressView.LOAD : ProgressView.SEND;
+        view.showProgressView(progressType);
         service.postOperation(operation);
     }
 
     private void handleLoadConnError(final PaymentException pe) {
-        MessageDialogFragment dialog = createMessageDialog(view.getStringRes(R.string.pmdialog_error_connection), true);
+        MessageDialogFragment dialog = createMessageDialog(getString(R.string.pmdialog_error_connection), true);
         PaymentResult result = new PaymentResult(pe.getMessage(), pe.error);
-        view.setPaymentResult(PaymentUI.RESULT_CODE_ERROR, result);
+        view.setPaymentResult(PaymentUI.RESULT_CODE_CANCELED, result);
 
         dialog.setListener(new ThemedDialogListener() {
             @Override
@@ -397,6 +360,7 @@ final class PaymentPagePresenter {
                         break;
                     case ThemedDialogFragment.BUTTON_POSITIVE:
                         loadPaymentSession(listUrl);
+                        break;
                 }
             }
 
@@ -405,12 +369,12 @@ final class PaymentPagePresenter {
                 view.closePage();
             }
         });
-        view.showDialog(dialog);
+        view.showProgressDialog(dialog);
     }
 
     private void handleOperationConnError() {
         view.showPaymentSession(this.session);
-        MessageDialogFragment dialog = createMessageDialog(view.getStringRes(R.string.pmdialog_error_connection), true);
+        MessageDialogFragment dialog = createMessageDialog(getString(R.string.pmdialog_error_connection), true);
 
         dialog.setListener(new ThemedDialogListener() {
             @Override
@@ -424,7 +388,7 @@ final class PaymentPagePresenter {
             public void onDismissed(ThemedDialogFragment dialog) {
             }
         });
-        view.showDialog(dialog);
+        view.showProgressDialog(dialog);
     }
 
     private String translateInteraction(Interaction interaction, String defMessage) {
@@ -434,10 +398,6 @@ final class PaymentPagePresenter {
         }
         String msg = session.getLang().translateInteraction(interaction);
         return TextUtils.isEmpty(msg) ? defMessage : msg;
-    }
-
-    private void showMessage(String message) {
-        view.showDialog(createMessageDialog(message, false));
     }
 
     private void closePageWithMessage(String message) {
@@ -453,17 +413,21 @@ final class PaymentPagePresenter {
                 view.closePage();
             }
         });
-        view.showDialog(dialog);
+        view.showProgressDialog(dialog);
     }
 
     private MessageDialogFragment createMessageDialog(String message, boolean hasRetry) {
         MessageDialogFragment dialog = new MessageDialogFragment();
         dialog.setMessage(message);
-        dialog.setNeutralButton(view.getStringRes(R.string.pmdialog_cancel_button));
+        dialog.setNeutralButton(getString(R.string.pmdialog_cancel_button));
 
         if (hasRetry) {
-            dialog.setPositiveButton(view.getStringRes(R.string.pmdialog_retry_button));
+            dialog.setPositiveButton(getString(R.string.pmdialog_retry_button));
         }
         return dialog;
+    }
+
+    private String getString(int resId) {
+        return view.getContext().getString(resId);
     }
 }

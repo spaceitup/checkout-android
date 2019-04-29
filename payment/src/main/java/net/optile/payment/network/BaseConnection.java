@@ -128,7 +128,7 @@ abstract class BaseConnection {
                 StringBuilder sb = new StringBuilder("Android");
 
                 sb.append("/");
-                sb.append(Integer.toString(Build.VERSION.SDK_INT));
+                sb.append(Build.VERSION.SDK_INT);
 
                 if (!TextUtils.isEmpty(Build.VERSION.RELEASE)) {
                     sb.append("/");
