@@ -276,9 +276,7 @@ Open the payment page with the listUrl as explained earlier. Notice the buttons 
 3. Charge PresetAccount
 -----------------------
 
-When reloading the ListResult from the Payment API, it now contains a PresetAccount. This PresetAccount represents the payment method previously selected by the user in the payment page.
-
-The Android SDK can be used to charge this PresetAccount by using the chargePresetAccount() method in the PaymentUI class. After calling this method an Activity will be launched showing the sending progress and it will post the charge request to the Payment API. Once the charge is completed a PaymentResult is returned through the onActivityResult() method.
+When reloading the ListResult from the Payment API, it now contains a PresetAccount. This PresetAccount represents the payment method previously selected by the user in the payment page. The Android SDK can be used to charge this PresetAccount by using the chargePresetAccount() method in the PaymentUI class. After calling this method an Activity will be launched showing the sending progress and it will post the charge request to the Payment API. Once the charge is completed a PaymentResult is returned through the onActivityResult() method.
 
 Code sample how to charge a PresetAccount:
 
