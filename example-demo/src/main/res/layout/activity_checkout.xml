@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.design.widget.CoordinatorLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/layout_coordinator"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/pmcolor_list"
+    android:fitsSystemWindows="true">
+
+    <include
+        layout="@layout/layout_header"/>
+
+    <android.support.v4.widget.NestedScrollView
+        android:id="@+id/scroll"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+        <LinearLayout
+            android:id="@+id/layout_content"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingTop="@dimen/pmborder_xlarge"
+                android:paddingBottom="@dimen/pmborder_xlarge"
+                android:paddingLeft="@dimen/pmborder_medium"
+                android:paddingRight="@dimen/pmborder_medium"
+                android:background="@color/pmcolor_background"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical"
+                    android:layout_marginBottom="@dimen/pmborder_medium"
+                    android:orientation="horizontal">
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginRight="@dimen/pmborder_xsmall"
+                        android:src="@drawable/ic_date" android:contentDescription="TODO"/>
+
+                    <TextView
+                        style="@style/PaymentText.Medium"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="@string/product_date"/>
+
+                    <TextView
+                        style="@style/PaymentText.Medium.Bold"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/product_price"/>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginRight="@dimen/pmborder_xsmall"
+                        android:src="@drawable/ic_count"/>
+
+                    <TextView
+                        style="@style/PaymentText.Medium"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/product_count"/>
+                </LinearLayout>
+            </LinearLayout>
+
+            <TextView
+                style="@style/PaymentText.Medium.Bold"
+                android:layout_marginTop="@dimen/pmborder_medium"
+                android:layout_marginLeft="@dimen/pmborder_medium"
+                android:layout_marginRight="@dimen/pmborder_medium"
+                android:layout_marginBottom="@dimen/pmborder_xxsmall"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/checkout_personal_details"/>
+
+            <android.support.design.card.MaterialCardView
+                style="@style/PaymentThemeCardView"
+                android:layout_marginLeft="@dimen/pmborder_medium"
+                android:layout_marginRight="@dimen/pmborder_medium"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="@dimen/pmborder_large"
+                    android:orientation="vertical">
+
+                    <include
+                        layout="@layout/layout_checkoutdetails"/>
+
+                    <Button
+                        style="@style/AppButton"
+                        android:id="@+id/button_checkout"
+                        android:layout_marginTop="@dimen/pmborder_large"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@string/button_checkout"/>
+
+                </LinearLayout>
+            </android.support.design.card.MaterialCardView>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:layout_marginTop="@dimen/pmborder_large"
+                android:layout_marginLeft="@dimen/pmborder_medium"
+                android:layout_marginRight="@dimen/pmborder_medium"
+                android:layout_marginBottom="@dimen/pmborder_large"
+                android:orientation="horizontal">
+
+                <TextView
+                    style="@style/PaymentText.Medium.Bold"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="@string/product_total"/>
+
+                <TextView
+                    style="@style/PaymentText.XLarge.Bold"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/product_price"/>
+            </LinearLayout>
+
+        </LinearLayout>
+
+    </android.support.v4.widget.NestedScrollView>
+
+</android.support.design.widget.CoordinatorLayout>
