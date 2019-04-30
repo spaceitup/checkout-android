@@ -1,0 +1,23 @@
+<resources>
+    <style name="AppButton" parent="PaymentThemeButton">
+        <item name="android:textAppearance">@style/PaymentText.Medium.Bold.Light</item>
+        <item name="android:background">@drawable/button_background</item>
+    </style>
+
+    <style name="DefaultCollapsingToolbarTheme" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="colorPrimary">@color/pmcolor_primary</item>
+        <item name="colorPrimaryDark">@color/pmcolor_primarydark</item>
+        <item name="colorAccent">@color/pmcolor_accent</item>
+
+        <item name="android:windowContentTransitions">true</item>
+        <item name="android:windowTranslucentStatus">true</item>
+        <item name="android:windowDrawsSystemBarBackgrounds">true</item>
+        <item name="android:windowTranslucentNavigation">false</item>
+    </style>
+
+    <style name="DefaultConfirmTheme" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="colorPrimary">@color/pmcolor_primary</item>
+        <item name="colorPrimaryDark">@color/pmcolor_primarydark</item>
+        <item name="colorAccent">@color/pmcolor_accent</item>
+    </style>
+</resources>
