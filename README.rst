@@ -109,7 +109,7 @@ This example demonstrates how to initialize and open the payment page provided b
 2. Example-Demo
 ---------------
 
-The demo example app shows how to use the Android SDK when a summary page (Delayed Payment Submission) is required to finalize the payment. The sources of this app can be found `here <./example-demo>`_. To use this example app paste a valid listUrl in the input field and click the button.
+The demo example shows how to use the Android SDK when a summary page is required to finalize the payment. The sources of this app can be found `here <./example-demo>`_. To use this example app paste a valid listUrl in the input field and click the button.
 
 Your first payment
 ==================
