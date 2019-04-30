@@ -39,7 +39,6 @@ final class CheckoutPresenter {
      * @param result the result received from the SDK
      */
     void handleSdkResult(SdkResult result) {
-
         switch (result.resultCode) {
             case PaymentUI.RESULT_CODE_OK:
                 handlePaymentSuccess(result.paymentResult);
@@ -56,7 +55,6 @@ final class CheckoutPresenter {
 
     private void handlePaymentSuccess(PaymentResult result) {
         OperationResult op = result.getOperationResult();
-
         if (op != null) {
             Redirect redirect = op.getRedirect();
 
@@ -71,7 +69,6 @@ final class CheckoutPresenter {
 
     private void handlePaymentCanceled(PaymentResult result) {
         Interaction interaction = result.getInteraction();
-
         if (interaction != null && interaction.getCode() == InteractionCode.ABORT) {
             view.closePayment();
         }

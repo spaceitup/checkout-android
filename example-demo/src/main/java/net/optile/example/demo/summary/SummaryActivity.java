@@ -54,7 +54,6 @@ public final class SummaryActivity extends BaseActivity implements SummaryView {
      * @return the newly created intent
      */
     public static Intent createStartIntent(Context context, String listUrl) {
-
         if (context == null) {
             throw new IllegalArgumentException("context may not be null");
         }
@@ -106,7 +105,6 @@ public final class SummaryActivity extends BaseActivity implements SummaryView {
     @Override
     public void onResume() {
         super.onResume();
-
         if (sdkResult != null) {
             presenter.handleSdkResult(sdkResult);
             this.sdkResult = null;
@@ -128,7 +126,6 @@ public final class SummaryActivity extends BaseActivity implements SummaryView {
      */
     @Override
     public void showPaymentSuccess() {
-
         if (!active) {
             return;
         }
@@ -141,7 +138,6 @@ public final class SummaryActivity extends BaseActivity implements SummaryView {
      */
     @Override
     public void showPaymentDetails(PresetAccount account, String method) {
-
         if (!active) {
             return;
         }
@@ -181,7 +177,6 @@ public final class SummaryActivity extends BaseActivity implements SummaryView {
      */
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
-
         if (requestCode != PAYMENT_REQUEST_CODE && requestCode != EDIT_REQUEST_CODE) {
             return;
         }
@@ -196,7 +191,6 @@ public final class SummaryActivity extends BaseActivity implements SummaryView {
      */
     @Override
     public void closePayment(String message) {
-
         if (!active) {
             return;
         }
@@ -212,7 +206,6 @@ public final class SummaryActivity extends BaseActivity implements SummaryView {
      */
     @Override
     public void showLoading(boolean val) {
-
         if (!active) {
             return;
         }

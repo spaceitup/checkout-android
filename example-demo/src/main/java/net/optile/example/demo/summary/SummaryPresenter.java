@@ -53,7 +53,6 @@ final class SummaryPresenter {
      * Check if there are any pending subscriptions and unsubscribe if needed
      */
     void onStop() {
-
         if (subscription != null) {
             subscription.unsubscribe();
             subscription = null;
@@ -66,7 +65,6 @@ final class SummaryPresenter {
      * @param result the result received from the SDK
      */
     void handleSdkResult(SdkResult result) {
-
         switch (result.requestCode) {
             case SummaryActivity.PAYMENT_REQUEST_CODE:
                 handlePaymentResult(result);
@@ -78,7 +76,6 @@ final class SummaryPresenter {
     }
 
     void loadPaymentDetails(String listUrl) {
-
         if (isLoadSessionActive()) {
             return;
         }
@@ -90,7 +87,6 @@ final class SummaryPresenter {
                 return asyncLoadPaymentSession(listUrl);
             }
         });
-
         this.subscription = single.subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe(new SingleSubscriber<ListResult>() {
@@ -107,7 +103,6 @@ final class SummaryPresenter {
     }
 
     private void handleEditResult(SdkResult result) {
-
         switch (result.resultCode) {
             case PaymentUI.RESULT_CODE_OK:
                 loadPaymentDetails(view.getListUrl());
@@ -123,7 +118,6 @@ final class SummaryPresenter {
     }
 
     private void handlePaymentResult(SdkResult result) {
-
         switch (result.resultCode) {
             case PaymentUI.RESULT_CODE_OK:
                 view.showPaymentSuccess();
@@ -140,7 +134,6 @@ final class SummaryPresenter {
 
     private void handleResultCanceled(PaymentResult result) {
         Interaction interaction = result.getInteraction();
-
         if (interaction != null && interaction.getCode() == InteractionCode.ABORT) {
             view.closePayment(null);
         }
@@ -174,12 +167,10 @@ final class SummaryPresenter {
 
     private String getPaymentMethod(String code, ListResult listResult) {
         Networks networks = listResult.getNetworks();
-
         if (networks == null) {
             return null;
         }
         List<ApplicableNetwork> an = networks.getApplicable();
-
         if (an == null || an.size() == 0) {
             return null;
         }

@@ -33,7 +33,6 @@ public abstract class BaseActivity extends AppCompatActivity {
      */
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-
         switch (item.getItemId()) {
             case android.R.id.home:
                 supportFinishAfterTransition();
@@ -48,13 +47,11 @@ public abstract class BaseActivity extends AppCompatActivity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Bundle bundle = savedInstanceState == null ? getIntent().getExtras() : savedInstanceState;
 
-        if (savedInstanceState != null) {
-            this.listUrl = savedInstanceState.getString(EXTRA_LISTURL);
-        } else {
-            Intent intent = getIntent();
-            this.listUrl = intent.getStringExtra(EXTRA_LISTURL);
-        }
+        if (bundle != null) {
+            this.listUrl = bundle.getString(EXTRA_LISTURL);
+        } 
     }
 
     /**

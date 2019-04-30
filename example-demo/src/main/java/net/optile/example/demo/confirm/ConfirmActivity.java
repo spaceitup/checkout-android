@@ -28,7 +28,6 @@ public final class ConfirmActivity extends BaseActivity {
      * @return the newly created intent
      */
     public static Intent createStartIntent(final Context context) {
-
         if (context == null) {
             throw new IllegalArgumentException("context may not be null");
         }

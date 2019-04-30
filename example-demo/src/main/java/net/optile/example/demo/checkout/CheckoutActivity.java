@@ -43,7 +43,6 @@ public final class CheckoutActivity extends BaseActivity implements CheckoutView
      * @return the newly created intent
      */
     public static Intent createStartIntent(Context context, String listUrl) {
-
         if (context == null) {
             throw new IllegalArgumentException("context may not be null");
         }
@@ -92,7 +91,6 @@ public final class CheckoutActivity extends BaseActivity implements CheckoutView
      */
     @Override
     public void showPaymentSummary() {
-
         if (!active) {
             return;
         }
@@ -105,7 +103,6 @@ public final class CheckoutActivity extends BaseActivity implements CheckoutView
      */
     @Override
     public void showPaymentConfirmed() {
-
         if (!active) {
             return;
         }
@@ -118,7 +115,6 @@ public final class CheckoutActivity extends BaseActivity implements CheckoutView
      */
     @Override
     public void closePayment() {
-
         if (!active) {
             return;
         }
@@ -130,7 +126,6 @@ public final class CheckoutActivity extends BaseActivity implements CheckoutView
      */
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
-
         if (requestCode != PAYMENT_REQUEST_CODE) {
             return;
         }

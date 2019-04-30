@@ -31,7 +31,6 @@ public final class SettingsActivity extends BaseActivity {
      * @return the newly created intent
      */
     public static Intent createStartIntent(final Context context) {
-
         if (context == null) {
             throw new IllegalArgumentException("context may not be null");
         }
@@ -47,6 +46,7 @@ public final class SettingsActivity extends BaseActivity {
     public void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_settings);
+
         Button button = findViewById(R.id.button_settings);
         button.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
@@ -56,7 +56,6 @@ public final class SettingsActivity extends BaseActivity {
     }
 
     private void onButtonClicked() {
-
         EditText listInput = findViewById(R.id.input_listurl);
         String listUrl = listInput.getText().toString().trim();
 
