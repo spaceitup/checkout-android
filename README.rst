@@ -15,7 +15,18 @@ Supported Features
 Examples
 -----------
 
-The Android SDK repository contains an example app explaining i.e. how to open the Payment Page and receive operation results after a charge has been completed. The sources of this example app can be found `here <./example>`_.
+The Android SDK repository contains two example apps demonstrating how to integrate the Android SDK into a mobile app. Both examples support lists created with either the presetFirst parameter set to true or false and it supports both registered users with saved accounts and unregistered users.
+
+1. Example-Checkout
+~~~~~~~~~~~~~~~~
+
+This example demonstrates how to initialize and open the payment page provided by the Android SDK. It also shows how to change the theme, set custom payment groups and receive payment results returned by the Android SDK. The sources of the checkout example can be found `here <./example-checkout>`_. Paste a valid listUrl in the input field and click the button to start this example.
+
+2. Example-Demo
+~~~~~~~~~~~~
+
+The demo example app shows how to use the Android SDK when a summary page (Delayed Payment Submission) is required to finalize the payment. The sources of this app can be found `here <./example-demo>`_. To use this example app paste a valid listUrl in the input field and click the button.
+
 
 Android Version
 ---------------
