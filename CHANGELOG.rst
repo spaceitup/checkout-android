@@ -1,6 +1,15 @@
 Changelog - Android SDK
 -----------------------
 
+**Version android-sdk-1.1.13**
+
+* [PCX-182] - [Android SDK] Create demo app for Android SDK with summary page
+* [PCX-191] - [Android SDK] Example app with summary page
+
+**Version android-sdk-1.1.12**
+
+* [PCX-231] - Fix automated UI tests for Android SDK
+
 **Version android-sdk-1.1.11**
 
 * [PCX-210] - Update model classes Redirect and Installment Plan
