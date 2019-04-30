@@ -3,9 +3,8 @@ Changelog - Android SDK
 
 **Version android-sdk-1.1.13**
 
-** Story
-    * [PCX-182] - [Android SDK] Create demo app for Android SDK with summary page
-    * [PCX-191] - [Android SDK] Example app with summary page
+* [PCX-182] - [Android SDK] Create demo app for Android SDK with summary page
+* [PCX-191] - [Android SDK] Example app with summary page
 
 **Version android-sdk-1.1.12**
 
