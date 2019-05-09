@@ -20,15 +20,15 @@ import org.junit.runner.RunWith;
 import android.support.test.filters.LargeTest;
 import android.support.test.rule.ActivityTestRule;
 import android.support.test.runner.AndroidJUnit4;
-import net.optile.example.checkout.CheckoutActivity;
+import net.optile.example.basic.BasicActivity;
 
 
 @RunWith(AndroidJUnit4.class)
 @LargeTest
 public class CheckoutPageTests {
     @Rule
-    public ActivityTestRule<CheckoutActivity> activityRule = new ActivityTestRule<>(
-        CheckoutActivity.class);
+    public ActivityTestRule<BasicActivity> activityRule = new ActivityTestRule<>(
+        BasicActivity.class);
 
     @Test
     public void defaultThemeLabelTest() {

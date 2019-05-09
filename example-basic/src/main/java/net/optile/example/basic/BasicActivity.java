@@ -5,7 +5,7 @@
  * This file is open source and available under the MIT license.
  * See the LICENSE file for more information.
  */
-package net.optile.example.checkout;
+package net.optile.example.basic;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
@@ -26,13 +26,13 @@ import net.optile.payment.ui.PaymentUI;
 import net.optile.payment.ui.theme.PaymentTheme;
 
 /**
- * This is the main Activity of this Checkout example app
+ * This is the main Activity of this basic example app
  */
-public final class CheckoutActivity extends AppCompatActivity {
+public final class BasicActivity extends AppCompatActivity {
 
     private final static int PAYMENT_REQUEST_CODE = 1;
 
-    private CheckoutResult checkoutResult;
+    private SdkResult sdkResult;
     private RadioGroup themeGroup;
     private EditText listInput;
     private View sdkResponseLayout;
@@ -44,7 +44,7 @@ public final class CheckoutActivity extends AppCompatActivity {
     @Override
     public void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_checkout);
+        setContentView(R.layout.activity_basic);
         themeGroup = findViewById(R.id.radio_themes);
         listInput = findViewById(R.id.input_listurl);
         sdkResponseLayout = findViewById(R.id.layout_sdkresponse);
@@ -73,10 +73,10 @@ public final class CheckoutActivity extends AppCompatActivity {
     public void onResume() {
         super.onResume();
 
-        if (checkoutResult != null) {
-            showSdkResponse(checkoutResult);
-            showApiResponse(checkoutResult);
-            this.checkoutResult = null;
+        if (sdkResult != null) {
+            showSdkResponse(sdkResult);
+            showApiResponse(sdkResult);
+            this.sdkResult = null;
         }
     }
 
@@ -91,11 +91,11 @@ public final class CheckoutActivity extends AppCompatActivity {
         }
         if (data != null && data.hasExtra(PaymentUI.EXTRA_PAYMENT_RESULT)) {
             PaymentResult result = data.getParcelableExtra(PaymentUI.EXTRA_PAYMENT_RESULT);
-            this.checkoutResult = new CheckoutResult(resultCode, result);
+            this.sdkResult = new SdkResult(resultCode, result);
         }
     }
 
-    private void showSdkResponse(CheckoutResult result) {
+    private void showSdkResponse(SdkResult result) {
         PaymentResult pr = result.paymentResult;
 
         apiResponseLayout.setVisibility(View.VISIBLE);
@@ -111,7 +111,7 @@ public final class CheckoutActivity extends AppCompatActivity {
         setText(val, R.id.label_sdkpaymenterror, R.id.text_sdkpaymenterror);
     }
 
-    private void showApiResponse(CheckoutResult result) {
+    private void showApiResponse(SdkResult result) {
         PaymentResult pr = result.paymentResult;
         Interaction interaction = pr.getInteraction();
 
@@ -179,11 +179,11 @@ public final class CheckoutActivity extends AppCompatActivity {
 
         switch (themeGroup.getCheckedRadioButtonId()) {
             case R.id.radio_theme_default:
-                return CheckoutThemeBuilder.createDefaultTheme();
+                return SdkThemeBuilder.createDefaultTheme();
             case R.id.radio_theme_custom:
-                return CheckoutThemeBuilder.createCustomTheme();
+                return SdkThemeBuilder.createCustomTheme();
             default:
-                return CheckoutThemeBuilder.createEmptyTheme();
+                return SdkThemeBuilder.createEmptyTheme();
         }
     }
 

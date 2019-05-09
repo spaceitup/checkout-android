@@ -6,7 +6,7 @@
  * See the LICENSE file for more information.
  */
 
-package net.optile.example.checkout;
+package net.optile.example.basic;
 
 import net.optile.payment.ui.theme.DialogParameters;
 import net.optile.payment.ui.theme.PageParameters;
@@ -15,9 +15,9 @@ import net.optile.payment.ui.theme.ProgressParameters;
 import net.optile.payment.ui.theme.WidgetParameters;
 
 /**
- * Class used to create a custom PaymentTheme for skinning the Android SDK Payment page
+ * Class used to create a custom PaymentTheme for theming the Android SDK Payment page
  */
-final class CheckoutThemeBuilder {
+final class SdkThemeBuilder {
 
     /**
      * Create an empty payment theme
