@@ -17,7 +17,7 @@ import org.json.JSONObject;
 
 import android.content.Context;
 import android.support.test.InstrumentationRegistry;
-import net.optile.example.checkout.R;
+import net.optile.example.basic.R;
 import net.optile.payment.core.PaymentException;
 import net.optile.payment.model.ListResult;
 import net.optile.payment.network.ListConnection;
@@ -35,7 +35,7 @@ public class ListService {
 
     public ListConfig createNewBodyConfig() throws JSONException, IOException {
         String fileContent = PaymentUtils.readRawResource(InstrumentationRegistry.getContext().getResources(),
-            net.optile.example.checkout.test.R.raw.preset);
+            net.optile.example.basic.test.R.raw.preset);
         JSONObject obj = new JSONObject(fileContent);
         return new ListConfig(obj);
     }
@@ -67,6 +67,6 @@ public class ListService {
 
     private String loadJsonBody() throws IOException {
         return PaymentUtils.readRawResource(InstrumentationRegistry.getContext().getResources(),
-            net.optile.example.checkout.test.R.raw.preset);
+            net.optile.example.basic.test.R.raw.preset);
     }
 }

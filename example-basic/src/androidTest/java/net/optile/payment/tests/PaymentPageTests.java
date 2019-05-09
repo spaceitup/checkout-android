@@ -26,8 +26,8 @@ import android.support.test.espresso.intent.Intents;
 import android.support.test.filters.LargeTest;
 import android.support.test.rule.ActivityTestRule;
 import android.support.test.runner.AndroidJUnit4;
-import net.optile.example.checkout.CheckoutActivity;
-import net.optile.example.checkout.R;
+import net.optile.example.basic.BasicActivity;
+import net.optile.example.basic.R;
 import net.optile.payment.list.ListConfig;
 import net.optile.payment.list.ListService;
 import net.optile.payment.ui.page.PaymentListActivity;
@@ -37,8 +37,8 @@ import net.optile.payment.ui.page.PaymentListActivity;
 
 public class PaymentPageTests {
     @Rule
-    public ActivityTestRule<CheckoutActivity> activityRule = new ActivityTestRule<>(
-        CheckoutActivity.class);
+    public ActivityTestRule<BasicActivity> activityRule = new ActivityTestRule<>(
+        BasicActivity.class);
 
     @Test
     public void openPaymentPageTest() throws JSONException, IOException {
