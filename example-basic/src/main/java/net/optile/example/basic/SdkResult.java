@@ -6,15 +6,15 @@
  * See the LICENSE file for more information.
  */
 
-package net.optile.example.checkout;
+package net.optile.example.basic;
 
 import net.optile.payment.ui.PaymentResult;
 import net.optile.payment.ui.PaymentUI;
 
 /**
- * Class for holding the CheckoutResult data
+ * Class for holding the SdkResult data
  */
-class CheckoutResult {
+class SdkResult {
 
     /** The PaymentPage resultCode */
     public final int resultCode;
@@ -28,7 +28,7 @@ class CheckoutResult {
      * @param resultCode indicating the payment resultCode
      * @param paymentResult optional result containing PaymentResult details
      */
-    public CheckoutResult(int resultCode, PaymentResult paymentResult) {
+    public SdkResult(int resultCode, PaymentResult paymentResult) {
         this.resultCode = resultCode;
         this.paymentResult = paymentResult;
     }

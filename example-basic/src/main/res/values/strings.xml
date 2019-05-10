@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Checkout Example</string>
+    <string name="app_name">Basic Example</string>
 
     <string name="theme_default">Default Theme</string>
     <string name="theme_custom">Custom Theme</string>
@@ -18,7 +18,7 @@
     <string name="apiinteractioncode">Interaction Code</string>
     <string name="apiinteractionreason">Interaction Reason</string>
 
-    <string name="dialog_error_title">Checkout Error</string>
+    <string name="dialog_error_title">Example Error</string>
     <string name="dialog_error_button">Close</string>
     <string name="dialog_error_listurl_invalid">Please paste a valid optile List Url in the input field.</string>
 </resources>
