@@ -6,7 +6,7 @@
  * See the LICENSE file for more information.
  */
 
-package net.optile.payment.list;
+package net.optile.payment.test.service;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -19,9 +19,9 @@ public class ListConfig {
         this.source = source;
     }
 
-    public void setPrice(String price) throws JSONException {
+    public void setAmount(String amount) throws JSONException {
         JSONObject payment = source.getJSONObject("payment");
-        payment.put("amount", price);
+        payment.put("amount", amount);
     }
 
     public void setLanguage(String lang) throws JSONException {
