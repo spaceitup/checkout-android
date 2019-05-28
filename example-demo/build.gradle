@@ -27,7 +27,12 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
-    sourceSets { main { res.srcDirs = ['src/main/res', 'src/androidTest/'] } }
+    sourceSets {
+        androidTest {
+            java.srcDirs += '../payment/src/sharedTest/java'
+            res.srcDirs += '../payment/src/sharedTest/res'
+        }
+    }
 }
 
 dependencies {
@@ -38,6 +43,7 @@ dependencies {
     implementation "io.reactivex:rxandroid:${rootProject.rxandroidVersion}"
 
     testImplementation "junit:junit:${rootProject.junitVersion}"
+    testImplementation "org.hamcrest:hamcrest-library:${rootProject.harmcrestVersion}"
 
     androidTestImplementation "com.android.support.test:runner:${rootProject.runnerVersion}"
     androidTestImplementation "com.android.support.test.espresso:espresso-core:${rootProject.espressoCoreVersion}"

@@ -18,6 +18,7 @@ import android.content.Context;
 import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.support.v4.widget.TextViewCompat;
+import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 import net.optile.payment.core.PaymentInputType;
@@ -138,5 +139,16 @@ public final class PaymentUtils {
             throw new IOException("Resource not found: " + resId);
         }
         return sb.toString();
+    }
+
+    /**
+     * Set the test tag to the view with the proper formatting understood by the automated UI tests.
+     *
+     * @param view in which the tag should be set
+     * @param type the type of the View, i.e. widget, networkcard.
+     * @param value the name of the view i.e. holderName, VISA
+     */
+    public static void setTestTag(View view, String type, String name) {
+        view.setTag(type + "-" + name);
     }
 }

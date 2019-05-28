@@ -58,6 +58,8 @@ final class AccountCardViewHolder extends PaymentCardViewHolder {
             throw new IllegalArgumentException("Expected AccountCard in onBind");
         }
         super.onBind(paymentCard);
+        PaymentUtils.setTestTag(itemView, "accountcard", paymentCard.getCode());
+
         AccountCard card = (AccountCard) paymentCard;
         AccountMask mask = card.getMaskedAccount();
         bindMaskedTitle(title, mask, card.getPaymentMethod());

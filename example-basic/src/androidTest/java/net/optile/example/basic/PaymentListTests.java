@@ -6,13 +6,15 @@
  * See the LICENSE file for more information.
  */
 
-package net.optile.payment.tests;
+package net.optile.example.basic;
 
 import static android.support.test.espresso.Espresso.onView;
 import static android.support.test.espresso.action.ViewActions.click;
 import static android.support.test.espresso.action.ViewActions.typeText;
+import static android.support.test.espresso.assertion.ViewAssertions.matches;
 import static android.support.test.espresso.intent.Intents.intended;
 import static android.support.test.espresso.intent.matcher.IntentMatchers.hasComponent;
+import static android.support.test.espresso.matcher.ViewMatchers.isDisplayed;
 import static android.support.test.espresso.matcher.ViewMatchers.withId;
 
 import java.io.IOException;
@@ -22,35 +24,46 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
+import android.content.Context;
+import android.support.test.InstrumentationRegistry;
 import android.support.test.espresso.intent.Intents;
 import android.support.test.filters.LargeTest;
 import android.support.test.rule.ActivityTestRule;
 import android.support.test.runner.AndroidJUnit4;
-import net.optile.example.basic.BasicActivity;
-import net.optile.example.basic.R;
-import net.optile.payment.list.ListConfig;
-import net.optile.payment.list.ListService;
+import net.optile.payment.test.service.ListConfig;
+import net.optile.payment.test.service.ListService;
 import net.optile.payment.ui.page.PaymentListActivity;
 
 @RunWith(AndroidJUnit4.class)
 @LargeTest
-
-public class PaymentPageTests {
+public class PaymentListTests {
     @Rule
     public ActivityTestRule<BasicActivity> activityRule = new ActivityTestRule<>(
         BasicActivity.class);
 
     @Test
-    public void openPaymentPageTest() throws JSONException, IOException {
+    public void openPaymentListTest() throws JSONException, IOException {
         Intents.init();
-        ListService listService = new ListService();
-        ListConfig config = listService.createNewBodyConfig();
-        config.setPrice("1.0");
-        String listUrl = listService.createConfigListUrl(config);
+        openPaymentList();
+        Intents.release();
+    }
+
+    private void openPaymentList() throws JSONException, IOException {
+        ListService service = getListService();
+        ListConfig config = service.createListConfig(net.optile.example.basic.test.R.raw.listtemplate);
+        String listUrl = service.createListUrl(config);
         onView(withId(R.id.input_listurl)).perform(typeText(listUrl));
         onView(withId(R.id.button_action)).perform(click());
+
         intended(hasComponent(PaymentListActivity.class.getName()));
-        Intents.release();
+        onView(withId(R.id.layout_parent)).check(matches(isDisplayed()));
+    }
+
+    private ListService getListService() throws IOException {
+        Context context = InstrumentationRegistry.getTargetContext();
+        String url = context.getString(R.string.paymentapi_url);
+        String auth = context.getString(R.string.paymentapi_auth);
+        return ListService.createInstance(url, auth);
     }
 }
 
