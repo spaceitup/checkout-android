@@ -6,15 +6,11 @@
  * See the LICENSE file for more information.
  */
 
-package net.optile.payment;
+package net.optile.example.demo;
 
 import org.junit.runner.RunWith;
 import org.junit.runners.Suite;
 
-import net.optile.payment.tests.CheckoutPageTests;
-import net.optile.payment.tests.PaymentPageTests;
-
-//Runs all UI Tests
 @RunWith(Suite.class)
-@Suite.SuiteClasses({ CheckoutPageTests.class, PaymentPageTests.class })
+@Suite.SuiteClasses({ SettingsPageTests.class, CheckoutPageTests.class })
 public class UITestSuite { }

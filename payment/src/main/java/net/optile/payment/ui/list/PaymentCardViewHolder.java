@@ -353,4 +353,8 @@ abstract class PaymentCardViewHolder extends RecyclerView.ViewHolder {
             }
         }
     }
+
+    void setTestTag(String type, String code) {
+        itemView.setTag(type + "_" + code);
+    }
 }

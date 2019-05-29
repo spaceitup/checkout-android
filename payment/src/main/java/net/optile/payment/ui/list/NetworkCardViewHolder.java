@@ -74,6 +74,8 @@ final class NetworkCardViewHolder extends PaymentCardViewHolder {
             throw new IllegalArgumentException("Expected Networkcard in onBind");
         }
         super.onBind(paymentCard);
+        PaymentUtils.setTestTag(itemView, "networkcard", paymentCard.getCode());
+
         NetworkCard networkCard = (NetworkCard) paymentCard;
         PaymentNetwork network = networkCard.getVisibleNetwork();
 

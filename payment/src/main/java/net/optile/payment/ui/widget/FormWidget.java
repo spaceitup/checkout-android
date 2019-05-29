@@ -17,6 +17,7 @@ import net.optile.payment.core.PaymentException;
 import net.optile.payment.form.Operation;
 import net.optile.payment.ui.theme.PaymentTheme;
 import net.optile.payment.ui.theme.WidgetParameters;
+import net.optile.payment.util.PaymentUtils;
 
 /**
  * Base class for all widgets, i.e. ButtonWidget, CheckBoxWidget, TextInputWidget etc.
@@ -36,6 +37,7 @@ public abstract class FormWidget {
     int state;
 
     FormWidget(String name, View rootView, PaymentTheme theme) {
+        PaymentUtils.setTestTag(rootView, "widget", name);
         this.name = name;
         this.rootView = rootView;
         this.theme = theme;

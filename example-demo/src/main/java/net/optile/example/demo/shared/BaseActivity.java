@@ -10,7 +10,6 @@ package net.optile.example.demo.shared;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
@@ -51,7 +50,7 @@ public abstract class BaseActivity extends AppCompatActivity {
 
         if (bundle != null) {
             this.listUrl = bundle.getString(EXTRA_LISTURL);
-        } 
+        }
     }
 
     /**

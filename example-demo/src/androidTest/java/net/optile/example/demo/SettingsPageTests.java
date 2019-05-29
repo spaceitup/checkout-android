@@ -6,12 +6,12 @@
  * See the LICENSE file for more information.
  */
 
-package net.optile.payment.tests;
+package net.optile.example.demo;
 
 import static android.support.test.espresso.Espresso.onView;
 import static android.support.test.espresso.assertion.ViewAssertions.matches;
 import static android.support.test.espresso.matcher.ViewMatchers.isDisplayed;
-import static android.support.test.espresso.matcher.ViewMatchers.withText;
+import static android.support.test.espresso.matcher.ViewMatchers.withId;
 
 import org.junit.Rule;
 import org.junit.Test;
@@ -20,18 +20,17 @@ import org.junit.runner.RunWith;
 import android.support.test.filters.LargeTest;
 import android.support.test.rule.ActivityTestRule;
 import android.support.test.runner.AndroidJUnit4;
-import net.optile.example.basic.BasicActivity;
-
+import net.optile.example.demo.settings.SettingsActivity;
 
 @RunWith(AndroidJUnit4.class)
 @LargeTest
-public class CheckoutPageTests {
+public class SettingsPageTests {
     @Rule
-    public ActivityTestRule<BasicActivity> activityRule = new ActivityTestRule<>(
-        BasicActivity.class);
+    public ActivityTestRule<SettingsActivity> activityRule = new ActivityTestRule<>(
+        SettingsActivity.class);
 
     @Test
-    public void defaultThemeLabelTest() {
-        onView(withText("Default Theme")).check(matches(isDisplayed()));
+    public void settingsPageVisibleTest() {
+        onView(withId(R.id.activity_settings)).check(matches(isDisplayed()));
     }
 }

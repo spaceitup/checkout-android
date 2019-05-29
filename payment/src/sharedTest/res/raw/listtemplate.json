@@ -11,7 +11,7 @@
         }
     },
     "payment": {
-        "amount": 9.99,
+        "amount": 1.99,
         "currency": "EUR",
         "reference": "Shop optile/03-12-2018"
     },

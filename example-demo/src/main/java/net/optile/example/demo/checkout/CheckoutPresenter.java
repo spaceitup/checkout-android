@@ -9,6 +9,7 @@
 package net.optile.example.demo.checkout;
 
 import java.util.Objects;
+
 import net.optile.example.demo.shared.SdkResult;
 import net.optile.payment.model.Interaction;
 import net.optile.payment.model.InteractionCode;

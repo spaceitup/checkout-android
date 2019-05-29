@@ -29,7 +29,7 @@ public class Operation {
     public final static String PAYOUT = "PAYOUT";
     public final static String UPDATE = "UPDATE";
     public final static String ACTIVATE = "ACTIVATE";
-    
+
     private final URL url;
     private final JSONObject form;
     private final JSONObject account;
