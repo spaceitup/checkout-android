@@ -1,6 +1,11 @@
 Changelog - Android SDK
 -----------------------
 
+**Version android-sdk-1.1.16**
+
+* [PCX-288] - Support different test merchants for functional tests
+
+
 **Version android-sdk-1.1.15**
 
 * [PCX-289] - Launch and show payment page functional tests
