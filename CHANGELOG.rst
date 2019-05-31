@@ -1,6 +1,19 @@
 Changelog - Android SDK
 -----------------------
 
+**Version android-sdk-1.1.16**
+
+* [PCX-288] - Support different test merchants for functional tests
+
+
+**Version android-sdk-1.1.15**
+
+* [PCX-289] - Launch and show payment page functional tests
+
+**Version android-sdk-1.1.14**
+      
+* [PCX-259] - Rename Android SDK Example app names
+
 **Version android-sdk-1.1.13**
 
 * [PCX-182] - [Android SDK] Create demo app for Android SDK with summary page
