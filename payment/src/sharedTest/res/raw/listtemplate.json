@@ -5,10 +5,7 @@
     "country": "DE",
     "customer": {
         "number": "42",
-        "email": "john.doe@example.com",
-        "registration": {
-            "id": "5c51c081b55f286f2db9f97au"
-        }
+        "email": "john.doe@example.com"
     },
     "payment": {
         "amount": 1.99,
