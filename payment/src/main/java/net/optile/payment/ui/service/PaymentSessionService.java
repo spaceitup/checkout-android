@@ -36,6 +36,7 @@ import net.optile.payment.network.PaymentConnection;
 import net.optile.payment.resource.PaymentGroup;
 import net.optile.payment.resource.ResourceLoader;
 import net.optile.payment.ui.PaymentUI;
+import net.optile.payment.ui.model.SmartSwitch;
 import net.optile.payment.ui.model.AccountCard;
 import net.optile.payment.ui.model.NetworkCard;
 import net.optile.payment.ui.model.PaymentNetwork;
@@ -250,27 +251,45 @@ public final class PaymentSessionService {
     private List<NetworkCard> createNetworkCards(Map<String, PaymentNetwork> networks, Map<String, PaymentGroup> groups)
         throws PaymentException {
         Map<String, NetworkCard> cards = new LinkedHashMap<>();
-        NetworkCard card;
         PaymentGroup group;
-        String code;
 
         for (PaymentNetwork network : networks.values()) {
-            code = network.getCode();
+            group = groups.get(network.getCode());
 
-            if ((group = groups.get(code)) == null) {
-                addNetworkCard(cards, code, network);
-                continue;
-            }
-            network.setSmartSelectionRegex(group.getSmartSelectionRegex(code));
-            card = cards.get(group.getId());
-
-            if (card == null) {
-                addNetworkCard(cards, group.getId(), network);
-            } else if (!card.addPaymentNetwork(network)) {
-                addNetworkCard(cards, code, network);
+            if (group == null) {
+                addNetwork2SingleCard(cards,  network);
+            } else {
+                addNetwork2GroupCard(cards, network, group);
             }
         }
         return new ArrayList<>(cards.values());
+    }
+        
+    private void addNetwork2SingleCard(Map<String, NetworkCard> cards, PaymentNetwork network) throws PaymentException {
+        NetworkCard card = new NetworkCard();
+        card.addPaymentNetwork(network);
+        cards.put(network.getCode(), card);
+    }
+
+    private void addNetwork2GroupCard(Map<String, NetworkCard> cards, PaymentNetwork network, PaymentGroup group) throws PaymentException {
+        String code = network.getCode();
+        String groupId = group.getId();
+        String regex = group.getSmartSelectionRegex(code);
+
+        if (TextUtils.isEmpty(regex)) {
+            throw createPaymentException("Missing regex for network: " + code + " in group: " + groupId, null);
+        }
+        NetworkCard card = cards.get(groupId);
+        if (card == null) {
+            card = new NetworkCard();
+            cards.put(groupId, card);
+        }
+        // a network can always be added to an empty card
+        if (!card.addPaymentNetwork(network)) {
+            addNetwork2SingleCard(cards, network);
+            return;
+        }
+        card.getSmartSwitch().addSelectionRegex(code, regex);
     }
 
     private void addNetworkCard(Map<String, NetworkCard> cards, String cardId, PaymentNetwork network) {
@@ -292,7 +311,7 @@ public final class PaymentSessionService {
             PaymentNetwork pn = networks.get(account.getCode());
 
             if (pn != null) {
-                card = new AccountCard(account, pn.getApplicableNetwork(), pn.getLang());
+                card = new AccountCard(account, pn);
                 cards.add(card);
             }
         }
@@ -301,16 +320,14 @@ public final class PaymentSessionService {
 
     private PresetCard createPresetCard(ListResult listResult, Map<String, PaymentNetwork> networks) {
         PresetAccount account = listResult.getPresetAccount();
-
         if (account == null) {
             return null;
         }
         PaymentNetwork pn = networks.get(account.getCode());
-
         if (pn == null) {
             return null;
         }
-        return new PresetCard(account, pn.getApplicableNetwork(), pn.getLang());
+        return new PresetCard(account, pn);
     }
 
     /**

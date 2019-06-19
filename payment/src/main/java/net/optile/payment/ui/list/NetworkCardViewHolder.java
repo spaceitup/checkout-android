@@ -24,6 +24,7 @@ import net.optile.payment.core.PaymentInputType;
 import net.optile.payment.ui.model.NetworkCard;
 import net.optile.payment.ui.model.PaymentCard;
 import net.optile.payment.ui.model.PaymentNetwork;
+import net.optile.payment.ui.model.SmartSwitch;
 import net.optile.payment.ui.theme.PaymentTheme;
 import net.optile.payment.ui.widget.FormWidget;
 import net.optile.payment.ui.widget.RegisterWidget;
@@ -93,7 +94,9 @@ final class NetworkCardViewHolder extends PaymentCardViewHolder {
     }
 
     private void bindTitle(NetworkCard card) {
-        List<PaymentNetwork> networks = card.getSmartSelected();
+        SmartSwitch smartSwitch = card.getSmartSwitch();
+        List<PaymentNetwork> networks = smartSwitch.getAllSelected();
+
         if (networks.size() == 0) {
             networks = card.getPaymentNetworks();
         }
@@ -107,10 +110,11 @@ final class NetworkCardViewHolder extends PaymentCardViewHolder {
 
     private void bindLogos(NetworkCard card) {
         List<PaymentNetwork> networks = card.getPaymentNetworks();
-
+        SmartSwitch smartSwitch = card.getSmartSwitch();
         boolean selected;
+        
         for (PaymentNetwork network : networks) {
-            selected = !card.hasSmartSelections() || card.isSmartSelected(network);
+            selected = !smartSwitch.hasSelected() || smartSwitch.isSelected(network);
             bindLogoView(network.getCode(), network.getLink("logo"), selected);
         }
     }
