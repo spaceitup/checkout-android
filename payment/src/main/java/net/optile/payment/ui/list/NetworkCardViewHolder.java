@@ -112,7 +112,7 @@ final class NetworkCardViewHolder extends PaymentCardViewHolder {
         List<PaymentNetwork> networks = card.getPaymentNetworks();
         SmartSwitch smartSwitch = card.getSmartSwitch();
         boolean selected;
-        
+
         for (PaymentNetwork network : networks) {
             selected = !smartSwitch.hasSelected() || smartSwitch.isSelected(network);
             bindLogoView(network.getCode(), network.getLink("logo"), selected);

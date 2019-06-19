@@ -26,7 +26,7 @@ public final class SmartSwitch {
 
     public SmartSwitch(List<PaymentNetwork> networks) {
         this.networks = networks;
-        this.smartMapping = new HashMap<>(); 
+        this.smartMapping = new HashMap<>();
         this.smartSelected = new ArrayList<>();
         this.smartBuffer = new ArrayList<>();
     }
@@ -34,7 +34,7 @@ public final class SmartSwitch {
     public void addSelectionRegex(String code, String regex) {
         smartMapping.put(code, regex);
     }
-    
+
     /**
      * Get the list of smart selected PaymentNetworks.
      *
@@ -52,7 +52,7 @@ public final class SmartSwitch {
     public PaymentNetwork getFirstSelected() {
         return smartSelected.size() > 0 ? smartSelected.get(0) : null;
     }
-    
+
     /**
      * Are any PaymentNetworks selected based on smart switch.
      *
@@ -77,11 +77,11 @@ public final class SmartSwitch {
         return smartSelected.contains(network);
     }
 
-    /** 
+    /**
      * Validate the PaymentMethods for smart selection given the new text
-     * 
+     *
      * @param text to validate for smart selection
-     * @return true when the smart selection of payment methods has changed, false otherwise 
+     * @return true when the smart selection of payment methods has changed, false otherwise
      */
     public boolean validate(String text) {
         smartBuffer.clear();

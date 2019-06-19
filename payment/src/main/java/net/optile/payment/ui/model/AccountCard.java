@@ -16,7 +16,6 @@ import java.util.Map;
 import net.optile.payment.core.LanguageFile;
 import net.optile.payment.model.AccountMask;
 import net.optile.payment.model.AccountRegistration;
-import net.optile.payment.model.ApplicableNetwork;
 import net.optile.payment.model.InputElement;
 import net.optile.payment.util.PaymentUtils;
 
