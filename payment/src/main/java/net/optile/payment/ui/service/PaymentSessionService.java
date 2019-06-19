@@ -36,7 +36,6 @@ import net.optile.payment.network.PaymentConnection;
 import net.optile.payment.resource.PaymentGroup;
 import net.optile.payment.resource.ResourceLoader;
 import net.optile.payment.ui.PaymentUI;
-import net.optile.payment.ui.model.SmartSwitch;
 import net.optile.payment.ui.model.AccountCard;
 import net.optile.payment.ui.model.NetworkCard;
 import net.optile.payment.ui.model.PaymentNetwork;
@@ -257,14 +256,14 @@ public final class PaymentSessionService {
             group = groups.get(network.getCode());
 
             if (group == null) {
-                addNetwork2SingleCard(cards,  network);
+                addNetwork2SingleCard(cards, network);
             } else {
                 addNetwork2GroupCard(cards, network, group);
             }
         }
         return new ArrayList<>(cards.values());
     }
-        
+
     private void addNetwork2SingleCard(Map<String, NetworkCard> cards, PaymentNetwork network) throws PaymentException {
         NetworkCard card = new NetworkCard();
         card.addPaymentNetwork(network);
