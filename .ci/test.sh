@@ -9,4 +9,4 @@ if [ -d target ]; then
     rm -rf target
 fi
 
-gradle_run_tests
+run_tests gradle
