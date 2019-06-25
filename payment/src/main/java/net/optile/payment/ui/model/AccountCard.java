@@ -16,7 +16,6 @@ import java.util.Map;
 import net.optile.payment.core.LanguageFile;
 import net.optile.payment.model.AccountMask;
 import net.optile.payment.model.AccountRegistration;
-import net.optile.payment.model.ApplicableNetwork;
 import net.optile.payment.model.InputElement;
 import net.optile.payment.util.PaymentUtils;
 
@@ -25,13 +24,11 @@ import net.optile.payment.util.PaymentUtils;
  */
 public final class AccountCard implements PaymentCard {
     private final AccountRegistration account;
-    private final ApplicableNetwork network;
-    private final LanguageFile lang;
+    private final PaymentNetwork network;
 
-    public AccountCard(AccountRegistration account, ApplicableNetwork network, LanguageFile lang) {
+    public AccountCard(AccountRegistration account, PaymentNetwork network) {
         this.account = account;
         this.network = network;
-        this.lang = lang;
     }
 
     /**
@@ -47,7 +44,7 @@ public final class AccountCard implements PaymentCard {
      */
     @Override
     public String getPaymentMethod() {
-        return network.getMethod();
+        return network.getPaymentMethod();
     }
 
     /**
@@ -63,7 +60,7 @@ public final class AccountCard implements PaymentCard {
      */
     @Override
     public LanguageFile getLang() {
-        return lang;
+        return network.getLang();
     }
 
     /**

@@ -15,7 +15,6 @@ import java.util.Map;
 
 import net.optile.payment.core.LanguageFile;
 import net.optile.payment.model.AccountMask;
-import net.optile.payment.model.ApplicableNetwork;
 import net.optile.payment.model.InputElement;
 import net.optile.payment.model.PresetAccount;
 
@@ -24,13 +23,11 @@ import net.optile.payment.model.PresetAccount;
  */
 public final class PresetCard implements PaymentCard {
     private final PresetAccount account;
-    private final ApplicableNetwork network;
-    private final LanguageFile lang;
+    private final PaymentNetwork network;
 
-    public PresetCard(PresetAccount account, ApplicableNetwork network, LanguageFile lang) {
+    public PresetCard(PresetAccount account, PaymentNetwork network) {
         this.account = account;
         this.network = network;
-        this.lang = lang;
     }
 
     /**
@@ -46,7 +43,7 @@ public final class PresetCard implements PaymentCard {
      */
     @Override
     public String getPaymentMethod() {
-        return network.getMethod();
+        return network.getPaymentMethod();
     }
 
     /**
@@ -62,7 +59,7 @@ public final class PresetCard implements PaymentCard {
      */
     @Override
     public LanguageFile getLang() {
-        return lang;
+        return network.getLang();
     }
 
     /**
