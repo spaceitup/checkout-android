@@ -11,6 +11,8 @@ package net.optile.payment.ui.model;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.regex.Pattern;
 
 import android.text.TextUtils;
 
@@ -19,7 +21,7 @@ import android.text.TextUtils;
  */
 public final class SmartSwitch {
 
-    private final HashMap<String, String> smartMapping;
+    private final Map<String, Pattern> smartMapping;
     private final List<PaymentNetwork> networks;
     private final List<PaymentNetwork> smartSelected;
     private final List<PaymentNetwork> smartBuffer;
@@ -32,7 +34,9 @@ public final class SmartSwitch {
     }
 
     public void addSelectionRegex(String code, String regex) {
-        smartMapping.put(code, regex);
+        if (!TextUtils.isEmpty(regex)) {
+            smartMapping.put(code, Pattern.compile(regex));
+        }
     }
 
     /**
@@ -50,7 +54,7 @@ public final class SmartSwitch {
      * @return the first smart selected PaymentNetwork.
      */
     public PaymentNetwork getFirstSelected() {
-        return smartSelected.size() > 0 ? smartSelected.get(0) : null;
+        return smartSelected.isEmpty() ? null : smartSelected.get(0);
     }
 
     /**
@@ -85,13 +89,12 @@ public final class SmartSwitch {
      */
     public boolean validate(String text) {
         smartBuffer.clear();
-        String regex;
 
         if (text != null) {
             for (PaymentNetwork network : networks) {
-                regex = smartMapping.get(network.getCode());
+                Pattern pattern = smartMapping.get(network.getCode());
 
-                if (!TextUtils.isEmpty(regex) && text.matches(regex)) {
+                if (pattern != null && pattern.matcher(text).matches()) {
                     smartBuffer.add(network);
                 }
             }
