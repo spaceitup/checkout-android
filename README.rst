@@ -607,7 +607,7 @@ Code sample how to set a customgroups.json file:
 Remove default group
 ----------------
 
-By default the Android SDK groups together payment methods VISA, Mastercard and AMEX into one card. Removing this default group is done by initializing the Android SDK with a group json file containing an empty array.
+By default the Android SDK groups together payment methods Discover, Mastercard, Diners, Unionpay, AMEX, JCB and VISA into one card. Removing this default group is done by initializing the Android SDK with a group json file containing an empty array.
 
 Example removedefaultgroup.json file:
 
