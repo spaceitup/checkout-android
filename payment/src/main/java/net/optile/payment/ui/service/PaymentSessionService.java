@@ -16,6 +16,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.concurrent.Callable;
 
+import android.util.Log;
 import android.content.Context;
 import android.text.TextUtils;
 import net.optile.payment.core.LanguageFile;
@@ -230,6 +231,7 @@ public final class PaymentSessionService {
             return items;
         }
         for (ApplicableNetwork network : an) {
+            Log.i("pay", "CODE: " + network.getCode());
             if (isSupported(network)) {
                 items.put(network.getCode(), loadPaymentNetwork(network));
             }
