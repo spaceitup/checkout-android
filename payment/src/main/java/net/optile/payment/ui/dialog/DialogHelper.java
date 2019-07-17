@@ -14,7 +14,7 @@ import android.widget.TextView;
 import net.optile.payment.R;
 import net.optile.payment.core.LanguageFile;
 import net.optile.payment.core.PaymentInputType;
-import net.optile.payment.core.PaymentMethodCodes;
+import net.optile.payment.core.PaymentNetworkCodes;
 import net.optile.payment.ui.PaymentUI;
 import net.optile.payment.ui.model.PaymentCard;
 import net.optile.payment.ui.theme.DialogParameters;
@@ -70,7 +70,7 @@ public class DialogHelper {
             return 0;
         }
         switch (card.getCode()) {
-            case PaymentMethodCodes.AMEX:
+            case PaymentNetworkCodes.AMEX:
                 return R.drawable.img_amex;
             default:
                 return R.drawable.img_card;

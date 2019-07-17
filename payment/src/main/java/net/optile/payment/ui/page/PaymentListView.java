@@ -24,11 +24,9 @@ interface PaymentListView {
     void clearList();
 
     /**
-     * Show the ProgressView either in SEND or LOAD mode.
-     *
-     * @param style the style of progress animation to be used
+     * Show the ProgressView in LOAD mode.
      */
-    void showProgressView(int style);
+    void showProgressView();
 
     /**
      * Stop loading and show the PaymentSession

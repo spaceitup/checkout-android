@@ -27,6 +27,7 @@
         android:visibility="gone"/>
 
     <include
-        layout="@layout/layout_progress_view"/>
+        layout="@layout/layout_progress_view"
+        android:clickable="true" />
 
 </RelativeLayout>
