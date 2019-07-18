@@ -37,12 +37,11 @@ import net.optile.payment.ui.widget.FormWidget;
 /**
  * The PaymentListPresenter implementing the presenter part of the MVP
  */
-final class PaymentListPresenter implements PaymentSessionListener, OperationListener {
+final class PaymentListPresenter implements PaymentSessionListener {
 
     private final PaymentListView view;
-    private final PaymentSessionService sessionService;
-    private final OperationService presetService;
-    
+    private final PaymentSessionService service;
+
     private PaymentSession session;
     private String listUrl;
     private Interaction reloadInteraction;
@@ -97,6 +96,7 @@ final class PaymentListPresenter implements PaymentSessionListener, OperationLis
         return false;
     }
 
+
     /**
      * Notify this presenter that the user has clicked the action button in the PaymentCard.
      * The presenter will validate if the operation is supported and then post it to the Payment API.
@@ -116,10 +116,8 @@ final class PaymentListPresenter implements PaymentSessionListener, OperationLis
         }
         switch (session.getOperationType()) {
             case Operation.CHARGE:
-                chargePaymentNetwork(card, widgets);
-                break;
-        case Operation.PRESET:
-                presetPaymentNetwork(card, widgets);
+            case Operation.PRESET:
+                postOperation(card, widgets);
                 break;
             default:
                 Log.w("pay_Presenter", "OperationType not supported");
@@ -160,7 +158,7 @@ final class PaymentListPresenter implements PaymentSessionListener, OperationLis
      * {@inheritDoc}
      */
     @Override
-    public void onPresetSuccess(OperationResult operation) {
+    public void onOperationSuccess(OperationResult operation) {
         PaymentResult result = new PaymentResult(operation);
 
         switch (operation.getInteraction().getCode()) {
@@ -176,7 +174,7 @@ final class PaymentListPresenter implements PaymentSessionListener, OperationLis
      * {@inheritDoc}
      */
     @Override
-    public void onPresetError(Throwable cause) {
+    public void onOperationError(Throwable cause) {
 
         if (cause instanceof PaymentException) {
             handleOperationPaymentError((PaymentException) cause);
@@ -337,13 +335,14 @@ final class PaymentListPresenter implements PaymentSessionListener, OperationLis
     private void loadPaymentSession(final String listUrl) {
         this.session = null;
         view.clearList();
-        view.showProgressView();
+        view.showProgressView(ProgressView.LOAD);
         service.loadPaymentSession(listUrl, view.getContext());
     }
 
-    private void presetPaymentNetwork(final Operation operation) {
+    private void postOperation(final Operation operation) {
         this.operation = operation;
-        view.showProgressView();
+        int progressType = operation.isType(Operation.PRESET) ? ProgressView.LOAD : ProgressView.SEND;
+        view.showProgressView(progressType);
         service.postOperation(operation);
     }
 

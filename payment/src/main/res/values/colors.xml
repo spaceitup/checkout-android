@@ -8,8 +8,6 @@
     <color name="pmcolor_background">#FFFFFF</color>
     <color name="pmcolor_list">#F2F2F2</color>
 
-    <color name="pmprogress_background">#CCFFFFFF</color>
-    
     <color name="pmvalidation_unknown">#E0E0E0</color>
     <color name="pmvalidation_error">#df3737</color>
     <color name="pmvalidation_ok">#207a20</color>
@@ -20,8 +18,5 @@
     <color name="pmtext_hint">#66424242</color>
     <color name="pmtext_error">#e66666</color>
     <color name="pmtext_light">#FFFFFF</color>
-
-    <color name="pmtest_transparent">#CCFFFFFF</color>
-    
 </resources>
  

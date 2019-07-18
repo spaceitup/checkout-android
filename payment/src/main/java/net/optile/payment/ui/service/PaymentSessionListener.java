@@ -31,16 +31,16 @@ public interface PaymentSessionListener {
     void onPaymentSessionError(Throwable cause);
 
     /**
-     * Called when the preset was successful.
+     * Called when the operation was successfully posted.
      *
-     * @param operationResult containing the result of the preset
+     * @param operationResult containing the result of the performed operation
      */
-    void onPresetSuccess(OperationResult operationResult);
+    void onOperationSuccess(OperationResult operationResult);
 
     /**
      * Called when an error occurred while performing the operation.
      *
      * @param cause describing the reason of failure
      */
-    void onPresetError(Throwable cause);
+    void onOperationError(Throwable cause);
 }

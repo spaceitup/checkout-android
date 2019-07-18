@@ -142,12 +142,17 @@ public final class PaymentListActivity extends BasePaymentActivity implements Pa
      * {@inheritDoc}
      */
     @Override
-    public void showProgressView() {
+    public void showProgressView(int style) {
         if (!active) {
             return;
         }
-        progressView.setStyle(ProgressView.LOAD);
+        paymentList.setVisible(false);
+        progressView.setStyle(style);
         progressView.setVisible(true);
+
+        if (style == ProgressView.SEND) {
+            setActionBar(getString(R.string.pmprogress_sendtitle), false);
+        }
     }
 
     /**

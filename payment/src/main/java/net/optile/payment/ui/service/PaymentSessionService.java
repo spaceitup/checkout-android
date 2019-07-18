@@ -54,14 +54,17 @@ public final class PaymentSessionService {
     private static final String KEYLANG = "lang";
 
     private final ListConnection listConnection;
+    private final PaymentConnection paymentConnection;
     private PaymentSessionListener listener;
     private WorkerTask<PaymentSession> sessionTask;
+    private WorkerTask<OperationResult> operationTask;
 
     /**
      * Create a new PaymentSessionService, this service is used to load the PaymentSession.
      */
     public PaymentSessionService() {
         this.listConnection = new ListConnection();
+        this.paymentConnection = new PaymentConnection();
     }
 
     /**
@@ -81,6 +84,19 @@ public final class PaymentSessionService {
             sessionTask.unsubscribe();
             sessionTask = null;
         }
+        if (operationTask != null) {
+            operationTask.unsubscribe();
+            operationTask = null;
+        }
+    }
+
+    /**
+     * Check if this service is currently active, i.e. is is loading a payment session or posting an operation.
+     *
+     * @return true when active, false otherwise
+     */
+    public boolean isActive() {
+        return isLoadingPaymentSession() || isPostingOperation();
     }
 
     /**
@@ -88,8 +104,17 @@ public final class PaymentSessionService {
      *
      * @return true when loading, false otherwise
      */
-    public boolean isActive() {
+    public boolean isLoadingPaymentSession() {
         return sessionTask != null && sessionTask.isSubscribed();
+    }
+
+    /**
+     * Check if this service is currently posting an operation to the Payment API
+     *
+     * @return true when posting, false otherwise
+     */
+    public boolean isPostingOperation() {
+        return operationTask != null && operationTask.isSubscribed();
     }
 
     /**
@@ -129,6 +154,54 @@ public final class PaymentSessionService {
             }
         });
         Workers.getInstance().forNetworkTasks().execute(sessionTask);
+    }
+
+    /**
+     * Post an operation to the Payment API
+     *
+     * @param operation to be posted to the Payment API
+     */
+    public void postOperation(final Operation operation) {
+
+        if (isPostingOperation()) {
+            throw new IllegalStateException("Already posting operation, stop first");
+        }
+        operationTask = WorkerTask.fromCallable(new Callable<OperationResult>() {
+            @Override
+            public OperationResult call() throws PaymentException {
+                return asyncPostOperation(operation);
+            }
+        });
+        operationTask.subscribe(new WorkerSubscriber<OperationResult>() {
+            @Override
+            public void onSuccess(OperationResult result) {
+                operationTask = null;
+
+                if (listener != null) {
+                    listener.onOperationSuccess(result);
+                }
+            }
+
+            @Override
+            public void onError(Throwable cause) {
+                operationTask = null;
+
+                if (listener != null) {
+                    listener.onOperationError(cause);
+                }
+            }
+        });
+        Workers.getInstance().forNetworkTasks().execute(operationTask);
+    }
+
+    /**
+     * Post an Operation to the Payment API
+     *
+     * @param operation the object containing the operation details
+     * @return operation result containing information about the operation request
+     */
+    private OperationResult asyncPostOperation(Operation operation) throws PaymentException {
+        return paymentConnection.postOperation(operation);
     }
 
     private PaymentSession asyncLoadPaymentSession(String listUrl, Context context) throws PaymentException {
