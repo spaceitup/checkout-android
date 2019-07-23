@@ -13,7 +13,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-import android.text.TextUtils;
 import net.optile.payment.core.LanguageFile;
 import net.optile.payment.model.ApplicableNetwork;
 import net.optile.payment.model.InputElement;
@@ -26,7 +25,6 @@ public class PaymentNetwork {
 
     private final ApplicableNetwork network;
     private final LanguageFile lang;
-    private String smartSelectionRegex;
 
     public PaymentNetwork(ApplicableNetwork network, LanguageFile lang) {
         this.network = network;
@@ -79,10 +77,6 @@ public class PaymentNetwork {
         return lang;
     }
 
-    public void setSmartSelectionRegex(String regex) {
-        this.smartSelectionRegex = regex;
-    }
-
     public boolean compare(PaymentNetwork network) {
         List<InputElement> srcItems = getInputElements();
         List<InputElement> cmpItems = network.getInputElements();
@@ -102,12 +96,5 @@ public class PaymentNetwork {
             }
         }
         return true;
-    }
-
-    boolean validateSmartSelected(String text) {
-        if (text == null || TextUtils.isEmpty(this.smartSelectionRegex)) {
-            return false;
-        }
-        return text.matches(smartSelectionRegex);
     }
 }

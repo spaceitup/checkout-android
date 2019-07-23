@@ -22,16 +22,14 @@ import net.optile.payment.model.PaymentMethod;
  */
 public final class NetworkCard implements PaymentCard {
     private final List<PaymentNetwork> networks;
-    private final List<PaymentNetwork> smartSelected;
-    private final List<PaymentNetwork> smartBuffer;
+    private final SmartSwitch smartSwitch;
 
     /**
      * Construct a new NetworkCard
      */
     public NetworkCard() {
         this.networks = new ArrayList<>();
-        this.smartSelected = new ArrayList<>();
-        this.smartBuffer = new ArrayList<>();
+        this.smartSwitch = new SmartSwitch(networks);
     }
 
     /**
@@ -121,7 +119,7 @@ public final class NetworkCard implements PaymentCard {
             case PaymentMethod.CREDIT_CARD:
             case PaymentMethod.DEBIT_CARD:
                 if (PaymentInputType.ACCOUNT_NUMBER.equals(type)) {
-                    return validateSmartSelected(text);
+                    return smartSwitch.validate(text);
                 }
         }
         return false;
@@ -144,21 +142,12 @@ public final class NetworkCard implements PaymentCard {
     }
 
     /**
-     * Get the list of PaymentNetworks supported by this NetworkCard.
+     * Get the list of all PaymentNetworks supported by this NetworkCard.
      *
      * @return the list of PaymentNetworks.
      */
     public List<PaymentNetwork> getPaymentNetworks() {
         return networks;
-    }
-
-    /**
-     * Get the list of smart selected PaymentNetworks.
-     *
-     * @return the list of smart selected PaymentNetworks.
-     */
-    public List<PaymentNetwork> getSmartSelected() {
-        return smartSelected;
     }
 
     /**
@@ -168,50 +157,16 @@ public final class NetworkCard implements PaymentCard {
      * @return active PaymentNetwork
      */
     public PaymentNetwork getVisibleNetwork() {
-
-        if (smartSelected.size() != 0) {
-            return smartSelected.get(0);
-        }
-        return networks.get(0);
+        PaymentNetwork network = smartSwitch.getFirstSelected();
+        return network == null ? networks.get(0) : network;
     }
 
     /**
-     * Are any PaymentNetworks smart selected in this NetworkCard.
+     * Get the SmartSwitch from this NetworkCard.
      *
      * @return true when there are selected payment networks, false otherwise
      */
-    public boolean hasSmartSelections() {
-        return smartSelected.size() > 0;
-    }
-
-    /**
-     * Check if the PaymentNetwork is smart selected, it is smart selected when the provided number input matches
-     * the regex of this PaymentMethod in the groups settings file. A PaymentMethod is always smart selected when
-     * there is only one PaymentMethod in the NetworkCard.
-     *
-     * @param network to check if smart selection
-     * @return true when smart selected, false otherwise
-     */
-    public boolean isSmartSelected(PaymentNetwork network) {
-        if (networks.size() == 1 && networks.get(0) == network) {
-            return true;
-        }
-        return smartSelected.contains(network);
-    }
-
-    private boolean validateSmartSelected(String text) {
-        smartBuffer.clear();
-
-        for (PaymentNetwork network : networks) {
-            if (network.validateSmartSelected(text)) {
-                smartBuffer.add(network);
-            }
-        }
-        if (!smartSelected.equals(smartBuffer)) {
-            smartSelected.clear();
-            smartSelected.addAll(smartBuffer);
-            return true;
-        }
-        return false;
+    public SmartSwitch getSmartSwitch() {
+        return smartSwitch;
     }
 }
