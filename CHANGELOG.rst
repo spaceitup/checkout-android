@@ -1,10 +1,13 @@
 Changelog - Android SDK
 -----------------------
 
+**Version android-sdk-1.1.17**
+
+* [PCX-321] - Add JCB UNIONPAY DINERS and DISCOVER to default credit card grouping
+
 **Version android-sdk-1.1.16**
 
 * [PCX-288] - Support different test merchants for functional tests
-
 
 **Version android-sdk-1.1.15**
 
