@@ -15,8 +15,9 @@ import android.support.annotation.RawRes;
 import android.text.TextUtils;
 import android.util.Patterns;
 import net.optile.payment.R;
+import net.optile.payment.model.PresetAccount;
 import net.optile.payment.ui.page.PaymentListActivity;
-import net.optile.payment.ui.page.PresetAccountActivity;
+import net.optile.payment.ui.page.ProcessPaymentActivity;
 import net.optile.payment.ui.theme.PaymentTheme;
 
 /**
@@ -180,9 +181,10 @@ public final class PaymentUI {
      *
      * @param activity the activity that will be notified when this PaymentPage is finished
      * @param requestCode the requestCode to be used for identifying results in the parent activity
+     * @param presetAccount account that has been preset and should be charged
      */
-    public void chargePresetAccount(Activity activity, int requestCode) {
-        Intent intent = PresetAccountActivity.createStartIntent(activity);
+    public void chargePresetAccount(Activity activity, int requestCode, PresetAccount presetAccount) {
+        Intent intent = ProcessPaymentActivity.createStartIntent(activity, presetAccount);
         launchActivity(activity, intent, requestCode);
     }
 

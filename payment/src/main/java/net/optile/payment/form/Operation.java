@@ -10,9 +10,11 @@ package net.optile.payment.form;
 
 import java.net.URL;
 import java.util.Objects;
-
+import android.util.Log;
 import org.json.JSONException;
 import org.json.JSONObject;
+import android.os.Parcel;
+import android.os.Parcelable;
 
 import android.text.TextUtils;
 import net.optile.payment.core.PaymentError;
@@ -22,7 +24,7 @@ import net.optile.payment.core.PaymentInputType;
 /**
  * Class holding Operation form values
  */
-public class Operation {
+public class Operation implements Parcelable {
 
     public final static String CHARGE = "CHARGE";
     public final static String PRESET = "PRESET";
@@ -30,16 +32,61 @@ public class Operation {
     public final static String UPDATE = "UPDATE";
     public final static String ACTIVATE = "ACTIVATE";
 
-    private final URL url;
-    private final JSONObject form;
-    private final JSONObject account;
+    private URL url;
+    private JSONObject form;
+    private JSONObject account;
 
+    public final static Parcelable.Creator<Operation> CREATOR = new Parcelable.Creator<Operation>() {
+
+        public Operation createFromParcel(Parcel in) {
+            return new Operation(in);
+        }
+
+        public Operation[] newArray(int size) {
+            return new Operation[size];
+        }
+    };
+    
     public Operation(URL url) {
         this.url = url;
         this.form = new JSONObject();
         this.account = new JSONObject();
     }
 
+    private Operation() {
+    }
+
+    private Operation(Parcel in) {
+
+        try {
+            this.url = (URL)in.readSerializable();
+            this.form = new JSONObject(in.readString());
+            this.account = new JSONObject(in.readString());
+        } catch (JSONException e) {
+            // this should never happen since we use the same GsonHelper
+            // to produce these Json strings
+            Log.w("pay_Operation", e);
+        }
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void writeToParcel(Parcel out, int flags) {
+        out.writeSerializable(this.url);
+        out.writeString(form.toString());
+        out.writeString(account.toString());
+    }
+    
     /**
      * Put a value into this Operation form.
      * Depending on the name of the value it will be added to the correct place in the Operation Json Object.

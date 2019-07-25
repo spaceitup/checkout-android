@@ -30,12 +30,12 @@ import net.optile.payment.ui.service.PaymentSessionListener;
 import net.optile.payment.ui.service.PaymentSessionService;
 
 /**
- * The PresetAccountPresenter takes care of posting the operation of the PresetAccount to the Payment API.
+ * The ProcessPaymentPresenter takes care of posting the operation of the PresetAccount to the Payment API.
  * First this presenter will load the list, checks if a PresetAccount is available and post the operation to the Payment API.
  */
-final class PresetAccountPresenter implements PaymentSessionListener {
+final class ProcessPaymentPresenter implements PaymentSessionListener {
 
-    private final PresetAccountView view;
+    private final ProcessPaymentView view;
     private final PaymentSessionService service;
 
     private PaymentSession session;
@@ -43,11 +43,11 @@ final class PresetAccountPresenter implements PaymentSessionListener {
     private Operation operation;
 
     /**
-     * Create a new PresetAccountPresenter
+     * Create a new ProcessPaymentPresenter
      *
-     * @param view The PresetAccountView
+     * @param view The ProcessPaymentView
      */
-    PresetAccountPresenter(PresetAccountView view) {
+    ProcessPaymentPresenter(ProcessPaymentView view) {
         this.view = view;
         service = new PaymentSessionService();
         service.setListener(this);

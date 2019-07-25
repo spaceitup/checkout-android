@@ -7,7 +7,7 @@
             android:name="net.optile.payment.ui.page.PaymentListActivity"
             android:theme="@style/PaymentTheme"/>
         <activity
-            android:name="net.optile.payment.ui.page.PresetAccountActivity"
+            android:name="net.optile.payment.ui.page.ProcessPaymentActivity"
             android:theme="@style/PaymentTheme"/>
     </application>
 </manifest>

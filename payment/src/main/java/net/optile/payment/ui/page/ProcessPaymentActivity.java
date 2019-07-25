@@ -8,42 +8,64 @@
 
 package net.optile.payment.ui.page;
 
+import java.net.URL;
+import java.util.Map;
+
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import net.optile.payment.R;
+import net.optile.payment.form.Operation;
+import net.optile.payment.model.PresetAccount;
 import net.optile.payment.ui.PaymentResult;
 import net.optile.payment.ui.dialog.ThemedDialogFragment;
 
 /**
- * The PresetAccountActivity is the view displaying the loading animation while posting the operation.
+ * The ProcessPaymentActivity is the view displaying the loading animation while posting the operation.
  * The presenter of this view will post the PresetAccount operation to the Payment API.
  */
-public final class PresetAccountActivity extends BasePaymentActivity implements PresetAccountView {
+public final class ProcessPaymentActivity extends BasePaymentActivity implements ProcessPaymentView {
 
-    private PresetAccountPresenter presenter;
+    private ProcessPaymentPresenter presenter;
 
     /**
-     * Create the start intent for this PresetAccountActivity
+     * Create the start intent for this ProcessPaymentActivity
      *
      * @param context Context to create the intent
      * @return newly created start intent
      */
-    public static Intent createStartIntent(Context context) {
-        return new Intent(context, PresetAccountActivity.class);
+    public static Intent createStartIntent(Context context, Operation operation) {
+        return new Intent(context, ProcessPaymentActivity.class);
     }
 
+    /**
+     * Create the start intent for this ProcessPaymentActivity
+     *
+     * @param context Context to create the intent
+     * @param account the preset account that should be processed
+     * @return newly created start intent
+     */
+    public static Intent createStartIntent(Context context, PresetAccount account) {
+        Map<String, URL> links = account.getLinks();
+        URL url = links != null ? links.get("operation") : null;
+
+        if (url == null) {
+            throw new IllegalArgumentException("PresetAccount does not contain an operation url");
+        }
+        return createStartIntent(context, new Operation(url));
+    }
+    
     /**
      * {@inheritDoc}
      */
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_presetaccount);
+        setContentView(R.layout.activity_processpayment);
 
         setActionBar(getString(R.string.pmprogress_sendtitle), false);
         initProgressView();
-        this.presenter = new PresetAccountPresenter(this);
+        this.presenter = new ProcessPaymentPresenter(this);
     }
 
     /**
