@@ -20,7 +20,6 @@ import net.optile.payment.form.Operation;
 import net.optile.payment.model.ErrorInfo;
 import net.optile.payment.model.Interaction;
 import net.optile.payment.model.InteractionCode;
-import net.optile.payment.model.InteractionReason;
 import net.optile.payment.model.ListResult;
 import net.optile.payment.model.OperationResult;
 import net.optile.payment.ui.PaymentResult;
@@ -47,7 +46,7 @@ final class PaymentListPresenter implements PaymentSessionListener {
     private Interaction reloadInteraction;
     private Operation operation;
     private ActivityResult activityResult;
-    
+
     /**
      * Create a new PaymentListPresenter
      *
@@ -83,15 +82,15 @@ final class PaymentListPresenter implements PaymentSessionListener {
         service.stop();
     }
 
-    /** 
+    /**
      * Set the payment result received through the onActivityResult method
-     * 
+     *
      * @param activityResult result to be set and handled when the presenter is started.
      */
     void setActivityResult(ActivityResult activityResult) {
-        this.activityResult = activityResult; 
+        this.activityResult = activityResult;
     }
-    
+
     /**
      * Let the Presenter handle the back press, i.e. if the presenter is currently performing an operation, the presenter may disable the back button press.
      *
@@ -167,10 +166,10 @@ final class PaymentListPresenter implements PaymentSessionListener {
             this.session = cachedSession;
             view.showPaymentSession(cachedSession);
         } else {
-            loadPaymentSession(this.listUrl);    
+            loadPaymentSession(this.listUrl);
         }
     }
-    
+
     private void handleActivityResult(ActivityResult result) {
         if (result.requestCode != PROCESSPAYMENT_REQUEST_CODE) {
             showPaymentSession(this.session);
@@ -367,7 +366,7 @@ final class PaymentListPresenter implements PaymentSessionListener {
 
     private void postOperation(final Operation operation) {
         this.operation = operation;
-        
+
         if (operation.isType(Operation.CHARGE)) {
             view.showProcessPaymentScreen(PROCESSPAYMENT_REQUEST_CODE, operation);
         } else {
@@ -375,7 +374,7 @@ final class PaymentListPresenter implements PaymentSessionListener {
             service.postOperation(operation);
         }
     }
-    
+
     private void handleLoadConnError(final PaymentException pe) {
         MessageDialogFragment dialog = createMessageDialog(getString(R.string.pmdialog_error_connection), true);
         PaymentResult result = new PaymentResult(pe.getMessage(), pe.error);

@@ -44,7 +44,7 @@ public final class NetworkCard implements PaymentCard {
         }
         return false;
     }
-    
+
     /**
      * {@inheritDoc}
      */

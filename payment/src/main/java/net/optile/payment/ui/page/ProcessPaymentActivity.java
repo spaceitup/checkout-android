@@ -28,7 +28,7 @@ public final class ProcessPaymentActivity extends BasePaymentActivity implements
 
     private ProcessPaymentPresenter presenter;
     private Operation operation;
-    
+
     /**
      * Create the start intent for this ProcessPaymentActivity
      *
@@ -69,7 +69,7 @@ public final class ProcessPaymentActivity extends BasePaymentActivity implements
         }
         return createStartIntent(context, new Operation(url));
     }
-    
+
     /**
      * {@inheritDoc}
      */

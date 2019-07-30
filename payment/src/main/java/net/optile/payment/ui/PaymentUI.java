@@ -59,11 +59,10 @@ public final class PaymentUI {
         return InstanceHolder.INSTANCE;
     }
 
-    /** 
+    /**
      * Get the PaymentResult from the data intent.
-     * 
+     *
      * @param data intent to obtain the PaymentResult form
-     * 
      * @return PaymentResult or null if not stored in the intent
      */
     public final static PaymentResult getPaymentResult(Intent data) {

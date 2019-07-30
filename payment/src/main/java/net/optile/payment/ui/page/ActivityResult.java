@@ -18,13 +18,13 @@ public class ActivityResult {
     final int requestCode;
     final int resultCode;
     final PaymentResult paymentResult;
-    
-    /** 
+
+    /**
      * Construct a new ActivityResult Object
-     * 
+     *
      * @param requestCode activity requestCode
      * @param resultCode activity resultCode
-     * @param paymentResult containing the result of the payment request 
+     * @param paymentResult containing the result of the payment request
      */
     public ActivityResult(int requestCode, int resultCode, PaymentResult paymentResult) {
         this.requestCode = requestCode;

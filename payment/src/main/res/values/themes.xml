@@ -23,7 +23,7 @@
     <style name="PaymentThemeNoActionBar.ProcessPayment">
         <item name="android:windowBackground">@color/pmcolor_background</item>
     </style>
-    
+
     <style name="PaymentThemeActionBar" parent="Widget.AppCompat.Light.ActionBar.Solid.Inverse">
         <item name="titleTextStyle">@style/PaymentText.Medium.Bold.Light</item>
     </style>

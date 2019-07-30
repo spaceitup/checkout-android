@@ -10,13 +10,14 @@ package net.optile.payment.form;
 
 import java.net.URL;
 import java.util.Objects;
-import android.util.Log;
+
 import org.json.JSONException;
 import org.json.JSONObject;
+
 import android.os.Parcel;
 import android.os.Parcelable;
-
 import android.text.TextUtils;
+import android.util.Log;
 import net.optile.payment.core.PaymentError;
 import net.optile.payment.core.PaymentException;
 import net.optile.payment.core.PaymentInputType;
@@ -31,11 +32,6 @@ public class Operation implements Parcelable {
     public final static String PAYOUT = "PAYOUT";
     public final static String UPDATE = "UPDATE";
     public final static String ACTIVATE = "ACTIVATE";
-
-    private URL url;
-    private JSONObject form;
-    private JSONObject account;
-
     public final static Parcelable.Creator<Operation> CREATOR = new Parcelable.Creator<Operation>() {
 
         public Operation createFromParcel(Parcel in) {
@@ -46,7 +42,10 @@ public class Operation implements Parcelable {
             return new Operation[size];
         }
     };
-    
+    private URL url;
+    private JSONObject form;
+    private JSONObject account;
+
     public Operation(URL url) {
         this.url = url;
         this.form = new JSONObject();
@@ -59,7 +58,7 @@ public class Operation implements Parcelable {
     private Operation(Parcel in) {
 
         try {
-            this.url = (URL)in.readSerializable();
+            this.url = (URL) in.readSerializable();
             this.form = new JSONObject(in.readString());
             this.account = new JSONObject(in.readString());
         } catch (JSONException e) {
@@ -86,7 +85,7 @@ public class Operation implements Parcelable {
         out.writeString(form.toString());
         out.writeString(account.toString());
     }
-    
+
     /**
      * Put a value into this Operation form.
      * Depending on the name of the value it will be added to the correct place in the Operation Json Object.

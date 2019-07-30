@@ -38,7 +38,7 @@ public final class AccountCard implements PaymentCard {
     public boolean containsLink(String name, URL url) {
         return url.equals(getLink(name));
     }
-    
+
     /**
      * {@inheritDoc}
      */

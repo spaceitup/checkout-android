@@ -33,7 +33,7 @@ public class PaymentMethodCodes {
     public final static String MAESTROUK = "MAESTROUK";
     public final static String POSTEPAY = "POSTEPAY";
     public final static String SEPADD = "SEPADD";
-    public final static String JCB = "JCB";    
+    public final static String JCB = "JCB";
 
     /**
      * Check if the given type is a valid payment input type

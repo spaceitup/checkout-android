@@ -46,7 +46,7 @@ public final class SummaryActivity extends BaseActivity implements SummaryView {
     private SummaryPresenter presenter;
     private SdkResult sdkResult;
     private PresetAccount account;
-    
+
     /**
      * Create an Intent to launch this checkout activity
      *

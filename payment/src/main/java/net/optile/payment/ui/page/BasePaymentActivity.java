@@ -27,7 +27,7 @@ import net.optile.payment.ui.theme.PaymentTheme;
 abstract class BasePaymentActivity extends AppCompatActivity {
 
     public final static String EXTRA_OPERATION = "operation";
-    
+
     boolean active;
     ProgressView progressView;
 

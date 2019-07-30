@@ -17,8 +17,8 @@ import android.view.MenuItem;
 import android.widget.TextView;
 import net.optile.payment.R;
 import net.optile.payment.form.Operation;
-import net.optile.payment.ui.PaymentUI;
 import net.optile.payment.ui.PaymentResult;
+import net.optile.payment.ui.PaymentUI;
 import net.optile.payment.ui.dialog.ThemedDialogFragment;
 import net.optile.payment.ui.list.PaymentList;
 import net.optile.payment.ui.model.PaymentCard;
@@ -114,7 +114,7 @@ public final class PaymentListActivity extends BasePaymentActivity implements Pa
         if (presenter.onBackPressed()) {
             return;
         }
-        setUserClosedPageResult();        
+        setUserClosedPageResult();
         super.onBackPressed();
         overridePendingTransition(0, 0);
     }
@@ -191,17 +191,17 @@ public final class PaymentListActivity extends BasePaymentActivity implements Pa
         supportFinishAfterTransition();
     }
 
-    
+
     /**
      * {@inheritDoc}
      */
     @Override
     public void showProcessPaymentScreen(int requestCode, Operation operation) {
-        Intent intent = ProcessPaymentActivity.createStartIntent(this, operation);   
+        Intent intent = ProcessPaymentActivity.createStartIntent(this, operation);
         startActivityForResult(intent, requestCode);
         overridePendingTransition(R.anim.fade_in, R.anim.no_animation);
     }
-    
+
     /**
      * {@inheritDoc}
      */

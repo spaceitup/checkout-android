@@ -25,7 +25,6 @@ import net.optile.payment.ui.dialog.MessageDialogFragment;
 import net.optile.payment.ui.dialog.ThemedDialogFragment;
 import net.optile.payment.ui.dialog.ThemedDialogFragment.ThemedDialogListener;
 import net.optile.payment.ui.model.PaymentSession;
-import net.optile.payment.ui.model.PresetCard;
 import net.optile.payment.ui.service.PaymentSessionListener;
 import net.optile.payment.ui.service.PaymentSessionService;
 
@@ -148,7 +147,7 @@ final class ProcessPaymentPresenter implements PaymentSessionListener {
         this.session = session;
 
         if (!session.containsLink("operation", operation.getURL())) {
-            closeSessionWithErrorCode(R.string.pmdialog_error_missingoperation, null);            
+            closeSessionWithErrorCode(R.string.pmdialog_error_missingoperation, null);
             return;
         }
         postOperation(operation);

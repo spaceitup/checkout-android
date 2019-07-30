@@ -43,19 +43,19 @@ interface PaymentListView {
      */
     void showWarningMessage(String message);
 
-    /** 
+    /**
      * Open the process payment screen to handle the operation
-     * 
+     *
      * @param requestCode the code identifying the request
      * @param operation to be handled by the process payment screen
      */
     void showProcessPaymentScreen(int requestCode, Operation operation);
 
-    /** 
+    /**
      * Pass PaymentResult and resultCode to the next activity.
      */
     void passOnPaymentResult(int resultCode, PaymentResult result);
-    
+
     /**
      * Close the payment page.
      */

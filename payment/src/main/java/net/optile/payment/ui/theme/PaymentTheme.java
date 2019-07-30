@@ -34,7 +34,7 @@ public final class PaymentTheme {
     public static PaymentTheme createDefault() {
         return createBuilder().
             setListParameters(ListParameters.createDefault()).
-            setProcessParameters(ProcessParameters.createDefault()).            
+            setProcessParameters(ProcessParameters.createDefault()).
             setWidgetParameters(WidgetParameters.createDefault()).
             setDialogParameters(DialogParameters.createDefault()).
             setProgressParameters(ProgressParameters.createDefault()).
@@ -48,7 +48,7 @@ public final class PaymentTheme {
     public ProcessParameters getProcessParameters() {
         return processParameters;
     }
-    
+
     public WidgetParameters getWidgetParameters() {
         return widgetParameters;
     }
@@ -80,7 +80,7 @@ public final class PaymentTheme {
             this.processParameters = processParameters;
             return this;
         }
-        
+
         public Builder setWidgetParameters(WidgetParameters widgetParameters) {
             this.widgetParameters = widgetParameters;
             return this;
