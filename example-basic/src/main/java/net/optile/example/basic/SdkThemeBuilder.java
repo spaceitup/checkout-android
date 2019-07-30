@@ -9,7 +9,7 @@
 package net.optile.example.basic;
 
 import net.optile.payment.ui.theme.DialogParameters;
-import net.optile.payment.ui.theme.PageParameters;
+import net.optile.payment.ui.theme.ListParameters;
 import net.optile.payment.ui.theme.PaymentTheme;
 import net.optile.payment.ui.theme.ProgressParameters;
 import net.optile.payment.ui.theme.WidgetParameters;
@@ -45,7 +45,7 @@ final class SdkThemeBuilder {
     public static PaymentTheme createCustomTheme() {
         PaymentTheme.Builder builder = PaymentTheme.createBuilder();
 
-        PageParameters pageParams = PageParameters.createBuilder().
+        ListParameters pageParams = ListParameters.createBuilder().
             setPageTheme(R.style.CustomThemePaymentPage).
             setEmptyListLabelStyle(R.style.CustomText_Medium_Light).
             setSectionHeaderLabelStyle(R.style.CustomText_Medium_Bold_Light).
@@ -56,7 +56,7 @@ final class SdkThemeBuilder {
             setNetworkCardTitleStyle(R.style.CustomText_Medium_Bold).
             setPaymentLogoBackground(R.drawable.custom_logobackground).
             build();
-        builder.setPageParameters(pageParams);
+        builder.setListParameters(pageParams);
 
         WidgetParameters widgetParams = WidgetParameters.createBuilder().
             setTextInputTheme(R.style.CustomThemeTextInput).

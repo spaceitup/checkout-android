@@ -27,7 +27,8 @@ import net.optile.payment.ui.dialog.ThemedDialogFragment;
 public final class ProcessPaymentActivity extends BasePaymentActivity implements ProcessPaymentView {
 
     private ProcessPaymentPresenter presenter;
-
+    private Operation operation;
+    
     /**
      * Create the start intent for this ProcessPaymentActivity
      *
@@ -35,7 +36,15 @@ public final class ProcessPaymentActivity extends BasePaymentActivity implements
      * @return newly created start intent
      */
     public static Intent createStartIntent(Context context, Operation operation) {
-        return new Intent(context, ProcessPaymentActivity.class);
+        if (context == null) {
+            throw new IllegalArgumentException("context may not be null");
+        }
+        if (operation == null) {
+            throw new IllegalArgumentException("operation may not be null");
+        }
+        Intent intent = new Intent(context, ProcessPaymentActivity.class);
+        intent.putExtra(EXTRA_OPERATION, operation);
+        return intent;
     }
 
     /**
@@ -46,6 +55,12 @@ public final class ProcessPaymentActivity extends BasePaymentActivity implements
      * @return newly created start intent
      */
     public static Intent createStartIntent(Context context, PresetAccount account) {
+        if (context == null) {
+            throw new IllegalArgumentException("context may not be null");
+        }
+        if (account == null) {
+            throw new IllegalArgumentException("account may not be null");
+        }
         Map<String, URL> links = account.getLinks();
         URL url = links != null ? links.get("operation") : null;
 
@@ -61,8 +76,15 @@ public final class ProcessPaymentActivity extends BasePaymentActivity implements
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        int theme = getPaymentTheme().getProcessParameters().getPageTheme();
+        if (theme != 0) {
+            setTheme(theme);
+        }
+        Bundle bundle = savedInstanceState == null ? getIntent().getExtras() : savedInstanceState;
+        if (bundle != null) {
+            this.operation = bundle.getParcelable(EXTRA_OPERATION);
+        }
         setContentView(R.layout.activity_processpayment);
-
         setActionBar(getString(R.string.pmprogress_sendtitle), false);
         initProgressView();
         this.presenter = new ProcessPaymentPresenter(this);
@@ -84,7 +106,7 @@ public final class ProcessPaymentActivity extends BasePaymentActivity implements
     @Override
     public void onResume() {
         super.onResume();
-        presenter.onStart();
+        presenter.onStart(operation);
     }
 
     /**
@@ -97,6 +119,7 @@ public final class ProcessPaymentActivity extends BasePaymentActivity implements
         }
         setUserClosedPageResult();
         super.onBackPressed();
+        overridePendingTransition(R.anim.no_animation, R.anim.fade_out);
     }
 
     /**
@@ -128,6 +151,7 @@ public final class ProcessPaymentActivity extends BasePaymentActivity implements
             return;
         }
         supportFinishAfterTransition();
+        overridePendingTransition(R.anim.no_animation, R.anim.fade_out);
     }
 
     /**

@@ -15,19 +15,19 @@ import org.junit.Test;
 
 import net.optile.payment.R;
 
-public class PageParametersTest {
+public class ListParametersTest {
 
     @Test
     public void createBuilder() {
-        PageParameters.Builder builder = PageParameters.createBuilder();
+        ListParameters.Builder builder = ListParameters.createBuilder();
         assertNotNull(builder);
     }
 
     @Test
     public void createDefault() {
-        PageParameters params = PageParameters.createDefault();
+        ListParameters params = ListParameters.createDefault();
         assertNotNull(params);
-        assertEquals(params.getPageTheme(), R.style.PaymentTheme_PaymentPage);
+        assertEquals(params.getPageTheme(), R.style.PaymentThemeDarkActionBar_PaymentList);
         assertEquals(params.getEmptyListLabelStyle(), R.style.PaymentText_Medium_Gray);
         assertEquals(params.getSectionHeaderLabelStyle(), R.style.PaymentText_Medium_Bold);
         assertEquals(params.getPresetCardTitleStyle(), R.style.PaymentText_Medium_Bold);
@@ -40,8 +40,8 @@ public class PageParametersTest {
 
     @Test
     public void getPageTheme() {
-        int value = R.style.PaymentTheme_PaymentPage;
-        PageParameters params = PageParameters.createBuilder().
+        int value = R.style.PaymentThemeDarkActionBar_PaymentList;
+        ListParameters params = ListParameters.createBuilder().
             setPageTheme(value).build();
         assertEquals(params.getPageTheme(), value);
     }
@@ -49,7 +49,7 @@ public class PageParametersTest {
     @Test
     public void getEmptyListLabelStyle() {
         int value = R.style.PaymentText_Medium_Gray;
-        PageParameters params = PageParameters.createBuilder().
+        ListParameters params = ListParameters.createBuilder().
             setEmptyListLabelStyle(value).build();
         assertEquals(params.getEmptyListLabelStyle(), value);
     }
@@ -57,7 +57,7 @@ public class PageParametersTest {
     @Test
     public void getSectionHeaderLabelStyle() {
         int value = R.style.PaymentText_Medium_Bold;
-        PageParameters params = PageParameters.createBuilder().
+        ListParameters params = ListParameters.createBuilder().
             setSectionHeaderLabelStyle(value).build();
         assertEquals(params.getSectionHeaderLabelStyle(), value);
     }
@@ -65,7 +65,7 @@ public class PageParametersTest {
     @Test
     public void getPresetCardTitleStyle() {
         int value = R.style.PaymentText_Medium_Bold;
-        PageParameters params = PageParameters.createBuilder().
+        ListParameters params = ListParameters.createBuilder().
             setPresetCardTitleStyle(value).build();
         assertEquals(params.getPresetCardTitleStyle(), value);
     }
@@ -73,7 +73,7 @@ public class PageParametersTest {
     @Test
     public void getPresetCardSubtitleStyle() {
         int value = R.style.PaymentText_Tiny;
-        PageParameters params = PageParameters.createBuilder().
+        ListParameters params = ListParameters.createBuilder().
             setPresetCardSubtitleStyle(value).build();
         assertEquals(params.getPresetCardSubtitleStyle(), value);
     }
@@ -81,7 +81,7 @@ public class PageParametersTest {
     @Test
     public void getAccountCardTitleStyle() {
         int value = R.style.PaymentText_Medium_Bold;
-        PageParameters params = PageParameters.createBuilder().
+        ListParameters params = ListParameters.createBuilder().
             setAccountCardTitleStyle(value).build();
         assertEquals(params.getAccountCardTitleStyle(), value);
     }
@@ -89,7 +89,7 @@ public class PageParametersTest {
     @Test
     public void getAccountCardSubtitleStyle() {
         int value = R.style.PaymentText_Tiny;
-        PageParameters params = PageParameters.createBuilder().
+        ListParameters params = ListParameters.createBuilder().
             setAccountCardSubtitleStyle(value).build();
         assertEquals(params.getAccountCardSubtitleStyle(), value);
     }
@@ -97,7 +97,7 @@ public class PageParametersTest {
     @Test
     public void getNetworkCardTitleStyle() {
         int value = R.style.PaymentText_Medium;
-        PageParameters params = PageParameters.createBuilder().
+        ListParameters params = ListParameters.createBuilder().
             setNetworkCardTitleStyle(value).build();
         assertEquals(params.getNetworkCardTitleStyle(), value);
     }
@@ -105,7 +105,7 @@ public class PageParametersTest {
     @Test
     public void getPaymentLogoBackground() {
         int value = R.color.pmcolor_background;
-        PageParameters params = PageParameters.createBuilder().
+        ListParameters params = ListParameters.createBuilder().
             setPaymentLogoBackground(value).build();
         assertEquals(params.getPaymentLogoBackground(), value);
     }

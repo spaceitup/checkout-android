@@ -59,6 +59,20 @@ public final class PaymentUI {
         return InstanceHolder.INSTANCE;
     }
 
+    /** 
+     * Get the PaymentResult from the data intent.
+     * 
+     * @param data intent to obtain the PaymentResult form
+     * 
+     * @return PaymentResult or null if not stored in the intent
+     */
+    public final static PaymentResult getPaymentResult(Intent data) {
+        if (data != null && data.hasExtra(EXTRA_PAYMENT_RESULT)) {
+            return data.getParcelableExtra(PaymentUI.EXTRA_PAYMENT_RESULT);
+        }
+        return null;
+    }
+
     /**
      * Get the listUrl in this PaymentUI
      *

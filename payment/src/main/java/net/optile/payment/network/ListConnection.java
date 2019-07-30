@@ -55,16 +55,14 @@ public final class ListConnection extends BaseConnection {
      */
     public ListResult createPaymentSession(final String baseUrl, final String authorization, final String listData)
         throws PaymentException {
-        final String source = "ListConnection[createPaymentSession]";
-
         if (TextUtils.isEmpty(baseUrl)) {
-            throw new IllegalArgumentException(source + " - baseUrl cannot be null or empty");
+            throw new IllegalArgumentException("baseUrl cannot be null or empty");
         }
         if (TextUtils.isEmpty(authorization)) {
-            throw new IllegalArgumentException(source + " - authorization cannot be null or empty");
+            throw new IllegalArgumentException("authorization cannot be null or empty");
         }
         if (TextUtils.isEmpty(listData)) {
-            throw new IllegalArgumentException(source + " - data cannot be null or empty");
+            throw new IllegalArgumentException("listData cannot be null or empty");
         }
 
         HttpURLConnection conn = null;
@@ -88,16 +86,16 @@ public final class ListConnection extends BaseConnection {
                 case HttpURLConnection.HTTP_OK:
                     return handleCreatePaymentSessionOk(readFromInputStream(conn));
                 default:
-                    throw createPaymentException(source, API_ERROR, rc, conn);
+                    throw createPaymentException(API_ERROR, rc, conn);
             }
         } catch (JsonParseException e) {
-            throw createPaymentException(source, PROTOCOL_ERROR, e);
+            throw createPaymentException(PROTOCOL_ERROR, e);
         } catch (MalformedURLException e) {
-            throw createPaymentException(source, INTERNAL_ERROR, e);
+            throw createPaymentException(INTERNAL_ERROR, e);
         } catch (IOException e) {
-            throw createPaymentException(source, CONN_ERROR, e);
+            throw createPaymentException(CONN_ERROR, e);
         } catch (SecurityException e) {
-            throw createPaymentException(source, SECURITY_ERROR, e);
+            throw createPaymentException(SECURITY_ERROR, e);
         } finally {
             close(conn);
         }
@@ -111,10 +109,8 @@ public final class ListConnection extends BaseConnection {
      * @return the NetworkResponse containing either an error or the ListResult
      */
     public ListResult getListResult(final String url) throws PaymentException {
-        final String source = "ListConnection[getListResult]";
-
         if (TextUtils.isEmpty(url)) {
-            throw new IllegalArgumentException(source + " - url cannot be null or empty");
+            throw new IllegalArgumentException("url cannot be null or empty");
         }
         HttpURLConnection conn = null;
 
@@ -133,16 +129,16 @@ public final class ListConnection extends BaseConnection {
                 case HttpURLConnection.HTTP_OK:
                     return handleGetListResultOk(readFromInputStream(conn));
                 default:
-                    throw createPaymentException(source, API_ERROR, rc, conn);
+                    throw createPaymentException(API_ERROR, rc, conn);
             }
         } catch (JsonParseException e) {
-            throw createPaymentException(source, PROTOCOL_ERROR, e);
+            throw createPaymentException(PROTOCOL_ERROR, e);
         } catch (MalformedURLException e) {
-            throw createPaymentException(source, INTERNAL_ERROR, e);
+            throw createPaymentException(INTERNAL_ERROR, e);
         } catch (IOException e) {
-            throw createPaymentException(source, CONN_ERROR, e);
+            throw createPaymentException(CONN_ERROR, e);
         } catch (SecurityException e) {
-            throw createPaymentException(source, SECURITY_ERROR, e);
+            throw createPaymentException(SECURITY_ERROR, e);
         } finally {
             close(conn);
         }
@@ -156,10 +152,8 @@ public final class ListConnection extends BaseConnection {
      * @return LanguageFile object containing the language entries
      */
     public LanguageFile loadLanguageFile(URL url, boolean cache) throws PaymentException {
-        final String source = "ListConnection[loadLanguageFile]";
-
         if (url == null) {
-            throw new IllegalArgumentException(source + " - url cannot be null");
+            throw new IllegalArgumentException("url cannot be null");
         }
         LanguageFile lang;
 
@@ -185,7 +179,7 @@ public final class ListConnection extends BaseConnection {
             }
             return lang;
         } catch (IOException e) {
-            throw createPaymentException(source, CONN_ERROR, e);
+            throw createPaymentException(CONN_ERROR, e);
         } finally {
             close(conn);
         }

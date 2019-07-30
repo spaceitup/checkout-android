@@ -34,6 +34,14 @@ public final class PresetCard implements PaymentCard {
      * {@inheritDoc}
      */
     @Override
+    public boolean containsLink(String name, URL url) {
+        return url.equals(getLink(name));
+    }
+    
+    /**
+     * {@inheritDoc}
+     */
+    @Override
     public URL getOperationLink() {
         return getLink("operation");
     }

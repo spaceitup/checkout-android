@@ -38,7 +38,7 @@ import net.optile.payment.ui.widget.FormWidget;
  * The PaymentListPresenter implementing the presenter part of the MVP
  */
 final class PaymentListPresenter implements PaymentSessionListener {
-
+    private final static int PROCESSPAYMENT_REQUEST_CODE = 1;
     private final PaymentListView view;
     private final PaymentSessionService service;
 
@@ -46,7 +46,8 @@ final class PaymentListPresenter implements PaymentSessionListener {
     private String listUrl;
     private Interaction reloadInteraction;
     private Operation operation;
-
+    private ActivityResult activityResult;
+    
     /**
      * Create a new PaymentListPresenter
      *
@@ -59,21 +60,20 @@ final class PaymentListPresenter implements PaymentSessionListener {
     }
 
     /**
-     * Load the PaymentSession from the Payment API. once loaded, populate the View with the newly loaded groups of payment methods.
-     * If a previous session with the same listUrl is available then reuse the existing one.
+     * Start the presenter
      */
     void onStart() {
-
         if (service.isActive()) {
             return;
         }
         this.listUrl = PaymentUI.getInstance().getListUrl();
 
-        if (session != null && session.isListUrl(this.listUrl)) {
-            view.showPaymentSession(session);
-            return;
+        if (activityResult != null) {
+            handleActivityResult(activityResult);
+            activityResult = null;
+        } else {
+            showPaymentSession(this.session);
         }
-        loadPaymentSession(this.listUrl);
     }
 
     /**
@@ -83,6 +83,15 @@ final class PaymentListPresenter implements PaymentSessionListener {
         service.stop();
     }
 
+    /** 
+     * Set the payment result received through the onActivityResult method
+     * 
+     * @param activityResult result to be set and handled when the presenter is started.
+     */
+    void setActivityResult(ActivityResult activityResult) {
+        this.activityResult = activityResult; 
+    }
+    
     /**
      * Let the Presenter handle the back press, i.e. if the presenter is currently performing an operation, the presenter may disable the back button press.
      *
@@ -95,7 +104,6 @@ final class PaymentListPresenter implements PaymentSessionListener {
         }
         return false;
     }
-
 
     /**
      * Notify this presenter that the user has clicked the action button in the PaymentCard.
@@ -152,6 +160,53 @@ final class PaymentListPresenter implements PaymentSessionListener {
             return;
         }
         closeSessionWithErrorCode(R.string.pmdialog_error_unknown, cause);
+    }
+
+    private void showPaymentSession(PaymentSession cachedSession) {
+        if (cachedSession != null && cachedSession.isListUrl(this.listUrl)) {
+            this.session = cachedSession;
+            view.showPaymentSession(cachedSession);
+        } else {
+            loadPaymentSession(this.listUrl);    
+        }
+    }
+    
+    private void handleActivityResult(ActivityResult result) {
+        if (result.requestCode != PROCESSPAYMENT_REQUEST_CODE) {
+            showPaymentSession(this.session);
+            return;
+        }
+        switch (result.resultCode) {
+            case PaymentUI.RESULT_CODE_OK:
+                view.passOnPaymentResult(PaymentUI.RESULT_CODE_OK, result.paymentResult);
+                break;
+            case PaymentUI.RESULT_CODE_ERROR:
+                view.passOnPaymentResult(PaymentUI.RESULT_CODE_ERROR, result.paymentResult);
+                break;
+            case PaymentUI.RESULT_CODE_CANCELED:
+                handlePaymentResultCanceled(result.paymentResult);
+                break;
+        }
+    }
+
+    private void handlePaymentResultCanceled(PaymentResult result) {
+        Interaction interaction = result.getInteraction();
+        if (interaction == null) {
+            showPaymentSession(this.session);
+            return;
+        }
+        switch (interaction.getCode()) {
+            case InteractionCode.RELOAD:
+            case InteractionCode.TRY_OTHER_ACCOUNT:
+            case InteractionCode.TRY_OTHER_NETWORK:
+                loadPaymentSession(this.listUrl);
+                break;
+            case InteractionCode.RETRY:
+                showPaymentSession(this.session);
+                break;
+            default:
+                view.passOnPaymentResult(PaymentUI.RESULT_CODE_CANCELED, result);
+        }
     }
 
     /**
@@ -252,44 +307,15 @@ final class PaymentListPresenter implements PaymentSessionListener {
 
         switch (interaction.getCode()) {
             case InteractionCode.RELOAD:
+            case InteractionCode.TRY_OTHER_ACCOUNT:
             case InteractionCode.TRY_OTHER_NETWORK:
                 reloadPaymentSession(result);
                 break;
             case InteractionCode.RETRY:
-                handleOperationInteractionRetry(result);
-                break;
-            case InteractionCode.TRY_OTHER_ACCOUNT:
                 continueSessionWithWarning(result);
                 break;
-            case InteractionCode.ABORT:
-                handleOperationInteractionAbort(result);
-                break;
             default:
                 closeSessionWithCanceledCode(result);
-        }
-    }
-
-    private void handleOperationInteractionAbort(PaymentResult result) {
-        Interaction interaction = result.getInteraction();
-
-        switch (interaction.getReason()) {
-            case InteractionReason.DUPLICATE_OPERATION:
-                closeSessionWithOkCode(result);
-                break;
-            default:
-                closeSessionWithCanceledCode(result);
-        }
-    }
-
-    private void handleOperationInteractionRetry(PaymentResult result) {
-        Interaction interaction = result.getInteraction();
-
-        switch (interaction.getReason()) {
-            case InteractionReason.EXPIRED_SESSION:
-                closeSessionWithCanceledCode(result);
-                break;
-            default:
-                continueSessionWithWarning(result);
         }
     }
 
@@ -325,7 +351,7 @@ final class PaymentListPresenter implements PaymentSessionListener {
             result = new PaymentResult(pe.getMessage(), pe.error);
         } else {
             String resultInfo = cause.toString();
-            PaymentError error = new PaymentError("PaymentPage", PaymentError.INTERNAL_ERROR, resultInfo);
+            PaymentError error = new PaymentError(PaymentError.INTERNAL_ERROR, resultInfo);
             result = new PaymentResult(resultInfo, error);
         }
         view.setPaymentResult(PaymentUI.RESULT_CODE_ERROR, result);
@@ -335,17 +361,21 @@ final class PaymentListPresenter implements PaymentSessionListener {
     private void loadPaymentSession(final String listUrl) {
         this.session = null;
         view.clearList();
-        view.showProgressView(ProgressView.LOAD);
+        view.showProgressView();
         service.loadPaymentSession(listUrl, view.getContext());
     }
 
     private void postOperation(final Operation operation) {
         this.operation = operation;
-        int progressType = operation.isType(Operation.PRESET) ? ProgressView.LOAD : ProgressView.SEND;
-        view.showProgressView(progressType);
-        service.postOperation(operation);
+        
+        if (operation.isType(Operation.CHARGE)) {
+            view.showProcessPaymentScreen(PROCESSPAYMENT_REQUEST_CODE, operation);
+        } else {
+            view.showProgressView();
+            service.postOperation(operation);
+        }
     }
-
+    
     private void handleLoadConnError(final PaymentException pe) {
         MessageDialogFragment dialog = createMessageDialog(getString(R.string.pmdialog_error_connection), true);
         PaymentResult result = new PaymentResult(pe.getMessage(), pe.error);

@@ -35,8 +35,21 @@ public final class AccountCard implements PaymentCard {
      * {@inheritDoc}
      */
     @Override
+    public boolean containsLink(String name, URL url) {
+        return url.equals(getLink(name));
+    }
+    
+    /**
+     * {@inheritDoc}
+     */
+    @Override
     public URL getOperationLink() {
         return getLink("operation");
+    }
+
+    public URL getLink(String name) {
+        Map<String, URL> links = account.getLinks();
+        return links != null ? links.get(name) : null;
     }
 
     /**
@@ -106,11 +119,6 @@ public final class AccountCard implements PaymentCard {
     @Override
     public boolean onTextInputChanged(String type, String text) {
         return false;
-    }
-
-    public URL getLink(String name) {
-        Map<String, URL> links = account.getLinks();
-        return links != null ? links.get(name) : null;
     }
 
     public AccountMask getMaskedAccount() {

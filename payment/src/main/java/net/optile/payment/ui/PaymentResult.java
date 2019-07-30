@@ -20,7 +20,7 @@ import net.optile.payment.model.OperationResult;
 import net.optile.payment.util.GsonHelper;
 
 /**
- * Class for holding the payment interaction and operationresult
+ * Class for holding the payment result, this class will always contain a resultInfo and an optional Interaction, OperationResult or PaymentError.
  */
 public final class PaymentResult implements Parcelable {
 
@@ -34,12 +34,10 @@ public final class PaymentResult implements Parcelable {
             return new PaymentResult[size];
         }
     };
-    private final static String TAG = "pay_PaymentResult";
-
-    private PaymentError error;
     private String resultInfo;
     private Interaction interaction;
     private OperationResult operationResult;
+    private PaymentError error;
 
     /**
      * Construct a new PaymentResult with only the resultInfo.
@@ -51,9 +49,9 @@ public final class PaymentResult implements Parcelable {
     }
 
     /**
-     * Construct a new PaymentResult with PaymentError.
+     * Construct a new PaymentResult with resultInfo and error.
      *
-     * @param resultInfo a string containing a description of the payment result
+     * @param resultInfo a string containing a description of the payment error
      * @param error the error describing the details about the error situation
      */
     public PaymentResult(String resultInfo, PaymentError error) {
@@ -62,9 +60,9 @@ public final class PaymentResult implements Parcelable {
     }
 
     /**
-     * Construct a new PaymentResult with PaymentError.
+     * Construct a new PaymentResult with the operationResult.
      *
-     * @param operationResult containing the interaction and resultInfo
+     * @param operationResult containing the result of the operation
      */
     public PaymentResult(OperationResult operationResult) {
         this.resultInfo = operationResult.getResultInfo();
@@ -73,10 +71,10 @@ public final class PaymentResult implements Parcelable {
     }
 
     /**
-     * Construct a new PaymentResult with the interaction values and the optional operationResult
+     * Construct a new PaymentResult with the resultInfo and interaction
      *
-     * @param resultInfo a string containing a description of the result
-     * @param interaction the mandatory interaction
+     * @param resultInfo a string containing a description of the interaction
+     * @param interaction describing the interaction
      */
     public PaymentResult(String resultInfo, Interaction interaction) {
         this.resultInfo = resultInfo;
@@ -106,7 +104,7 @@ public final class PaymentResult implements Parcelable {
         } catch (JsonSyntaxException e) {
             // this should never happen since we use the same GsonHelper
             // to produce these Json strings
-            Log.w(TAG, e);
+            Log.w("pay_PaymentResult", e);
         }
     }
 
@@ -114,6 +112,10 @@ public final class PaymentResult implements Parcelable {
         return error;
     }
 
+    public boolean isError() {
+        return error != null;
+    }
+    
     public String getResultInfo() {
         return resultInfo;
     }

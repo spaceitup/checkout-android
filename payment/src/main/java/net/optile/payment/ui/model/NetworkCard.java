@@ -36,6 +36,19 @@ public final class NetworkCard implements PaymentCard {
      * {@inheritDoc}
      */
     @Override
+    public boolean containsLink(String name, URL url) {
+        for (PaymentNetwork network : networks) {
+            if (network.containsLink(name, url)) {
+                return true;
+            }
+        }
+        return false;
+    }
+    
+    /**
+     * {@inheritDoc}
+     */
+    @Override
     public URL getOperationLink() {
         return getVisibleNetwork().getLink("operation");
     }

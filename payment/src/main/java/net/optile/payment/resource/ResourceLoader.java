@@ -52,8 +52,8 @@ public final class ResourceLoader {
             }
             return map;
         } catch (IOException | JsonSyntaxException e) {
-            String msg = "loadPaymentGroups failed: " + e.toString();
-            PaymentError error = new PaymentError("ResourceLoader", PaymentError.INTERNAL_ERROR, msg);
+            String msg = "ResourceLoader.loadPaymentGroups failed: " + e.toString();
+            PaymentError error = new PaymentError(PaymentError.INTERNAL_ERROR, msg);
             throw new PaymentException(error, msg, e);
         }
     }
@@ -79,8 +79,8 @@ public final class ResourceLoader {
             }
             return map;
         } catch (IOException | JsonSyntaxException e) {
-            String msg = "loadValidationGroup failed: " + e.toString();
-            PaymentError error = new PaymentError("ResourceLoader", PaymentError.INTERNAL_ERROR, msg);
+            String msg = "ResourceLoader.loadValidationGroup failed: " + e.toString();
+            PaymentError error = new PaymentError(PaymentError.INTERNAL_ERROR, msg);
             throw new PaymentException(error, msg, e);
         }
     }

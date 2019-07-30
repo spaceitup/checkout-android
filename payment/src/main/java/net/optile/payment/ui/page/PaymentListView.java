@@ -9,6 +9,7 @@
 package net.optile.payment.ui.page;
 
 import android.content.Context;
+import net.optile.payment.form.Operation;
 import net.optile.payment.ui.PaymentResult;
 import net.optile.payment.ui.dialog.ThemedDialogFragment;
 import net.optile.payment.ui.model.PaymentSession;
@@ -25,10 +26,8 @@ interface PaymentListView {
 
     /**
      * Show the ProgressView either in SEND or LOAD mode.
-     *
-     * @param style the style of progress animation to be used
      */
-    void showProgressView(int style);
+    void showProgressView();
 
     /**
      * Stop loading and show the PaymentSession
@@ -44,8 +43,21 @@ interface PaymentListView {
      */
     void showWarningMessage(String message);
 
+    /** 
+     * Open the process payment screen to handle the operation
+     * 
+     * @param requestCode the code identifying the request
+     * @param operation to be handled by the process payment screen
+     */
+    void showProcessPaymentScreen(int requestCode, Operation operation);
+
+    /** 
+     * Pass PaymentResult and resultCode to the next activity.
+     */
+    void passOnPaymentResult(int resultCode, PaymentResult result);
+    
     /**
-     * Close the payment page
+     * Close the payment page.
      */
     void closePage();
 

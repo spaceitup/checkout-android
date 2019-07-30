@@ -117,7 +117,7 @@ public class Operation implements Parcelable {
             }
         } catch (JSONException e) {
             String msg = "Operation.putValue failed for name: " + name;
-            PaymentError error = new PaymentError("Operation", PaymentError.INTERNAL_ERROR, msg);
+            PaymentError error = new PaymentError(PaymentError.INTERNAL_ERROR, msg);
             throw new PaymentException(error, msg, e);
         }
     }

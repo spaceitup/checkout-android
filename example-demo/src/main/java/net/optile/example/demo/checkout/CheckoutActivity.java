@@ -31,7 +31,6 @@ import net.optile.payment.ui.PaymentUI;
  * Activity displaying the checkout page, this page will open the Android SDK payment page.
  */
 public final class CheckoutActivity extends BaseActivity implements CheckoutView {
-
     private CheckoutPresenter presenter;
     private SdkResult sdkResult;
 

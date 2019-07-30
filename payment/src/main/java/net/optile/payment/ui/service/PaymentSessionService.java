@@ -363,7 +363,7 @@ public final class PaymentSessionService {
     }
 
     private PaymentException createPaymentException(String message, Throwable cause) {
-        PaymentError error = new PaymentError("Session", PaymentError.INTERNAL_ERROR, message);
+        PaymentError error = new PaymentError(PaymentError.INTERNAL_ERROR, message);
         return new PaymentException(error, message, cause);
     }
 

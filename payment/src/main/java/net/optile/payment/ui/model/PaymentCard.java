@@ -19,6 +19,16 @@ import net.optile.payment.model.InputElement;
  */
 public interface PaymentCard {
 
+    /** 
+     * Check if this PaymentCard contains a link with key and value 
+     * 
+     * @param name the name of the link
+     * @param url to match with the URL in this PaymentCard
+     * 
+     * @return true when this PaymentCard contains the URL, false otherwise
+     */
+    boolean containsLink(String name, URL url);
+    
     /**
      * Get the operation link, this link can be used to make i.e. a charge request
      *

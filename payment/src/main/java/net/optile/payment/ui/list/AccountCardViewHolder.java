@@ -17,7 +17,7 @@ import net.optile.payment.R;
 import net.optile.payment.model.AccountMask;
 import net.optile.payment.ui.model.AccountCard;
 import net.optile.payment.ui.model.PaymentCard;
-import net.optile.payment.ui.theme.PageParameters;
+import net.optile.payment.ui.theme.ListParameters;
 import net.optile.payment.ui.theme.PaymentTheme;
 import net.optile.payment.util.PaymentUtils;
 
@@ -33,7 +33,7 @@ final class AccountCardViewHolder extends PaymentCardViewHolder {
         super(adapter, parent);
 
         PaymentTheme theme = adapter.getPaymentTheme();
-        PageParameters params = theme.getPageParameters();
+        ListParameters params = theme.getListParameters();
 
         this.title = parent.findViewById(R.id.text_title);
         PaymentUtils.setTextAppearance(title, params.getAccountCardTitleStyle());
