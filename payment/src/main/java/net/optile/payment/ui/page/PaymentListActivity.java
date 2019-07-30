@@ -111,9 +111,6 @@ public final class PaymentListActivity extends BasePaymentActivity implements Pa
      */
     @Override
     public void onBackPressed() {
-        if (presenter.onBackPressed()) {
-            return;
-        }
         setUserClosedPageResult();
         super.onBackPressed();
         overridePendingTransition(0, 0);
@@ -231,17 +228,6 @@ public final class PaymentListActivity extends BasePaymentActivity implements Pa
     @Override
     public Context getContext() {
         return this;
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public void showWarningMessage(String message) {
-        if (!active) {
-            return;
-        }
-        showSnackbar(message);
     }
 
     public void onActionClicked(PaymentCard item, Map<String, FormWidget> widgets) {

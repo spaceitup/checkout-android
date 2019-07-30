@@ -27,11 +27,11 @@ public class ProgressParametersTest {
     public void createDefault() {
         ProgressParameters params = ProgressParameters.createDefault();
         assertNotNull(params);
-        assertEquals(params.getLoadBackground(), R.color.pmcolor_list);
+        assertEquals(params.getLoadBackground(), R.color.pmprogress_background);
         assertEquals(params.getLoadProgressBarColor(), R.color.pmcolor_primary);
         assertEquals(params.getSendBackground(), R.color.pmcolor_background);
         assertEquals(params.getSendProgressBarColorFront(), R.color.pmcolor_primary);
-        assertEquals(params.getSendProgressBarColorBack(), R.color.pmvalidation_unknown);
+        assertEquals(params.getSendProgressBarColorBack(), R.color.pmprogress_accent);
         assertEquals(params.getHeaderStyle(), R.style.PaymentText_XLarge_Bold);
         assertEquals(params.getInfoStyle(), R.style.PaymentText_Medium);
     }

@@ -43,11 +43,11 @@ public final class ProgressParameters {
 
     public static ProgressParameters createDefault() {
         return createBuilder().
-            setLoadBackground(R.color.pmcolor_list).
+            setLoadBackground(R.color.pmprogress_background).
             setLoadProgressBarColor(R.color.pmcolor_primary).
             setSendBackground(R.color.pmcolor_background).
             setSendProgressBarColorFront(R.color.pmcolor_primary).
-            setSendProgressBarColorBack(R.color.pmvalidation_unknown).
+            setSendProgressBarColorBack(R.color.pmprogress_accent).
             setHeaderStyle(R.style.PaymentText_XLarge_Bold).
             setInfoStyle(R.style.PaymentText_Medium).
             build();

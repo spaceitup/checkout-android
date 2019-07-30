@@ -37,13 +37,6 @@ interface PaymentListView {
     void showPaymentSession(PaymentSession session);
 
     /**
-     * Show a warning message to the user
-     *
-     * @param message The message to be shown
-     */
-    void showWarningMessage(String message);
-
-    /**
      * Open the process payment screen to handle the operation
      *
      * @param requestCode the code identifying the request

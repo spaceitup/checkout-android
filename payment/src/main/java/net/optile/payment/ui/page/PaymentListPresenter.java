@@ -92,19 +92,6 @@ final class PaymentListPresenter implements PaymentSessionListener {
     }
 
     /**
-     * Let the Presenter handle the back press, i.e. if the presenter is currently performing an operation, the presenter may disable the back button press.
-     *
-     * @return true when this presenter handles the back press, false otherwise
-     */
-    boolean onBackPressed() {
-        if (service.isPostingOperation()) {
-            view.showWarningMessage(getString(R.string.pmsnackbar_operation_interrupted));
-            return true;
-        }
-        return false;
-    }
-
-    /**
      * Notify this presenter that the user has clicked the action button in the PaymentCard.
      * The presenter will validate if the operation is supported and then post it to the Payment API.
      *
