@@ -45,6 +45,15 @@ public final class PaymentListActivity extends BasePaymentActivity implements Pa
         return new Intent(context, PaymentListActivity.class);
     }
 
+    /** 
+     * Get the transition used when this Activity is being started 
+     * 
+     * @return the start transition of this activity 
+     */
+    public static int getStartTransition() {
+        return R.anim.no_animation;
+    }
+    
     /**
      * {@inheritDoc}
      */
@@ -113,7 +122,7 @@ public final class PaymentListActivity extends BasePaymentActivity implements Pa
     public void onBackPressed() {
         setUserClosedPageResult();
         super.onBackPressed();
-        overridePendingTransition(0, 0);
+        overridePendingTransition(R.anim.no_animation, R.anim.no_animation);
     }
 
     /**
@@ -173,7 +182,7 @@ public final class PaymentListActivity extends BasePaymentActivity implements Pa
             return;
         }
         supportFinishAfterTransition();
-        overridePendingTransition(0, 0);
+        overridePendingTransition(R.anim.no_animation, R.anim.no_animation);
     }
 
     /**

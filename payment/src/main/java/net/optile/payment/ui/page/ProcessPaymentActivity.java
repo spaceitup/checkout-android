@@ -47,6 +47,15 @@ public final class ProcessPaymentActivity extends BasePaymentActivity implements
         return intent;
     }
 
+    /** 
+     * Get the transition used when this Activity is being started 
+     * 
+     * @return the start transition of this activity 
+     */
+    public static int getStartTransition() {
+        return R.anim.fade_in;
+    }
+    
     /**
      * Create the start intent for this ProcessPaymentActivity
      *

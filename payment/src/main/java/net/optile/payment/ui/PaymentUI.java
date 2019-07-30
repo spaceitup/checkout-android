@@ -199,6 +199,7 @@ public final class PaymentUI {
     public void chargePresetAccount(Activity activity, int requestCode, PresetAccount presetAccount) {
         Intent intent = ProcessPaymentActivity.createStartIntent(activity, presetAccount);
         launchActivity(activity, intent, requestCode);
+        activity.overridePendingTransition(ProcessPaymentActivity.getStartTransition(), R.anim.no_animation);
     }
 
     /**
@@ -210,6 +211,7 @@ public final class PaymentUI {
     public void showPaymentPage(Activity activity, int requestCode) {
         Intent intent = PaymentListActivity.createStartIntent(activity);
         launchActivity(activity, intent, requestCode);
+        activity.overridePendingTransition(PaymentListActivity.getStartTransition(), R.anim.no_animation);
     }
 
     /**
@@ -240,7 +242,6 @@ public final class PaymentUI {
         }
         activity.finishActivity(requestCode);
         activity.startActivityForResult(intent, requestCode);
-        activity.overridePendingTransition(0, 0);
     }
 
     private static class InstanceHolder {
