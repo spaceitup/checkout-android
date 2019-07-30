@@ -20,7 +20,7 @@ import net.optile.payment.model.InputElement;
 public interface PaymentCard {
 
     /**
-     * Check if this PaymentCard contains a link with key and value
+     * Check if this PaymentCard contains a link with name and value
      *
      * @param name the name of the link
      * @param url to match with the URL in this PaymentCard

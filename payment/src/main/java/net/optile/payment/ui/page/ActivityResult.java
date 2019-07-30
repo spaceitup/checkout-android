@@ -13,7 +13,7 @@ import net.optile.payment.ui.PaymentResult;
 /**
  * Class holding the onActivityResult payment result
  */
-public class ActivityResult {
+final class ActivityResult {
 
     final int requestCode;
     final int resultCode;
@@ -26,7 +26,7 @@ public class ActivityResult {
      * @param resultCode activity resultCode
      * @param paymentResult containing the result of the payment request
      */
-    public ActivityResult(int requestCode, int resultCode, PaymentResult paymentResult) {
+    ActivityResult(int requestCode, int resultCode, PaymentResult paymentResult) {
         this.requestCode = requestCode;
         this.resultCode = resultCode;
         this.paymentResult = paymentResult;

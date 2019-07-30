@@ -112,10 +112,6 @@ public final class PaymentResult implements Parcelable {
         return error;
     }
 
-    public boolean isError() {
-        return error != null;
-    }
-
     public String getResultInfo() {
         return resultInfo;
     }

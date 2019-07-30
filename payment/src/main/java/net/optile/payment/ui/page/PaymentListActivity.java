@@ -205,7 +205,7 @@ public final class PaymentListActivity extends BasePaymentActivity implements Pa
     public void showProcessPaymentScreen(int requestCode, Operation operation) {
         Intent intent = ProcessPaymentActivity.createStartIntent(this, operation);
         startActivityForResult(intent, requestCode);
-        overridePendingTransition(R.anim.fade_in, R.anim.no_animation);
+        overridePendingTransition(ProcessPaymentActivity.getStartTransition(), R.anim.no_animation);
     }
 
     /**
