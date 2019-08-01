@@ -19,6 +19,7 @@ import net.optile.payment.form.Operation;
 import net.optile.payment.model.PresetAccount;
 import net.optile.payment.ui.PaymentResult;
 import net.optile.payment.ui.dialog.ThemedDialogFragment;
+import net.optile.payment.ui.dialog.ThemedDialogFragment.ThemedDialogListener;
 
 /**
  * The ProcessPaymentActivity is the view displaying the loading animation while posting the operation.
@@ -47,15 +48,6 @@ public final class ProcessPaymentActivity extends BasePaymentActivity implements
         return intent;
     }
 
-    /** 
-     * Get the transition used when this Activity is being started 
-     * 
-     * @return the start transition of this activity 
-     */
-    public static int getStartTransition() {
-        return R.anim.fade_in;
-    }
-    
     /**
      * Create the start intent for this ProcessPaymentActivity
      *
@@ -79,6 +71,15 @@ public final class ProcessPaymentActivity extends BasePaymentActivity implements
         return createStartIntent(context, new Operation(url));
     }
 
+    /** 
+     * Get the transition used when this Activity is being started 
+     * 
+     * @return the start transition of this activity 
+     */
+    public static int getStartTransition() {
+        return R.anim.fade_in;
+    }
+    
     /**
      * {@inheritDoc}
      */
@@ -135,7 +136,7 @@ public final class ProcessPaymentActivity extends BasePaymentActivity implements
      * {@inheritDoc}
      */
     @Override
-    public void showProgressView() {
+    public void showProgress() {
         if (!active) {
             return;
         }
@@ -143,6 +144,43 @@ public final class ProcessPaymentActivity extends BasePaymentActivity implements
         progressView.setVisible(true);
     }
 
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void showWarningMessage(String message) {
+        if (!active) {
+            return;
+        }
+        showSnackbar(message);
+    }
+    
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void showMessageDialog(String message, ThemedDialogListener listener) {
+        if (!active) {
+            return;
+        }
+        progressView.setVisible(false);
+        ThemedDialogFragment dialog = createMessageDialog(message, listener);
+        dialog.show(getSupportFragmentManager(), "dialog_message");
+    }
+    
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void showConnErrorDialog(ThemedDialogListener listener) {
+        if (!active) {
+            return;
+        }
+        progressView.setVisible(false);
+        ThemedDialogFragment dialog = createConnErrorDialog(listener);
+        dialog.show(getSupportFragmentManager(), "dialog_connerror");
+    }
+    
     /**
      * {@inheritDoc}
      */
@@ -172,28 +210,5 @@ public final class ProcessPaymentActivity extends BasePaymentActivity implements
             return;
         }
         setActivityResult(resultCode, result);
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public void showProgressDialog(ThemedDialogFragment dialog) {
-        if (!active) {
-            return;
-        }
-        progressView.setVisible(false);
-        dialog.show(getSupportFragmentManager(), "presetaccount_dialog");
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public void showWarningMessage(String message) {
-        if (!active) {
-            return;
-        }
-        showSnackbar(message);
     }
 }

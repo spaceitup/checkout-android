@@ -11,6 +11,7 @@ package net.optile.payment.ui.page;
 import android.content.Context;
 import net.optile.payment.ui.PaymentResult;
 import net.optile.payment.ui.dialog.ThemedDialogFragment;
+import net.optile.payment.ui.dialog.ThemedDialogFragment.ThemedDialogListener;
 
 /**
  * The ProcessPaymentView interface is the View part of the MVP, this is implemented by the ProcessPaymentActivity
@@ -18,16 +19,24 @@ import net.optile.payment.ui.dialog.ThemedDialogFragment;
 interface ProcessPaymentView {
 
     /**
-     * Show the progress view animation.
+     * Show the progress animation.
      */
-    void showProgressView();
+    void showProgress();
 
     /**
-     * Show the Themed Dialog with a message about the progress
+     * Show a generic message to the user, notify the listener of events in this dialog.
      *
-     * @param dialog to be shown
+     * @param message the message to show in the dialog
+     * @param listener to be notified of dialog events
      */
-    void showProgressDialog(ThemedDialogFragment dialog);
+    void showMessageDialog(String message, ThemedDialogListener listener);
+
+    /** 
+     * Show the connection error dialog to the user, notify the listener of events in this dialog.
+     * 
+     * @param listener to be notified of dialog events
+     */
+    void showConnErrorDialog(ThemedDialogListener listener);
 
     /**
      * Show a warning message to the user

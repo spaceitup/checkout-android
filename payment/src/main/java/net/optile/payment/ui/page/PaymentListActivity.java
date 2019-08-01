@@ -10,6 +10,7 @@ package net.optile.payment.ui.page;
 
 import java.util.Map;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -20,6 +21,7 @@ import net.optile.payment.form.Operation;
 import net.optile.payment.ui.PaymentResult;
 import net.optile.payment.ui.PaymentUI;
 import net.optile.payment.ui.dialog.ThemedDialogFragment;
+import net.optile.payment.ui.dialog.ThemedDialogFragment.ThemedDialogListener;
 import net.optile.payment.ui.list.PaymentList;
 import net.optile.payment.ui.model.PaymentCard;
 import net.optile.payment.ui.model.PaymentSession;
@@ -166,7 +168,7 @@ public final class PaymentListActivity extends BasePaymentActivity implements Pa
      * {@inheritDoc}
      */
     @Override
-    public void showProgressView() {
+    public void showProgress() {
         if (!active) {
             return;
         }
@@ -197,17 +199,6 @@ public final class PaymentListActivity extends BasePaymentActivity implements Pa
         supportFinishAfterTransition();
     }
 
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public void showProcessPaymentScreen(int requestCode, Operation operation) {
-        Intent intent = ProcessPaymentActivity.createStartIntent(this, operation);
-        startActivityForResult(intent, requestCode);
-        overridePendingTransition(ProcessPaymentActivity.getStartTransition(), R.anim.no_animation);
-    }
-
     /**
      * {@inheritDoc}
      */
@@ -223,19 +214,33 @@ public final class PaymentListActivity extends BasePaymentActivity implements Pa
      * {@inheritDoc}
      */
     @Override
-    public void showProgressDialog(ThemedDialogFragment dialog) {
+    public void showMessageDialog(String message, ThemedDialogListener listener) {
         if (!active) {
             return;
         }
         progressView.setVisible(false);
-        dialog.show(getSupportFragmentManager(), "paymentlist_dialog");
+        ThemedDialogFragment dialog = createMessageDialog(message, listener);
+        dialog.show(getSupportFragmentManager(), "dialog_message");
+    }
+    
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void showConnErrorDialog(ThemedDialogListener listener) {
+        if (!active) {
+            return;
+        }
+        progressView.setVisible(false);
+        ThemedDialogFragment dialog = createConnErrorDialog(listener);
+        dialog.show(getSupportFragmentManager(), "dialog_connerror");
     }
 
     /**
      * {@inheritDoc}
      */
     @Override
-    public Context getContext() {
+    public Activity getActivity() {
         return this;
     }
 

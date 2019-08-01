@@ -27,15 +27,19 @@ import net.optile.payment.ui.dialog.ThemedDialogFragment.ThemedDialogListener;
 import net.optile.payment.ui.model.PaymentSession;
 import net.optile.payment.ui.service.PaymentSessionListener;
 import net.optile.payment.ui.service.PaymentSessionService;
+import net.optile.payment.ui.service.OperationListener;
+import net.optile.payment.ui.service.OperationService;
 
 /**
  * The ProcessPaymentPresenter takes care of posting the operation to the Payment API.
  * First this presenter will load the list, checks if the operation is present in the list and then post the operation to the Payment API.
  */
-final class ProcessPaymentPresenter implements PaymentSessionListener {
-    private final ProcessPaymentView view;
-    private final PaymentSessionService service;
+final class ProcessPaymentPresenter implements PaymentSessionListener, OperationListener {
 
+    private final ProcessPaymentView view;
+    private final PaymentSessionService sessionService;
+    private final OperationService operationService;
+    
     private PaymentSession session;
     private String listUrl;
     private Operation operation;
@@ -47,16 +51,20 @@ final class ProcessPaymentPresenter implements PaymentSessionListener {
      */
     ProcessPaymentPresenter(ProcessPaymentView view) {
         this.view = view;
-        service = new PaymentSessionService();
-        service.setListener(this);
+        sessionService = new PaymentSessionService();
+        sessionService.setListener(this);
+        operationService = new OperationService();
+        operationService.setListener(this);
     }
 
     /**
      * Start the PresetAccount presenter
+     *
+     * @param operation process this operation when the presenter is started
      */
     void onStart(Operation operation) {
 
-        if (service.isActive()) {
+        if (sessionService.isActive() || operationService.isActive()) {
             return;
         }
         this.operation = operation;
@@ -68,7 +76,8 @@ final class ProcessPaymentPresenter implements PaymentSessionListener {
      * Notify this presenter that it should stop and cleanup its resources
      */
     void onStop() {
-        service.stop();
+        sessionService.stop();
+        operationService.stop();
     }
 
     /**
@@ -77,11 +86,8 @@ final class ProcessPaymentPresenter implements PaymentSessionListener {
      * @return true when this presenter handled the back press, false otherwise
      */
     boolean onBackPressed() {
-        if (service.isActive()) {
-            view.showWarningMessage(getString(R.string.pmsnackbar_operation_interrupted));
-            return true;
-        }
-        return false;
+        view.showWarningMessage(getString(R.string.pmsnackbar_operation_interrupted));
+        return true;
     }
 
     /**
@@ -135,7 +141,6 @@ final class ProcessPaymentPresenter implements PaymentSessionListener {
      */
     @Override
     public void onOperationError(Throwable cause) {
-
         if (cause instanceof PaymentException) {
             handleOperationPaymentError((PaymentException) cause);
             return;
@@ -207,7 +212,7 @@ final class ProcessPaymentPresenter implements PaymentSessionListener {
         String msg = translateInteraction(interaction, null);
 
         if (!TextUtils.isEmpty(msg)) {
-            view.showProgressDialog(createMessageDialog(msg, false));
+            view.showMessageDialog(msg, null);
         }
     }
 
@@ -239,22 +244,19 @@ final class ProcessPaymentPresenter implements PaymentSessionListener {
 
     private void loadPaymentSession(final String listUrl) {
         this.session = null;
-        view.showProgressView();
-        service.loadPaymentSession(listUrl, view.getContext());
+        view.showProgress();
+        sessionService.loadPaymentSession(listUrl, view.getContext());
     }
 
     private void postOperation(final Operation operation) {
         this.operation = operation;
-        view.showProgressView();
-        service.postOperation(operation);
+        view.showProgress();
+        operationService.postOperation(operation);
     }
 
     private void handleLoadConnError(final PaymentException pe) {
-        MessageDialogFragment dialog = createMessageDialog(getString(R.string.pmdialog_error_connection), true);
         PaymentResult result = new PaymentResult(pe.getMessage(), pe.error);
-        view.setPaymentResult(PaymentUI.RESULT_CODE_CANCELED, result);
-
-        dialog.setListener(new ThemedDialogListener() {
+        view.showConnErrorDialog(new ThemedDialogListener() {
             @Override
             public void onButtonClicked(ThemedDialogFragment dialog, int which) {
                 switch (which) {
@@ -266,39 +268,31 @@ final class ProcessPaymentPresenter implements PaymentSessionListener {
                         break;
                 }
             }
-
             @Override
             public void onDismissed(ThemedDialogFragment dialog) {
                 view.closePage();
             }
-        });
-        view.showProgressDialog(dialog);
+            });
     }
 
     private void handleOperationConnError(final PaymentException pe) {
-        MessageDialogFragment dialog = createMessageDialog(getString(R.string.pmdialog_error_connection), true);
         PaymentResult result = new PaymentResult(pe.getMessage(), pe.error);
-        view.setPaymentResult(PaymentUI.RESULT_CODE_CANCELED, result);
-
-        dialog.setListener(new ThemedDialogListener() {
+        view.showConnErrorDialog(new ThemedDialogListener() {
             @Override
             public void onButtonClicked(ThemedDialogFragment dialog, int which) {
                 switch (which) {
-                    case ThemedDialogFragment.BUTTON_NEUTRAL:
-                        view.closePage();
-                        break;
                     case ThemedDialogFragment.BUTTON_POSITIVE:
                         postOperation(operation);
                         break;
+                    default:
+                        view.closePage();
                 }
             }
-
             @Override
             public void onDismissed(ThemedDialogFragment dialog) {
                 view.closePage();
             }
         });
-        view.showProgressDialog(dialog);
     }
 
     private String translateInteraction(Interaction interaction, String defMessage) {
@@ -311,30 +305,16 @@ final class ProcessPaymentPresenter implements PaymentSessionListener {
     }
 
     private void closePageWithMessage(String message) {
-        MessageDialogFragment dialog = createMessageDialog(message, false);
-        dialog.setListener(new ThemedDialogListener() {
+        view.showMessageDialog(message, new ThemedDialogListener() {
             @Override
             public void onButtonClicked(ThemedDialogFragment dialog, int which) {
                 view.closePage();
             }
-
             @Override
             public void onDismissed(ThemedDialogFragment dialog) {
                 view.closePage();
             }
         });
-        view.showProgressDialog(dialog);
-    }
-
-    private MessageDialogFragment createMessageDialog(String message, boolean hasRetry) {
-        MessageDialogFragment dialog = new MessageDialogFragment();
-        dialog.setMessage(message);
-        dialog.setNeutralButton(getString(R.string.pmdialog_cancel_button));
-
-        if (hasRetry) {
-            dialog.setPositiveButton(getString(R.string.pmdialog_retry_button));
-        }
-        return dialog;
     }
 
     private String getString(int resId) {
