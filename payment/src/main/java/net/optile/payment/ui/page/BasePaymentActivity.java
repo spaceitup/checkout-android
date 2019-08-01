@@ -26,8 +26,6 @@ import net.optile.payment.ui.theme.PaymentTheme;
  */
 abstract class BasePaymentActivity extends AppCompatActivity {
 
-    public final static String EXTRA_OPERATION = "operation";
-
     boolean active;
     ProgressView progressView;
 
@@ -134,7 +132,7 @@ abstract class BasePaymentActivity extends AppCompatActivity {
      */
     void setActivityResult(int resultCode, PaymentResult result) {
         Intent intent = new Intent();
-        intent.putExtra(PaymentUI.EXTRA_PAYMENT_RESULT, result);
+        result.putInto(intent);
         setResult(resultCode, intent);
     }
 }

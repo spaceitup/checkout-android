@@ -29,7 +29,6 @@ public final class PaymentUI {
     public final static int RESULT_CODE_OK = Activity.RESULT_FIRST_USER;
     public final static int RESULT_CODE_CANCELED = Activity.RESULT_FIRST_USER + 1;
     public final static int RESULT_CODE_ERROR = Activity.RESULT_FIRST_USER + 2;
-    public final static String EXTRA_PAYMENT_RESULT = "paymentresult";
 
     /** The orientation of the Payment page, by default it is in locked mode */
     private int orientation;
@@ -57,19 +56,6 @@ public final class PaymentUI {
      */
     public static PaymentUI getInstance() {
         return InstanceHolder.INSTANCE;
-    }
-
-    /**
-     * Get the PaymentResult from the data intent.
-     *
-     * @param data intent to obtain the PaymentResult form
-     * @return PaymentResult or null if not stored in the intent
-     */
-    public final static PaymentResult getPaymentResult(Intent data) {
-        if (data != null && data.hasExtra(EXTRA_PAYMENT_RESULT)) {
-            return data.getParcelableExtra(PaymentUI.EXTRA_PAYMENT_RESULT);
-        }
-        return null;
     }
 
     /**

@@ -128,8 +128,8 @@ public final class CheckoutActivity extends BaseActivity implements CheckoutView
         if (requestCode != PAYMENT_REQUEST_CODE) {
             return;
         }
-        if (data != null && data.hasExtra(PaymentUI.EXTRA_PAYMENT_RESULT)) {
-            PaymentResult result = data.getParcelableExtra(PaymentUI.EXTRA_PAYMENT_RESULT);
+        PaymentResult result = PaymentResult.fromResultIntent(data);
+        if (result != null) {
             this.sdkResult = new SdkResult(requestCode, resultCode, result);
         }
     }

@@ -26,6 +26,7 @@ import net.optile.payment.ui.dialog.ThemedDialogFragment;
  */
 public final class ProcessPaymentActivity extends BasePaymentActivity implements ProcessPaymentView {
 
+    private final static String EXTRA_OPERATION = "operation";
     private ProcessPaymentPresenter presenter;
     private Operation operation;
 

@@ -164,10 +164,8 @@ final class PaymentListPresenter implements PaymentSessionListener {
         }
         switch (result.resultCode) {
             case PaymentUI.RESULT_CODE_OK:
-                view.passOnPaymentResult(PaymentUI.RESULT_CODE_OK, result.paymentResult);
-                break;
             case PaymentUI.RESULT_CODE_ERROR:
-                view.passOnPaymentResult(PaymentUI.RESULT_CODE_ERROR, result.paymentResult);
+                view.passOnPaymentResult(result.resultCode, result.paymentResult);
                 break;
             case PaymentUI.RESULT_CODE_CANCELED:
                 handlePaymentResultCanceled(result.paymentResult);

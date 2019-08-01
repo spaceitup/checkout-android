@@ -130,11 +130,10 @@ public final class PaymentListActivity extends BasePaymentActivity implements Pa
      */
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        PaymentResult result = PaymentUI.getPaymentResult(data);
-        if (result == null) {
-            return;
+        PaymentResult result = PaymentResult.fromResultIntent(data);
+        if (result != null) {
+            presenter.setActivityResult(new ActivityResult(requestCode, resultCode, result));
         }
-        presenter.setActivityResult(new ActivityResult(requestCode, resultCode, result));
     }
 
     /**

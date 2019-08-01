@@ -10,10 +10,12 @@ package net.optile.payment.ui;
 
 import com.google.gson.JsonSyntaxException;
 
+import android.content.Intent;
 import android.os.Parcel;
 import android.os.Parcelable;
 import android.text.TextUtils;
 import android.util.Log;
+import net.optile.payment.ui.PaymentUI;
 import net.optile.payment.core.PaymentError;
 import net.optile.payment.model.Interaction;
 import net.optile.payment.model.OperationResult;
@@ -24,6 +26,7 @@ import net.optile.payment.util.GsonHelper;
  */
 public final class PaymentResult implements Parcelable {
 
+    public final static String EXTRA_PAYMENT_RESULT = "paymentresult";
     public final static Parcelable.Creator<PaymentResult> CREATOR = new Parcelable.Creator<PaymentResult>() {
 
         public PaymentResult createFromParcel(Parcel in) {
@@ -39,6 +42,28 @@ public final class PaymentResult implements Parcelable {
     private OperationResult operationResult;
     private PaymentError error;
 
+    /**
+     * Get the PaymentResult from the result intent.
+     *
+     * @param intent containing the PaymentResult
+     * @return PaymentResult or null if not stored in the intent
+     */    
+    public final static PaymentResult fromResultIntent(Intent intent) {
+        if (intent != null && intent.hasExtra(EXTRA_PAYMENT_RESULT)) {
+            return intent.getParcelableExtra(EXTRA_PAYMENT_RESULT);
+        }
+        return null;
+    }
+
+    /** 
+     * Put this PaymentResult into the provided intent. 
+     * 
+     * @param intent into which this PaymentResult should be stored.
+     */
+    public void putInto(Intent intent) {
+        intent.putExtra(EXTRA_PAYMENT_RESULT, this);
+    }
+    
     /**
      * Construct a new PaymentResult with only the resultInfo.
      *
@@ -105,6 +130,7 @@ public final class PaymentResult implements Parcelable {
             // this should never happen since we use the same GsonHelper
             // to produce these Json strings
             Log.w("pay_PaymentResult", e);
+            throw new RuntimeException(e);
         }
     }
 

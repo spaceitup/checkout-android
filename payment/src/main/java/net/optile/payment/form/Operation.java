@@ -42,9 +42,9 @@ public class Operation implements Parcelable {
             return new Operation[size];
         }
     };
-    private URL url;
-    private JSONObject form;
-    private JSONObject account;
+    private final URL url;
+    private final JSONObject form;
+    private final JSONObject account;
 
     public Operation(URL url) {
         this.url = url;
@@ -52,22 +52,16 @@ public class Operation implements Parcelable {
         this.account = new JSONObject();
     }
 
-    private Operation() {
-    }
-
     private Operation(Parcel in) {
-
+        this.url = (URL) in.readSerializable();
         try {
-            this.url = (URL) in.readSerializable();
             this.form = new JSONObject(in.readString());
             this.account = new JSONObject(in.readString());
         } catch (JSONException e) {
-            // this should never happen since we use the same GsonHelper
-            // to produce these Json strings
-            Log.w("pay_Operation", e);
+            throw new RuntimeException(e);
         }
     }
-
+    
     /**
      * {@inheritDoc}
      */
