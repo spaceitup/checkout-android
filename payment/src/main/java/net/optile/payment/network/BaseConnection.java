@@ -282,7 +282,7 @@ abstract class BaseConnection {
             }
         } catch (IOException | JsonParseException e) {
             // Ignore the exceptions since the ErrorInfo is an optional field
-            // and it is more important to not loose the status error code
+            // and it is more important to not lose the status error code
             Log.w("BaseConnection.createPaymentException", e);
         }
         final PaymentError error = new PaymentError(errorType, statusCode, data, info);

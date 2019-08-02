@@ -17,6 +17,7 @@ import net.optile.payment.core.LanguageFile;
 import net.optile.payment.model.AccountMask;
 import net.optile.payment.model.InputElement;
 import net.optile.payment.model.PresetAccount;
+import net.optile.payment.util.PaymentUtils;
 
 /**
  * Class for holding the data of a PresetCard in the list
@@ -35,7 +36,7 @@ public final class PresetCard implements PaymentCard {
      */
     @Override
     public boolean containsLink(String name, URL url) {
-        return url.equals(getLink(name));
+        return PaymentUtils.compareToString(getLink(name), url);
     }
 
     /**

@@ -36,7 +36,7 @@ public final class AccountCard implements PaymentCard {
      */
     @Override
     public boolean containsLink(String name, URL url) {
-        return url.equals(getLink(name));
+        return PaymentUtils.compareToString(getLink(name), url);
     }
 
     /**

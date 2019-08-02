@@ -199,10 +199,8 @@ final class PaymentListPresenter implements PaymentSessionListener, NetworkServi
     public void onProcessPaymentResult(int resultCode, PaymentResult paymentResult) {
         switch (resultCode) {
             case PaymentUI.RESULT_CODE_OK:
-                view.passOnPaymentResult(PaymentUI.RESULT_CODE_OK, paymentResult);
-                break;
             case PaymentUI.RESULT_CODE_ERROR:
-                view.passOnPaymentResult(PaymentUI.RESULT_CODE_ERROR, paymentResult);
+                view.passOnPaymentResult(resultCode, paymentResult);
                 break;
             case PaymentUI.RESULT_CODE_CANCELED:
                 handlePaymentResultCanceled(paymentResult);
@@ -226,14 +224,14 @@ final class PaymentListPresenter implements PaymentSessionListener, NetworkServi
             return;
         }
         switch (result.requestCode) {
-        case PREPAREPAYMENT_REQUEST_CODE:
-            onPreparePaymentResult(result.resultCode, result.paymentResult);
-            break;
-        case PROCESSPAYMENT_REQUEST_CODE:
-            onProcessPaymentResult(result.resultCode, result.paymentResult);
-            break;
-        default:
-            showPaymentSession(this.session);
+            case PREPAREPAYMENT_REQUEST_CODE:
+                onPreparePaymentResult(result.resultCode, result.paymentResult);
+                break;
+            case PROCESSPAYMENT_REQUEST_CODE:
+                onProcessPaymentResult(result.resultCode, result.paymentResult);
+                break;
+            default:
+                showPaymentSession(this.session);
         }
     }
 

@@ -49,6 +49,18 @@ public final class PaymentUtils {
         return value == null ? "" : value.trim();
     }
 
+    /** 
+     * Compare String values of two Objects by obtaining the String values using the toString method.
+     * 
+     * @param obj1 the first object
+     * @param obj2 the second object
+     * 
+     * @return true when the String values of both Objects are equal.
+     */
+    public static boolean compareToString(Object obj1, Object obj2) {
+        return obj1 != null && obj2 != null && (obj1.toString().equals(obj2.toString()));
+    }
+    
     /**
      * Get the base integer value given the Integer object.
      * If the object is null then return the 0 value.

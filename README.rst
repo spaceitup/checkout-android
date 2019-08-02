@@ -212,8 +212,7 @@ Code sample how to obtain the PaymentResult inside the onActivityResult() method
         if (requestCode != PAYMENT_REQUEST_CODE || data == null) {
             return;
         }
-        PaymentResult result = data.getParcelableExtra(PaymentUI.EXTRA_PAYMENT_RESULT);
-        
+        PaymentResult result = PaymentResult.fromResultIntent(data);        
         if (result == null) {
             return;
         }
