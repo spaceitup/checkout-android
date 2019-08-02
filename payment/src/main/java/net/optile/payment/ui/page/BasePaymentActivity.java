@@ -37,11 +37,6 @@ abstract class BasePaymentActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setActivityResult(PaymentUI.RESULT_CODE_CANCELED, new PaymentResult("Initializing page."));
         setRequestedOrientation(PaymentUI.getInstance().getOrientation());
-
-        int pageTheme = getPaymentTheme().getPageParameters().getPageTheme();
-        if (pageTheme != 0) {
-            setTheme(pageTheme);
-        }
     }
 
     /**
@@ -137,7 +132,7 @@ abstract class BasePaymentActivity extends AppCompatActivity {
      */
     void setActivityResult(int resultCode, PaymentResult result) {
         Intent intent = new Intent();
-        intent.putExtra(PaymentUI.EXTRA_PAYMENT_RESULT, result);
+        result.putInto(intent);
         setResult(resultCode, intent);
     }
 }

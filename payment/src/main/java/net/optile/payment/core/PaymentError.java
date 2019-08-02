@@ -30,10 +30,6 @@ public final class PaymentError {
      */
     public final String errorType;
     /**
-     * The source of the error
-     */
-    public final String source;
-    /**
      * The optional network status code like 400 or 500
      */
     public final int statusCode;
@@ -49,26 +45,23 @@ public final class PaymentError {
     /**
      * Construct a new PaymentError object containing the information about the payment failure
      *
-     * @param source the source
      * @param errorType the error type
      * @param errorData the error data
      */
-    public PaymentError(final String source, @ErrorType final String errorType, final String errorData) {
-        this(source, errorType, 0, errorData, null);
+    public PaymentError(@ErrorType final String errorType, final String errorData) {
+        this(errorType, 0, errorData, null);
     }
 
     /**
      * Construct a new PaymentError object containing all information about a network error
      *
-     * @param source the source
      * @param errorType the error type
      * @param statusCode the status code
      * @param errorData the error data
      * @param errorInfo the error info
      */
-    public PaymentError(final String source, @ErrorType final String errorType, final int statusCode, final String errorData,
+    public PaymentError(@ErrorType final String errorType, final int statusCode, final String errorData,
         final ErrorInfo errorInfo) {
-        this.source = source;
         this.errorType = errorType;
         this.statusCode = statusCode;
         this.errorData = errorData;
@@ -96,10 +89,6 @@ public final class PaymentError {
         sb.append("errorType: ");
         sb.append(this.errorType);
 
-        if (this.source != null) {
-            sb.append(", source: ");
-            sb.append(this.source);
-        }
         if (this.statusCode != 0) {
             sb.append(", statusCode: ");
             sb.append(this.statusCode);

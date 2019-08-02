@@ -16,7 +16,9 @@ import android.os.Bundle;
 import android.view.MenuItem;
 import android.widget.TextView;
 import net.optile.payment.R;
+import net.optile.payment.form.Operation;
 import net.optile.payment.ui.PaymentResult;
+import net.optile.payment.ui.PaymentUI;
 import net.optile.payment.ui.dialog.ThemedDialogFragment;
 import net.optile.payment.ui.list.PaymentList;
 import net.optile.payment.ui.model.PaymentCard;
@@ -43,12 +45,25 @@ public final class PaymentListActivity extends BasePaymentActivity implements Pa
         return new Intent(context, PaymentListActivity.class);
     }
 
+    /** 
+     * Get the transition used when this Activity is being started 
+     * 
+     * @return the start transition of this activity 
+     */
+    public static int getStartTransition() {
+        return R.anim.no_animation;
+    }
+    
     /**
      * {@inheritDoc}
      */
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        int theme = getPaymentTheme().getListParameters().getPageTheme();
+        if (theme != 0) {
+            setTheme(theme);
+        }
         this.cachedListIndex = -1;
 
         setContentView(R.layout.activity_paymentlist);
@@ -91,11 +106,10 @@ public final class PaymentListActivity extends BasePaymentActivity implements Pa
      */
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-
         switch (item.getItemId()) {
             case android.R.id.home:
                 setUserClosedPageResult();
-                supportFinishAfterTransition();
+                closePage();
                 return true;
         }
         return false;
@@ -106,11 +120,20 @@ public final class PaymentListActivity extends BasePaymentActivity implements Pa
      */
     @Override
     public void onBackPressed() {
-        if (presenter.onBackPressed()) {
-            return;
-        }
         setUserClosedPageResult();
         super.onBackPressed();
+        overridePendingTransition(R.anim.no_animation, R.anim.no_animation);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        PaymentResult result = PaymentResult.fromResultIntent(data);
+        if (result != null) {
+            presenter.setActivityResult(new ActivityResult(requestCode, resultCode, result));
+        }
     }
 
     /**
@@ -142,17 +165,11 @@ public final class PaymentListActivity extends BasePaymentActivity implements Pa
      * {@inheritDoc}
      */
     @Override
-    public void showProgressView(int style) {
+    public void showProgressView() {
         if (!active) {
             return;
         }
-        paymentList.setVisible(false);
-        progressView.setStyle(style);
         progressView.setVisible(true);
-
-        if (style == ProgressView.SEND) {
-            setActionBar(getString(R.string.pmprogress_sendtitle), false);
-        }
     }
 
     /**
@@ -164,6 +181,30 @@ public final class PaymentListActivity extends BasePaymentActivity implements Pa
             return;
         }
         supportFinishAfterTransition();
+        overridePendingTransition(R.anim.no_animation, R.anim.no_animation);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void passOnPaymentResult(int resultCode, PaymentResult result) {
+        if (!active) {
+            return;
+        }
+        setActivityResult(resultCode, result);
+        supportFinishAfterTransition();
+    }
+
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void showProcessPaymentScreen(int requestCode, Operation operation) {
+        Intent intent = ProcessPaymentActivity.createStartIntent(this, operation);
+        startActivityForResult(intent, requestCode);
+        overridePendingTransition(ProcessPaymentActivity.getStartTransition(), R.anim.no_animation);
     }
 
     /**
@@ -197,24 +238,13 @@ public final class PaymentListActivity extends BasePaymentActivity implements Pa
         return this;
     }
 
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public void showWarningMessage(String message) {
-        if (!active) {
-            return;
-        }
-        showSnackbar(message);
-    }
-
     public void onActionClicked(PaymentCard item, Map<String, FormWidget> widgets) {
         presenter.onActionClicked(item, widgets);
     }
 
     private void initPaymentList() {
         TextView empty = findViewById(R.id.label_empty);
-        PaymentUtils.setTextAppearance(empty, getPaymentTheme().getPageParameters().getEmptyListLabelStyle());
+        PaymentUtils.setTextAppearance(empty, getPaymentTheme().getListParameters().getEmptyListLabelStyle());
         this.paymentList = new PaymentList(this, findViewById(R.id.recyclerview_paymentlist), empty);
     }
 }

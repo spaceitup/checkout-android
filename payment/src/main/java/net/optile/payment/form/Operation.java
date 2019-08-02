@@ -14,7 +14,10 @@ import java.util.Objects;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import android.os.Parcel;
+import android.os.Parcelable;
 import android.text.TextUtils;
+import android.util.Log;
 import net.optile.payment.core.PaymentError;
 import net.optile.payment.core.PaymentException;
 import net.optile.payment.core.PaymentInputType;
@@ -22,14 +25,23 @@ import net.optile.payment.core.PaymentInputType;
 /**
  * Class holding Operation form values
  */
-public class Operation {
+public class Operation implements Parcelable {
 
     public final static String CHARGE = "CHARGE";
     public final static String PRESET = "PRESET";
     public final static String PAYOUT = "PAYOUT";
     public final static String UPDATE = "UPDATE";
     public final static String ACTIVATE = "ACTIVATE";
+    public final static Parcelable.Creator<Operation> CREATOR = new Parcelable.Creator<Operation>() {
 
+        public Operation createFromParcel(Parcel in) {
+            return new Operation(in);
+        }
+
+        public Operation[] newArray(int size) {
+            return new Operation[size];
+        }
+    };
     private final URL url;
     private final JSONObject form;
     private final JSONObject account;
@@ -38,6 +50,34 @@ public class Operation {
         this.url = url;
         this.form = new JSONObject();
         this.account = new JSONObject();
+    }
+
+    private Operation(Parcel in) {
+        this.url = (URL) in.readSerializable();
+        try {
+            this.form = new JSONObject(in.readString());
+            this.account = new JSONObject(in.readString());
+        } catch (JSONException e) {
+            throw new RuntimeException(e);
+        }
+    }
+    
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void writeToParcel(Parcel out, int flags) {
+        out.writeSerializable(this.url);
+        out.writeString(form.toString());
+        out.writeString(account.toString());
     }
 
     /**
@@ -70,7 +110,7 @@ public class Operation {
             }
         } catch (JSONException e) {
             String msg = "Operation.putValue failed for name: " + name;
-            PaymentError error = new PaymentError("Operation", PaymentError.INTERNAL_ERROR, msg);
+            PaymentError error = new PaymentError(PaymentError.INTERNAL_ERROR, msg);
             throw new PaymentException(error, msg, e);
         }
     }

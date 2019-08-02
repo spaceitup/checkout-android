@@ -107,4 +107,21 @@ public final class PaymentSession {
         List<ApplicableNetwork> an = nw.getApplicable();
         return an != null ? an.size() : 0;
     }
+
+    public boolean containsLink(String name, URL url) {
+        if (presetCard != null && presetCard.containsLink(name, url)) {
+            return true;
+        }
+        for (AccountCard card : accounts) {
+            if (card.containsLink(name, url)) {
+                return true;
+            }
+        }
+        for (NetworkCard card : networks) {
+            if (card.containsLink(name, url)) {
+                return true;
+            }
+        }
+        return false;
+    }
 }

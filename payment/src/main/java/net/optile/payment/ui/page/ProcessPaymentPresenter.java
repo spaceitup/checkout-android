@@ -25,17 +25,15 @@ import net.optile.payment.ui.dialog.MessageDialogFragment;
 import net.optile.payment.ui.dialog.ThemedDialogFragment;
 import net.optile.payment.ui.dialog.ThemedDialogFragment.ThemedDialogListener;
 import net.optile.payment.ui.model.PaymentSession;
-import net.optile.payment.ui.model.PresetCard;
 import net.optile.payment.ui.service.PaymentSessionListener;
 import net.optile.payment.ui.service.PaymentSessionService;
 
 /**
- * The PresetAccountPresenter takes care of posting the operation of the PresetAccount to the Payment API.
- * First this presenter will load the list, checks if a PresetAccount is available and post the operation to the Payment API.
+ * The ProcessPaymentPresenter takes care of posting the operation to the Payment API.
+ * First this presenter will load the list, checks if the operation is present in the list and then post the operation to the Payment API.
  */
-final class PresetAccountPresenter implements PaymentSessionListener {
-
-    private final PresetAccountView view;
+final class ProcessPaymentPresenter implements PaymentSessionListener {
+    private final ProcessPaymentView view;
     private final PaymentSessionService service;
 
     private PaymentSession session;
@@ -43,11 +41,11 @@ final class PresetAccountPresenter implements PaymentSessionListener {
     private Operation operation;
 
     /**
-     * Create a new PresetAccountPresenter
+     * Create a new ProcessPaymentPresenter
      *
-     * @param view The PresetAccountView
+     * @param view The ProcessPaymentView
      */
-    PresetAccountPresenter(PresetAccountView view) {
+    ProcessPaymentPresenter(ProcessPaymentView view) {
         this.view = view;
         service = new PaymentSessionService();
         service.setListener(this);
@@ -56,11 +54,12 @@ final class PresetAccountPresenter implements PaymentSessionListener {
     /**
      * Start the PresetAccount presenter
      */
-    void onStart() {
+    void onStart(Operation operation) {
 
         if (service.isActive()) {
             return;
         }
+        this.operation = operation;
         this.listUrl = PaymentUI.getInstance().getListUrl();
         loadPaymentSession(this.listUrl);
     }
@@ -147,12 +146,11 @@ final class PresetAccountPresenter implements PaymentSessionListener {
     private void handleLoadInteractionProceed(PaymentSession session) {
         this.session = session;
 
-        if (!session.hasPresetCard()) {
-            closeSessionWithErrorCode(R.string.pmdialog_error_missingpresetaccount, null);
+        if (!session.containsLink("operation", operation.getURL())) {
+            closeSessionWithErrorCode(R.string.pmdialog_error_missingoperation, null);
             return;
         }
-        PresetCard card = session.getPresetCard();
-        postOperation(new Operation(card.getOperationLink()));
+        postOperation(operation);
     }
 
     private void handleLoadPaymentError(PaymentException cause) {
@@ -232,7 +230,7 @@ final class PresetAccountPresenter implements PaymentSessionListener {
             result = new PaymentResult(pe.getMessage(), pe.error);
         } else {
             String resultInfo = cause != null ? cause.toString() : getString(msgResId);
-            PaymentError error = new PaymentError("PresetAccount", PaymentError.INTERNAL_ERROR, resultInfo);
+            PaymentError error = new PaymentError(PaymentError.INTERNAL_ERROR, resultInfo);
             result = new PaymentResult(resultInfo, error);
         }
         view.setPaymentResult(PaymentUI.RESULT_CODE_ERROR, result);

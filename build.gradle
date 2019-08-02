@@ -59,7 +59,7 @@ ext {
     jsonsnapshotVersion = "1.0.12"
     androidxTestCoreVersion = "1.0.0"
     espressoIntentsVersion = "3.0.1"
-    harmcrestVersion ="1.3"
+    harmcrestVersion = "1.3"
 }
 
 task buildci(type: GradleBuild) {

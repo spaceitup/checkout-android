@@ -13,9 +13,9 @@ import net.optile.payment.ui.PaymentResult;
 import net.optile.payment.ui.dialog.ThemedDialogFragment;
 
 /**
- * The PresetAccountView interface is the View part of the MVP, this is implemented by the PresetAccountActivity
+ * The ProcessPaymentView interface is the View part of the MVP, this is implemented by the ProcessPaymentActivity
  */
-interface PresetAccountView {
+interface ProcessPaymentView {
 
     /**
      * Show the progress view animation.

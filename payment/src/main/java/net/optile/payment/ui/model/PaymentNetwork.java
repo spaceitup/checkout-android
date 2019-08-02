@@ -31,6 +31,10 @@ public class PaymentNetwork {
         this.lang = lang;
     }
 
+    public boolean containsLink(String name, URL url) {
+        return PaymentUtils.compareToString(getLink(name), url);
+    }
+
     public URL getLink(String name) {
         Map<String, URL> links = network.getLinks();
         return links != null ? links.get(name) : null;

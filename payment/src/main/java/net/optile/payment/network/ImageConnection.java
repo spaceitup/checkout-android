@@ -36,10 +36,8 @@ public final class ImageConnection extends BaseConnection {
      * @return Bitmap drawable
      */
     public Bitmap loadBitmap(final URL url) throws PaymentException {
-        final String source = "ImageConnection[loadBitmap]";
-
         if (url == null) {
-            throw new IllegalArgumentException(source + " - url cannot be null");
+            throw new IllegalArgumentException("url cannot be null");
         }
         HttpURLConnection conn = null;
         try {
@@ -49,7 +47,7 @@ public final class ImageConnection extends BaseConnection {
                 return BitmapFactory.decodeStream(in);
             }
         } catch (IOException e) {
-            throw createPaymentException(source, CONN_ERROR, e);
+            throw createPaymentException(CONN_ERROR, e);
         } finally {
             close(conn);
         }

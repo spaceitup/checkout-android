@@ -15,8 +15,9 @@ import android.support.annotation.RawRes;
 import android.text.TextUtils;
 import android.util.Patterns;
 import net.optile.payment.R;
+import net.optile.payment.model.PresetAccount;
 import net.optile.payment.ui.page.PaymentListActivity;
-import net.optile.payment.ui.page.PresetAccountActivity;
+import net.optile.payment.ui.page.ProcessPaymentActivity;
 import net.optile.payment.ui.theme.PaymentTheme;
 
 /**
@@ -28,7 +29,6 @@ public final class PaymentUI {
     public final static int RESULT_CODE_OK = Activity.RESULT_FIRST_USER;
     public final static int RESULT_CODE_CANCELED = Activity.RESULT_FIRST_USER + 1;
     public final static int RESULT_CODE_ERROR = Activity.RESULT_FIRST_USER + 2;
-    public final static String EXTRA_PAYMENT_RESULT = "paymentresult";
 
     /** The orientation of the Payment page, by default it is in locked mode */
     private int orientation;
@@ -180,10 +180,12 @@ public final class PaymentUI {
      *
      * @param activity the activity that will be notified when this PaymentPage is finished
      * @param requestCode the requestCode to be used for identifying results in the parent activity
+     * @param presetAccount account that has been preset and should be charged
      */
-    public void chargePresetAccount(Activity activity, int requestCode) {
-        Intent intent = PresetAccountActivity.createStartIntent(activity);
+    public void chargePresetAccount(Activity activity, int requestCode, PresetAccount presetAccount) {
+        Intent intent = ProcessPaymentActivity.createStartIntent(activity, presetAccount);
         launchActivity(activity, intent, requestCode);
+        activity.overridePendingTransition(ProcessPaymentActivity.getStartTransition(), R.anim.no_animation);
     }
 
     /**
@@ -195,6 +197,7 @@ public final class PaymentUI {
     public void showPaymentPage(Activity activity, int requestCode) {
         Intent intent = PaymentListActivity.createStartIntent(activity);
         launchActivity(activity, intent, requestCode);
+        activity.overridePendingTransition(PaymentListActivity.getStartTransition(), R.anim.no_animation);
     }
 
     /**
@@ -225,7 +228,6 @@ public final class PaymentUI {
         }
         activity.finishActivity(requestCode);
         activity.startActivityForResult(intent, requestCode);
-        activity.overridePendingTransition(0, 0);
     }
 
     private static class InstanceHolder {

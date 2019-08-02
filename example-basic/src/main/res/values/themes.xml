@@ -10,7 +10,7 @@
         <item name="android:textAppearance">@style/AppButtonText</item>
     </style>
 
-    <style name="CustomThemePaymentPage" parent="Theme.AppCompat.Light.DarkActionBar">
+    <style name="CustomThemePaymentList" parent="Theme.AppCompat.Light.DarkActionBar">
         <item name="colorPrimary">@color/customColorPrimary</item>
         <item name="colorPrimaryDark">@color/customColorPrimaryDark</item>
         <item name="colorAccent">@color/customColorAccent</item>
@@ -21,6 +21,13 @@
         <item name="android:windowBackground">@color/customColorPrimary</item>
     </style>
 
+    <style name="CustomThemeProcessPayment" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="android:windowBackground">@color/pmcolor_background</item>
+        <item name="colorPrimary">@color/customColorPrimary</item>
+        <item name="colorPrimaryDark">@color/customColorPrimaryDark</item>
+        <item name="colorAccent">@color/customColorAccent</item>
+    </style>
+    
     <style name="CustomThemeActionBar" parent="Widget.AppCompat.Light.ActionBar.Solid.Inverse">
         <item name="elevation">0dp</item>
         <item name="titleTextStyle">@style/CustomText.Medium.Bold.Light</item>

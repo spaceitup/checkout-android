@@ -25,7 +25,7 @@ public class PaymentThemeTest {
     public void createDefault() {
         PaymentTheme params = PaymentTheme.createDefault();
         assertNotNull(params);
-        assertNotNull(params.getPageParameters());
+        assertNotNull(params.getListParameters());
         assertNotNull(params.getWidgetParameters());
         assertNotNull(params.getDialogParameters());
         assertNotNull(params.getProgressParameters());
@@ -33,10 +33,10 @@ public class PaymentThemeTest {
 
     @Test
     public void getPageParameters() {
-        PageParameters value = PageParameters.createDefault();
+        ListParameters value = ListParameters.createDefault();
         PaymentTheme params = PaymentTheme.createBuilder().
-            setPageParameters(value).build();
-        assertEquals(params.getPageParameters(), value);
+            setListParameters(value).build();
+        assertEquals(params.getListParameters(), value);
     }
 
     @Test

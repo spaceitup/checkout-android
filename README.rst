@@ -212,8 +212,7 @@ Code sample how to obtain the PaymentResult inside the onActivityResult() method
         if (requestCode != PAYMENT_REQUEST_CODE || data == null) {
             return;
         }
-        PaymentResult result = data.getParcelableExtra(PaymentUI.EXTRA_PAYMENT_RESULT);
-        
+        PaymentResult result = PaymentResult.fromResultIntent(data);        
         if (result == null) {
             return;
         }
@@ -295,13 +294,16 @@ Code sample how to charge a PresetAccount:
     // Request code to identify the response in onActivityResult()
     int PAYMENT_REQUEST_CODE = 1;
 
+    // get the preset account from the ListResult
+    PresetAccount account = listResult.getPresetAccount();
+    
     // list URL obtained from your backend
     String listUrl = "<https://...>";
 
     // Show the charge preset account page
     PaymentUI paymentUI = PaymentUI.getInstance();
     paymentUI.setListUrl(listUrl);
-    paymentUI.chargePresetAccount(this, PAYMENT_REQUEST_CODE);
+    paymentUI.chargePresetAccount(this, PAYMENT_REQUEST_CODE, account);
 
 Customize Payment Page
 ======================
@@ -357,27 +359,27 @@ TextAppearance style resource id used for TextView elements. If the
 parameter name ends with Theme then the parameter holds a theme resource
 id and is applied during inflation of the UI element.
 
-PageParameters
+ListParameters
 ~~~~~~~~~~~~~~
 
-The PageParameters class contains a collection of parameters used to
+The ListParameters class contains a collection of parameters used to
 theme the page and list.
 
-Code sample how to set the PageParameters in the PaymentTheme:
+Code sample how to set the ListParameters in the PaymentTheme:
 
 .. code-block:: java
 
-    PageParameters pageParams = PageParameters.createBuilder().
-    setPageTheme(R.style.CustomThemePaymentPage).
+    ListParameters listParams = ListParameters.createBuilder().
+    setPageTheme(R.style.CustomThemePaymentList).
     build();
-    builder.setPageParameters(pageParams);
+    builder.setListParameters(listParams);
 
 Table explaining each page parameter:
 
 +--------------------------+--------------------------------------------+
 | Name                     | Purpose                                    |
 +==========================+============================================+
-| pageTheme                | Main theme of the Payment Page Activity.   |
+| pageTheme                | Main theme of the PaymentListActivity.     |
 +--------------------------+--------------------------------------------+
 | emptyListLabelStyle      | TextAppearance of label shown when the     |
 |                          | list of payment methods is empty           |
@@ -396,6 +398,29 @@ Table explaining each page parameter:
 +--------------------------+--------------------------------------------+
 | paymentLogoBackground    | Background resource ID drawn behind        |
 |                          | payment method images                      |
++--------------------------+--------------------------------------------+
+
+ProcessParameters
+~~~~~~~~~~~~~~
+
+The ProcessParameters class contains a collection of parameters used to
+theme the process payment page.
+
+Code sample how to set the ProcessParameters in the PaymentTheme:
+
+.. code-block:: java
+
+    ProcessParameters processParams = ProcessParameters.createBuilder().
+    setPageTheme(R.style.CustomThemeProcessPayment).
+    build();
+    builder.setProcessParameters(processParams);
+
+Table explaining each process parameter:
+
++--------------------------+--------------------------------------------+
+| Name                     | Purpose                                    |
++==========================+============================================+
+| pageTheme                | Main theme of the ProcessPaymentActivity.  |
 +--------------------------+--------------------------------------------+
 
 WidgetParameters

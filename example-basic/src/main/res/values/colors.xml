@@ -9,7 +9,7 @@
     <color name="customColorPrimary">#F07D1B</color>
     <color name="customColorPrimaryDark">#F07D1B</color>
     <color name="customColorAccent">#FFFFFF</color>
-    <color name="custom_cardbackground">#ffffff</color>
+    <color name="custom_cardbackground">#FFFFFF</color>
     <color name="custom_accent">#D6D6D6</color>
     <color name="custom_textgray">#B6B6B6</color>
     <color name="custom_textlight">#FFFFFF</color>

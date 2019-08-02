@@ -269,8 +269,7 @@ abstract class BaseConnection {
      * @param conn the conn
      * @return PaymentException network exception
      */
-    PaymentException createPaymentException(final String source, final String errorType, final int statusCode,
-        final HttpURLConnection conn) {
+    PaymentException createPaymentException(final String errorType, final int statusCode, final HttpURLConnection conn) {
         String data = null;
         ErrorInfo info = null;
 
@@ -283,11 +282,11 @@ abstract class BaseConnection {
             }
         } catch (IOException | JsonParseException e) {
             // Ignore the exceptions since the ErrorInfo is an optional field
-            // and it is more important to not loose the status error code
-            Log.w(source, e);
+            // and it is more important to not lose the status error code
+            Log.w("BaseConnection.createPaymentException", e);
         }
-        final PaymentError error = new PaymentError(source, errorType, statusCode, data, info);
-        return new PaymentException(error, source);
+        final PaymentError error = new PaymentError(errorType, statusCode, data, info);
+        return new PaymentException(error, null);
     }
 
     /**
@@ -298,9 +297,9 @@ abstract class BaseConnection {
      * @param cause the cause
      * @return NetworkResponse network exception
      */
-    PaymentException createPaymentException(final String source, String errorType, Exception cause) {
-        final PaymentError error = new PaymentError(source, errorType, 0, null, null);
-        return new PaymentException(error, source, cause);
+    PaymentException createPaymentException(String errorType, Exception cause) {
+        final PaymentError error = new PaymentError(errorType, 0, null, null);
+        return new PaymentException(error, null, cause);
     }
 
     /**

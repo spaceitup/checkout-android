@@ -136,7 +136,7 @@ final class NetworkCardViewHolder extends PaymentCardViewHolder {
     }
 
     private void initTextSwitcher(final View parent, final PaymentTheme theme) {
-        final int style = theme.getPageParameters().getNetworkCardTitleStyle();
+        final int style = theme.getListParameters().getNetworkCardTitleStyle();
 
         TextView tv = parent.findViewById(R.id.title0);
         PaymentUtils.setTextAppearance(tv, style);
