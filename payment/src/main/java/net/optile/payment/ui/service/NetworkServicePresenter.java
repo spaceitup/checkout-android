@@ -22,21 +22,6 @@ public interface NetworkServicePresenter {
      */
     void showProgress();
     
-    /** 
-     * Show a connection error dialog to the user and notify the listener when the notification is closed.
-     * 
-     * @param listener to be notified when the message has been closed 
-     */
-    void showConnErrorDialog(ThemedDialogListener listener);
-
-    /** 
-     * Show a message dialog to the user and notify the listener when the message closed.
-     * 
-     * @param message the message to be shown to the user
-     * @param listener to be notified when the message has been closed.
-     */
-    void showMessageDialog(String message, ThemedDialogListener listener);
-    
     /**
      * Called when the payment is prepared. The NetworkService can either pass the result through the Activity.onActivityResult or 
      * directly through this callback method.

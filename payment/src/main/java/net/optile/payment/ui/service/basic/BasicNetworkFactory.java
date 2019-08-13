@@ -23,16 +23,16 @@ public final class BasicNetworkFactory implements NetworkServiceFactory {
      * {@inheritDoc}
      */
     @Override
-    public boolean isSupported(ApplicableNetwork network) {
+    public boolean isNetworkSupported(ApplicableNetwork network) {
         String button = network.getButton();
-        return isSupported(network.getCode()) && (TextUtils.isEmpty(button) || !button.contains("activate")) && !network.getRedirect();
+        return isCodeSupported(network.getCode()) && (TextUtils.isEmpty(button) || !button.contains("activate")) && !network.getRedirect();
     }
 
     /**
      * {@inheritDoc}
      */
     @Override
-    public boolean isSupported(String code) {
+    public boolean isCodeSupported(String code) {
         switch (code) {
             case PaymentNetworkCodes.AMEX:
             case PaymentNetworkCodes.CASTORAMA:

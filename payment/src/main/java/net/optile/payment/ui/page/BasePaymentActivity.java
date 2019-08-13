@@ -70,8 +70,8 @@ abstract class BasePaymentActivity extends AppCompatActivity {
         dialog.setNeutralButton(getString(R.string.pmdialog_cancel_button));
         return dialog;
     }
-    
-    ThemedDialogFragment createConnErrorDialog(ThemedDialogListener listener) {
+
+    ThemedDialogFragment createConnectionDialog(ThemedDialogListener listener) {
         MessageDialogFragment dialog = new MessageDialogFragment();
         dialog.setMessage(getString(R.string.pmdialog_error_connection));
         dialog.setNeutralButton(getString(R.string.pmdialog_cancel_button));

@@ -157,7 +157,7 @@ public final class PaymentSessionService {
             return items;
         }
         for (ApplicableNetwork network : an) {
-            if (isSupported(network)) {
+            if (NetworkServiceLookup.isNetworkSupported(network)) {
                 items.put(network.getCode(), loadPaymentNetwork(network));
             }
         }
@@ -285,6 +285,9 @@ public final class PaymentSessionService {
     }
 
     private boolean isSupported(ApplicableNetwork network) {
+        
+
+
         String button = network.getButton();
         return (TextUtils.isEmpty(button) || !button.contains("activate")) && !network.getRedirect();
     }

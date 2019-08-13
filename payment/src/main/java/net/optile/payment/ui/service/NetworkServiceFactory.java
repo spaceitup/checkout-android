@@ -21,15 +21,15 @@ public interface NetworkServiceFactory {
      * @param network to be checked if it is supported
      * @return true when supported, false otherwise
      */
-    boolean isSupported(ApplicableNetwork network);
+    boolean isNetworkSupported(ApplicableNetwork network);
 
-    /** 
+    /**
      * Check if the network code is supported by this factory.
      * 
      * @param code to be checked if it is supported by this factory.
      * @return true when supported, false otherwise
      */
-    boolean isSupported(String code);
+    boolean isCodeSupported(String code);
     
     /** 
      * Create a service for this specific payment network

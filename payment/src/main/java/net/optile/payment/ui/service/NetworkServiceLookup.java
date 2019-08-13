@@ -16,6 +16,7 @@ import net.optile.payment.ui.service.basic.BasicNetworkFactory;
 
 /**
  * Class for looking up a NetworkService given the ApplicableNetwork.
+ * This will later be implemented by a ServiceLoader.
  */
 public class NetworkServiceLookup {
 
@@ -28,9 +29,9 @@ public class NetworkServiceLookup {
      * 
      * @return true when supported, false otherwise
      */
-    public static boolean isSupported(ApplicableNetwork network) {
+    public static boolean isNetworkSupported(ApplicableNetwork network) {
         NetworkServiceFactory factory = getFactory(network.getCode());
-        return factory != null && factory.isSupported(network);
+        return factory != null && factory.isNetworkSupported(network);
     }
     
     /**
@@ -49,7 +50,7 @@ public class NetworkServiceLookup {
             initFactories();
         }
         for (NetworkServiceFactory factory : factories) {
-            if (factory.isSupported(code)) {
+            if (factory.isCodeSupported(code)) {
                 return factory;
             }
         }

@@ -11,6 +11,7 @@ package net.optile.payment.ui.page;
 import java.net.URL;
 import java.util.Map;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -22,17 +23,17 @@ import net.optile.payment.ui.dialog.ThemedDialogFragment;
 import net.optile.payment.ui.dialog.ThemedDialogFragment.ThemedDialogListener;
 
 /**
- * The ProcessPaymentActivity is the view displaying the loading animation while posting the operation.
+ * The ChargePaymentActivity is the view displaying the loading animation while posting the operation.
  * The presenter of this view will post the PresetAccount operation to the Payment API.
  */
-public final class ProcessPaymentActivity extends BasePaymentActivity implements ProcessPaymentView {
+public final class ChargePaymentActivity extends BasePaymentActivity implements ChargePaymentView {
 
     private final static String EXTRA_OPERATION = "operation";
-    private ProcessPaymentPresenter presenter;
+    private ChargePaymentPresenter presenter;
     private Operation operation;
 
     /**
-     * Create the start intent for this ProcessPaymentActivity
+     * Create the start intent for this ChargePaymentActivity
      *
      * @param context Context to create the intent
      * @return newly created start intent
@@ -44,13 +45,13 @@ public final class ProcessPaymentActivity extends BasePaymentActivity implements
         if (operation == null) {
             throw new IllegalArgumentException("operation may not be null");
         }
-        Intent intent = new Intent(context, ProcessPaymentActivity.class);
+        Intent intent = new Intent(context, ChargePaymentActivity.class);
         intent.putExtra(EXTRA_OPERATION, operation);
         return intent;
     }
 
     /**
-     * Create the start intent for this ProcessPaymentActivity
+     * Create the start intent for this ChargePaymentActivity
      *
      * @param context Context to create the intent
      * @param account the preset account that should be processed
@@ -69,7 +70,7 @@ public final class ProcessPaymentActivity extends BasePaymentActivity implements
         if (url == null) {
             throw new IllegalArgumentException("PresetAccount does not contain an operation url");
         }
-        return createStartIntent(context, new Operation(url));
+        return createStartIntent(context, new Operation(account.getCode(), url));
     }
 
     /** 
@@ -98,7 +99,7 @@ public final class ProcessPaymentActivity extends BasePaymentActivity implements
         setContentView(R.layout.activity_processpayment);
         setActionBar(getString(R.string.pmprogress_sendtitle), false);
         initProgressView();
-        this.presenter = new ProcessPaymentPresenter(this);
+        this.presenter = new ChargePaymentPresenter(this);
     }
 
     /**
@@ -120,6 +121,17 @@ public final class ProcessPaymentActivity extends BasePaymentActivity implements
         presenter.onStart(operation);
     }
 
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        PaymentResult result = PaymentResult.fromResultIntent(data);
+        if (result != null) {
+            presenter.setActivityResult(new ActivityResult(requestCode, resultCode, result));
+        }
+    }
+    
     /**
      * {@inheritDoc}
      */
@@ -173,20 +185,20 @@ public final class ProcessPaymentActivity extends BasePaymentActivity implements
      * {@inheritDoc}
      */
     @Override
-    public void showConnErrorDialog(ThemedDialogListener listener) {
+    public void showConnectionDialog(ThemedDialogListener listener) {
         if (!active) {
             return;
         }
         progressView.setVisible(false);
-        ThemedDialogFragment dialog = createConnErrorDialog(listener);
-        dialog.show(getSupportFragmentManager(), "dialog_connerror");
+        ThemedDialogFragment dialog = createConnectionDialog(listener);
+        dialog.show(getSupportFragmentManager(), "dialog_connection");
     }
     
     /**
      * {@inheritDoc}
      */
     @Override
-    public Context getContext() {
+    public Activity getActivity() {
         return this;
     }
 
@@ -194,7 +206,7 @@ public final class ProcessPaymentActivity extends BasePaymentActivity implements
      * {@inheritDoc}
      */
     @Override
-    public void closePage() {
+    public void close() {
         if (!active) {
             return;
         }

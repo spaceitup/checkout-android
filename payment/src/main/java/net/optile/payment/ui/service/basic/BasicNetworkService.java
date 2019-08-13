@@ -9,13 +9,13 @@
 package net.optile.payment.ui.service.basic;
 
 import android.app.Activity;
-import android.content.Intent;
-import net.optile.payment.R;
+import net.optile.payment.core.PaymentError;
+import net.optile.payment.core.PaymentException;
 import net.optile.payment.form.Operation;
+import net.optile.payment.model.InteractionCode;
 import net.optile.payment.model.OperationResult;
-import net.optile.payment.model.PresetAccount;
-import net.optile.payment.ui.model.PaymentSession;
-import net.optile.payment.ui.page.ProcessPaymentActivity;
+import net.optile.payment.ui.PaymentResult;
+import net.optile.payment.ui.PaymentUI;
 import net.optile.payment.ui.service.NetworkService;
 import net.optile.payment.ui.service.OperationListener;
 import net.optile.payment.ui.service.OperationService;
@@ -25,7 +25,7 @@ import net.optile.payment.ui.service.OperationService;
  */
 public final class BasicNetworkService extends NetworkService implements OperationListener {
     private final OperationService service;
-
+    
     /**
      * Create a new BasicNetworkService, this service is a basic implementation that simply send an operation to the Payment API.
      */
@@ -46,9 +46,33 @@ public final class BasicNetworkService extends NetworkService implements Operati
      * {@inheritDoc}
      */
     @Override
-    public void preparePayment(Activity activity, int requestCode, PaymentSession session, Operation operation) {
-        if (presenter != null) {
-            //presenter.onPreparePaymentSuccess(null);
+    public void preparePayment(Activity activity, int requestCode, Operation operation) {
+        PaymentResult result = new PaymentResult("preparePayment not required");
+        presenter.onPreparePaymentResult(PaymentUI.RESULT_CODE_OK, result);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void processPayment(Activity activity, int requestCode, Operation operation) {
+        presenter.showProgress();
+        service.postOperation(operation);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void onOperationSuccess(OperationResult operation) {
+        PaymentResult result = new PaymentResult(operation);
+
+        switch (operation.getInteraction().getCode()) {
+            case InteractionCode.PROCEED:
+                presenter.onProcessPaymentResult(PaymentUI.RESULT_CODE_OK, result);
+                break;
+            default:
+                presenter.onProcessPaymentResult(PaymentUI.RESULT_CODE_CANCELED, result);
         }
     }
 
@@ -56,31 +80,17 @@ public final class BasicNetworkService extends NetworkService implements Operati
      * {@inheritDoc}
      */
     @Override
-    public void processPayment(Activity activity, int requestCode, PaymentSession session, Operation operation) {
-        String type = operation.getType();
+    public void onOperationError(Throwable cause) {
+        PaymentResult result;
 
-        if (Operation.CHARGE.equals(type)) {
-            // Redirect to the ProcessPaymentActivity to process the operation request
-            Intent intent = ProcessPaymentActivity.createStartIntent(activity, operation);
-            activity.startActivityForResult(intent, requestCode);
-            activity.overridePendingTransition(ProcessPaymentActivity.getStartTransition(), R.anim.no_animation);
+        if (cause instanceof PaymentException) {
+            PaymentException pe = (PaymentException) cause;
+            result = new PaymentResult(pe.getMessage(), pe.error);
         } else {
-            presenter.showProgress();
-            service.postOperation(operation);
+            String resultInfo = cause.toString();
+            PaymentError error = new PaymentError(PaymentError.INTERNAL_ERROR, resultInfo);
+            result = new PaymentResult(resultInfo, error);
         }
-    }
-
-    @Override
-    public void onOperationSuccess(final OperationResult operationResult) {
-        if (presenter != null) {
-            //presenter.onProcessPaymentSuccess(operationResult);
-        }
-    }
-
-    @Override
-    public void onOperationError(final Throwable cause) {
-        if (presenter != null) {
-            //presenter.onProcessPaymentError(cause);
-        }
+        presenter.onProcessPaymentResult(PaymentUI.RESULT_CODE_ERROR, result);
     }
 }

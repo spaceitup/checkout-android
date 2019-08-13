@@ -42,17 +42,20 @@ public class Operation implements Parcelable {
             return new Operation[size];
         }
     };
+    private final String code;
     private final URL url;
     private final JSONObject form;
     private final JSONObject account;
 
-    public Operation(URL url) {
+    public Operation(String code, URL url) {
+        this.code = code;
         this.url = url;
         this.form = new JSONObject();
         this.account = new JSONObject();
     }
 
     private Operation(Parcel in) {
+        this.code = in.readString();
         this.url = (URL) in.readSerializable();
         try {
             this.form = new JSONObject(in.readString());
@@ -75,6 +78,7 @@ public class Operation implements Parcelable {
      */
     @Override
     public void writeToParcel(Parcel out, int flags) {
+        out.writeString(code);
         out.writeSerializable(this.url);
         out.writeString(form.toString());
         out.writeString(account.toString());
@@ -148,6 +152,10 @@ public class Operation implements Parcelable {
         return Objects.equals(type, getType());
     }
 
+    public String getCode() {
+        return code;
+    }
+    
     public String toJson() throws JSONException {
         form.put("account", account);
         return form.toString();

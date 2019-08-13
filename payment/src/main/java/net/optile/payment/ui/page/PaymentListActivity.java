@@ -19,7 +19,6 @@ import android.widget.TextView;
 import net.optile.payment.R;
 import net.optile.payment.form.Operation;
 import net.optile.payment.ui.PaymentResult;
-import net.optile.payment.ui.PaymentUI;
 import net.optile.payment.ui.dialog.ThemedDialogFragment;
 import net.optile.payment.ui.dialog.ThemedDialogFragment.ThemedDialogListener;
 import net.optile.payment.ui.list.PaymentList;
@@ -111,7 +110,7 @@ public final class PaymentListActivity extends BasePaymentActivity implements Pa
         switch (item.getItemId()) {
             case android.R.id.home:
                 setUserClosedPageResult();
-                closePage();
+                close();
                 return true;
         }
         return false;
@@ -167,6 +166,16 @@ public final class PaymentListActivity extends BasePaymentActivity implements Pa
      * {@inheritDoc}
      */
     @Override
+    public void showChargePaymentScreen(int requestCode, Operation operation) {
+        Intent intent = ChargePaymentActivity.createStartIntent(this, operation);
+        startActivityForResult(intent, requestCode);
+        overridePendingTransition(ChargePaymentActivity.getStartTransition(), R.anim.no_animation);
+    }
+    
+    /**
+     * {@inheritDoc}
+     */
+    @Override
     public void showProgress() {
         if (!active) {
             return;
@@ -178,7 +187,7 @@ public final class PaymentListActivity extends BasePaymentActivity implements Pa
      * {@inheritDoc}
      */
     @Override
-    public void closePage() {
+    public void close() {
         if (!active) {
             return;
         }
@@ -226,13 +235,13 @@ public final class PaymentListActivity extends BasePaymentActivity implements Pa
      * {@inheritDoc}
      */
     @Override
-    public void showConnErrorDialog(ThemedDialogListener listener) {
+    public void showConnectionDialog(ThemedDialogListener listener) {
         if (!active) {
             return;
         }
         progressView.setVisible(false);
-        ThemedDialogFragment dialog = createConnErrorDialog(listener);
-        dialog.show(getSupportFragmentManager(), "dialog_connerror");
+        ThemedDialogFragment dialog = createConnectionDialog(listener);
+        dialog.show(getSupportFragmentManager(), "dialog_connection");
     }
 
     /**

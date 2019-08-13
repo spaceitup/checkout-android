@@ -32,6 +32,14 @@ interface PaymentListView {
     void showProgress();
 
     /**
+     * Open the process payment screen to handle the operation
+     *
+     * @param requestCode the code identifying the request
+     * @param operation to be handled by the charge payment screen
+     */
+    void showChargePaymentScreen(int requestCode, Operation operation);
+    
+    /**
      * Show a generic message to the user, notify the listener of events in this dialog.
      *
      * @param message the message to be shown in the dialog
@@ -44,7 +52,7 @@ interface PaymentListView {
      * 
      * @param listener to be notified of dialog events
      */
-    void showConnErrorDialog(ThemedDialogListener listener);
+    void showConnectionDialog(ThemedDialogListener listener);
     
     /**
      * Stop loading and show the PaymentSession
@@ -59,9 +67,9 @@ interface PaymentListView {
     void passOnPaymentResult(int resultCode, PaymentResult result);
 
     /**
-     * Close the payment page.
+     * Close and return to the parent who launched the view.
      */
-    void closePage();
+    void close();
 
     /**
      * Set the current activity payment result, this is either PaymentUI.RESULT_CODE_OK,

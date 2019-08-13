@@ -8,15 +8,16 @@
 
 package net.optile.payment.ui.page;
 
+import android.app.Activity;
 import android.content.Context;
 import net.optile.payment.ui.PaymentResult;
 import net.optile.payment.ui.dialog.ThemedDialogFragment;
 import net.optile.payment.ui.dialog.ThemedDialogFragment.ThemedDialogListener;
 
 /**
- * The ProcessPaymentView interface is the View part of the MVP, this is implemented by the ProcessPaymentActivity
+ * The ChargePaymentView interface is the View part of the MVP, this is implemented by the ChargePaymentActivity
  */
-interface ProcessPaymentView {
+interface ChargePaymentView {
 
     /**
      * Show the progress animation.
@@ -36,7 +37,7 @@ interface ProcessPaymentView {
      * 
      * @param listener to be notified of dialog events
      */
-    void showConnErrorDialog(ThemedDialogListener listener);
+    void showConnectionDialog(ThemedDialogListener listener);
 
     /**
      * Show a warning message to the user
@@ -46,9 +47,9 @@ interface ProcessPaymentView {
     void showWarningMessage(String message);
 
     /**
-     * Close the payment page
+     * Close this view and return to the parent who launched it
      */
-    void closePage();
+    void close();
 
     /**
      * Set the current activity payment result, this is either PaymentUI.RESULT_CODE_OK,
@@ -64,5 +65,5 @@ interface ProcessPaymentView {
      *
      * @return the Context of this view
      */
-    Context getContext();
+    Activity getActivity();
 }
