@@ -9,9 +9,7 @@
 package net.optile.payment.ui.page;
 
 import android.app.Activity;
-import android.content.Context;
 import net.optile.payment.ui.PaymentResult;
-import net.optile.payment.ui.dialog.ThemedDialogFragment;
 import net.optile.payment.ui.dialog.ThemedDialogFragment.ThemedDialogListener;
 
 /**
@@ -32,9 +30,9 @@ interface ChargePaymentView {
      */
     void showMessageDialog(String message, ThemedDialogListener listener);
 
-    /** 
+    /**
      * Show the connection error dialog to the user, notify the listener of events in this dialog.
-     * 
+     *
      * @param listener to be notified of dialog events
      */
     void showConnectionDialog(ThemedDialogListener listener);

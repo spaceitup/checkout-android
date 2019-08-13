@@ -8,7 +8,6 @@
 
 package net.optile.payment.ui.service;
 
-import net.optile.payment.model.OperationResult;
 import net.optile.payment.ui.model.PaymentSession;
 
 /**

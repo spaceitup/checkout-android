@@ -20,10 +20,8 @@ import net.optile.payment.model.ErrorInfo;
 import net.optile.payment.model.Interaction;
 import net.optile.payment.model.InteractionCode;
 import net.optile.payment.model.ListResult;
-import net.optile.payment.model.OperationResult;
 import net.optile.payment.ui.PaymentResult;
 import net.optile.payment.ui.PaymentUI;
-import net.optile.payment.ui.dialog.MessageDialogFragment;
 import net.optile.payment.ui.dialog.ThemedDialogFragment;
 import net.optile.payment.ui.dialog.ThemedDialogFragment.ThemedDialogListener;
 import net.optile.payment.ui.model.PaymentCard;
@@ -31,8 +29,8 @@ import net.optile.payment.ui.model.PaymentSession;
 import net.optile.payment.ui.service.NetworkService;
 import net.optile.payment.ui.service.NetworkServiceLookup;
 import net.optile.payment.ui.service.NetworkServicePresenter;
-import net.optile.payment.ui.service.PaymentSessionService;
 import net.optile.payment.ui.service.PaymentSessionListener;
+import net.optile.payment.ui.service.PaymentSessionService;
 import net.optile.payment.ui.widget.FormWidget;
 
 /**
@@ -54,7 +52,7 @@ final class PaymentListPresenter implements PaymentSessionListener, NetworkServi
     private Operation operation;
     private ActivityResult activityResult;
     private NetworkService networkService;
-    
+
     /**
      * Create a new PaymentListPresenter
      *
@@ -125,7 +123,7 @@ final class PaymentListPresenter implements PaymentSessionListener, NetworkServi
                 operation = createOperation(card, widgets);
                 networkService = NetworkServiceLookup.getService(card.getCode());
                 networkService.setPresenter(this);
-                networkService.preparePayment(view.getActivity(), 0, operation);                
+                networkService.preparePayment(view.getActivity(), 0, operation);
             } catch (PaymentException e) {
                 closeWithErrorCode(e);
             }
@@ -200,6 +198,7 @@ final class PaymentListPresenter implements PaymentSessionListener, NetworkServi
                         view.close();
                 }
             }
+
             @Override
             public void onDismissed(ThemedDialogFragment dialog) {
                 view.close();
@@ -236,7 +235,7 @@ final class PaymentListPresenter implements PaymentSessionListener, NetworkServi
                 view.showPaymentSession(this.session);
         }
     }
-    
+
     /**
      * {@inheritDoc}
      */
@@ -302,13 +301,14 @@ final class PaymentListPresenter implements PaymentSessionListener, NetworkServi
                         view.close();
                 }
             }
+
             @Override
             public void onDismissed(ThemedDialogFragment dialog) {
                 view.close();
             }
         });
     }
-    
+
     /**
      * {@inheritDoc}
      */
@@ -365,19 +365,20 @@ final class PaymentListPresenter implements PaymentSessionListener, NetworkServi
                         view.close();
                 }
             }
+
             @Override
             public void onDismissed(ThemedDialogFragment dialog) {
                 view.close();
             }
         });
     }
-    
-    /** 
-     * The Charge payment result is received from the ChargePaymentActivity. Error messages are not displayed by this presenter since 
-     * the ChargePaymentActivity has taken care of displaying error and warning messages.   
-     * 
+
+    /**
+     * The Charge payment result is received from the ChargePaymentActivity. Error messages are not displayed by this presenter since
+     * the ChargePaymentActivity has taken care of displaying error and warning messages.
+     *
      * @param resultCode
-     * @param paymentResult 
+     * @param paymentResult
      */
     private void onChargePaymentResult(int resultCode, PaymentResult paymentResult) {
         this.operation = null;
@@ -432,7 +433,7 @@ final class PaymentListPresenter implements PaymentSessionListener, NetworkServi
         }
         return operation;
     }
-    
+
     private void closeWithOkCode(PaymentResult result) {
         view.setPaymentResult(PaymentUI.RESULT_CODE_OK, result);
         view.close();
@@ -455,17 +456,18 @@ final class PaymentListPresenter implements PaymentSessionListener, NetworkServi
     }
 
     private void closeWithErrorCode(String message, PaymentError error) {
-        PaymentResult result = new PaymentResult(message, error);        
+        PaymentResult result = new PaymentResult(message, error);
         view.setPaymentResult(PaymentUI.RESULT_CODE_ERROR, result);
-        closeWithMessage(getString(R.string.pmdialog_error_unknown));        
+        closeWithMessage(getString(R.string.pmdialog_error_unknown));
     }
-    
+
     private void closeWithMessage(String message) {
         view.showMessageDialog(message, new ThemedDialogListener() {
             @Override
             public void onButtonClicked(ThemedDialogFragment dialog, int which) {
                 view.close();
             }
+
             @Override
             public void onDismissed(ThemedDialogFragment dialog) {
                 view.close();
@@ -496,7 +498,7 @@ final class PaymentListPresenter implements PaymentSessionListener, NetworkServi
         view.showPaymentSession(this.session);
         showInteractionDialog(result.getInteraction());
     }
-    
+
     private String translateInteraction(Interaction interaction) {
         if (session == null || interaction == null) {
             return null;

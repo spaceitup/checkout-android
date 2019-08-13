@@ -9,12 +9,10 @@
 package net.optile.payment.ui.page;
 
 import android.app.Activity;
-import android.content.Context;
 import net.optile.payment.form.Operation;
 import net.optile.payment.ui.PaymentResult;
-import net.optile.payment.ui.dialog.ThemedDialogFragment;
-import net.optile.payment.ui.model.PaymentSession;
 import net.optile.payment.ui.dialog.ThemedDialogFragment.ThemedDialogListener;
+import net.optile.payment.ui.model.PaymentSession;
 
 /**
  * The PaymentListView is the interface is the View part of the MVP, this is implemented by the PaymentListActivity
@@ -38,7 +36,7 @@ interface PaymentListView {
      * @param operation to be handled by the charge payment screen
      */
     void showChargePaymentScreen(int requestCode, Operation operation);
-    
+
     /**
      * Show a generic message to the user, notify the listener of events in this dialog.
      *
@@ -47,13 +45,13 @@ interface PaymentListView {
      */
     void showMessageDialog(String message, ThemedDialogListener listener);
 
-    /** 
+    /**
      * Show the connection error dialog to the user, notify the listener of events in this dialog.
-     * 
+     *
      * @param listener to be notified of dialog events
      */
     void showConnectionDialog(ThemedDialogListener listener);
-    
+
     /**
      * Stop loading and show the PaymentSession
      *

@@ -21,8 +21,8 @@ import net.optile.payment.ui.PaymentUI;
 import net.optile.payment.ui.dialog.DialogHelper;
 import net.optile.payment.ui.dialog.MessageDialogFragment;
 import net.optile.payment.ui.dialog.ThemedDialogFragment;
-import net.optile.payment.ui.theme.PaymentTheme;
 import net.optile.payment.ui.dialog.ThemedDialogFragment.ThemedDialogListener;
+import net.optile.payment.ui.theme.PaymentTheme;
 
 /**
  * The base activity for payment activities.
@@ -66,6 +66,7 @@ abstract class BasePaymentActivity extends AppCompatActivity {
 
     ThemedDialogFragment createMessageDialog(String message, ThemedDialogListener listener) {
         MessageDialogFragment dialog = new MessageDialogFragment();
+        dialog.setListener(listener);
         dialog.setMessage(message);
         dialog.setNeutralButton(getString(R.string.pmdialog_cancel_button));
         return dialog;
@@ -73,12 +74,13 @@ abstract class BasePaymentActivity extends AppCompatActivity {
 
     ThemedDialogFragment createConnectionDialog(ThemedDialogListener listener) {
         MessageDialogFragment dialog = new MessageDialogFragment();
+        dialog.setListener(listener);
         dialog.setMessage(getString(R.string.pmdialog_error_connection));
         dialog.setNeutralButton(getString(R.string.pmdialog_cancel_button));
         dialog.setPositiveButton(getString(R.string.pmdialog_retry_button));
         return dialog;
     }
-    
+
     /**
      * Initialize the ProgressView, the UI elements needed by the ProgressView must be available in the root view of the activity.
      */

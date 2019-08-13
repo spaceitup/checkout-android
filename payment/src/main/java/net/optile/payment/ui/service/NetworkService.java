@@ -10,8 +10,6 @@ package net.optile.payment.ui.service;
 
 import android.app.Activity;
 import net.optile.payment.form.Operation;
-import net.optile.payment.model.PresetAccount;
-import net.optile.payment.ui.model.PaymentSession;
 
 /**
  * Interface for network services, a NetworkService is responsible for activating and
@@ -20,38 +18,38 @@ import net.optile.payment.ui.model.PaymentSession;
 public abstract class NetworkService {
 
     protected NetworkServicePresenter presenter;
-    
-    /** 
+
+    /**
      * Stop this NetworkService
      */
     public void stop() {
     }
-    
+
     /**
      * Set the presenter in this NetworkService
-     * 
+     *
      * @param presenter the presenter to be set
      */
     public void setPresenter(NetworkServicePresenter presenter) {
         this.presenter = presenter;
     }
 
-    /** 
-     * Prepare the payment for this NetworkService. Depending on the type of network (Visa, GooglePay) the result may either be returned through the 
-     * onActivityResult or through the NetworkServicePresenter. 
+    /**
+     * Prepare the payment for this NetworkService. Depending on the type of network (Visa, GooglePay) the result may either be returned through the
+     * onActivityResult or through the NetworkServicePresenter.
      *
-     * @param activity 
+     * @param activity
      * @param requestCode
      * @param operation
      */
     public void preparePayment(Activity activity, int requestCode, Operation operation) {
     }
-    
-    /** 
-     * Process the payment through this NetworkService. The result is either returned through the onActivityResult call in the 
+
+    /**
+     * Process the payment through this NetworkService. The result is either returned through the onActivityResult call in the
      * provided Activity or through the NetworkServicePresenter.
-     * 
-     * @param activity 
+     *
+     * @param activity
      * @param requestCode
      * @param operation
      */

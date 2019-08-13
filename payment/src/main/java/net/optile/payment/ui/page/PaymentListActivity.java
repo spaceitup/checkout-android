@@ -10,6 +10,7 @@ package net.optile.payment.ui.page;
 
 import java.util.Map;
 
+import android.util.Log;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
@@ -46,15 +47,15 @@ public final class PaymentListActivity extends BasePaymentActivity implements Pa
         return new Intent(context, PaymentListActivity.class);
     }
 
-    /** 
-     * Get the transition used when this Activity is being started 
-     * 
-     * @return the start transition of this activity 
+    /**
+     * Get the transition used when this Activity is being started
+     *
+     * @return the start transition of this activity
      */
     public static int getStartTransition() {
         return R.anim.no_animation;
     }
-    
+
     /**
      * {@inheritDoc}
      */
@@ -171,7 +172,7 @@ public final class PaymentListActivity extends BasePaymentActivity implements Pa
         startActivityForResult(intent, requestCode);
         overridePendingTransition(ChargePaymentActivity.getStartTransition(), R.anim.no_animation);
     }
-    
+
     /**
      * {@inheritDoc}
      */
@@ -188,6 +189,7 @@ public final class PaymentListActivity extends BasePaymentActivity implements Pa
      */
     @Override
     public void close() {
+        Log.i("pay", "closing PaymentListActivity");
         if (!active) {
             return;
         }
@@ -230,7 +232,7 @@ public final class PaymentListActivity extends BasePaymentActivity implements Pa
         ThemedDialogFragment dialog = createMessageDialog(message, listener);
         dialog.show(getSupportFragmentManager(), "dialog_message");
     }
-    
+
     /**
      * {@inheritDoc}
      */

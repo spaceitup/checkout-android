@@ -8,10 +8,10 @@
 
 package net.optile.payment.ui.service.basic;
 
+import android.text.TextUtils;
 import net.optile.payment.core.PaymentNetworkCodes;
 import net.optile.payment.model.ApplicableNetwork;
 import net.optile.payment.ui.service.NetworkService;
-import android.text.TextUtils;
 import net.optile.payment.ui.service.NetworkServiceFactory;
 
 /**

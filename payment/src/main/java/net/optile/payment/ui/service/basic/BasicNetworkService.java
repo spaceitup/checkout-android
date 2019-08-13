@@ -25,7 +25,7 @@ import net.optile.payment.ui.service.OperationService;
  */
 public final class BasicNetworkService extends NetworkService implements OperationListener {
     private final OperationService service;
-    
+
     /**
      * Create a new BasicNetworkService, this service is a basic implementation that simply send an operation to the Payment API.
      */
@@ -41,7 +41,7 @@ public final class BasicNetworkService extends NetworkService implements Operati
     public void stop() {
         service.stop();
     }
-    
+
     /**
      * {@inheritDoc}
      */

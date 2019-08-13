@@ -9,7 +9,6 @@
 package net.optile.payment.ui.service;
 
 import net.optile.payment.model.OperationResult;
-import net.optile.payment.ui.model.PaymentSession;
 
 /**
  * Listener to be called by the OperationService to inform about operation updates.

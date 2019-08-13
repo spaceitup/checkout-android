@@ -8,41 +8,15 @@
 
 package net.optile.payment.ui.service;
 
-import java.net.MalformedURLException;
-import java.net.URL;
-import java.util.ArrayList;
-import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.Map;
 import java.util.concurrent.Callable;
 
-import android.util.Log;
-import android.content.Context;
-import android.text.TextUtils;
-import net.optile.payment.core.LanguageFile;
-import net.optile.payment.core.PaymentError;
 import net.optile.payment.core.PaymentException;
 import net.optile.payment.core.WorkerSubscriber;
 import net.optile.payment.core.WorkerTask;
 import net.optile.payment.core.Workers;
 import net.optile.payment.form.Operation;
-import net.optile.payment.model.AccountRegistration;
-import net.optile.payment.model.ApplicableNetwork;
-import net.optile.payment.model.ListResult;
-import net.optile.payment.model.Networks;
 import net.optile.payment.model.OperationResult;
-import net.optile.payment.model.PresetAccount;
-import net.optile.payment.network.ListConnection;
 import net.optile.payment.network.PaymentConnection;
-import net.optile.payment.resource.PaymentGroup;
-import net.optile.payment.resource.ResourceLoader;
-import net.optile.payment.ui.PaymentUI;
-import net.optile.payment.ui.model.AccountCard;
-import net.optile.payment.ui.model.NetworkCard;
-import net.optile.payment.ui.model.PaymentNetwork;
-import net.optile.payment.ui.model.PaymentSession;
-import net.optile.payment.ui.model.PresetCard;
-import net.optile.payment.validation.Validator;
 
 /**
  * The OperationService providing asynchronize posting of the Operation and communication with the Payment API.

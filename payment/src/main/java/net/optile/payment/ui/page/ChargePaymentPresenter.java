@@ -22,11 +22,11 @@ import net.optile.payment.ui.PaymentUI;
 import net.optile.payment.ui.dialog.ThemedDialogFragment;
 import net.optile.payment.ui.dialog.ThemedDialogFragment.ThemedDialogListener;
 import net.optile.payment.ui.model.PaymentSession;
-import net.optile.payment.ui.service.PaymentSessionListener;
-import net.optile.payment.ui.service.PaymentSessionService;
 import net.optile.payment.ui.service.NetworkService;
 import net.optile.payment.ui.service.NetworkServiceLookup;
 import net.optile.payment.ui.service.NetworkServicePresenter;
+import net.optile.payment.ui.service.PaymentSessionListener;
+import net.optile.payment.ui.service.PaymentSessionService;
 
 /**
  * The ChargePaymentPresenter takes care of posting the operation to the Payment API.
@@ -45,7 +45,7 @@ final class ChargePaymentPresenter implements PaymentSessionListener, NetworkSer
     private Operation operation;
     private ActivityResult activityResult;
     private NetworkService networkService;
-    
+
     /**
      * Create a new ChargePaymentPresenter
      *
@@ -60,7 +60,7 @@ final class ChargePaymentPresenter implements PaymentSessionListener, NetworkSer
     void onStart(Operation operation) {
         this.operation = operation;
         this.listUrl = PaymentUI.getInstance().getListUrl();
-        
+
         if (activityResult != null) {
             handleActivityResult(activityResult);
             activityResult = null;
@@ -130,7 +130,7 @@ final class ChargePaymentPresenter implements PaymentSessionListener, NetworkSer
         this.session = session;
         networkService = NetworkServiceLookup.getService(operation.getCode());
         networkService.setPresenter(this);
-        networkService.processPayment(view.getActivity(), PROCESSPAYMENT_REQUEST_CODE, operation);                
+        networkService.processPayment(view.getActivity(), PROCESSPAYMENT_REQUEST_CODE, operation);
     }
 
     private void handleLoadSessionError(PaymentException cause) {
@@ -160,6 +160,7 @@ final class ChargePaymentPresenter implements PaymentSessionListener, NetworkSer
                         view.close();
                 }
             }
+
             @Override
             public void onDismissed(ThemedDialogFragment dialog) {
                 view.close();
@@ -174,14 +175,14 @@ final class ChargePaymentPresenter implements PaymentSessionListener, NetworkSer
     public void showProgress() {
         view.showProgress();
     }
-    
+
     /**
      * {@inheritDoc}
      */
     @Override
     public void onPreparePaymentResult(int resultCode, PaymentResult paymentResult) {
     }
-    
+
     /**
      * {@inheritDoc}
      */
@@ -223,7 +224,7 @@ final class ChargePaymentPresenter implements PaymentSessionListener, NetworkSer
             }
         });
     }
-    
+
     /**
      * Let this presenter handle the back pressed.
      *
@@ -233,7 +234,7 @@ final class ChargePaymentPresenter implements PaymentSessionListener, NetworkSer
         view.showWarningMessage(getString(R.string.pmsnackbar_operation_interrupted));
         return true;
     }
-    
+
     private void handleActivityResult(ActivityResult result) {
         if (session == null) {
             String message = "Missing cached session in ChargePaymentPresenter";
@@ -250,7 +251,7 @@ final class ChargePaymentPresenter implements PaymentSessionListener, NetworkSer
         view.setPaymentResult(PaymentUI.RESULT_CODE_OK, result);
         view.close();
     }
-    
+
     private void closeWithCanceledCode(PaymentResult result) {
         view.setPaymentResult(PaymentUI.RESULT_CODE_CANCELED, result);
 
@@ -268,11 +269,11 @@ final class ChargePaymentPresenter implements PaymentSessionListener, NetworkSer
     }
 
     private void closeWithErrorCode(String message, PaymentError error) {
-        PaymentResult result = new PaymentResult(message, error);        
+        PaymentResult result = new PaymentResult(message, error);
         view.setPaymentResult(PaymentUI.RESULT_CODE_ERROR, result);
-        closeWithMessage(getString(R.string.pmdialog_error_unknown));        
+        closeWithMessage(getString(R.string.pmdialog_error_unknown));
     }
-    
+
     private void loadPaymentSession(final String listUrl) {
         this.session = null;
         view.showProgress();
@@ -285,6 +286,7 @@ final class ChargePaymentPresenter implements PaymentSessionListener, NetworkSer
             public void onButtonClicked(ThemedDialogFragment dialog, int which) {
                 view.close();
             }
+
             @Override
             public void onDismissed(ThemedDialogFragment dialog) {
                 view.close();

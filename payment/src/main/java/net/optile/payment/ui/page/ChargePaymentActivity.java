@@ -73,15 +73,15 @@ public final class ChargePaymentActivity extends BasePaymentActivity implements 
         return createStartIntent(context, new Operation(account.getCode(), url));
     }
 
-    /** 
-     * Get the transition used when this Activity is being started 
-     * 
-     * @return the start transition of this activity 
+    /**
+     * Get the transition used when this Activity is being started
+     *
+     * @return the start transition of this activity
      */
     public static int getStartTransition() {
         return R.anim.fade_in;
     }
-    
+
     /**
      * {@inheritDoc}
      */
@@ -131,7 +131,7 @@ public final class ChargePaymentActivity extends BasePaymentActivity implements 
             presenter.setActivityResult(new ActivityResult(requestCode, resultCode, result));
         }
     }
-    
+
     /**
      * {@inheritDoc}
      */
@@ -167,7 +167,7 @@ public final class ChargePaymentActivity extends BasePaymentActivity implements 
         }
         showSnackbar(message);
     }
-    
+
     /**
      * {@inheritDoc}
      */
@@ -180,7 +180,7 @@ public final class ChargePaymentActivity extends BasePaymentActivity implements 
         ThemedDialogFragment dialog = createMessageDialog(message, listener);
         dialog.show(getSupportFragmentManager(), "dialog_message");
     }
-    
+
     /**
      * {@inheritDoc}
      */
@@ -193,7 +193,7 @@ public final class ChargePaymentActivity extends BasePaymentActivity implements 
         ThemedDialogFragment dialog = createConnectionDialog(listener);
         dialog.show(getSupportFragmentManager(), "dialog_connection");
     }
-    
+
     /**
      * {@inheritDoc}
      */

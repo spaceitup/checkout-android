@@ -24,15 +24,12 @@ import net.optile.payment.core.PaymentException;
 import net.optile.payment.core.WorkerSubscriber;
 import net.optile.payment.core.WorkerTask;
 import net.optile.payment.core.Workers;
-import net.optile.payment.form.Operation;
 import net.optile.payment.model.AccountRegistration;
 import net.optile.payment.model.ApplicableNetwork;
 import net.optile.payment.model.ListResult;
 import net.optile.payment.model.Networks;
-import net.optile.payment.model.OperationResult;
 import net.optile.payment.model.PresetAccount;
 import net.optile.payment.network.ListConnection;
-import net.optile.payment.network.PaymentConnection;
 import net.optile.payment.resource.PaymentGroup;
 import net.optile.payment.resource.ResourceLoader;
 import net.optile.payment.ui.PaymentUI;
@@ -285,7 +282,6 @@ public final class PaymentSessionService {
     }
 
     private boolean isSupported(ApplicableNetwork network) {
-        
 
 
         String button = network.getButton();
