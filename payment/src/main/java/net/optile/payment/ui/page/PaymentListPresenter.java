@@ -287,7 +287,7 @@ final class PaymentListPresenter implements PaymentSessionListener, NetworkServi
         this.operation = null;
         view.setPaymentResult(PaymentUI.RESULT_CODE_ERROR, result);
         if (!result.getPaymentError().isError(PaymentError.CONN_ERROR)) {
-            view.close();
+            closeWithMessage(getString(R.string.pmdialog_error_unknown));
             return;
         }
         view.showConnectionDialog(new ThemedDialogListener() {
@@ -351,7 +351,7 @@ final class PaymentListPresenter implements PaymentSessionListener, NetworkServi
     private void handleProcessPaymentError(PaymentResult paymentResult) {
         view.setPaymentResult(PaymentUI.RESULT_CODE_ERROR, paymentResult);
         if (!paymentResult.getPaymentError().isError(PaymentError.CONN_ERROR)) {
-            view.close();
+            closeWithMessage(getString(R.string.pmdialog_error_unknown));
             return;
         }
         view.showConnectionDialog(new ThemedDialogListener() {
