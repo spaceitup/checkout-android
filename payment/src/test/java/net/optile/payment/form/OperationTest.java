@@ -41,13 +41,13 @@ public class OperationTest {
 
     @Test(expected = IllegalArgumentException.class)
     public void putValue_invalidName_exception() throws PaymentException {
-        Operation operation = new Operation(createTestURL());
+        Operation operation = new Operation("VISA", createTestURL());
         operation.putValue(null, "Foo");
     }
 
     @Test
     public void putValue_success() throws PaymentException, JSONException {
-        Operation operation = new Operation(createTestURL());
+        Operation operation = new Operation("VISA", createTestURL());
         operation.putValue(PaymentInputType.ACCOUNT_NUMBER, "accountnumber123");
         operation.putValue(PaymentInputType.HOLDER_NAME, "John Doe");
         operation.putValue(PaymentInputType.EXPIRY_MONTH, 12);

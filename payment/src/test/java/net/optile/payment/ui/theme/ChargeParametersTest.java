@@ -15,25 +15,25 @@ import org.junit.Test;
 
 import net.optile.payment.R;
 
-public class ProcessParametersTest {
+public class ChargeParametersTest {
 
     @Test
     public void createBuilder() {
-        ProcessParameters.Builder builder = ProcessParameters.createBuilder();
+        ChargeParameters.Builder builder = ChargeParameters.createBuilder();
         assertNotNull(builder);
     }
 
     @Test
     public void createDefault() {
-        ProcessParameters params = ProcessParameters.createDefault();
+        ChargeParameters params = ChargeParameters.createDefault();
         assertNotNull(params);
-        assertEquals(params.getPageTheme(), R.style.PaymentThemeNoActionBar_ProcessPayment);
+        assertEquals(params.getPageTheme(), R.style.PaymentThemeNoActionBar_ChargePayment);
     }
 
     @Test
     public void getPageTheme() {
-        int value = R.style.PaymentThemeNoActionBar_ProcessPayment;
-        ProcessParameters params = ProcessParameters.createBuilder().
+        int value = R.style.PaymentThemeNoActionBar_ChargePayment;
+        ChargeParameters params = ChargeParameters.createBuilder().
             setPageTheme(value).build();
         assertEquals(params.getPageTheme(), value);
     }

@@ -88,7 +88,7 @@ public final class ChargePaymentActivity extends BasePaymentActivity implements 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        int theme = getPaymentTheme().getProcessParameters().getPageTheme();
+        int theme = getPaymentTheme().getChargeParameters().getPageTheme();
         if (theme != 0) {
             setTheme(theme);
         }
@@ -96,7 +96,7 @@ public final class ChargePaymentActivity extends BasePaymentActivity implements 
         if (bundle != null) {
             this.operation = bundle.getParcelable(EXTRA_OPERATION);
         }
-        setContentView(R.layout.activity_processpayment);
+        setContentView(R.layout.activity_chargepayment);
         setActionBar(getString(R.string.pmprogress_sendtitle), false);
         initProgressView();
         this.presenter = new ChargePaymentPresenter(this);

@@ -20,7 +20,7 @@
         <item name="android:windowBackground">@color/pmcolor_list</item>
     </style>
 
-    <style name="PaymentThemeNoActionBar.ProcessPayment">
+    <style name="PaymentThemeNoActionBar.ChargePayment">
         <item name="android:windowBackground">@color/pmcolor_background</item>
         <item name="colorPrimaryDark">@color/pmprogress_accent</item>
     </style>
