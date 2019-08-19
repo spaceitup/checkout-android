@@ -34,7 +34,7 @@ import net.optile.payment.ui.service.PaymentSessionService;
  */
 final class ChargePaymentPresenter implements PaymentSessionListener, NetworkServicePresenter {
 
-    private final static int PROCESSPAYMENT_REQUEST_CODE = 1;
+    private final static int CHARGE_REQUEST_CODE = 1;
 
     private final ChargePaymentView view;
     private final PaymentSessionService sessionService;
@@ -231,7 +231,7 @@ final class ChargePaymentPresenter implements PaymentSessionListener, NetworkSer
 
     private void processPayment() {
         try {
-            networkService.processPayment(view.getActivity(), PROCESSPAYMENT_REQUEST_CODE, operation);
+            networkService.processPayment(view.getActivity(), CHARGE_REQUEST_CODE, operation);
         } catch (PaymentException e) {
             closeWithErrorCode(e.getMessage(), e.error);
         }
@@ -244,7 +244,7 @@ final class ChargePaymentPresenter implements PaymentSessionListener, NetworkSer
             closeWithErrorCode(message, error);
             return;
         }
-        if (result.requestCode == PROCESSPAYMENT_REQUEST_CODE) {
+        if (result.requestCode == CHARGE_REQUEST_CODE) {
             onProcessPaymentResult(result.resultCode, result.paymentResult);
         }
     }
