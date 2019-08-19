@@ -222,6 +222,6 @@ public final class ChargePaymentActivity extends BasePaymentActivity implements 
         if (!active) {
             return;
         }
-        setActivityResult(resultCode, result);
+        setResultIntent(resultCode, result);
     }
 }

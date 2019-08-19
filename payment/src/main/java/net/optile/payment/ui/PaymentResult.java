@@ -16,6 +16,8 @@ import android.os.Parcelable;
 import android.text.TextUtils;
 import android.util.Log;
 import net.optile.payment.core.PaymentError;
+import net.optile.payment.core.PaymentException;
+import net.optile.payment.model.ErrorInfo;
 import net.optile.payment.model.Interaction;
 import net.optile.payment.model.OperationResult;
 import net.optile.payment.util.GsonHelper;
@@ -41,6 +43,26 @@ public final class PaymentResult implements Parcelable {
     private OperationResult operationResult;
     private PaymentError error;
 
+    /** 
+     * Construct a new PaymentResult given the cause, the cause can either be a PaymentException or any other exception
+     * 
+     * @param cause of the error
+     */
+    public final static PaymentResult fromThrowable(Throwable cause) {
+        if (cause instanceof PaymentException) {
+            PaymentException pe = (PaymentException) cause;
+            ErrorInfo info = pe.error.errorInfo;
+            if (info != null) {
+                return new PaymentResult(info.getResultInfo(), info.getInteraction());
+            } else {
+                return new PaymentResult(pe.getMessage(), pe.error);
+            }
+        } 
+        String resultInfo = cause.toString();
+        PaymentError error = new PaymentError(PaymentError.INTERNAL_ERROR, resultInfo);
+        return new PaymentResult(resultInfo, error);
+    }
+    
     /**
      * Construct a new PaymentResult with only the resultInfo.
      *
@@ -149,6 +171,10 @@ public final class PaymentResult implements Parcelable {
         return operationResult;
     }
 
+    public boolean hasError() {
+        return error != null;
+    }
+    
     /**
      * {@inheritDoc}
      */

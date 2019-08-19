@@ -201,11 +201,11 @@ public final class PaymentListActivity extends BasePaymentActivity implements Pa
      * {@inheritDoc}
      */
     @Override
-    public void passOnPaymentResult(int resultCode, PaymentResult result) {
+    public void passOnActivityResult(ActivityResult activityResult) {
         if (!active) {
             return;
         }
-        setActivityResult(resultCode, result);
+        setResultIntent(activityResult.resultCode, activityResult.paymentResult);
         supportFinishAfterTransition();
     }
 
@@ -217,7 +217,7 @@ public final class PaymentListActivity extends BasePaymentActivity implements Pa
         if (!active) {
             return;
         }
-        setActivityResult(resultCode, result);
+        setResultIntent(resultCode, result);
     }
 
     /**

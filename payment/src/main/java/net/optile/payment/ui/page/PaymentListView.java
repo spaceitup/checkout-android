@@ -60,9 +60,11 @@ interface PaymentListView {
     void showPaymentSession(PaymentSession session);
 
     /**
-     * Pass PaymentResult and resultCode to the next activity.
+     * Pass on the ActivityResult to the activity that started this View.
+     *
+     * @param activityResult to be pass on
      */
-    void passOnPaymentResult(int resultCode, PaymentResult result);
+    void passOnActivityResult(ActivityResult activityResult);
 
     /**
      * Close and return to the parent who launched the view.

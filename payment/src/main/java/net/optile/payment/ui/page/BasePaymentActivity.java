@@ -38,7 +38,7 @@ abstract class BasePaymentActivity extends AppCompatActivity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setActivityResult(PaymentUI.RESULT_CODE_CANCELED, new PaymentResult("Initializing page."));
+        setResultIntent(PaymentUI.RESULT_CODE_CANCELED, new PaymentResult("Initializing page."));
         setRequestedOrientation(PaymentUI.getInstance().getOrientation());
     }
 
@@ -141,7 +141,7 @@ abstract class BasePaymentActivity extends AppCompatActivity {
      * Set the PaymentResult indicating that the user has closed the page.
      */
     void setUserClosedPageResult() {
-        setActivityResult(PaymentUI.RESULT_CODE_CANCELED, new PaymentResult("Page closed by user."));
+        setResultIntent(PaymentUI.RESULT_CODE_CANCELED, new PaymentResult("Page closed by user."));
     }
 
     /**
@@ -150,7 +150,7 @@ abstract class BasePaymentActivity extends AppCompatActivity {
      * @param resultCode of the ActivityResult
      * @param result to be added as extra to the intent
      */
-    void setActivityResult(int resultCode, PaymentResult result) {
+    void setResultIntent(int resultCode, PaymentResult result) {
         Intent intent = new Intent();
         result.putInto(intent);
         setResult(resultCode, intent);

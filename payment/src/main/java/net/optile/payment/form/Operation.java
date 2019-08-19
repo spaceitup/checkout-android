@@ -10,6 +10,7 @@ package net.optile.payment.form;
 
 import java.net.URL;
 import java.util.Objects;
+import java.net.MalformedURLException;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -163,4 +164,31 @@ public class Operation implements Parcelable {
     public URL getURL() {
         return url;
     }
+
+    /** 
+     * Create a new empty Operation using the URL from the provided operation and use the newType.
+     *
+     * @param operation the source operation to use
+     * @param newType the type of the new Operation
+     */
+    public final static Operation createOperationFrom(Operation operation, String newType) throws PaymentException {
+        String curType = operation.getType();
+
+        if (curType == null) {
+            throw new PaymentException("Could not determine type from operation URL");
+        }
+        String src = operation.getURL().toString();
+        String from = curType.toLowerCase();
+        String to = newType.toLowerCase();
+        int lastIndex = src.lastIndexOf(from);
+        String tail = src.substring(lastIndex).replaceFirst(from, to);
+
+        try {
+            URL url = new URL(src.substring(0, lastIndex) + tail);
+            return new Operation(operation.getCode(), url);
+        } catch (MalformedURLException e) {
+            throw new PaymentException("Could not convert to: " + newType, e);
+        }
+    }
+
 }

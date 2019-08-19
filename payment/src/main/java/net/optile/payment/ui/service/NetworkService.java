@@ -9,6 +9,7 @@
 package net.optile.payment.ui.service;
 
 import android.app.Activity;
+import net.optile.payment.core.PaymentException;
 import net.optile.payment.form.Operation;
 
 /**
@@ -42,7 +43,7 @@ public abstract class NetworkService {
      * @param requestCode
      * @param operation
      */
-    public void preparePayment(Activity activity, int requestCode, Operation operation) {
+    public void preparePayment(Activity activity, int requestCode, Operation operation) throws PaymentException {
     }
 
     /**
@@ -53,6 +54,6 @@ public abstract class NetworkService {
      * @param requestCode
      * @param operation
      */
-    public void processPayment(Activity activity, int requestCode, Operation operation) {
+    public void processPayment(Activity activity, int requestCode, Operation operation) throws PaymentException {
     }
 }

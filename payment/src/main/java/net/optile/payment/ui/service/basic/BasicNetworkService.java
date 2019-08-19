@@ -46,7 +46,7 @@ public final class BasicNetworkService extends NetworkService implements Operati
      * {@inheritDoc}
      */
     @Override
-    public void preparePayment(Activity activity, int requestCode, Operation operation) {
+    public void preparePayment(Activity activity, int requestCode, Operation operation) throws PaymentException {
         PaymentResult result = new PaymentResult("preparePayment not required");
         presenter.onPreparePaymentResult(PaymentUI.RESULT_CODE_OK, result);
     }
@@ -55,7 +55,7 @@ public final class BasicNetworkService extends NetworkService implements Operati
      * {@inheritDoc}
      */
     @Override
-    public void processPayment(Activity activity, int requestCode, Operation operation) {
+    public void processPayment(Activity activity, int requestCode, Operation operation) throws PaymentException {
         presenter.showProgress();
         service.postOperation(operation);
     }
@@ -66,7 +66,6 @@ public final class BasicNetworkService extends NetworkService implements Operati
     @Override
     public void onOperationSuccess(OperationResult operation) {
         PaymentResult result = new PaymentResult(operation);
-
         switch (operation.getInteraction().getCode()) {
             case InteractionCode.PROCEED:
                 presenter.onProcessPaymentResult(PaymentUI.RESULT_CODE_OK, result);
@@ -81,16 +80,8 @@ public final class BasicNetworkService extends NetworkService implements Operati
      */
     @Override
     public void onOperationError(Throwable cause) {
-        PaymentResult result;
-
-        if (cause instanceof PaymentException) {
-            PaymentException pe = (PaymentException) cause;
-            result = new PaymentResult(pe.getMessage(), pe.error);
-        } else {
-            String resultInfo = cause.toString();
-            PaymentError error = new PaymentError(PaymentError.INTERNAL_ERROR, resultInfo);
-            result = new PaymentResult(resultInfo, error);
-        }
-        presenter.onProcessPaymentResult(PaymentUI.RESULT_CODE_ERROR, result);
+        PaymentResult result = PaymentResult.fromThrowable(cause);
+        int status = result.hasError() ? PaymentUI.RESULT_CODE_ERROR : PaymentUI.RESULT_CODE_CANCELED;
+        presenter.onPreparePaymentResult(status, result);         
     }
 }
