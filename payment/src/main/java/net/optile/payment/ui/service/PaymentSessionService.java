@@ -49,7 +49,6 @@ import net.optile.payment.validation.Validator;
  */
 public final class PaymentSessionService {
 
-    private static final String PAYMENTPAGE = "paymentpage";
     private static final String KEYLANG = "lang";
 
     private final ListConnection listConnection;
@@ -343,12 +342,20 @@ public final class PaymentSessionService {
         }
         PaymentNetwork network = networks.entrySet().iterator().next().getValue();
         URL langUrl = network.getLink(KEYLANG);
-
+        if (langUrl == null) {
+            throw createPaymentException("Missing lang URL in PaymentNetwork", null);
+        }
         try {
-            String pageUrl = langUrl.toString().replaceAll(network.getCode(), PAYMENTPAGE);
+            String pageUrl = langUrl.toString();
+            int index = pageUrl.lastIndexOf('/');
+
+            if (index < 0 || !pageUrl.endsWith(".properties")) {
+                throw createPaymentException("Invalid URL for creating paymentpage language URL", null);                
+            }
+            pageUrl = pageUrl.substring(0, index) + "/paymentpage.properties";
             return listConnection.loadLanguageFile(new URL(pageUrl), true);
         } catch (MalformedURLException e) {
-            throw createPaymentException("Malformed language URL", e);
+            throw createPaymentException("Malformed paymentpage language URL", e);
         }
     }
 
