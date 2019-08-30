@@ -171,24 +171,20 @@ public class Operation implements Parcelable {
      * @param operation the source operation to use
      * @param newType the type of the new Operation
      */
-    public final static Operation createOperationFrom(Operation operation, String newType) throws PaymentException {
+    public final static Operation create(Operation operation, String newType) throws PaymentException {
         String curType = operation.getType();
-
         if (curType == null) {
             throw new PaymentException("Could not determine type from operation URL");
         }
-        String src = operation.getURL().toString();
-        String from = curType.toLowerCase();
-        String to = newType.toLowerCase();
-        int lastIndex = src.lastIndexOf(from);
-        String tail = src.substring(lastIndex).replaceFirst(from, to);
-
+        curType = curType.toLowerCase();
+        newType = newType.toLowerCase();
+        String url = operation.getURL().toString();
+        int lastIndex = url.lastIndexOf(curType);
+        url = url.substring(0, lastIndex) + newType + url.substring(lastIndex + curType.length());
         try {
-            URL url = new URL(src.substring(0, lastIndex) + tail);
-            return new Operation(operation.getCode(), url);
+            return new Operation(operation.getCode(), new URL(url));
         } catch (MalformedURLException e) {
             throw new PaymentException("Could not convert to: " + newType, e);
         }
     }
-
 }
