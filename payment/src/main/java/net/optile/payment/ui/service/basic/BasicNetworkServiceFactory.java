@@ -17,7 +17,7 @@ import net.optile.payment.ui.service.NetworkServiceFactory;
 /**
  * Specific implementation for basic networks like i.e. Visa, mastercard and sepa.
  */
-public final class BasicNetworkFactory implements NetworkServiceFactory {
+public final class BasicNetworkServiceFactory implements NetworkServiceFactory {
 
     /**
      * {@inheritDoc}
