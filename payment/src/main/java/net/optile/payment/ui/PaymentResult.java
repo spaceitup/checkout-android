@@ -43,24 +43,34 @@ public final class PaymentResult implements Parcelable {
     private OperationResult operationResult;
     private PaymentError error;
 
-    /** 
+    /**
      * Construct a new PaymentResult given the cause, the cause can either be a PaymentException or any other exception
-     * 
+     *
      * @param cause of the error
      */
     public final static PaymentResult fromThrowable(Throwable cause) {
         if (cause instanceof PaymentException) {
-            PaymentException pe = (PaymentException) cause;
-            ErrorInfo info = pe.error.errorInfo;
-            if (info != null) {
-                return new PaymentResult(info.getResultInfo(), info.getInteraction());
-            } else {
-                return new PaymentResult(pe.getMessage(), pe.error);
-            }
-        } 
+            return fromPaymentException((PaymentException) cause);
+        }
         String resultInfo = cause.toString();
         PaymentError error = new PaymentError(PaymentError.INTERNAL_ERROR, resultInfo);
         return new PaymentResult(resultInfo, error);
+    }
+
+    /** 
+     * Construct a new PaymentResult from the given PaymentException
+     * 
+     * @param exception containing the error details
+     * 
+     * @return the newly created PaymentResult
+     */
+    public final static PaymentResult fromPaymentException(PaymentException exception) {
+        ErrorInfo info = exception.error.errorInfo;
+        if (info != null) {
+            return new PaymentResult(info.getResultInfo(), info.getInteraction());
+        } else {
+            return new PaymentResult(exception.getMessage(), exception.error);
+        }
     }
     
     /**
@@ -140,7 +150,7 @@ public final class PaymentResult implements Parcelable {
      * @return PaymentResult or null if not stored in the intent
      */
     public final static PaymentResult fromResultIntent(Intent intent) {
-        if (intent != null && intent.hasExtra(EXTRA_PAYMENT_RESULT)) {
+        if (intent != null) {
             return intent.getParcelableExtra(EXTRA_PAYMENT_RESULT);
         }
         return null;
