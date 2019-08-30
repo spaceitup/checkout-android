@@ -36,7 +36,7 @@ public final class PresetCard implements PaymentCard {
      */
     @Override
     public boolean containsLink(String name, URL url) {
-        return PaymentUtils.compareToString(getLink(name), url);
+        return PaymentUtils.equalsAsString(getLink(name), url);
     }
 
     /**
