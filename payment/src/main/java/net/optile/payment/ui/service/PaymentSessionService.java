@@ -288,13 +288,6 @@ public final class PaymentSessionService {
         return ResourceLoader.loadPaymentGroups(context.getResources(), groupResId);
     }
 
-    private boolean isSupported(ApplicableNetwork network) {
-
-
-        String button = network.getButton();
-        return (TextUtils.isEmpty(button) || !button.contains("activate")) && !network.getRedirect();
-    }
-
     private PaymentException createPaymentException(String message, Throwable cause) {
         PaymentError error = new PaymentError(PaymentError.INTERNAL_ERROR, message);
         return new PaymentException(error, message, cause);
