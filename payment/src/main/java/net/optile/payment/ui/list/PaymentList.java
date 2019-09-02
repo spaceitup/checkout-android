@@ -175,8 +175,6 @@ public final class PaymentList {
     private void setPaymentListItems(PaymentSession session, int cachedListIndex) {
         items.clear();
         this.selIndex = cachedListIndex;
-
-        int index = 0;
         int accountSize = session.getAccountCardSize();
         int networkSize = session.getNetworkCardSize();
 
@@ -184,19 +182,16 @@ public final class PaymentList {
             items.add(new HeaderItem(nextViewType(), activity.getString(R.string.pmlist_preset_header)));
             items.add(new PaymentCardItem(nextViewType(), session.getPresetCard()));
             this.selIndex = 1;
-            index += 2;
         }
 
         if (accountSize > 0) {
             items.add(new HeaderItem(nextViewType(), activity.getString(R.string.pmlist_account_header)));
-            index++;
         }
         for (AccountCard card : session.getAccountCards()) {
             items.add(new PaymentCardItem(nextViewType(), card));
             if (this.selIndex == -1 && card.isPreselected()) {
-                this.selIndex = index;
+                this.selIndex = items.size() - 1;
             }
-            index++;
         }
         if (networkSize > 0) {
             int resId = accountSize == 0 ? R.string.pmlist_networkonly_header : R.string.pmlist_network_header;
@@ -205,9 +200,8 @@ public final class PaymentList {
         for (NetworkCard card : session.getNetworkCards()) {
             items.add(new PaymentCardItem(nextViewType(), card));
             if (this.selIndex == -1 && card.isPreselected()) {
-                this.selIndex = index;
+                this.selIndex = items.size() - 1;
             }
-            index++;
         }
     }
 
