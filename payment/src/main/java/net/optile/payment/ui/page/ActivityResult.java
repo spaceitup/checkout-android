@@ -11,7 +11,7 @@ package net.optile.payment.ui.page;
 import net.optile.payment.ui.PaymentResult;
 
 /**
- * Class holding the onActivityResult payment result
+ * Class holding the onActivityResult payment result data
  */
 final class ActivityResult {
 

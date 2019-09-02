@@ -8,10 +8,10 @@
 
 package net.optile.payment.ui.page;
 
-import android.content.Context;
+import android.app.Activity;
 import net.optile.payment.form.Operation;
 import net.optile.payment.ui.PaymentResult;
-import net.optile.payment.ui.dialog.ThemedDialogFragment;
+import net.optile.payment.ui.dialog.ThemedDialogFragment.ThemedDialogListener;
 import net.optile.payment.ui.model.PaymentSession;
 
 /**
@@ -20,14 +20,37 @@ import net.optile.payment.ui.model.PaymentSession;
 interface PaymentListView {
 
     /**
-     * Clear the list
+     * Clear the payment list
      */
     void clearList();
 
     /**
-     * Show the ProgressView either in SEND or LOAD mode.
+     * Show the progress animation.
      */
-    void showProgressView();
+    void showProgress();
+
+    /**
+     * Open the process payment screen to handle the operation
+     *
+     * @param requestCode the code identifying the request
+     * @param operation to be handled by the charge payment screen
+     */
+    void showChargePaymentScreen(int requestCode, Operation operation);
+
+    /**
+     * Show a generic message to the user, notify the listener of events in this dialog.
+     *
+     * @param message the message to be shown in the dialog
+     * @param listener to be notified of dialog events
+     */
+    void showMessageDialog(String message, ThemedDialogListener listener);
+
+    /**
+     * Show the connection error dialog to the user, notify the listener of events in this dialog.
+     *
+     * @param listener to be notified of dialog events
+     */
+    void showConnectionDialog(ThemedDialogListener listener);
 
     /**
      * Stop loading and show the PaymentSession
@@ -37,29 +60,16 @@ interface PaymentListView {
     void showPaymentSession(PaymentSession session);
 
     /**
-     * Open the process payment screen to handle the operation
+     * Pass on the ActivityResult to the activity that started this View.
      *
-     * @param requestCode the code identifying the request
-     * @param operation to be handled by the process payment screen
+     * @param activityResult to be pass on
      */
-    void showProcessPaymentScreen(int requestCode, Operation operation);
+    void passOnActivityResult(ActivityResult activityResult);
 
     /**
-     * Pass PaymentResult and resultCode to the next activity.
+     * Close and return to the parent who launched the view.
      */
-    void passOnPaymentResult(int resultCode, PaymentResult result);
-
-    /**
-     * Close the payment page.
-     */
-    void closePage();
-
-    /**
-     * Show a Dialog with a message about the progress (send or load)
-     *
-     * @param dialog to be shown
-     */
-    void showProgressDialog(ThemedDialogFragment dialog);
+    void close();
 
     /**
      * Set the current activity payment result, this is either PaymentUI.RESULT_CODE_OK,
@@ -71,10 +81,10 @@ interface PaymentListView {
     void setPaymentResult(int resultCode, PaymentResult result);
 
     /**
-     * Get the Android Context of this view.
+     * Get the Activity of this view.
      *
-     * @return the Context of this view
+     * @return the Activity of this view
      */
-    Context getContext();
+    Activity getActivity();
 
 }

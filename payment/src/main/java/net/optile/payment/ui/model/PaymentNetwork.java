@@ -32,7 +32,7 @@ public class PaymentNetwork {
     }
 
     public boolean containsLink(String name, URL url) {
-        return PaymentUtils.compareToString(getLink(name), url);
+        return PaymentUtils.equalsAsString(getLink(name), url);
     }
 
     public URL getLink(String name) {

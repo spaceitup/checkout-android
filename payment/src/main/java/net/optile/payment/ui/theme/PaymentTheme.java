@@ -14,14 +14,14 @@ package net.optile.payment.ui.theme;
 public final class PaymentTheme {
 
     private final ListParameters listParameters;
-    private final ProcessParameters processParameters;
+    private final ChargeParameters chargeParameters;
     private final WidgetParameters widgetParameters;
     private final DialogParameters dialogParameters;
     private final ProgressParameters progressParameters;
 
     private PaymentTheme(Builder builder) {
         this.listParameters = builder.listParameters;
-        this.processParameters = builder.processParameters;
+        this.chargeParameters = builder.chargeParameters;
         this.widgetParameters = builder.widgetParameters;
         this.dialogParameters = builder.dialogParameters;
         this.progressParameters = builder.progressParameters;
@@ -34,7 +34,7 @@ public final class PaymentTheme {
     public static PaymentTheme createDefault() {
         return createBuilder().
             setListParameters(ListParameters.createDefault()).
-            setProcessParameters(ProcessParameters.createDefault()).
+            setChargeParameters(ChargeParameters.createDefault()).
             setWidgetParameters(WidgetParameters.createDefault()).
             setDialogParameters(DialogParameters.createDefault()).
             setProgressParameters(ProgressParameters.createDefault()).
@@ -45,8 +45,8 @@ public final class PaymentTheme {
         return listParameters;
     }
 
-    public ProcessParameters getProcessParameters() {
-        return processParameters;
+    public ChargeParameters getChargeParameters() {
+        return chargeParameters;
     }
 
     public WidgetParameters getWidgetParameters() {
@@ -63,7 +63,7 @@ public final class PaymentTheme {
 
     public static final class Builder {
         ListParameters listParameters;
-        ProcessParameters processParameters;
+        ChargeParameters chargeParameters;
         WidgetParameters widgetParameters;
         DialogParameters dialogParameters;
         ProgressParameters progressParameters;
@@ -76,8 +76,8 @@ public final class PaymentTheme {
             return this;
         }
 
-        public Builder setProcessParameters(ProcessParameters processParameters) {
-            this.processParameters = processParameters;
+        public Builder setChargeParameters(ChargeParameters chargeParameters) {
+            this.chargeParameters = chargeParameters;
             return this;
         }
 
@@ -101,8 +101,8 @@ public final class PaymentTheme {
             if (listParameters == null) {
                 listParameters = ListParameters.createBuilder().build();
             }
-            if (processParameters == null) {
-                processParameters = ProcessParameters.createBuilder().build();
+            if (chargeParameters == null) {
+                chargeParameters = ChargeParameters.createBuilder().build();
             }
             if (widgetParameters == null) {
                 widgetParameters = WidgetParameters.createBuilder().build();

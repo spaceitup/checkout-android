@@ -19,6 +19,9 @@ import net.optile.payment.R;
 import net.optile.payment.ui.PaymentResult;
 import net.optile.payment.ui.PaymentUI;
 import net.optile.payment.ui.dialog.DialogHelper;
+import net.optile.payment.ui.dialog.MessageDialogFragment;
+import net.optile.payment.ui.dialog.ThemedDialogFragment;
+import net.optile.payment.ui.dialog.ThemedDialogFragment.ThemedDialogListener;
 import net.optile.payment.ui.theme.PaymentTheme;
 
 /**
@@ -35,7 +38,7 @@ abstract class BasePaymentActivity extends AppCompatActivity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setActivityResult(PaymentUI.RESULT_CODE_CANCELED, new PaymentResult("Initializing page."));
+        setResultIntent(PaymentUI.RESULT_CODE_CANCELED, new PaymentResult("Initializing page."));
         setRequestedOrientation(PaymentUI.getInstance().getOrientation());
     }
 
@@ -59,6 +62,23 @@ abstract class BasePaymentActivity extends AppCompatActivity {
     public void onResume() {
         super.onResume();
         active = true;
+    }
+
+    ThemedDialogFragment createMessageDialog(String message, ThemedDialogListener listener) {
+        MessageDialogFragment dialog = new MessageDialogFragment();
+        dialog.setListener(listener);
+        dialog.setMessage(message);
+        dialog.setNeutralButton(getString(R.string.pmdialog_cancel_button));
+        return dialog;
+    }
+
+    ThemedDialogFragment createConnectionDialog(ThemedDialogListener listener) {
+        MessageDialogFragment dialog = new MessageDialogFragment();
+        dialog.setListener(listener);
+        dialog.setMessage(getString(R.string.pmdialog_error_connection));
+        dialog.setNeutralButton(getString(R.string.pmdialog_cancel_button));
+        dialog.setPositiveButton(getString(R.string.pmdialog_retry_button));
+        return dialog;
     }
 
     /**
@@ -121,7 +141,7 @@ abstract class BasePaymentActivity extends AppCompatActivity {
      * Set the PaymentResult indicating that the user has closed the page.
      */
     void setUserClosedPageResult() {
-        setActivityResult(PaymentUI.RESULT_CODE_CANCELED, new PaymentResult("Page closed by user."));
+        setResultIntent(PaymentUI.RESULT_CODE_CANCELED, new PaymentResult("Page closed by user."));
     }
 
     /**
@@ -130,7 +150,7 @@ abstract class BasePaymentActivity extends AppCompatActivity {
      * @param resultCode of the ActivityResult
      * @param result to be added as extra to the intent
      */
-    void setActivityResult(int resultCode, PaymentResult result) {
+    void setResultIntent(int resultCode, PaymentResult result) {
         Intent intent = new Intent();
         result.putInto(intent);
         setResult(resultCode, intent);

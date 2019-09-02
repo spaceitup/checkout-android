@@ -10,6 +10,8 @@ package net.optile.payment.ui.page;
 
 import java.util.Map;
 
+import android.util.Log;
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -18,8 +20,8 @@ import android.widget.TextView;
 import net.optile.payment.R;
 import net.optile.payment.form.Operation;
 import net.optile.payment.ui.PaymentResult;
-import net.optile.payment.ui.PaymentUI;
 import net.optile.payment.ui.dialog.ThemedDialogFragment;
+import net.optile.payment.ui.dialog.ThemedDialogFragment.ThemedDialogListener;
 import net.optile.payment.ui.list.PaymentList;
 import net.optile.payment.ui.model.PaymentCard;
 import net.optile.payment.ui.model.PaymentSession;
@@ -45,15 +47,15 @@ public final class PaymentListActivity extends BasePaymentActivity implements Pa
         return new Intent(context, PaymentListActivity.class);
     }
 
-    /** 
-     * Get the transition used when this Activity is being started 
-     * 
-     * @return the start transition of this activity 
+    /**
+     * Get the transition used when this Activity is being started
+     *
+     * @return the start transition of this activity
      */
     public static int getStartTransition() {
         return R.anim.no_animation;
     }
-    
+
     /**
      * {@inheritDoc}
      */
@@ -109,7 +111,7 @@ public final class PaymentListActivity extends BasePaymentActivity implements Pa
         switch (item.getItemId()) {
             case android.R.id.home:
                 setUserClosedPageResult();
-                closePage();
+                close();
                 return true;
         }
         return false;
@@ -165,7 +167,17 @@ public final class PaymentListActivity extends BasePaymentActivity implements Pa
      * {@inheritDoc}
      */
     @Override
-    public void showProgressView() {
+    public void showChargePaymentScreen(int requestCode, Operation operation) {
+        Intent intent = ChargePaymentActivity.createStartIntent(this, operation);
+        startActivityForResult(intent, requestCode);
+        overridePendingTransition(ChargePaymentActivity.getStartTransition(), R.anim.no_animation);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void showProgress() {
         if (!active) {
             return;
         }
@@ -176,7 +188,8 @@ public final class PaymentListActivity extends BasePaymentActivity implements Pa
      * {@inheritDoc}
      */
     @Override
-    public void closePage() {
+    public void close() {
+        Log.i("pay", "closing PaymentListActivity");
         if (!active) {
             return;
         }
@@ -188,23 +201,12 @@ public final class PaymentListActivity extends BasePaymentActivity implements Pa
      * {@inheritDoc}
      */
     @Override
-    public void passOnPaymentResult(int resultCode, PaymentResult result) {
+    public void passOnActivityResult(ActivityResult activityResult) {
         if (!active) {
             return;
         }
-        setActivityResult(resultCode, result);
+        setResultIntent(activityResult.resultCode, activityResult.paymentResult);
         supportFinishAfterTransition();
-    }
-
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public void showProcessPaymentScreen(int requestCode, Operation operation) {
-        Intent intent = ProcessPaymentActivity.createStartIntent(this, operation);
-        startActivityForResult(intent, requestCode);
-        overridePendingTransition(ProcessPaymentActivity.getStartTransition(), R.anim.no_animation);
     }
 
     /**
@@ -215,26 +217,40 @@ public final class PaymentListActivity extends BasePaymentActivity implements Pa
         if (!active) {
             return;
         }
-        setActivityResult(resultCode, result);
+        setResultIntent(resultCode, result);
     }
 
     /**
      * {@inheritDoc}
      */
     @Override
-    public void showProgressDialog(ThemedDialogFragment dialog) {
+    public void showMessageDialog(String message, ThemedDialogListener listener) {
         if (!active) {
             return;
         }
         progressView.setVisible(false);
-        dialog.show(getSupportFragmentManager(), "paymentlist_dialog");
+        ThemedDialogFragment dialog = createMessageDialog(message, listener);
+        dialog.show(getSupportFragmentManager(), "dialog_message");
     }
 
     /**
      * {@inheritDoc}
      */
     @Override
-    public Context getContext() {
+    public void showConnectionDialog(ThemedDialogListener listener) {
+        if (!active) {
+            return;
+        }
+        progressView.setVisible(false);
+        ThemedDialogFragment dialog = createConnectionDialog(listener);
+        dialog.show(getSupportFragmentManager(), "dialog_connection");
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public Activity getActivity() {
         return this;
     }
 

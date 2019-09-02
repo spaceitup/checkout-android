@@ -10,6 +10,7 @@ package net.optile.payment.form;
 
 import java.net.URL;
 import java.util.Objects;
+import java.net.MalformedURLException;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -17,7 +18,6 @@ import org.json.JSONObject;
 import android.os.Parcel;
 import android.os.Parcelable;
 import android.text.TextUtils;
-import android.util.Log;
 import net.optile.payment.core.PaymentError;
 import net.optile.payment.core.PaymentException;
 import net.optile.payment.core.PaymentInputType;
@@ -42,17 +42,20 @@ public class Operation implements Parcelable {
             return new Operation[size];
         }
     };
+    private final String code;
     private final URL url;
     private final JSONObject form;
     private final JSONObject account;
 
-    public Operation(URL url) {
+    public Operation(String code, URL url) {
+        this.code = code;
         this.url = url;
         this.form = new JSONObject();
         this.account = new JSONObject();
     }
 
     private Operation(Parcel in) {
+        this.code = in.readString();
         this.url = (URL) in.readSerializable();
         try {
             this.form = new JSONObject(in.readString());
@@ -61,7 +64,7 @@ public class Operation implements Parcelable {
             throw new RuntimeException(e);
         }
     }
-    
+
     /**
      * {@inheritDoc}
      */
@@ -75,6 +78,7 @@ public class Operation implements Parcelable {
      */
     @Override
     public void writeToParcel(Parcel out, int flags) {
+        out.writeString(code);
         out.writeSerializable(this.url);
         out.writeString(form.toString());
         out.writeString(account.toString());
@@ -148,6 +152,10 @@ public class Operation implements Parcelable {
         return Objects.equals(type, getType());
     }
 
+    public String getCode() {
+        return code;
+    }
+
     public String toJson() throws JSONException {
         form.put("account", account);
         return form.toString();
@@ -155,5 +163,28 @@ public class Operation implements Parcelable {
 
     public URL getURL() {
         return url;
+    }
+
+    /** 
+     * Create a new empty Operation using the URL from the provided operation and use the newType.
+     *
+     * @param operation the source operation to use
+     * @param newType the type of the new Operation
+     */
+    public final static Operation create(Operation operation, String newType) throws PaymentException {
+        String curType = operation.getType();
+        if (curType == null) {
+            throw new PaymentException("Could not determine type from operation URL");
+        }
+        curType = curType.toLowerCase();
+        newType = newType.toLowerCase();
+        String url = operation.getURL().toString();
+        int lastIndex = url.lastIndexOf(curType);
+        url = url.substring(0, lastIndex) + newType + url.substring(lastIndex + curType.length());
+        try {
+            return new Operation(operation.getCode(), new URL(url));
+        } catch (MalformedURLException e) {
+            throw new PaymentException("Could not convert to: " + newType, e);
+        }
     }
 }

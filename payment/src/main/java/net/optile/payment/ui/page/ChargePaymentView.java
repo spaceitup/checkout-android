@@ -8,26 +8,34 @@
 
 package net.optile.payment.ui.page;
 
-import android.content.Context;
+import android.app.Activity;
 import net.optile.payment.ui.PaymentResult;
-import net.optile.payment.ui.dialog.ThemedDialogFragment;
+import net.optile.payment.ui.dialog.ThemedDialogFragment.ThemedDialogListener;
 
 /**
- * The ProcessPaymentView interface is the View part of the MVP, this is implemented by the ProcessPaymentActivity
+ * The ChargePaymentView interface is the View part of the MVP, this is implemented by the ChargePaymentActivity
  */
-interface ProcessPaymentView {
+interface ChargePaymentView {
 
     /**
-     * Show the progress view animation.
+     * Show the progress animation.
      */
-    void showProgressView();
+    void showProgress();
 
     /**
-     * Show the Themed Dialog with a message about the progress
+     * Show a generic message to the user, notify the listener of events in this dialog.
      *
-     * @param dialog to be shown
+     * @param message the message to show in the dialog
+     * @param listener to be notified of dialog events
      */
-    void showProgressDialog(ThemedDialogFragment dialog);
+    void showMessageDialog(String message, ThemedDialogListener listener);
+
+    /**
+     * Show the connection error dialog to the user, notify the listener of events in this dialog.
+     *
+     * @param listener to be notified of dialog events
+     */
+    void showConnectionDialog(ThemedDialogListener listener);
 
     /**
      * Show a warning message to the user
@@ -37,9 +45,9 @@ interface ProcessPaymentView {
     void showWarningMessage(String message);
 
     /**
-     * Close the payment page
+     * Close this view and return to the parent who launched it
      */
-    void closePage();
+    void close();
 
     /**
      * Set the current activity payment result, this is either PaymentUI.RESULT_CODE_OK,
@@ -55,5 +63,5 @@ interface ProcessPaymentView {
      *
      * @return the Context of this view
      */
-    Context getContext();
+    Activity getActivity();
 }

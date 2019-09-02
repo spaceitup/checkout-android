@@ -24,15 +24,12 @@ import net.optile.payment.core.PaymentException;
 import net.optile.payment.core.WorkerSubscriber;
 import net.optile.payment.core.WorkerTask;
 import net.optile.payment.core.Workers;
-import net.optile.payment.form.Operation;
 import net.optile.payment.model.AccountRegistration;
 import net.optile.payment.model.ApplicableNetwork;
 import net.optile.payment.model.ListResult;
 import net.optile.payment.model.Networks;
-import net.optile.payment.model.OperationResult;
 import net.optile.payment.model.PresetAccount;
 import net.optile.payment.network.ListConnection;
-import net.optile.payment.network.PaymentConnection;
 import net.optile.payment.resource.PaymentGroup;
 import net.optile.payment.resource.ResourceLoader;
 import net.optile.payment.ui.PaymentUI;
@@ -44,7 +41,7 @@ import net.optile.payment.ui.model.PresetCard;
 import net.optile.payment.validation.Validator;
 
 /**
- * The PaymentSessionService providing asynchronize loading of the PaymentSession and communication with the Payment API.
+ * The PaymentSessionService providing asynchronize loading of the PaymentSession.
  * This service makes callbacks in the listener to notify of request completions.
  */
 public final class PaymentSessionService {
@@ -52,17 +49,14 @@ public final class PaymentSessionService {
     private static final String KEYLANG = "lang";
 
     private final ListConnection listConnection;
-    private final PaymentConnection paymentConnection;
     private PaymentSessionListener listener;
     private WorkerTask<PaymentSession> sessionTask;
-    private WorkerTask<OperationResult> operationTask;
 
     /**
      * Create a new PaymentSessionService, this service is used to load the PaymentSession.
      */
     public PaymentSessionService() {
         this.listConnection = new ListConnection();
-        this.paymentConnection = new PaymentConnection();
     }
 
     /**
@@ -82,10 +76,6 @@ public final class PaymentSessionService {
             sessionTask.unsubscribe();
             sessionTask = null;
         }
-        if (operationTask != null) {
-            operationTask.unsubscribe();
-            operationTask = null;
-        }
     }
 
     /**
@@ -94,25 +84,7 @@ public final class PaymentSessionService {
      * @return true when active, false otherwise
      */
     public boolean isActive() {
-        return isLoadingPaymentSession() || isPostingOperation();
-    }
-
-    /**
-     * Check if this service is currently loading a payment session from the Payment API
-     *
-     * @return true when loading, false otherwise
-     */
-    public boolean isLoadingPaymentSession() {
         return sessionTask != null && sessionTask.isSubscribed();
-    }
-
-    /**
-     * Check if this service is currently posting an operation to the Payment API
-     *
-     * @return true when posting, false otherwise
-     */
-    public boolean isPostingOperation() {
-        return operationTask != null && operationTask.isSubscribed();
     }
 
     /**
@@ -154,54 +126,6 @@ public final class PaymentSessionService {
         Workers.getInstance().forNetworkTasks().execute(sessionTask);
     }
 
-    /**
-     * Post an operation to the Payment API
-     *
-     * @param operation to be posted to the Payment API
-     */
-    public void postOperation(final Operation operation) {
-
-        if (isPostingOperation()) {
-            throw new IllegalStateException("Already posting operation, stop first");
-        }
-        operationTask = WorkerTask.fromCallable(new Callable<OperationResult>() {
-            @Override
-            public OperationResult call() throws PaymentException {
-                return asyncPostOperation(operation);
-            }
-        });
-        operationTask.subscribe(new WorkerSubscriber<OperationResult>() {
-            @Override
-            public void onSuccess(OperationResult result) {
-                operationTask = null;
-
-                if (listener != null) {
-                    listener.onOperationSuccess(result);
-                }
-            }
-
-            @Override
-            public void onError(Throwable cause) {
-                operationTask = null;
-
-                if (listener != null) {
-                    listener.onOperationError(cause);
-                }
-            }
-        });
-        Workers.getInstance().forNetworkTasks().execute(operationTask);
-    }
-
-    /**
-     * Post an Operation to the Payment API
-     *
-     * @param operation the object containing the operation details
-     * @return operation result containing information about the operation request
-     */
-    private OperationResult asyncPostOperation(Operation operation) throws PaymentException {
-        return paymentConnection.postOperation(operation);
-    }
-
     private PaymentSession asyncLoadPaymentSession(String listUrl, Context context) throws PaymentException {
         ListResult listResult = listConnection.getListResult(listUrl);
         Map<String, PaymentNetwork> networks = loadPaymentNetworks(listResult);
@@ -229,7 +153,7 @@ public final class PaymentSessionService {
             return items;
         }
         for (ApplicableNetwork network : an) {
-            if (isSupported(network)) {
+            if (NetworkServiceLookup.isNetworkSupported(network)) {
                 items.put(network.getCode(), loadPaymentNetwork(network));
             }
         }
@@ -362,11 +286,6 @@ public final class PaymentSessionService {
     private Map<String, PaymentGroup> loadPaymentGroups(Context context) throws PaymentException {
         int groupResId = PaymentUI.getInstance().getGroupResId();
         return ResourceLoader.loadPaymentGroups(context.getResources(), groupResId);
-    }
-
-    private boolean isSupported(ApplicableNetwork network) {
-        String button = network.getButton();
-        return (TextUtils.isEmpty(button) || !button.contains("activate")) && !network.getRedirect();
     }
 
     private PaymentException createPaymentException(String message, Throwable cause) {

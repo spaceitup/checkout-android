@@ -15,11 +15,11 @@ import net.optile.payment.R;
  * Class for holding the PaymentPage theme parameters.
  * These parameters may be used to theme the PaymentPage UI elements and text appearances.
  */
-public final class ProcessParameters {
+public final class ChargeParameters {
 
     private final int pageTheme;
 
-    private ProcessParameters(Builder builder) {
+    private ChargeParameters(Builder builder) {
         this.pageTheme = builder.pageTheme;
     }
 
@@ -27,9 +27,9 @@ public final class ProcessParameters {
         return new Builder();
     }
 
-    public static ProcessParameters createDefault() {
+    public static ChargeParameters createDefault() {
         return createBuilder().
-            setPageTheme(R.style.PaymentThemeNoActionBar_ProcessPayment).
+            setPageTheme(R.style.PaymentThemeNoActionBar_ChargePayment).
             build();
     }
 
@@ -48,8 +48,8 @@ public final class ProcessParameters {
             return this;
         }
 
-        public ProcessParameters build() {
-            return new ProcessParameters(this);
+        public ChargeParameters build() {
+            return new ChargeParameters(this);
         }
     }
 }

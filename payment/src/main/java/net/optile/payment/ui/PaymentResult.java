@@ -15,8 +15,9 @@ import android.os.Parcel;
 import android.os.Parcelable;
 import android.text.TextUtils;
 import android.util.Log;
-import net.optile.payment.ui.PaymentUI;
 import net.optile.payment.core.PaymentError;
+import net.optile.payment.core.PaymentException;
+import net.optile.payment.model.ErrorInfo;
 import net.optile.payment.model.Interaction;
 import net.optile.payment.model.OperationResult;
 import net.optile.payment.util.GsonHelper;
@@ -43,25 +44,33 @@ public final class PaymentResult implements Parcelable {
     private PaymentError error;
 
     /**
-     * Get the PaymentResult from the result intent.
+     * Construct a new PaymentResult given the cause, the cause can either be a PaymentException or any other exception
      *
-     * @param intent containing the PaymentResult
-     * @return PaymentResult or null if not stored in the intent
-     */    
-    public final static PaymentResult fromResultIntent(Intent intent) {
-        if (intent != null && intent.hasExtra(EXTRA_PAYMENT_RESULT)) {
-            return intent.getParcelableExtra(EXTRA_PAYMENT_RESULT);
+     * @param cause of the error
+     */
+    public final static PaymentResult fromThrowable(Throwable cause) {
+        if (cause instanceof PaymentException) {
+            return fromPaymentException((PaymentException) cause);
         }
-        return null;
+        String resultInfo = cause.toString();
+        PaymentError error = new PaymentError(PaymentError.INTERNAL_ERROR, resultInfo);
+        return new PaymentResult(resultInfo, error);
     }
 
     /** 
-     * Put this PaymentResult into the provided intent. 
+     * Construct a new PaymentResult from the given PaymentException
      * 
-     * @param intent into which this PaymentResult should be stored.
+     * @param exception containing the error details
+     * 
+     * @return the newly created PaymentResult
      */
-    public void putInto(Intent intent) {
-        intent.putExtra(EXTRA_PAYMENT_RESULT, this);
+    public final static PaymentResult fromPaymentException(PaymentException exception) {
+        ErrorInfo info = exception.error.errorInfo;
+        if (info != null) {
+            return new PaymentResult(info.getResultInfo(), info.getInteraction());
+        } else {
+            return new PaymentResult(exception.getMessage(), exception.error);
+        }
     }
     
     /**
@@ -134,6 +143,28 @@ public final class PaymentResult implements Parcelable {
         }
     }
 
+    /**
+     * Get the PaymentResult from the result intent.
+     *
+     * @param intent containing the PaymentResult
+     * @return PaymentResult or null if not stored in the intent
+     */
+    public final static PaymentResult fromResultIntent(Intent intent) {
+        if (intent != null) {
+            return intent.getParcelableExtra(EXTRA_PAYMENT_RESULT);
+        }
+        return null;
+    }
+
+    /**
+     * Put this PaymentResult into the provided intent.
+     *
+     * @param intent into which this PaymentResult should be stored.
+     */
+    public void putInto(Intent intent) {
+        intent.putExtra(EXTRA_PAYMENT_RESULT, this);
+    }
+
     public PaymentError getPaymentError() {
         return error;
     }
@@ -150,6 +181,10 @@ public final class PaymentResult implements Parcelable {
         return operationResult;
     }
 
+    public boolean hasError() {
+        return error != null;
+    }
+    
     /**
      * {@inheritDoc}
      */

@@ -12,6 +12,7 @@ import static io.github.jsonSnapshot.SnapshotMatcher.expect;
 import static io.github.jsonSnapshot.SnapshotMatcher.start;
 import static io.github.jsonSnapshot.SnapshotMatcher.validateSnapshots;
 import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertEquals;
 
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -41,13 +42,13 @@ public class OperationTest {
 
     @Test(expected = IllegalArgumentException.class)
     public void putValue_invalidName_exception() throws PaymentException {
-        Operation operation = new Operation(createTestURL());
+        Operation operation = new Operation("VISA", createTestURL());
         operation.putValue(null, "Foo");
     }
 
     @Test
     public void putValue_success() throws PaymentException, JSONException {
-        Operation operation = new Operation(createTestURL());
+        Operation operation = new Operation("VISA", createTestURL());
         operation.putValue(PaymentInputType.ACCOUNT_NUMBER, "accountnumber123");
         operation.putValue(PaymentInputType.HOLDER_NAME, "John Doe");
         operation.putValue(PaymentInputType.EXPIRY_MONTH, 12);
@@ -61,6 +62,21 @@ public class OperationTest {
         expect(operation.toJson()).toMatchSnapshot();
     }
 
+    @Test
+    public void create_success() throws PaymentException {
+        URL url = null;
+        try {
+            url = new URL("http://localhost/test/charge");
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+        }
+        assertNotNull(url);
+        Operation srcOperation = new Operation("VISA", url);
+        Operation dstOperation = Operation.create(srcOperation, Operation.PRESET.toLowerCase());
+        String dstUrl = dstOperation.getURL().toString();
+        assertEquals(dstUrl, "http://localhost/test/preset");
+    }
+    
     private URL createTestURL() {
         URL url = null;
 
