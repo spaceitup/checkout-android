@@ -189,7 +189,6 @@ public final class PaymentListActivity extends BasePaymentActivity implements Pa
      */
     @Override
     public void close() {
-        Log.i("pay", "closing PaymentListActivity");
         if (!active) {
             return;
         }
