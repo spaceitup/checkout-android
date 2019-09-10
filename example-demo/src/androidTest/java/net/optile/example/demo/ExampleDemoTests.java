@@ -60,6 +60,7 @@ public class ExampleDemoTests {
 
         ListService service = getListService();
         ListConfig config = service.createListConfig(net.optile.example.demo.test.R.raw.listtemplate);
+        config.setPresetFirst(false);
         String listUrl = service.createListUrl(config);
 
         // enter the listUrl in the settings screen and click the button
