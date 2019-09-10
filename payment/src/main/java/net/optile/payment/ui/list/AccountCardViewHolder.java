@@ -24,7 +24,7 @@ import net.optile.payment.util.PaymentUtils;
 /**
  * The AccountCardViewHolder class holding and binding views for an AccountCard
  */
-final class AccountCardViewHolder extends PaymentCardViewHolder {
+public final class AccountCardViewHolder extends PaymentCardViewHolder {
 
     private final TextView title;
     private final TextView subTitle;
@@ -58,7 +58,7 @@ final class AccountCardViewHolder extends PaymentCardViewHolder {
             throw new IllegalArgumentException("Expected AccountCard in onBind");
         }
         super.onBind(paymentCard);
-        PaymentUtils.setTestTag(itemView, "accountcard", paymentCard.getCode());
+        PaymentUtils.setTestId(itemView, "card", "savedaccount");
 
         AccountCard card = (AccountCard) paymentCard;
         AccountMask mask = card.getMaskedAccount();

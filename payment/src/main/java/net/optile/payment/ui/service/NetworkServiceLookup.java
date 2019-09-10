@@ -8,8 +8,8 @@
 
 package net.optile.payment.ui.service;
 
-import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.List;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 import net.optile.payment.model.ApplicableNetwork;
 import net.optile.payment.ui.service.basic.BasicNetworkServiceFactory;

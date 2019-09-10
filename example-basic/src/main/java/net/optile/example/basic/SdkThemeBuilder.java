@@ -8,10 +8,10 @@
 
 package net.optile.example.basic;
 
+import net.optile.payment.ui.theme.ChargeParameters;
 import net.optile.payment.ui.theme.DialogParameters;
 import net.optile.payment.ui.theme.ListParameters;
 import net.optile.payment.ui.theme.PaymentTheme;
-import net.optile.payment.ui.theme.ChargeParameters;
 import net.optile.payment.ui.theme.ProgressParameters;
 import net.optile.payment.ui.theme.WidgetParameters;
 
@@ -63,7 +63,7 @@ final class SdkThemeBuilder {
             setPageTheme(R.style.CustomThemeProcessPayment).
             build();
         builder.setChargeParameters(processParams);
-        
+
         WidgetParameters widgetParams = WidgetParameters.createBuilder().
             setTextInputTheme(R.style.CustomThemeTextInput).
             setButtonTheme(R.style.CustomThemeButton).

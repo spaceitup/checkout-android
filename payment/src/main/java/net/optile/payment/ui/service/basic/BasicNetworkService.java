@@ -9,7 +9,6 @@
 package net.optile.payment.ui.service.basic;
 
 import android.app.Activity;
-import net.optile.payment.core.PaymentError;
 import net.optile.payment.core.PaymentException;
 import net.optile.payment.form.Operation;
 import net.optile.payment.model.InteractionCode;
@@ -82,6 +81,6 @@ public final class BasicNetworkService extends NetworkService implements Operati
     public void onOperationError(Throwable cause) {
         PaymentResult result = PaymentResult.fromThrowable(cause);
         int status = result.hasError() ? PaymentUI.RESULT_CODE_ERROR : PaymentUI.RESULT_CODE_CANCELED;
-        presenter.onPreparePaymentResult(status, result);         
+        presenter.onPreparePaymentResult(status, result);
     }
 }

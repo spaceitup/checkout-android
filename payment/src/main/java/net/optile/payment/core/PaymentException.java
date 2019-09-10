@@ -38,7 +38,7 @@ public class PaymentException extends Exception {
         super(message, cause);
         this.error = new PaymentError(PaymentError.INTERNAL_ERROR, message);
     }
-    
+
     /**
      * {@inheritDoc}
      *

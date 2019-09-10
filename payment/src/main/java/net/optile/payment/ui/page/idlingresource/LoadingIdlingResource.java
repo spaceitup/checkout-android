@@ -8,9 +8,10 @@
 
 package net.optile.payment.ui.page.idlingresource;
 
-import android.util.Log;
-import android.support.test.espresso.IdlingResource;
 import java.util.concurrent.atomic.AtomicBoolean;
+
+import android.support.test.espresso.IdlingResource;
+import android.util.Log;
 
 /**
  * For waiting until the PaymentSession has been loaded
@@ -18,7 +19,7 @@ import java.util.concurrent.atomic.AtomicBoolean;
 public class LoadingIdlingResource implements IdlingResource {
 
     private volatile ResourceCallback callback;
-    private AtomicBoolean isIdleNow = new AtomicBoolean(true);
+    private AtomicBoolean isIdleNow = new AtomicBoolean(false);
 
     @Override
     public String getName() {
@@ -27,16 +28,17 @@ public class LoadingIdlingResource implements IdlingResource {
 
     @Override
     public boolean isIdleNow() {
-        Log.i("pay", "IS IDLE NOW: " + isIdleNow.get());
         return isIdleNow.get();
     }
 
     @Override
     public void registerIdleTransitionCallback(ResourceCallback callback) {
+        Log.i("pay", "registerIdleTransitionCallback");
         this.callback = callback;
     }
 
     public void setIdleState(boolean isIdleNow) {
+        Log.i("pay", "setIdleState: " + isIdleNow);
         this.isIdleNow.set(isIdleNow);
         if (isIdleNow && callback != null) {
             callback.onTransitionToIdle();

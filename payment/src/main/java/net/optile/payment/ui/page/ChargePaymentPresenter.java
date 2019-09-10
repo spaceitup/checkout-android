@@ -13,7 +13,6 @@ import net.optile.payment.R;
 import net.optile.payment.core.PaymentError;
 import net.optile.payment.core.PaymentException;
 import net.optile.payment.form.Operation;
-import net.optile.payment.model.ErrorInfo;
 import net.optile.payment.model.Interaction;
 import net.optile.payment.model.InteractionCode;
 import net.optile.payment.model.ListResult;
@@ -155,6 +154,7 @@ final class ChargePaymentPresenter implements PaymentSessionListener, NetworkSer
                         view.close();
                 }
             }
+
             @Override
             public void onDismissed(ThemedDialogFragment dialog) {
                 view.close();
@@ -212,6 +212,7 @@ final class ChargePaymentPresenter implements PaymentSessionListener, NetworkSer
                         view.close();
                 }
             }
+
             @Override
             public void onDismissed(ThemedDialogFragment dialog) {
                 view.close();
@@ -236,7 +237,7 @@ final class ChargePaymentPresenter implements PaymentSessionListener, NetworkSer
             closeWithErrorCode(e.getMessage(), e.error);
         }
     }
-    
+
     private void handleActivityResult(ActivityResult result) {
         if (session == null) {
             String message = "Missing cached session in ChargePaymentPresenter";
@@ -285,6 +286,7 @@ final class ChargePaymentPresenter implements PaymentSessionListener, NetworkSer
             public void onButtonClicked(ThemedDialogFragment dialog, int which) {
                 view.close();
             }
+
             @Override
             public void onDismissed(ThemedDialogFragment dialog) {
                 view.close();

@@ -11,8 +11,8 @@ package net.optile.payment.form;
 import static io.github.jsonSnapshot.SnapshotMatcher.expect;
 import static io.github.jsonSnapshot.SnapshotMatcher.start;
 import static io.github.jsonSnapshot.SnapshotMatcher.validateSnapshots;
-import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
 
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -76,7 +76,7 @@ public class OperationTest {
         String dstUrl = dstOperation.getURL().toString();
         assertEquals(dstUrl, "http://localhost/test/preset");
     }
-    
+
     private URL createTestURL() {
         URL url = null;
 

@@ -14,10 +14,10 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.VisibleForTesting;
 import android.support.test.espresso.IdlingResource;
 import android.view.MenuItem;
 import android.widget.TextView;
-import android.support.annotation.VisibleForTesting;
 import net.optile.payment.R;
 import net.optile.payment.form.Operation;
 import net.optile.payment.ui.PaymentResult;
@@ -39,6 +39,7 @@ public final class PaymentListActivity extends BasePaymentActivity implements Pa
     private PaymentList paymentList;
     private int cachedListIndex;
     private LoadingIdlingResource loadingIdlingResource;
+    private boolean initialized;
 
     /**
      * Create the start intent for this PaymentListActivity.
@@ -104,10 +105,6 @@ public final class PaymentListActivity extends BasePaymentActivity implements Pa
     public void onResume() {
         super.onResume();
         presenter.onStart();
-
-        if (loadingIdlingResource != null) {
-            loadingIdlingResource.setIdleState(false);
-        }
     }
 
     /**
@@ -168,9 +165,10 @@ public final class PaymentListActivity extends BasePaymentActivity implements Pa
         setActionBar(getString(R.string.pmpage_title), true);
         paymentList.showPaymentSession(session, cachedListIndex);
         this.cachedListIndex = -1;
+        this.initialized = true;
 
         if (loadingIdlingResource != null) {
-            loadingIdlingResource.setIdleState(true);
+            loadingIdlingResource.setIdleState(initialized);
         }
     }
 
@@ -282,6 +280,7 @@ public final class PaymentListActivity extends BasePaymentActivity implements Pa
         if (loadingIdlingResource == null) {
             loadingIdlingResource = new LoadingIdlingResource();
         }
+        loadingIdlingResource.setIdleState(initialized);
         return loadingIdlingResource;
     }
 }

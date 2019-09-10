@@ -6,7 +6,11 @@
  * See the LICENSE file for more information.
  */
 
-package net.optile.example.demo;
+package net.optile.payment.test.view;
+
+import static android.support.test.InstrumentationRegistry.getInstrumentation;
+
+import java.util.Collection;
 
 import android.app.Activity;
 import android.os.Looper;
@@ -14,16 +18,16 @@ import android.support.test.runner.lifecycle.ActivityLifecycleMonitor;
 import android.support.test.runner.lifecycle.ActivityLifecycleMonitorRegistry;
 import android.support.test.runner.lifecycle.Stage;
 
-import java.util.Collection;
-
-import static android.support.test.InstrumentationRegistry.getInstrumentation;
-
 /**
- *
- *
- *
+ * Activity helper methods for testing Activities
  */
-public class TestUtils {
+public class ActivityHelper {
+
+    /**
+     * Obtain the current Activity that is in RESUMED stage.
+     *
+     * @return the current Activity
+     */
     public static Activity getCurrentActivity() {
         if (Looper.myLooper() == Looper.getMainLooper()) {
             return getCurrentActivityOnMainThread();

@@ -274,7 +274,7 @@ public final class PaymentSessionService {
             int index = pageUrl.lastIndexOf('/');
 
             if (index < 0 || !pageUrl.endsWith(".properties")) {
-                throw createPaymentException("Invalid URL for creating paymentpage language URL", null);                
+                throw createPaymentException("Invalid URL for creating paymentpage language URL", null);
             }
             pageUrl = pageUrl.substring(0, index) + "/paymentpage.properties";
             return listConnection.loadLanguageFile(new URL(pageUrl), true);

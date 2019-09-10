@@ -16,7 +16,6 @@ import net.optile.payment.R;
 import net.optile.payment.core.PaymentError;
 import net.optile.payment.core.PaymentException;
 import net.optile.payment.form.Operation;
-import net.optile.payment.model.ErrorInfo;
 import net.optile.payment.model.Interaction;
 import net.optile.payment.model.InteractionCode;
 import net.optile.payment.model.ListResult;
@@ -195,6 +194,7 @@ final class PaymentListPresenter implements PaymentSessionListener, NetworkServi
                         view.close();
                 }
             }
+
             @Override
             public void onDismissed(ThemedDialogFragment dialog) {
                 view.close();
@@ -363,6 +363,7 @@ final class PaymentListPresenter implements PaymentSessionListener, NetworkServi
                         view.close();
                 }
             }
+
             @Override
             public void onDismissed(ThemedDialogFragment dialog) {
                 view.close();
@@ -385,7 +386,7 @@ final class PaymentListPresenter implements PaymentSessionListener, NetworkServi
             closeWithErrorCode(e.getMessage(), e.error);
         }
     }
-    
+
     /**
      * The Charge result is received from the ChargePaymentActivity. Error messages are not displayed by this presenter since
      * the ChargePaymentActivity has taken care of displaying error and warning messages.
@@ -474,7 +475,7 @@ final class PaymentListPresenter implements PaymentSessionListener, NetworkServi
     private void closeWithErrorCode(String resultInfo, PaymentError error) {
         closeWithErrorCode(new PaymentResult(resultInfo, error));
     }
-    
+
     private void closeWithErrorCode(PaymentResult result) {
         view.setPaymentResult(PaymentUI.RESULT_CODE_ERROR, result);
         closeWithMessage(getString(R.string.pmdialog_error_unknown));
@@ -486,6 +487,7 @@ final class PaymentListPresenter implements PaymentSessionListener, NetworkServi
             public void onButtonClicked(ThemedDialogFragment dialog, int which) {
                 view.close();
             }
+
             @Override
             public void onDismissed(ThemedDialogFragment dialog) {
                 view.close();

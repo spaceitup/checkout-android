@@ -44,36 +44,6 @@ public final class PaymentResult implements Parcelable {
     private PaymentError error;
 
     /**
-     * Construct a new PaymentResult given the cause, the cause can either be a PaymentException or any other exception
-     *
-     * @param cause of the error
-     */
-    public final static PaymentResult fromThrowable(Throwable cause) {
-        if (cause instanceof PaymentException) {
-            return fromPaymentException((PaymentException) cause);
-        }
-        String resultInfo = cause.toString();
-        PaymentError error = new PaymentError(PaymentError.INTERNAL_ERROR, resultInfo);
-        return new PaymentResult(resultInfo, error);
-    }
-
-    /** 
-     * Construct a new PaymentResult from the given PaymentException
-     * 
-     * @param exception containing the error details
-     * 
-     * @return the newly created PaymentResult
-     */
-    public final static PaymentResult fromPaymentException(PaymentException exception) {
-        ErrorInfo info = exception.error.errorInfo;
-        if (info != null) {
-            return new PaymentResult(info.getResultInfo(), info.getInteraction());
-        } else {
-            return new PaymentResult(exception.getMessage(), exception.error);
-        }
-    }
-    
-    /**
      * Construct a new PaymentResult with only the resultInfo.
      *
      * @param resultInfo a string containing a description of the payment result
@@ -144,6 +114,35 @@ public final class PaymentResult implements Parcelable {
     }
 
     /**
+     * Construct a new PaymentResult given the cause, the cause can either be a PaymentException or any other exception
+     *
+     * @param cause of the error
+     */
+    public final static PaymentResult fromThrowable(Throwable cause) {
+        if (cause instanceof PaymentException) {
+            return fromPaymentException((PaymentException) cause);
+        }
+        String resultInfo = cause.toString();
+        PaymentError error = new PaymentError(PaymentError.INTERNAL_ERROR, resultInfo);
+        return new PaymentResult(resultInfo, error);
+    }
+
+    /**
+     * Construct a new PaymentResult from the given PaymentException
+     *
+     * @param exception containing the error details
+     * @return the newly created PaymentResult
+     */
+    public final static PaymentResult fromPaymentException(PaymentException exception) {
+        ErrorInfo info = exception.error.errorInfo;
+        if (info != null) {
+            return new PaymentResult(info.getResultInfo(), info.getInteraction());
+        } else {
+            return new PaymentResult(exception.getMessage(), exception.error);
+        }
+    }
+
+    /**
      * Get the PaymentResult from the result intent.
      *
      * @param intent containing the PaymentResult
@@ -184,7 +183,7 @@ public final class PaymentResult implements Parcelable {
     public boolean hasError() {
         return error != null;
     }
-    
+
     /**
      * {@inheritDoc}
      */

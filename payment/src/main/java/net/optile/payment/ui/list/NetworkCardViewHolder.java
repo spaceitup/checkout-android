@@ -38,7 +38,7 @@ final class NetworkCardViewHolder extends PaymentCardViewHolder {
 
     private final TextSwitcher title;
 
-    NetworkCardViewHolder(ListAdapter adapter, View parent, NetworkCard networkCard) {
+    public NetworkCardViewHolder(ListAdapter adapter, View parent, NetworkCard networkCard) {
         super(adapter, parent);
 
         PaymentTheme theme = adapter.getPaymentTheme();
@@ -75,10 +75,10 @@ final class NetworkCardViewHolder extends PaymentCardViewHolder {
             throw new IllegalArgumentException("Expected Networkcard in onBind");
         }
         super.onBind(paymentCard);
-        PaymentUtils.setTestTag(itemView, "networkcard", paymentCard.getCode());
-
         NetworkCard networkCard = (NetworkCard) paymentCard;
         PaymentNetwork network = networkCard.getVisibleNetwork();
+        int size = networkCard.getPaymentNetworkSize();
+        PaymentUtils.setTestId(itemView, "card", size == 1 ? "network" : "group");
 
         bindTitle(networkCard);
         bindLogos(networkCard);

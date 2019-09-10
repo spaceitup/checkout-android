@@ -57,7 +57,7 @@ final class PresetCardViewHolder extends PaymentCardViewHolder {
             throw new IllegalArgumentException("Expected PresetCard in onBind");
         }
         super.onBind(paymentCard);
-        PaymentUtils.setTestTag(itemView, "presetcard", paymentCard.getCode());
+        PaymentUtils.setTestId(itemView, "card", "preset");
 
         PresetCard card = (PresetCard) paymentCard;
         AccountMask mask = card.getMaskedAccount();

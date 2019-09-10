@@ -8,9 +8,9 @@
 
 package net.optile.payment.form;
 
+import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.Objects;
-import java.net.MalformedURLException;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -62,6 +62,29 @@ public class Operation implements Parcelable {
             this.account = new JSONObject(in.readString());
         } catch (JSONException e) {
             throw new RuntimeException(e);
+        }
+    }
+
+    /**
+     * Create a new empty Operation using the URL from the provided operation and use the newType.
+     *
+     * @param operation the source operation to use
+     * @param newType the type of the new Operation
+     */
+    public final static Operation create(Operation operation, String newType) throws PaymentException {
+        String curType = operation.getType();
+        if (curType == null) {
+            throw new PaymentException("Could not determine type from operation URL");
+        }
+        curType = curType.toLowerCase();
+        newType = newType.toLowerCase();
+        String url = operation.getURL().toString();
+        int lastIndex = url.lastIndexOf(curType);
+        url = url.substring(0, lastIndex) + newType + url.substring(lastIndex + curType.length());
+        try {
+            return new Operation(operation.getCode(), new URL(url));
+        } catch (MalformedURLException e) {
+            throw new PaymentException("Could not convert to: " + newType, e);
         }
     }
 
@@ -163,28 +186,5 @@ public class Operation implements Parcelable {
 
     public URL getURL() {
         return url;
-    }
-
-    /** 
-     * Create a new empty Operation using the URL from the provided operation and use the newType.
-     *
-     * @param operation the source operation to use
-     * @param newType the type of the new Operation
-     */
-    public final static Operation create(Operation operation, String newType) throws PaymentException {
-        String curType = operation.getType();
-        if (curType == null) {
-            throw new PaymentException("Could not determine type from operation URL");
-        }
-        curType = curType.toLowerCase();
-        newType = newType.toLowerCase();
-        String url = operation.getURL().toString();
-        int lastIndex = url.lastIndexOf(curType);
-        url = url.substring(0, lastIndex) + newType + url.substring(lastIndex + curType.length());
-        try {
-            return new Operation(operation.getCode(), new URL(url));
-        } catch (MalformedURLException e) {
-            throw new PaymentException("Could not convert to: " + newType, e);
-        }
     }
 }
