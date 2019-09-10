@@ -20,7 +20,7 @@ import net.optile.payment.util.PaymentUtils;
 /**
  * The HeaderViewHolder holding and binding views for a header in the RecyclerView
  */
-final class HeaderViewHolder extends RecyclerView.ViewHolder {
+public final class HeaderViewHolder extends RecyclerView.ViewHolder {
 
     private final TextView title;
 
@@ -42,6 +42,7 @@ final class HeaderViewHolder extends RecyclerView.ViewHolder {
     }
 
     void onBind(HeaderItem item) {
+        PaymentUtils.setTestId(itemView, "label", "header");
         title.setText(item.title);
     }
 }

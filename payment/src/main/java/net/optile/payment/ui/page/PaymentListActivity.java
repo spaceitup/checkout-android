@@ -10,11 +10,12 @@ package net.optile.payment.ui.page;
 
 import java.util.Map;
 
-import android.util.Log;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.VisibleForTesting;
+import android.support.test.espresso.IdlingResource;
 import android.view.MenuItem;
 import android.widget.TextView;
 import net.optile.payment.R;
@@ -25,6 +26,7 @@ import net.optile.payment.ui.dialog.ThemedDialogFragment.ThemedDialogListener;
 import net.optile.payment.ui.list.PaymentList;
 import net.optile.payment.ui.model.PaymentCard;
 import net.optile.payment.ui.model.PaymentSession;
+import net.optile.payment.ui.page.idlingresource.LoadingIdlingResource;
 import net.optile.payment.ui.widget.FormWidget;
 import net.optile.payment.util.PaymentUtils;
 
@@ -36,6 +38,8 @@ public final class PaymentListActivity extends BasePaymentActivity implements Pa
     private PaymentListPresenter presenter;
     private PaymentList paymentList;
     private int cachedListIndex;
+    private LoadingIdlingResource loadingIdlingResource;
+    private boolean initialized;
 
     /**
      * Create the start intent for this PaymentListActivity.
@@ -161,6 +165,11 @@ public final class PaymentListActivity extends BasePaymentActivity implements Pa
         setActionBar(getString(R.string.pmpage_title), true);
         paymentList.showPaymentSession(session, cachedListIndex);
         this.cachedListIndex = -1;
+        this.initialized = true;
+
+        if (loadingIdlingResource != null) {
+            loadingIdlingResource.setIdleState(initialized);
+        }
     }
 
     /**
@@ -261,5 +270,17 @@ public final class PaymentListActivity extends BasePaymentActivity implements Pa
         TextView empty = findViewById(R.id.label_empty);
         PaymentUtils.setTextAppearance(empty, getPaymentTheme().getListParameters().getEmptyListLabelStyle());
         this.paymentList = new PaymentList(this, findViewById(R.id.recyclerview_paymentlist), empty);
+    }
+
+    /**
+     * Only called from test, creates and returns a new {@link SimpleIdlingResource}.
+     */
+    @VisibleForTesting
+    public IdlingResource getLoadingIdlingResource() {
+        if (loadingIdlingResource == null) {
+            loadingIdlingResource = new LoadingIdlingResource();
+        }
+        loadingIdlingResource.setIdleState(initialized);
+        return loadingIdlingResource;
     }
 }

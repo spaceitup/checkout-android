@@ -164,6 +164,15 @@ public final class NetworkCard implements PaymentCard {
     }
 
     /**
+     * Get the number of networks stored in this network card
+     *
+     * @return the number of networks stored in this card
+     */
+    public int getPaymentNetworkSize() {
+        return networks.size();
+    }
+
+    /**
      * Get the visible PaymentNetwork, this is either the first in the list of smart selected networks or the first network if
      * none are smart selected.
      *

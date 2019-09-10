@@ -53,7 +53,7 @@ import net.optile.payment.validation.ValidationResult;
 /**
  * The PaymentCardViewHolder holding the header and input widgets
  */
-abstract class PaymentCardViewHolder extends RecyclerView.ViewHolder {
+public abstract class PaymentCardViewHolder extends RecyclerView.ViewHolder {
 
     final static String BUTTON_WIDGET = "buttonWidget";
     final static String LABEL_WIDGET = "labelWidget";
@@ -124,6 +124,16 @@ abstract class PaymentCardViewHolder extends RecyclerView.ViewHolder {
                 adapter.onTextInputChanged(getAdapterPosition(), type, text);
             }
         };
+    }
+
+    /**
+     * Get the FormWidget given the name, i.e. cardNumber or holderName.
+     *
+     * @param name of the widget to be returned
+     * @return the widget or null if it could not be found
+     */
+    public FormWidget getFormWidget(String name) {
+        return widgets.get(name);
     }
 
     void addButtonWidget(PaymentTheme theme) {
@@ -221,10 +231,6 @@ abstract class PaymentCardViewHolder extends RecyclerView.ViewHolder {
         for (FormWidget widget : widgets.values()) {
             widget.setValidation();
         }
-    }
-
-    FormWidget getFormWidget(String name) {
-        return widgets.get(name);
     }
 
     void onBind(PaymentCard paymentCard) {
@@ -352,9 +358,5 @@ abstract class PaymentCardViewHolder extends RecyclerView.ViewHolder {
                 break;
             }
         }
-    }
-
-    void setTestTag(String type, String code) {
-        itemView.setTag(type + "_" + code);
     }
 }

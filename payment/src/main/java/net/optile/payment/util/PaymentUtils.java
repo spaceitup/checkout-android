@@ -155,13 +155,13 @@ public final class PaymentUtils {
     }
 
     /**
-     * Set the test tag to the view with the proper formatting understood by the automated UI tests.
+     * Set the test Id to the view with the proper formatting understood by the automated UI tests.
      *
      * @param view in which the tag should be set
      * @param type the type of the View, i.e. widget, networkcard.
-     * @param value the name of the view i.e. holderName, VISA
+     * @param name the name of the view i.e. holderName
      */
-    public static void setTestTag(View view, String type, String name) {
-        view.setTag(type + "-" + name);
+    public static void setTestId(View view, String type, String name) {
+        view.setContentDescription(type + "_" + name);
     }
 }

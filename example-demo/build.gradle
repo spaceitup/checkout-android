@@ -49,4 +49,6 @@ dependencies {
     androidTestImplementation "com.android.support.test.espresso:espresso-core:${rootProject.espressoCoreVersion}"
     androidTestImplementation "com.android.support.test:rules:${rootProject.rulesVersion}"
     androidTestImplementation "com.android.support.test.espresso:espresso-intents:${rootProject.espressoIntentsVersion}"
+    androidTestImplementation "com.android.support.test.espresso:espresso-contrib:${rootProject.espressoContribVersion}"
+
 }
