@@ -57,6 +57,7 @@ ext {
     rulesVersion = "1.0.2"
     espressoCoreVersion = "3.0.2"
     espressoIdlingVersion = "3.0.2"
+    espressoContribVersion = "3.0.2"
     jsonsnapshotVersion = "1.0.12"
     androidxTestCoreVersion = "1.0.0"
     espressoIntentsVersion = "3.0.1"
