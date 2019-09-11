@@ -27,6 +27,7 @@ import android.support.v4.widget.NestedScrollView;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.HorizontalScrollView;
+import android.widget.NumberPicker;
 import android.widget.ScrollView;
 import net.optile.payment.ui.list.PaymentCardViewHolder;
 import net.optile.payment.ui.widget.FormWidget;
@@ -66,8 +67,10 @@ public final class PaymentActions {
                     throw createPerformException("ViewHolder is not of type PaymentCardViewHolder");
                 }
                 FormWidget widget = ((PaymentCardViewHolder) viewHolder).getFormWidget(widgetName);
+                if (widget == null) {
+                    throw createPerformException(String.format("Widget %s could not be found inside card", widgetName));
+                }
                 View formView = widget.getRootView().findViewById(viewResId);
-
                 if (formView == null) {
                     throw createPerformException("Could not find the View inside the Widget: " + widgetName);
                 }
@@ -103,8 +106,33 @@ public final class PaymentActions {
         };
     }
 
+    /**
+     * Scroll to the view action
+     *
+     * @param value
+     * @return the newly created ViewAction
+     */
+    public static ViewAction setValueInNumberPicker(final int value) {
+        return new ViewAction() {
+            @Override
+            public Matcher<View> getConstraints() {
+                return ViewMatchers.isAssignableFrom(NumberPicker.class);
+            }
+
+            @Override
+            public String getDescription() {
+                return String.format("Set the value %d of a NumberPicker", value);
+            }
+
+            @Override
+            public void perform(UiController uiController, View view) {
+                ((NumberPicker) view).setValue(value);
+            }
+        };
+    }
+
     private static PerformException createPerformException(String description) {
-        return  new PerformException.Builder()
+        return new PerformException.Builder()
             .withActionDescription(description)
             .build();
     }

@@ -36,6 +36,7 @@ public final class ListConfig {
         JSONObject language = source.getJSONObject("style");
         language.put("language", lang);
     }
+
     public void setPresetFirst(boolean val) throws JSONException {
         source.put("presetFirst", val);
     }
