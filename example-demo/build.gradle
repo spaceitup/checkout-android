@@ -1,7 +1,6 @@
 apply plugin: 'com.android.application'
 
 android {
-
     compileOptions {
         sourceCompatibility rootProject.javaCompatVersion
         targetCompatibility rootProject.javaCompatVersion
@@ -41,6 +40,7 @@ dependencies {
     implementation project(":payment")
     implementation "io.reactivex:rxjava:${rootProject.rxjavaVersion}"
     implementation "io.reactivex:rxandroid:${rootProject.rxandroidVersion}"
+    implementation "com.android.support.test.espresso:espresso-idling-resource:${rootProject.espressoIdlingVersion}@aar"
 
     testImplementation "junit:junit:${rootProject.junitVersion}"
     testImplementation "org.hamcrest:hamcrest-library:${rootProject.harmcrestVersion}"

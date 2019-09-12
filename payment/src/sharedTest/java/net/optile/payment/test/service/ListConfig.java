@@ -37,6 +37,10 @@ public final class ListConfig {
         language.put("language", lang);
     }
 
+    public void setPresetFirst(boolean val) throws JSONException {
+        source.put("presetFirst", val);
+    }
+
     public String toJsonString() {
         return source.toString();
     }

@@ -127,7 +127,7 @@ public final class PaymentList {
     }
 
     void showDialogFragment(DialogFragment dialog, String tag) {
-        dialog.show(activity.getSupportFragmentManager(), tag);
+        activity.showDialogFragment(dialog, tag);
     }
 
     void onHintClicked(int position, String type) {

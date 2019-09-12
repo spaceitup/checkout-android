@@ -16,6 +16,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.VisibleForTesting;
 import android.support.test.espresso.IdlingResource;
+import android.support.v4.app.DialogFragment;
 import android.view.MenuItem;
 import android.widget.TextView;
 import net.optile.payment.R;
@@ -26,7 +27,7 @@ import net.optile.payment.ui.dialog.ThemedDialogFragment.ThemedDialogListener;
 import net.optile.payment.ui.list.PaymentList;
 import net.optile.payment.ui.model.PaymentCard;
 import net.optile.payment.ui.model.PaymentSession;
-import net.optile.payment.ui.page.idlingresource.LoadingIdlingResource;
+import net.optile.payment.ui.page.idlingresource.SimpleIdlingResource;
 import net.optile.payment.ui.widget.FormWidget;
 import net.optile.payment.util.PaymentUtils;
 
@@ -38,8 +39,12 @@ public final class PaymentListActivity extends BasePaymentActivity implements Pa
     private PaymentListPresenter presenter;
     private PaymentList paymentList;
     private int cachedListIndex;
-    private LoadingIdlingResource loadingIdlingResource;
-    private boolean initialized;
+
+    // For automated UI Testing
+    private boolean loadCompleted;
+    private SimpleIdlingResource loadIdlingResource;
+    private SimpleIdlingResource dialogIdlingResource;
+    private SimpleIdlingResource closeIdlingResource;
 
     /**
      * Create the start intent for this PaymentListActivity.
@@ -165,10 +170,11 @@ public final class PaymentListActivity extends BasePaymentActivity implements Pa
         setActionBar(getString(R.string.pmpage_title), true);
         paymentList.showPaymentSession(session, cachedListIndex);
         this.cachedListIndex = -1;
-        this.initialized = true;
 
-        if (loadingIdlingResource != null) {
-            loadingIdlingResource.setIdleState(initialized);
+        // For automated UI testing
+        this.loadCompleted = true;
+        if (loadIdlingResource != null) {
+            loadIdlingResource.setIdleState(loadCompleted);
         }
     }
 
@@ -203,6 +209,11 @@ public final class PaymentListActivity extends BasePaymentActivity implements Pa
         }
         supportFinishAfterTransition();
         overridePendingTransition(R.anim.no_animation, R.anim.no_animation);
+
+        // For automated UI testing
+        if (closeIdlingResource != null) {
+            closeIdlingResource.setIdleState(true);
+        }
     }
 
     /**
@@ -238,7 +249,7 @@ public final class PaymentListActivity extends BasePaymentActivity implements Pa
         }
         progressView.setVisible(false);
         ThemedDialogFragment dialog = createMessageDialog(message, listener);
-        dialog.show(getSupportFragmentManager(), "dialog_message");
+        showDialogFragment(dialog, "dialog_message");
     }
 
     /**
@@ -251,7 +262,9 @@ public final class PaymentListActivity extends BasePaymentActivity implements Pa
         }
         progressView.setVisible(false);
         ThemedDialogFragment dialog = createConnectionDialog(listener);
-        dialog.show(getSupportFragmentManager(), "dialog_connection");
+        showDialogFragment(dialog, "dialog_connection");
+
+
     }
 
     /**
@@ -260,6 +273,15 @@ public final class PaymentListActivity extends BasePaymentActivity implements Pa
     @Override
     public Activity getActivity() {
         return this;
+    }
+
+    public void showDialogFragment(DialogFragment dialog, String tag) {
+        dialog.show(getSupportFragmentManager(), tag);
+
+        // For automated UI testing
+        if (dialogIdlingResource != null) {
+            dialogIdlingResource.setIdleState(true);
+        }
     }
 
     public void onActionClicked(PaymentCard item, Map<String, FormWidget> widgets) {
@@ -273,14 +295,40 @@ public final class PaymentListActivity extends BasePaymentActivity implements Pa
     }
 
     /**
-     * Only called from test, creates and returns a new {@link SimpleIdlingResource}.
+     * Only called from test, creates and returns a new IdlingResource
      */
     @VisibleForTesting
-    public IdlingResource getLoadingIdlingResource() {
-        if (loadingIdlingResource == null) {
-            loadingIdlingResource = new LoadingIdlingResource();
+    public IdlingResource getLoadIdlingResource() {
+        if (loadIdlingResource == null) {
+            loadIdlingResource = new SimpleIdlingResource("listLoadIdlingResource");
         }
-        loadingIdlingResource.setIdleState(initialized);
-        return loadingIdlingResource;
+        if (loadCompleted) {
+            loadIdlingResource.setIdleState(loadCompleted);
+        }
+        return loadIdlingResource;
+    }
+
+    /**
+     * Only called from test, creates and returns a new IdlingResource
+     */
+    @VisibleForTesting
+    public IdlingResource getDialogIdlingResource() {
+        if (dialogIdlingResource == null) {
+            dialogIdlingResource = new SimpleIdlingResource("listDialogIdlingResource");
+        }
+        dialogIdlingResource.reset();
+        return dialogIdlingResource;
+    }
+
+    /**
+     * Only called from test, creates and returns a new IdlingResource
+     */
+    @VisibleForTesting
+    public IdlingResource getCloseIdlingResource() {
+        if (closeIdlingResource == null) {
+            closeIdlingResource = new SimpleIdlingResource("listCloseIdlingResource");
+        }
+        closeIdlingResource.reset();
+        return dialogIdlingResource;
     }
 }

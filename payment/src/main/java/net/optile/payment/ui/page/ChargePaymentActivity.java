@@ -15,12 +15,15 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.VisibleForTesting;
+import android.support.test.espresso.IdlingResource;
 import net.optile.payment.R;
 import net.optile.payment.form.Operation;
 import net.optile.payment.model.PresetAccount;
 import net.optile.payment.ui.PaymentResult;
 import net.optile.payment.ui.dialog.ThemedDialogFragment;
 import net.optile.payment.ui.dialog.ThemedDialogFragment.ThemedDialogListener;
+import net.optile.payment.ui.page.idlingresource.SimpleIdlingResource;
 
 /**
  * The ChargePaymentActivity is the view displaying the loading animation while posting the operation.
@@ -31,6 +34,10 @@ public final class ChargePaymentActivity extends BasePaymentActivity implements 
     private final static String EXTRA_OPERATION = "operation";
     private ChargePaymentPresenter presenter;
     private Operation operation;
+
+    // For automated UI testing
+    private boolean chargeCompleted;
+    private SimpleIdlingResource chargeIdlingResource;
 
     /**
      * Create the start intent for this ChargePaymentActivity
@@ -212,6 +219,12 @@ public final class ChargePaymentActivity extends BasePaymentActivity implements 
         }
         supportFinishAfterTransition();
         overridePendingTransition(R.anim.no_animation, R.anim.fade_out);
+
+        // For automated UI testing
+        chargeCompleted = true;
+        if (chargeIdlingResource != null) {
+            chargeIdlingResource.setIdleState(true);
+        }
     }
 
     /**
@@ -223,5 +236,19 @@ public final class ChargePaymentActivity extends BasePaymentActivity implements 
             return;
         }
         setResultIntent(resultCode, result);
+    }
+
+    /**
+     * Only called from test, creates and returns a new IdlingResource
+     */
+    @VisibleForTesting
+    public IdlingResource getChargeIdlingResource() {
+        if (chargeIdlingResource == null) {
+            chargeIdlingResource = new SimpleIdlingResource("chargeIdlingResource");
+        }
+        if (chargeCompleted) {
+            chargeIdlingResource.setIdleState(chargeCompleted);
+        }
+        return chargeIdlingResource;
     }
 }
