@@ -16,7 +16,7 @@ import android.support.v4.app.DialogFragment;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.RecyclerView.ViewHolder;
 import android.view.ViewGroup;
-import net.optile.payment.core.LanguageFile;
+import net.optile.payment.core.Localization;
 import net.optile.payment.ui.PaymentUI;
 import net.optile.payment.ui.model.AccountCard;
 import net.optile.payment.ui.model.NetworkCard;
@@ -179,16 +179,12 @@ final class ListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         if (!result.isError()) {
             return result;
         }
-        result.setMessage(card.getLang().translateError(result.getError()));
+        result.setMessage(Localization.translateError(card.getCode(), result.getError()));
         return result;
     }
 
     PaymentTheme getPaymentTheme() {
         return PaymentUI.getInstance().getPaymentTheme();
-    }
-
-    LanguageFile getPageLanguageFile() {
-        return list.getPaymentSession().getLang();
     }
 
     private ListItem getItemWithViewType(int viewType) {
