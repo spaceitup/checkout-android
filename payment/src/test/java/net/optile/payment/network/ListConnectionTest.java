@@ -12,12 +12,13 @@ import static org.junit.Assert.assertNotNull;
 
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.Properties;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.robolectric.RobolectricTestRunner;
 
-import net.optile.payment.core.LanguageFile;
+import net.optile.payment.core.Localization;
 import net.optile.payment.core.PaymentException;
 import net.optile.payment.model.ListResult;
 
@@ -77,7 +78,7 @@ public class ListConnectionTest {
     @Test(expected = IllegalArgumentException.class)
     public void loadLanguageFile_invalidURL_IllegalArgumentException() throws PaymentException {
         ListConnection conn = new ListConnection();
-        LanguageFile lang = conn.loadLanguageFile(null, false);
+        Properties prop = conn.loadLanguageFile(null);
     }
 
     private URL createTestURL() {

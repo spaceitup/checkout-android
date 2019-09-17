@@ -159,20 +159,18 @@ public final class PaymentSessionService {
                 throw createPaymentException("Missing 'lang' link in PaymentNetwork", null);
             }
             code = network.getCode();
-            if (!loc.hasProperties(code)) {
-                loc.putProperties(code, listConnection.loadLanguageFile(langUrl));
+            if (!loc.hasFile(code)) {
+                loc.putFile(code, listConnection.loadLanguageFile(langUrl));
             }
         }
-        if (!loc.hasFallback() && langUrl != null) {
+        if (!loc.hasSharedFile() && langUrl != null) {
             Properties prop = loadPaymentPageLocalization(context, langUrl);
-            loc.setFallback(prop);
+            loc.setSharedFile(prop);
         }
     }
 
     /**
      * This method loads the payment page language file.
-     * Additional language entries will be added to support localization when there is no network
-     * or when the language file obtained from the backend is missing entries.
      *
      * @param langUrl the URL pointing to one of the PaymentNetwork language URLs
      * @return the properties object containing the language entries
@@ -186,27 +184,9 @@ public final class PaymentSessionService {
                 throw createPaymentException("Invalid URL for creating paymentpage language URL", null);
             }
             pageUrl = pageUrl.substring(0, index) + "/paymentpage.properties";
-            Properties prop = listConnection.loadLanguageFile(new URL(pageUrl));
-
-            putProperty(context, prop, BUTTON_CANCEL, R.string.pmlocal_button_cancel);
-            putProperty(context, prop, BUTTON_RETRY, R.string.pmlocal_button_retry);
-            putProperty(context, prop, BUTTON_UPDATE, R.string.pmlocal_button_update);
-            putProperty(context, prop, LIST_TITLE, R.string.pmlocal_list_title);
-            putProperty(context, prop, LIST_HEADER_NETWORKS, R.string.pmlocal_list_header_networks);
-            putProperty(context, prop, CHARGE_TITLE, R.string.pmlocal_charge_title);
-            putProperty(context, prop, CHARGE_TEXT, R.string.pmlocal_charge_text);
-            putProperty(context, prop, CHARGE_INTERRUPTED, R.string.pmlocal_charge_interrupted);
-            putProperty(context, prop, ERROR_CONNECTION, R.string.pmlocal_error_connection);
-            putProperty(context, prop, ERROR_DEFAULT, R.string.pmlocal_error_default);
-            return prop;
+            return listConnection.loadLanguageFile(new URL(pageUrl));
         } catch (MalformedURLException e) {
             throw createPaymentException("Malformed paymentpage language URL", e);
-        }
-    }
-
-    private void putProperty(Context context, Properties prop, String key, int stringResId) {
-        if (!prop.containsKey(key)) {
-            prop.put(key, context.getString(stringResId));
         }
     }
 
