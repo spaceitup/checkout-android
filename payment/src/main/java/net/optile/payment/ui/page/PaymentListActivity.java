@@ -332,6 +332,6 @@ public final class PaymentListActivity extends BasePaymentActivity implements Pa
             closeIdlingResource = new SimpleIdlingResource("listCloseIdlingResource");
         }
         closeIdlingResource.reset();
-        return dialogIdlingResource;
+        return closeIdlingResource;
     }
 }

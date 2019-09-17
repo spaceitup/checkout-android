@@ -40,6 +40,7 @@ import android.view.View;
 import net.optile.example.demo.checkout.CheckoutActivity;
 import net.optile.example.demo.confirm.ConfirmActivity;
 import net.optile.example.demo.settings.SettingsActivity;
+import net.optile.example.demo.summary.SummaryActivity;
 import net.optile.payment.test.service.ListConfig;
 import net.optile.payment.test.service.ListService;
 import net.optile.payment.test.view.ActivityHelper;
@@ -49,20 +50,38 @@ import net.optile.payment.ui.page.PaymentListActivity;
 
 @RunWith(AndroidJUnit4.class)
 @LargeTest
-public class ExampleDemoTests {
+public final class ExampleDemoTests {
 
     @Rule
     public ActivityTestRule<SettingsActivity> settingsActivityRule = new ActivityTestRule<>(SettingsActivity.class);
 
     @Test
-    public void successfulDirectChargeTest() throws JSONException, IOException {
+    public void successfulNoPresetChargeTest() throws JSONException, IOException {
         Intents.init();
+        int cardIndex = 1;
+        
+        openPaymentList(false);
+        fillGroupedNetworkCard(cardIndex);
+        performDirectCharge(cardIndex);
+        waitForChargeCompleted();
+        Intents.release();
+    }
 
-        ListService service = getListService();
-        ListConfig config = service.createListConfig(net.optile.example.demo.test.R.raw.listtemplate);
-        config.setPresetFirst(false);
-        String listUrl = service.createListUrl(config);
-
+    @Test
+    public void successfulPresetChargeTest() throws IOException, JSONException {
+        Intents.init();
+        int cardIndex = 1;
+        
+        openPaymentList(true);
+        fillGroupedNetworkCard(cardIndex);
+        performPresetCharge(cardIndex);
+        waitForChargeCompleted();
+        Intents.release();
+    }
+    
+    private void openPaymentList(boolean presetFirst) throws IOException, JSONException {
+        String listUrl = createListUrl(presetFirst);
+        
         // enter the listUrl in the settings screen and click the button
         onView(withId(R.id.layout_settings)).check(matches(isDisplayed()));
         onView(withId(R.id.input_listurl)).perform(typeText(listUrl));
@@ -70,40 +89,58 @@ public class ExampleDemoTests {
 
         // Wait for CheckoutActivity to be visible and click the pay button
         intended(hasComponent(CheckoutActivity.class.getName()));
-        CheckoutActivity checkoutActivity = (CheckoutActivity) ActivityHelper.getCurrentActivity();
-        onView(withId(R.id.layout_checkout)).check(matches(isDisplayed()));
         onView(withId(R.id.button_checkout)).perform(PaymentActions.scrollToView(), click());
 
         // Obtain the PaymentListActivity 
         intended(hasComponent(PaymentListActivity.class.getName()));
         PaymentListActivity listActivity = (PaymentListActivity) ActivityHelper.getCurrentActivity();
-        IdlingResource dialogIdlingResource = listActivity.getDialogIdlingResource();
         IdlingResource loadIdlingResource = listActivity.getLoadIdlingResource();
 
-        // Wait for the SimpleIdlingResource until the PaymentList is loaded
+        // Wait for the loadIdlingResource until the PaymentList is loaded
         IdlingRegistry.getInstance().register(loadIdlingResource);
+        onView(withId(R.id.recyclerview_paymentlist)).check(matches(isDisplayed()));
+        IdlingRegistry.getInstance().unregister(loadIdlingResource);
+    }
+
+    private void fillGroupedNetworkCard(int cardIndex) {
+        PaymentListActivity listActivity = (PaymentListActivity) ActivityHelper.getCurrentActivity();
         Matcher<View> list = withId(R.id.recyclerview_paymentlist);
-        onView(list).check(matches(isDisplayed()));
 
         // Check and fill the payment card
-        onView(list).check(matches(isCardWithTestId(0, "label_header")));
-        onView(list).check(matches(isCardWithTestId(1, "card_group")));
-        onView(list).perform(actionOnItemAtPosition(1, click()));
-        onView(list).perform(actionOnViewInWidget(1, typeText("4111111111111111"), "number", R.id.textinputedittext));
-        onView(list).perform(actionOnViewInWidget(1, typeText("John Doe"), "holderName", R.id.textinputedittext));
-        onView(list).perform(actionOnViewInWidget(1, click(), "expiryDate", R.id.textinputedittext));
+        onView(list).check(matches(isCardWithTestId(cardIndex, "card_group")));
+        onView(list).perform(actionOnItemAtPosition(cardIndex, click()));
+        onView(list).perform(actionOnViewInWidget(cardIndex, typeText("4111111111111111"), "number", R.id.textinputedittext));
+        onView(list).perform(actionOnViewInWidget(cardIndex, typeText("John Doe"), "holderName", R.id.textinputedittext));
+        onView(list).perform(actionOnViewInWidget(cardIndex, typeText("123"), "verificationCode", R.id.textinputedittext));
 
-        // wait for the DialogIdlingResource until the DateDialog is visible
+        // Wait for the DialogIdlingResource until the DateDialog is visible and fill in the date
+        IdlingResource dialogIdlingResource = listActivity.getDialogIdlingResource();
+        onView(list).perform(actionOnViewInWidget(1, click(), "expiryDate", R.id.textinputedittext));
         IdlingRegistry.getInstance().register(dialogIdlingResource);
+
         onView(withId(R.id.text_button_neutral)).check(matches(isDisplayed()));
         onView(withId(R.id.numberpicker_year)).perform(setValueInNumberPicker(4));
         onView(withId(R.id.text_button_neutral)).perform(click());
+        IdlingRegistry.getInstance().unregister(dialogIdlingResource);
+    }
 
-        // Click on the widget button
-        onView(list).perform(actionOnViewInWidget(1, typeText("123"), "verificationCode", R.id.textinputedittext));
-        onView(list).perform(actionOnViewInWidget(1, click(), "buttonWidget", R.id.button));
+    private void performDirectCharge(int cardIndex) {
+        onView(withId(R.id.recyclerview_paymentlist)).perform(actionOnViewInWidget(cardIndex, click(), "buttonWidget", R.id.button));
+    }
 
-        // Check that the ChargePaymentActivity is launched and wait for it to close
+    private void performPresetCharge(int cardIndex) {
+        PaymentListActivity listActivity = (PaymentListActivity) ActivityHelper.getCurrentActivity();
+        IdlingResource closeIdlingResource = listActivity.getCloseIdlingResource();
+        onView(withId(R.id.recyclerview_paymentlist)).perform(actionOnViewInWidget(cardIndex, click(), "buttonWidget", R.id.button));
+        IdlingRegistry.getInstance().register(closeIdlingResource);
+
+        // Wait for the summary activity to load and click on pay button
+        intended(hasComponent(SummaryActivity.class.getName()));
+        onView(withId(R.id.button_pay)).perform(PaymentActions.scrollToView(), click());
+        IdlingRegistry.getInstance().unregister(closeIdlingResource);
+    }
+    
+    private void waitForChargeCompleted() {
         intended(hasComponent(ChargePaymentActivity.class.getName()));
         onView(withId(R.id.layout_chargepayment)).check(matches(isDisplayed()));
         ChargePaymentActivity chargeActivity = (ChargePaymentActivity) ActivityHelper.getCurrentActivity();
@@ -113,18 +150,16 @@ public class ExampleDemoTests {
         // Check that the confirm activity is shown and that it is displayed
         intended(hasComponent(ConfirmActivity.class.getName()));
         onView(withId(R.id.layout_confirm)).check(matches(isDisplayed()));
-
         IdlingRegistry.getInstance().unregister(chargeIdlingResource);
-        IdlingRegistry.getInstance().unregister(loadIdlingResource);
-        IdlingRegistry.getInstance().unregister(dialogIdlingResource);
-
-        Intents.release();
     }
 
-    private ListService getListService() throws IOException {
+    private String createListUrl(boolean presetFirst) throws JSONException, IOException {
         Context context = InstrumentationRegistry.getTargetContext();
         String url = context.getString(R.string.paymentapi_url);
         String auth = context.getString(R.string.paymentapi_auth);
-        return ListService.createInstance(url, auth);
+        ListService service = ListService.createInstance(url, auth);
+        ListConfig config = service.createListConfig(net.optile.example.demo.test.R.raw.listtemplate);
+        config.setPresetFirst(presetFirst);
+        return service.createListUrl(config);
     }
 }
