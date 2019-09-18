@@ -67,11 +67,14 @@ public class LocalizationTest {
 
     @Test
     public void setSharedFile() {
+        String testKey = "testKey";
+        String testValue = "testValue";
+
         Localization loc = Localization.getInstance();
-        Properties prop = new Properties();
-        prop.put("testKey", "testValue");
-        loc.setSharedFile(prop);
-        assertEquals(loc.getTranslation("testKey", null), "testValue");
+        Properties shared = new Properties();
+        shared.put(testKey, testValue);
+        loc.setSharedFile(shared);
+        assertEquals(Localization.translate(testKey), testValue);
     }
 
     @Test
@@ -83,11 +86,14 @@ public class LocalizationTest {
 
     @Test
     public void putFile() {
+        String fileName = "fileName";
+        String testKey = "testKey";
+
         Localization loc = Localization.getInstance();
-        Properties prop = new Properties();
-        prop.put("testKey", "testValue");        
-        loc.putFile("testFile", prop);
-        assertEquals(loc.getTranslation("testFile", "testKey", null), "testValue");
+        Properties file = new Properties();
+        file.put(testKey, "testValue");
+        loc.putFile(fileName, file);
+        assertEquals(Localization.translate(fileName, testKey, null), "testValue");
     }
 
     @Test
@@ -96,4 +102,58 @@ public class LocalizationTest {
         loc.putFile("testFile", new Properties());
         assertTrue(loc.hasFile("testFile"));
     }
+
+    @Test
+    public void translateTestMissingFileDefaultValue() {
+        String defaultValue = "defaultValue";
+        Localization loc = Localization.getInstance();
+        assertEquals(Localization.translate("fileName", "testKey", defaultValue), defaultValue);
+    }
+
+    @Test
+    public void translateTestMissingFileKeyDefaultValue() {
+        String fileName = "fileName";
+        String defaultValue = "defaultValue";
+
+        Localization loc = Localization.getInstance();
+        Properties file = new Properties();
+        loc.putFile(fileName, file);
+        assertEquals(Localization.translate(fileName, "testKey", defaultValue), defaultValue);
+    }
+    
+    @Test
+    public void translateTestFallbackToShared() {
+        String fileName = "fileName";
+        String testKey = "testKey";
+
+        Localization loc = Localization.getInstance();
+        Properties file = new Properties();
+        loc.putFile(fileName, file);
+
+        Properties shared = new Properties();
+        shared.put("testKey", "testValue");
+        loc.setSharedFile(shared);
+        assertEquals(Localization.translate(fileName, "testKey", null), "testValue");
+    }
+
+    @Test
+    public void translateTestFallbackToLocalTranslations() {
+        String fileName = "fileName";
+        String testKey = "testKey";
+        
+        Context context = ApplicationProvider.getApplicationContext();        
+        String title = context.getString(R.string.pmlocal_list_title);
+
+        Localization loc = Localization.getInstance();
+        loc.loadLocalTranslations(context);
+
+        Properties file = new Properties();
+        file.put(testKey, "fileValue");
+        loc.putFile(fileName, file);
+
+        Properties shared = new Properties();
+        shared.put(testKey, "sharedValue");        
+        loc.setSharedFile(shared);
+        assertEquals(Localization.translate(fileName, Localization.LIST_TITLE, null), title);
+    }   
 }
