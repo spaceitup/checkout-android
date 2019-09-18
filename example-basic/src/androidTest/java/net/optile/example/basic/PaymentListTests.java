@@ -56,7 +56,7 @@ public class PaymentListTests {
         onView(withId(R.id.button_action)).perform(click());
 
         intended(hasComponent(PaymentListActivity.class.getName()));
-        onView(withId(R.id.layout_parent)).check(matches(isDisplayed()));
+        onView(withId(R.id.layout_paymentlist)).check(matches(isDisplayed()));
     }
 
     private ListService getListService() throws IOException {
