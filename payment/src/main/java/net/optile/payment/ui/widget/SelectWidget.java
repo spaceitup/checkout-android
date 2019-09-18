@@ -10,7 +10,7 @@ package net.optile.payment.ui.widget;
 
 import java.util.List;
 
-import android.support.annotation.NonNull;
+import androidx.annotation.NonNull;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;

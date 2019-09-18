@@ -8,8 +8,8 @@
 
 package net.optile.payment.ui.theme;
 
-import android.support.annotation.AnyRes;
-import android.support.annotation.StyleRes;
+import androidx.annotation.AnyRes;
+import androidx.annotation.StyleRes;
 import net.optile.payment.R;
 
 /**

@@ -3,7 +3,7 @@
               android:layout_width="match_parent"
               android:layout_height="wrap_content">
 
-    <android.support.design.card.MaterialCardView
+    <com.google.android.material.card.MaterialCardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="@dimen/pmborder_medium"
@@ -57,6 +57,6 @@
                 android:paddingEnd="@dimen/pmborder_xsmall"
                 android:visibility="gone"/>
         </RelativeLayout>
-    </android.support.design.card.MaterialCardView>
+    </com.google.android.material.card.MaterialCardView>
 
 </LinearLayout>

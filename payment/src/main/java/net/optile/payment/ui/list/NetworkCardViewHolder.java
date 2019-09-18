@@ -11,7 +11,7 @@ package net.optile.payment.ui.list;
 import java.util.ArrayList;
 import java.util.List;
 
-import android.support.v7.widget.RecyclerView.ViewHolder;
+import androidx.recyclerview.widget.RecyclerView.ViewHolder;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;

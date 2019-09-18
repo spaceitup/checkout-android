@@ -17,7 +17,7 @@ import java.util.List;
 import android.content.Context;
 import android.content.res.Configuration;
 import android.content.res.Resources;
-import android.support.v4.widget.TextViewCompat;
+import androidx.core.widget.TextViewCompat;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;

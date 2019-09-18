@@ -11,10 +11,10 @@ package net.optile.payment.ui.theme;
 import java.util.HashMap;
 import java.util.Map;
 
-import android.support.annotation.AnyRes;
-import android.support.annotation.ColorRes;
-import android.support.annotation.DrawableRes;
-import android.support.annotation.StyleRes;
+import androidx.annotation.AnyRes;
+import androidx.annotation.ColorRes;
+import androidx.annotation.DrawableRes;
+import androidx.annotation.StyleRes;
 import net.optile.payment.R;
 import net.optile.payment.core.PaymentInputType;
 

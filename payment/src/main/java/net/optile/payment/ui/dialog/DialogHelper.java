@@ -8,7 +8,7 @@
 
 package net.optile.payment.ui.dialog;
 
-import android.support.design.widget.Snackbar;
+import com.google.android.material.snackbar.Snackbar;
 import android.view.View;
 import android.widget.TextView;
 import net.optile.payment.R;
@@ -35,7 +35,7 @@ public class DialogHelper {
      */
     public static Snackbar createSnackbar(View view, String message) {
         Snackbar snackbar = Snackbar.make(view, message, Snackbar.LENGTH_LONG);
-        int snackbarTextId = android.support.design.R.id.snackbar_text;
+        int snackbarTextId = com.google.android.material.R.id.snackbar_text;
         PaymentTheme theme = PaymentUI.getInstance().getPaymentTheme();
         DialogParameters params = theme.getDialogParameters();
         View snackbarView = snackbar.getView();

@@ -16,20 +16,20 @@
             android:contentDescription="@string/pmpage_contentdescription"
             android:src="@drawable/ic_checkmark"/>
 
-        <android.support.design.widget.TextInputLayout
+        <com.google.android.material.textfield.TextInputLayout
             android:layout_weight="1"
             android:theme="@style/PaymentThemeTextInput"
             android:hint="@string/personal_name_label"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content">
 
-            <android.support.design.widget.TextInputEditText
+            <com.google.android.material.textfield.TextInputEditText
                 style="@style/PaymentThemeEditText"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/personal_name_value"
                 android:singleLine="true"/>
-        </android.support.design.widget.TextInputLayout>
+        </com.google.android.material.textfield.TextInputLayout>
     </LinearLayout>
 
     <LinearLayout
@@ -48,20 +48,20 @@
             android:contentDescription="@string/pmpage_contentdescription"
             android:src="@drawable/ic_checkmark"/>
 
-        <android.support.design.widget.TextInputLayout
+        <com.google.android.material.textfield.TextInputLayout
             android:layout_weight="1"
             android:theme="@style/PaymentThemeTextInput"
             android:hint="@string/personal_address_label"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content">
 
-            <android.support.design.widget.TextInputEditText
+            <com.google.android.material.textfield.TextInputEditText
                 style="@style/PaymentThemeEditText"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/personal_address_value"
                 android:singleLine="true"/>
-        </android.support.design.widget.TextInputLayout>
+        </com.google.android.material.textfield.TextInputLayout>
     </LinearLayout>
 
     <LinearLayout
@@ -80,20 +80,20 @@
             android:contentDescription="@string/pmpage_contentdescription"
             android:src="@drawable/ic_checkmark"/>
 
-        <android.support.design.widget.TextInputLayout
+        <com.google.android.material.textfield.TextInputLayout
             android:layout_weight="1"
             android:theme="@style/PaymentThemeTextInput"
             android:hint="@string/personal_city_label"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content">
 
-            <android.support.design.widget.TextInputEditText
+            <com.google.android.material.textfield.TextInputEditText
                 style="@style/PaymentThemeEditText"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/personal_city_value"
                 android:singleLine="true"/>
-        </android.support.design.widget.TextInputLayout>
+        </com.google.android.material.textfield.TextInputLayout>
     </LinearLayout>
 
     <LinearLayout
@@ -112,20 +112,20 @@
             android:contentDescription="@string/pmpage_contentdescription"
             android:src="@drawable/ic_checkmark"/>
 
-        <android.support.design.widget.TextInputLayout
+        <com.google.android.material.textfield.TextInputLayout
             android:layout_weight="1"
             android:theme="@style/PaymentThemeTextInput"
             android:hint="@string/personal_email_label"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content">
 
-            <android.support.design.widget.TextInputEditText
+            <com.google.android.material.textfield.TextInputEditText
                 style="@style/PaymentThemeEditText"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/personal_email_value"
                 android:singleLine="true"/>
-        </android.support.design.widget.TextInputLayout>
+        </com.google.android.material.textfield.TextInputLayout>
     </LinearLayout>
 
     <LinearLayout
@@ -144,20 +144,20 @@
             android:contentDescription="@string/pmpage_contentdescription"
             android:src="@drawable/ic_checkmark"/>
 
-        <android.support.design.widget.TextInputLayout
+        <com.google.android.material.textfield.TextInputLayout
             android:layout_weight="1"
             android:theme="@style/PaymentThemeTextInput"
             android:hint="@string/personal_phone_label"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content">
 
-            <android.support.design.widget.TextInputEditText
+            <com.google.android.material.textfield.TextInputEditText
                 style="@style/PaymentThemeEditText"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/personal_phone_value"
                 android:singleLine="true"/>
-        </android.support.design.widget.TextInputLayout>
+        </com.google.android.material.textfield.TextInputLayout>
     </LinearLayout>
 
 </merge>
