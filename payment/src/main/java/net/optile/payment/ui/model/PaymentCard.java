@@ -11,7 +11,6 @@ package net.optile.payment.ui.model;
 import java.net.URL;
 import java.util.List;
 
-import net.optile.payment.core.LanguageFile;
 import net.optile.payment.model.InputElement;
 
 /**
@@ -48,13 +47,6 @@ public interface PaymentCard {
      * @return code of the visible network, preset or account
      */
     String getCode();
-
-    /**
-     * Get the language file of this PaymentCard
-     *
-     * @return language file
-     */
-    LanguageFile getLang();
 
     /**
      * Get the action button label

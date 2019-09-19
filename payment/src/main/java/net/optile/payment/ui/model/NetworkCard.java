@@ -12,7 +12,6 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
-import net.optile.payment.core.LanguageFile;
 import net.optile.payment.core.PaymentInputType;
 import net.optile.payment.model.InputElement;
 import net.optile.payment.model.PaymentMethod;
@@ -67,14 +66,6 @@ public final class NetworkCard implements PaymentCard {
     @Override
     public String getCode() {
         return getVisibleNetwork().getCode();
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public LanguageFile getLang() {
-        return getVisibleNetwork().getLang();
     }
 
     /**

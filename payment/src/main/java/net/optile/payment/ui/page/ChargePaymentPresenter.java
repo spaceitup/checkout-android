@@ -8,8 +8,12 @@
 
 package net.optile.payment.ui.page;
 
+import static net.optile.payment.core.Localization.CHARGE_INTERRUPTED;
+import static net.optile.payment.core.Localization.ERROR_DEFAULT;
+
 import android.text.TextUtils;
 import net.optile.payment.R;
+import net.optile.payment.core.Localization;
 import net.optile.payment.core.PaymentError;
 import net.optile.payment.core.PaymentException;
 import net.optile.payment.form.Operation;
@@ -226,7 +230,7 @@ final class ChargePaymentPresenter implements PaymentSessionListener, NetworkSer
      * @return true when this presenter handled the back press, false otherwise
      */
     boolean onBackPressed() {
-        view.showWarningMessage(getString(R.string.pmsnackbar_operation_interrupted));
+        view.showWarningMessage(Localization.translate(CHARGE_INTERRUPTED));
         return true;
     }
 
@@ -266,14 +270,14 @@ final class ChargePaymentPresenter implements PaymentSessionListener, NetworkSer
 
         String msg = translateInteraction(result.getInteraction());
         if (TextUtils.isEmpty(msg)) {
-            msg = getString(R.string.pmdialog_error_unknown);
+            msg = Localization.translate(ERROR_DEFAULT);
         }
         closeWithMessage(msg);
     }
 
     private void closeWithErrorCode(PaymentResult result) {
         view.setPaymentResult(PaymentUI.RESULT_CODE_ERROR, result);
-        closeWithMessage(getString(R.string.pmdialog_error_unknown));
+        closeWithMessage(Localization.translate(ERROR_DEFAULT));
     }
 
     private void closeWithErrorCode(String resultInfo, PaymentError error) {
@@ -305,7 +309,7 @@ final class ChargePaymentPresenter implements PaymentSessionListener, NetworkSer
         if (session == null || interaction == null) {
             return null;
         }
-        return session.getLang().translateInteraction(interaction);
+        return Localization.translateInteraction(interaction);
     }
 
     private String getString(int resId) {

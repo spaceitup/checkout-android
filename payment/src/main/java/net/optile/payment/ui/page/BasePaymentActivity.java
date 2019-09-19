@@ -8,6 +8,10 @@
 
 package net.optile.payment.ui.page;
 
+import static net.optile.payment.core.Localization.BUTTON_CANCEL;
+import static net.optile.payment.core.Localization.BUTTON_RETRY;
+import static net.optile.payment.core.Localization.ERROR_CONNECTION;
+
 import android.content.Intent;
 import android.os.Bundle;
 import androidx.appcompat.app.ActionBar;
@@ -16,6 +20,7 @@ import android.text.TextUtils;
 import android.view.View;
 import android.view.ViewGroup;
 import net.optile.payment.R;
+import net.optile.payment.core.Localization;
 import net.optile.payment.ui.PaymentResult;
 import net.optile.payment.ui.PaymentUI;
 import net.optile.payment.ui.dialog.DialogHelper;
@@ -68,26 +73,17 @@ abstract class BasePaymentActivity extends AppCompatActivity {
         MessageDialogFragment dialog = new MessageDialogFragment();
         dialog.setListener(listener);
         dialog.setMessage(message);
-        dialog.setNeutralButton(getString(R.string.pmdialog_cancel_button));
+        dialog.setNeutralButton(Localization.translate(BUTTON_CANCEL));
         return dialog;
     }
 
     ThemedDialogFragment createConnectionDialog(ThemedDialogListener listener) {
         MessageDialogFragment dialog = new MessageDialogFragment();
         dialog.setListener(listener);
-        dialog.setMessage(getString(R.string.pmdialog_error_connection));
-        dialog.setNeutralButton(getString(R.string.pmdialog_cancel_button));
-        dialog.setPositiveButton(getString(R.string.pmdialog_retry_button));
+        dialog.setMessage(Localization.translate(ERROR_CONNECTION));
+        dialog.setNeutralButton(Localization.translate(BUTTON_CANCEL));
+        dialog.setPositiveButton(Localization.translate(BUTTON_RETRY));
         return dialog;
-    }
-
-    /**
-     * Initialize the ProgressView, the UI elements needed by the ProgressView must be available in the root view of the activity.
-     */
-    void initProgressView() {
-        progressView = new ProgressView(getRootView(), getPaymentTheme());
-        progressView.setSendLabels(getString(R.string.pmprogress_sendheader),
-            getString(R.string.pmprogress_sendinfo));
     }
 
     /**

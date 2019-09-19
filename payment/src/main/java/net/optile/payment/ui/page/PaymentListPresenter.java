@@ -8,11 +8,14 @@
 
 package net.optile.payment.ui.page;
 
+import static net.optile.payment.core.Localization.ERROR_DEFAULT;
+
 import java.net.URL;
 import java.util.Map;
 
 import android.text.TextUtils;
 import net.optile.payment.R;
+import net.optile.payment.core.Localization;
 import net.optile.payment.core.PaymentError;
 import net.optile.payment.core.PaymentException;
 import net.optile.payment.form.Operation;
@@ -467,7 +470,7 @@ final class PaymentListPresenter implements PaymentSessionListener, NetworkServi
 
         String msg = translateInteraction(result.getInteraction());
         if (TextUtils.isEmpty(msg)) {
-            msg = getString(R.string.pmdialog_error_unknown);
+            msg = Localization.translate(ERROR_DEFAULT);
         }
         closeWithMessage(msg);
     }
@@ -478,7 +481,7 @@ final class PaymentListPresenter implements PaymentSessionListener, NetworkServi
 
     private void closeWithErrorCode(PaymentResult result) {
         view.setPaymentResult(PaymentUI.RESULT_CODE_ERROR, result);
-        closeWithMessage(getString(R.string.pmdialog_error_unknown));
+        closeWithMessage(Localization.translate(ERROR_DEFAULT));
     }
 
     private void closeWithMessage(String message) {
@@ -511,7 +514,7 @@ final class PaymentListPresenter implements PaymentSessionListener, NetworkServi
         if (session == null || interaction == null) {
             return null;
         }
-        return session.getLang().translateInteraction(interaction);
+        return Localization.translateInteraction(interaction);
     }
 
     private String getString(int resId) {
