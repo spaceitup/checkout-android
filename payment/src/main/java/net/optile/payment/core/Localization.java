@@ -89,7 +89,7 @@ public final class Localization {
      * @return the translation or null if not found
      */
     public static String translateError(String fileName, String error) {
-        return translate(fileName, "error.".concat(error), null);
+        return translate(fileName, "error." + error, null);
     }
 
     /**
@@ -99,7 +99,7 @@ public final class Localization {
      * @return translation or null if not found
      */
     public static String translateInteraction(Interaction interaction) {
-        String key = "interaction.".concat(interaction.getCode()).concat(".").concat(interaction.getReason());
+        String key = "interaction." + interaction.getCode() + "." + interaction.getReason();
         return getInstance().getTranslation(key, null);
     }
 
@@ -111,7 +111,7 @@ public final class Localization {
      * @return translation or null if not found
      */
     public static String translateAccountLabel(String fileName, String account) {
-        return translate(fileName, "account.".concat(account).concat(".label"), null);
+        return translate(fileName, "account." + account + ".label", null);
     }
 
     /**
@@ -123,7 +123,7 @@ public final class Localization {
      * @return the translation or null if not found
      */
     public static String translateAccountHint(String fileName, String account, String type) {
-        String key = "account.".concat(account).concat(".").concat("hint.").concat("where.").concat(type);
+        String key = "account." + account + "." + "hint." + "where." + type;
         return translate(fileName, key, null);
     }
 
