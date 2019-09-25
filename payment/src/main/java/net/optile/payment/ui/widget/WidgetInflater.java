@@ -9,7 +9,6 @@
 package net.optile.payment.ui.widget;
 
 import android.content.Context;
-import android.view.ContextThemeWrapper;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,7 +16,6 @@ import net.optile.payment.R;
 import net.optile.payment.model.InputElement;
 import net.optile.payment.model.InputElementType;
 import net.optile.payment.ui.theme.PaymentTheme;
-import net.optile.payment.ui.theme.WidgetParameters;
 
 /**
  * Class with helper methods to inflate widgets with proper theming
@@ -53,8 +51,7 @@ public final class WidgetInflater {
      * @return inflated and themed CheckBoxWidget
      */
     public static CheckBoxWidget inflateCheckBoxWidget(String name, ViewGroup parent, PaymentTheme theme) {
-        WidgetParameters params = theme.getWidgetParameters();
-        View layout = inflateWithThemedChild(parent, R.layout.widget_checkbox, R.layout.view_checkbox, params.getCheckBoxTheme());
+        View layout = inflateWithThemedChild(parent, R.layout.widget_checkbox, R.layout.view_checkbox);
         return new CheckBoxWidget(name, layout, theme);
     }
 
@@ -67,8 +64,7 @@ public final class WidgetInflater {
      * @return inflated and themed RegisterWidget
      */
     public static RegisterWidget inflateRegisterWidget(String name, ViewGroup parent, PaymentTheme theme) {
-        WidgetParameters params = theme.getWidgetParameters();
-        View layout = inflateWithThemedChild(parent, R.layout.widget_checkbox, R.layout.view_checkbox, params.getCheckBoxTheme());
+        View layout = inflateWithThemedChild(parent, R.layout.widget_checkbox, R.layout.view_checkbox);
         return new RegisterWidget(name, layout, theme);
     }
 
@@ -81,8 +77,7 @@ public final class WidgetInflater {
      * @return inflated and themed ButtonWidget
      */
     public static ButtonWidget inflateButtonWidget(String name, ViewGroup parent, PaymentTheme theme) {
-        WidgetParameters params = theme.getWidgetParameters();
-        View layout = inflateWithThemedChild(parent, R.layout.widget_button, R.layout.view_button, params.getButtonTheme());
+        View layout = inflateWithThemedChild(parent, R.layout.widget_button, R.layout.view_button);
         return new ButtonWidget(name, layout, theme);
     }
 
@@ -95,7 +90,7 @@ public final class WidgetInflater {
      * @return inflated and themed DateWidget
      */
     public static DateWidget inflateDateWidget(String name, ViewGroup parent, PaymentTheme theme) {
-        View layout = inflateTextInputView(parent, theme);
+        View layout = inflateTextInputView(parent);
         return new DateWidget(name, layout, theme);
     }
 
@@ -108,7 +103,7 @@ public final class WidgetInflater {
      * @return inflated and themed TextInputWidget
      */
     public static TextInputWidget inflateTextInputWidget(String name, ViewGroup parent, PaymentTheme theme) {
-        View layout = inflateTextInputView(parent, theme);
+        View layout = inflateTextInputView(parent);
         return new TextInputWidget(name, layout, theme);
     }
 
@@ -154,13 +149,10 @@ public final class WidgetInflater {
      * Inflate the input layout and add the hint element to it
      *
      * @param parent ViewGroup in which this inflated view will be added
-     * @param theme the PaymentTheme to apply to the inflated view
      * @return the inflated view
      */
-    private static View inflateTextInputView(ViewGroup parent, PaymentTheme theme) {
-        int themeResId = theme.getWidgetParameters().getTextInputTheme();
-        View view = inflateWithThemedChild(parent, R.layout.widget_textinput, R.layout.view_textinput, themeResId);
-
+    private static View inflateTextInputView(ViewGroup parent) {
+        View view = inflateWithThemedChild(parent, R.layout.widget_textinput, R.layout.view_textinput);
         LayoutInflater inflater = LayoutInflater.from(parent.getContext());
         ViewGroup group = view.findViewById(R.id.layout_viewholder);
         inflater.inflate(R.layout.view_hint, group, true);
@@ -173,20 +165,15 @@ public final class WidgetInflater {
      * @param parent ViewGroup in which this inflated view will be added
      * @param layoutResId layout resource id of the view that should be inflated
      * @param childResId internal view resource id that should be inflated with the theme
-     * @param themeResId theme used to inflate the internval view element
      * @return the inflated view
      */
-    private static View inflateWithThemedChild(ViewGroup parent, int layoutResId, int childResId, int themeResId) {
+    private static View inflateWithThemedChild(ViewGroup parent, int layoutResId, int childResId) {
         Context context = parent.getContext();
         LayoutInflater inflater = LayoutInflater.from(context);
         View view = inflater.inflate(layoutResId, parent, false);
         ViewGroup group = view.findViewById(R.id.layout_viewholder);
-
         if (group == null) {
             return view;
-        }
-        if (themeResId != 0) {
-            inflater = LayoutInflater.from(new ContextThemeWrapper(context, themeResId));
         }
         inflater.inflate(childResId, group, true);
         return view;

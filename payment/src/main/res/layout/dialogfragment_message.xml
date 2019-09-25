@@ -23,6 +23,7 @@
 
             <TextView
                 android:id="@+id/text_title"
+                android:textAppearance="?attr/themedMessageDialogTitleStyle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="@dimen/pmborder_medium"
@@ -30,12 +31,14 @@
 
             <TextView
                 android:id="@+id/text_message_notitle"
+                android:textAppearance="?attr/themedMessageDialogDetailsNoTitleStyle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:visibility="gone"/>
 
             <TextView
                 android:id="@+id/text_message_title"
+                android:textAppearance="?attr/themedMessageDialogDetailsStyle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:visibility="gone"/>
@@ -50,6 +53,7 @@
 
                 <TextView
                     android:id="@+id/text_imageprefix"
+                    android:textAppearance="?attr/themedMessageDialogImageLabelStyle"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:visibility="gone"/>
@@ -62,6 +66,7 @@
 
                 <TextView
                     android:id="@+id/text_imagesuffix"
+                    android:textAppearance="?attr/themedMessageDialogImageLabelStyle"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:visibility="gone"/>

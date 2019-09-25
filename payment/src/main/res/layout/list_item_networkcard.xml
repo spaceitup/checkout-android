@@ -4,6 +4,7 @@
               android:layout_height="wrap_content">
 
     <com.google.android.material.card.MaterialCardView
+        style="?attr/paymentCardStyle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="@dimen/pmborder_medium"
@@ -41,11 +42,13 @@
 
                     <TextView
                         android:id="@+id/title0"
+                        android:textAppearance="?attr/networkCardTitleStyle"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"/>
 
                     <TextView
                         android:id="@+id/title1"
+                        android:textAppearance="?attr/networkCardTitleStyle"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"/>
                 </TextSwitcher>

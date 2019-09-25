@@ -17,10 +17,10 @@ import java.util.List;
 import android.content.Context;
 import android.content.res.Configuration;
 import android.content.res.Resources;
-import androidx.core.widget.TextViewCompat;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
+import androidx.core.widget.TextViewCompat;
 import net.optile.payment.core.PaymentInputType;
 import net.optile.payment.model.InputElement;
 

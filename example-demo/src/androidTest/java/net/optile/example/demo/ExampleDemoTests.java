@@ -29,6 +29,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 
 import android.content.Context;
+import android.view.View;
 import androidx.test.InstrumentationRegistry;
 import androidx.test.espresso.IdlingRegistry;
 import androidx.test.espresso.IdlingResource;
@@ -36,7 +37,6 @@ import androidx.test.espresso.intent.Intents;
 import androidx.test.filters.LargeTest;
 import androidx.test.rule.ActivityTestRule;
 import androidx.test.runner.AndroidJUnit4;
-import android.view.View;
 import net.optile.example.demo.checkout.CheckoutActivity;
 import net.optile.example.demo.confirm.ConfirmActivity;
 import net.optile.example.demo.settings.SettingsActivity;

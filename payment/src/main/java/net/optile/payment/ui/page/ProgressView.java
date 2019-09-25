@@ -8,19 +8,10 @@
 
 package net.optile.payment.ui.page;
 
-import android.graphics.PorterDuff;
-import android.graphics.drawable.Drawable;
-import android.graphics.drawable.LayerDrawable;
-import android.os.Handler;
-import android.os.Looper;
-import androidx.core.content.ContextCompat;
 import android.view.View;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import net.optile.payment.R;
-import net.optile.payment.ui.theme.PaymentTheme;
-import net.optile.payment.ui.theme.ProgressParameters;
-import net.optile.payment.util.PaymentUtils;
 
 /**
  * View managing the different style of progress animations.
@@ -38,7 +29,6 @@ class ProgressView {
     private final View sendLayout;
     private final TextView sendHeader;
     private final TextView sendInfo;
-    private final Handler sendHandler;
     private final ProgressBar loadProgressBar;
     private final ProgressBar sendProgressBar;
     private final View rootView;
@@ -48,25 +38,19 @@ class ProgressView {
      * Construct a new loading view given the parent view that holds the Views for the loading animations
      *
      * @param rootView the root view containing the progress views and layouts
-     * @param theme contains the ProgressParameters for theming the progress views
      */
-    ProgressView(View rootView, PaymentTheme theme) {
-        ProgressParameters params = theme.getProgressParameters();
+    ProgressView(View rootView) {
         this.rootView = rootView;
 
         // setup the ProgressBar for loading
         loadLayout = rootView.findViewById(R.id.layout_load);
         loadProgressBar = loadLayout.findViewById(R.id.progressbar_load);
-        applyLoadTheming(params);
 
         // setup the ProgressBar for sending
         sendLayout = rootView.findViewById(R.id.layout_send);
         sendHeader = sendLayout.findViewById(R.id.text_sendheader);
         sendInfo = sendLayout.findViewById(R.id.text_sendinfo);
         sendProgressBar = sendLayout.findViewById(R.id.progressbar_send);
-        applySendTheming(params);
-
-        sendHandler = new Handler(Looper.getMainLooper());
     }
 
     /**
@@ -99,7 +83,6 @@ class ProgressView {
         if (!visible) {
             loadLayout.setVisibility(View.GONE);
             sendLayout.setVisibility(View.GONE);
-            stopSendProgress();
             return;
         }
         switch (style) {
@@ -115,7 +98,6 @@ class ProgressView {
      * Notify that this Progress view should be stopped
      */
     public void onStop() {
-        stopSendProgress();
     }
 
     private void setLoadVisible() {
@@ -134,48 +116,5 @@ class ProgressView {
         }
         loadLayout.setVisibility(View.GONE);
         sendLayout.setVisibility(View.VISIBLE);
-        startSendProgress();
-    }
-
-    private void stopSendProgress() {
-        sendHandler.removeCallbacksAndMessages(null);
-    }
-
-    private void startSendProgress() {
-        sendProgressBar.setProgress(SEND_MIN);
-        sendProgressBar.setMax(SEND_MAX);
-        sendHandler.postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                int progress = sendProgressBar.getProgress() + 1;
-                if (progress > SEND_MAX) {
-                    progress = SEND_MIN;
-                }
-                sendProgressBar.setProgress(progress);
-                sendHandler.postDelayed(this, SEND_TIMEOUT);
-            }
-        }, SEND_TIMEOUT);
-    }
-
-    private void applyLoadTheming(ProgressParameters params) {
-        loadLayout.setBackgroundResource(params.getLoadBackground());
-        setColorFilter(loadProgressBar.getIndeterminateDrawable(), params.getLoadProgressBarColor());
-    }
-
-    private void applySendTheming(ProgressParameters params) {
-        sendLayout.setBackgroundResource(params.getSendBackground());
-        PaymentUtils.setTextAppearance(sendHeader, params.getHeaderStyle());
-        PaymentUtils.setTextAppearance(sendInfo, params.getInfoStyle());
-
-        LayerDrawable layer = (LayerDrawable) sendProgressBar.getProgressDrawable();
-        setColorFilter(layer.getDrawable(0), params.getSendProgressBarColorBack());
-        setColorFilter(layer.getDrawable(1), params.getSendProgressBarColorFront());
-    }
-
-    private void setColorFilter(Drawable drawable, int resId) {
-        if (drawable == null || resId == 0) {
-            return;
-        }
-        drawable.setColorFilter(ContextCompat.getColor(rootView.getContext(), resId), PorterDuff.Mode.SRC_IN);
     }
 }

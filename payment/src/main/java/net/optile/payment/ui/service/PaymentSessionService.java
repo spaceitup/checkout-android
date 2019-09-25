@@ -8,17 +8,6 @@
 
 package net.optile.payment.ui.service;
 
-import static net.optile.payment.core.Localization.BUTTON_CANCEL;
-import static net.optile.payment.core.Localization.BUTTON_RETRY;
-import static net.optile.payment.core.Localization.BUTTON_UPDATE;
-import static net.optile.payment.core.Localization.CHARGE_INTERRUPTED;
-import static net.optile.payment.core.Localization.CHARGE_TEXT;
-import static net.optile.payment.core.Localization.CHARGE_TITLE;
-import static net.optile.payment.core.Localization.ERROR_CONNECTION;
-import static net.optile.payment.core.Localization.ERROR_DEFAULT;
-import static net.optile.payment.core.Localization.LIST_HEADER_NETWORKS;
-import static net.optile.payment.core.Localization.LIST_TITLE;
-
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
@@ -28,7 +17,6 @@ import java.util.Map;
 import java.util.Properties;
 import java.util.concurrent.Callable;
 
-import net.optile.payment.R;
 import android.content.Context;
 import android.text.TextUtils;
 import net.optile.payment.core.Localization;

@@ -17,8 +17,6 @@ import android.widget.NumberPicker;
 import android.widget.TextView;
 import net.optile.payment.R;
 import net.optile.payment.ui.PaymentUI;
-import net.optile.payment.ui.theme.DialogParameters;
-import net.optile.payment.util.PaymentUtils;
 
 /**
  * Date Dialog Fragment for allowing the user to select month and year
@@ -54,12 +52,20 @@ public final class DateDialogFragment extends ThemedDialogFragment {
      * {@inheritDoc}
      */
     @Override
+    public int getTheme() {
+        int theme = PaymentUI.getInstance().getPaymentTheme().getDateDialogTheme();
+        return theme == 0 ? super.getTheme() : theme;
+    }
+    
+    /**
+     * {@inheritDoc}
+     */
+    @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        DialogParameters params = PaymentUI.getInstance().getPaymentTheme().getDialogParameters();
         View v = inflater.inflate(R.layout.dialogfragment_date, container, false);
-        initTitle(v, params);
+        initTitle(v);
         initNumberPickers(v);
-        initButtons(v, params);
+        initButtons(v);
         return v;
     }
 
@@ -85,14 +91,13 @@ public final class DateDialogFragment extends ThemedDialogFragment {
         yearPicker.setValue(yearIndex);
     }
 
-    private void initTitle(View rootView, DialogParameters params) {
+    private void initTitle(View rootView) {
         TextView tv = rootView.findViewById(R.id.text_title);
 
         if (TextUtils.isEmpty(title)) {
             tv.setVisibility(View.GONE);
             return;
         }
-        PaymentUtils.setTextAppearance(tv, params.getDateTitleStyle());
         tv.setVisibility(View.VISIBLE);
         tv.setText(title);
     }

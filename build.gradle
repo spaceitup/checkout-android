@@ -47,7 +47,7 @@ ext {
     gsonVersion = "2.8.5"
     bumptechGlideVersion = "4.8.0"
 
-    androidMaterialVersion = "1.0.0"
+    androidMaterialVersion = "1.1.0-alpha10"
     androidxTestCoreVersion = "1.0.0"
     androidxTestRunnerVersion = "1.1.0"
     androidxTestRulesVersion = "1.1.0"

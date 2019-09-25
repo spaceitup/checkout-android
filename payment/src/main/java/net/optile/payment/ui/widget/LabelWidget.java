@@ -12,8 +12,6 @@ import android.view.View;
 import android.widget.TextView;
 import net.optile.payment.R;
 import net.optile.payment.ui.theme.PaymentTheme;
-import net.optile.payment.ui.theme.WidgetParameters;
-import net.optile.payment.util.PaymentUtils;
 
 /**
  * Widget for showing an info label in the PaymentCard
@@ -32,9 +30,6 @@ public class LabelWidget extends FormWidget {
     public LabelWidget(String name, View rootView, PaymentTheme theme) {
         super(name, rootView, theme);
         label = rootView.findViewById(R.id.text_label);
-
-        WidgetParameters params = theme.getWidgetParameters();
-        PaymentUtils.setTextAppearance(label, params.getInfoLabelStyle());
     }
 
     public void setLabel(String text) {

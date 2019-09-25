@@ -10,28 +10,20 @@
  */
 package net.optile.payment.core;
 
-import static org.junit.Assert.*;
-import org.junit.Test;
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 
-import org.junit.Test;
+import java.util.Properties;
+
 import org.junit.Before;
+import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.robolectric.RobolectricTestRunner;
-import java.util.Properties;
+
 import android.content.Context;
-import android.content.res.Resources;
 import androidx.test.core.app.ApplicationProvider;
 import net.optile.payment.R;
-import net.optile.payment.core.PaymentException;
-import net.optile.payment.core.PaymentInputType;
-import net.optile.payment.core.PaymentNetworkCodes;
-import net.optile.payment.model.PaymentMethod;
-import net.optile.payment.resource.ResourceLoader;
 
 @RunWith(RobolectricTestRunner.class)
 public class LocalizationTest {

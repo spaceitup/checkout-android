@@ -19,14 +19,14 @@ import java.util.List;
 
 import android.content.Context;
 import android.os.IBinder;
+import android.view.View;
+import android.view.inputmethod.InputMethodManager;
+import android.widget.TextView;
 import androidx.fragment.app.DialogFragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.LinearSmoothScroller;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.recyclerview.widget.SimpleItemAnimator;
-import android.view.View;
-import android.view.inputmethod.InputMethodManager;
-import android.widget.TextView;
 import net.optile.payment.R;
 import net.optile.payment.core.Localization;
 import net.optile.payment.ui.dialog.DialogHelper;

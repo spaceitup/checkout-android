@@ -8,6 +8,7 @@
 
     <TextView
         android:id="@+id/text_title"
+        android:textAppearance="?attr/themedDateDialogTitleStyle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginLeft="@dimen/pmborder_large"

@@ -8,7 +8,6 @@
 
 package net.optile.payment.ui.theme;
 
-import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 
 import org.junit.Test;

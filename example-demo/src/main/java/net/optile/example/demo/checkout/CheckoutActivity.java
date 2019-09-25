@@ -8,17 +8,18 @@
 
 package net.optile.example.demo.checkout;
 
+import com.google.android.material.appbar.CollapsingToolbarLayout;
+
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Typeface;
 import android.os.Bundle;
-import com.google.android.material.appbar.CollapsingToolbarLayout;
-import androidx.core.content.res.ResourcesCompat;
-import androidx.appcompat.app.ActionBar;
-import androidx.appcompat.widget.Toolbar;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
+import androidx.appcompat.app.ActionBar;
+import androidx.appcompat.widget.Toolbar;
+import androidx.core.content.res.ResourcesCompat;
 import net.optile.example.demo.R;
 import net.optile.example.demo.confirm.ConfirmActivity;
 import net.optile.example.demo.shared.BaseActivity;

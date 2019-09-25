@@ -11,6 +11,7 @@ package net.optile.payment.ui.widget;
 import java.util.List;
 
 import com.google.android.material.textfield.TextInputEditText;
+
 import android.text.TextUtils;
 import android.view.View;
 import net.optile.payment.R;

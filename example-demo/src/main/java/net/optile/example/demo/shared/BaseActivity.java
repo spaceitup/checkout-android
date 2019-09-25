@@ -11,8 +11,8 @@ package net.optile.example.demo.shared;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.os.Bundle;
-import androidx.appcompat.app.AppCompatActivity;
 import android.view.MenuItem;
+import androidx.appcompat.app.AppCompatActivity;
 import net.optile.example.demo.R;
 
 /**

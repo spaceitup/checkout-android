@@ -11,11 +11,11 @@ package net.optile.payment.ui.list;
 import java.util.List;
 
 import android.content.Context;
+import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.DialogFragment;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.recyclerview.widget.RecyclerView.ViewHolder;
-import android.view.ViewGroup;
 import net.optile.payment.core.Localization;
 import net.optile.payment.ui.PaymentUI;
 import net.optile.payment.ui.model.AccountCard;

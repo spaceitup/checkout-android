@@ -10,6 +10,7 @@ package net.optile.payment.ui.theme;
 
 import androidx.annotation.AnyRes;
 import androidx.annotation.StyleRes;
+import androidx.annotation.DimenRes;
 import net.optile.payment.R;
 
 /**
@@ -19,22 +20,9 @@ import net.optile.payment.R;
 public final class ListParameters {
 
     private final int pageTheme;
-    private final int emptyListLabelStyle;
-    private final int sectionHeaderLabelStyle;
-    private final int presetCardTitleStyle;
-    private final int presetCardSubtitleStyle;
-    private final int accountCardTitleStyle;
-    private final int accountCardSubtitleStyle;
-    private final int networkCardTitleStyle;
-    private final int paymentLogoBackground;
 
     private ListParameters(Builder builder) {
         this.pageTheme = builder.pageTheme;
-        this.emptyListLabelStyle = builder.emptyListLabelStyle;
-        this.sectionHeaderLabelStyle = builder.sectionHeaderLabelStyle;
-        this.presetCardTitleStyle = builder.presetCardTitleStyle;
-        this.presetCardSubtitleStyle = builder.presetCardSubtitleStyle;
-        this.accountCardTitleStyle = builder.accountCardTitleStyle;
         this.accountCardSubtitleStyle = builder.accountCardSubtitleStyle;
         this.networkCardTitleStyle = builder.networkCardTitleStyle;
         this.paymentLogoBackground = builder.paymentLogoBackground;
@@ -46,7 +34,8 @@ public final class ListParameters {
 
     public static ListParameters createDefault() {
         return createBuilder().
-            setPageTheme(R.style.PaymentThemeDarkActionBar_PaymentList).
+            setPageTheme(R.style.PaymentTheme_PaymentList).
+            setToolbarTitleStyle(R.style.PaymentText_Medium_Bold_Light).
             setEmptyListLabelStyle(R.style.PaymentText_Medium_Gray).
             setSectionHeaderLabelStyle(R.style.PaymentText_Medium_Bold).
             setPresetCardTitleStyle(R.style.PaymentText_Medium_Bold).
@@ -59,6 +48,10 @@ public final class ListParameters {
 
     public int getPageTheme() {
         return pageTheme;
+    }
+
+    public int getToolbarTitleStyle() {
+        return toolbarTitleStyle;
     }
 
     public int getEmptyListLabelStyle() {
@@ -95,6 +88,7 @@ public final class ListParameters {
 
     public final static class Builder {
         int pageTheme;
+        int toolbarTitleStyle;
         int emptyListLabelStyle;
         int sectionHeaderLabelStyle;
         int accountCardTitleStyle;
@@ -112,6 +106,11 @@ public final class ListParameters {
             return this;
         }
 
+        public Builder setToolbarTitleStyle(@StyleRes int toolbarTitleStyle) {
+            this.toolbarTitleStyle = toolbarTitleStyle;
+            return this;
+        }
+        
         public Builder setEmptyListLabelStyle(@StyleRes int emptyListLabelStyle) {
             this.emptyListLabelStyle = emptyListLabelStyle;
             return this;

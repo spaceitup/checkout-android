@@ -14,7 +14,6 @@ import java.net.URL;
 import java.util.Map;
 
 import android.text.TextUtils;
-import net.optile.payment.R;
 import net.optile.payment.core.Localization;
 import net.optile.payment.core.PaymentError;
 import net.optile.payment.core.PaymentException;

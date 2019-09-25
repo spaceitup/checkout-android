@@ -8,13 +8,11 @@
 
 package net.optile.payment.ui.list;
 
-import androidx.recyclerview.widget.RecyclerView;
-import androidx.recyclerview.widget.RecyclerView.ViewHolder;
 import android.view.View;
 import android.widget.TextView;
+import androidx.recyclerview.widget.RecyclerView;
+import androidx.recyclerview.widget.RecyclerView.ViewHolder;
 import net.optile.payment.R;
-import net.optile.payment.ui.theme.ListParameters;
-import net.optile.payment.ui.theme.PaymentTheme;
 import net.optile.payment.util.PaymentUtils;
 
 /**
@@ -31,14 +29,7 @@ public final class HeaderViewHolder extends RecyclerView.ViewHolder {
 
     static ViewHolder createInstance(ListAdapter adapter) {
         View view = View.inflate(adapter.getContext(), R.layout.list_item_header, null);
-        HeaderViewHolder holder = new HeaderViewHolder(view);
-        holder.applyTheme(adapter.getPaymentTheme());
-        return holder;
-    }
-
-    void applyTheme(PaymentTheme theme) {
-        ListParameters params = theme.getListParameters();
-        PaymentUtils.setTextAppearance(title, params.getSectionHeaderLabelStyle());
+        return new HeaderViewHolder(view);
     }
 
     void onBind(HeaderItem item) {

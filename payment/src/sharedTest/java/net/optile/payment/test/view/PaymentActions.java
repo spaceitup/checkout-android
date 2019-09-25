@@ -18,17 +18,17 @@ import static org.hamcrest.CoreMatchers.anyOf;
 
 import org.hamcrest.Matcher;
 
+import android.view.View;
+import android.widget.HorizontalScrollView;
+import android.widget.NumberPicker;
+import android.widget.ScrollView;
+import androidx.core.widget.NestedScrollView;
+import androidx.recyclerview.widget.RecyclerView;
 import androidx.test.espresso.PerformException;
 import androidx.test.espresso.UiController;
 import androidx.test.espresso.ViewAction;
 import androidx.test.espresso.action.ScrollToAction;
 import androidx.test.espresso.matcher.ViewMatchers;
-import androidx.core.widget.NestedScrollView;
-import androidx.recyclerview.widget.RecyclerView;
-import android.view.View;
-import android.widget.HorizontalScrollView;
-import android.widget.NumberPicker;
-import android.widget.ScrollView;
 import net.optile.payment.ui.list.PaymentCardViewHolder;
 import net.optile.payment.ui.widget.FormWidget;
 

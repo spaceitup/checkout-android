@@ -4,7 +4,13 @@
         <item name="android:background">@drawable/button_background</item>
     </style>
 
-    <style name="DefaultCollapsingToolbarTheme" parent="Theme.AppCompat.Light.NoActionBar">
+    <style name="SettingsTheme" parent="Theme.MaterialComponents.Light.DarkActionBar">
+        <item name="colorPrimary">@color/pmcolor_primary</item>
+        <item name="colorPrimaryDark">@color/pmcolor_primarydark</item>
+        <item name="colorAccent">@color/pmcolor_accent</item>
+    </style>
+    
+    <style name="DefaultCollapsingToolbarTheme" parent="Theme.MaterialComponents.Light.NoActionBar">
         <item name="colorPrimary">@color/pmcolor_primary</item>
         <item name="colorPrimaryDark">@color/pmcolor_primarydark</item>
         <item name="colorAccent">@color/pmcolor_accent</item>
@@ -15,7 +21,7 @@
         <item name="android:windowTranslucentNavigation">false</item>
     </style>
 
-    <style name="DefaultConfirmTheme" parent="Theme.AppCompat.Light.NoActionBar">
+    <style name="DefaultConfirmTheme" parent="Theme.MaterialComponents.Light.NoActionBar">
         <item name="colorPrimary">@color/pmcolor_primary</item>
         <item name="colorPrimaryDark">@color/pmcolor_primarydark</item>
         <item name="colorAccent">@color/pmcolor_accent</item>

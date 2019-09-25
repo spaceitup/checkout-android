@@ -14,12 +14,10 @@ import static net.optile.payment.core.Localization.ERROR_CONNECTION;
 
 import android.content.Intent;
 import android.os.Bundle;
-import androidx.appcompat.app.ActionBar;
-import androidx.appcompat.app.AppCompatActivity;
 import android.text.TextUtils;
 import android.view.View;
 import android.view.ViewGroup;
-import net.optile.payment.R;
+import androidx.appcompat.app.AppCompatActivity;
 import net.optile.payment.core.Localization;
 import net.optile.payment.ui.PaymentResult;
 import net.optile.payment.ui.PaymentUI;
@@ -102,24 +100,6 @@ abstract class BasePaymentActivity extends AppCompatActivity {
      */
     View getRootView() {
         return ((ViewGroup) this.findViewById(android.R.id.content)).getChildAt(0);
-    }
-
-    /**
-     * Set the action bar with a title and optional back arrow.
-     *
-     * @param title of the action bar
-     * @param homeEnabled when true show the back arrow, false hide the arrow.
-     */
-    void setActionBar(String title, boolean homeEnabled) {
-        ActionBar actionBar = getSupportActionBar();
-
-        if (actionBar == null) {
-            return;
-        }
-        actionBar.setTitle(title);
-        actionBar.setHomeButtonEnabled(homeEnabled);
-        actionBar.setDisplayHomeAsUpEnabled(homeEnabled);
-        actionBar.setDisplayShowHomeEnabled(true);
     }
 
     /**

@@ -17,8 +17,6 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import net.optile.payment.R;
 import net.optile.payment.ui.PaymentUI;
-import net.optile.payment.ui.theme.DialogParameters;
-import net.optile.payment.util.PaymentUtils;
 
 /**
  * Message Dialog Fragment for showing a message to the user with an action button
@@ -40,6 +38,15 @@ public final class MessageDialogFragment extends ThemedDialogFragment {
         this.title = title;
     }
 
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public int getTheme() {
+        int theme = PaymentUI.getInstance().getPaymentTheme().getMessageDialogTheme();
+        return theme == 0 ? super.getTheme() : theme;
+    }
+    
     /**
      * Set the message in this message dialog that should be shown to the user
      *
@@ -63,16 +70,15 @@ public final class MessageDialogFragment extends ThemedDialogFragment {
      */
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        DialogParameters params = PaymentUI.getInstance().getPaymentTheme().getDialogParameters();
         View v = inflater.inflate(R.layout.dialogfragment_message, container, false);
-        initTitle(v, params);
-        initMessage(v, params);
-        initImage(v, params);
-        initButtons(v, params);
+        initTitle(v);
+        initMessage(v);
+        initImage(v);
+        initButtons(v);
         return v;
     }
 
-    private void initImage(View rootView, DialogParameters params) {
+    private void initImage(View rootView) {
 
         View layout = rootView.findViewById(R.id.layout_image);
         if (imageResId == 0) {
@@ -80,28 +86,25 @@ public final class MessageDialogFragment extends ThemedDialogFragment {
             return;
         }
         layout.setVisibility(View.VISIBLE);
-        initImageLabel(rootView.findViewById(R.id.text_imageprefix), imagePrefix, params);
-        initImageLabel(rootView.findViewById(R.id.text_imagesuffix), imageSuffix, params);
+        initImageLabel(rootView.findViewById(R.id.text_imageprefix), imagePrefix);
+        initImageLabel(rootView.findViewById(R.id.text_imagesuffix), imageSuffix);
         ImageView view = rootView.findViewById(R.id.image_logo);
         view.setVisibility(View.VISIBLE);
         view.setImageResource(imageResId);
     }
 
-    private void initImageLabel(TextView tv, String label, DialogParameters params) {
+    private void initImageLabel(TextView tv, String label) {
         if (TextUtils.isEmpty(label)) {
             tv.setVisibility(View.GONE);
             return;
         }
-        PaymentUtils.setTextAppearance(tv, params.getImageLabelStyle());
         tv.setVisibility(View.VISIBLE);
         tv.setText(label);
     }
 
 
-    private void initTitle(View rootView, DialogParameters params) {
+    private void initTitle(View rootView) {
         TextView tv = rootView.findViewById(R.id.text_title);
-        PaymentUtils.setTextAppearance(tv, params.getMessageTitleStyle());
-
         if (TextUtils.isEmpty(title)) {
             tv.setVisibility(View.GONE);
             return;
@@ -110,13 +113,9 @@ public final class MessageDialogFragment extends ThemedDialogFragment {
         tv.setText(title);
     }
 
-    private void initMessage(View rootView, DialogParameters params) {
+    private void initMessage(View rootView) {
         TextView tvTitle = rootView.findViewById(R.id.text_message_title);
         TextView tvNoTitle = rootView.findViewById(R.id.text_message_notitle);
-
-        PaymentUtils.setTextAppearance(tvTitle, params.getMessageDetailsStyle());
-        PaymentUtils.setTextAppearance(tvNoTitle, params.getMessageDetailsNoTitleStyle());
-
         if (TextUtils.isEmpty(title)) {
             tvTitle.setVisibility(View.GONE);
             initMessage(tvNoTitle);
@@ -127,7 +126,6 @@ public final class MessageDialogFragment extends ThemedDialogFragment {
     }
 
     private void initMessage(TextView textView) {
-
         if (TextUtils.isEmpty(message)) {
             textView.setVisibility(View.GONE);
             return;

@@ -11,7 +11,7 @@
 
         <activity
             android:name=".settings.SettingsActivity"
-            android:theme="@style/PaymentThemeDarkActionBar.PaymentList">
+            android:theme="@style/SettingsTheme">
 
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>

@@ -12,7 +12,6 @@ import static net.optile.payment.core.Localization.CHARGE_INTERRUPTED;
 import static net.optile.payment.core.Localization.ERROR_DEFAULT;
 
 import android.text.TextUtils;
-import net.optile.payment.R;
 import net.optile.payment.core.Localization;
 import net.optile.payment.core.PaymentError;
 import net.optile.payment.core.PaymentException;
