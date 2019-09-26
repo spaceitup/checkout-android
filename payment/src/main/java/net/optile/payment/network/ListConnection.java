@@ -141,24 +141,24 @@ public final class ListConnection extends BaseConnection {
     }
 
     /**
-     * Load the language file given the URL
+     * Load the language file given the URL and store it in the provided properties file.
      *
+     * @param file in which the language entries should be loaded
      * @param url containing the address of the remote language file
      * @return Properties object containing the language entries
      */
-    public Properties loadLanguageFile(URL url) throws PaymentException {
+    public Properties loadLanguageFile(Properties file, URL url) throws PaymentException {
         if (url == null) {
             throw new IllegalArgumentException("url cannot be null");
         }
-        Properties lang = new Properties();
         HttpURLConnection conn = null;
         try {
             conn = createGetConnection(url);
             try (InputStream in = conn.getInputStream();
                 InputStreamReader ir = new InputStreamReader(in)) {
-                lang.load(ir);
+                file.load(ir);
             }
-            return lang;
+            return file;
         } catch (IOException e) {
             throw createPaymentException(CONN_ERROR, e);
         } finally {

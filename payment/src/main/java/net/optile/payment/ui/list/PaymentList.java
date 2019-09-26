@@ -8,11 +8,11 @@
 
 package net.optile.payment.ui.list;
 
-import static net.optile.payment.core.Localization.BUTTON_BACK;
-import static net.optile.payment.core.Localization.LIST_HEADER_NETWORKS;
-import static net.optile.payment.core.Localization.LIST_HEADER_OTHERACCOUNTS;
-import static net.optile.payment.core.Localization.LIST_HEADER_PRESET;
-import static net.optile.payment.core.Localization.LIST_HEADER_SAVEDACCOUNTS;
+import static net.optile.payment.localization.LocalizationKey.BUTTON_BACK;
+import static net.optile.payment.localization.LocalizationKey.LIST_HEADER_NETWORKS;
+import static net.optile.payment.localization.LocalizationKey.LIST_HEADER_OTHERACCOUNTS;
+import static net.optile.payment.localization.LocalizationKey.LIST_HEADER_PRESET;
+import static net.optile.payment.localization.LocalizationKey.LIST_HEADER_SAVEDACCOUNTS;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -28,7 +28,7 @@ import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.TextView;
 import net.optile.payment.R;
-import net.optile.payment.core.Localization;
+import net.optile.payment.localization.Localization;
 import net.optile.payment.ui.dialog.DialogHelper;
 import net.optile.payment.ui.model.AccountCard;
 import net.optile.payment.ui.model.NetworkCard;

@@ -15,7 +15,7 @@ import android.support.annotation.RawRes;
 import android.text.TextUtils;
 import android.util.Patterns;
 import net.optile.payment.R;
-import net.optile.payment.core.Localization;
+import net.optile.payment.localization.Localization;
 import net.optile.payment.model.PresetAccount;
 import net.optile.payment.ui.page.ChargePaymentActivity;
 import net.optile.payment.ui.page.PaymentListActivity;

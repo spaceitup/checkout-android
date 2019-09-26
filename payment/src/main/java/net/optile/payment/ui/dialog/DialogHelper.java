@@ -8,14 +8,14 @@
 
 package net.optile.payment.ui.dialog;
 
-import static net.optile.payment.core.Localization.ACCOUNTHINT_TEXT;
-import static net.optile.payment.core.Localization.ACCOUNTHINT_TITLE;
+import static net.optile.payment.localization.LocalizationKey.ACCOUNTHINT_TEXT;
+import static net.optile.payment.localization.LocalizationKey.ACCOUNTHINT_TITLE;
 
 import android.support.design.widget.Snackbar;
 import android.view.View;
 import android.widget.TextView;
 import net.optile.payment.R;
-import net.optile.payment.core.Localization;
+import net.optile.payment.localization.Localization;
 import net.optile.payment.core.PaymentInputType;
 import net.optile.payment.core.PaymentNetworkCodes;
 import net.optile.payment.ui.PaymentUI;

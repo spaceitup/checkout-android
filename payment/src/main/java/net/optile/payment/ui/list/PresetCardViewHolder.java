@@ -8,7 +8,7 @@
 
 package net.optile.payment.ui.list;
 
-import static net.optile.payment.core.Localization.LIST_PRESET_TEXT;
+import static net.optile.payment.localization.LocalizationKey.LIST_PRESET_TEXT;
 
 import android.support.v7.widget.RecyclerView.ViewHolder;
 import android.view.LayoutInflater;
@@ -16,7 +16,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 import net.optile.payment.R;
-import net.optile.payment.core.Localization;
+import net.optile.payment.localization.Localization;
 import net.optile.payment.model.AccountMask;
 import net.optile.payment.ui.model.PaymentCard;
 import net.optile.payment.ui.model.PresetCard;

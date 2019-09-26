@@ -6,7 +6,19 @@
  * See the LICENSE file for more information.
  */
 
-package net.optile.payment.core;
+package net.optile.payment.localization;
+
+import static net.optile.payment.localization.LocalizationKey.ACCOUNTHINT_TITLE;
+import static net.optile.payment.localization.LocalizationKey.BUTTON_CANCEL;
+import static net.optile.payment.localization.LocalizationKey.BUTTON_RETRY;
+import static net.optile.payment.localization.LocalizationKey.BUTTON_UPDATE;
+import static net.optile.payment.localization.LocalizationKey.CHARGE_INTERRUPTED;
+import static net.optile.payment.localization.LocalizationKey.CHARGE_TEXT;
+import static net.optile.payment.localization.LocalizationKey.CHARGE_TITLE;
+import static net.optile.payment.localization.LocalizationKey.ERROR_CONNECTION;
+import static net.optile.payment.localization.LocalizationKey.ERROR_DEFAULT;
+import static net.optile.payment.localization.LocalizationKey.LIST_HEADER_NETWORKS;
+import static net.optile.payment.localization.LocalizationKey.LIST_TITLE;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -23,41 +35,15 @@ import net.optile.payment.model.Interaction;
  * If the shared file is not set or does not contain the translation, then it will try to obtain the translation from the local translations map.
  */
 public final class Localization {
-
-    // all entries starting with pmlocal originate from the local strings.xml file
-    public final static String AUTO_REGISTRATION = "autoRegistrationLabel";
-    public final static String ALLOW_RECURRENCE = "allowRecurrenceLabel";
-    public final static String NETWORK_LABEL = "network.label";
-
-    public final static String BUTTON_BACK = "button.back.label";
-    public final static String BUTTON_CANCEL = "pmlocal.button.cancel";
-    public final static String BUTTON_UPDATE = "pmlocal.button.update";
-    public final static String BUTTON_RETRY = "pmlocal.button.retry";
-
-    public final static String LIST_TITLE = "pmlocal.list.title";
-    public final static String LIST_PRESET_TEXT = "networks.preset.text";
-    public final static String LIST_HEADER_PRESET = "networks.preset.title";
-    public final static String LIST_HEADER_SAVEDACCOUNTS = "savedAccountsLabel";
-    public final static String LIST_HEADER_OTHERACCOUNTS = "addNewAccountLabel";
-    public final static String LIST_HEADER_NETWORKS = "pmlocal.list.header.networks";
-
-    public final static String CHARGE_TITLE = "pmlocal.charge.title";
-    public final static String CHARGE_TEXT = "pmlocal.charge.text";
-    public final static String CHARGE_INTERRUPTED = "pmlocal.charge.interupted";
-
-    public final static String ERROR_CONNECTION = "pmlocal.error.connection";
-    public final static String ERROR_DEFAULT = "pmlocal.error.default";
-
-    public final static String ACCOUNTHINT_TITLE = "title";
-    public final static String ACCOUNTHINT_TEXT = "text";
-
     private final Map<String, Properties> files;
     private final Map<String, String> localTranslations;
     private Properties sharedFile;
+    private String localizationId;
 
     private Localization() {
         this.files = new HashMap<>();
         this.localTranslations = new HashMap<>();
+        this.sharedFile = new Properties();
     }
 
     /**
@@ -89,7 +75,7 @@ public final class Localization {
      * @return the translation or null if not found
      */
     public static String translateError(String fileName, String error) {
-        return translate(fileName, "error." + error, null);
+        return translate(fileName, LocalizationKey.errorKey(error), null);
     }
 
     /**
@@ -99,8 +85,7 @@ public final class Localization {
      * @return translation or null if not found
      */
     public static String translateInteraction(Interaction interaction) {
-        String key = "interaction." + interaction.getCode() + "." + interaction.getReason();
-        return getInstance().getTranslation(key, null);
+        return getInstance().getTranslation(LocalizationKey.interactionKey(interaction), null);
     }
 
     /**
@@ -111,7 +96,7 @@ public final class Localization {
      * @return translation or null if not found
      */
     public static String translateAccountLabel(String fileName, String account) {
-        return translate(fileName, "account." + account + ".label", null);
+        return translate(fileName, LocalizationKey.accountLabelKey(account), null);
     }
 
     /**
@@ -123,8 +108,7 @@ public final class Localization {
      * @return the translation or null if not found
      */
     public static String translateAccountHint(String fileName, String account, String type) {
-        String key = "account." + account + "." + "hint." + "where." + type;
-        return translate(fileName, key, null);
+        return translate(fileName, LocalizationKey.accountHintKey(account, type), null);
     }
 
     /**
@@ -219,20 +203,32 @@ public final class Localization {
         localTranslations.put(ERROR_DEFAULT, context.getString(R.string.pmlocal_error_default));
     }
 
-    public void clear() {
-        files.clear();
-        localTranslations.clear();
-        sharedFile = null;
+    public void setLocalizationId(String localizationId) {
+        this.localizationId = localizationId;
     }
 
-    public void setSharedFile(Properties sharedFile) {
-        this.sharedFile = sharedFile;
+    public String getLocalizationId() {
+        return localizationId;
+    }
+        
+    public void clearAll() {
+        localTranslations.clear();
+        clearFiles();
+    }
+
+    public void clearFiles() {
+        files.clear();
+        sharedFile = null;
     }
 
     public boolean hasSharedFile() {
         return sharedFile != null;
     }
 
+    public void setSharedFile(Properties sharedFile) {
+        this.sharedFile = sharedFile;
+    }
+    
     public void putFile(String fileName, Properties properties) {
         files.put(fileName, properties);
     }
