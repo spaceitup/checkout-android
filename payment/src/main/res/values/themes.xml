@@ -7,7 +7,6 @@
 
     <style name="PaymentTheme.PaymentList">
         <item name="android:windowBackground">@color/pmcolor_list</item> 
-
         <item name="paymentListToolbarTheme">@style/PaymentToolbarTheme</item>
         <item name="paymentListToolbarTitleStyle">@style/PaymentText.Medium.Bold</item>
         <item name="paymentListEmptyLabelStyle">@style/PaymentText.Small</item>
@@ -36,7 +35,6 @@
     </style>
 
     <style name="PaymentTheme.ChargePayment">
-        <item name="snackbarStyle">@style/PaymentSnackBarStyle</item>
         <item name="android:windowBackground">@color/pmcolor_background</item>
         <item name="colorPrimaryDark">@color/pmprogress_accent</item>
         <item name="progressSendBackground">@color/pmcolor_background</item>

@@ -3,6 +3,7 @@
               android:id="@+id/layout_buttons"
               android:layout_width="match_parent"
               android:layout_height="wrap_content"
+              android:layout_marginHorizontal="@dimen/pmborder_xsmall"
               android:orientation="horizontal"
               android:gravity="end">
 

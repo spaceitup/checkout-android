@@ -82,11 +82,12 @@
         <item name="android:textSize">16sp</item>
     </style>
 
-    <style name="WidgetTextInputStyle" parent="Widget.MaterialComponents.TextInputLayout.FilledBox">
+    <style name="WidgetTextInputStyle" parent="@style/Widget.MaterialComponents.TextInputLayout.FilledBox">
         <item name="hintTextAppearance">@style/PaymentText.InputLayoutHint</item>
         <item name="errorTextAppearance">@style/PaymentText.InputLayoutError</item>
         <item name="boxBackgroundColor">@color/pmcolor_background</item>
         <item name="android:textColorHint">@color/pmcolor_controlnormal</item>
+        <item name="hintTextColor">@color/pmtext_dark</item>
         <item name="errorTextColor">@color/pmtext_error</item>
         <item name="errorIconDrawable">@null</item>        
     </style>
@@ -95,10 +96,6 @@
         <item name="android:textAppearance">@style/PaymentText.InputEditText</item>
     </style>
 
-    <style name="PaymentSnackBarStyle" parent="Widget.MaterialComponents.Snackbar">
-        <item name="android:textAppearance">@style/PaymentText.Small</item>        
-    </style>
-    
     <style name="PaymentCardStyle" parent="Widget.MaterialComponents.CardView">
         <item name="cardBackgroundColor">@color/pmcolor_background</item>
         <item name="cardCornerRadius">@dimen/pmcard_radius</item>
@@ -107,6 +104,7 @@
     <style name="WidgetButtonStyle" parent="@style/Widget.MaterialComponents.Button.UnelevatedButton">
         <item name="android:textAllCaps">false</item>
         <item name="android:textAppearance">@style/PaymentText.Medium.Bold.Light</item>        
+        <item name="android:paddingVertical">@dimen/pmborder_small</item>        
     </style>
 
     <style name="DialogButtonStyle" parent="@style/Widget.MaterialComponents.Button.TextButton.Dialog">

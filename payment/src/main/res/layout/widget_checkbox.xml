@@ -10,10 +10,8 @@
 
     <LinearLayout
         android:id="@+id/layout_viewholder"
-        android:layout_width="@dimen/pmwidget_checkboxwidth"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:gravity="end"
-        android:layout_marginEnd="@dimen/pmwidget_padding"
         android:orientation="horizontal"/>
 
     <TextView

@@ -149,7 +149,7 @@ public final class ChargePaymentActivity extends BasePaymentActivity implements 
      */
     @Override
     public void onBackPressed() {
-        if (!presenter.onBackPressed()) {
+        if (presenter.onBackPressed()) {
             return;
         }
         setUserClosedPageResult();
