@@ -8,9 +8,9 @@
 
 package net.optile.payment.ui.page;
 
-import static net.optile.payment.core.Localization.BUTTON_CANCEL;
-import static net.optile.payment.core.Localization.BUTTON_RETRY;
-import static net.optile.payment.core.Localization.ERROR_CONNECTION;
+import static net.optile.payment.localization.LocalizationKey.BUTTON_CANCEL;
+import static net.optile.payment.localization.LocalizationKey.BUTTON_RETRY;
+import static net.optile.payment.localization.LocalizationKey.ERROR_CONNECTION;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -18,7 +18,7 @@ import android.text.TextUtils;
 import android.view.View;
 import android.view.ViewGroup;
 import androidx.appcompat.app.AppCompatActivity;
-import net.optile.payment.core.Localization;
+import net.optile.payment.localization.Localization;
 import net.optile.payment.ui.PaymentResult;
 import net.optile.payment.ui.PaymentUI;
 import net.optile.payment.ui.dialog.DialogHelper;

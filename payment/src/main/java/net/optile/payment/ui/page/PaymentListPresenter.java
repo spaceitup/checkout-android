@@ -8,13 +8,13 @@
 
 package net.optile.payment.ui.page;
 
-import static net.optile.payment.core.Localization.ERROR_DEFAULT;
+import static net.optile.payment.localization.LocalizationKey.ERROR_DEFAULT;
 
 import java.net.URL;
 import java.util.Map;
 
 import android.text.TextUtils;
-import net.optile.payment.core.Localization;
+import net.optile.payment.localization.Localization;
 import net.optile.payment.core.PaymentError;
 import net.optile.payment.core.PaymentException;
 import net.optile.payment.form.Operation;

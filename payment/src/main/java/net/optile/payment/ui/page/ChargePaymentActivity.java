@@ -8,8 +8,8 @@
 
 package net.optile.payment.ui.page;
 
-import static net.optile.payment.core.Localization.CHARGE_TEXT;
-import static net.optile.payment.core.Localization.CHARGE_TITLE;
+import static net.optile.payment.localization.LocalizationKey.CHARGE_TEXT;
+import static net.optile.payment.localization.LocalizationKey.CHARGE_TITLE;
 
 import java.net.URL;
 import java.util.Map;
@@ -21,7 +21,7 @@ import android.os.Bundle;
 import androidx.annotation.VisibleForTesting;
 import androidx.test.espresso.IdlingResource;
 import net.optile.payment.R;
-import net.optile.payment.core.Localization;
+import net.optile.payment.localization.Localization;
 import net.optile.payment.form.Operation;
 import net.optile.payment.model.PresetAccount;
 import net.optile.payment.ui.PaymentResult;

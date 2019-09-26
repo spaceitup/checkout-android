@@ -8,7 +8,7 @@
 
 package net.optile.payment.ui.page;
 
-import static net.optile.payment.core.Localization.LIST_TITLE;
+import static net.optile.payment.localization.LocalizationKey.LIST_TITLE;
 
 import java.util.Map;
 
@@ -23,7 +23,7 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.DialogFragment;
 import androidx.test.espresso.IdlingResource;
 import net.optile.payment.R;
-import net.optile.payment.core.Localization;
+import net.optile.payment.localization.Localization;
 import net.optile.payment.form.Operation;
 import net.optile.payment.ui.PaymentResult;
 import net.optile.payment.ui.dialog.ThemedDialogFragment;

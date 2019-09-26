@@ -8,7 +8,7 @@
 
 package net.optile.payment.ui.list;
 
-import static net.optile.payment.core.Localization.BUTTON_UPDATE;
+import static net.optile.payment.localization.LocalizationKey.BUTTON_UPDATE;
 
 import java.net.URL;
 import java.util.ArrayList;
@@ -32,7 +32,7 @@ import android.widget.TextView;
 import androidx.fragment.app.DialogFragment;
 import androidx.recyclerview.widget.RecyclerView;
 import net.optile.payment.R;
-import net.optile.payment.core.Localization;
+import net.optile.payment.localization.Localization;
 import net.optile.payment.core.PaymentInputType;
 import net.optile.payment.model.AccountMask;
 import net.optile.payment.model.InputElement;

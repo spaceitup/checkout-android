@@ -8,14 +8,13 @@
  * This software may not be copied, used or distributed unless agreement
  * has been received in full.
  */
-package net.optile.payment.core;
+package net.optile.payment.localization;
 
+import org.junit.Test;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
-
 import java.util.Properties;
-
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -24,6 +23,7 @@ import org.robolectric.RobolectricTestRunner;
 import android.content.Context;
 import androidx.test.core.app.ApplicationProvider;
 import net.optile.payment.R;
+import net.optile.payment.localization.Localization;
 
 @RunWith(RobolectricTestRunner.class)
 public class LocalizationTest {
@@ -31,7 +31,7 @@ public class LocalizationTest {
     @Before
     public void before() {
         Localization loc = Localization.getInstance();
-        loc.clear();
+        loc.clearAll();
     }
     
     @Test
@@ -45,16 +45,16 @@ public class LocalizationTest {
         Context context = ApplicationProvider.getApplicationContext();        
         Localization loc = Localization.getInstance();
         loc.loadLocalTranslations(context);
-        assertNotNull(loc.translate(Localization.BUTTON_CANCEL));
-        assertNotNull(loc.translate(Localization.BUTTON_RETRY));
-        assertNotNull(loc.translate(Localization.BUTTON_UPDATE));
-        assertNotNull(loc.translate(Localization.LIST_TITLE));
-        assertNotNull(loc.translate(Localization.LIST_HEADER_NETWORKS));
-        assertNotNull(loc.translate(Localization.CHARGE_TITLE));
-        assertNotNull(loc.translate(Localization.CHARGE_TEXT));
-        assertNotNull(loc.translate(Localization.CHARGE_INTERRUPTED));
-        assertNotNull(loc.translate(Localization.ERROR_CONNECTION));
-        assertNotNull(loc.translate(Localization.ERROR_DEFAULT));
+        assertNotNull(loc.translate(LocalizationKey.BUTTON_CANCEL));
+        assertNotNull(loc.translate(LocalizationKey.BUTTON_RETRY));
+        assertNotNull(loc.translate(LocalizationKey.BUTTON_UPDATE));
+        assertNotNull(loc.translate(LocalizationKey.LIST_TITLE));
+        assertNotNull(loc.translate(LocalizationKey.LIST_HEADER_NETWORKS));
+        assertNotNull(loc.translate(LocalizationKey.CHARGE_TITLE));
+        assertNotNull(loc.translate(LocalizationKey.CHARGE_TEXT));
+        assertNotNull(loc.translate(LocalizationKey.CHARGE_INTERRUPTED));
+        assertNotNull(loc.translate(LocalizationKey.ERROR_CONNECTION));
+        assertNotNull(loc.translate(LocalizationKey.ERROR_DEFAULT));
     }
 
     @Test
@@ -144,8 +144,8 @@ public class LocalizationTest {
         loc.putFile(fileName, file);
 
         Properties shared = new Properties();
-        shared.put(testKey, "sharedValue");        
+        shared.put(testKey, "sharedValue");
         loc.setSharedFile(shared);
-        assertEquals(Localization.translate(fileName, Localization.LIST_TITLE, null), title);
+        assertEquals(Localization.translate(fileName, LocalizationKey.LIST_TITLE, null), title);
     }   
 }

@@ -1,7 +1,6 @@
 <resources>
-    <style name="AppButton" parent="PaymentThemeButton">
+    <style name="AppButton">
         <item name="android:textAppearance">@style/PaymentText.Medium.Bold.Light</item>
-        <item name="android:background">@drawable/button_background</item>
     </style>
 
     <style name="SettingsTheme" parent="Theme.MaterialComponents.Light.DarkActionBar">
