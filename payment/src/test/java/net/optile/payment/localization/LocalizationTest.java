@@ -42,20 +42,11 @@ public class LocalizationTest {
     }
 
     @Test
-    public void loadLocalTranslations() {
-        Context context = ApplicationProvider.getApplicationContext();        
+    public void setLocalTranslations() {
         Localization loc = Localization.getInstance();
-        loc.loadLocalTranslations(context);
-        assertNotNull(loc.translate(LocalizationKey.BUTTON_CANCEL));
-        assertNotNull(loc.translate(LocalizationKey.BUTTON_RETRY));
-        assertNotNull(loc.translate(LocalizationKey.BUTTON_UPDATE));
-        assertNotNull(loc.translate(LocalizationKey.LIST_TITLE));
-        assertNotNull(loc.translate(LocalizationKey.LIST_HEADER_NETWORKS));
-        assertNotNull(loc.translate(LocalizationKey.CHARGE_TITLE));
-        assertNotNull(loc.translate(LocalizationKey.CHARGE_TEXT));
-        assertNotNull(loc.translate(LocalizationKey.CHARGE_INTERRUPTED));
-        assertNotNull(loc.translate(LocalizationKey.ERROR_CONNECTION));
-        assertNotNull(loc.translate(LocalizationKey.ERROR_DEFAULT));
+        LocalTranslations trans = new LocalTranslations();
+        loc.setLocalTranslations(trans);
+        assertTrue(loc.hasLocalTranslations());
     }
 
     @Test
@@ -138,7 +129,9 @@ public class LocalizationTest {
         String title = context.getString(R.string.pmlocal_list_title);
 
         Localization loc = Localization.getInstance();
-        loc.loadLocalTranslations(context);
+        LocalTranslations trans = new LocalTranslations();
+        trans.load(context);
+        loc.setLocalTranslations(trans);
 
         Properties file = new Properties();
         file.put(testKey, "fileValue");

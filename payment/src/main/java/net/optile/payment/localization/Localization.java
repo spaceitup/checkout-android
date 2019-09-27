@@ -30,20 +30,21 @@ import net.optile.payment.R;
 import net.optile.payment.model.Interaction;
 
 /**
- * Class holding the localization files and local translations.
- * If the translation is not available in a localization file with the given name, it will try to obtain the translation from the shared file.
- * If the shared file is not set or does not contain the translation, then it will try to obtain the translation from the local translations map.
+ * Class holding the localization files and local translations..
+ *
+ * This class implements a fallback mechanism with the following logic:
+ * 1. If the translation is not available in a localization file with the given name, it will try to obtain the translation from the shared file.
+ * 2. If the shared file is not set or does not contain the translation, then it will try to obtain the translation from the local translations.
+ * 3. If the local translations have not been set or does not contain the translation then the default value will be returned.
  */
 public final class Localization {
     private final Map<String, Properties> files;
-    private final Map<String, String> localTranslations;
+    private LocalTranslations localTranslations;
     private Properties sharedFile;
     private String localizationId;
-
+    
     private Localization() {
         this.files = new HashMap<>();
-        this.localTranslations = new HashMap<>();
-        this.sharedFile = new Properties();
     }
 
     /**
@@ -53,6 +54,48 @@ public final class Localization {
      */
     public static Localization getInstance() {
         return InstanceHolder.INSTANCE;
+    }
+
+    public void setLocalizationId(String localizationId) {
+        this.localizationId = localizationId;
+    }
+
+    public String getLocalizationId() {
+        return localizationId;
+    }
+        
+    public void clearAll() {
+        clearFiles();
+        localTranslations = null;
+    }
+
+    public void clearFiles() {
+        files.clear();
+        sharedFile = null;
+    }
+
+    public boolean hasLocalTranslations() {
+        return localTranslations != null;
+    }
+    
+    public void setLocalTranslations(LocalTranslations localTranslations) {
+        this.localTranslations = localTranslations;
+    }
+
+    public boolean hasSharedFile() {
+        return sharedFile != null;
+    }
+
+    public void setSharedFile(Properties sharedFile) {
+        this.sharedFile = sharedFile;
+    }
+
+    public boolean hasFile(String fileName) {
+        return files.containsKey(fileName);
+    }
+    
+    public void putFile(String fileName, Properties properties) {
+        files.put(fileName, properties);
     }
 
     /**
@@ -175,66 +218,13 @@ public final class Localization {
      */
     public String getTranslation(String key, String defaultValue) {
         String value = getValue(sharedFile, key);
-        if (TextUtils.isEmpty(value)) {
-            value = localTranslations.get(key);
+        if (!TextUtils.isEmpty(value)) {
+            return value;
         }
-        return TextUtils.isEmpty(value) ? defaultValue : value;
-    }
-
-    /**
-     * Load the local translations into this Localization Object.
-     * The local translations serve as a fallback when the translation could not be found in any of the files.
-     *
-     * @param context used to load the local translations
-     */
-    public void loadLocalTranslations(Context context) {
-        if (localTranslations.size() != 0) {
-            return;
+        if (localTranslations == null) {
+            return defaultValue;
         }
-        localTranslations.put(BUTTON_CANCEL, context.getString(R.string.pmlocal_button_cancel));
-        localTranslations.put(BUTTON_RETRY, context.getString(R.string.pmlocal_button_retry));
-        localTranslations.put(BUTTON_UPDATE, context.getString(R.string.pmlocal_button_update));
-        localTranslations.put(LIST_TITLE, context.getString(R.string.pmlocal_list_title));
-        localTranslations.put(LIST_HEADER_NETWORKS, context.getString(R.string.pmlocal_list_header_networks));
-        localTranslations.put(CHARGE_TITLE, context.getString(R.string.pmlocal_charge_title));
-        localTranslations.put(CHARGE_TEXT, context.getString(R.string.pmlocal_charge_text));
-        localTranslations.put(CHARGE_INTERRUPTED, context.getString(R.string.pmlocal_charge_interrupted));
-        localTranslations.put(ERROR_CONNECTION, context.getString(R.string.pmlocal_error_connection));
-        localTranslations.put(ERROR_DEFAULT, context.getString(R.string.pmlocal_error_default));
-    }
-
-    public void setLocalizationId(String localizationId) {
-        this.localizationId = localizationId;
-    }
-
-    public String getLocalizationId() {
-        return localizationId;
-    }
-        
-    public void clearAll() {
-        localTranslations.clear();
-        clearFiles();
-    }
-
-    public void clearFiles() {
-        files.clear();
-        sharedFile = null;
-    }
-
-    public boolean hasSharedFile() {
-        return sharedFile != null;
-    }
-
-    public void setSharedFile(Properties sharedFile) {
-        this.sharedFile = sharedFile;
-    }
-    
-    public void putFile(String fileName, Properties properties) {
-        files.put(fileName, properties);
-    }
-
-    public boolean hasFile(String fileName) {
-        return files.containsKey(fileName);
+        return localTranslations.getTranslation(key, defaultValue);
     }
 
     private String getValue(Properties prop, String key) {
