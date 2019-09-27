@@ -19,8 +19,8 @@ import static net.optile.payment.localization.LocalizationKey.ERROR_DEFAULT;
 import static net.optile.payment.localization.LocalizationKey.LIST_HEADER_NETWORKS;
 import static net.optile.payment.localization.LocalizationKey.LIST_TITLE;
 
-import java.util.Map;
 import java.util.HashMap;
+import java.util.Map;
 
 import android.content.Context;
 import android.text.TextUtils;

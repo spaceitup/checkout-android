@@ -12,10 +12,10 @@ import static net.optile.payment.localization.LocalizationKey.CHARGE_INTERRUPTED
 import static net.optile.payment.localization.LocalizationKey.ERROR_DEFAULT;
 
 import android.text.TextUtils;
-import net.optile.payment.localization.Localization;
 import net.optile.payment.core.PaymentError;
 import net.optile.payment.core.PaymentException;
 import net.optile.payment.form.Operation;
+import net.optile.payment.localization.Localization;
 import net.optile.payment.model.Interaction;
 import net.optile.payment.model.InteractionCode;
 import net.optile.payment.model.ListResult;

@@ -8,13 +8,6 @@
 
 package net.optile.payment.localization;
 
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Properties;
-
-import android.content.Context;
-import android.text.TextUtils;
-import net.optile.payment.R;
 import net.optile.payment.model.Interaction;
 
 /**
