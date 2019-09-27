@@ -15,9 +15,10 @@ import com.google.android.material.snackbar.Snackbar;
 
 import android.view.View;
 import net.optile.payment.R;
-import net.optile.payment.localization.Localization;
 import net.optile.payment.core.PaymentInputType;
 import net.optile.payment.core.PaymentNetworkCodes;
+import net.optile.payment.localization.Localization;
+import net.optile.payment.ui.PaymentUI;
 import net.optile.payment.ui.model.PaymentCard;
 
 /**
