@@ -20,14 +20,12 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
-import java.util.Map;
-import java.util.concurrent.ConcurrentHashMap;
+import java.util.Properties;
 
 import com.google.gson.JsonParseException;
 
 import android.net.Uri;
 import android.text.TextUtils;
-import net.optile.payment.core.LanguageFile;
 import net.optile.payment.core.PaymentException;
 import net.optile.payment.model.ListResult;
 
@@ -40,8 +38,6 @@ import net.optile.payment.model.ListResult;
  * at the same time.
  */
 public final class ListConnection extends BaseConnection {
-
-    private final static Map<String, LanguageFile> languageCache = new ConcurrentHashMap<>();
 
     /**
      * Create a new payment session through the Payment API. Remind this is not
@@ -145,39 +141,24 @@ public final class ListConnection extends BaseConnection {
     }
 
     /**
-     * Load the language file given the URL
+     * Load the language file given the URL and store it in the provided properties file.
      *
+     * @param file in which the language entries should be loaded
      * @param url containing the address of the remote language file
-     * @param cache when set to true, obtain from and cache the LanguageFile for recurring use
-     * @return LanguageFile object containing the language entries
+     * @return Properties object containing the language entries
      */
-    public LanguageFile loadLanguageFile(URL url, boolean cache) throws PaymentException {
+    public Properties loadLanguageFile(Properties file, URL url) throws PaymentException {
         if (url == null) {
             throw new IllegalArgumentException("url cannot be null");
         }
-        LanguageFile lang;
-
-        if (cache) {
-            lang = languageCache.get(url.toString());
-
-            if (lang != null) {
-                return lang;
-            }
-        }
-        lang = new LanguageFile();
         HttpURLConnection conn = null;
-
         try {
             conn = createGetConnection(url);
-
             try (InputStream in = conn.getInputStream();
                 InputStreamReader ir = new InputStreamReader(in)) {
-                lang.getProperties().load(ir);
+                file.load(ir);
             }
-            if (cache) {
-                languageCache.put(url.toString(), lang);
-            }
-            return lang;
+            return file;
         } catch (IOException e) {
             throw createPaymentException(CONN_ERROR, e);
         } finally {

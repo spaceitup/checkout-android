@@ -8,6 +8,8 @@
 
 package net.optile.payment.ui.list;
 
+import static net.optile.payment.localization.LocalizationKey.BUTTON_UPDATE;
+
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -30,8 +32,8 @@ import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
 import net.optile.payment.R;
-import net.optile.payment.core.LanguageFile;
 import net.optile.payment.core.PaymentInputType;
+import net.optile.payment.localization.Localization;
 import net.optile.payment.model.AccountMask;
 import net.optile.payment.model.InputElement;
 import net.optile.payment.model.PaymentMethod;
@@ -249,15 +251,12 @@ public abstract class PaymentCardViewHolder extends RecyclerView.ViewHolder {
 
     void bindElementWidgets(PaymentCard card) {
         FormWidget widget;
-        LanguageFile lang = card.getLang();
-
         for (InputElement element : card.getInputElements()) {
             widget = getFormWidget(element.getName());
-
             if (widget instanceof SelectWidget) {
                 bindSelectWidget((SelectWidget) widget, element);
             } else if (widget instanceof TextInputWidget) {
-                bindTextInputWidget((TextInputWidget) widget, card.getCode(), element, lang);
+                bindTextInputWidget((TextInputWidget) widget, card.getCode(), element);
             }
         }
     }
@@ -293,10 +292,10 @@ public abstract class PaymentCardViewHolder extends RecyclerView.ViewHolder {
         widget.setSelectOptions(element.getOptions());
     }
 
-    void bindTextInputWidget(TextInputWidget widget, String code, InputElement element, LanguageFile lang) {
+    void bindTextInputWidget(TextInputWidget widget, String code, InputElement element) {
         WidgetParameters params = adapter.getPaymentTheme().getWidgetParameters();
         int hintDrawable = params.getHintDrawable();
-        boolean visible = hintDrawable != 0 && lang.containsAccountHint(widget.getName());
+        boolean visible = hintDrawable != 0 && Localization.hasAccountHint(code, widget.getName());
 
         bindIconResource(widget);
         widget.setLabel(element.getLabel());
@@ -318,13 +317,13 @@ public abstract class PaymentCardViewHolder extends RecyclerView.ViewHolder {
         if (widget == null) {
             return;
         }
-        LanguageFile pageLang = adapter.getPageLanguageFile();
+        String code = card.getCode();
         bindIconResource(widget);
         widget.setMonthInputElement(card.getInputElement(PaymentInputType.EXPIRY_MONTH));
         widget.setYearInputElement(card.getInputElement(PaymentInputType.EXPIRY_YEAR));
 
-        widget.setLabel(card.getLang().translateAccountLabel(name));
-        widget.setDialogButtonLabel(pageLang.translate(LanguageFile.KEY_BUTTON_UPDATE));
+        widget.setLabel(Localization.translateAccountLabel(code, name));
+        widget.setDialogButtonLabel(Localization.translate(code, BUTTON_UPDATE));
     }
 
     void bindButtonWidget(PaymentCard card) {
@@ -333,8 +332,7 @@ public abstract class PaymentCardViewHolder extends RecyclerView.ViewHolder {
         if (widget == null) {
             return;
         }
-        LanguageFile pageLang = adapter.getPageLanguageFile();
-        widget.setLabel(pageLang.translate(card.getButton()));
+        widget.setLabel(Localization.translate(card.getCode(), card.getButton()));
     }
 
     void bindLogoView(String name, URL url, boolean selected) {

@@ -8,6 +8,11 @@
 
 package net.optile.payment.ui.list;
 
+
+
+import static net.optile.payment.core.PaymentInputType.ALLOW_RECURRENCE;
+import static net.optile.payment.core.PaymentInputType.AUTO_REGISTRATION;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -19,8 +24,8 @@ import android.view.ViewGroup;
 import android.widget.TextSwitcher;
 import android.widget.TextView;
 import net.optile.payment.R;
-import net.optile.payment.core.LanguageFile;
-import net.optile.payment.core.PaymentInputType;
+import net.optile.payment.localization.Localization;
+import net.optile.payment.localization.LocalizationKey;
 import net.optile.payment.ui.model.NetworkCard;
 import net.optile.payment.ui.model.PaymentCard;
 import net.optile.payment.ui.model.PaymentNetwork;
@@ -87,9 +92,9 @@ final class NetworkCardViewHolder extends PaymentCardViewHolder {
     }
 
     private void addRegisterWidgets(PaymentTheme theme) {
-        FormWidget widget = WidgetInflater.inflateRegisterWidget(PaymentInputType.AUTO_REGISTRATION, formLayout, theme);
+        FormWidget widget = WidgetInflater.inflateRegisterWidget(AUTO_REGISTRATION, formLayout, theme);
         addWidget(widget);
-        widget = WidgetInflater.inflateRegisterWidget(PaymentInputType.ALLOW_RECURRENCE, formLayout, theme);
+        widget = WidgetInflater.inflateRegisterWidget(ALLOW_RECURRENCE, formLayout, theme);
         addWidget(widget);
     }
 
@@ -120,19 +125,15 @@ final class NetworkCardViewHolder extends PaymentCardViewHolder {
     }
 
     private void bindRegistrationWidget(PaymentNetwork network) {
-        RegisterWidget widget = (RegisterWidget) getFormWidget(PaymentInputType.AUTO_REGISTRATION);
+        RegisterWidget widget = (RegisterWidget) getFormWidget(AUTO_REGISTRATION);
         widget.setRegistrationType(network.getRegistration());
-
-        LanguageFile lang = adapter.getPageLanguageFile();
-        widget.setLabel(lang.translate(LanguageFile.KEY_AUTO_REGISTRATION, null));
+        widget.setLabel(Localization.translate(network.getCode(), LocalizationKey.AUTO_REGISTRATION, null));
     }
 
     private void bindRecurrenceWidget(PaymentNetwork network) {
-        RegisterWidget widget = (RegisterWidget) getFormWidget(PaymentInputType.ALLOW_RECURRENCE);
+        RegisterWidget widget = (RegisterWidget) getFormWidget(ALLOW_RECURRENCE);
         widget.setRegistrationType(network.getRecurrence());
-
-        LanguageFile lang = adapter.getPageLanguageFile();
-        widget.setLabel(lang.translate(LanguageFile.KEY_ALLOW_RECURRENCE, null));
+        widget.setLabel(Localization.translate(network.getCode(), LocalizationKey.ALLOW_RECURRENCE, null));
     }
 
     private void initTextSwitcher(final View parent, final PaymentTheme theme) {

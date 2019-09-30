@@ -8,6 +8,8 @@
 
 package net.optile.payment.ui.page;
 
+import static net.optile.payment.localization.LocalizationKey.LIST_TITLE;
+
 import java.util.Map;
 
 import android.app.Activity;
@@ -21,6 +23,7 @@ import android.view.MenuItem;
 import android.widget.TextView;
 import net.optile.payment.R;
 import net.optile.payment.form.Operation;
+import net.optile.payment.localization.Localization;
 import net.optile.payment.ui.PaymentResult;
 import net.optile.payment.ui.dialog.ThemedDialogFragment;
 import net.optile.payment.ui.dialog.ThemedDialogFragment.ThemedDialogListener;
@@ -78,9 +81,9 @@ public final class PaymentListActivity extends BasePaymentActivity implements Pa
         this.cachedListIndex = -1;
 
         setContentView(R.layout.activity_paymentlist);
-        setActionBar(getString(R.string.pmpage_title), true);
+        setActionBar("", true);
+        progressView = new ProgressView(getRootView(), getPaymentTheme());
 
-        initProgressView();
         initPaymentList();
         this.presenter = new PaymentListPresenter(this);
     }
@@ -167,7 +170,7 @@ public final class PaymentListActivity extends BasePaymentActivity implements Pa
             return;
         }
         progressView.setVisible(false);
-        setActionBar(getString(R.string.pmpage_title), true);
+        setActionBar(Localization.translate(LIST_TITLE), true);
         paymentList.showPaymentSession(session, cachedListIndex);
         this.cachedListIndex = -1;
 

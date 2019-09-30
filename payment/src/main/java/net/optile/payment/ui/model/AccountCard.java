@@ -13,7 +13,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-import net.optile.payment.core.LanguageFile;
 import net.optile.payment.model.AccountMask;
 import net.optile.payment.model.AccountRegistration;
 import net.optile.payment.model.InputElement;
@@ -66,14 +65,6 @@ public final class AccountCard implements PaymentCard {
     @Override
     public String getCode() {
         return account.getCode();
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public LanguageFile getLang() {
-        return network.getLang();
     }
 
     /**

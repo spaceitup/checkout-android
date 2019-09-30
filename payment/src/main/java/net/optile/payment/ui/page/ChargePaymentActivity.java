@@ -8,6 +8,9 @@
 
 package net.optile.payment.ui.page;
 
+import static net.optile.payment.localization.LocalizationKey.CHARGE_TEXT;
+import static net.optile.payment.localization.LocalizationKey.CHARGE_TITLE;
+
 import java.net.URL;
 import java.util.Map;
 
@@ -19,6 +22,7 @@ import android.support.annotation.VisibleForTesting;
 import android.support.test.espresso.IdlingResource;
 import net.optile.payment.R;
 import net.optile.payment.form.Operation;
+import net.optile.payment.localization.Localization;
 import net.optile.payment.model.PresetAccount;
 import net.optile.payment.ui.PaymentResult;
 import net.optile.payment.ui.dialog.ThemedDialogFragment;
@@ -104,8 +108,9 @@ public final class ChargePaymentActivity extends BasePaymentActivity implements 
             this.operation = bundle.getParcelable(EXTRA_OPERATION);
         }
         setContentView(R.layout.activity_chargepayment);
-        setActionBar(getString(R.string.pmprogress_sendtitle), false);
-        initProgressView();
+        progressView = new ProgressView(getRootView(), getPaymentTheme());
+        progressView.setSendLabels(Localization.translate(CHARGE_TITLE),
+                                   Localization.translate(CHARGE_TEXT));
         this.presenter = new ChargePaymentPresenter(this);
     }
 

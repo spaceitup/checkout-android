@@ -8,13 +8,16 @@
 
 package net.optile.payment.ui.dialog;
 
+import static net.optile.payment.localization.LocalizationKey.ACCOUNTHINT_TEXT;
+import static net.optile.payment.localization.LocalizationKey.ACCOUNTHINT_TITLE;
+
 import android.support.design.widget.Snackbar;
 import android.view.View;
 import android.widget.TextView;
 import net.optile.payment.R;
-import net.optile.payment.core.LanguageFile;
 import net.optile.payment.core.PaymentInputType;
 import net.optile.payment.core.PaymentNetworkCodes;
+import net.optile.payment.localization.Localization;
 import net.optile.payment.ui.PaymentUI;
 import net.optile.payment.ui.model.PaymentCard;
 import net.optile.payment.ui.theme.DialogParameters;
@@ -55,10 +58,10 @@ public class DialogHelper {
      * @param button label of the back button
      */
     public static MessageDialogFragment createHintDialog(PaymentCard card, String type, String button) {
-        LanguageFile lang = card.getLang();
+        String code = card.getCode();
         MessageDialogFragment dialog = new MessageDialogFragment();
-        dialog.setTitle(lang.translateAccountHint(type, LanguageFile.TITLE));
-        dialog.setMessage(lang.translateAccountHint(type, LanguageFile.TEXT));
+        dialog.setTitle(Localization.translateAccountHint(code, type, ACCOUNTHINT_TITLE));
+        dialog.setMessage(Localization.translateAccountHint(code, type, ACCOUNTHINT_TEXT));
         dialog.setImageResId(getHintImageResId(card, type));
         dialog.setNeutralButton(button);
         return dialog;
