@@ -96,7 +96,7 @@
         <item name="android:textAppearance">@style/PaymentText.InputEditText</item>
     </style>
 
-    <style name="PaymentCardStyle" parent="Widget.MaterialComponents.CardView">
+    <style name="PaymentCardStyle" parent="@style/Widget.MaterialComponents.CardView">
         <item name="cardBackgroundColor">@color/pmcolor_background</item>
         <item name="cardCornerRadius">@dimen/pmcard_radius</item>
     </style>
