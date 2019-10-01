@@ -5,8 +5,6 @@ PATH=$PATH:/opt/gocd/build
 
 source /opt/gocd/build/java/buildlib.sh
 
-if [ -d target ]; then
-    rm -rf target
-fi
+configure gradle
 
-run_tests gradle
+source /opt/gocd/build/java/test.sh
