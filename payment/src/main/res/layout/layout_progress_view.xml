@@ -1,59 +1,40 @@
 <?xml version="1.0" encoding="utf-8"?>
 <merge xmlns:android="http://schemas.android.com/apk/res/android">
     <LinearLayout
-        android:id="@+id/layout_load"
+        android:id="@+id/layout_progress"
         android:visibility="gone"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:padding="@dimen/pmborder_large"
         android:orientation="vertical"
         android:clickable="true"
         android:focusable="true"
         android:gravity="center">
 
         <ProgressBar
-            android:id="@+id/progressbar_load"
-            android:layout_width="@dimen/pmprogressbar_loadsize"
-            android:layout_height="@dimen/pmprogressbar_loadsize"/>
-    </LinearLayout>
+            android:id="@+id/progressbar"
+            android:indeterminateTint="?attr/progressColor"
+            android:layout_width="@dimen/pmprogressbar_size"
+            android:layout_height="@dimen/pmprogressbar_size" />
 
-    <LinearLayout
-        android:id="@+id/layout_send"
-        android:visibility="gone"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical"
-        android:gravity="center">
-
-        <LinearLayout
+        <TextView
+            android:id="@+id/text_header"
+            android:textAppearance="?attr/progressHeaderStyle"
+            android:gravity="center"
+            android:visibility="gone"            
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:padding="@dimen/pmborder_medium"
-            android:orientation="vertical"
+            android:layout_marginTop="@dimen/pmborder_large"
+            android:layout_marginBottom="@dimen/pmborder_medium" />
+
+        <TextView
+            android:id="@+id/text_info"
+            android:textAppearance="?attr/progressInfoStyle"
+            android:visibility="gone"
             android:gravity="center"
-            android:layout_gravity="center">
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
 
-            <ProgressBar
-                android:id="@+id/progressbar_send"
-                android:layout_width="@dimen/pmprogressbar_sendsize"
-                android:layout_height="@dimen/pmprogressbar_sendsize"
-                android:layout_marginBottom="@dimen/pmborder_large"/>
-
-            <TextView
-                android:id="@+id/text_sendheader"
-                android:textAppearance="?attr/progressSendHeaderStyle"
-                android:gravity="center"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="@dimen/pmborder_medium" />
-
-            <TextView
-                android:id="@+id/text_sendinfo"
-                android:textAppearance="?attr/progressSendInfoStyle"
-                android:gravity="center"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"/>
-
-        </LinearLayout>
     </LinearLayout>
 </merge>    
 

@@ -32,10 +32,8 @@
     <attr name="accountCardSubtitleStyle" type="reference"/>        
     <attr name="networkCardTitleStyle" type="reference"/>        
 
-    <attr name="progressLoadBackground" type="reference"/>        
-    <attr name="progressLoadColor" type="reference"/>
-    <attr name="progressSendBackground" type="reference"/>
-    <attr name="progressSendColor" type="reference"/>
-    <attr name="progressSendHeaderStyle" type="reference"/>
-    <attr name="progressSendInfoStyle" type="reference"/>
+    <attr name="progressBackground" type="reference"/>        
+    <attr name="progressColor" type="reference"/>
+    <attr name="progressHeaderStyle" type="reference"/>
+    <attr name="progressInfoStyle" type="reference"/>
 </resources>

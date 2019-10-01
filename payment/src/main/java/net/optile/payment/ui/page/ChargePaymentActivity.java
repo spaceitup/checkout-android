@@ -108,9 +108,9 @@ public final class ChargePaymentActivity extends BasePaymentActivity implements 
             this.operation = bundle.getParcelable(EXTRA_OPERATION);
         }
         setContentView(R.layout.activity_chargepayment);
-        progressView = new ProgressView(getRootView());
-        progressView.setSendLabels(Localization.translate(CHARGE_TITLE),
-                                   Localization.translate(CHARGE_TEXT));
+        progressView = new ProgressView(findViewById(R.id.layout_progress));
+        progressView.setLabels(Localization.translate(CHARGE_TITLE),
+                               Localization.translate(CHARGE_TEXT));
         this.presenter = new ChargePaymentPresenter(this);
     }
 
@@ -121,7 +121,6 @@ public final class ChargePaymentActivity extends BasePaymentActivity implements 
     public void onPause() {
         super.onPause();
         presenter.onStop();
-        progressView.onStop();
     }
 
     /**
@@ -165,7 +164,6 @@ public final class ChargePaymentActivity extends BasePaymentActivity implements 
         if (!active) {
             return;
         }
-        progressView.setStyle(ProgressView.SEND);
         progressView.setVisible(true);
     }
 

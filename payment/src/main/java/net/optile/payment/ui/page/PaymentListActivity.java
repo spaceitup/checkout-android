@@ -80,7 +80,7 @@ public final class PaymentListActivity extends BasePaymentActivity implements Pa
         }
         this.cachedListIndex = -1;
         setContentView(R.layout.activity_paymentlist);
-        progressView = new ProgressView(getRootView());
+        progressView = new ProgressView(findViewById(R.id.layout_progress));
 
         initPaymentList();
         initToolbar();

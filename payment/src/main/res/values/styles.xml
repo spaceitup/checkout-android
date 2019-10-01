@@ -1,6 +1,6 @@
 <resources>
 
-    <style name="PaymentText" parent="@android:style/TextAppearance.Medium">
+    <style name="PaymentText" parent="@android:style/TextAppearance">
         <item name="android:textColor">@color/pmtext_dark</item>
         <item name="android:fontFamily">@font/roboto_light</item>
     </style>
@@ -104,7 +104,8 @@
     <style name="WidgetButtonStyle" parent="@style/Widget.MaterialComponents.Button.UnelevatedButton">
         <item name="android:textAllCaps">false</item>
         <item name="android:textAppearance">@style/PaymentText.Medium.Bold.Light</item>        
-        <item name="android:paddingVertical">@dimen/pmborder_small</item>        
+        <item name="android:paddingVertical">@dimen/pmborder_small</item>
+        <item name="android:paddingHorizontal">@dimen/pmborder_medium</item>        
     </style>
 
     <style name="DialogButtonStyle" parent="@style/Widget.MaterialComponents.Button.TextButton.Dialog">
@@ -116,5 +117,6 @@
     <style name="WidgetCheckBoxStyle" parent="@style/Widget.MaterialComponents.CompoundButton.CheckBox">
         <item name="colorControlNormal">@color/pmcolor_controlnormal</item>
         <item name="colorControlActivated">@color/pmvalidation_ok</item>
+        <item name="useMaterialThemeColors">false</item>        
     </style>
 </resources>

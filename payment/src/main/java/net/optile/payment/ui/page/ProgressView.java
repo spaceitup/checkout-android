@@ -8,113 +8,57 @@
 
 package net.optile.payment.ui.page;
 
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import net.optile.payment.R;
 
 /**
- * View managing the different style of progress animations.
+ * Class managing showing a ProgressBar with optional labels.
  */
 class ProgressView {
 
-    public final static int LOAD = 0x00;
-    public final static int SEND = 0x01;
-
-    private final static int SEND_MIN = 0;
-    private final static int SEND_MAX = 1000;
-    private final static int SEND_TIMEOUT = 30000 / SEND_MAX;
-
-    private final View loadLayout;
-    private final View sendLayout;
-    private final TextView sendHeader;
-    private final TextView sendInfo;
-    private final ProgressBar loadProgressBar;
-    private final ProgressBar sendProgressBar;
-    private final View rootView;
-    private int style;
+    private final TextView textHeader;
+    private final TextView textInfo;
+    private final ProgressBar progressBar;
+    private final View view;
 
     /**
      * Construct a new loading view given the parent view that holds the Views for the loading animations
      *
-     * @param rootView the root view containing the progress views and layouts
+     * @param view the root view containing the progress views and layouts
      */
-    ProgressView(View rootView) {
-        this.rootView = rootView;
-
-        // setup the ProgressBar for loading
-        loadLayout = rootView.findViewById(R.id.layout_load);
-        loadProgressBar = loadLayout.findViewById(R.id.progressbar_load);
-
-        // setup the ProgressBar for sending
-        sendLayout = rootView.findViewById(R.id.layout_send);
-        sendHeader = sendLayout.findViewById(R.id.text_sendheader);
-        sendInfo = sendLayout.findViewById(R.id.text_sendinfo);
-        sendProgressBar = sendLayout.findViewById(R.id.progressbar_send);
+    ProgressView(View view) {
+        this.view = view;
+        progressBar = view.findViewById(R.id.progressbar);
+        textHeader = view.findViewById(R.id.text_header);
+        textInfo = view.findViewById(R.id.text_info);
     }
 
     /**
-     * Set the style of progress that this view should show
+     * Set the labels shown under the progressbar.
      *
-     * @param style to be shown when made visible
+     * @param header label
+     * @param info label
      */
-    public void setStyle(int style) {
-        this.style = style;
+    public void setLabels(String header, String info) {
+        if (!TextUtils.isEmpty(header)) {
+            textHeader.setText(header);
+            textHeader.setVisibility(View.VISIBLE);
+        }
+        if (!TextUtils.isEmpty(header)) {
+            textInfo.setText(info);
+            textInfo.setVisibility(View.VISIBLE);
+        }
     }
 
     /**
-     * Set the labels shown when using the SEND progress type.
-     *
-     * @param header shown for the SEND type.
-     * @param info shown for the SEND type.
-     */
-    public void setSendLabels(String header, String info) {
-        sendHeader.setText(header);
-        sendInfo.setText(info);
-    }
-
-    /**
-     * Show the loading view with the given style
+     * Show the progress bar with optional title and info labels
      *
      * @param visible when true, show the loading animation, hide it otherwise
      */
     public void setVisible(boolean visible) {
-
-        if (!visible) {
-            loadLayout.setVisibility(View.GONE);
-            sendLayout.setVisibility(View.GONE);
-            return;
-        }
-        switch (style) {
-            case SEND:
-                setSendVisible();
-                break;
-            default:
-                setLoadVisible();
-        }
-    }
-
-    /**
-     * Notify that this Progress view should be stopped
-     */
-    public void onStop() {
-    }
-
-    private void setLoadVisible() {
-
-        if (loadLayout.getVisibility() == View.VISIBLE) {
-            return;
-        }
-        sendLayout.setVisibility(View.GONE);
-        loadLayout.setVisibility(View.VISIBLE);
-    }
-
-    private void setSendVisible() {
-
-        if (sendLayout.getVisibility() == View.VISIBLE) {
-            return;
-        }
-        loadLayout.setVisibility(View.GONE);
-        sendLayout.setVisibility(View.VISIBLE);
+        view.setVisibility(visible ? View.VISIBLE : View.GONE);
     }
 }

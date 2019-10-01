@@ -52,10 +52,6 @@ abstract class BasePaymentActivity extends AppCompatActivity {
     public void onPause() {
         super.onPause();
         active = false;
-
-        if (progressView != null) {
-            progressView.onStop();
-        }
     }
 
     /**

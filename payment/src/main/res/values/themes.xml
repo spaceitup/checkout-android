@@ -30,17 +30,18 @@
         <item name="widgetCheckBoxLabelUncheckedStyle">@style/PaymentText.Medium.Hint</item>
         <item name="widgetSelectLabelStyle">@style/PaymentText.Tiny</item>
 
-        <item name="progressLoadBackground">@color/pmprogress_background</item>        
-        <item name="progressLoadColor">@color/pmcolor_primary</item>
+        <item name="progressBackground">@color/pmprogress_background</item>        
+        <item name="progressColor">@color/pmcolor_primary</item>
     </style>
 
     <style name="PaymentTheme.ChargePayment">
         <item name="android:windowBackground">@color/pmcolor_background</item>
         <item name="colorPrimaryDark">@color/pmprogress_accent</item>
-        <item name="progressSendBackground">@color/pmcolor_background</item>
-        <item name="progressSendColor">@color/pmcolor_primary</item>
-        <item name="progressSendHeaderStyle">@style/PaymentText.XLarge.Bold</item>
-        <item name="progressSendInfoStyle">@style/PaymentText.Medium</item>
+
+        <item name="progressBackground">@color/pmprogress_background</item>        
+        <item name="progressColor">@color/pmcolor_primary</item>
+        <item name="progressHeaderStyle">@style/PaymentText.XLarge.Bold</item>
+        <item name="progressInfoStyle">@style/PaymentText.Medium</item>
     </style>
         
     <style name="PaymentDialogTheme" parent="Theme.MaterialComponents.Light.Dialog">
