@@ -1,39 +1,53 @@
 <resources>
-    <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+    <style name="AppTheme" parent="Theme.MaterialComponents.Light.DarkActionBar">
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
     </style>
 
-    <style name="AppButton" parent="Widget.AppCompat.Button">
-        <item name="android:textAllCaps">false</item>
-        <item name="android:textAppearance">@style/AppButtonText</item>
-    </style>
-
-    <style name="CustomThemePaymentList" parent="Theme.AppCompat.Light.DarkActionBar">
+    <style name="CustomPaymentTheme" parent="PaymentTheme">
         <item name="colorPrimary">@color/customColorPrimary</item>
         <item name="colorPrimaryDark">@color/customColorPrimaryDark</item>
         <item name="colorAccent">@color/customColorAccent</item>
-        <item name="actionBarStyle">@style/CustomThemeActionBar</item>
-        <item name="materialCardViewStyle">@style/CustomThemeCardView</item>
-        <item name="textInputStyle">@style/CustomThemeTextInput</item>
-        <item name="editTextStyle">@style/CustomThemeEditText</item>
-        <item name="android:windowBackground">@color/customColorPrimary</item>
-    </style>
+    </style>                
+        
+    <style name="CustomPaymentTheme.PaymentList">
+        <item name="android:windowBackground">@color/customColorPrimary</item> 
+        <item name="paymentListToolbarTheme">@style/CustomToolbarTheme</item>
+        <item name="paymentListToolbarTitleStyle">@style/CustomText.Medium.Bold.Light</item>
+        <item name="paymentListEmptyLabelStyle">@style/CustomText.Medium.Bold.Light</item>
+        <item name="paymentListHeaderLabelStyle">@style/CustomText.Medium.Bold.Light</item>        
 
-    <style name="CustomThemeProcessPayment" parent="Theme.AppCompat.Light.NoActionBar">
-        <item name="android:windowBackground">@color/pmcolor_background</item>
-        <item name="colorPrimary">@color/customColorPrimary</item>
-        <item name="colorPrimaryDark">@color/customColorPrimaryDark</item>
-        <item name="colorAccent">@color/customColorAccent</item>
-    </style>
+        <item name="paymentCardStyle">@style/CustomPaymentCardStyle</item>
+        <item name="paymentCardLogoBackground">@drawable/custom_logobackground</item>
+        
+        <item name="presetCardTitleStyle">@style/CustomText.Medium.Bold</item>        
+        <item name="presetCardSubtitleStyle">@style/CustomText.Small</item>
+        <item name="accountCardTitleStyle">@style/CustomText.Medium.Bold</item>        
+        <item name="accountCardSubtitleStyle">@style/CustomText.Small</item>
+        <item name="networkCardTitleStyle">@style/CustomText.Medium.Bold</item>     
 
-    <style name="CustomThemeActionBar" parent="Widget.AppCompat.Light.ActionBar.Solid.Inverse">
-        <item name="elevation">0dp</item>
-        <item name="titleTextStyle">@style/CustomText.Medium.Bold.Light</item>
-    </style>
+        <item name="widgetTextInputStyle">@style/CustomWidgetTextInputStyle</item>
+        <item name="widgetEditTextStyle">@style/CustomWidgetEditTextStyle</item>
+        <item name="widgetButtonStyle">@style/CustomWidgetButtonStyle</item>        
+        <item name="widgetCheckBoxStyle">@style/CustomWidgetCheckBoxStyle</item>
+        <item name="widgetHintDrawable">@drawable/ic_hint</item>
+        <item name="widgetCheckBoxLabelCheckedStyle">@style/CustomText.Medium</item>
+        <item name="widgetCheckBoxLabelUncheckedStyle">@style/CustomText.Medium.Gray</item>
+        <item name="widgetSelectLabelStyle">@style/CustomText.Tiny</item>
 
-    <style name="CustomThemeDialog" parent="Theme.AppCompat.Light.Dialog">
+        <item name="progressBackground">@color/customColorPrimary</item>        
+        <item name="progressColor">@color/customColorAccent</item>
+    </style>        
+
+    <style name="CustomPaymentTheme.ChargePayment">
+        <item name="progressBackground">@color/custom_cardbackground</item>
+        <item name="progressColor">@color/customColorPrimary</item>
+        <item name="progressHeaderStyle">@style/CustomText.XLarge.Bold</item>
+        <item name="progressInfoStyle">@style/CustomText.Medium</item>
+    </style>
+    
+    <style name="CustomDialogTheme" parent="PaymentDialogTheme">
         <item name="android:windowNoTitle">true</item>
         <item name="android:bottomRightRadius">@dimen/custom_dialogradius</item>
         <item name="android:bottomLeftRadius">@dimen/custom_dialogradius</item>
@@ -42,43 +56,21 @@
         <item name="android:windowFullscreen">false</item>
         <item name="android:windowIsFloating">true</item>
         <item name="android:windowCloseOnTouchOutside">true</item>
+        <item name="themedDialogButtonStyle">@style/CustomDialogButtonStyle</item>        
     </style>
 
-    <style name="CustomThemeCardView" parent="CardView.Light">
-        <item name="cardBackgroundColor">@color/custom_cardbackground</item>
-        <item name="cardUseCompatPadding">false</item>
-        <item name="cardPreventCornerOverlap">true</item>
-        <item name="cardElevation">0dp</item>
-        <item name="cardMaxElevation">0dp</item>
-        <item name="cardCornerRadius">@dimen/custom_cardradius</item>
+    <style name="CustomDialogTheme.Date">
+        <item name="themedDateDialogTitleStyle">@style/CustomText.Medium.Bold</item>
     </style>
 
-    <style name="CustomThemeButton" parent="Widget.AppCompat.Button.Borderless">
-        <item name="android:textAllCaps">true</item>
-        <item name="android:foreground">?attr/selectableItemBackgroundBorderless</item>
+    <style name="CustomDialogTheme.Message">
+        <item name="themedMessageDialogTitleStyle">@style/CustomText.Large.Bold</item>
+        <item name="themedMessageDialogDetailsStyle">@style/CustomText.Medium</item>
+        <item name="themedMessageDialogDetailsNoTitleStyle">@style/CustomText.Medium.Bold</item>
+        <item name="themedMessageDialogImageLabelStyle">@style/CustomText.Tiny</item>
     </style>
 
-    <style name="CustomThemeTextInput" parent="Widget.Design.TextInputLayout">
-        <!-- hint text color inside EditText -->
-        <item name="android:textColorHint">@color/custom_textgray</item>
-        <!-- This color of the area of text selected -->
-        <item name="android:textColorHighlight">@color/custom_textgray</item>
-        <!-- underline color control normal -->
-        <item name="colorControlNormal">@color/custom_accent</item>
-        <!-- underline color enabled -->
-        <item name="colorControlActivated">@color/customColorPrimary</item>
-        <!-- floating hint text appearance -->
-        <item name="hintTextAppearance">@style/CustomTextInputLayoutHint</item>
-        <!-- error text appearance -->
-        <item name="errorTextAppearance">@style/CustomTextInputLayoutError</item>
-    </style>
-
-    <style name="CustomThemeEditText" parent="Widget.AppCompat.EditText">
-        <item name="android:textAppearance">@style/CustomTextInputEditText</item>
-    </style>
-
-    <style name="CustomThemeCheckBox" parent="Widget.AppCompat.CompoundButton.CheckBox">
-        <item name="colorControlNormal">@color/custom_validationunknown</item>
-        <item name="colorControlActivated">@color/custom_validationok</item>
+    <style name="CustomToolbarTheme" parent="PaymentToolbarTheme">
+        <item name="android:elevation">0dp</item>
     </style>
 </resources>

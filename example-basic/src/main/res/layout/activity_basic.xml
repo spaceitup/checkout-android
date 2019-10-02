@@ -47,10 +47,8 @@
             android:layout_marginBottom="@dimen/border_medium"/>
 
         <Button
-            style="@style/AppButton"
-            app:backgroundTint="@color/colorPrimary"
+            style="@style/WidgetButtonStyle"
             android:id="@+id/button_action"
-            android:padding="@dimen/border_large"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="@dimen/border_large"
