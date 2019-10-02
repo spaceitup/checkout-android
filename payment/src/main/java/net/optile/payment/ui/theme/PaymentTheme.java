@@ -76,7 +76,7 @@ public final class PaymentTheme {
         return paymentListTheme;
     }
 
-    public int getChargePaymenTheme() {
+    public int getChargePaymentTheme() {
         return chargePaymentTheme;
     }
 

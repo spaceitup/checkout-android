@@ -99,7 +99,7 @@ public final class ChargePaymentActivity extends BasePaymentActivity implements 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        int theme = getPaymentTheme().getChargePaymenTheme();
+        int theme = getPaymentTheme().getChargePaymentTheme();
         if (theme != 0) {
             setTheme(theme);
         }
