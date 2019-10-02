@@ -1,8 +1,4 @@
 <resources>
-    <style name="AppButton">
-        <item name="android:textAppearance">@style/PaymentText.Medium.Bold.Light</item>
-    </style>
-
     <style name="SettingsTheme" parent="Theme.MaterialComponents.Light.DarkActionBar">
         <item name="colorPrimary">@color/pmcolor_primary</item>
         <item name="colorPrimaryDark">@color/pmcolor_primarydark</item>
@@ -18,6 +14,8 @@
         <item name="android:windowTranslucentStatus">true</item>
         <item name="android:windowDrawsSystemBarBackgrounds">true</item>
         <item name="android:windowTranslucentNavigation">false</item>
+
+        <item name="paymentCardLogoBackground">@null</item>
     </style>
 
     <style name="DefaultConfirmTheme" parent="Theme.MaterialComponents.Light.NoActionBar">

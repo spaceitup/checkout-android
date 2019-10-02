@@ -17,14 +17,14 @@
             android:src="@drawable/ic_checkmark"/>
 
         <com.google.android.material.textfield.TextInputLayout
+            style="@style/WidgetTextInputStyle"
             android:layout_weight="1"
-            android:theme="@style/PaymentThemeTextInput"
             android:hint="@string/personal_name_label"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content">
 
             <com.google.android.material.textfield.TextInputEditText
-                style="@style/PaymentThemeEditText"
+                style="@style/WidgetEditTextStyle"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/personal_name_value"
@@ -49,14 +49,14 @@
             android:src="@drawable/ic_checkmark"/>
 
         <com.google.android.material.textfield.TextInputLayout
+            style="@style/WidgetTextInputStyle"
             android:layout_weight="1"
-            android:theme="@style/PaymentThemeTextInput"
             android:hint="@string/personal_address_label"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content">
 
             <com.google.android.material.textfield.TextInputEditText
-                style="@style/PaymentThemeEditText"
+                style="@style/WidgetEditTextStyle"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/personal_address_value"
@@ -81,14 +81,14 @@
             android:src="@drawable/ic_checkmark"/>
 
         <com.google.android.material.textfield.TextInputLayout
+            style="@style/WidgetTextInputStyle"
             android:layout_weight="1"
-            android:theme="@style/PaymentThemeTextInput"
             android:hint="@string/personal_city_label"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content">
 
             <com.google.android.material.textfield.TextInputEditText
-                style="@style/PaymentThemeEditText"
+                style="@style/WidgetEditTextStyle"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/personal_city_value"
@@ -113,14 +113,14 @@
             android:src="@drawable/ic_checkmark"/>
 
         <com.google.android.material.textfield.TextInputLayout
+            style="@style/WidgetTextInputStyle"
             android:layout_weight="1"
-            android:theme="@style/PaymentThemeTextInput"
             android:hint="@string/personal_email_label"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content">
 
             <com.google.android.material.textfield.TextInputEditText
-                style="@style/PaymentThemeEditText"
+                style="@style/WidgetEditTextStyle"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/personal_email_value"
@@ -145,14 +145,14 @@
             android:src="@drawable/ic_checkmark"/>
 
         <com.google.android.material.textfield.TextInputLayout
+            style="@style/WidgetTextInputStyle"
             android:layout_weight="1"
-            android:theme="@style/PaymentThemeTextInput"
             android:hint="@string/personal_phone_label"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content">
 
             <com.google.android.material.textfield.TextInputEditText
-                style="@style/PaymentThemeEditText"
+                style="@style/WidgetEditTextStyle"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/personal_phone_value"

@@ -31,6 +31,7 @@ import org.junit.runner.RunWith;
 import android.content.Context;
 import android.view.View;
 import androidx.test.InstrumentationRegistry;
+import androidx.test.espresso.Espresso;
 import androidx.test.espresso.IdlingRegistry;
 import androidx.test.espresso.IdlingResource;
 import androidx.test.espresso.intent.Intents;
@@ -111,17 +112,19 @@ public final class ExampleDemoTests {
         onView(list).perform(actionOnItemAtPosition(cardIndex, click()));
         onView(list).perform(actionOnViewInWidget(cardIndex, typeText("4111111111111111"), "number", R.id.textinputedittext));
         onView(list).perform(actionOnViewInWidget(cardIndex, typeText("John Doe"), "holderName", R.id.textinputedittext));
-        onView(list).perform(actionOnViewInWidget(cardIndex, typeText("123"), "verificationCode", R.id.textinputedittext));
 
         // Wait for the DialogIdlingResource until the DateDialog is visible and fill in the date
         IdlingResource dialogIdlingResource = listActivity.getDialogIdlingResource();
         onView(list).perform(actionOnViewInWidget(1, click(), "expiryDate", R.id.textinputedittext));
         IdlingRegistry.getInstance().register(dialogIdlingResource);
-
-        onView(withId(R.id.text_button_neutral)).check(matches(isDisplayed()));
+        
+        onView(withId(R.id.dialogbutton_neutral)).check(matches(isDisplayed()));
         onView(withId(R.id.numberpicker_year)).perform(setValueInNumberPicker(4));
-        onView(withId(R.id.text_button_neutral)).perform(click());
+        onView(withId(R.id.dialogbutton_neutral)).perform(click());
         IdlingRegistry.getInstance().unregister(dialogIdlingResource);
+        
+        onView(list).perform(actionOnViewInWidget(cardIndex, typeText("123"), "verificationCode", R.id.textinputedittext));
+        Espresso.closeSoftKeyboard();
     }
 
     private void performDirectCharge(int cardIndex) {

@@ -91,7 +91,7 @@
                 android:text="@string/checkout_personal_details"/>
 
             <com.google.android.material.card.MaterialCardView
-                style="@style/PaymentThemeCardView"
+                style="@style/PaymentCardStyle"
                 android:layout_marginLeft="@dimen/pmborder_medium"
                 android:layout_marginRight="@dimen/pmborder_medium"
                 android:layout_width="match_parent"
@@ -106,8 +106,8 @@
                     <include
                         layout="@layout/layout_checkoutdetails"/>
 
-                    <Button
-                        style="@style/AppButton"
+                    <com.google.android.material.button.MaterialButton
+                        style="@style/WidgetButtonStyle"
                         android:id="@+id/button_checkout"
                         android:layout_marginTop="@dimen/pmborder_large"
                         android:layout_width="match_parent"
