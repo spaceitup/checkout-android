@@ -14,10 +14,10 @@ import java.lang.annotation.RetentionPolicy;
 import android.support.annotation.StringDef;
 
 /**
- * Class containing PaymentMethodCodes for which the accountNumber and verificationCodes are custom validated.
+ * Class containing PaymentNetworkCodes for which the accountNumber and verificationCodes are custom validated.
  * Custom validation settings are defined in the R.raw.validations file.
  */
-public class PaymentMethodCodes {
+public class PaymentNetworkCodes {
 
     public final static String AMEX = "AMEX";
     public final static String CASTORAMA = "CASTORAMA";
@@ -33,7 +33,8 @@ public class PaymentMethodCodes {
     public final static String MAESTROUK = "MAESTROUK";
     public final static String POSTEPAY = "POSTEPAY";
     public final static String SEPADD = "SEPADD";
-    public final static String JCB = "JCB";    
+    public final static String JCB = "JCB";
+    public final static String GOOGLEPAY = "GOOGLEPAY";
 
     /**
      * Check if the given type is a valid payment input type
@@ -60,6 +61,7 @@ public class PaymentMethodCodes {
                 case POSTEPAY:
                 case SEPADD:
                 case JCB:
+                case GOOGLEPAY:
                     return true;
             }
         }
@@ -82,7 +84,8 @@ public class PaymentMethodCodes {
         MAESTROUK,
         POSTEPAY,
         SEPADD,
-        JCB
+        JCB,
+        GOOGLEPAY
     })
     public @interface Definition { }
 }

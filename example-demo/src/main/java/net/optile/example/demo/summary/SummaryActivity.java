@@ -45,6 +45,7 @@ public final class SummaryActivity extends BaseActivity implements SummaryView {
 
     private SummaryPresenter presenter;
     private SdkResult sdkResult;
+    private PresetAccount account;
 
     /**
      * Create an Intent to launch this checkout activity
@@ -142,6 +143,7 @@ public final class SummaryActivity extends BaseActivity implements SummaryView {
             return;
         }
         showLoading(false);
+        this.account = account;
         AccountMask mask = account.getMaskedAccount();
         ImageView view = findViewById(R.id.image_logo);
         URL url = getLink(account, "logo");
@@ -180,8 +182,8 @@ public final class SummaryActivity extends BaseActivity implements SummaryView {
         if (requestCode != PAYMENT_REQUEST_CODE && requestCode != EDIT_REQUEST_CODE) {
             return;
         }
-        if (data != null && data.hasExtra(PaymentUI.EXTRA_PAYMENT_RESULT)) {
-            PaymentResult result = data.getParcelableExtra(PaymentUI.EXTRA_PAYMENT_RESULT);
+        PaymentResult result = PaymentResult.fromResultIntent(data);
+        if (result != null) {
             this.sdkResult = new SdkResult(requestCode, resultCode, result);
         }
     }
@@ -250,8 +252,10 @@ public final class SummaryActivity extends BaseActivity implements SummaryView {
     }
 
     private void onPayClicked() {
-        PaymentUI paymentUI = PaymentUI.getInstance();
-        paymentUI.chargePresetAccount(this, PAYMENT_REQUEST_CODE);
+        if (account != null) {
+            PaymentUI paymentUI = PaymentUI.getInstance();
+            paymentUI.chargePresetAccount(this, PAYMENT_REQUEST_CODE, account);
+        }
     }
 
     private void onEditClicked() {

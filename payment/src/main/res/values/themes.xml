@@ -1,20 +1,28 @@
 <resources>
 
-    <style name="PaymentTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+    <style name="PaymentThemeDarkActionBar" parent="Theme.AppCompat.Light.DarkActionBar">
         <item name="colorPrimary">@color/pmcolor_primary</item>
         <item name="colorPrimaryDark">@color/pmcolor_primarydark</item>
         <item name="colorAccent">@color/pmcolor_accent</item>
     </style>
 
-    <style name="PaymentTheme.PaymentPage">
+    <style name="PaymentThemeNoActionBar" parent="Theme.AppCompat.Light.NoActionBar">
         <item name="colorPrimary">@color/pmcolor_primary</item>
         <item name="colorPrimaryDark">@color/pmcolor_primarydark</item>
         <item name="colorAccent">@color/pmcolor_accent</item>
+    </style>
+
+    <style name="PaymentThemeDarkActionBar.PaymentList">
         <item name="actionBarStyle">@style/PaymentThemeActionBar</item>
         <item name="textInputStyle">@style/PaymentThemeTextInput</item>
         <item name="editTextStyle">@style/PaymentThemeEditText</item>
         <item name="materialCardViewStyle">@style/PaymentThemeCardView</item>
         <item name="android:windowBackground">@color/pmcolor_list</item>
+    </style>
+
+    <style name="PaymentThemeNoActionBar.ChargePayment">
+        <item name="android:windowBackground">@color/pmcolor_background</item>
+        <item name="colorPrimaryDark">@color/pmprogress_accent</item>
     </style>
 
     <style name="PaymentThemeActionBar" parent="Widget.AppCompat.Light.ActionBar.Solid.Inverse">

@@ -8,6 +8,12 @@
 
 package net.optile.payment.ui.list;
 
+import static net.optile.payment.localization.LocalizationKey.BUTTON_BACK;
+import static net.optile.payment.localization.LocalizationKey.LIST_HEADER_NETWORKS;
+import static net.optile.payment.localization.LocalizationKey.LIST_HEADER_OTHERACCOUNTS;
+import static net.optile.payment.localization.LocalizationKey.LIST_HEADER_PRESET;
+import static net.optile.payment.localization.LocalizationKey.LIST_HEADER_SAVEDACCOUNTS;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -22,10 +28,11 @@ import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.TextView;
 import net.optile.payment.R;
-import net.optile.payment.core.LanguageFile;
+import net.optile.payment.localization.Localization;
 import net.optile.payment.ui.dialog.DialogHelper;
 import net.optile.payment.ui.model.AccountCard;
 import net.optile.payment.ui.model.NetworkCard;
+import net.optile.payment.ui.model.PaymentCard;
 import net.optile.payment.ui.model.PaymentSession;
 import net.optile.payment.ui.page.PaymentListActivity;
 
@@ -127,15 +134,16 @@ public final class PaymentList {
     }
 
     void showDialogFragment(DialogFragment dialog, String tag) {
-        dialog.show(activity.getSupportFragmentManager(), tag);
+        activity.showDialogFragment(dialog, tag);
     }
 
     void onHintClicked(int position, String type) {
         ListItem item = items.get(position);
-
-        if (item.hasPaymentCard()) {
-            String button = session.getLang().translate(LanguageFile.KEY_BUTTON_BACK);
-            DialogFragment dialog = DialogHelper.createHintDialog(item.getPaymentCard(), type, button);
+        PaymentCard card = item.getPaymentCard();
+        
+        if (card != null) {
+            String button = Localization.translate(card.getCode(), BUTTON_BACK);
+            DialogFragment dialog = DialogHelper.createHintDialog(card, type, button);
             showDialogFragment(dialog, "hint_dialog");
         }
     }
@@ -175,39 +183,33 @@ public final class PaymentList {
     private void setPaymentListItems(PaymentSession session, int cachedListIndex) {
         items.clear();
         this.selIndex = cachedListIndex;
-
-        int index = 0;
         int accountSize = session.getAccountCardSize();
         int networkSize = session.getNetworkCardSize();
 
         if (session.hasPresetCard()) {
-            items.add(new HeaderItem(nextViewType(), activity.getString(R.string.pmlist_preset_header)));
+            items.add(new HeaderItem(nextViewType(), Localization.translate(LIST_HEADER_PRESET)));
             items.add(new PaymentCardItem(nextViewType(), session.getPresetCard()));
             this.selIndex = 1;
-            index += 2;
         }
 
         if (accountSize > 0) {
-            items.add(new HeaderItem(nextViewType(), activity.getString(R.string.pmlist_account_header)));
-            index++;
+            items.add(new HeaderItem(nextViewType(), Localization.translate(LIST_HEADER_SAVEDACCOUNTS)));
         }
         for (AccountCard card : session.getAccountCards()) {
             items.add(new PaymentCardItem(nextViewType(), card));
             if (this.selIndex == -1 && card.isPreselected()) {
-                this.selIndex = index;
+                this.selIndex = items.size() - 1;
             }
-            index++;
         }
         if (networkSize > 0) {
-            int resId = accountSize == 0 ? R.string.pmlist_networkonly_header : R.string.pmlist_network_header;
-            items.add(new HeaderItem(nextViewType(), activity.getString(resId)));
+            String key = accountSize == 0 ? LIST_HEADER_NETWORKS : LIST_HEADER_OTHERACCOUNTS;
+            items.add(new HeaderItem(nextViewType(), Localization.translate(key)));
         }
         for (NetworkCard card : session.getNetworkCards()) {
             items.add(new PaymentCardItem(nextViewType(), card));
             if (this.selIndex == -1 && card.isPreselected()) {
-                this.selIndex = index;
+                this.selIndex = items.size() - 1;
             }
-            index++;
         }
     }
 

@@ -8,6 +8,10 @@
 
 package net.optile.payment.ui.page;
 
+import static net.optile.payment.localization.LocalizationKey.BUTTON_CANCEL;
+import static net.optile.payment.localization.LocalizationKey.BUTTON_RETRY;
+import static net.optile.payment.localization.LocalizationKey.ERROR_CONNECTION;
+
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.ActionBar;
@@ -15,10 +19,13 @@ import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
 import android.view.View;
 import android.view.ViewGroup;
-import net.optile.payment.R;
+import net.optile.payment.localization.Localization;
 import net.optile.payment.ui.PaymentResult;
 import net.optile.payment.ui.PaymentUI;
 import net.optile.payment.ui.dialog.DialogHelper;
+import net.optile.payment.ui.dialog.MessageDialogFragment;
+import net.optile.payment.ui.dialog.ThemedDialogFragment;
+import net.optile.payment.ui.dialog.ThemedDialogFragment.ThemedDialogListener;
 import net.optile.payment.ui.theme.PaymentTheme;
 
 /**
@@ -35,13 +42,8 @@ abstract class BasePaymentActivity extends AppCompatActivity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setActivityResult(PaymentUI.RESULT_CODE_CANCELED, new PaymentResult("Initializing page."));
+        setResultIntent(PaymentUI.RESULT_CODE_CANCELED, new PaymentResult("Initializing page."));
         setRequestedOrientation(PaymentUI.getInstance().getOrientation());
-
-        int pageTheme = getPaymentTheme().getPageParameters().getPageTheme();
-        if (pageTheme != 0) {
-            setTheme(pageTheme);
-        }
     }
 
     /**
@@ -66,13 +68,21 @@ abstract class BasePaymentActivity extends AppCompatActivity {
         active = true;
     }
 
-    /**
-     * Initialize the ProgressView, the UI elements needed by the ProgressView must be available in the root view of the activity.
-     */
-    void initProgressView() {
-        progressView = new ProgressView(getRootView(), getPaymentTheme());
-        progressView.setSendLabels(getString(R.string.pmprogress_sendheader),
-            getString(R.string.pmprogress_sendinfo));
+    ThemedDialogFragment createMessageDialog(String message, ThemedDialogListener listener) {
+        MessageDialogFragment dialog = new MessageDialogFragment();
+        dialog.setListener(listener);
+        dialog.setMessage(message);
+        dialog.setNeutralButton(Localization.translate(BUTTON_CANCEL));
+        return dialog;
+    }
+
+    ThemedDialogFragment createConnectionDialog(ThemedDialogListener listener) {
+        MessageDialogFragment dialog = new MessageDialogFragment();
+        dialog.setListener(listener);
+        dialog.setMessage(Localization.translate(ERROR_CONNECTION));
+        dialog.setNeutralButton(Localization.translate(BUTTON_CANCEL));
+        dialog.setPositiveButton(Localization.translate(BUTTON_RETRY));
+        return dialog;
     }
 
     /**
@@ -126,7 +136,7 @@ abstract class BasePaymentActivity extends AppCompatActivity {
      * Set the PaymentResult indicating that the user has closed the page.
      */
     void setUserClosedPageResult() {
-        setActivityResult(PaymentUI.RESULT_CODE_CANCELED, new PaymentResult("Page closed by user."));
+        setResultIntent(PaymentUI.RESULT_CODE_CANCELED, new PaymentResult("Page closed by user."));
     }
 
     /**
@@ -135,9 +145,9 @@ abstract class BasePaymentActivity extends AppCompatActivity {
      * @param resultCode of the ActivityResult
      * @param result to be added as extra to the intent
      */
-    void setActivityResult(int resultCode, PaymentResult result) {
+    void setResultIntent(int resultCode, PaymentResult result) {
         Intent intent = new Intent();
-        intent.putExtra(PaymentUI.EXTRA_PAYMENT_RESULT, result);
+        result.putInto(intent);
         setResult(resultCode, intent);
     }
 }

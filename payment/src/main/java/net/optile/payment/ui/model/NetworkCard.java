@@ -12,7 +12,6 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
-import net.optile.payment.core.LanguageFile;
 import net.optile.payment.core.PaymentInputType;
 import net.optile.payment.model.InputElement;
 import net.optile.payment.model.PaymentMethod;
@@ -30,6 +29,19 @@ public final class NetworkCard implements PaymentCard {
     public NetworkCard() {
         this.networks = new ArrayList<>();
         this.smartSwitch = new SmartSwitch(networks);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public boolean containsLink(String name, URL url) {
+        for (PaymentNetwork network : networks) {
+            if (network.containsLink(name, url)) {
+                return true;
+            }
+        }
+        return false;
     }
 
     /**
@@ -54,14 +66,6 @@ public final class NetworkCard implements PaymentCard {
     @Override
     public String getCode() {
         return getVisibleNetwork().getCode();
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public LanguageFile getLang() {
-        return getVisibleNetwork().getLang();
     }
 
     /**
@@ -148,6 +152,15 @@ public final class NetworkCard implements PaymentCard {
      */
     public List<PaymentNetwork> getPaymentNetworks() {
         return networks;
+    }
+
+    /**
+     * Get the number of networks stored in this network card
+     *
+     * @return the number of networks stored in this card
+     */
+    public int getPaymentNetworkSize() {
+        return networks.size();
     }
 
     /**

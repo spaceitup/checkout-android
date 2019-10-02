@@ -6,10 +6,11 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
+        android:clickable="true"
+        android:focusable="true"
         android:gravity="center">
 
         <ProgressBar
-            xmlns:android="http://schemas.android.com/apk/res/android"
             android:id="@+id/progressbar_load"
             android:layout_width="@dimen/pmprogressbar_loadsize"
             android:layout_height="@dimen/pmprogressbar_loadsize"/>

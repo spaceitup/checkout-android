@@ -50,6 +50,19 @@ public final class PaymentUtils {
     }
 
     /**
+     * Compare String values of two Objects by obtaining the String values using the toString method.
+     *
+     * @param obj1 the first object
+     * @param obj2 the second object
+     * @return true when the String values of both Objects are equal and not null, false otherwise.
+     */
+    public static boolean equalsAsString(Object obj1, Object obj2) {
+        String str1 = obj1 != null ? obj1.toString() : null;
+        String str2 = obj2 != null ? obj2.toString() : null;
+        return str1 != null && str2 != null && (str1.equals(str2));
+    }
+
+    /**
      * Get the base integer value given the Integer object.
      * If the object is null then return the 0 value.
      *
@@ -142,13 +155,13 @@ public final class PaymentUtils {
     }
 
     /**
-     * Set the test tag to the view with the proper formatting understood by the automated UI tests.
+     * Set the test Id to the view with the proper formatting understood by the automated UI tests.
      *
      * @param view in which the tag should be set
      * @param type the type of the View, i.e. widget, networkcard.
-     * @param value the name of the view i.e. holderName, VISA
+     * @param name the name of the view i.e. holderName
      */
-    public static void setTestTag(View view, String type, String name) {
-        view.setTag(type + "-" + name);
+    public static void setTestId(View view, String type, String name) {
+        view.setContentDescription(type + "_" + name);
     }
 }

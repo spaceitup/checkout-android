@@ -37,7 +37,7 @@ public abstract class FormWidget {
     int state;
 
     FormWidget(String name, View rootView, PaymentTheme theme) {
-        PaymentUtils.setTestTag(rootView, "widget", name);
+        PaymentUtils.setTestId(rootView, "widget", name);
         this.name = name;
         this.rootView = rootView;
         this.theme = theme;

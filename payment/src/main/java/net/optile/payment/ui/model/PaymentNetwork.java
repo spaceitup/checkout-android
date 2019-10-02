@@ -13,22 +13,23 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-import net.optile.payment.core.LanguageFile;
 import net.optile.payment.model.ApplicableNetwork;
 import net.optile.payment.model.InputElement;
 import net.optile.payment.util.PaymentUtils;
 
 /**
- * Class for holding the ApplicableNetwork with its localized language file
+ * Class for holding the ApplicableNetwork
  */
 public class PaymentNetwork {
 
     private final ApplicableNetwork network;
-    private final LanguageFile lang;
 
-    public PaymentNetwork(ApplicableNetwork network, LanguageFile lang) {
+    public PaymentNetwork(ApplicableNetwork network) {
         this.network = network;
-        this.lang = lang;
+    }
+
+    public boolean containsLink(String name, URL url) {
+        return PaymentUtils.equalsAsString(getLink(name), url);
     }
 
     public URL getLink(String name) {
@@ -71,10 +72,6 @@ public class PaymentNetwork {
 
     public String getButton() {
         return network.getButton();
-    }
-
-    public LanguageFile getLang() {
-        return lang;
     }
 
     public boolean compare(PaymentNetwork network) {

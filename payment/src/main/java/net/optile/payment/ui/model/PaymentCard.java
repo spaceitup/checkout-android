@@ -11,13 +11,21 @@ package net.optile.payment.ui.model;
 import java.net.URL;
 import java.util.List;
 
-import net.optile.payment.core.LanguageFile;
 import net.optile.payment.model.InputElement;
 
 /**
  * Interface for payment cards like AccountCard and NetworkCard
  */
 public interface PaymentCard {
+
+    /**
+     * Check if this PaymentCard contains a link with name and value
+     *
+     * @param name the name of the link
+     * @param url to match with the URL in this PaymentCard
+     * @return true when this PaymentCard contains the URL, false otherwise
+     */
+    boolean containsLink(String name, URL url);
 
     /**
      * Get the operation link, this link can be used to make i.e. a charge request
@@ -39,13 +47,6 @@ public interface PaymentCard {
      * @return code of the visible network, preset or account
      */
     String getCode();
-
-    /**
-     * Get the language file of this PaymentCard
-     *
-     * @return language file
-     */
-    LanguageFile getLang();
 
     /**
      * Get the action button label

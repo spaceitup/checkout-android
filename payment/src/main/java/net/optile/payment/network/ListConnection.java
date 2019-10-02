@@ -20,14 +20,12 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
-import java.util.Map;
-import java.util.concurrent.ConcurrentHashMap;
+import java.util.Properties;
 
 import com.google.gson.JsonParseException;
 
 import android.net.Uri;
 import android.text.TextUtils;
-import net.optile.payment.core.LanguageFile;
 import net.optile.payment.core.PaymentException;
 import net.optile.payment.model.ListResult;
 
@@ -41,8 +39,6 @@ import net.optile.payment.model.ListResult;
  */
 public final class ListConnection extends BaseConnection {
 
-    private final static Map<String, LanguageFile> languageCache = new ConcurrentHashMap<>();
-
     /**
      * Create a new payment session through the Payment API. Remind this is not
      * a request mobile apps should be making as this call is normally executed
@@ -55,16 +51,14 @@ public final class ListConnection extends BaseConnection {
      */
     public ListResult createPaymentSession(final String baseUrl, final String authorization, final String listData)
         throws PaymentException {
-        final String source = "ListConnection[createPaymentSession]";
-
         if (TextUtils.isEmpty(baseUrl)) {
-            throw new IllegalArgumentException(source + " - baseUrl cannot be null or empty");
+            throw new IllegalArgumentException("baseUrl cannot be null or empty");
         }
         if (TextUtils.isEmpty(authorization)) {
-            throw new IllegalArgumentException(source + " - authorization cannot be null or empty");
+            throw new IllegalArgumentException("authorization cannot be null or empty");
         }
         if (TextUtils.isEmpty(listData)) {
-            throw new IllegalArgumentException(source + " - data cannot be null or empty");
+            throw new IllegalArgumentException("listData cannot be null or empty");
         }
 
         HttpURLConnection conn = null;
@@ -88,16 +82,16 @@ public final class ListConnection extends BaseConnection {
                 case HttpURLConnection.HTTP_OK:
                     return handleCreatePaymentSessionOk(readFromInputStream(conn));
                 default:
-                    throw createPaymentException(source, API_ERROR, rc, conn);
+                    throw createPaymentException(API_ERROR, rc, conn);
             }
         } catch (JsonParseException e) {
-            throw createPaymentException(source, PROTOCOL_ERROR, e);
+            throw createPaymentException(PROTOCOL_ERROR, e);
         } catch (MalformedURLException e) {
-            throw createPaymentException(source, INTERNAL_ERROR, e);
+            throw createPaymentException(INTERNAL_ERROR, e);
         } catch (IOException e) {
-            throw createPaymentException(source, CONN_ERROR, e);
+            throw createPaymentException(CONN_ERROR, e);
         } catch (SecurityException e) {
-            throw createPaymentException(source, SECURITY_ERROR, e);
+            throw createPaymentException(SECURITY_ERROR, e);
         } finally {
             close(conn);
         }
@@ -111,10 +105,8 @@ public final class ListConnection extends BaseConnection {
      * @return the NetworkResponse containing either an error or the ListResult
      */
     public ListResult getListResult(final String url) throws PaymentException {
-        final String source = "ListConnection[getListResult]";
-
         if (TextUtils.isEmpty(url)) {
-            throw new IllegalArgumentException(source + " - url cannot be null or empty");
+            throw new IllegalArgumentException("url cannot be null or empty");
         }
         HttpURLConnection conn = null;
 
@@ -133,59 +125,42 @@ public final class ListConnection extends BaseConnection {
                 case HttpURLConnection.HTTP_OK:
                     return handleGetListResultOk(readFromInputStream(conn));
                 default:
-                    throw createPaymentException(source, API_ERROR, rc, conn);
+                    throw createPaymentException(API_ERROR, rc, conn);
             }
         } catch (JsonParseException e) {
-            throw createPaymentException(source, PROTOCOL_ERROR, e);
+            throw createPaymentException(PROTOCOL_ERROR, e);
         } catch (MalformedURLException e) {
-            throw createPaymentException(source, INTERNAL_ERROR, e);
+            throw createPaymentException(INTERNAL_ERROR, e);
         } catch (IOException e) {
-            throw createPaymentException(source, CONN_ERROR, e);
+            throw createPaymentException(CONN_ERROR, e);
         } catch (SecurityException e) {
-            throw createPaymentException(source, SECURITY_ERROR, e);
+            throw createPaymentException(SECURITY_ERROR, e);
         } finally {
             close(conn);
         }
     }
 
     /**
-     * Load the language file given the URL
+     * Load the language file given the URL and store it in the provided properties file.
      *
+     * @param file in which the language entries should be loaded
      * @param url containing the address of the remote language file
-     * @param cache when set to true, obtain from and cache the LanguageFile for recurring use
-     * @return LanguageFile object containing the language entries
+     * @return Properties object containing the language entries
      */
-    public LanguageFile loadLanguageFile(URL url, boolean cache) throws PaymentException {
-        final String source = "ListConnection[loadLanguageFile]";
-
+    public Properties loadLanguageFile(Properties file, URL url) throws PaymentException {
         if (url == null) {
-            throw new IllegalArgumentException(source + " - url cannot be null");
+            throw new IllegalArgumentException("url cannot be null");
         }
-        LanguageFile lang;
-
-        if (cache) {
-            lang = languageCache.get(url.toString());
-
-            if (lang != null) {
-                return lang;
-            }
-        }
-        lang = new LanguageFile();
         HttpURLConnection conn = null;
-
         try {
             conn = createGetConnection(url);
-
             try (InputStream in = conn.getInputStream();
                 InputStreamReader ir = new InputStreamReader(in)) {
-                lang.getProperties().load(ir);
+                file.load(ir);
             }
-            if (cache) {
-                languageCache.put(url.toString(), lang);
-            }
-            return lang;
+            return file;
         } catch (IOException e) {
-            throw createPaymentException(source, CONN_ERROR, e);
+            throw createPaymentException(CONN_ERROR, e);
         } finally {
             close(conn);
         }

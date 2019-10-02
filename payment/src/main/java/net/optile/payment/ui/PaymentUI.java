@@ -15,8 +15,11 @@ import android.support.annotation.RawRes;
 import android.text.TextUtils;
 import android.util.Patterns;
 import net.optile.payment.R;
+import net.optile.payment.localization.LocalTranslations;
+import net.optile.payment.localization.Localization;
+import net.optile.payment.model.PresetAccount;
+import net.optile.payment.ui.page.ChargePaymentActivity;
 import net.optile.payment.ui.page.PaymentListActivity;
-import net.optile.payment.ui.page.PresetAccountActivity;
 import net.optile.payment.ui.theme.PaymentTheme;
 
 /**
@@ -28,7 +31,6 @@ public final class PaymentUI {
     public final static int RESULT_CODE_OK = Activity.RESULT_FIRST_USER;
     public final static int RESULT_CODE_CANCELED = Activity.RESULT_FIRST_USER + 1;
     public final static int RESULT_CODE_ERROR = Activity.RESULT_FIRST_USER + 2;
-    public final static String EXTRA_PAYMENT_RESULT = "paymentresult";
 
     /** The orientation of the Payment page, by default it is in locked mode */
     private int orientation;
@@ -180,10 +182,12 @@ public final class PaymentUI {
      *
      * @param activity the activity that will be notified when this PaymentPage is finished
      * @param requestCode the requestCode to be used for identifying results in the parent activity
+     * @param presetAccount account that has been preset and should be charged
      */
-    public void chargePresetAccount(Activity activity, int requestCode) {
-        Intent intent = PresetAccountActivity.createStartIntent(activity);
+    public void chargePresetAccount(Activity activity, int requestCode, PresetAccount presetAccount) {
+        Intent intent = ChargePaymentActivity.createStartIntent(activity, presetAccount);
         launchActivity(activity, intent, requestCode);
+        activity.overridePendingTransition(ChargePaymentActivity.getStartTransition(), R.anim.no_animation);
     }
 
     /**
@@ -195,16 +199,16 @@ public final class PaymentUI {
     public void showPaymentPage(Activity activity, int requestCode) {
         Intent intent = PaymentListActivity.createStartIntent(activity);
         launchActivity(activity, intent, requestCode);
+        activity.overridePendingTransition(PaymentListActivity.getStartTransition(), R.anim.no_animation);
     }
 
     /**
-     * Validate Android SDK Settings before launching the Activity.
+     * Validate Android SDK Settings and Localization before launching the Activity.
      *
      * @param activity the activity that will be notified when this PaymentPage is finished
      * @param requestCode the requestCode to be used for identifying results in the parent activity
      */
     private void launchActivity(Activity activity, Intent intent, int requestCode) {
-
         if (listUrl == null) {
             throw new IllegalStateException("listUrl must be set before showing the PaymentPage");
         }
@@ -214,6 +218,8 @@ public final class PaymentUI {
         if (intent == null) {
             throw new IllegalArgumentException("intent may not be null");
         }
+        initLocalTranslations(activity);
+
         if (theme == null) {
             setPaymentTheme(PaymentTheme.createDefault());
         }
@@ -225,9 +231,17 @@ public final class PaymentUI {
         }
         activity.finishActivity(requestCode);
         activity.startActivityForResult(intent, requestCode);
-        activity.overridePendingTransition(0, 0);
     }
 
+    private void initLocalTranslations(Activity activity) {
+        Localization localization = Localization.getInstance();
+        if (!localization.hasLocalTranslations()) {
+            LocalTranslations trans = new LocalTranslations();
+            trans.load(activity);
+            localization.setLocalTranslations(trans);
+        }
+    }
+    
     private static class InstanceHolder {
         static final PaymentUI INSTANCE = new PaymentUI();
     }

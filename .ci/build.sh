@@ -5,4 +5,6 @@ PATH=$PATH:/opt/gocd/build
 
 source /opt/gocd/build/java/buildlib.sh
 
-gradle_build
+configure gradle
+
+source /opt/gocd/build/java/build.sh

@@ -21,6 +21,27 @@ public class PaymentException extends Exception {
     /**
      * {@inheritDoc}
      *
+     * @param message the extra error info
+     */
+    public PaymentException(final String message) {
+        super(message);
+        this.error = new PaymentError(PaymentError.INTERNAL_ERROR, message);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @param message the extra error info
+     * @param cause the cause
+     */
+    public PaymentException(final String message, final Throwable cause) {
+        super(message, cause);
+        this.error = new PaymentError(PaymentError.INTERNAL_ERROR, message);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
      * @param error the error
      * @param message the extra error info
      */

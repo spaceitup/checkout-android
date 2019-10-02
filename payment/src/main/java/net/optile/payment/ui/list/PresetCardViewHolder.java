@@ -8,16 +8,19 @@
 
 package net.optile.payment.ui.list;
 
+import static net.optile.payment.localization.LocalizationKey.LIST_PRESET_TEXT;
+
 import android.support.v7.widget.RecyclerView.ViewHolder;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 import net.optile.payment.R;
+import net.optile.payment.localization.Localization;
 import net.optile.payment.model.AccountMask;
 import net.optile.payment.ui.model.PaymentCard;
 import net.optile.payment.ui.model.PresetCard;
-import net.optile.payment.ui.theme.PageParameters;
+import net.optile.payment.ui.theme.ListParameters;
 import net.optile.payment.ui.theme.PaymentTheme;
 import net.optile.payment.util.PaymentUtils;
 
@@ -33,7 +36,7 @@ final class PresetCardViewHolder extends PaymentCardViewHolder {
         super(adapter, parent);
 
         PaymentTheme theme = adapter.getPaymentTheme();
-        PageParameters params = theme.getPageParameters();
+        ListParameters params = theme.getListParameters();
 
         this.title = parent.findViewById(R.id.text_title);
         PaymentUtils.setTextAppearance(title, params.getPresetCardTitleStyle());
@@ -57,14 +60,12 @@ final class PresetCardViewHolder extends PaymentCardViewHolder {
             throw new IllegalArgumentException("Expected PresetCard in onBind");
         }
         super.onBind(paymentCard);
-        PaymentUtils.setTestTag(itemView, "presetcard", paymentCard.getCode());
-
+        PaymentUtils.setTestId(itemView, "card", "preset");
         PresetCard card = (PresetCard) paymentCard;
         AccountMask mask = card.getMaskedAccount();
         bindMaskedTitle(title, mask, card.getPaymentMethod());
         bindMaskedSubTitle(subTitle, mask);
-        bindLogoView(card.getCode(), card.getLink("logo"), true);
-        bindLabelWidget(adapter.getContext().getString(R.string.pmlist_preset_info));
+        bindLogoView(paymentCard.getCode(), card.getLink("logo"), true);
+        bindLabelWidget(Localization.translate(LIST_PRESET_TEXT));
     }
-
 }

@@ -13,7 +13,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-import net.optile.payment.core.LanguageFile;
 import net.optile.payment.model.AccountMask;
 import net.optile.payment.model.AccountRegistration;
 import net.optile.payment.model.InputElement;
@@ -35,8 +34,21 @@ public final class AccountCard implements PaymentCard {
      * {@inheritDoc}
      */
     @Override
+    public boolean containsLink(String name, URL url) {
+        return PaymentUtils.equalsAsString(getLink(name), url);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
     public URL getOperationLink() {
         return getLink("operation");
+    }
+
+    public URL getLink(String name) {
+        Map<String, URL> links = account.getLinks();
+        return links != null ? links.get(name) : null;
     }
 
     /**
@@ -53,14 +65,6 @@ public final class AccountCard implements PaymentCard {
     @Override
     public String getCode() {
         return account.getCode();
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public LanguageFile getLang() {
-        return network.getLang();
     }
 
     /**
@@ -106,11 +110,6 @@ public final class AccountCard implements PaymentCard {
     @Override
     public boolean onTextInputChanged(String type, String text) {
         return false;
-    }
-
-    public URL getLink(String name) {
-        Map<String, URL> links = account.getLinks();
-        return links != null ? links.get(name) : null;
     }
 
     public AccountMask getMaskedAccount() {

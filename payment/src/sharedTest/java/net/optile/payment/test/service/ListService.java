@@ -22,6 +22,9 @@ import net.optile.payment.model.ListResult;
 import net.optile.payment.network.ListConnection;
 import net.optile.payment.util.PaymentUtils;
 
+/**
+ * Class for creating a new ListUrl
+ */
 public class ListService {
 
     private final String url;
@@ -34,10 +37,23 @@ public class ListService {
         this.conn = new ListConnection();
     }
 
+    /**
+     * Create a new instance of the ListService
+     *
+     * @param url to which this ListService should connect to
+     * @param auth authentication token
+     * @return the newly created ListService
+     */
     public final static ListService createInstance(String url, String auth) {
         return new ListService(url, auth);
     }
 
+    /**
+     * Create a new listUrl given the ListConfig
+     *
+     * @param config configuration describing which listUrl should be created
+     * @return the newly created listUrl
+     */
     public String createListUrl(ListConfig config) throws IOException {
         Context context = InstrumentationRegistry.getTargetContext();
 
@@ -55,6 +71,12 @@ public class ListService {
         }
     }
 
+    /**
+     * Create a new ListConfig given the json configuration file.
+     *
+     * @param jsonResId resource ID pointing to the json config file
+     * @return the newly created ListConfig
+     */
     public ListConfig createListConfig(int jsonResId) throws JSONException, IOException {
         String fileContent = PaymentUtils.readRawResource(InstrumentationRegistry.getContext().getResources(), jsonResId);
         JSONObject obj = new JSONObject(fileContent);

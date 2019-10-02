@@ -43,10 +43,8 @@ public final class PaymentConnection extends BaseConnection {
      * @return the OperationResult object received from the Payment API
      */
     public OperationResult postOperation(final Operation operation) throws PaymentException {
-        final String source = "PaymentConnection[postOperation]";
-
         if (operation == null) {
-            throw new IllegalArgumentException(source + " - operation cannot be null");
+            throw new IllegalArgumentException("operation cannot be null");
         }
         HttpURLConnection conn = null;
 
@@ -63,18 +61,18 @@ public final class PaymentConnection extends BaseConnection {
                 case HttpURLConnection.HTTP_OK:
                     return handlePostOperationOk(readFromInputStream(conn));
                 default:
-                    throw createPaymentException(source, API_ERROR, rc, conn);
+                    throw createPaymentException(API_ERROR, rc, conn);
             }
         } catch (JsonParseException e) {
-            throw createPaymentException(source, PROTOCOL_ERROR, e);
+            throw createPaymentException(PROTOCOL_ERROR, e);
         } catch (MalformedURLException e) {
-            throw createPaymentException(source, INTERNAL_ERROR, e);
+            throw createPaymentException(INTERNAL_ERROR, e);
         } catch (JSONException e) {
-            throw createPaymentException(source, INTERNAL_ERROR, e);
+            throw createPaymentException(INTERNAL_ERROR, e);
         } catch (IOException e) {
-            throw createPaymentException(source, CONN_ERROR, e);
+            throw createPaymentException(CONN_ERROR, e);
         } catch (SecurityException e) {
-            throw createPaymentException(source, SECURITY_ERROR, e);
+            throw createPaymentException(SECURITY_ERROR, e);
         } finally {
             close(conn);
         }

@@ -12,7 +12,6 @@ import java.net.URL;
 import java.util.List;
 import java.util.Map;
 
-import net.optile.payment.core.LanguageFile;
 import net.optile.payment.model.ApplicableNetwork;
 import net.optile.payment.model.ListResult;
 import net.optile.payment.model.Networks;
@@ -27,7 +26,6 @@ public final class PaymentSession {
     private final List<AccountCard> accounts;
     private final List<NetworkCard> networks;
     private final Validator validator;
-    private final LanguageFile lang;
 
     /**
      * Construct a new PaymentSession object
@@ -37,16 +35,14 @@ public final class PaymentSession {
      * @param accounts list of AccountCards supported by this PaymentSession
      * @param networks list of NetworkCards supported by this PaymentSession
      * @param validator used to validate input values for this payment session
-     * @param lang payment page language file
      */
     public PaymentSession(ListResult listResult, PresetCard presetCard, List<AccountCard> accounts, List<NetworkCard> networks,
-        Validator validator, LanguageFile lang) {
+        Validator validator) {
         this.listResult = listResult;
         this.presetCard = presetCard;
         this.accounts = accounts;
         this.networks = networks;
         this.validator = validator;
-        this.lang = lang;
     }
 
     public ListResult getListResult() {
@@ -67,10 +63,6 @@ public final class PaymentSession {
 
     public Validator getValidator() {
         return validator;
-    }
-
-    public LanguageFile getLang() {
-        return lang;
     }
 
     public URL getLink(String name) {
@@ -106,5 +98,22 @@ public final class PaymentSession {
         }
         List<ApplicableNetwork> an = nw.getApplicable();
         return an != null ? an.size() : 0;
+    }
+
+    public boolean containsLink(String name, URL url) {
+        if (presetCard != null && presetCard.containsLink(name, url)) {
+            return true;
+        }
+        for (AccountCard card : accounts) {
+            if (card.containsLink(name, url)) {
+                return true;
+            }
+        }
+        for (NetworkCard card : networks) {
+            if (card.containsLink(name, url)) {
+                return true;
+            }
+        }
+        return false;
     }
 }

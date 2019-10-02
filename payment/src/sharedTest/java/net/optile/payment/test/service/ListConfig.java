@@ -11,10 +11,18 @@ package net.optile.payment.test.service;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-public class ListConfig {
+/**
+ * Class containing the configuration for creating a new list
+ */
+public final class ListConfig {
 
     private final JSONObject source;
 
+    /**
+     * Create a new ListConfig from the json source object
+     *
+     * @param source containing the configuration in json format
+     */
     public ListConfig(JSONObject source) {
         this.source = source;
     }
@@ -29,8 +37,11 @@ public class ListConfig {
         language.put("language", lang);
     }
 
+    public void setPresetFirst(boolean val) throws JSONException {
+        source.put("presetFirst", val);
+    }
+
     public String toJsonString() {
         return source.toString();
-
     }
 }

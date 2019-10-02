@@ -16,7 +16,7 @@ import net.optile.payment.R;
  * Class for holding the PaymentPage theme parameters.
  * These parameters may be used to theme the PaymentPage UI elements and text appearances.
  */
-public final class PageParameters {
+public final class ListParameters {
 
     private final int pageTheme;
     private final int emptyListLabelStyle;
@@ -28,7 +28,7 @@ public final class PageParameters {
     private final int networkCardTitleStyle;
     private final int paymentLogoBackground;
 
-    private PageParameters(Builder builder) {
+    private ListParameters(Builder builder) {
         this.pageTheme = builder.pageTheme;
         this.emptyListLabelStyle = builder.emptyListLabelStyle;
         this.sectionHeaderLabelStyle = builder.sectionHeaderLabelStyle;
@@ -44,9 +44,9 @@ public final class PageParameters {
         return new Builder();
     }
 
-    public static PageParameters createDefault() {
+    public static ListParameters createDefault() {
         return createBuilder().
-            setPageTheme(R.style.PaymentTheme_PaymentPage).
+            setPageTheme(R.style.PaymentThemeDarkActionBar_PaymentList).
             setEmptyListLabelStyle(R.style.PaymentText_Medium_Gray).
             setSectionHeaderLabelStyle(R.style.PaymentText_Medium_Bold).
             setPresetCardTitleStyle(R.style.PaymentText_Medium_Bold).
@@ -152,8 +152,8 @@ public final class PageParameters {
             return this;
         }
 
-        public PageParameters build() {
-            return new PageParameters(this);
+        public ListParameters build() {
+            return new ListParameters(this);
         }
     }
 }
