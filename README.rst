@@ -390,7 +390,7 @@ Table explaining each attribute:
 | paymentListToolbarTheme           | Theme of the PaymentList Toolbar           |
 +-----------------------------------+--------------------------------------------+
 | paymentListToolbarTitleStyle      | TextAppearance of the toolbar title        |
-+--------------------------         +--------------------------------------------+
++-----------------------------------+--------------------------------------------+
 | paymentListEmptyLabelStyle        | TextAppearance of label shown when the     |
 |                                   | list of payment methods is empty           |
 +-----------------------------------+--------------------------------------------+
