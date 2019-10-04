@@ -1,6 +1,17 @@
 Changelog - Android SDK
 -----------------------
 
+**Version android-sdk-1.1.18**
+
+* [PCX-388] - Bug, Button labels don't have a default fall-back
+* [PCX-407] - Bug, paymentpage.properties loading fails
+* [PCX-416] - Bug, Preselected card in ListResult does not open correct card
+* [PCX-378] - Separate processing payment from payment page
+* [PCX-379] - Create separate services for processing payments
+* [PCX-420] - Write automated UI test to load the payment page and open the first payment card 
+* [PCX-430] - Write automated UI test to validate payment with presetFirst:true
+* [PCX-431] - Write automated UI test to validate payment with presetFirst:false
+
 **Version android-sdk-1.1.17**
 
 * [PCX-321] - Add JCB UNIONPAY DINERS and DISCOVER to default credit card grouping
