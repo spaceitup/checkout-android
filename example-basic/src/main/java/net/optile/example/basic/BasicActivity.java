@@ -85,7 +85,7 @@ public final class BasicActivity extends AppCompatActivity {
      */
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
-
+        super.onActivityResult(requestCode, resultCode, data);
         if (requestCode != PAYMENT_REQUEST_CODE) {
             return;
         }

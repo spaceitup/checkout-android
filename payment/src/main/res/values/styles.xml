@@ -103,10 +103,12 @@
     
     <style name="WidgetButtonStyle" parent="@style/Widget.MaterialComponents.Button.UnelevatedButton">
         <item name="android:textAllCaps">false</item>
-        <item name="android:textAppearance">@style/PaymentText.Medium.Bold.Light</item>        
-        <item name="android:paddingVertical">@dimen/pmborder_small</item>
-        <item name="android:paddingHorizontal">@dimen/pmborder_medium</item>
-        <item name="cornerRadius">@dimen/pmbutton_radius</item>        
+        <item name="android:textAppearance">@style/PaymentText.Medium.Bold.Light</item>
+        <item name="android:paddingTop">@dimen/pmborder_small</item>
+        <item name="android:paddingBottom">@dimen/pmborder_small</item>
+        <item name="android:paddingLeft">@dimen/pmborder_medium</item>
+        <item name="android:paddingRight">@dimen/pmborder_medium</item>
+        <item name="cornerRadius">@dimen/pmbutton_radius</item>
     </style>
 
     <style name="DialogButtonStyle" parent="@style/Widget.MaterialComponents.Button.TextButton.Dialog">

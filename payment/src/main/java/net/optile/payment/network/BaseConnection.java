@@ -263,7 +263,6 @@ abstract class BaseConnection {
     /**
      * Handle the error response from the Payment API
      *
-     * @param source the source
      * @param errorType the error type
      * @param statusCode the status code
      * @param conn the conn
@@ -292,7 +291,6 @@ abstract class BaseConnection {
     /**
      * Handle the error response from the Payment API
      *
-     * @param source the source
      * @param errorType the error type
      * @param cause the cause
      * @return NetworkResponse network exception
