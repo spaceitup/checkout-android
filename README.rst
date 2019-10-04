@@ -371,7 +371,16 @@ be used for coloring the icons in front of the input fields.
 Theming PaymentList screen
 ~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-The theming of the PaymentList is defined by creating a new theme in your themes.xml and setting custom attributes in this theme. Once the theme has been created in your themes.xml file it can be set in the PaymentTheme class. The following list describes the attributes you can use to theme the PaymentList.
+The theming of the PaymentList is defined by creating a new theme in your themes.xml and setting custom attributes in this theme. Once the theme has been created in your themes.xml file it can be set in the PaymentTheme class.
+
+Code sample how to create and set a custom PaymentList theme:
+
+.. code-block:: java
+
+    PaymentTheme.Builder builder = PaymentTheme.createBuilder();
+    builder.setPaymentListTheme(R.style.CustomPaymentTheme_PaymentList);
+
+The following list describes the attributes you can use to theme the PaymentList.
 
 Table explaining each attribute:
 
@@ -436,11 +445,17 @@ Table explaining each attribute:
 |                                   | ID                                         | 
 +-----------------------------------+--------------------------------------------+
 
-
 Theming ChargePayment screen
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Similar to the theming of the PaymentList, the ChargePayment screen will also be themed using custom attributes and set in the PaymentTheme class.
+
+Code sample how to create and set a custom ChargePayment theme:
+
+.. code-block:: java
+
+    PaymentTheme.Builder builder = PaymentTheme.createBuilder();
+    builder.setChargePaymentTheme(R.style.CustomPaymentTheme_ChargePayment);
 
 Table explaining each attribute:
 
@@ -466,6 +481,14 @@ The Android SDK uses two different dialogs.
 The date dialog is used to enter the expiration data of credit cards and a
 message dialog is used for showing messages and asking questions.
 The custom themes of both date and message dialogs can be set in the PaymentTheme class.
+
+Code sample how to create the date and message dialog themes:
+
+.. code-block:: java
+
+    PaymentTheme.Builder builder = PaymentTheme.createBuilder();
+    builder.setDateDialogTheme(R.style.CustomDialogTheme_Date);
+    builder.setMessageDialogTheme(R.style.CustomDialogTheme_Message);
 
 Table explaining the attributes in the shared PaymentDialogTheme:
 
