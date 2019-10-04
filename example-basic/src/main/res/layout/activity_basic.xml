@@ -31,11 +31,6 @@
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="@dimen/border_small"
                 android:text="@string/theme_custom"/>
-            <RadioButton
-                android:id="@+id/radio_theme_empty"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/theme_empty"/>
         </RadioGroup>
 
         <EditText

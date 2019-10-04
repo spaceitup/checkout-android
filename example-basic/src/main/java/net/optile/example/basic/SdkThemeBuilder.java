@@ -16,15 +16,6 @@ import net.optile.payment.ui.theme.PaymentTheme;
 final class SdkThemeBuilder {
 
     /**
-     * Create an empty payment theme
-     *
-     * @return the empty theme
-     */
-    public static PaymentTheme createEmptyTheme() {
-        return PaymentTheme.createBuilder().build();
-    }
-
-    /**
      * Create a default payment theme
      *
      * @return the default theme

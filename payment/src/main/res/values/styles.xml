@@ -105,13 +105,15 @@
         <item name="android:textAllCaps">false</item>
         <item name="android:textAppearance">@style/PaymentText.Medium.Bold.Light</item>        
         <item name="android:paddingVertical">@dimen/pmborder_small</item>
-        <item name="android:paddingHorizontal">@dimen/pmborder_medium</item>        
+        <item name="android:paddingHorizontal">@dimen/pmborder_medium</item>
+        <item name="cornerRadius">@dimen/pmbutton_radius</item>        
     </style>
 
     <style name="DialogButtonStyle" parent="@style/Widget.MaterialComponents.Button.TextButton.Dialog">
         <item name="android:textAllCaps">false</item>
         <item name="android:textAppearance">@style/PaymentText.Small.Bold.Primary</item>
         <item name="android:textColor">@color/pmcolor_primary</item>        
+
     </style>
 
     <style name="WidgetCheckBoxStyle" parent="@style/Widget.MaterialComponents.CompoundButton.CheckBox">

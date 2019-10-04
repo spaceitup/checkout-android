@@ -178,12 +178,10 @@ public final class BasicActivity extends AppCompatActivity {
     private PaymentTheme createPaymentTheme() {
 
         switch (themeGroup.getCheckedRadioButtonId()) {
-            case R.id.radio_theme_default:
-                return SdkThemeBuilder.createDefaultTheme();
             case R.id.radio_theme_custom:
                 return SdkThemeBuilder.createCustomTheme();
             default:
-                return SdkThemeBuilder.createEmptyTheme();
+                return SdkThemeBuilder.createDefaultTheme();
         }
     }
 

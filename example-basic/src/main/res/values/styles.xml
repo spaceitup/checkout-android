@@ -106,6 +106,7 @@
     <style name="CustomWidgetButtonStyle" parent="@style/WidgetButtonStyle">
         <item name="android:textAllCaps">true</item>
         <item name="android:textAppearance">@style/CustomText.Medium.Bold.Light</item>        
+        <item name="cornerRadius">@dimen/custom_buttonradius</item>        
     </style>
 
     <style name="CustomDialogButtonStyle" parent="@style/DialogButtonStyle">
