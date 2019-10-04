@@ -8,10 +8,16 @@
 
 package net.optile.payment.ui.page;
 
+import android.content.Context;
+import android.content.res.Resources;
+import android.graphics.PorterDuff;
+import android.graphics.drawable.Drawable;
 import android.text.TextUtils;
+import android.util.TypedValue;
 import android.view.View;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import androidx.core.content.ContextCompat;
 import net.optile.payment.R;
 
 /**
@@ -34,6 +40,7 @@ class ProgressView {
         progressBar = view.findViewById(R.id.progressbar);
         textHeader = view.findViewById(R.id.text_header);
         textInfo = view.findViewById(R.id.text_info);
+        styleProgressBar();
     }
 
     /**
@@ -60,5 +67,21 @@ class ProgressView {
      */
     public void setVisible(boolean visible) {
         view.setVisibility(visible ? View.VISIBLE : View.GONE);
+    }
+
+    /** 
+     * The ProgressBar is styled programmatically since the Android SDK must support
+     * the Android version 19 and indeterminateTint is not supported for older devices.
+     */
+    private void styleProgressBar() {
+        TypedValue typedValue = new TypedValue();
+        view.getContext().getTheme().resolveAttribute(R.attr.progressColor, typedValue, true);
+
+        Drawable drawable = progressBar.getIndeterminateDrawable();
+        if (drawable == null || typedValue.resourceId == 0) {
+            return;
+        }
+        drawable.setColorFilter(ContextCompat.getColor(view.getContext(), typedValue.resourceId),
+            PorterDuff.Mode.SRC_IN);
     }
 }
