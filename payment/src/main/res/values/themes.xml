@@ -69,7 +69,6 @@
     </style>
     
     <style name="PaymentToolbarTheme" parent="ThemeOverlay.MaterialComponents.Dark.ActionBar">
-        <item name="android:elevation">@dimen/pmtoolbar_elevation</item>
     </style>
 
 </resources>

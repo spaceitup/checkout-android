@@ -118,7 +118,7 @@ public final class PaymentResult implements Parcelable {
      *
      * @param cause of the error
      */
-    public final static PaymentResult fromThrowable(Throwable cause) {
+    public static PaymentResult fromThrowable(Throwable cause) {
         if (cause instanceof PaymentException) {
             return fromPaymentException((PaymentException) cause);
         }
@@ -133,7 +133,7 @@ public final class PaymentResult implements Parcelable {
      * @param exception containing the error details
      * @return the newly created PaymentResult
      */
-    public final static PaymentResult fromPaymentException(PaymentException exception) {
+    public static PaymentResult fromPaymentException(PaymentException exception) {
         ErrorInfo info = exception.error.errorInfo;
         if (info != null) {
             return new PaymentResult(info.getResultInfo(), info.getInteraction());
@@ -148,7 +148,7 @@ public final class PaymentResult implements Parcelable {
      * @param intent containing the PaymentResult
      * @return PaymentResult or null if not stored in the intent
      */
-    public final static PaymentResult fromResultIntent(Intent intent) {
+    public static PaymentResult fromResultIntent(Intent intent) {
         if (intent != null) {
             return intent.getParcelableExtra(EXTRA_PAYMENT_RESULT);
         }
