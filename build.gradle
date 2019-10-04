@@ -39,7 +39,7 @@ ext {
 
     javaCompatVersion = JavaVersion.VERSION_1_8
 
-    minSdkVersion = 21
+    minSdkVersion = 19
     compileSdkVersion = 28
     targetSdkVersion = 28
     buildToolsVersion = "28.0.3"
