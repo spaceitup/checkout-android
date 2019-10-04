@@ -338,9 +338,8 @@ Code sample how to set the fixed orientation mode:
 Page Theming
 ------------
 
-Theming of the Payment Page is done using the PaymentTheme class and in
-order for theming to take effect, the customized PaymentTheme instance
-must be set in the PaymentUI class prior to opening the Payment Page.
+Theming of the Android SDK screens and views are done using the PaymentTheme class. In order for theming to take effect, the customized PaymentTheme instance
+must be set in the PaymentUI class prior to opening i.e. the Payment Page.
 
 Code sample how to create and set a custom PaymentTheme:
 
@@ -354,220 +353,155 @@ Code sample how to create and set a custom PaymentTheme:
     paymentUI.showPaymentPage(this, PAYMENT_REQUEST_CODE);
 
 The PaymentTheme contains a set of parameters defining the customized
-theming. When a parameter name ends with Style, the parameter holds a
-TextAppearance style resource id used for TextView elements. If the
-parameter name ends with Theme then the parameter holds a theme resource
-id and is applied during inflation of the UI element.
+theming.
 
-ListParameters
-~~~~~~~~~~~~~~
+IconMapping
+~~~~~~~~~~~
 
-The ListParameters class contains a collection of parameters used to
-theme the page and list.
+The PaymentTheme allow setting individual drawable resource ids for icons
+by using the putInputTypeIcon() method, use the setDefaultIconMapping()
+method to use the icons provided by the Android SDK.
 
-Code sample how to set the ListParameters in the PaymentTheme:
+Validation colors
+~~~~~~~~~~~~~~~~~
 
-.. code-block:: java
+The three validation colors (unknown, error and ok) can be set in the PaymentTheme and these colors will
+be used for coloring the icons in front of the input fields.
 
-    ListParameters listParams = ListParameters.createBuilder().
-    setPageTheme(R.style.CustomThemePaymentList).
-    build();
-    builder.setListParameters(listParams);
+Theming PaymentList screen
+~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Table explaining each page parameter:
+The theming of the PaymentList is defined by creating a new theme in your themes.xml and setting custom attributes in this theme. Once the theme has been created in your themes.xml file it can be set in the PaymentTheme class. The following list describes the attributes you can use to theme the PaymentList.
 
-+--------------------------+--------------------------------------------+
-| Name                     | Purpose                                    |
-+==========================+============================================+
-| pageTheme                | Main theme of the PaymentListActivity.     |
-+--------------------------+--------------------------------------------+
-| emptyListLabelStyle      | TextAppearance of label shown when the     |
-|                          | list of payment methods is empty           |
-+--------------------------+--------------------------------------------+
-| sectionHeaderLabelStyle  | TextAppearance of section header label in  |
-|                          | the list, i.e. “Saved accounts”            |
-+--------------------------+--------------------------------------------+
-| networkCardTitleStyle    | TextAppearance of network card title,      |
-|                          | i.e. “Visa”                                |
-+--------------------------+--------------------------------------------+
-| accountCardTitleStyle    | TextAppearance of account card title,      |
-|                          | i.e. “41 \**\* 1111”                       |
-+--------------------------+--------------------------------------------+
-| accountCardSubtitleStyle | TextAppearance of account card subtitle,   |
-|                          | i.e. the expiry date “01 / 2032”           |
-+--------------------------+--------------------------------------------+
-| paymentLogoBackground    | Background resource ID drawn behind        |
-|                          | payment method images                      |
-+--------------------------+--------------------------------------------+
+Table explaining each attribute:
 
-ProcessParameters
-~~~~~~~~~~~~~~
++-----------------------------------+--------------------------------------------+
+| Name                              | Purpose                                    |
++===================================+============================================+
+| paymentListToolbarTheme           | Theme of the PaymentList Toolbar           |
++-----------------------------------+--------------------------------------------+
+| paymentListToolbarTitleStyle      | TextAppearance of the toolbar title        |
++--------------------------         +--------------------------------------------+
+| paymentListEmptyLabelStyle        | TextAppearance of label shown when the     |
+|                                   | list of payment methods is empty           |
++-----------------------------------+--------------------------------------------+
+| paymentListHeaderLabelStyle       | TextAppearance of section header label in  |
+|                                   | the list, i.e. “Saved accounts”            |
++-----------------------------------+--------------------------------------------+
+| paymentCardStyle                  | The style for payment cards inside the     |
+|                                   | the list                                   |
++-----------------------------------+--------------------------------------------+
+| paymentCardLogoBackground         | Background resource ID drawn behind        |
+|                                   | payment method images                      |
++-----------------------------------+--------------------------------------------+
+| presetCardTitleStyle              | TextAppearance of preset card title,       |
+|                                   | i.e. “41 \**\* 1111”                       |
++-----------------------------------+--------------------------------------------+
+| presetCardSubtitleStyle           | TextAppearance of preset card subtitle,    |
+|                                   | i.e. the expiry date “01 / 2032”           |
++-----------------------------------+--------------------------------------------+
+| accountCardTitleStyle             | TextAppearance of account card title,      |
+|                                   | i.e. “41 \**\* 1111”                       |
++-----------------------------------+--------------------------------------------+
+| accountCardSubtitleStyle          | TextAppearance of account card subtitle,   |
+|                                   | i.e. the expiry date “01 / 2032”           |
++-----------------------------------+--------------------------------------------+
+| networkCardTitleStyle             | TextAppearance of network card title       |
+|                                   | i.e. Visa or GooglePay                     |
++-----------------------------------+--------------------------------------------+
+| hintDrawable                      | Drawable resource ID of the hint icon for  |
+|                                   | verification codes                         |
++-----------------------------------+--------------------------------------------+
+| widgetTextInputStyle              | Style for widget TextInputLayout views     |
++-----------------------------------+--------------------------------------------+
+| widgetEditTextStyle               | style for widget TextInputEditText views   |
++-----------------------------------+--------------------------------------------+
+| widgetButtonStyle                 | Style for widget action button in payment  |
+|                                   | cards                                      |
++-----------------------------------+--------------------------------------------+
+| widgetCheckBoxStyle               | Style for widget checkboxes views          |
++-----------------------------------+--------------------------------------------+
+| widgetCheckBoxLabelCheckedStyle   | TextAppearance of label when checkBox is   |
+|                                   | checked                                    |
++-----------------------------------+--------------------------------------------+
+| widgetCheckBoxLabelUncheckedStyle | TextAppearance of label when checkBox is   |
+|                                   | unchecked                                  |
++-----------------------------------+--------------------------------------------+
+| widgetSelectLabelStyle            | TextAppearance of label shown above        |
+|                                   | SelectBox                                  |
++-----------------------------------+--------------------------------------------+
+| progressBackground                | Background resource ID of the loading page |
++-----------------------------------+--------------------------------------------+
+| progressColor                     | Indeterminate ProgressBar color resource   |
+|                                   | ID                                         | 
++-----------------------------------+--------------------------------------------+
 
-The ProcessParameters class contains a collection of parameters used to
-theme the process payment page.
 
-Code sample how to set the ProcessParameters in the PaymentTheme:
+Theming ChargePayment screen
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-.. code-block:: java
+Similar to the theming of the PaymentList, the ChargePayment screen will also be themed using custom attributes and set in the PaymentTheme class.
 
-    ProcessParameters processParams = ProcessParameters.createBuilder().
-    setPageTheme(R.style.CustomThemeProcessPayment).
-    build();
-    builder.setProcessParameters(processParams);
+Table explaining each attribute:
 
-Table explaining each process parameter:
++-----------------------------------+--------------------------------------------+
+| Name                              | Purpose                                    |
++===================================+============================================+
+| progressBackground                | Background resource ID of the loading page |
++-----------------------------------+--------------------------------------------+
+| progressColor                     | Indeterminate ProgressBar color resource   |
+|                                   | ID                                         | 
++-----------------------------------+--------------------------------------------+
+| progressHeaderStyle               | TextAppearance of the header progress      |
+|                                   | label                                      | 
++-----------------------------------+--------------------------------------------+
+| progressInfoStyle                 | TextAppearance of the info progress label  |
++-----------------------------------+--------------------------------------------+
 
-+--------------------------+--------------------------------------------+
-| Name                     | Purpose                                    |
-+==========================+============================================+
-| pageTheme                | Main theme of the ProcessPaymentActivity.  |
-+--------------------------+--------------------------------------------+
 
-WidgetParameters
+Theming dialogs
 ~~~~~~~~~~~~~~~~
 
-The WidgetParameters contains a collection of parameters used to theme
-widgets. Widgets are UI elements handling user input, i.e. TextInput,
-CheckBoxes Select options. Below is a table explaining each parameter.
+The Android SDK uses two different dialogs.
+The date dialog is used to enter the expiration data of credit cards and a
+message dialog is used for showing messages and asking questions.
+The custom themes of both date and message dialogs can be set in the PaymentTheme class.
 
-The WidgetParameters class allow setting individual drawable resource
-ids for icons by using the putInputTypeIcon() method, use the
-setDefaultIconMapping() method to use the icons provided by the Android SDK.
+Table explaining the attributes in the shared PaymentDialogTheme:
 
-Code sample how to set the WidgetParameters in the PaymentTheme:
++-----------------------------------+--------------------------------------------+
+| Name                              | Purpose                                    |
++===================================+============================================+
+| themedDialogButtonStyle           | Style for buttons used in both message and |
+|                                   | date dialogs                               |
++-----------------------------------+--------------------------------------------+
 
-.. code-block:: java
+Table explaining the attributes for the date dialog:
 
-    WidgetParameters widgetParams = WidgetParameters.createBuilder().
-    setTextInputTheme(R.style.CustomThemeTextInput).
-    build();
-    builder.setWidgetParameters(widgetParams);
++-----------------------------------+--------------------------------------------+
+| Name                              | Purpose                                    |
++===================================+============================================+
+| themedDateDialogTitleStyle        | TextAppearance of the title in a date      |
+|                                   | dialog                                     |
++-----------------------------------+--------------------------------------------+
 
-Table explaining each widget parameter:
+Table explaining the attributes for the message dialog:
 
-+-----------------------------+--------------------------------------------+
-| Name                        | Purpose                                    |
-+=============================+============================================+
-| textInputTheme              | Theme for TextInputLayout elements         |
-+-----------------------------+--------------------------------------------+
-| buttonTheme                 | Theme for action button in each payment    |
-|                             | card                                       |
-+-----------------------------+--------------------------------------------+
-| buttonLabelStyle            | TextAppearance of label inside the action  |
-|                             | button                                     |
-+-----------------------------+--------------------------------------------+
-| buttonBackground            | Background resource ID of action button    |
-+-----------------------------+--------------------------------------------+
-| checkBoxTheme               | Theme for checkBox UI element              |
-+-----------------------------+--------------------------------------------+
-| checkBoxLabelCheckedStyle   | TextAppearance of label when checkBox is   |
-|                             | checked                                    |
-+-----------------------------+--------------------------------------------+
-| checkBoxLabelUncheckedStyle | TextAppearance of label when checkBox is   |
-|                             | unchecked                                  |
-+-----------------------------+--------------------------------------------+
-| selectLabelStyle            | TextAppearance of label shown above        |
-|                             | SelectBox                                  |
-+-----------------------------+--------------------------------------------+
-| validationColorOk           | Color resource ID indicating successful    |
-|                             | validation state                           |
-+-----------------------------+--------------------------------------------+
-| validationColorUnknown      | Color resource ID indicating unknown       |
-|                             | validation state                           |
-+-----------------------------+--------------------------------------------+
-| validationColorError        | Color resource ID indicating error         |
-|                             | validation state                           |
-+-----------------------------+--------------------------------------------+
-| hintDrawable                | Drawable resource ID of the hint icon for  |
-|                             | verification codes                         |
-+-----------------------------+--------------------------------------------+
++----------------------------------------+--------------------------------------------+
+| Name                                   | Purpose                                    |
++========================================+============================================+
+| themedMessageDialogTitleStyle          | TextAppearance of title in message dialog  |
++----------------------------------------+--------------------------------------------+
+| themedMessageDialogDetailsStyle        | TextAppearance of message in message       |
+|                                        | dialog                                     |
++----------------------------------------+--------------------------------------------+
+| themedMessageDialogDetailsNoTitleStyle | TextAppearance of message in message       |
+|                                        | dialog without title                       |
++----------------------------------------+--------------------------------------------+
+| themedMessageDialogImageLabelStyle     | TextAppearance of the image prefix &       |
+|                                        | suffix labels in messag dialog             |
++----------------------------------------+--------------------------------------------+
 
-DialogParameters
-~~~~~~~~~~~~~~~~
-
-The DialogParameters in the PaymentTheme holds parameters to theme popup
-dialog windows. The Android SDK contain two different dialogs, the
-DateDialog for setting expiry dates and MessageDialog to show warnings
-and errors.
-
-Code sample how to set the DialogParameters in the PaymentTheme:
-
-.. code-block:: java
-
-    DialogParameters dialogParams = DialogParameters.createBuilder().
-    setDateTitleStyle(R.style.CustomText_Medium).
-    build();
-    builder.setDialogParameters(dialogParams);
-
-Table explaining each dialog parameter:
-
-+-----------------------------+--------------------------------------------+
-| Name                        | Purpose                                    |
-+=============================+============================================+
-| dialogTheme                 | Theme for Dialogs, i.e. message and date   |
-|                             | dialogs                                    |
-+-----------------------------+--------------------------------------------+
-| dateTitleStyle              | TextAppearance of title in DateDialog      |
-+-----------------------------+--------------------------------------------+
-| dateSubtitleStyle           | TextAppearance of subtitle in DateDialog   |
-+-----------------------------+--------------------------------------------+
-| messageTitleStyle           | TextAppearance of title in MessageDialog   |
-+-----------------------------+--------------------------------------------+
-| messageDetailsStyle         | TextAppearance of message in MessageDialog |
-+-----------------------------+--------------------------------------------+
-| messageDetailsNoTitleStyle  | TextAppearance of message in MessageDialog |
-|                             | without title                              |
-+-----------------------------+--------------------------------------------+
-| buttonLabelStyle            | TextAppearance of action button for Date   |
-|                             | and MessageDialogs                         |
-+-----------------------------+--------------------------------------------+
-| imageLabelStyle             | TextAppearance of the image prefix &       |
-|                             | suffix labels in MessageDialog             |
-+-----------------------------+--------------------------------------------+
-| snackbarTextStyle           | TextAppearance of the text label inside a  |
-|                             | Snackbar                                   |
-+-----------------------------+--------------------------------------------+
-
-ProgressParameters
-~~~~~~~~~~~~~~~~~~
-
-The ProgressParameters in the PaymentTheme hold parameters to theme
-progress animations shown when loading lists or sending charge/preset requests
-to the Payment API.
-
-Code sample how to set the ProgressParameters in the PaymentTheme:
-
-.. code-block:: java
-
-    ProgressParameters progressParams = ProgressParameters.createBuilder().
-    setLoadProgressBarColor(R.color.customColorPrimary).
-    build();
-    builder.setProgressParameters(progressParams);
-
-Table explaining each progress parameter:
-
-+---------------------------+--------------------------------------------+
-| Name                      | Purpose                                    |   
-+===========================+============================================+
-| loadBackground            | Background resource ID of the loading page |
-+---------------------------+--------------------------------------------+
-| loadProgressBarColor      | Indeterminate ProgressBar color resource   |
-|                           | ID                                         | 
-+---------------------------+--------------------------------------------+
-| sendBackground            | Background resource ID of the loading page |
-+---------------------------+--------------------------------------------+
-| sendProgressBarColorFront | Determinate ProgressBar front color        |
-|                           | resource ID                                | 
-+---------------------------+--------------------------------------------+
-| sendProgressBarColorBack  | Determinate ProgressBar back color         |
-|                           | resource ID                                | 
-+---------------------------+--------------------------------------------+
-| headerStyle               | TextAppearance of header in the send       |
-|                           | progress screen                            | 
-+---------------------------+--------------------------------------------+
-| infoStyle                 | TextAppearance of info in the send         |
-|                           | progress screen                            | 
-+---------------------------+--------------------------------------------+
 
 Grouping of Payment Methods
 ===========================

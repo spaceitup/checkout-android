@@ -9,6 +9,12 @@
     <attr name="paymentCardStyle" type="reference" />
     <attr name="paymentCardLogoBackground" type="reference" />
 
+    <attr name="presetCardTitleStyle" type="reference"/>        
+    <attr name="presetCardSubtitleStyle" type="reference"/>        
+    <attr name="accountCardTitleStyle" type="reference"/>        
+    <attr name="accountCardSubtitleStyle" type="reference"/>        
+    <attr name="networkCardTitleStyle" type="reference"/>        
+
     <attr name="widgetHintDrawable" type="reference"/>
     <attr name="widgetInfoLabelStyle" type="reference"/>
     <attr name="widgetTextInputStyle" type="reference"/>
@@ -25,12 +31,6 @@
     <attr name="themedMessageDialogDetailsStyle" type="reference"/>
     <attr name="themedMessageDialogDetailsNoTitleStyle" type="reference"/>
     <attr name="themedMessageDialogImageLabelStyle" type="reference"/>        
-
-    <attr name="presetCardTitleStyle" type="reference"/>        
-    <attr name="presetCardSubtitleStyle" type="reference"/>        
-    <attr name="accountCardTitleStyle" type="reference"/>        
-    <attr name="accountCardSubtitleStyle" type="reference"/>        
-    <attr name="networkCardTitleStyle" type="reference"/>        
 
     <attr name="progressBackground" type="reference"/>        
     <attr name="progressColor" type="reference"/>

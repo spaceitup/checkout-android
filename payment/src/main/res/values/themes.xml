@@ -9,9 +9,9 @@
         <item name="android:windowBackground">@color/pmcolor_list</item> 
         <item name="paymentListToolbarTheme">@style/PaymentToolbarTheme</item>
         <item name="paymentListToolbarTitleStyle">@style/PaymentText.Medium.Bold</item>
+
         <item name="paymentListEmptyLabelStyle">@style/PaymentText.Small</item>
         <item name="paymentListHeaderLabelStyle">@style/PaymentText.Medium.Bold</item>        
-
         <item name="paymentCardStyle">@style/PaymentCardStyle</item>
         <item name="paymentCardLogoBackground">@null</item>
         
@@ -21,16 +21,17 @@
         <item name="accountCardSubtitleStyle">@style/PaymentText.Tiny</item>
         <item name="networkCardTitleStyle">@style/PaymentText.Medium</item>     
 
+        <item name="widgetHintDrawable">@drawable/ic_hint</item>        
+        <item name="widgetInfoLabelStyle">@style/PaymentText.Small</item>
         <item name="widgetTextInputStyle">@style/WidgetTextInputStyle</item>
         <item name="widgetEditTextStyle">@style/WidgetEditTextStyle</item>
         <item name="widgetButtonStyle">@style/WidgetButtonStyle</item>        
         <item name="widgetCheckBoxStyle">@style/WidgetCheckBoxStyle</item>
-        <item name="widgetHintDrawable">@drawable/ic_hint</item>
         <item name="widgetCheckBoxLabelCheckedStyle">@style/PaymentText.Medium</item>
         <item name="widgetCheckBoxLabelUncheckedStyle">@style/PaymentText.Medium.Hint</item>
         <item name="widgetSelectLabelStyle">@style/PaymentText.Tiny</item>
 
-        <item name="progressBackground">@color/pmprogress_background</item>        
+        <item name="progressBackground">@color/pmprogress_background</item>     
         <item name="progressColor">@color/pmcolor_primary</item>
     </style>
 
