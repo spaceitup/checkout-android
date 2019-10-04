@@ -11,7 +11,7 @@ android {
 
     defaultConfig {
         applicationId "net.optile.example.demo"
-        minSdkVersion rootProject.minSdkVersion
+        minSdkVersion rootProject.examplesMinSdkVersion
         targetSdkVersion rootProject.targetSdkVersion
         versionCode rootProject.versionCode
         versionName rootProject.versionName
