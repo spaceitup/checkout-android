@@ -10,172 +10,76 @@ package net.optile.payment.ui.page;
 
 import android.graphics.PorterDuff;
 import android.graphics.drawable.Drawable;
-import android.graphics.drawable.LayerDrawable;
-import android.os.Handler;
-import android.os.Looper;
-import android.support.v4.content.ContextCompat;
+import android.text.TextUtils;
+import android.util.TypedValue;
 import android.view.View;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import androidx.core.content.ContextCompat;
 import net.optile.payment.R;
-import net.optile.payment.ui.theme.PaymentTheme;
-import net.optile.payment.ui.theme.ProgressParameters;
-import net.optile.payment.util.PaymentUtils;
 
 /**
- * View managing the different style of progress animations.
+ * Class managing showing a ProgressBar with optional labels.
  */
 class ProgressView {
 
-    public final static int LOAD = 0x00;
-    public final static int SEND = 0x01;
-
-    private final static int SEND_MIN = 0;
-    private final static int SEND_MAX = 1000;
-    private final static int SEND_TIMEOUT = 30000 / SEND_MAX;
-
-    private final View loadLayout;
-    private final View sendLayout;
-    private final TextView sendHeader;
-    private final TextView sendInfo;
-    private final Handler sendHandler;
-    private final ProgressBar loadProgressBar;
-    private final ProgressBar sendProgressBar;
-    private final View rootView;
-    private int style;
+    private final TextView textHeader;
+    private final TextView textInfo;
+    private final ProgressBar progressBar;
+    private final View view;
 
     /**
      * Construct a new loading view given the parent view that holds the Views for the loading animations
      *
-     * @param rootView the root view containing the progress views and layouts
-     * @param theme contains the ProgressParameters for theming the progress views
+     * @param view the root view containing the progress views and layouts
      */
-    ProgressView(View rootView, PaymentTheme theme) {
-        ProgressParameters params = theme.getProgressParameters();
-        this.rootView = rootView;
-
-        // setup the ProgressBar for loading
-        loadLayout = rootView.findViewById(R.id.layout_load);
-        loadProgressBar = loadLayout.findViewById(R.id.progressbar_load);
-        applyLoadTheming(params);
-
-        // setup the ProgressBar for sending
-        sendLayout = rootView.findViewById(R.id.layout_send);
-        sendHeader = sendLayout.findViewById(R.id.text_sendheader);
-        sendInfo = sendLayout.findViewById(R.id.text_sendinfo);
-        sendProgressBar = sendLayout.findViewById(R.id.progressbar_send);
-        applySendTheming(params);
-
-        sendHandler = new Handler(Looper.getMainLooper());
+    ProgressView(View view) {
+        this.view = view;
+        progressBar = view.findViewById(R.id.progressbar);
+        textHeader = view.findViewById(R.id.text_header);
+        textInfo = view.findViewById(R.id.text_info);
+        styleProgressBar();
     }
 
     /**
-     * Set the style of progress that this view should show
+     * Set the labels shown under the progressbar.
      *
-     * @param style to be shown when made visible
+     * @param header label
+     * @param info label
      */
-    public void setStyle(int style) {
-        this.style = style;
+    public void setLabels(String header, String info) {
+        if (!TextUtils.isEmpty(header)) {
+            textHeader.setText(header);
+            textHeader.setVisibility(View.VISIBLE);
+        }
+        if (!TextUtils.isEmpty(header)) {
+            textInfo.setText(info);
+            textInfo.setVisibility(View.VISIBLE);
+        }
     }
 
     /**
-     * Set the labels shown when using the SEND progress type.
-     *
-     * @param header shown for the SEND type.
-     * @param info shown for the SEND type.
-     */
-    public void setSendLabels(String header, String info) {
-        sendHeader.setText(header);
-        sendInfo.setText(info);
-    }
-
-    /**
-     * Show the loading view with the given style
+     * Show the progress bar with optional title and info labels
      *
      * @param visible when true, show the loading animation, hide it otherwise
      */
     public void setVisible(boolean visible) {
-
-        if (!visible) {
-            loadLayout.setVisibility(View.GONE);
-            sendLayout.setVisibility(View.GONE);
-            stopSendProgress();
-            return;
-        }
-        switch (style) {
-            case SEND:
-                setSendVisible();
-                break;
-            default:
-                setLoadVisible();
-        }
+        view.setVisibility(visible ? View.VISIBLE : View.GONE);
     }
 
     /**
-     * Notify that this Progress view should be stopped
+     * The ProgressBar is styled programmatically since the Android SDK must support
+     * the Android version 19 and indeterminateTint is not supported for older devices.
      */
-    public void onStop() {
-        stopSendProgress();
-    }
+    private void styleProgressBar() {
+        TypedValue typedValue = new TypedValue();
+        view.getContext().getTheme().resolveAttribute(R.attr.progressColor, typedValue, true);
 
-    private void setLoadVisible() {
-
-        if (loadLayout.getVisibility() == View.VISIBLE) {
+        Drawable drawable = progressBar.getIndeterminateDrawable();
+        if (drawable == null || typedValue.resourceId == 0) {
             return;
         }
-        sendLayout.setVisibility(View.GONE);
-        loadLayout.setVisibility(View.VISIBLE);
-    }
-
-    private void setSendVisible() {
-
-        if (sendLayout.getVisibility() == View.VISIBLE) {
-            return;
-        }
-        loadLayout.setVisibility(View.GONE);
-        sendLayout.setVisibility(View.VISIBLE);
-        startSendProgress();
-    }
-
-    private void stopSendProgress() {
-        sendHandler.removeCallbacksAndMessages(null);
-    }
-
-    private void startSendProgress() {
-        sendProgressBar.setProgress(SEND_MIN);
-        sendProgressBar.setMax(SEND_MAX);
-        sendHandler.postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                int progress = sendProgressBar.getProgress() + 1;
-                if (progress > SEND_MAX) {
-                    progress = SEND_MIN;
-                }
-                sendProgressBar.setProgress(progress);
-                sendHandler.postDelayed(this, SEND_TIMEOUT);
-            }
-        }, SEND_TIMEOUT);
-    }
-
-    private void applyLoadTheming(ProgressParameters params) {
-        loadLayout.setBackgroundResource(params.getLoadBackground());
-        setColorFilter(loadProgressBar.getIndeterminateDrawable(), params.getLoadProgressBarColor());
-    }
-
-    private void applySendTheming(ProgressParameters params) {
-        sendLayout.setBackgroundResource(params.getSendBackground());
-        PaymentUtils.setTextAppearance(sendHeader, params.getHeaderStyle());
-        PaymentUtils.setTextAppearance(sendInfo, params.getInfoStyle());
-
-        LayerDrawable layer = (LayerDrawable) sendProgressBar.getProgressDrawable();
-        setColorFilter(layer.getDrawable(0), params.getSendProgressBarColorBack());
-        setColorFilter(layer.getDrawable(1), params.getSendProgressBarColorFront());
-    }
-
-    private void setColorFilter(Drawable drawable, int resId) {
-        if (drawable == null || resId == 0) {
-            return;
-        }
-        drawable.setColorFilter(ContextCompat.getColor(rootView.getContext(), resId), PorterDuff.Mode.SRC_IN);
+        drawable.setColorFilter(ContextCompat.getColor(view.getContext(), typedValue.resourceId),
+            PorterDuff.Mode.SRC_IN);
     }
 }

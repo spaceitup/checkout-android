@@ -71,7 +71,7 @@ public class Operation implements Parcelable {
      * @param operation the source operation to use
      * @param newType the type of the new Operation
      */
-    public final static Operation create(Operation operation, String newType) throws PaymentException {
+    public static Operation create(Operation operation, String newType) throws PaymentException {
         String curType = operation.getType();
         if (curType == null) {
             throw new PaymentException("Could not determine type from operation URL");

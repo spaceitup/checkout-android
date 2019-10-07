@@ -9,20 +9,18 @@
 package net.optile.payment.ui.list;
 
 
-
 import static net.optile.payment.core.PaymentInputType.ALLOW_RECURRENCE;
 import static net.optile.payment.core.PaymentInputType.AUTO_REGISTRATION;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import android.support.v7.widget.RecyclerView.ViewHolder;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextSwitcher;
-import android.widget.TextView;
+import androidx.recyclerview.widget.RecyclerView.ViewHolder;
 import net.optile.payment.R;
 import net.optile.payment.localization.Localization;
 import net.optile.payment.localization.LocalizationKey;
@@ -48,13 +46,10 @@ final class NetworkCardViewHolder extends PaymentCardViewHolder {
 
         PaymentTheme theme = adapter.getPaymentTheme();
         this.title = parent.findViewById(R.id.textswitcher_title);
-        initTextSwitcher(parent, theme);
-
-        addNetworkLogos(parent, networkCard, theme);
+        addNetworkLogos(parent, networkCard);
         addElementWidgets(networkCard, theme);
         addRegisterWidgets(theme);
         addButtonWidget(theme);
-
         setLastImeOptions();
     }
 
@@ -64,14 +59,14 @@ final class NetworkCardViewHolder extends PaymentCardViewHolder {
         return new NetworkCardViewHolder(adapter, view, networkCard);
     }
 
-    private void addNetworkLogos(View parent, NetworkCard networkCard, PaymentTheme theme) {
+    private void addNetworkLogos(View parent, NetworkCard networkCard) {
         List<String> names = new ArrayList<>();
         List<PaymentNetwork> networks = networkCard.getPaymentNetworks();
 
         for (PaymentNetwork network : networks) {
             names.add(network.getCode());
         }
-        addLogoViews(parent, names, theme);
+        addLogoViews(parent, names);
     }
 
     void onBind(PaymentCard paymentCard) {
@@ -134,15 +129,5 @@ final class NetworkCardViewHolder extends PaymentCardViewHolder {
         RegisterWidget widget = (RegisterWidget) getFormWidget(ALLOW_RECURRENCE);
         widget.setRegistrationType(network.getRecurrence());
         widget.setLabel(Localization.translate(network.getCode(), LocalizationKey.ALLOW_RECURRENCE, null));
-    }
-
-    private void initTextSwitcher(final View parent, final PaymentTheme theme) {
-        final int style = theme.getListParameters().getNetworkCardTitleStyle();
-
-        TextView tv = parent.findViewById(R.id.title0);
-        PaymentUtils.setTextAppearance(tv, style);
-
-        tv = parent.findViewById(R.id.title1);
-        PaymentUtils.setTextAppearance(tv, style);
     }
 }

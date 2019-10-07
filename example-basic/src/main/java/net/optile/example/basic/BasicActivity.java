@@ -11,7 +11,6 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
 import android.util.Patterns;
 import android.view.View;
@@ -19,6 +18,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RadioGroup;
 import android.widget.TextView;
+import androidx.appcompat.app.AppCompatActivity;
 import net.optile.payment.core.PaymentError;
 import net.optile.payment.model.Interaction;
 import net.optile.payment.ui.PaymentResult;
@@ -85,7 +85,7 @@ public final class BasicActivity extends AppCompatActivity {
      */
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
-
+        super.onActivityResult(requestCode, resultCode, data);
         if (requestCode != PAYMENT_REQUEST_CODE) {
             return;
         }
@@ -178,12 +178,10 @@ public final class BasicActivity extends AppCompatActivity {
     private PaymentTheme createPaymentTheme() {
 
         switch (themeGroup.getCheckedRadioButtonId()) {
-            case R.id.radio_theme_default:
-                return SdkThemeBuilder.createDefaultTheme();
             case R.id.radio_theme_custom:
                 return SdkThemeBuilder.createCustomTheme();
             default:
-                return SdkThemeBuilder.createEmptyTheme();
+                return SdkThemeBuilder.createDefaultTheme();
         }
     }
 

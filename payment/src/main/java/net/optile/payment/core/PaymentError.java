@@ -11,7 +11,7 @@ package net.optile.payment.core;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 
-import android.support.annotation.StringDef;
+import androidx.annotation.StringDef;
 import net.optile.payment.model.ErrorInfo;
 
 /**

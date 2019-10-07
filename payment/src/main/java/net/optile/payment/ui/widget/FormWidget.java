@@ -8,15 +8,14 @@
 
 package net.optile.payment.ui.widget;
 
-import android.support.annotation.DrawableRes;
-import android.support.v4.content.ContextCompat;
 import android.view.View;
 import android.widget.ImageView;
+import androidx.annotation.DrawableRes;
+import androidx.core.content.ContextCompat;
 import net.optile.payment.R;
 import net.optile.payment.core.PaymentException;
 import net.optile.payment.form.Operation;
 import net.optile.payment.ui.theme.PaymentTheme;
-import net.optile.payment.ui.theme.WidgetParameters;
 import net.optile.payment.util.PaymentUtils;
 
 /**
@@ -147,14 +146,13 @@ public abstract class FormWidget {
         if (icon == null) {
             return;
         }
-        WidgetParameters params = theme.getWidgetParameters();
-        int colorResId = params.getValidationColorUnknown();
+        int colorResId = theme.getValidationColorUnknown();
         switch (state) {
             case VALIDATION_OK:
-                colorResId = params.getValidationColorOk();
+                colorResId = theme.getValidationColorOk();
                 break;
             case VALIDATION_ERROR:
-                colorResId = params.getValidationColorError();
+                colorResId = theme.getValidationColorError();
         }
         if (colorResId != 0) {
             icon.setColorFilter(ContextCompat.getColor(rootView.getContext(), colorResId));

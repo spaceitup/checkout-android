@@ -97,30 +97,30 @@ public final class PaymentSessionService {
             throw new IllegalStateException("Already loading payment session, stop first");
         }
         sessionTask = WorkerTask.fromCallable(new Callable<PaymentSession>() {
-                @Override
-                public PaymentSession call() throws PaymentException {
-                    return asyncLoadPaymentSession(listUrl, context);
-                }
-            });
+            @Override
+            public PaymentSession call() throws PaymentException {
+                return asyncLoadPaymentSession(listUrl, context);
+            }
+        });
         sessionTask.subscribe(new WorkerSubscriber<PaymentSession>() {
-                @Override
-                public void onSuccess(PaymentSession paymentSession) {
-                    sessionTask = null;
+            @Override
+            public void onSuccess(PaymentSession paymentSession) {
+                sessionTask = null;
 
-                    if (listener != null) {
-                        listener.onPaymentSessionSuccess(paymentSession);
-                    }
+                if (listener != null) {
+                    listener.onPaymentSessionSuccess(paymentSession);
                 }
+            }
 
-                @Override
-                public void onError(Throwable cause) {
-                    sessionTask = null;
+            @Override
+            public void onError(Throwable cause) {
+                sessionTask = null;
 
-                    if (listener != null) {
-                        listener.onPaymentSessionError(cause);
-                    }
+                if (listener != null) {
+                    listener.onPaymentSessionError(cause);
                 }
-            });
+            }
+        });
         Workers.getInstance().forNetworkTasks().execute(sessionTask);
     }
 
@@ -146,7 +146,7 @@ public final class PaymentSessionService {
         }
         URL langUrl = null;
         String code = null;
-        
+
         for (PaymentNetwork network : networks.values()) {
             langUrl = network.getLink("lang");
             code = network.getCode();

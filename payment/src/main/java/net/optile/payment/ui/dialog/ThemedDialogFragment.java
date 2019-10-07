@@ -12,15 +12,12 @@ import android.app.Activity;
 import android.app.Dialog;
 import android.content.DialogInterface;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.v4.app.DialogFragment;
 import android.text.TextUtils;
 import android.view.View;
-import android.widget.TextView;
+import android.widget.Button;
+import androidx.annotation.NonNull;
+import androidx.fragment.app.DialogFragment;
 import net.optile.payment.R;
-import net.optile.payment.ui.PaymentUI;
-import net.optile.payment.ui.theme.DialogParameters;
-import net.optile.payment.util.PaymentUtils;
 
 /**
  * Themed Dialog Fragment with two optional buttons, neutral and positive.
@@ -77,37 +74,22 @@ public abstract class ThemedDialogFragment extends DialogFragment {
         }
     }
 
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public int getTheme() {
-        DialogParameters params = PaymentUI.getInstance().getPaymentTheme().getDialogParameters();
-        int theme = params.getDialogTheme();
-        return theme == 0 ? super.getTheme() : theme;
+    void initButtons(View rootView) {
+        Button button = rootView.findViewById(R.id.dialogbutton_neutral);
+        initButton(button, BUTTON_NEUTRAL, neutralLabel);
+
+        button = rootView.findViewById(R.id.dialogbutton_positive);
+        initButton(button, BUTTON_POSITIVE, positiveLabel);
     }
 
-    void initButtons(View rootView, DialogParameters params) {
-        int buttonLabelStyle = params.getButtonLabelStyle();
-
-        TextView tv = rootView.findViewById(R.id.text_button_neutral);
-        initButton(tv, BUTTON_NEUTRAL, neutralLabel, buttonLabelStyle);
-
-        tv = rootView.findViewById(R.id.text_button_positive);
-        initButton(tv, BUTTON_POSITIVE, positiveLabel, buttonLabelStyle);
-    }
-
-    private void initButton(final TextView tv, final int which, final String label, final int style) {
-
+    private void initButton(final Button button, final int which, final String label) {
         if (TextUtils.isEmpty(label)) {
-            tv.setVisibility(View.GONE);
+            button.setVisibility(View.GONE);
             return;
         }
-        tv.setVisibility(View.VISIBLE);
-        tv.setText(label);
-        PaymentUtils.setTextAppearance(tv, style);
-
-        tv.setOnClickListener(new View.OnClickListener() {
+        button.setVisibility(View.VISIBLE);
+        button.setText(label);
+        button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 onButtonClicked(which);
@@ -116,7 +98,6 @@ public abstract class ThemedDialogFragment extends DialogFragment {
     }
 
     void onButtonClicked(int which) {
-
         if (listener != null) {
             listener.onButtonClicked(this, which);
         }

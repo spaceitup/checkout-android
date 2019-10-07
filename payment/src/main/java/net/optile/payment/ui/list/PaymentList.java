@@ -19,14 +19,14 @@ import java.util.List;
 
 import android.content.Context;
 import android.os.IBinder;
-import android.support.v4.app.DialogFragment;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.LinearSmoothScroller;
-import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.SimpleItemAnimator;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.TextView;
+import androidx.fragment.app.DialogFragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.LinearSmoothScroller;
+import androidx.recyclerview.widget.RecyclerView;
+import androidx.recyclerview.widget.SimpleItemAnimator;
 import net.optile.payment.R;
 import net.optile.payment.localization.Localization;
 import net.optile.payment.ui.dialog.DialogHelper;
@@ -140,7 +140,7 @@ public final class PaymentList {
     void onHintClicked(int position, String type) {
         ListItem item = items.get(position);
         PaymentCard card = item.getPaymentCard();
-        
+
         if (card != null) {
             String button = Localization.translate(card.getCode(), BUTTON_BACK);
             DialogFragment dialog = DialogHelper.createHintDialog(card, type, button);

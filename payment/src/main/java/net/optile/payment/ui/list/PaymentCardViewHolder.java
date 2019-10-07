@@ -21,8 +21,6 @@ import java.util.Map;
 import android.animation.ObjectAnimator;
 import android.content.Context;
 import android.content.res.Resources;
-import android.support.v4.app.DialogFragment;
-import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -31,6 +29,8 @@ import android.widget.LinearLayout.LayoutParams;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
+import androidx.fragment.app.DialogFragment;
+import androidx.recyclerview.widget.RecyclerView;
 import net.optile.payment.R;
 import net.optile.payment.core.PaymentInputType;
 import net.optile.payment.localization.Localization;
@@ -39,7 +39,6 @@ import net.optile.payment.model.InputElement;
 import net.optile.payment.model.PaymentMethod;
 import net.optile.payment.ui.model.PaymentCard;
 import net.optile.payment.ui.theme.PaymentTheme;
-import net.optile.payment.ui.theme.WidgetParameters;
 import net.optile.payment.ui.widget.ButtonWidget;
 import net.optile.payment.ui.widget.DateWidget;
 import net.optile.payment.ui.widget.FormWidget;
@@ -189,12 +188,11 @@ public abstract class PaymentCardViewHolder extends RecyclerView.ViewHolder {
         formLayout.addView(widget.getRootView());
     }
 
-    void addLogoView(View parent, String name, PaymentTheme theme) {
-        addLogoViews(parent, Collections.singletonList(name), theme);
+    void addLogoView(View parent, String name) {
+        addLogoViews(parent, Collections.singletonList(name));
     }
 
-    void addLogoViews(View parent, List<String> names, PaymentTheme theme) {
-        int logoBackground = theme.getListParameters().getPaymentLogoBackground();
+    void addLogoViews(View parent, List<String> names) {
         LayoutInflater inflater = LayoutInflater.from(parent.getContext());
         Context context = parent.getContext();
 
@@ -221,7 +219,6 @@ public abstract class PaymentCardViewHolder extends RecyclerView.ViewHolder {
 
             params.setMargins(0, marginTop, marginRight, 0);
             view.setLayoutParams(params);
-            PaymentUtils.setImageBackground(view, logoBackground);
             logos.put(name, view);
             row.addView(view);
         }
@@ -293,21 +290,19 @@ public abstract class PaymentCardViewHolder extends RecyclerView.ViewHolder {
     }
 
     void bindTextInputWidget(TextInputWidget widget, String code, InputElement element) {
-        WidgetParameters params = adapter.getPaymentTheme().getWidgetParameters();
-        int hintDrawable = params.getHintDrawable();
-        boolean visible = hintDrawable != 0 && Localization.hasAccountHint(code, widget.getName());
+        boolean visible = Localization.hasAccountHint(code, widget.getName());
 
         bindIconResource(widget);
         widget.setLabel(element.getLabel());
         widget.setInputElementType(element.getType());
         widget.setMaxLength(adapter.getMaxLength(code, element.getName()));
-        widget.setHint(visible, hintDrawable);
+        widget.setHint(visible);
         widget.setValidation();
     }
 
     void bindIconResource(FormWidget widget) {
-        WidgetParameters params = adapter.getPaymentTheme().getWidgetParameters();
-        widget.setIconResource(params.getInputTypeIcon(widget.getName()));
+        PaymentTheme theme = adapter.getPaymentTheme();
+        widget.setIconResource(theme.getInputTypeIcon(widget.getName()));
     }
 
     void bindDateWidget(PaymentCard card) {

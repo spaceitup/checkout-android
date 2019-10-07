@@ -16,11 +16,12 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.annotation.VisibleForTesting;
-import android.support.test.espresso.IdlingResource;
-import android.support.v4.app.DialogFragment;
 import android.view.MenuItem;
-import android.widget.TextView;
+import androidx.annotation.VisibleForTesting;
+import androidx.appcompat.app.ActionBar;
+import androidx.appcompat.widget.Toolbar;
+import androidx.fragment.app.DialogFragment;
+import androidx.test.espresso.IdlingResource;
 import net.optile.payment.R;
 import net.optile.payment.form.Operation;
 import net.optile.payment.localization.Localization;
@@ -32,7 +33,6 @@ import net.optile.payment.ui.model.PaymentCard;
 import net.optile.payment.ui.model.PaymentSession;
 import net.optile.payment.ui.page.idlingresource.SimpleIdlingResource;
 import net.optile.payment.ui.widget.FormWidget;
-import net.optile.payment.util.PaymentUtils;
 
 /**
  * The PaymentListActivity showing available payment methods in a list.
@@ -74,18 +74,41 @@ public final class PaymentListActivity extends BasePaymentActivity implements Pa
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        int theme = getPaymentTheme().getListParameters().getPageTheme();
+        int theme = getPaymentTheme().getPaymentListTheme();
         if (theme != 0) {
             setTheme(theme);
         }
         this.cachedListIndex = -1;
-
         setContentView(R.layout.activity_paymentlist);
-        setActionBar("", true);
-        progressView = new ProgressView(getRootView(), getPaymentTheme());
+        progressView = new ProgressView(findViewById(R.id.layout_progress));
 
         initPaymentList();
+        initToolbar();
         this.presenter = new PaymentListPresenter(this);
+    }
+
+    /**
+     * Initialize the toolbar in this PaymentList
+     */
+    private void initToolbar() {
+        Toolbar toolbar = findViewById(R.id.toolbar);
+        toolbar.setTitle("");
+        setSupportActionBar(toolbar);
+
+        ActionBar actionBar = getSupportActionBar();
+        actionBar.setHomeButtonEnabled(true);
+        actionBar.setDisplayHomeAsUpEnabled(true);
+        actionBar.setDisplayShowHomeEnabled(true);
+    }
+
+    /**
+     * Set the action bar with a title and optional back arrow.
+     *
+     * @param title of the action bar
+     */
+    private void setToolbar(String title) {
+        Toolbar toolbar = findViewById(R.id.toolbar);
+        toolbar.setTitle(title);
     }
 
     /**
@@ -144,6 +167,7 @@ public final class PaymentListActivity extends BasePaymentActivity implements Pa
      */
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
         PaymentResult result = PaymentResult.fromResultIntent(data);
         if (result != null) {
             presenter.setActivityResult(new ActivityResult(requestCode, resultCode, result));
@@ -170,7 +194,7 @@ public final class PaymentListActivity extends BasePaymentActivity implements Pa
             return;
         }
         progressView.setVisible(false);
-        setActionBar(Localization.translate(LIST_TITLE), true);
+        setToolbar(Localization.translate(LIST_TITLE));
         paymentList.showPaymentSession(session, cachedListIndex);
         this.cachedListIndex = -1;
 
@@ -292,9 +316,8 @@ public final class PaymentListActivity extends BasePaymentActivity implements Pa
     }
 
     private void initPaymentList() {
-        TextView empty = findViewById(R.id.label_empty);
-        PaymentUtils.setTextAppearance(empty, getPaymentTheme().getListParameters().getEmptyListLabelStyle());
-        this.paymentList = new PaymentList(this, findViewById(R.id.recyclerview_paymentlist), empty);
+        this.paymentList = new PaymentList(this, findViewById(R.id.recyclerview_paymentlist),
+            findViewById(R.id.label_empty));
     }
 
     /**
