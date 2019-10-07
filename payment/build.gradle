@@ -71,7 +71,7 @@ dependencies {
 uploadArchives {
     if (!(project.hasProperty('mavenUser') && project.hasProperty('mavenPassword'))) {
         logger.warn('Missing mavenUser and/or mavenPassword from ~/.gradle/gradle.properties in uploadArchives task')
-	return
+        return
     }
     repositories {
         mavenDeployer {
@@ -101,7 +101,7 @@ uploadArchives {
 task uploadExternal(type: Upload) {
     if (!project.hasProperty('packageCloudMavenPassword')) {
         logger.warn('Missing packageCloudMavenPassword from ~/.gradle/gradle.properties in uploadExternal task')
-	return
+        return
     }
     configuration = configurations.archives
     uploadDescriptor = true
