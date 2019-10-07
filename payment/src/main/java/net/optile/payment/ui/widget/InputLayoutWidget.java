@@ -181,8 +181,4 @@ abstract class InputLayoutWidget extends FormWidget {
         params.width = 0;
         view.setLayoutParams(params);
     }
-
-    private void setTypefaceToInputLayout(TextInputLayout inputLayout, String typeFace){
-
-    }
 }
