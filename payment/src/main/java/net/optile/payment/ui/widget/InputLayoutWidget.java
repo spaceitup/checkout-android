@@ -8,9 +8,9 @@
 
 package net.optile.payment.ui.widget;
 
-import android.support.annotation.DrawableRes;
-import android.support.design.widget.TextInputEditText;
-import android.support.design.widget.TextInputLayout;
+import com.google.android.material.textfield.TextInputEditText;
+import com.google.android.material.textfield.TextInputLayout;
+
 import android.text.InputFilter;
 import android.text.TextUtils;
 import android.text.method.DigitsKeyListener;
@@ -110,11 +110,9 @@ abstract class InputLayoutWidget extends FormWidget {
         validate();
     }
 
-    public void setHint(boolean visible, @DrawableRes int hintDrawable) {
-
+    public void setHint(boolean visible) {
         if (visible) {
             hintLayout.setVisibility(View.VISIBLE);
-            hintImage.setImageResource(hintDrawable);
         } else {
             hintLayout.setVisibility(View.GONE);
         }

@@ -8,14 +8,14 @@
 
 package net.optile.payment.test.view;
 
-import static android.support.test.espresso.intent.Checks.checkNotNull;
+import static androidx.test.espresso.intent.Checks.checkNotNull;
 
 import org.hamcrest.Description;
 import org.hamcrest.Matcher;
 
-import android.support.test.espresso.matcher.BoundedMatcher;
-import android.support.v7.widget.RecyclerView;
 import android.view.View;
+import androidx.recyclerview.widget.RecyclerView;
+import androidx.test.espresso.matcher.BoundedMatcher;
 import net.optile.payment.ui.list.PaymentCardViewHolder;
 import net.optile.payment.ui.widget.FormWidget;
 

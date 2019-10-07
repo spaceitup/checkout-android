@@ -11,20 +11,21 @@ package net.optile.example.demo.summary;
 import java.net.URL;
 import java.util.Map;
 
+import com.google.android.material.appbar.CollapsingToolbarLayout;
+
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Typeface;
 import android.os.Bundle;
-import android.support.design.widget.CollapsingToolbarLayout;
-import android.support.v4.content.res.ResourcesCompat;
-import android.support.v7.app.ActionBar;
-import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import androidx.appcompat.app.ActionBar;
+import androidx.appcompat.widget.Toolbar;
+import androidx.core.content.res.ResourcesCompat;
 import net.optile.example.demo.R;
 import net.optile.example.demo.confirm.ConfirmActivity;
 import net.optile.example.demo.settings.SettingsActivity;
@@ -179,6 +180,7 @@ public final class SummaryActivity extends BaseActivity implements SummaryView {
      */
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
         if (requestCode != PAYMENT_REQUEST_CODE && requestCode != EDIT_REQUEST_CODE) {
             return;
         }

@@ -24,7 +24,7 @@ public class LocalTranslationsTest {
 
     @Test
     public void loadLocalTranslations() {
-        Context context = ApplicationProvider.getApplicationContext();        
+        Context context = ApplicationProvider.getApplicationContext();
         LocalTranslations trans = new LocalTranslations();
         trans.load(context);
         assertNotNull(trans.getTranslation(LocalizationKey.BUTTON_CANCEL, null));

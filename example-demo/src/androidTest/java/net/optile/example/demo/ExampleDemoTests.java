@@ -7,15 +7,15 @@
  */
 package net.optile.example.demo;
 
-import static android.support.test.espresso.Espresso.onView;
-import static android.support.test.espresso.action.ViewActions.click;
-import static android.support.test.espresso.action.ViewActions.typeText;
-import static android.support.test.espresso.assertion.ViewAssertions.matches;
-import static android.support.test.espresso.contrib.RecyclerViewActions.actionOnItemAtPosition;
-import static android.support.test.espresso.intent.Intents.intended;
-import static android.support.test.espresso.intent.matcher.IntentMatchers.hasComponent;
-import static android.support.test.espresso.matcher.ViewMatchers.isDisplayed;
-import static android.support.test.espresso.matcher.ViewMatchers.withId;
+import static androidx.test.espresso.Espresso.onView;
+import static androidx.test.espresso.action.ViewActions.click;
+import static androidx.test.espresso.action.ViewActions.typeText;
+import static androidx.test.espresso.assertion.ViewAssertions.matches;
+import static androidx.test.espresso.contrib.RecyclerViewActions.actionOnItemAtPosition;
+import static androidx.test.espresso.intent.Intents.intended;
+import static androidx.test.espresso.intent.matcher.IntentMatchers.hasComponent;
+import static androidx.test.espresso.matcher.ViewMatchers.isDisplayed;
+import static androidx.test.espresso.matcher.ViewMatchers.withId;
 import static net.optile.payment.test.view.PaymentActions.actionOnViewInWidget;
 import static net.optile.payment.test.view.PaymentActions.setValueInNumberPicker;
 import static net.optile.payment.test.view.PaymentMatchers.isCardWithTestId;
@@ -29,14 +29,15 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 
 import android.content.Context;
-import android.support.test.InstrumentationRegistry;
-import android.support.test.espresso.IdlingRegistry;
-import android.support.test.espresso.IdlingResource;
-import android.support.test.espresso.intent.Intents;
-import android.support.test.filters.LargeTest;
-import android.support.test.rule.ActivityTestRule;
-import android.support.test.runner.AndroidJUnit4;
 import android.view.View;
+import androidx.test.InstrumentationRegistry;
+import androidx.test.espresso.Espresso;
+import androidx.test.espresso.IdlingRegistry;
+import androidx.test.espresso.IdlingResource;
+import androidx.test.espresso.intent.Intents;
+import androidx.test.filters.LargeTest;
+import androidx.test.rule.ActivityTestRule;
+import androidx.test.runner.AndroidJUnit4;
 import net.optile.example.demo.checkout.CheckoutActivity;
 import net.optile.example.demo.confirm.ConfirmActivity;
 import net.optile.example.demo.settings.SettingsActivity;
@@ -59,7 +60,7 @@ public final class ExampleDemoTests {
     public void successfulNoPresetChargeTest() throws JSONException, IOException {
         Intents.init();
         int cardIndex = 1;
-        
+
         openPaymentList(false);
         fillGroupedNetworkCard(cardIndex);
         performDirectCharge(cardIndex);
@@ -71,17 +72,17 @@ public final class ExampleDemoTests {
     public void successfulPresetChargeTest() throws IOException, JSONException {
         Intents.init();
         int cardIndex = 1;
-        
+
         openPaymentList(true);
         fillGroupedNetworkCard(cardIndex);
         performPresetCharge(cardIndex);
         waitForChargeCompleted();
         Intents.release();
     }
-    
+
     private void openPaymentList(boolean presetFirst) throws IOException, JSONException {
         String listUrl = createListUrl(presetFirst);
-        
+
         // enter the listUrl in the settings screen and click the button
         onView(withId(R.id.layout_settings)).check(matches(isDisplayed()));
         onView(withId(R.id.input_listurl)).perform(typeText(listUrl));
@@ -111,17 +112,19 @@ public final class ExampleDemoTests {
         onView(list).perform(actionOnItemAtPosition(cardIndex, click()));
         onView(list).perform(actionOnViewInWidget(cardIndex, typeText("4111111111111111"), "number", R.id.textinputedittext));
         onView(list).perform(actionOnViewInWidget(cardIndex, typeText("John Doe"), "holderName", R.id.textinputedittext));
-        onView(list).perform(actionOnViewInWidget(cardIndex, typeText("123"), "verificationCode", R.id.textinputedittext));
 
         // Wait for the DialogIdlingResource until the DateDialog is visible and fill in the date
         IdlingResource dialogIdlingResource = listActivity.getDialogIdlingResource();
         onView(list).perform(actionOnViewInWidget(1, click(), "expiryDate", R.id.textinputedittext));
         IdlingRegistry.getInstance().register(dialogIdlingResource);
 
-        onView(withId(R.id.text_button_neutral)).check(matches(isDisplayed()));
+        onView(withId(R.id.dialogbutton_neutral)).check(matches(isDisplayed()));
         onView(withId(R.id.numberpicker_year)).perform(setValueInNumberPicker(4));
-        onView(withId(R.id.text_button_neutral)).perform(click());
+        onView(withId(R.id.dialogbutton_neutral)).perform(click());
         IdlingRegistry.getInstance().unregister(dialogIdlingResource);
+
+        onView(list).perform(actionOnViewInWidget(cardIndex, typeText("123"), "verificationCode", R.id.textinputedittext));
+        Espresso.closeSoftKeyboard();
     }
 
     private void performDirectCharge(int cardIndex) {
@@ -139,7 +142,7 @@ public final class ExampleDemoTests {
         onView(withId(R.id.button_pay)).perform(PaymentActions.scrollToView(), click());
         IdlingRegistry.getInstance().unregister(closeIdlingResource);
     }
-    
+
     private void waitForChargeCompleted() {
         intended(hasComponent(ChargePaymentActivity.class.getName()));
         onView(withId(R.id.layout_chargepayment)).check(matches(isDisplayed()));

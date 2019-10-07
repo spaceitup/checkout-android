@@ -1,14 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.design.widget.TextInputLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                                               android:id="@+id/textinputlayout"
-                                               android:layout_weight="1"
-                                               android:layout_width="wrap_content"
-                                               android:layout_height="wrap_content">
+<com.google.android.material.textfield.TextInputLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    style="?attr/widgetTextInputStyle"
+    android:id="@+id/textinputlayout"
+    android:layout_weight="1"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content">
 
-    <android.support.design.widget.TextInputEditText
+    <com.google.android.material.textfield.TextInputEditText
+        style="?attr/widgetEditTextStyle"
         android:id="@+id/textinputedittext"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:imeOptions="actionNext"
         android:singleLine="true"/>
-</android.support.design.widget.TextInputLayout>
+</com.google.android.material.textfield.TextInputLayout>

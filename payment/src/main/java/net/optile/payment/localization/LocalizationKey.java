@@ -47,14 +47,14 @@ public final class LocalizationKey {
     }
 
     public static String accountLabelKey(String account) {
-        return "account." + account + ".label";        
+        return "account." + account + ".label";
     }
 
     public static String accountHintKey(String account, String type) {
         return "account." + account + "." + "hint." + "where." + type;
     }
-    
+
     public static String interactionKey(Interaction interaction) {
-        return "interaction." + interaction.getCode() + "." + interaction.getReason();        
+        return "interaction." + interaction.getCode() + "." + interaction.getReason();
     }
 }

@@ -12,11 +12,11 @@ android {
 
     defaultConfig {
         applicationId "net.optile.example.basic"
-        minSdkVersion rootProject.minSdkVersion
+        minSdkVersion rootProject.examplesMinSdkVersion
         targetSdkVersion rootProject.targetSdkVersion
         versionCode rootProject.versionCode
         versionName rootProject.versionName
-        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         resValue "string", "paymentapi_auth", "$System.env.ANDROIDSDK_PAYMENTAPI_AUTH"
         resValue "string", "paymentapi_url", "$System.env.ANDROIDSDK_PAYMENTAPI_URL"
     }
@@ -37,14 +37,14 @@ android {
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
-    implementation "com.android.support:design:${rootProject.supportLibVersion}"
+    implementation "com.google.android.material:material:${rootProject.androidMaterialVersion}"
     implementation project(":payment")
 
     testImplementation "junit:junit:${rootProject.junitVersion}"
     testImplementation "org.hamcrest:hamcrest-library:${rootProject.harmcrestVersion}"
 
-    androidTestImplementation "com.android.support.test:runner:${rootProject.runnerVersion}"
-    androidTestImplementation "com.android.support.test.espresso:espresso-core:${rootProject.espressoCoreVersion}"
-    androidTestImplementation "com.android.support.test:rules:${rootProject.rulesVersion}"
-    androidTestImplementation "com.android.support.test.espresso:espresso-intents:${rootProject.espressoIntentsVersion}"
+    androidTestImplementation "androidx.test:runner:${rootProject.androidxTestRunnerVersion}"
+    androidTestImplementation "androidx.test:rules:${rootProject.androidxTestRulesVersion}"
+    androidTestImplementation "androidx.test.espresso:espresso-core:${rootProject.androidxTestEspressoVersion}"
+    androidTestImplementation "androidx.test.espresso:espresso-intents:${rootProject.androidxTestEspressoVersion}"
 }

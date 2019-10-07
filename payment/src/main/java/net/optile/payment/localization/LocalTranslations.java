@@ -36,7 +36,7 @@ public final class LocalTranslations {
     public LocalTranslations() {
         localTranslations = new HashMap<String, String>();
     }
-    
+
     /**
      * Load the local translations into this Localization Object.
      * The local translations serve as a fallback when the translation could not be found in any of the files.
@@ -59,7 +59,7 @@ public final class LocalTranslations {
     public void clear() {
         localTranslations.clear();
     }
-    
+
     /**
      * Get the local translation, if the translation is not stored in this storage then return the defaultValue.
      *

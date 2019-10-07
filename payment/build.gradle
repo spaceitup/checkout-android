@@ -28,7 +28,7 @@ android {
         targetSdkVersion rootProject.targetSdkVersion
         versionCode rootProject.versionCode
         versionName rootProject.versionName
-        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
 
     buildTypes {
@@ -46,9 +46,9 @@ android {
 }
 
 dependencies {
-    implementation "com.android.support:design:${rootProject.supportLibVersion}"
+    implementation "com.google.android.material:material:${rootProject.androidMaterialVersion}"
     implementation "com.google.code.gson:gson:${rootProject.gsonVersion}"
-    implementation "com.android.support.test.espresso:espresso-idling-resource:${rootProject.espressoIdlingVersion}@aar"
+    implementation "androidx.test.espresso:espresso-idling-resource:${rootProject.androidxTestEspressoVersion}@aar"
     implementation("com.github.bumptech.glide:glide:${rootProject.bumptechGlideVersion}") {
         exclude group: "com.android.support"
     }
@@ -59,8 +59,8 @@ dependencies {
     testImplementation "org.robolectric:robolectric:${rootProject.robolectricVersion}"
     testImplementation "androidx.test:core:${rootProject.androidxTestCoreVersion}"
 
-    androidTestImplementation "com.android.support.test:runner:${rootProject.runnerVersion}"
-    androidTestImplementation "com.android.support.test.espresso:espresso-core:${rootProject.espressoCoreVersion}"
+    androidTestImplementation "androidx.test:runner:$rootProject.androidxTestRunnerVersion"
+    androidTestImplementation "androidx.test.espresso:espresso-core:${rootProject.androidxTestEspressoVersion}"
 
     deployerJars "io.packagecloud.maven.wagon:maven-packagecloud-wagon:${rootProject.packagecloudWagonVersion}"
 }

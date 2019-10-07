@@ -10,7 +10,7 @@ package net.optile.payment.ui.page.idlingresource;
 
 import java.util.concurrent.atomic.AtomicBoolean;
 
-import android.support.test.espresso.IdlingResource;
+import androidx.test.espresso.IdlingResource;
 
 /**
  * A Simple idling resource using a Boolean to define if its idle.

@@ -11,18 +11,14 @@ package net.optile.payment.ui.dialog;
 import static net.optile.payment.localization.LocalizationKey.ACCOUNTHINT_TEXT;
 import static net.optile.payment.localization.LocalizationKey.ACCOUNTHINT_TITLE;
 
-import android.support.design.widget.Snackbar;
+import com.google.android.material.snackbar.Snackbar;
+
 import android.view.View;
-import android.widget.TextView;
 import net.optile.payment.R;
 import net.optile.payment.core.PaymentInputType;
 import net.optile.payment.core.PaymentNetworkCodes;
 import net.optile.payment.localization.Localization;
-import net.optile.payment.ui.PaymentUI;
 import net.optile.payment.ui.model.PaymentCard;
-import net.optile.payment.ui.theme.DialogParameters;
-import net.optile.payment.ui.theme.PaymentTheme;
-import net.optile.payment.util.PaymentUtils;
 
 /**
  * Class with helper methods for creating themed dialogs and snackbars.
@@ -37,17 +33,7 @@ public class DialogHelper {
      * @return the newly created Snackbar
      */
     public static Snackbar createSnackbar(View view, String message) {
-        Snackbar snackbar = Snackbar.make(view, message, Snackbar.LENGTH_LONG);
-        int snackbarTextId = android.support.design.R.id.snackbar_text;
-        PaymentTheme theme = PaymentUI.getInstance().getPaymentTheme();
-        DialogParameters params = theme.getDialogParameters();
-        View snackbarView = snackbar.getView();
-        TextView textView = snackbarView.findViewById(snackbarTextId);
-
-        if (textView != null) {
-            PaymentUtils.setTextAppearance(textView, params.getSnackbarTextStyle());
-        }
-        return snackbar;
+        return Snackbar.make(view, message, Snackbar.LENGTH_LONG);
     }
 
     /**

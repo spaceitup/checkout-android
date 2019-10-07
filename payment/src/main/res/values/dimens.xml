@@ -9,8 +9,8 @@
     <dimen name="pmbutton_radius">5dp</dimen>
     <dimen name="pmwidget_padding">4dp</dimen>
     <dimen name="pmwidget_iconsize">24dp</dimen>
-    <dimen name="pmwidget_checkboxwidth">36dp</dimen>
 
+    <dimen name="pmtoolbar_elevation">4dp</dimen>
     <dimen name="pmcard_radius">4dp</dimen>
     <dimen name="pmcard_logos_portrait">108dp</dimen>
     <dimen name="pmcard_logos_landscape">166dp</dimen>
@@ -19,8 +19,6 @@
 
     <dimen name="pmlogo_width">50dp</dimen>
     <dimen name="pmlogo_height">40dp</dimen>
-
-    <dimen name="pmprogressbar_sendsize">120dp</dimen>
-    <dimen name="pmprogressbar_loadsize">50dp</dimen>
+    <dimen name="pmprogressbar_size">64dp</dimen>
 
 </resources>

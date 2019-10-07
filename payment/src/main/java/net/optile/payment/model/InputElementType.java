@@ -11,7 +11,7 @@ package net.optile.payment.model;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 
-import android.support.annotation.StringDef;
+import androidx.annotation.StringDef;
 
 /**
  * Type of possible input element

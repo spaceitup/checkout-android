@@ -18,8 +18,8 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.annotation.VisibleForTesting;
-import android.support.test.espresso.IdlingResource;
+import androidx.annotation.VisibleForTesting;
+import androidx.test.espresso.IdlingResource;
 import net.optile.payment.R;
 import net.optile.payment.form.Operation;
 import net.optile.payment.localization.Localization;
@@ -99,7 +99,7 @@ public final class ChargePaymentActivity extends BasePaymentActivity implements 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        int theme = getPaymentTheme().getChargeParameters().getPageTheme();
+        int theme = getPaymentTheme().getChargePaymentTheme();
         if (theme != 0) {
             setTheme(theme);
         }
@@ -108,9 +108,9 @@ public final class ChargePaymentActivity extends BasePaymentActivity implements 
             this.operation = bundle.getParcelable(EXTRA_OPERATION);
         }
         setContentView(R.layout.activity_chargepayment);
-        progressView = new ProgressView(getRootView(), getPaymentTheme());
-        progressView.setSendLabels(Localization.translate(CHARGE_TITLE),
-                                   Localization.translate(CHARGE_TEXT));
+        progressView = new ProgressView(findViewById(R.id.layout_progress));
+        progressView.setLabels(Localization.translate(CHARGE_TITLE),
+            Localization.translate(CHARGE_TEXT));
         this.presenter = new ChargePaymentPresenter(this);
     }
 
@@ -121,7 +121,6 @@ public final class ChargePaymentActivity extends BasePaymentActivity implements 
     public void onPause() {
         super.onPause();
         presenter.onStop();
-        progressView.onStop();
     }
 
     /**
@@ -138,6 +137,7 @@ public final class ChargePaymentActivity extends BasePaymentActivity implements 
      */
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
         PaymentResult result = PaymentResult.fromResultIntent(data);
         if (result != null) {
             presenter.setActivityResult(new ActivityResult(requestCode, resultCode, result));
@@ -149,7 +149,7 @@ public final class ChargePaymentActivity extends BasePaymentActivity implements 
      */
     @Override
     public void onBackPressed() {
-        if (!presenter.onBackPressed()) {
+        if (presenter.onBackPressed()) {
             return;
         }
         setUserClosedPageResult();
@@ -165,7 +165,6 @@ public final class ChargePaymentActivity extends BasePaymentActivity implements 
         if (!active) {
             return;
         }
-        progressView.setStyle(ProgressView.SEND);
         progressView.setVisible(true);
     }
 

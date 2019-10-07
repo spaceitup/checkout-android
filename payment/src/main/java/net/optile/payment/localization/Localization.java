@@ -30,7 +30,7 @@ public final class Localization {
     private LocalTranslations localTranslations;
     private Properties sharedFile;
     private String localizationId;
-    
+
     private Localization() {
         this.files = new HashMap<>();
     }
@@ -51,7 +51,7 @@ public final class Localization {
     public String getLocalizationId() {
         return localizationId;
     }
-        
+
     public void clearAll() {
         clearFiles();
         localTranslations = null;
@@ -65,7 +65,7 @@ public final class Localization {
     public boolean hasLocalTranslations() {
         return localTranslations != null;
     }
-    
+
     public void setLocalTranslations(LocalTranslations localTranslations) {
         this.localTranslations = localTranslations;
     }
@@ -81,7 +81,7 @@ public final class Localization {
     public boolean hasFile(String fileName) {
         return files.containsKey(fileName);
     }
-    
+
     public void putFile(String fileName, Properties properties) {
         files.put(fileName, properties);
     }

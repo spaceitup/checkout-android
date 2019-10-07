@@ -8,16 +8,15 @@
 
 package net.optile.payment.ui.list;
 
-import android.support.v7.widget.RecyclerView.ViewHolder;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import androidx.recyclerview.widget.RecyclerView.ViewHolder;
 import net.optile.payment.R;
 import net.optile.payment.model.AccountMask;
 import net.optile.payment.ui.model.AccountCard;
 import net.optile.payment.ui.model.PaymentCard;
-import net.optile.payment.ui.theme.ListParameters;
 import net.optile.payment.ui.theme.PaymentTheme;
 import net.optile.payment.util.PaymentUtils;
 
@@ -31,16 +30,10 @@ public final class AccountCardViewHolder extends PaymentCardViewHolder {
 
     private AccountCardViewHolder(ListAdapter adapter, View parent, AccountCard accountCard) {
         super(adapter, parent);
-
-        PaymentTheme theme = adapter.getPaymentTheme();
-        ListParameters params = theme.getListParameters();
-
         this.title = parent.findViewById(R.id.text_title);
-        PaymentUtils.setTextAppearance(title, params.getAccountCardTitleStyle());
         this.subTitle = parent.findViewById(R.id.text_subtitle);
-        PaymentUtils.setTextAppearance(subTitle, params.getAccountCardSubtitleStyle());
-
-        addLogoView(parent, accountCard.getCode(), theme);
+        PaymentTheme theme = adapter.getPaymentTheme();
+        addLogoView(parent, accountCard.getCode());
         addElementWidgets(accountCard, theme);
         addButtonWidget(theme);
         setLastImeOptions();
