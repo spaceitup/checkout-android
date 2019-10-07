@@ -69,6 +69,10 @@ dependencies {
 // This task contains the upload repositories for Nexus release & shapshot
 //
 uploadArchives {
+    if (!(project.hasProperty('mavenUser') && project.hasProperty('mavenPassword'))) {
+        logger.warn('Missing mavenUser and/or mavenPassword from ~/.gradle/gradle.properties in uploadArchives task')
+	return
+    }
     repositories {
         mavenDeployer {
             repository(url: "https://nexus.mgmt.oscato.com/repository/releases/") {
@@ -95,6 +99,10 @@ uploadArchives {
 // https://packagecloud.io/docs#gradle_deploy
 // 
 task uploadExternal(type: Upload) {
+    if (!project.hasProperty('packageCloudMavenPassword')) {
+        logger.warn('Missing packageCloudMavenPassword from ~/.gradle/gradle.properties in uploadExternal task')
+	return
+    }
     configuration = configurations.archives
     uploadDescriptor = true
 
