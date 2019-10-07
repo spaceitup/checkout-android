@@ -46,7 +46,7 @@
 
                     <TextView
                         android:id="@+id/text_subtitle"
-                        android:textAppearance="?attr/presetCardSubtitleStyle"                        
+                        android:textAppearance="?attr/presetCardSubtitleStyle"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"/>
                 </LinearLayout>

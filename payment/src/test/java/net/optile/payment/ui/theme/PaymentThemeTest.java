@@ -81,7 +81,7 @@ public class PaymentThemeTest {
             setChargePaymentTheme(value).build();
         assertEquals(theme.getChargePaymentTheme(), value);
     }
-    
+
     @Test
     public void getValidationColorOk() {
         int value = R.color.pmcolor_primary;

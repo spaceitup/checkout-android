@@ -88,7 +88,7 @@ public final class PaymentListActivity extends BasePaymentActivity implements Pa
     }
 
     /**
-     * Initialize the toolbar in this PaymentList 
+     * Initialize the toolbar in this PaymentList
      */
     private void initToolbar() {
         Toolbar toolbar = findViewById(R.id.toolbar);
@@ -110,7 +110,7 @@ public final class PaymentListActivity extends BasePaymentActivity implements Pa
         Toolbar toolbar = findViewById(R.id.toolbar);
         toolbar.setTitle(title);
     }
-    
+
     /**
      * {@inheritDoc}
      */
@@ -317,7 +317,7 @@ public final class PaymentListActivity extends BasePaymentActivity implements Pa
 
     private void initPaymentList() {
         this.paymentList = new PaymentList(this, findViewById(R.id.recyclerview_paymentlist),
-                                           findViewById(R.id.label_empty));
+            findViewById(R.id.label_empty));
     }
 
     /**

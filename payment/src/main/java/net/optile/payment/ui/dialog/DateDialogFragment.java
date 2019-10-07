@@ -56,7 +56,7 @@ public final class DateDialogFragment extends ThemedDialogFragment {
         int theme = PaymentUI.getInstance().getPaymentTheme().getDateDialogTheme();
         return theme == 0 ? super.getTheme() : theme;
     }
-    
+
     /**
      * {@inheritDoc}
      */

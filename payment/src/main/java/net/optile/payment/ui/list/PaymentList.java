@@ -140,7 +140,7 @@ public final class PaymentList {
     void onHintClicked(int position, String type) {
         ListItem item = items.get(position);
         PaymentCard card = item.getPaymentCard();
-        
+
         if (card != null) {
             String button = Localization.translate(card.getCode(), BUTTON_BACK);
             DialogFragment dialog = DialogHelper.createHintDialog(card, type, button);

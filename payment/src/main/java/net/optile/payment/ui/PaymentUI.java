@@ -241,7 +241,7 @@ public final class PaymentUI {
             localization.setLocalTranslations(trans);
         }
     }
-    
+
     private static class InstanceHolder {
         static final PaymentUI INSTANCE = new PaymentUI();
     }

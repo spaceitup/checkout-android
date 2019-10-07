@@ -110,7 +110,7 @@ public final class ChargePaymentActivity extends BasePaymentActivity implements 
         setContentView(R.layout.activity_chargepayment);
         progressView = new ProgressView(findViewById(R.id.layout_progress));
         progressView.setLabels(Localization.translate(CHARGE_TITLE),
-                               Localization.translate(CHARGE_TEXT));
+            Localization.translate(CHARGE_TEXT));
         this.presenter = new ChargePaymentPresenter(this);
     }
 

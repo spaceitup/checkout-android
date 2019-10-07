@@ -60,7 +60,7 @@ public final class ExampleDemoTests {
     public void successfulNoPresetChargeTest() throws JSONException, IOException {
         Intents.init();
         int cardIndex = 1;
-        
+
         openPaymentList(false);
         fillGroupedNetworkCard(cardIndex);
         performDirectCharge(cardIndex);
@@ -72,17 +72,17 @@ public final class ExampleDemoTests {
     public void successfulPresetChargeTest() throws IOException, JSONException {
         Intents.init();
         int cardIndex = 1;
-        
+
         openPaymentList(true);
         fillGroupedNetworkCard(cardIndex);
         performPresetCharge(cardIndex);
         waitForChargeCompleted();
         Intents.release();
     }
-    
+
     private void openPaymentList(boolean presetFirst) throws IOException, JSONException {
         String listUrl = createListUrl(presetFirst);
-        
+
         // enter the listUrl in the settings screen and click the button
         onView(withId(R.id.layout_settings)).check(matches(isDisplayed()));
         onView(withId(R.id.input_listurl)).perform(typeText(listUrl));
@@ -117,12 +117,12 @@ public final class ExampleDemoTests {
         IdlingResource dialogIdlingResource = listActivity.getDialogIdlingResource();
         onView(list).perform(actionOnViewInWidget(1, click(), "expiryDate", R.id.textinputedittext));
         IdlingRegistry.getInstance().register(dialogIdlingResource);
-        
+
         onView(withId(R.id.dialogbutton_neutral)).check(matches(isDisplayed()));
         onView(withId(R.id.numberpicker_year)).perform(setValueInNumberPicker(4));
         onView(withId(R.id.dialogbutton_neutral)).perform(click());
         IdlingRegistry.getInstance().unregister(dialogIdlingResource);
-        
+
         onView(list).perform(actionOnViewInWidget(cardIndex, typeText("123"), "verificationCode", R.id.textinputedittext));
         Espresso.closeSoftKeyboard();
     }
@@ -142,7 +142,7 @@ public final class ExampleDemoTests {
         onView(withId(R.id.button_pay)).perform(PaymentActions.scrollToView(), click());
         IdlingRegistry.getInstance().unregister(closeIdlingResource);
     }
-    
+
     private void waitForChargeCompleted() {
         intended(hasComponent(ChargePaymentActivity.class.getName()));
         onView(withId(R.id.layout_chargepayment)).check(matches(isDisplayed()));

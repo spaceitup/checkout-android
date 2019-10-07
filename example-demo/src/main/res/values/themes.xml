@@ -4,7 +4,7 @@
         <item name="colorPrimaryDark">@color/pmcolor_primarydark</item>
         <item name="colorAccent">@color/pmcolor_accent</item>
     </style>
-    
+
     <style name="DefaultCollapsingToolbarTheme" parent="Theme.MaterialComponents.Light.NoActionBar">
         <item name="colorPrimary">@color/pmcolor_primary</item>
         <item name="colorPrimaryDark">@color/pmcolor_primarydark</item>

@@ -33,7 +33,7 @@ public class LocalizationTest {
         Localization loc = Localization.getInstance();
         loc.clearAll();
     }
-    
+
     @Test
     public void getInstance() {
         Localization loc = Localization.getInstance();
@@ -103,7 +103,7 @@ public class LocalizationTest {
         loc.putFile(fileName, file);
         assertEquals(Localization.translate(fileName, "testKey", defaultValue), defaultValue);
     }
-    
+
     @Test
     public void translateTestFallbackToShared() {
         String fileName = "fileName";
@@ -123,8 +123,8 @@ public class LocalizationTest {
     public void translateTestFallbackToLocalTranslations() {
         String fileName = "fileName";
         String testKey = "testKey";
-        
-        Context context = ApplicationProvider.getApplicationContext();        
+
+        Context context = ApplicationProvider.getApplicationContext();
         String title = context.getString(R.string.pmlocal_list_title);
 
         Localization loc = Localization.getInstance();
@@ -140,5 +140,5 @@ public class LocalizationTest {
         shared.put(testKey, "sharedValue");
         loc.setSharedFile(shared);
         assertEquals(Localization.translate(fileName, LocalizationKey.LIST_TITLE, null), title);
-    }   
+    }
 }

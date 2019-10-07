@@ -24,7 +24,7 @@
     <style name="CustomText.Small.Light">
         <item name="android:textColor">@color/custom_textlight</item>
     </style>
-    
+
     <style name="CustomText.Small.Bold">
         <item name="android:fontFamily">@font/avenir_next_bold</item>
     </style>
@@ -45,7 +45,7 @@
         <item name="android:textColor">@color/custom_textlight</item>
     </style>
 
-    <style name="CustomText.Medium.Bold">        
+    <style name="CustomText.Medium.Bold">
         <item name="android:fontFamily">@font/avenir_next_bold</item>
     </style>
 
@@ -89,7 +89,7 @@
         <item name="android:textColorHint">@color/custom_textgray</item>
         <item name="hintTextColor">@color/custom_textgray</item>
         <item name="errorTextColor">@color/custom_validationerror</item>
-        <item name="errorIconDrawable">@null</item>        
+        <item name="errorIconDrawable">@null</item>
     </style>
 
     <style name="CustomWidgetEditTextStyle" parent="@style/WidgetEditTextStyle">
@@ -102,11 +102,11 @@
         <item name="cardElevation">0dp</item>
         <item name="cardMaxElevation">0dp</item>
     </style>
-    
+
     <style name="CustomWidgetButtonStyle" parent="@style/WidgetButtonStyle">
         <item name="android:textAllCaps">true</item>
-        <item name="android:textAppearance">@style/CustomText.Medium.Bold.Light</item>        
-        <item name="cornerRadius">@dimen/custom_buttonradius</item>        
+        <item name="android:textAppearance">@style/CustomText.Medium.Bold.Light</item>
+        <item name="cornerRadius">@dimen/custom_buttonradius</item>
     </style>
 
     <style name="CustomDialogButtonStyle" parent="@style/DialogButtonStyle">

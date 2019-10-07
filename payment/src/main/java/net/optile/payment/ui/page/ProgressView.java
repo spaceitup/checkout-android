@@ -8,8 +8,6 @@
 
 package net.optile.payment.ui.page;
 
-import android.content.Context;
-import android.content.res.Resources;
 import android.graphics.PorterDuff;
 import android.graphics.drawable.Drawable;
 import android.text.TextUtils;
@@ -69,7 +67,7 @@ class ProgressView {
         view.setVisibility(visible ? View.VISIBLE : View.GONE);
     }
 
-    /** 
+    /**
      * The ProgressBar is styled programmatically since the Android SDK must support
      * the Android version 19 and indeterminateTint is not supported for older devices.
      */

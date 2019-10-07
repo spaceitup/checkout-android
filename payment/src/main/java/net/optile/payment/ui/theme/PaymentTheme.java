@@ -28,7 +28,7 @@ public final class PaymentTheme {
     private final int validationColorUnknown;
     private final int validationColorOk;
     private final int validationColorError;
-    
+
     private PaymentTheme(Builder builder) {
         this.iconMapping = new HashMap<>(builder.iconMapping);
 
@@ -63,7 +63,7 @@ public final class PaymentTheme {
         Integer val = iconMapping.get(inputType);
         return val != null ? val : R.drawable.ic_default;
     }
-    
+
     public int getMessageDialogTheme() {
         return messageDialogTheme;
     }
@@ -91,7 +91,7 @@ public final class PaymentTheme {
     public int getValidationColorError() {
         return validationColorError;
     }
-    
+
     public static final class Builder {
         Map<String, Integer> iconMapping;
         int messageDialogTheme;
@@ -158,7 +158,7 @@ public final class PaymentTheme {
             this.validationColorError = validationColorError;
             return this;
         }
-        
+
         public PaymentTheme build() {
             return new PaymentTheme(this);
         }

@@ -9,7 +9,6 @@
 package net.optile.payment.ui.list;
 
 
-
 import static net.optile.payment.core.PaymentInputType.ALLOW_RECURRENCE;
 import static net.optile.payment.core.PaymentInputType.AUTO_REGISTRATION;
 

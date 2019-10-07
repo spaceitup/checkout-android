@@ -2,18 +2,18 @@
 <resources>
 
     <attr name="paymentListToolbarTheme" type="reference"/>
-    <attr name="paymentListToolbarTitleStyle" type="reference" />    
-    <attr name="paymentListEmptyLabelStyle" type="reference" />
-    <attr name="paymentListHeaderLabelStyle" type="reference" />
+    <attr name="paymentListToolbarTitleStyle" type="reference"/>
+    <attr name="paymentListEmptyLabelStyle" type="reference"/>
+    <attr name="paymentListHeaderLabelStyle" type="reference"/>
 
-    <attr name="paymentCardStyle" type="reference" />
-    <attr name="paymentCardLogoBackground" type="reference" />
+    <attr name="paymentCardStyle" type="reference"/>
+    <attr name="paymentCardLogoBackground" type="reference"/>
 
-    <attr name="presetCardTitleStyle" type="reference"/>        
-    <attr name="presetCardSubtitleStyle" type="reference"/>        
-    <attr name="accountCardTitleStyle" type="reference"/>        
-    <attr name="accountCardSubtitleStyle" type="reference"/>        
-    <attr name="networkCardTitleStyle" type="reference"/>        
+    <attr name="presetCardTitleStyle" type="reference"/>
+    <attr name="presetCardSubtitleStyle" type="reference"/>
+    <attr name="accountCardTitleStyle" type="reference"/>
+    <attr name="accountCardSubtitleStyle" type="reference"/>
+    <attr name="networkCardTitleStyle" type="reference"/>
 
     <attr name="widgetHintDrawable" type="reference"/>
     <attr name="widgetInfoLabelStyle" type="reference"/>
@@ -25,14 +25,14 @@
     <attr name="widgetCheckBoxLabelUncheckedStyle" type="reference"/>
     <attr name="widgetSelectLabelStyle" type="reference"/>
 
-    <attr name="themedDialogButtonStyle" type="reference"/>    
+    <attr name="themedDialogButtonStyle" type="reference"/>
     <attr name="themedDateDialogTitleStyle" type="reference"/>
     <attr name="themedMessageDialogTitleStyle" type="reference"/>
     <attr name="themedMessageDialogDetailsStyle" type="reference"/>
     <attr name="themedMessageDialogDetailsNoTitleStyle" type="reference"/>
-    <attr name="themedMessageDialogImageLabelStyle" type="reference"/>        
+    <attr name="themedMessageDialogImageLabelStyle" type="reference"/>
 
-    <attr name="progressBackground" type="reference"/>        
+    <attr name="progressBackground" type="reference"/>
     <attr name="progressColor" type="reference"/>
     <attr name="progressHeaderStyle" type="reference"/>
     <attr name="progressInfoStyle" type="reference"/>

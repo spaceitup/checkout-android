@@ -36,7 +36,7 @@
     </LinearLayout>
 
     <com.google.android.material.button.MaterialButton
-        style="@style/WidgetButtonStyle"    
+        style="@style/WidgetButtonStyle"
         android:id="@+id/button_neworder"
         android:layout_margin="@dimen/pmborder_medium"
         android:layout_width="match_parent"
