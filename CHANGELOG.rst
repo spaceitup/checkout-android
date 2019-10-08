@@ -1,10 +1,11 @@
 Changelog - Android SDK
 -----------------------
-** Version android-sdk-2.0.1**
+
+**Version android-sdk-2.0.1**
 
 * [PCX-479] - Remove gradle properties dependency from build scripts
 
-** Version android-sdk-2.0.0**
+**Version android-sdk-2.0.0**
 
 Note: version 2.0.0 is a major release with a breaking change switching from the discontinued AppCompat libraries to the new AndroidX material libraries.
 
