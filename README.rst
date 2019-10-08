@@ -21,7 +21,7 @@ Android SDK. TLS1.2 is enabled for Android version 19 (Kitkat).
 AndroidX
 --------
 
-The Android SDK 2.0 is build with the new AndroidX material libraries. If your app continues to use external libraries build using the older AppCompat libraries then please keep the following two lines to the gradle.properties file:
+The Android SDK 2.0 is build using the new AndroidX material libraries. If your app continues to use external libraries depending on the older AppCompat libraries then please keep the following two lines in the gradle.properties file:
 
 ::
    
