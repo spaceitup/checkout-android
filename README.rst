@@ -21,7 +21,7 @@ Android SDK. TLS1.2 is enabled for Android version 19 (Kitkat).
 AndroidX
 --------
 
-The Android SDK is build with the AppCompat Design library. In order to use the Android SDK with an AndroidX app the following two lines must be added to the gradle.properties file:
+The Android SDK 2.0 is build with the new AndroidX material libraries. If your app continues to use external libraries build using the older AppCompat libraries then please keep the following two lines to the gradle.properties file:
 
 ::
    
@@ -149,7 +149,7 @@ Add the android-sdk dependency to the dependencies section of the app’s level 
 ::
 
     dependencies {
-        implementation "com.oscato.mobile:android-sdk:1.1.18"
+        implementation "com.oscato.mobile:android-sdk:2.0.1"
     }
 
 2 - Create payment session
