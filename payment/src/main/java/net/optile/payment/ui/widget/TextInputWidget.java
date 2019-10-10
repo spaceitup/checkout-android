@@ -27,7 +27,7 @@ import net.optile.payment.validation.ValidationResult;
  */
 public final class TextInputWidget extends InputLayoutWidget {
 
-    private final static String NUMERIC_DIGITS = "0123456789 -";
+    private final static String NUMERIC_DIGITS = "0123456789 ";
 
     /**
      * Construct a new TextInputWidget
@@ -86,6 +86,7 @@ public final class TextInputWidget extends InputLayoutWidget {
         switch (type) {
             case InputElementType.NUMERIC:
                 setTextInputType(InputType.TYPE_CLASS_NUMBER, NUMERIC_DIGITS);
+                textInput.addTextChangedListener(new IBANTextWatcher(textInput)); 
                 break;
             case InputElementType.INTEGER:
                 setTextInputType(InputType.TYPE_CLASS_NUMBER, null);
