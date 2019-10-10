@@ -66,6 +66,7 @@ dependencies {
     testImplementation "org.robolectric:robolectric:${rootProject.robolectricVersion}"
     testImplementation "androidx.test:core:${rootProject.androidxTestCoreVersion}"
     testImplementation "androidx.test.ext:junit:${rootProject.androidxTestJunitVersion}"
+    testImplementation "org.hamcrest:hamcrest-library:${rootProject.harmcrestVersion}"
 
     androidTestImplementation "androidx.test.ext:junit:${rootProject.androidxTestJunitVersion}"
     androidTestImplementation "androidx.test:runner:${rootProject.androidxTestRunnerVersion}"

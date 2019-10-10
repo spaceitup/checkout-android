@@ -9,20 +9,29 @@
 package net.optile.payment;
 
 import static androidx.test.espresso.Espresso.onView;
+import static androidx.test.espresso.action.ViewActions.click;
 import static androidx.test.espresso.assertion.ViewAssertions.matches;
+import static androidx.test.espresso.contrib.RecyclerViewActions.actionOnItemAtPosition;
 import static androidx.test.espresso.intent.Intents.intended;
 import static androidx.test.espresso.intent.matcher.IntentMatchers.hasComponent;
 import static androidx.test.espresso.matcher.ViewMatchers.isDisplayed;
 import static androidx.test.espresso.matcher.ViewMatchers.withId;
+import static net.optile.payment.test.view.PaymentActions.actionOnViewInWidget;
+import static net.optile.payment.test.view.PaymentMatchers.hasTextInputLayoutError;
+import static net.optile.payment.test.view.PaymentMatchers.hasTextInputLayoutHint;
+import static net.optile.payment.test.view.PaymentMatchers.isCardWithTestId;
+import static net.optile.payment.test.view.PaymentMatchers.isViewInWidget;
 
 import java.io.IOException;
 
+import org.hamcrest.Matcher;
 import org.json.JSONException;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
 import android.content.Context;
+import android.view.View;
 import androidx.test.espresso.IdlingRegistry;
 import androidx.test.espresso.IdlingResource;
 import androidx.test.espresso.intent.Intents;
@@ -40,11 +49,21 @@ public class CreditCardTests {
     public ActivityTestRule<PaymentListActivity> activityRule = new ActivityTestRule<>(PaymentListActivity.class, true, false);
 
     @Test
-    public void launchPaymentListTest() throws JSONException, IOException {
+    public void missingHolderNameTest() throws JSONException, IOException {
         Intents.init();
 
         // open the payment list
         openPaymentList();
+
+        int cardIndex = 1;
+        Matcher<View> list = withId(R.id.recyclerview_paymentlist);
+        onView(list).check(matches(isCardWithTestId(cardIndex, "card_group")));
+        onView(list).perform(actionOnItemAtPosition(cardIndex, click()));
+        onView(list).perform(actionOnViewInWidget(cardIndex, click(), "buttonWidget", R.id.button));
+
+        onView(list).check(matches(isViewInWidget(cardIndex, hasTextInputLayoutHint("Holder Name"), "holderName", R.id.textinputlayout)));
+        onView(list).check(matches(isViewInWidget(cardIndex, hasTextInputLayoutError("Missing holder name"), "holderName", R.id.textinputlayout)));
+
         Intents.release();
     }
 
