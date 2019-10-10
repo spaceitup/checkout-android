@@ -6,11 +6,11 @@
  * See the LICENSE file for more information.
  */
 
-package net.optile.example.basic;
+package net.optile.payment;
 
 import org.junit.runner.RunWith;
 import org.junit.runners.Suite;
 
 @RunWith(Suite.class)
-@Suite.SuiteClasses({ BasicPageTests.class })
+@Suite.SuiteClasses({ CreditCardTests.class })
 public class UITestSuite { }
