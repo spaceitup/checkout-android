@@ -15,6 +15,7 @@ import org.junit.Test;
 
 import net.optile.payment.R;
 import net.optile.payment.core.PaymentInputType;
+import net.optile.payment.ui.PaymentTheme;
 
 public class PaymentThemeTest {
 

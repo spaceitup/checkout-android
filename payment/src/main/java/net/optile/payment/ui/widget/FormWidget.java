@@ -15,7 +15,7 @@ import androidx.core.content.ContextCompat;
 import net.optile.payment.R;
 import net.optile.payment.core.PaymentException;
 import net.optile.payment.form.Operation;
-import net.optile.payment.ui.theme.PaymentTheme;
+import net.optile.payment.ui.PaymentTheme;
 import net.optile.payment.util.PaymentUtils;
 
 /**
