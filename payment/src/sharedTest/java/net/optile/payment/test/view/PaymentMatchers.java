@@ -128,11 +128,12 @@ public final class PaymentMatchers {
                 if (!(view instanceof TextInputLayout)) {
                     return false;
                 }
-                CharSequence hint = ((TextInputLayout)view).getHint();
-                if (hint == null) {
-                    return false;
+                CharSequence hintSequence = ((TextInputLayout)view).getHint();
+                String inputHint = "";
+                if (hintSequence != null) {
+                    inputHint = hintSequence.toString();
                 }
-                return expectedHint.equals(hint.toString());
+                return expectedHint.equals(inputHint);
             }
 
             @Override
@@ -148,11 +149,12 @@ public final class PaymentMatchers {
                 if (!(view instanceof TextInputLayout)) {
                     return false;
                 }
-                CharSequence error = ((TextInputLayout)view).getError();
-                if (error == null) {
-                    return false;
+                CharSequence errorSequence = ((TextInputLayout)view).getError();
+                String inputError = "";
+                if (errorSequence != null) {
+                    inputError = errorSequence.toString();
                 }
-                return expectedError.equals(error.toString());
+                return expectedError.equals(inputError);
             }
             @Override
             public void describeTo(Description description) {
