@@ -8,7 +8,7 @@
 
 package net.optile.example.basic;
 
-import net.optile.payment.ui.theme.PaymentTheme;
+import net.optile.payment.ui.PaymentTheme;
 
 /**
  * Class used to create a custom PaymentTheme for theming the Android SDK Payment page

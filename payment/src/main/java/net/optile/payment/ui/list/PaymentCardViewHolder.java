@@ -38,7 +38,7 @@ import net.optile.payment.model.AccountMask;
 import net.optile.payment.model.InputElement;
 import net.optile.payment.model.PaymentMethod;
 import net.optile.payment.ui.model.PaymentCard;
-import net.optile.payment.ui.theme.PaymentTheme;
+import net.optile.payment.ui.PaymentTheme;
 import net.optile.payment.ui.widget.ButtonWidget;
 import net.optile.payment.ui.widget.DateWidget;
 import net.optile.payment.ui.widget.FormWidget;
