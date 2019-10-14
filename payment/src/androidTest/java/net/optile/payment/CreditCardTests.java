@@ -10,16 +10,20 @@ package net.optile.payment;
 
 import static androidx.test.espresso.Espresso.onView;
 import static androidx.test.espresso.action.ViewActions.click;
+import static androidx.test.espresso.action.ViewActions.typeText;
 import static androidx.test.espresso.assertion.ViewAssertions.matches;
 import static androidx.test.espresso.contrib.RecyclerViewActions.actionOnItemAtPosition;
 import static androidx.test.espresso.intent.Intents.intended;
 import static androidx.test.espresso.intent.matcher.IntentMatchers.hasComponent;
 import static androidx.test.espresso.matcher.ViewMatchers.isDisplayed;
 import static androidx.test.espresso.matcher.ViewMatchers.withId;
+import static androidx.test.espresso.matcher.ViewMatchers.withText;
 import static net.optile.payment.test.view.PaymentActions.actionOnViewInWidget;
+import static net.optile.payment.test.view.PaymentActions.setValueInNumberPicker;
 import static net.optile.payment.test.view.PaymentMatchers.hasTextInputLayoutError;
 import static net.optile.payment.test.view.PaymentMatchers.hasTextInputLayoutHint;
 import static net.optile.payment.test.view.PaymentMatchers.isCardWithTestId;
+import static net.optile.payment.test.view.PaymentMatchers.isViewInCard;
 import static net.optile.payment.test.view.PaymentMatchers.isViewInWidget;
 
 import java.io.IOException;
@@ -32,6 +36,7 @@ import org.junit.runner.RunWith;
 
 import android.content.Context;
 import android.view.View;
+import androidx.test.espresso.Espresso;
 import androidx.test.espresso.IdlingRegistry;
 import androidx.test.espresso.IdlingResource;
 import androidx.test.espresso.intent.Intents;
@@ -55,7 +60,7 @@ public class CreditCardTests {
         // open the payment list
         openPaymentList();
 
-        int cardIndex = 1;
+        int cardIndex = 3;
         Matcher<View> list = withId(R.id.recyclerview_paymentlist);
         onView(list).check(matches(isCardWithTestId(cardIndex, "card_group")));
         onView(list).perform(actionOnItemAtPosition(cardIndex, click()));
@@ -77,37 +82,64 @@ public class CreditCardTests {
     }
 
     @Test
-    public void payingWithoutCardNumberTest() throws IOException, JSONException {
+    public void validVisaPaymentTest() throws IOException, JSONException, InterruptedException {
         Intents.init();
 
-        int cardIndex = 1;
+        openPaymentList();
+        PaymentListActivity listActivity = (PaymentListActivity) ActivityHelper.getCurrentActivity();
+
+        int cardIndex = 3;
         Matcher<View> list = withId(R.id.recyclerview_paymentlist);
         onView(list).check(matches(isCardWithTestId(cardIndex, "card_group")));
         onView(list).perform(actionOnItemAtPosition(cardIndex, click()));
 
-        
+        onView(list).perform(actionOnViewInWidget(cardIndex, typeText("4111111111111111"), "number", R.id.textinputedittext));
+        onView(list).check(matches(isViewInCard(cardIndex, withText("Visa"), R.id.title1)));
 
-        openPaymentList();
+        onView(list).perform(actionOnViewInWidget(cardIndex, typeText("John Doe"), "holderName", R.id.textinputedittext));
+
+        // Wait for the DialogIdlingResource until the DateDialog is visible and fill in the date
+        IdlingResource dialogIdlingResource = listActivity.getDialogIdlingResource();
+        onView(list).perform(actionOnViewInWidget(3, click(), "expiryDate", R.id.textinputedittext));
+        IdlingRegistry.getInstance().register(dialogIdlingResource);
+
+
+        onView(withId(R.id.dialogbutton_neutral)).check(matches(isDisplayed()));
+        onView(withId(R.id.numberpicker_year)).perform(setValueInNumberPicker(4));
+        onView(withId(R.id.dialogbutton_neutral)).perform(click());
+        IdlingRegistry.getInstance().unregister(dialogIdlingResource);
+
+        onView(list).perform(actionOnViewInWidget(cardIndex, typeText("123"), "verificationCode", R.id.textinputedittext));
+
+        Espresso.closeSoftKeyboard();
+        onView(withId(R.id.recyclerview_paymentlist)).perform(actionOnViewInWidget(cardIndex, click(), "buttonWidget", R.id.button));
+
+        Intents.release();
+
     }
 
     @Test
-    public void clickOnSecondNetwork() throws JSONException, IOException, InterruptedException {
+    public void payWithSavedCreditCard() throws JSONException, IOException {
         Intents.init();
 
         openPaymentList();
 
-        int cardIndex = 2;
+        int cardIndex = 1;
         Matcher<View> list = withId(R.id.recyclerview_paymentlist);
+        onView(list).check(matches(isCardWithTestId(cardIndex, "card_savedaccount")));
         onView(list).perform(actionOnItemAtPosition(cardIndex, click()));
 
-        Thread.sleep(5000);
+        onView(list).perform(actionOnViewInWidget(cardIndex, typeText("123"), "verificationCode", R.id.textinputedittext));
+        Espresso.closeSoftKeyboard();
+        onView(withId(R.id.recyclerview_paymentlist)).perform(actionOnViewInWidget(cardIndex, click(), "buttonWidget", R.id.button));
 
         Intents.release();
+
     }
 
 
     private void openPaymentList() throws JSONException, IOException {
-        PaymentSessionHelper.setupPaymentUI(net.optile.payment.test.R.raw.listtemplate, false);
+        PaymentSessionHelper.setupPaymentUI(net.optile.payment.test.R.raw.listtemplate_payment, false);
 
         Context context = InstrumentationRegistry.getInstrumentation().getTargetContext();
         activityRule.launchActivity(PaymentListActivity.createStartIntent(context));
