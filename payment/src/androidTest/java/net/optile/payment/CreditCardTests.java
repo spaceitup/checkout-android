@@ -139,7 +139,7 @@ public class CreditCardTests {
 
 
     private void openPaymentList() throws JSONException, IOException {
-        PaymentSessionHelper.setupPaymentUI(net.optile.payment.test.R.raw.listtemplate_payment, false);
+        PaymentSessionHelper.setupPaymentUI(net.optile.payment.test.R.raw.listtemplate_register, false);
 
         Context context = InstrumentationRegistry.getInstrumentation().getTargetContext();
         activityRule.launchActivity(PaymentListActivity.createStartIntent(context));
