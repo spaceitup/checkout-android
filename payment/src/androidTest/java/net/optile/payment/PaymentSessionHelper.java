@@ -20,8 +20,9 @@ import androidx.test.platform.app.InstrumentationRegistry;
 import net.optile.payment.localization.LocalTranslations;
 import net.optile.payment.localization.Localization;
 import net.optile.payment.test.service.ListService;
+import net.optile.payment.ui.PaymentTheme;
 import net.optile.payment.ui.PaymentUI;
-import net.optile.payment.ui.theme.PaymentTheme;
+
 
 
 /**
