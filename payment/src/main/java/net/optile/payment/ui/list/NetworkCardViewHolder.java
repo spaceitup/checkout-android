@@ -28,7 +28,7 @@ import net.optile.payment.ui.model.NetworkCard;
 import net.optile.payment.ui.model.PaymentCard;
 import net.optile.payment.ui.model.PaymentNetwork;
 import net.optile.payment.ui.model.SmartSwitch;
-import net.optile.payment.ui.theme.PaymentTheme;
+import net.optile.payment.ui.PaymentTheme;
 import net.optile.payment.ui.widget.FormWidget;
 import net.optile.payment.ui.widget.RegisterWidget;
 import net.optile.payment.ui.widget.WidgetInflater;

@@ -20,7 +20,6 @@ import net.optile.payment.localization.Localization;
 import net.optile.payment.model.PresetAccount;
 import net.optile.payment.ui.page.ChargePaymentActivity;
 import net.optile.payment.ui.page.PaymentListActivity;
-import net.optile.payment.ui.theme.PaymentTheme;
 
 /**
  * The PaymentUI is the controller to initialize and launch the Payment Page.

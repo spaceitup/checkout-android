@@ -19,7 +19,7 @@ import android.widget.TextView;
 import net.optile.payment.core.PaymentException;
 import net.optile.payment.form.Operation;
 import net.optile.payment.model.InputElementType;
-import net.optile.payment.ui.theme.PaymentTheme;
+import net.optile.payment.ui.PaymentTheme;
 import net.optile.payment.validation.ValidationResult;
 
 /**

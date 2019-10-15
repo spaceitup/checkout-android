@@ -12,7 +12,7 @@ import android.view.View;
 import net.optile.payment.core.PaymentException;
 import net.optile.payment.form.Operation;
 import net.optile.payment.model.RegistrationType;
-import net.optile.payment.ui.theme.PaymentTheme;
+import net.optile.payment.ui.PaymentTheme;
 
 /**
  * Widget for handling the Register input
