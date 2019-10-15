@@ -8,7 +8,8 @@
 
 package net.optile.payment.test.view;
 
-import static androidx.test.InstrumentationRegistry.getInstrumentation;
+
+import static androidx.test.platform.app.InstrumentationRegistry.getInstrumentation;
 
 import java.util.Collection;
 

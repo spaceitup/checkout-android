@@ -42,9 +42,10 @@ dependencies {
     implementation "io.reactivex:rxandroid:${rootProject.rxandroidVersion}"
     implementation "androidx.test.espresso:espresso-idling-resource:${rootProject.androidxTestEspressoVersion}@aar"
 
-    testImplementation "junit:junit:${rootProject.junitVersion}"
+    testImplementation "androidx.test.ext:junit:${rootProject.androidxTestJunitVersion}"
     testImplementation "org.hamcrest:hamcrest-library:${rootProject.harmcrestVersion}"
 
+    androidTestImplementation "androidx.test.ext:junit:${rootProject.androidxTestJunitVersion}"
     androidTestImplementation "androidx.test:runner:${rootProject.androidxTestRunnerVersion}"
     androidTestImplementation "androidx.test:rules:${rootProject.androidxTestRulesVersion}"
     androidTestImplementation "androidx.test.espresso:espresso-core:${rootProject.androidxTestEspressoVersion}"
