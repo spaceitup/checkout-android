@@ -12,6 +12,9 @@ import static androidx.test.espresso.intent.Checks.checkNotNull;
 
 import org.hamcrest.Description;
 import org.hamcrest.Matcher;
+import org.hamcrest.TypeSafeMatcher;
+
+import com.google.android.material.textfield.TextInputLayout;
 
 import android.view.View;
 import androidx.recyclerview.widget.RecyclerView;
@@ -114,6 +117,47 @@ public final class PaymentMatchers {
                     return false;
                 }
                 return viewMatcher.matches(formView);
+            }
+        };
+    }
+
+    public static Matcher<View> hasTextInputLayoutHint(final String expectedHint) {
+        return new TypeSafeMatcher<View>() {
+            @Override
+            public boolean matchesSafely(View view) {
+                if (!(view instanceof TextInputLayout)) {
+                    return false;
+                }
+                CharSequence hintSequence = ((TextInputLayout)view).getHint();
+                String inputHint = "";
+                if (hintSequence != null) {
+                    inputHint = hintSequence.toString();
+                }
+                return expectedHint.equals(inputHint);
+            }
+
+            @Override
+            public void describeTo(Description description) {
+            }
+        };
+    }
+
+    public static Matcher<View> hasTextInputLayoutError(final String expectedError) {
+        return new TypeSafeMatcher<View>() {
+            @Override
+            public boolean matchesSafely(View view) {
+                if (!(view instanceof TextInputLayout)) {
+                    return false;
+                }
+                CharSequence errorSequence = ((TextInputLayout)view).getError();
+                String inputError = "";
+                if (errorSequence != null) {
+                    inputError = errorSequence.toString();
+                }
+                return expectedError.equals(inputError);
+            }
+            @Override
+            public void describeTo(Description description) {
             }
         };
     }
