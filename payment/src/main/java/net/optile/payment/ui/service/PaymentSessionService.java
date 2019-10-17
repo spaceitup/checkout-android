@@ -127,60 +127,12 @@ public final class PaymentSessionService {
     private PaymentSession asyncLoadPaymentSession(String listUrl, Context context) throws PaymentException {
         ListResult listResult = listConnection.getListResult(listUrl);
         Map<String, PaymentNetwork> networks = loadPaymentNetworks(listResult);
-        loadLocalization(context, listUrl, networks);
-
         Map<String, PaymentGroup> groups = loadPaymentGroups(context);
         Validator validator = loadValidator(context);
         PresetCard presetCard = createPresetCard(listResult, networks);
         List<AccountCard> accountCards = createAccountCards(listResult, networks);
         List<NetworkCard> networkCards = createNetworkCards(networks, groups);
         return new PaymentSession(listResult, presetCard, accountCards, networkCards, validator);
-    }
-
-    private void loadLocalization(Context context, String listUrl, Map<String, PaymentNetwork> networks) throws PaymentException {
-        Localization loc = Localization.getInstance();
-
-        if (!listUrl.equals(loc.getLocalizationId())) {
-            loc.clearFiles();
-            loc.setLocalizationId(listUrl);
-        }
-        URL langUrl = null;
-        String code = null;
-
-        for (PaymentNetwork network : networks.values()) {
-            langUrl = network.getLink("lang");
-            code = network.getCode();
-            if (langUrl == null) {
-                throw createPaymentException("Missing 'lang' link in PaymentNetwork: " + code, null);
-            }
-            if (!loc.hasFile(code)) {
-                loc.putFile(code, listConnection.loadLanguageFile(new Properties(), langUrl));
-            }
-        }
-        if (!loc.hasSharedFile() && langUrl != null) {
-            loc.setSharedFile(loadPaymentPageLocalization(context, langUrl));
-        }
-    }
-
-    /**
-     * This method loads the payment page language file.
-     *
-     * @param langUrl the URL pointing to one of the PaymentNetwork language URLs
-     * @return the properties object containing the language entries
-     */
-    private Properties loadPaymentPageLocalization(Context context, URL langUrl) throws PaymentException {
-        try {
-            String pageUrl = langUrl.toString();
-            int index = pageUrl.lastIndexOf('/');
-
-            if (index < 0 || !pageUrl.endsWith(".properties")) {
-                throw createPaymentException("Invalid URL for creating paymentpage language URL", null);
-            }
-            pageUrl = pageUrl.substring(0, index) + "/paymentpage.properties";
-            return listConnection.loadLanguageFile(new Properties(), new URL(pageUrl));
-        } catch (MalformedURLException e) {
-            throw createPaymentException("Malformed paymentpage language URL", e);
-        }
     }
 
     private Map<String, PaymentNetwork> loadPaymentNetworks(ListResult listResult) throws PaymentException {

@@ -27,6 +27,8 @@ import net.optile.payment.ui.dialog.ThemedDialogFragment;
 import net.optile.payment.ui.dialog.ThemedDialogFragment.ThemedDialogListener;
 import net.optile.payment.ui.model.PaymentCard;
 import net.optile.payment.ui.model.PaymentSession;
+import net.optile.payment.ui.service.LocalizationListener;
+import net.optile.payment.ui.service.LocalizationService;
 import net.optile.payment.ui.service.NetworkService;
 import net.optile.payment.ui.service.NetworkServiceLookup;
 import net.optile.payment.ui.service.NetworkServicePresenter;
@@ -37,7 +39,7 @@ import net.optile.payment.ui.widget.FormWidget;
 /**
  * The PaymentListPresenter implementing the presenter part of the MVP
  */
-final class PaymentListPresenter implements PaymentSessionListener, NetworkServicePresenter {
+final class PaymentListPresenter implements PaymentSessionListener, LocalizationListener, NetworkServicePresenter {
 
     private final static int PREPAREPAYMENT_REQUEST_CODE = 1;
     private final static int PROCESSPAYMENT_REQUEST_CODE = 2;
@@ -45,7 +47,8 @@ final class PaymentListPresenter implements PaymentSessionListener, NetworkServi
 
     private final PaymentListView view;
     private final PaymentSessionService sessionService;
-
+    private final LocalizationService localizationService;
+    
     private PaymentSession session;
     private String listUrl;
     private Interaction reloadInteraction;
@@ -63,6 +66,8 @@ final class PaymentListPresenter implements PaymentSessionListener, NetworkServi
         this.view = view;
         sessionService = new PaymentSessionService();
         sessionService.setListener(this);
+        localizationService = new LocalizationService();
+        localizationService.setListener(this);
     }
 
     /**
@@ -158,6 +163,37 @@ final class PaymentListPresenter implements PaymentSessionListener, NetworkServi
         PaymentResult result = PaymentResult.fromThrowable(cause);
         if (result.hasError()) {
             handleLoadSessionError(result);
+        } else {
+            closeWithCanceledCode(result);
+        }
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void onPaymentSessionSuccess(PaymentSession session) {
+        ListResult listResult = session.getListResult();
+        Interaction interaction = listResult.getInteraction();
+
+        switch (interaction.getCode()) {
+            case InteractionCode.PROCEED:
+                handleLoadSessionOk(session);
+                break;
+            default:
+                PaymentResult result = new PaymentResult(listResult.getResultInfo(), interaction);
+                closeWithCanceledCode(result);
+        }
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void onLocalizationError(Throwable cause) {
+        PaymentResult result = PaymentResult.fromThrowable(cause);
+        if (result.hasError()) {
+            handleLocalizationError(result);
         } else {
             closeWithCanceledCode(result);
         }

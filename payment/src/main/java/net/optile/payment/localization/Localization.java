@@ -86,7 +86,7 @@ public final class Localization {
      * @return the translation or the defValue if the translation was not found
      */
     public static String translate(String networkCode, String key, String defValue) {
-        return getInstance().getHolderTranslation(networkCode, key, defValue);
+        return getInstance().getNetworkTranslation(networkCode, key, defValue);
     }
 
     /**
@@ -137,13 +137,13 @@ public final class Localization {
      * Get the translation from the network localization the given network code.
      * If the localization does not exist or does not contain the translation then return the defValue
      *
-     * @param networkCode name of the localization holder
+     * @param networkCode name of the network localization
      * @param key of the translation
      * @param defValue returned when the translation could not be found
      * @return the translation or defValue if the translation was not found
      */
-    public String getTranslation(String networkCode, String key, String defValue) {
-        LocalizationHolder holder = holders != null ? holders.get(networkCode) : null;
+    public String getNetworkTranslation(String networkCode, String key, String defValue) {
+        LocalizationHolder holder = networks != null ? networks.get(networkCode) : null;
         return holder != null ? holder.translate(key, defValue) : defValue;
     }
 

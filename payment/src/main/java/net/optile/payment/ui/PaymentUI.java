@@ -15,8 +15,8 @@ import android.text.TextUtils;
 import android.util.Patterns;
 import androidx.annotation.RawRes;
 import net.optile.payment.R;
-import net.optile.payment.localization.LocalTranslations;
 import net.optile.payment.localization.Localization;
+import net.optile.payment.localization.LocalLocalizationHolder;
 import net.optile.payment.model.PresetAccount;
 import net.optile.payment.ui.page.ChargePaymentActivity;
 import net.optile.payment.ui.page.PaymentListActivity;
@@ -234,7 +234,7 @@ public final class PaymentUI {
 
     private void initLocalization(Activity activity) {
         Localization loc = Localization.getInstance();
-        loc.setLocalizations(LocalizationService.createLocalLocalization(activity), null);
+        loc.setLocalizations(new LocalLocalizationHolder(activity), null);
     }
 
     private static class InstanceHolder {

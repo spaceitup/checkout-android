@@ -8,17 +8,6 @@
 
 package net.optile.payment.ui.service;
 
-import static net.optile.payment.localization.LocalizationKey.BUTTON_CANCEL;
-import static net.optile.payment.localization.LocalizationKey.BUTTON_RETRY;
-import static net.optile.payment.localization.LocalizationKey.BUTTON_UPDATE;
-import static net.optile.payment.localization.LocalizationKey.CHARGE_INTERRUPTED;
-import static net.optile.payment.localization.LocalizationKey.CHARGE_TEXT;
-import static net.optile.payment.localization.LocalizationKey.CHARGE_TITLE;
-import static net.optile.payment.localization.LocalizationKey.ERROR_CONNECTION;
-import static net.optile.payment.localization.LocalizationKey.ERROR_DEFAULT;
-import static net.optile.payment.localization.LocalizationKey.LIST_HEADER_NETWORKS;
-import static net.optile.payment.localization.LocalizationKey.LIST_TITLE;
-
 import java.util.HashMap;
 import java.util.Map;
 
@@ -45,7 +34,7 @@ import net.optile.payment.core.Workers;
 import net.optile.payment.localization.Localization;
 import net.optile.payment.localization.LocalizationCache;
 import net.optile.payment.localization.LocalizationHolder;
-import net.optile.payment.localization.MapLocalizationHolder;
+import net.optile.payment.localization.LocalLocalizationHolder;
 import net.optile.payment.localization.MultiLocalizationHolder;
 import net.optile.payment.model.AccountRegistration;
 import net.optile.payment.model.ApplicableNetwork;
@@ -77,7 +66,7 @@ public final class LocalizationService {
     private static LocalizationCache cache = new LocalizationCache();
     
     /**
-     * Create a new PaymentSessionService, this service is used to load the PaymentSession.
+     * Create a new LocalizationService, this service is used to load the localizations.
      */
     public LocalizationService() {
         this.connection = new LocalizationConnection();
@@ -115,12 +104,12 @@ public final class LocalizationService {
      * Load all localizations for the payment session
      *
      * @param context needed to load the local localization store
-     * @param localization in which the localization files should be stored
-     * @param session the payment session containing networks for which localization should be loaded
+     * @param localization in which the localizations should be stored
+     * @param session the payment session containing networks for which localizations should be loaded
      */
     public void loadLocalizations(final Context context, final Localization localization, final PaymentSession session) {
         if (task != null) {
-            throw new IllegalStateException("Already loading localization files, stop first");
+            throw new IllegalStateException("Already loading localizations, stop first");
         }
         task = WorkerTask.fromCallable(new Callable<Localization>() {
             @Override
@@ -145,26 +134,6 @@ public final class LocalizationService {
             }
         });
         Workers.getInstance().forNetworkTasks().execute(task);
-    }
-
-    /** 
-     * Create a LocalizationHolder containing the local fallback translations
-     * 
-     * @param context from which the local strings will be taken
-     */
-    public static LocalizationHolder createLocalLocalization(Context context) {
-        Map<String, String> map = new HashMap<>();
-        map.put(BUTTON_CANCEL, context.getString(R.string.pmlocal_button_cancel));
-        map.put(BUTTON_RETRY, context.getString(R.string.pmlocal_button_retry));
-        map.put(BUTTON_UPDATE, context.getString(R.string.pmlocal_button_update));
-        map.put(LIST_TITLE, context.getString(R.string.pmlocal_list_title));
-        map.put(LIST_HEADER_NETWORKS, context.getString(R.string.pmlocal_list_header_networks));
-        map.put(CHARGE_TITLE, context.getString(R.string.pmlocal_charge_title));
-        map.put(CHARGE_TEXT, context.getString(R.string.pmlocal_charge_text));
-        map.put(CHARGE_INTERRUPTED, context.getString(R.string.pmlocal_charge_interrupted));
-        map.put(ERROR_CONNECTION, context.getString(R.string.pmlocal_error_connection));
-        map.put(ERROR_DEFAULT, context.getString(R.string.pmlocal_error_default));
-        return new MapLocalizationHolder(map);
     }
     
     private Localization asyncLoadLocalizations(Context context, Localization localization, PaymentSession session) throws PaymentException {
@@ -214,7 +183,7 @@ public final class LocalizationService {
 
             LocalizationHolder holder = cache.get(sharedUrl);
             if (holder == null) {
-                holder = new MultiLocalizationHolder(connection.loadLocalization(new URL(sharedUrl)), createLocalLocalization(context));
+                holder = new MultiLocalizationHolder(connection.loadLocalization(new URL(sharedUrl)), new LocalLocalizationHolder(context));
                 cache.put(sharedUrl, holder);
             }
             return holder;

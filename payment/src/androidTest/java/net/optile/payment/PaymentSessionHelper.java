@@ -17,12 +17,11 @@ import org.json.JSONException;
 
 import android.content.Context;
 import androidx.test.platform.app.InstrumentationRegistry;
-import net.optile.payment.localization.LocalTranslations;
 import net.optile.payment.localization.Localization;
 import net.optile.payment.test.service.ListService;
 import net.optile.payment.ui.PaymentTheme;
 import net.optile.payment.ui.PaymentUI;
-
+import net.optile.payment.ui.service.LocalizationService;
 
 
 /**
@@ -47,8 +46,7 @@ public class PaymentSessionHelper {
         paymentUI.setValidationResId(R.raw.validations);
         paymentUI.setGroupResId(R.raw.groups);
 
-        LocalTranslations trans = new LocalTranslations();
-        trans.load(context);
-        Localization.getInstance().setLocalTranslations(trans);
+        Localization loc = Localization.getInstance();
+        loc.setLocalizations(LocalizationService.createLocalLocalization(context), null);
     }
 }

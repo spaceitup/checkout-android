@@ -9,6 +9,7 @@
 package net.optile.payment.ui.model;
 
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -62,11 +63,11 @@ public final class PaymentSession {
     }
 
     public List<PaymentNetwork> getPaymentNetworks() {
-        List<PaymentNetwork> networks = new ArrayList<>();
+        List<PaymentNetwork> list = new ArrayList<>();
         for (NetworkCard card : networks) {
-            networks.addAll(card.getPaymentNetworks());
+            list.addAll(card.getPaymentNetworks());
         }
-        return networks;
+        return list;
     }
     
     public Validator getValidator() {
