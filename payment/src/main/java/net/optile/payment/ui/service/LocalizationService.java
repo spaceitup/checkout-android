@@ -1,0 +1,233 @@
+/*
+ * Copyright (c) 2019 optile GmbH
+ * https://www.optile.net
+ *
+ * This file is open source and available under the MIT license.
+ * See the LICENSE file for more information.
+ */
+
+package net.optile.payment.ui.service;
+
+import static net.optile.payment.localization.LocalizationKey.BUTTON_CANCEL;
+import static net.optile.payment.localization.LocalizationKey.BUTTON_RETRY;
+import static net.optile.payment.localization.LocalizationKey.BUTTON_UPDATE;
+import static net.optile.payment.localization.LocalizationKey.CHARGE_INTERRUPTED;
+import static net.optile.payment.localization.LocalizationKey.CHARGE_TEXT;
+import static net.optile.payment.localization.LocalizationKey.CHARGE_TITLE;
+import static net.optile.payment.localization.LocalizationKey.ERROR_CONNECTION;
+import static net.optile.payment.localization.LocalizationKey.ERROR_DEFAULT;
+import static net.optile.payment.localization.LocalizationKey.LIST_HEADER_NETWORKS;
+import static net.optile.payment.localization.LocalizationKey.LIST_TITLE;
+
+import java.util.HashMap;
+import java.util.Map;
+
+import android.content.Context;
+import android.text.TextUtils;
+import net.optile.payment.R;
+
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.util.ArrayList;
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Properties;
+import java.util.concurrent.Callable;
+
+import android.content.Context;
+import android.text.TextUtils;
+import net.optile.payment.core.PaymentError;
+import net.optile.payment.core.PaymentException;
+import net.optile.payment.core.WorkerSubscriber;
+import net.optile.payment.core.WorkerTask;
+import net.optile.payment.core.Workers;
+import net.optile.payment.localization.Localization;
+import net.optile.payment.localization.LocalizationCache;
+import net.optile.payment.localization.LocalizationHolder;
+import net.optile.payment.localization.MapLocalizationHolder;
+import net.optile.payment.localization.MultiLocalizationHolder;
+import net.optile.payment.model.AccountRegistration;
+import net.optile.payment.model.ApplicableNetwork;
+import net.optile.payment.model.ListResult;
+import net.optile.payment.model.Networks;
+import net.optile.payment.model.PresetAccount;
+import net.optile.payment.network.ListConnection;
+import net.optile.payment.network.LocalizationConnection;
+import net.optile.payment.resource.PaymentGroup;
+import net.optile.payment.resource.ResourceLoader;
+import net.optile.payment.ui.PaymentUI;
+import net.optile.payment.ui.model.AccountCard;
+import net.optile.payment.ui.model.NetworkCard;
+import net.optile.payment.ui.model.PaymentNetwork;
+import net.optile.payment.ui.model.PaymentSession;
+import net.optile.payment.ui.model.PresetCard;
+import net.optile.payment.validation.Validator;
+
+/**
+ * The LocalizationService providing asynchronize loading of the localizations needed for presenting the list of payment networks and showing errors.
+ * This service makes callbacks in the listener to notify of request completions.
+ */
+public final class LocalizationService {
+    private final LocalizationConnection connection;
+    private LocalizationListener listener;
+    private WorkerTask<Localization> task;
+
+    /** Memory cache of localizations */
+    private static LocalizationCache cache = new LocalizationCache();
+    
+    /**
+     * Create a new PaymentSessionService, this service is used to load the PaymentSession.
+     */
+    public LocalizationService() {
+        this.connection = new LocalizationConnection();
+    }
+
+    /**
+     * Set the localization listener which will be informed about the state of the localizations being loaded.
+     *
+     * @param listener to be informed about the localizations being loaded
+     */
+    public void setListener(LocalizationListener listener) {
+        this.listener = listener;
+    }
+
+    /**
+     * Stop and unsubscribe from tasks that are currently active in this service.
+     */
+    public void stop() {
+        if (task != null) {
+            task.unsubscribe();
+            task = null;
+        }
+    }
+
+    /**
+     * Check if this service is currently active, i.e. is loading the localization files.
+     *
+     * @return true when active, false otherwise
+     */
+    public boolean isActive() {
+        return task != null && task.isSubscribed();
+    }
+
+    /**
+     * Load all localizations for the payment session
+     *
+     * @param context needed to load the local localization store
+     * @param localization in which the localization files should be stored
+     * @param session the payment session containing networks for which localization should be loaded
+     */
+    public void loadLocalizations(final Context context, final Localization localization, final PaymentSession session) {
+        if (task != null) {
+            throw new IllegalStateException("Already loading localization files, stop first");
+        }
+        task = WorkerTask.fromCallable(new Callable<Localization>() {
+            @Override
+            public Localization call() throws PaymentException {
+                return asyncLoadLocalizations(context, localization, session);
+            }
+        });
+        task.subscribe(new WorkerSubscriber<Localization>() {
+            @Override
+            public void onSuccess(Localization loc) {
+                task = null;
+                if (listener != null) {
+                    listener.onLocalizationSuccess();
+                }
+            }
+            @Override
+            public void onError(Throwable cause) {
+                task = null;
+                if (listener != null) {
+                    listener.onLocalizationError(cause);
+                }
+            }
+        });
+        Workers.getInstance().forNetworkTasks().execute(task);
+    }
+
+    /** 
+     * Create a LocalizationHolder containing the local fallback translations
+     * 
+     * @param context from which the local strings will be taken
+     */
+    public static LocalizationHolder createLocalLocalization(Context context) {
+        Map<String, String> map = new HashMap<>();
+        map.put(BUTTON_CANCEL, context.getString(R.string.pmlocal_button_cancel));
+        map.put(BUTTON_RETRY, context.getString(R.string.pmlocal_button_retry));
+        map.put(BUTTON_UPDATE, context.getString(R.string.pmlocal_button_update));
+        map.put(LIST_TITLE, context.getString(R.string.pmlocal_list_title));
+        map.put(LIST_HEADER_NETWORKS, context.getString(R.string.pmlocal_list_header_networks));
+        map.put(CHARGE_TITLE, context.getString(R.string.pmlocal_charge_title));
+        map.put(CHARGE_TEXT, context.getString(R.string.pmlocal_charge_text));
+        map.put(CHARGE_INTERRUPTED, context.getString(R.string.pmlocal_charge_interrupted));
+        map.put(ERROR_CONNECTION, context.getString(R.string.pmlocal_error_connection));
+        map.put(ERROR_DEFAULT, context.getString(R.string.pmlocal_error_default));
+        return new MapLocalizationHolder(map);
+    }
+    
+    private Localization asyncLoadLocalizations(Context context, Localization localization, PaymentSession session) throws PaymentException {
+        String listUrl = session.getListUrl();
+        if (!listUrl.equals(cache.getCacheId())) {
+            cache.clear();
+            cache.setCacheId(listUrl);
+        }
+        List<PaymentNetwork> networks = session.getPaymentNetworks();
+        if (networks.size() == 0) {
+            return localization;
+        }
+        LocalizationHolder shared = loadSharedLocalization(context, networks.get(0));
+        Map<String, LocalizationHolder> holders = loadNetworkLocalizations(networks, shared);
+        localization.setLocalizations(shared, holders);
+        return localization;
+    }
+
+    private Map<String, LocalizationHolder> loadNetworkLocalizations(List<PaymentNetwork> networks, LocalizationHolder fallback) throws PaymentException {
+        Map<String, LocalizationHolder> map = new HashMap<>();
+        
+        for (PaymentNetwork network : networks) {
+            URL url = getNetworkLanguageUrl(network);
+            String langUrl = url.toString();
+            String code = network.getCode();
+            LocalizationHolder holder = cache.get(langUrl);
+
+            if (holder == null) {
+                holder = new MultiLocalizationHolder(connection.loadLocalization(url), fallback);
+                cache.put(langUrl, holder);
+            }
+            map.put(code, holder);
+        }
+        return map;
+    }
+
+    private LocalizationHolder loadSharedLocalization(Context context, PaymentNetwork network) throws PaymentException {
+        try {
+            URL url = getNetworkLanguageUrl(network);
+            String sharedUrl = url.toString();
+            int index = sharedUrl.lastIndexOf('/');
+
+            if (index < 0 || !sharedUrl.endsWith(".properties")) {
+                throw new PaymentException("Invalid URL for creating shared language URL");
+            }
+            sharedUrl = sharedUrl.substring(0, index) + "/paymentpage.properties";
+
+            LocalizationHolder holder = cache.get(sharedUrl);
+            if (holder == null) {
+                holder = new MultiLocalizationHolder(connection.loadLocalization(new URL(sharedUrl)), createLocalLocalization(context));
+                cache.put(sharedUrl, holder);
+            }
+            return holder;
+        } catch (MalformedURLException e) {
+            throw new PaymentException("Malformed paymentpage language URL", e);
+        }
+    }
+
+    private URL getNetworkLanguageUrl(PaymentNetwork network) throws PaymentException {
+        URL url = network.getLink("lang");
+        if (url == null) {
+            throw new PaymentException("Missing 'lang' url in PaymentNetwork: " + network.getCode());
+        }
+        return url;
+    }
+}

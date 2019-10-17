@@ -217,7 +217,7 @@ public final class PaymentUI {
         if (intent == null) {
             throw new IllegalArgumentException("intent may not be null");
         }
-        initLocalTranslations(activity);
+        initLocalization(activity);
 
         if (theme == null) {
             setPaymentTheme(PaymentTheme.createDefault());
@@ -232,13 +232,9 @@ public final class PaymentUI {
         activity.startActivityForResult(intent, requestCode);
     }
 
-    private void initLocalTranslations(Activity activity) {
-        Localization localization = Localization.getInstance();
-        if (!localization.hasLocalTranslations()) {
-            LocalTranslations trans = new LocalTranslations();
-            trans.load(activity);
-            localization.setLocalTranslations(trans);
-        }
+    private void initLocalization(Activity activity) {
+        Localization loc = Localization.getInstance();
+        loc.setLocalizations(LocalizationService.createLocalLocalization(activity), null);
     }
 
     private static class InstanceHolder {

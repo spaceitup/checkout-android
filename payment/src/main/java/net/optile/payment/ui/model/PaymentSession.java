@@ -61,6 +61,14 @@ public final class PaymentSession {
         return networks;
     }
 
+    public List<PaymentNetwork> getPaymentNetworks() {
+        List<PaymentNetwork> networks = new ArrayList<>();
+        for (NetworkCard card : networks) {
+            networks.addAll(card.getPaymentNetworks());
+        }
+        return networks;
+    }
+    
     public Validator getValidator() {
         return validator;
     }
@@ -70,6 +78,11 @@ public final class PaymentSession {
         return links != null ? links.get(name) : null;
     }
 
+    public String getListUrl() {
+        URL url = getLink("self");
+        return url != null ? url.toString() : null;
+    }
+    
     public boolean isListUrl(String listUrl) {
         URL url = getLink("self");
         return url != null && url.toString().equals(listUrl);
