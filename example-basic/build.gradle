@@ -40,9 +40,10 @@ dependencies {
     implementation "com.google.android.material:material:${rootProject.androidMaterialVersion}"
     implementation project(":payment")
 
-    testImplementation "junit:junit:${rootProject.junitVersion}"
+    testImplementation "androidx.test.ext:junit:${rootProject.androidxTestJunitVersion}"
     testImplementation "org.hamcrest:hamcrest-library:${rootProject.harmcrestVersion}"
 
+    androidTestImplementation "androidx.test.ext:junit:${rootProject.androidxTestJunitVersion}"
     androidTestImplementation "androidx.test:runner:${rootProject.androidxTestRunnerVersion}"
     androidTestImplementation "androidx.test:rules:${rootProject.androidxTestRulesVersion}"
     androidTestImplementation "androidx.test.espresso:espresso-core:${rootProject.androidxTestEspressoVersion}"

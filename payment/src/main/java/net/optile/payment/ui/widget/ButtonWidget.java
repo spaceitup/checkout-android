@@ -11,7 +11,7 @@ package net.optile.payment.ui.widget;
 import android.view.View;
 import android.widget.Button;
 import net.optile.payment.R;
-import net.optile.payment.ui.theme.PaymentTheme;
+import net.optile.payment.ui.PaymentTheme;
 
 /**
  * Widget for showing the Submit (pay) button

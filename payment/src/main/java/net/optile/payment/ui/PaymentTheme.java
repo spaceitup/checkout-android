@@ -6,7 +6,7 @@
  * See the LICENSE file for more information.
  */
 
-package net.optile.payment.ui.theme;
+package net.optile.payment.ui;
 
 import java.util.HashMap;
 import java.util.Map;
