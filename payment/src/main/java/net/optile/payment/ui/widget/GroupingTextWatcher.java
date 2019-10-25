@@ -7,27 +7,48 @@ import android.text.Editable;
 import android.text.TextWatcher;
 import android.widget.EditText;
 
-public class IBANTextWatcher implements TextWatcher {
+/**
+ * Class for separating 4 digits with a space
+ */
+public class GroupingTextWatcher implements TextWatcher {
 
-    // means divider position is every 5th symbol
-    private static final int DIVIDER_MODULO = 5;
-    private static final int GROUP_SIZE = DIVIDER_MODULO - 1;
     private static final char DIVIDER = ' ';
     private static final String STRING_DIVIDER = " ";
-    private String previousText = "";
 
+    private final EditText editText;
+    private final int groupSize;
+    private final int dividerModulo;
+    private final String inputRegex;
+    private final Pattern inputPattern;
+    
+    private String previousText = "";
     private int deleteLength;
     private int insertLength;
     private int start;
-    private final EditText editText;
 
-    private String regexIBAN = "(\\w{" + GROUP_SIZE + "}" + DIVIDER + ")*\\w{1," + GROUP_SIZE + "}";
-    private Pattern patternIBAN = Pattern.compile(regexIBAN);
-
-    public IBANTextWatcher(EditText editText) {
+    /** 
+     * Construct a new GroupingTextWatcher for the given editText
+     * 
+     * @param groupSize the size of grouped characters
+     * @param editText for which this class is manipulating the input
+     */
+    public GroupingTextWatcher(int groupSize, EditText editText) {
+        if (groupSize <= 0) {
+            throw new IllegalArgumentException("groupSize must be equal or greater than 1");
+        }
+        if (editText == null) {
+            throw new IllegalArgumentException("editText must not be null");
+        }
         this.editText = editText;
+        this.groupSize = groupSize;
+        this.dividerModulo = groupSize + 1;
+        this.inputRegex = "(\\w{" + groupSize + "}" + DIVIDER + ")*\\w{1," + groupSize + "}";
+        this.inputPattern = Pattern.compile(inputRegex);
     }
-    
+
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void beforeTextChanged(final CharSequence s, final int start, final int count, final int after) {
         this.previousText = s.toString();
@@ -36,22 +57,25 @@ public class IBANTextWatcher implements TextWatcher {
         this.start = start;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void onTextChanged(final CharSequence s, final int start, final int before, final int count) {
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void afterTextChanged(final Editable s) {
         String originalString = s.toString();
 
-        if (!previousText.equals(originalString) &&
-                !isInputCorrect(originalString)) {
+        if (!previousText.equals(originalString) && !isInputCorrect(originalString)) {
             String newString = previousText.substring(0, start);
             int cursor = start;
 
-            if (deleteLength > 0 && s.length() > 0 &&
-                    (previousText.charAt(start) == DIVIDER ||
-                            start == s.length())) {
+            if (deleteLength > 0 && s.length() > 0 && (previousText.charAt(start) == DIVIDER || start == s.length())) {
                 newString = previousText.substring(0, start - 1);
                 --cursor;
             }
@@ -61,7 +85,6 @@ public class IBANTextWatcher implements TextWatcher {
                 newString = buildCorrectInput(newString);
                 cursor = newString.length();
             }
-
             newString += previousText.substring(start + deleteLength);
             s.replace(0, s.length(), buildCorrectInput(newString));
 
@@ -74,31 +97,30 @@ public class IBANTextWatcher implements TextWatcher {
      * if we have the String "123456789" and there should exist a white space
      * every 4 characters then the correct String should be "1234 5678 9".
      *
-     * @param s String to be evaluated
-     * @return true if string s is written correctly
+     * @param input String to be evaluated
+     * @return true if string input is written correctly
      */
-    private boolean isInputCorrect(String s) {
-        Matcher matcherDot = patternIBAN.matcher(s);
+    private boolean isInputCorrect(String input) {
+        Matcher matcherDot = inputPattern.matcher(input);
         return matcherDot.matches();
     }
 
     /**
      * Puts the white spaces in the correct positions,
-     * see the example in {@link IBANTextWatcher#isInputCorrect(String)}
+     * see the example in {@link GroupingTextWatcher#isInputCorrect(String)}
      * to understand the correct positions.
      *
-     * @param s String to be corrected.
+     * @param input String to be corrected.
      * @return String corrected.
      */
-    private String buildCorrectInput(String s) {
+    private String buildCorrectInput(String input) {
         StringBuilder sbs = new StringBuilder(
-                s.replaceAll(STRING_DIVIDER, ""));
+            input.replaceAll(STRING_DIVIDER, ""));
 
         // Insert the divider in the correct positions
-        for (int i = GROUP_SIZE; i < sbs.length(); i += DIVIDER_MODULO) {
+        for (int i = groupSize; i < sbs.length(); i += dividerModulo) {
             sbs.insert(i, DIVIDER);
         }
-
         return sbs.toString();
     }
 }

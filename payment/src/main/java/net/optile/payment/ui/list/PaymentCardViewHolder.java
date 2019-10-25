@@ -21,6 +21,7 @@ import java.util.Map;
 import android.animation.ObjectAnimator;
 import android.content.Context;
 import android.content.res.Resources;
+import android.text.InputType;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -29,33 +30,43 @@ import android.widget.LinearLayout.LayoutParams;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
-import androidx.fragment.app.DialogFragment;
 import androidx.recyclerview.widget.RecyclerView;
 import net.optile.payment.R;
 import net.optile.payment.core.PaymentInputType;
 import net.optile.payment.localization.Localization;
 import net.optile.payment.model.AccountMask;
 import net.optile.payment.model.InputElement;
+import net.optile.payment.model.InputElementType;
 import net.optile.payment.model.PaymentMethod;
 import net.optile.payment.ui.model.PaymentCard;
 import net.optile.payment.ui.PaymentTheme;
 import net.optile.payment.ui.widget.ButtonWidget;
 import net.optile.payment.ui.widget.DateWidget;
 import net.optile.payment.ui.widget.FormWidget;
+import net.optile.payment.ui.widget.InputLayoutWidget;
 import net.optile.payment.ui.widget.LabelWidget;
 import net.optile.payment.ui.widget.SelectWidget;
 import net.optile.payment.ui.widget.TextInputWidget;
 import net.optile.payment.ui.widget.WidgetInflater;
 import net.optile.payment.ui.widget.WidgetPresenter;
+import net.optile.payment.ui.widget.mode.AccountNumberInputMode;
+import net.optile.payment.ui.widget.mode.ElementInputMode;
+import net.optile.payment.ui.widget.mode.IBANInputMode;
+import net.optile.payment.ui.widget.mode.TextInputMode;
+import net.optile.payment.ui.widget.mode.VerificationCodeInputMode;
 import net.optile.payment.util.ImageHelper;
 import net.optile.payment.util.PaymentUtils;
-import net.optile.payment.validation.ValidationResult;
 
 /**
  * The PaymentCardViewHolder holding the header and input widgets
  */
 public abstract class PaymentCardViewHolder extends RecyclerView.ViewHolder {
 
+    public final static String DIGITS_NUMERIC = "0123456789 ";
+    public final static String DIGITS_INTEGER = "0123456789";            
+    public final static String DIGITS_ALPHANUMERIC = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789 ";
+    public final static int TEXTINPUT_GROUPSIZE = 4;
+    
     final static String BUTTON_WIDGET = "buttonWidget";
     final static String LABEL_WIDGET = "labelWidget";
 
@@ -75,7 +86,7 @@ public abstract class PaymentCardViewHolder extends RecyclerView.ViewHolder {
     PaymentCardViewHolder(ListAdapter adapter, View parent) {
         super(parent);
         this.adapter = adapter;
-
+        this.presenter = new CardWidgetPresenter(this, adapter);
         this.formLayout = parent.findViewById(R.id.layout_form);
         this.widgets = new LinkedHashMap<>();
         this.logoLayout = parent.findViewById(R.id.tablelayout_logo);
@@ -88,43 +99,6 @@ public abstract class PaymentCardViewHolder extends RecyclerView.ViewHolder {
                 adapter.onItemClicked(getAdapterPosition());
             }
         });
-
-        this.presenter = new WidgetPresenter() {
-            @Override
-            public void onActionClicked() {
-                adapter.onActionClicked(getAdapterPosition());
-            }
-
-            @Override
-            public void onHintClicked(String type) {
-                adapter.onHintClicked(getAdapterPosition(), type);
-            }
-
-            @Override
-            public void hideKeyboard() {
-                adapter.hideKeyboard(getAdapterPosition());
-            }
-
-            @Override
-            public void showKeyboard() {
-                adapter.showKeyboard(getAdapterPosition());
-            }
-
-            @Override
-            public void showDialogFragment(DialogFragment dialog, String tag) {
-                adapter.showDialogFragment(getAdapterPosition(), dialog, tag);
-            }
-
-            @Override
-            public ValidationResult validate(String type, String value1, String value2) {
-                return adapter.validate(getAdapterPosition(), type, value1, value2);
-            }
-
-            @Override
-            public void onTextInputChanged(String type, String text) {
-                adapter.onTextInputChanged(getAdapterPosition(), type, text);
-            }
-        };
     }
 
     /**
@@ -282,7 +256,6 @@ public abstract class PaymentCardViewHolder extends RecyclerView.ViewHolder {
         }
     }
 
-
     void bindSelectWidget(SelectWidget widget, InputElement element) {
         bindIconResource(widget);
         widget.setLabel(element.getLabel());
@@ -291,13 +264,11 @@ public abstract class PaymentCardViewHolder extends RecyclerView.ViewHolder {
 
     void bindTextInputWidget(TextInputWidget widget, String code, InputElement element) {
         boolean visible = Localization.hasAccountHint(code, widget.getName());
-
-        bindIconResource(widget);
-        widget.setLabel(element.getLabel());
-        widget.setInputElementType(element.getType());
-        widget.setMaxLength(adapter.getMaxLength(code, element.getName()));
         widget.setHint(visible);
+        widget.setLabel(element.getLabel());
+        bindIconResource(widget);
         widget.setValidation();
+        widget.setTextInputMode(createTextInputMode(code, element));
     }
 
     void bindIconResource(FormWidget widget) {
@@ -350,6 +321,22 @@ public abstract class PaymentCardViewHolder extends RecyclerView.ViewHolder {
             if (widget != null && widget.setLastImeOptionsWidget()) {
                 break;
             }
+        }
+    }
+
+    private TextInputMode createTextInputMode(String code, InputElement element) {
+        String name = element.getName();
+        int maxLength = adapter.getMaxLength(code, name);
+        int groupSize = 4;
+        switch (name) {
+            case PaymentInputType.ACCOUNT_NUMBER:
+                return new AccountNumberInputMode(maxLength, groupSize);
+            case PaymentInputType.VERIFICATION_CODE:
+                return new VerificationCodeInputMode(maxLength, 0);
+            case PaymentInputType.IBAN:
+                return new IBANInputMode(maxLength, groupSize);
+            default:
+                return new ElementInputMode(maxLength, 0, element);
         }
     }
 }
