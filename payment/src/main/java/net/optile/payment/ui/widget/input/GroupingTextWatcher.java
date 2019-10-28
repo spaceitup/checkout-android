@@ -1,4 +1,4 @@
-package net.optile.payment.ui.widget;
+package net.optile.payment.ui.widget.input;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;

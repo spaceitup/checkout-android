@@ -6,7 +6,7 @@
  * See the LICENSE file for more information.
  */
 
-package net.optile.payment.ui.widget.mode;
+package net.optile.payment.ui.widget.input;
 
 import android.text.InputFilter;
 import android.text.Spanned;

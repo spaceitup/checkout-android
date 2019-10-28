@@ -6,10 +6,10 @@
  * See the LICENSE file for more information.
  */
 
-package net.optile.payment.ui.widget.mode;
+package net.optile.payment.ui.widget.input;
 
 import static android.text.InputType.TYPE_TEXT_VARIATION_PERSON_NAME;
-
+import static android.text.InputType.TYPE_TEXT_FLAG_CAP_WORDS;
 import com.google.android.material.textfield.TextInputEditText;
 
 import android.text.InputFilter;
@@ -36,6 +36,6 @@ public final class HolderNameInputMode extends TextInputMode {
         InputFilter[] filters = new InputFilter[1];
         filters[0] = new InputFilter.LengthFilter(maxLength);
         editText.setFilters(filters);
-        editText.setInputType(TYPE_TEXT_VARIATION_PERSON_NAME);
+        editText.setInputType(TYPE_TEXT_VARIATION_PERSON_NAME | TYPE_TEXT_FLAG_CAP_WORDS);
     }
 }

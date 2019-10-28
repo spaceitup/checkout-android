@@ -6,7 +6,7 @@
  * See the LICENSE file for more information.
  */
 
-package net.optile.payment.ui.widget.mode;
+package net.optile.payment.ui.widget.input;
 
 import net.optile.payment.core.PaymentInputType;
 import net.optile.payment.model.InputElement;

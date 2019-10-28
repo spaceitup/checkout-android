@@ -18,7 +18,7 @@ import android.widget.TextView;
 import net.optile.payment.core.PaymentException;
 import net.optile.payment.form.Operation;
 import net.optile.payment.ui.PaymentTheme;
-import net.optile.payment.ui.widget.mode.TextInputMode;
+import net.optile.payment.ui.widget.input.TextInputMode;
 import net.optile.payment.validation.ValidationResult;
 
 /**

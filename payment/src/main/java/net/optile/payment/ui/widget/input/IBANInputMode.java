@@ -6,13 +6,12 @@
  * See the LICENSE file for more information.
  */
 
-package net.optile.payment.ui.widget.mode;
+package net.optile.payment.ui.widget.input;
 
 import com.google.android.material.textfield.TextInputEditText;
 
 import android.text.InputFilter;
 import android.text.InputType;
-import net.optile.payment.ui.widget.GroupingTextWatcher;
 
 /**
  * InputMode for IBAN numbers

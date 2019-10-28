@@ -8,7 +8,7 @@
 
 package net.optile.payment.ui.list;
 
-import static net.optile.payment.localization.LocalizationKey.BUTTON_UPDATE;
+import static net.optile.payment.localization.LocalizationKey.BUTTON_OK;
 
 import java.net.URL;
 import java.util.ArrayList;
@@ -46,8 +46,8 @@ import net.optile.payment.ui.widget.SelectWidget;
 import net.optile.payment.ui.widget.TextInputWidget;
 import net.optile.payment.ui.widget.WidgetInflater;
 import net.optile.payment.ui.widget.WidgetPresenter;
-import net.optile.payment.ui.widget.mode.TextInputMode;
-import net.optile.payment.ui.widget.mode.TextInputModeFactory;
+import net.optile.payment.ui.widget.input.TextInputMode;
+import net.optile.payment.ui.widget.input.TextInputModeFactory;
 import net.optile.payment.util.ImageHelper;
 import net.optile.payment.util.PaymentUtils;
 
@@ -257,8 +257,9 @@ public abstract class PaymentCardViewHolder extends RecyclerView.ViewHolder {
     }
 
     void bindTextInputWidget(TextInputWidget widget, String code, InputElement element) {
+        String name = element.getName();
         boolean visible = Localization.hasAccountHint(code, widget.getName());
-        int maxLength = adapter.getMaxLength(code, element.getName());
+        int maxLength = adapter.getMaxLength(code, name);
         TextInputMode mode = TextInputModeFactory.createMode(maxLength, GROUPSIZE, element);
 
         bindIconResource(widget);
@@ -266,6 +267,10 @@ public abstract class PaymentCardViewHolder extends RecyclerView.ViewHolder {
         widget.setLabel(element.getLabel());
         widget.setValidation();
         widget.setTextInputMode(mode);
+
+        if (PaymentInputType.VERIFICATION_CODE.equals(name)) {
+            widget.setReducedView();
+        }
     }
 
     void bindIconResource(FormWidget widget) {
@@ -286,7 +291,8 @@ public abstract class PaymentCardViewHolder extends RecyclerView.ViewHolder {
         widget.setYearInputElement(card.getInputElement(PaymentInputType.EXPIRY_YEAR));
 
         widget.setLabel(Localization.translateAccountLabel(code, name));
-        widget.setDialogButtonLabel(Localization.translate(code, BUTTON_UPDATE));
+        widget.setDialogButtonLabel(Localization.translate(code, BUTTON_OK));
+        widget.setReducedView();
     }
 
     void bindButtonWidget(PaymentCard card) {

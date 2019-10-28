@@ -19,5 +19,6 @@
     <string name="pmlocal_button_cancel">Cancel</string>
     <string name="pmlocal_button_retry">Retry</string>
     <string name="pmlocal_button_update">Update</string>
+    <string name="pmlocal_button_ok">OK</string>    
 
 </resources>
