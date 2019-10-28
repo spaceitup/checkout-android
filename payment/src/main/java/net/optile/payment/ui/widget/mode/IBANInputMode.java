@@ -19,10 +19,10 @@ import net.optile.payment.ui.widget.GroupingTextWatcher;
  */
 public final class IBANInputMode extends TextInputMode {
 
-    /** 
-     * Construct an IBANInputMode 
+    /**
+     * Construct an IBANInputMode
      *
-     * @param maxLength maximum length of the input field 
+     * @param maxLength maximum length of the input field
      * @param groupSize size of the groups
      */
     public IBANInputMode(int maxLength, int groupSize) {
@@ -36,7 +36,7 @@ public final class IBANInputMode extends TextInputMode {
     public String normalize(String value) {
         return value != null ? value.replaceAll("\\s", "") : null;
     }
-    
+
     /**
      * {@inheritDoc}
      */

@@ -21,7 +21,6 @@ import java.util.Map;
 import android.animation.ObjectAnimator;
 import android.content.Context;
 import android.content.res.Resources;
-import android.text.InputType;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -36,27 +35,19 @@ import net.optile.payment.core.PaymentInputType;
 import net.optile.payment.localization.Localization;
 import net.optile.payment.model.AccountMask;
 import net.optile.payment.model.InputElement;
-import net.optile.payment.model.InputElementType;
 import net.optile.payment.model.PaymentMethod;
-import net.optile.payment.ui.model.PaymentCard;
 import net.optile.payment.ui.PaymentTheme;
+import net.optile.payment.ui.model.PaymentCard;
 import net.optile.payment.ui.widget.ButtonWidget;
 import net.optile.payment.ui.widget.DateWidget;
 import net.optile.payment.ui.widget.FormWidget;
-import net.optile.payment.ui.widget.InputLayoutWidget;
 import net.optile.payment.ui.widget.LabelWidget;
 import net.optile.payment.ui.widget.SelectWidget;
 import net.optile.payment.ui.widget.TextInputWidget;
 import net.optile.payment.ui.widget.WidgetInflater;
 import net.optile.payment.ui.widget.WidgetPresenter;
-import net.optile.payment.ui.widget.mode.AccountNumberInputMode;
-import net.optile.payment.ui.widget.mode.BICInputMode;
-import net.optile.payment.ui.widget.mode.ElementInputMode;
-import net.optile.payment.ui.widget.mode.HolderNameInputMode;
-import net.optile.payment.ui.widget.mode.IBANInputMode;
 import net.optile.payment.ui.widget.mode.TextInputMode;
 import net.optile.payment.ui.widget.mode.TextInputModeFactory;
-import net.optile.payment.ui.widget.mode.VerificationCodeInputMode;
 import net.optile.payment.util.ImageHelper;
 import net.optile.payment.util.PaymentUtils;
 
@@ -66,10 +57,10 @@ import net.optile.payment.util.PaymentUtils;
 public abstract class PaymentCardViewHolder extends RecyclerView.ViewHolder {
 
     public final static String DIGITS_NUMERIC = "0123456789 ";
-    public final static String DIGITS_INTEGER = "0123456789";            
+    public final static String DIGITS_INTEGER = "0123456789";
     public final static String DIGITS_ALPHANUMERIC = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789 ";
     public final static int TEXTINPUT_GROUPSIZE = 4;
-    
+
     final static String BUTTON_WIDGET = "buttonWidget";
     final static String LABEL_WIDGET = "labelWidget";
     final static float ALPHA_SELECTED = 1f;

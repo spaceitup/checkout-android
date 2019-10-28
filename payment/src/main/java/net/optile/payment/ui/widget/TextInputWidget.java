@@ -9,7 +9,6 @@
 package net.optile.payment.ui.widget;
 
 import android.text.Editable;
-import android.text.InputType;
 import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.view.KeyEvent;
@@ -18,7 +17,6 @@ import android.view.inputmethod.EditorInfo;
 import android.widget.TextView;
 import net.optile.payment.core.PaymentException;
 import net.optile.payment.form.Operation;
-import net.optile.payment.model.InputElementType;
 import net.optile.payment.ui.PaymentTheme;
 import net.optile.payment.ui.widget.mode.TextInputMode;
 import net.optile.payment.validation.ValidationResult;
@@ -28,7 +26,7 @@ import net.optile.payment.validation.ValidationResult;
  */
 public final class TextInputWidget extends InputLayoutWidget {
     private TextInputMode mode;
-    
+
     /**
      * Construct a new TextInputWidget
      *
@@ -84,12 +82,12 @@ public final class TextInputWidget extends InputLayoutWidget {
         this.mode = mode;
         mode.apply(textInput);
     }
-    
+
     String getValue() {
         String val = super.getValue();
         return mode != null ? mode.normalize(val) : val;
     }
-    
+
     void handleOnFocusChange(boolean hasFocus) {
 
         if (hasFocus) {

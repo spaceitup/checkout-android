@@ -12,17 +12,16 @@ import com.google.android.material.textfield.TextInputEditText;
 
 import android.text.InputFilter;
 import android.text.InputType;
-import net.optile.payment.ui.widget.GroupingTextWatcher;
 
 /**
  * InputMode for BIC numbers
  */
 public final class BICInputMode extends TextInputMode {
 
-    /** 
+    /**
      * Construct an BICInputMode
      *
-     * @param maxLength maximum length of the input field 
+     * @param maxLength maximum length of the input field
      */
     public BICInputMode(int maxLength) {
         super(maxLength, 0);
@@ -35,7 +34,7 @@ public final class BICInputMode extends TextInputMode {
     public String normalize(String value) {
         return value != null ? value.replaceAll("\\s", "") : null;
     }
-    
+
     /**
      * {@inheritDoc}
      */

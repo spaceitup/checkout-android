@@ -20,15 +20,15 @@ public class GroupingTextWatcher implements TextWatcher {
     private final int dividerModulo;
     private final String inputRegex;
     private final Pattern inputPattern;
-    
+
     private String previousText = "";
     private int deleteLength;
     private int insertLength;
     private int start;
 
-    /** 
+    /**
      * Construct a new GroupingTextWatcher for the given editText
-     * 
+     *
      * @param groupSize the size of grouped characters
      * @param editText for which this class is manipulating the input
      */

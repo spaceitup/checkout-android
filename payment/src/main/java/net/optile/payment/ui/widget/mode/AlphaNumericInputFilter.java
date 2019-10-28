@@ -21,7 +21,7 @@ public final class AlphaNumericInputFilter implements InputFilter {
     public AlphaNumericInputFilter(boolean allowSpace) {
         this.allowSpace = allowSpace;
     }
-    
+
     /**
      * {@inheritDoc}
      */

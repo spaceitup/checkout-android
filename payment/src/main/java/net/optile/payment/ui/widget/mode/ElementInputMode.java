@@ -15,7 +15,6 @@ import android.text.InputType;
 import android.text.method.DigitsKeyListener;
 import net.optile.payment.model.InputElement;
 import net.optile.payment.model.InputElementType;
-import net.optile.payment.ui.widget.GroupingTextWatcher;
 
 /**
  * InputMode for InputElements received in the ListResult
@@ -24,9 +23,9 @@ public final class ElementInputMode extends TextInputMode {
 
     private final static String NUMERIC_DIGITS = "0123456789- ";
     private final InputElement element;
-    
-    /** 
-     * Construct an ElementInputMode 
+
+    /**
+     * Construct an ElementInputMode
      *
      * @param maxLength maximum length of the input
      * @param element containing the type of the input
@@ -46,7 +45,7 @@ public final class ElementInputMode extends TextInputMode {
         }
         return value;
     }
-    
+
     /**
      * {@inheritDoc}
      */
@@ -57,15 +56,15 @@ public final class ElementInputMode extends TextInputMode {
         editText.setFilters(filters);
 
         switch (element.getType()) {
-        case InputElementType.NUMERIC:
-            editText.setInputType(InputType.TYPE_CLASS_NUMBER);
-            editText.setKeyListener(DigitsKeyListener.getInstance(NUMERIC_DIGITS));
-            break;
-        case InputElementType.INTEGER:
-            editText.setInputType(InputType.TYPE_CLASS_NUMBER);
-            break;
-        default:
-            editText.setInputType(InputType.TYPE_CLASS_TEXT);
+            case InputElementType.NUMERIC:
+                editText.setInputType(InputType.TYPE_CLASS_NUMBER);
+                editText.setKeyListener(DigitsKeyListener.getInstance(NUMERIC_DIGITS));
+                break;
+            case InputElementType.INTEGER:
+                editText.setInputType(InputType.TYPE_CLASS_NUMBER);
+                break;
+            default:
+                editText.setInputType(InputType.TYPE_CLASS_TEXT);
         }
     }
 }

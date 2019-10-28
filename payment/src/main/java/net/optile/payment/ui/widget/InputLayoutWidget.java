@@ -11,15 +11,12 @@ package net.optile.payment.ui.widget;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
 
-import android.text.InputFilter;
 import android.text.TextUtils;
-import android.text.method.DigitsKeyListener;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import net.optile.payment.R;
-import net.optile.payment.core.PaymentInputType;
 import net.optile.payment.ui.PaymentTheme;
 import net.optile.payment.util.PaymentUtils;
 import net.optile.payment.validation.ValidationResult;
@@ -36,7 +33,7 @@ public abstract class InputLayoutWidget extends FormWidget {
 
     final TextInputEditText textInput;
     final TextInputLayout textLayout;
-    
+
     final View hintLayout;
     final ImageView hintImage;
 
@@ -151,7 +148,7 @@ public abstract class InputLayoutWidget extends FormWidget {
         textLayout.setError(message);
     }
 
-    
+
     private void setReducedWidth(View view, float weight) {
         LinearLayout.LayoutParams params = (LinearLayout.LayoutParams) view.getLayoutParams();
         params.weight = weight;

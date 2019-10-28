@@ -17,25 +17,26 @@ public abstract class TextInputMode {
 
     final int maxLength;
     final int groupSize;
-    
+
     TextInputMode(int maxLength, int groupSize) {
         this.maxLength = maxLength;
         this.groupSize = groupSize;
     }
 
-    /** 
+    /**
      * Normalize the value if needed for the given mode
-     * 
+     *
      * @param value to be normalized
-     * @return the normalized value 
+     * @return the normalized value
      */
     public String normalize(String value) {
         return value;
     }
 
-    /** 
+    /**
      * Get the maxLength when grouping is applied
-     * @return the maxLength for grouping 
+     *
+     * @return the maxLength for grouping
      */
     public int getMaxLengthForGrouping() {
         if (groupSize == 0 || maxLength == 0) {
@@ -44,8 +45,8 @@ public abstract class TextInputMode {
         return maxLength + (maxLength / groupSize);
     }
 
-    /** 
-     * Apply the mode to the TextInputEditText 
+    /**
+     * Apply the mode to the TextInputEditText
      *
      * @param editText to apply the mode to
      */

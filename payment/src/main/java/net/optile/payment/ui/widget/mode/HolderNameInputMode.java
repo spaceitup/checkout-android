@@ -13,16 +13,14 @@ import static android.text.InputType.TYPE_TEXT_VARIATION_PERSON_NAME;
 import com.google.android.material.textfield.TextInputEditText;
 
 import android.text.InputFilter;
-import android.text.method.DigitsKeyListener;
-import net.optile.payment.ui.widget.GroupingTextWatcher;
 
 /**
  * InputMode for holder names
  */
 public final class HolderNameInputMode extends TextInputMode {
 
-    /** 
-     * Construct an HolderNameInputMode 
+    /**
+     * Construct an HolderNameInputMode
      *
      * @param maxLength the maximum length of the holder name
      */

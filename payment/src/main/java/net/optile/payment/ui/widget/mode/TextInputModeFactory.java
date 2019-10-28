@@ -16,13 +16,13 @@ import net.optile.payment.model.InputElement;
  */
 public final class TextInputModeFactory {
 
-    /** 
+    /**
      * Create a TextInputMode for the given input element
-     * 
+     *
      * @param maxLength the maximum length of the input field
      * @param groupSize the size of character grouping if the mode supports grouping
      * @param element contains the name and type of the input element
-     * @return the TextInputMode for the given InputElement 
+     * @return the TextInputMode for the given InputElement
      */
     public static TextInputMode createMode(int maxLength, int groupSize, InputElement element) {
         switch (element.getName()) {

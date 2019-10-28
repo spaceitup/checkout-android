@@ -20,9 +20,9 @@ import net.optile.payment.ui.widget.GroupingTextWatcher;
 public final class AccountNumberInputMode extends TextInputMode {
 
     private final static String ACCOUNTNUMBER_DIGITS = "0123456789 ";
-    
-    /** 
-     * Construct an AccountNumberInputMode 
+
+    /**
+     * Construct an AccountNumberInputMode
      *
      * @param maxLength maximum length of the input field
      * @param groupSize size of the grouped digits
@@ -38,7 +38,7 @@ public final class AccountNumberInputMode extends TextInputMode {
     public String normalize(String value) {
         return value != null ? value.replaceAll("\\s", "") : null;
     }
-    
+
     /**
      * {@inheritDoc}
      */

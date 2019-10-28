@@ -18,10 +18,10 @@ import android.text.InputType;
  */
 public final class VerificationCodeInputMode extends TextInputMode {
 
-    /** 
-     * Construct an VerificationCodeInputMode 
+    /**
+     * Construct an VerificationCodeInputMode
      *
-     * @param maxLength maximum length of the input field 
+     * @param maxLength maximum length of the input field
      */
     public VerificationCodeInputMode(int maxLength) {
         super(maxLength, 0);
