@@ -8,22 +8,25 @@
 
 package net.optile.payment.ui.widget.mode;
 
+import static android.text.InputType.TYPE_TEXT_VARIATION_PERSON_NAME;
+
 import com.google.android.material.textfield.TextInputEditText;
 
 import android.text.InputFilter;
-import android.text.InputType;
+import android.text.method.DigitsKeyListener;
+import net.optile.payment.ui.widget.GroupingTextWatcher;
 
 /**
- * InputMode for VerificationCode numbers
+ * InputMode for holder names
  */
-public final class VerificationCodeInputMode extends TextInputMode {
+public final class HolderNameInputMode extends TextInputMode {
 
     /** 
-     * Construct an VerificationCodeInputMode 
+     * Construct an HolderNameInputMode 
      *
-     * @param maxLength maximum length of the input field 
+     * @param maxLength the maximum length of the holder name
      */
-    public VerificationCodeInputMode(int maxLength) {
+    public HolderNameInputMode(int maxLength) {
         super(maxLength, 0);
     }
 
@@ -35,6 +38,6 @@ public final class VerificationCodeInputMode extends TextInputMode {
         InputFilter[] filters = new InputFilter[1];
         filters[0] = new InputFilter.LengthFilter(maxLength);
         editText.setFilters(filters);
-        editText.setInputType(InputType.TYPE_CLASS_NUMBER);
+        editText.setInputType(TYPE_TEXT_VARIATION_PERSON_NAME);
     }
 }

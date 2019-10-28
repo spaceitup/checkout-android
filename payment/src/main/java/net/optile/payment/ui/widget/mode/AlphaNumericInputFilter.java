@@ -16,6 +16,12 @@ import android.text.Spanned;
  */
 public final class AlphaNumericInputFilter implements InputFilter {
 
+    private final boolean allowSpace;
+
+    public AlphaNumericInputFilter(boolean allowSpace) {
+        this.allowSpace = allowSpace;
+    }
+    
     /**
      * {@inheritDoc}
      */
@@ -25,7 +31,7 @@ public final class AlphaNumericInputFilter implements InputFilter {
         StringBuilder builder = new StringBuilder();
         for (int i = start; i < end; i++) {
             char c = source.charAt(i);
-            if (Character.isLetterOrDigit(c) || Character.isSpaceChar(c)) {
+            if (Character.isLetterOrDigit(c) || (allowSpace && Character.isSpaceChar(c))) {
                 builder.append(c);
             }
         }

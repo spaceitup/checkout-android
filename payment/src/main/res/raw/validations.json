@@ -181,7 +181,7 @@
         "items": [
             {
                 "type": "bic",
-                "hide": true
+                "hide": false
             }
         ]
     }

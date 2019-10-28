@@ -15,7 +15,6 @@ import com.google.android.material.textfield.TextInputEditText;
  */
 public abstract class TextInputMode {
 
-    public final static String NUMERIC_DIGITS = "0123456789 ";
     final int maxLength;
     final int groupSize;
     

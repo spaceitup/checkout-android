@@ -50,9 +50,12 @@ import net.optile.payment.ui.widget.TextInputWidget;
 import net.optile.payment.ui.widget.WidgetInflater;
 import net.optile.payment.ui.widget.WidgetPresenter;
 import net.optile.payment.ui.widget.mode.AccountNumberInputMode;
+import net.optile.payment.ui.widget.mode.BICInputMode;
 import net.optile.payment.ui.widget.mode.ElementInputMode;
+import net.optile.payment.ui.widget.mode.HolderNameInputMode;
 import net.optile.payment.ui.widget.mode.IBANInputMode;
 import net.optile.payment.ui.widget.mode.TextInputMode;
+import net.optile.payment.ui.widget.mode.TextInputModeFactory;
 import net.optile.payment.ui.widget.mode.VerificationCodeInputMode;
 import net.optile.payment.util.ImageHelper;
 import net.optile.payment.util.PaymentUtils;
@@ -69,12 +72,12 @@ public abstract class PaymentCardViewHolder extends RecyclerView.ViewHolder {
     
     final static String BUTTON_WIDGET = "buttonWidget";
     final static String LABEL_WIDGET = "labelWidget";
-
     final static float ALPHA_SELECTED = 1f;
     final static float ALPHA_DESELECTED = 0.4f;
     final static int ANIM_DURATION = 200;
     final static int COLUMN_SIZE_LANDSCAPE = 3;
     final static int COLUMN_SIZE_PORTRAIT = 2;
+    final static int GROUPSIZE = 4;
 
     final ViewGroup formLayout;
     final ListAdapter adapter;
@@ -264,11 +267,14 @@ public abstract class PaymentCardViewHolder extends RecyclerView.ViewHolder {
 
     void bindTextInputWidget(TextInputWidget widget, String code, InputElement element) {
         boolean visible = Localization.hasAccountHint(code, widget.getName());
+        int maxLength = adapter.getMaxLength(code, element.getName());
+        TextInputMode mode = TextInputModeFactory.createMode(maxLength, GROUPSIZE, element);
+
+        bindIconResource(widget);
         widget.setHint(visible);
         widget.setLabel(element.getLabel());
-        bindIconResource(widget);
         widget.setValidation();
-        widget.setTextInputMode(createTextInputMode(code, element));
+        widget.setTextInputMode(mode);
     }
 
     void bindIconResource(FormWidget widget) {
@@ -321,22 +327,6 @@ public abstract class PaymentCardViewHolder extends RecyclerView.ViewHolder {
             if (widget != null && widget.setLastImeOptionsWidget()) {
                 break;
             }
-        }
-    }
-
-    private TextInputMode createTextInputMode(String code, InputElement element) {
-        String name = element.getName();
-        int maxLength = adapter.getMaxLength(code, name);
-        int groupSize = 4;
-        switch (name) {
-            case PaymentInputType.ACCOUNT_NUMBER:
-                return new AccountNumberInputMode(maxLength, groupSize);
-            case PaymentInputType.VERIFICATION_CODE:
-                return new VerificationCodeInputMode(maxLength, 0);
-            case PaymentInputType.IBAN:
-                return new IBANInputMode(maxLength, groupSize);
-            default:
-                return new ElementInputMode(maxLength, 0, element);
         }
     }
 }

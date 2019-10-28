@@ -12,23 +12,26 @@ import com.google.android.material.textfield.TextInputEditText;
 
 import android.text.InputFilter;
 import android.text.InputType;
+import android.text.method.DigitsKeyListener;
 import net.optile.payment.model.InputElement;
+import net.optile.payment.model.InputElementType;
 import net.optile.payment.ui.widget.GroupingTextWatcher;
 
 /**
- * InputMode for Element numbers
+ * InputMode for InputElements received in the ListResult
  */
 public final class ElementInputMode extends TextInputMode {
 
+    private final static String NUMERIC_DIGITS = "0123456789- ";
     private final InputElement element;
     
     /** 
      * Construct an ElementInputMode 
      *
-     * @param maxLength 
-     * @param groupSize
+     * @param maxLength maximum length of the input
+     * @param element containing the type of the input
      */
-    public ElementInputMode(int maxLength, int groupSize, InputElement element) {
+    public ElementInputMode(int maxLength, InputElement element) {
         super(maxLength, 0);
         this.element = element;
     }
@@ -37,10 +40,32 @@ public final class ElementInputMode extends TextInputMode {
      * {@inheritDoc}
      */
     @Override
+    public String normalize(String value) {
+        if (value != null && element.getType().equals(InputElementType.NUMERIC)) {
+            return value.replaceAll("[\\s|-]", "");
+        }
+        return value;
+    }
+    
+    /**
+     * {@inheritDoc}
+     */
+    @Override
     public void apply(TextInputEditText editText) {
         InputFilter[] filters = new InputFilter[1];
         filters[0] = new InputFilter.LengthFilter(maxLength);
         editText.setFilters(filters);
-        editText.setInputType(InputType.TYPE_CLASS_TEXT);
+
+        switch (element.getType()) {
+        case InputElementType.NUMERIC:
+            editText.setInputType(InputType.TYPE_CLASS_NUMBER);
+            editText.setKeyListener(DigitsKeyListener.getInstance(NUMERIC_DIGITS));
+            break;
+        case InputElementType.INTEGER:
+            editText.setInputType(InputType.TYPE_CLASS_NUMBER);
+            break;
+        default:
+            editText.setInputType(InputType.TYPE_CLASS_TEXT);
+        }
     }
 }

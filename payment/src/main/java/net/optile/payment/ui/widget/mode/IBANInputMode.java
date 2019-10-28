@@ -22,8 +22,8 @@ public final class IBANInputMode extends TextInputMode {
     /** 
      * Construct an IBANInputMode 
      *
-     * @param maxLength 
-     * @param groupSize
+     * @param maxLength maximum length of the input field 
+     * @param groupSize size of the groups
      */
     public IBANInputMode(int maxLength, int groupSize) {
         super(maxLength, groupSize);
@@ -34,7 +34,7 @@ public final class IBANInputMode extends TextInputMode {
      */
     @Override
     public String normalize(String value) {
-        return value != null ? value.replaceAll("[\\s]", "") : null;
+        return value != null ? value.replaceAll("\\s", "") : null;
     }
     
     /**
@@ -42,11 +42,10 @@ public final class IBANInputMode extends TextInputMode {
      */
     @Override
     public void apply(TextInputEditText editText) {
-        int length = getMaxLengthForGrouping();
         InputFilter[] filters = new InputFilter[3];
-        filters[0] = new InputFilter.LengthFilter(length);
+        filters[0] = new InputFilter.LengthFilter(getMaxLengthForGrouping());
         filters[1] = new InputFilter.AllCaps();
-        filters[2] = new AlphaNumericInputFilter();
+        filters[2] = new AlphaNumericInputFilter(true);
         editText.setFilters(filters);
         editText.setInputType(InputType.TYPE_CLASS_TEXT);
 

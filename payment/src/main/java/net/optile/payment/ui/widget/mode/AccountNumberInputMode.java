@@ -19,11 +19,13 @@ import net.optile.payment.ui.widget.GroupingTextWatcher;
  */
 public final class AccountNumberInputMode extends TextInputMode {
 
+    private final static String ACCOUNTNUMBER_DIGITS = "0123456789 ";
+    
     /** 
      * Construct an AccountNumberInputMode 
      *
-     * @param maxLength 
-     * @param groupSize
+     * @param maxLength maximum length of the input field
+     * @param groupSize size of the grouped digits
      */
     public AccountNumberInputMode(int maxLength, int groupSize) {
         super(maxLength, groupSize);
@@ -34,7 +36,7 @@ public final class AccountNumberInputMode extends TextInputMode {
      */
     @Override
     public String normalize(String value) {
-        return value != null ? value.replaceAll("[\\s]", "") : null;
+        return value != null ? value.replaceAll("\\s", "") : null;
     }
     
     /**
@@ -42,11 +44,10 @@ public final class AccountNumberInputMode extends TextInputMode {
      */
     @Override
     public void apply(TextInputEditText editText) {
-        int length = getMaxLengthForGrouping();
         InputFilter[] filters = new InputFilter[1];
-        filters[0] = new InputFilter.LengthFilter(length);
+        filters[0] = new InputFilter.LengthFilter(getMaxLengthForGrouping());
         editText.setFilters(filters);
-        editText.setKeyListener(DigitsKeyListener.getInstance(NUMERIC_DIGITS));
+        editText.setKeyListener(DigitsKeyListener.getInstance(ACCOUNTNUMBER_DIGITS));
 
         if (groupSize > 0) {
             editText.addTextChangedListener(new GroupingTextWatcher(groupSize, editText));
