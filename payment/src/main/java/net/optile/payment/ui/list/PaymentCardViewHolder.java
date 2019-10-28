@@ -56,11 +56,6 @@ import net.optile.payment.util.PaymentUtils;
  */
 public abstract class PaymentCardViewHolder extends RecyclerView.ViewHolder {
 
-    public final static String DIGITS_NUMERIC = "0123456789 ";
-    public final static String DIGITS_INTEGER = "0123456789";
-    public final static String DIGITS_ALPHANUMERIC = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789 ";
-    public final static int TEXTINPUT_GROUPSIZE = 4;
-
     final static String BUTTON_WIDGET = "buttonWidget";
     final static String LABEL_WIDGET = "labelWidget";
     final static float ALPHA_SELECTED = 1f;
