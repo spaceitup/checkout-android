@@ -46,7 +46,7 @@ public final class IBANInputMode extends TextInputMode {
         filters[1] = new InputFilter.AllCaps();
         filters[2] = new AlphaNumericInputFilter(true);
         editText.setFilters(filters);
-        editText.setInputType(InputType.TYPE_CLASS_TEXT);
+        editText.setInputType(InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD);
 
         if (groupSize > 0) {
             editText.addTextChangedListener(new GroupingTextWatcher(groupSize, editText));

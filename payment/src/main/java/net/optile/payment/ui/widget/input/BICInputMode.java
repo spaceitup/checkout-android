@@ -45,6 +45,6 @@ public final class BICInputMode extends TextInputMode {
         filters[1] = new InputFilter.AllCaps();
         filters[2] = new AlphaNumericInputFilter(false);
         editText.setFilters(filters);
-        editText.setInputType(InputType.TYPE_CLASS_TEXT);
+        editText.setInputType(InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD);
     }
 }

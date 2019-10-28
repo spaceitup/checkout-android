@@ -11,6 +11,7 @@ package net.optile.payment.ui.widget.input;
 import com.google.android.material.textfield.TextInputEditText;
 
 import android.text.InputFilter;
+import android.text.InputType;
 import android.text.method.DigitsKeyListener;
 
 /**
@@ -46,6 +47,7 @@ public final class AccountNumberInputMode extends TextInputMode {
         InputFilter[] filters = new InputFilter[1];
         filters[0] = new InputFilter.LengthFilter(getMaxLengthForGrouping());
         editText.setFilters(filters);
+        editText.setInputType(InputType.TYPE_CLASS_NUMBER);
         editText.setKeyListener(DigitsKeyListener.getInstance(ACCOUNTNUMBER_DIGITS));
 
         if (groupSize > 0) {
