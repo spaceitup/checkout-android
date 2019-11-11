@@ -1,6 +1,12 @@
 Changelog - Android SDK
 -----------------------
 
+**Version android-sdk-2.1.3**
+
+* [PCX-201] - Write Mastercard[credit cards] UI Test for Android SDK
+* [PCX-429] - Account number digit-grouping on Android SDK
+* [PCX-491] - Change the default error message to match Payment Page Widget
+
 **Version android-sdk-2.1.2**
 
 * [PCX-492] - Move PaymentTheme class to same level as other public UI classes, this is a breaking change if using the PaymentTheme class.
