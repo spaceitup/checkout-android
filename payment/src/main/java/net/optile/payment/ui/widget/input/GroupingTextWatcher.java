@@ -88,7 +88,9 @@ public class GroupingTextWatcher implements TextWatcher {
             newString += previousText.substring(start + deleteLength);
             s.replace(0, s.length(), buildCorrectInput(newString));
 
-            editText.setSelection(cursor);
+            if (cursor >= 0 && cursor < editText.length()) {
+                editText.setSelection(cursor);
+            }
         }
     }
 

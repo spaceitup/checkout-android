@@ -8,8 +8,9 @@
 
 package net.optile.payment.ui.widget.input;
 
-import static android.text.InputType.TYPE_TEXT_VARIATION_PERSON_NAME;
 import static android.text.InputType.TYPE_TEXT_FLAG_CAP_WORDS;
+import static android.text.InputType.TYPE_TEXT_VARIATION_PERSON_NAME;
+
 import com.google.android.material.textfield.TextInputEditText;
 
 import android.text.InputFilter;
