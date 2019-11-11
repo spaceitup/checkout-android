@@ -1,6 +1,10 @@
 Changelog - Android SDK
 -----------------------
 
+**Version android-sdk-2.1.2**
+
+* [PCX-492] - Move PaymentTheme class to same level as other public UI classes, this is a breaking change if using the PaymentTheme class.
+
 **Version android-sdk-2.0.1**
 
 * [PCX-479] - Remove gradle properties dependency from build scripts

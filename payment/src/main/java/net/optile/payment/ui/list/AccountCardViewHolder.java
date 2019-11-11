@@ -15,9 +15,9 @@ import android.widget.TextView;
 import androidx.recyclerview.widget.RecyclerView.ViewHolder;
 import net.optile.payment.R;
 import net.optile.payment.model.AccountMask;
+import net.optile.payment.ui.PaymentTheme;
 import net.optile.payment.ui.model.AccountCard;
 import net.optile.payment.ui.model.PaymentCard;
-import net.optile.payment.ui.PaymentTheme;
 import net.optile.payment.util.PaymentUtils;
 
 /**

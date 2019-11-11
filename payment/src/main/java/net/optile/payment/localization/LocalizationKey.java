@@ -20,6 +20,7 @@ public final class LocalizationKey {
     public final static String ALLOW_RECURRENCE = "allowRecurrenceLabel";
     public final static String NETWORK_LABEL = "network.label";
 
+    public final static String BUTTON_OK = "button.ok.label";    
     public final static String BUTTON_BACK = "button.back.label";
     public final static String BUTTON_CANCEL = "pmlocal.button.cancel";
     public final static String BUTTON_UPDATE = "pmlocal.button.update";

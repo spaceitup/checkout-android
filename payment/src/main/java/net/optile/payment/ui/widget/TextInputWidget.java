@@ -9,7 +9,6 @@
 package net.optile.payment.ui.widget;
 
 import android.text.Editable;
-import android.text.InputType;
 import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.view.KeyEvent;
@@ -18,16 +17,15 @@ import android.view.inputmethod.EditorInfo;
 import android.widget.TextView;
 import net.optile.payment.core.PaymentException;
 import net.optile.payment.form.Operation;
-import net.optile.payment.model.InputElementType;
 import net.optile.payment.ui.PaymentTheme;
+import net.optile.payment.ui.widget.input.TextInputMode;
 import net.optile.payment.validation.ValidationResult;
 
 /**
  * Widget for handling text input
  */
 public final class TextInputWidget extends InputLayoutWidget {
-
-    private final static String NUMERIC_DIGITS = "0123456789 -";
+    private TextInputMode mode;
 
     /**
      * Construct a new TextInputWidget
@@ -49,7 +47,7 @@ public final class TextInputWidget extends InputLayoutWidget {
         });
         textInput.addTextChangedListener(new TextWatcher() {
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-                presenter.onTextInputChanged(name, getNormalizedValue());
+                presenter.onTextInputChanged(name, getValue());
             }
 
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -65,7 +63,7 @@ public final class TextInputWidget extends InputLayoutWidget {
      */
     @Override
     public boolean validate() {
-        ValidationResult result = presenter.validate(name, getNormalizedValue(), null);
+        ValidationResult result = presenter.validate(name, getValue(), null);
         return setValidationResult(result);
     }
 
@@ -74,30 +72,27 @@ public final class TextInputWidget extends InputLayoutWidget {
      */
     @Override
     public void putValue(Operation operation) throws PaymentException {
-        String val = getNormalizedValue();
-
+        String val = getValue();
         if (!TextUtils.isEmpty(val)) {
             operation.putValue(name, val);
         }
     }
 
-    public void setInputElementType(String type) {
+    public void setTextInputMode(TextInputMode mode) {
+        this.mode = mode;
+        mode.apply(textInput);
+    }
 
-        switch (type) {
-            case InputElementType.NUMERIC:
-                setTextInputType(InputType.TYPE_CLASS_NUMBER, NUMERIC_DIGITS);
-                break;
-            case InputElementType.INTEGER:
-                setTextInputType(InputType.TYPE_CLASS_NUMBER, null);
-                setReducedView();
-        }
+    String getValue() {
+        String val = super.getValue();
+        return mode != null ? mode.normalize(val) : val;
     }
 
     void handleOnFocusChange(boolean hasFocus) {
 
         if (hasFocus) {
             setInputLayoutState(VALIDATION_UNKNOWN, false, null);
-        } else if (state == VALIDATION_UNKNOWN && !TextUtils.isEmpty(getNormalizedValue())) {
+        } else if (state == VALIDATION_UNKNOWN && !TextUtils.isEmpty(getValue())) {
             validate();
         }
     }

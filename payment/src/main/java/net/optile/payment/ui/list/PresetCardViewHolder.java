@@ -18,9 +18,9 @@ import androidx.recyclerview.widget.RecyclerView;
 import net.optile.payment.R;
 import net.optile.payment.localization.Localization;
 import net.optile.payment.model.AccountMask;
+import net.optile.payment.ui.PaymentTheme;
 import net.optile.payment.ui.model.PaymentCard;
 import net.optile.payment.ui.model.PresetCard;
-import net.optile.payment.ui.PaymentTheme;
 import net.optile.payment.util.PaymentUtils;
 
 /**

@@ -29,6 +29,8 @@ android {
         versionCode rootProject.versionCode
         versionName rootProject.versionName
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        resValue "string", "paymentapi_auth", "$System.env.ANDROIDSDK_PAYMENTAPI_AUTH"
+        resValue "string", "paymentapi_url", "$System.env.ANDROIDSDK_PAYMENTAPI_URL"
     }
 
     buildTypes {
@@ -43,6 +45,13 @@ android {
             }
         }
     }
+
+    sourceSets {
+        androidTest {
+            java.srcDirs += '../payment/src/sharedTest/java'
+            res.srcDirs += '../payment/src/sharedTest/res'
+        }
+    }
 }
 
 dependencies {
@@ -52,15 +61,19 @@ dependencies {
     implementation("com.github.bumptech.glide:glide:${rootProject.bumptechGlideVersion}") {
         exclude group: "com.android.support"
     }
-
     testImplementation "io.github.json-snapshot:json-snapshot:${rootProject.jsonsnapshotVersion}"
-    testImplementation "junit:junit:${rootProject.junitVersion}"
     testImplementation "org.mockito:mockito-core:${rootProject.mockitoCoreVersion}"
     testImplementation "org.robolectric:robolectric:${rootProject.robolectricVersion}"
     testImplementation "androidx.test:core:${rootProject.androidxTestCoreVersion}"
+    testImplementation "androidx.test.ext:junit:${rootProject.androidxTestJunitVersion}"
+    testImplementation "org.hamcrest:hamcrest-library:${rootProject.harmcrestVersion}"
 
-    androidTestImplementation "androidx.test:runner:$rootProject.androidxTestRunnerVersion"
+    androidTestImplementation "androidx.test.ext:junit:${rootProject.androidxTestJunitVersion}"
+    androidTestImplementation "androidx.test:runner:${rootProject.androidxTestRunnerVersion}"
+    androidTestImplementation "androidx.test:rules:${rootProject.androidxTestRulesVersion}"
     androidTestImplementation "androidx.test.espresso:espresso-core:${rootProject.androidxTestEspressoVersion}"
+    androidTestImplementation "androidx.test.espresso:espresso-intents:${rootProject.androidxTestEspressoVersion}"
+    androidTestImplementation "androidx.test.espresso:espresso-contrib:${rootProject.androidxTestEspressoVersion}"
 
     deployerJars "io.packagecloud.maven.wagon:maven-packagecloud-wagon:${rootProject.packagecloudWagonVersion}"
 }
