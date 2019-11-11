@@ -38,7 +38,6 @@ public abstract class InputLayoutWidget extends FormWidget {
     final ImageView hintImage;
 
     String label;
-    boolean normalize;
 
     /**
      * Construct a new TextInputWidget
