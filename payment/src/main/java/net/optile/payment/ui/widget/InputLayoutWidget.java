@@ -11,15 +11,12 @@ package net.optile.payment.ui.widget;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
 
-import android.text.InputFilter;
 import android.text.TextUtils;
-import android.text.method.DigitsKeyListener;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import net.optile.payment.R;
-import net.optile.payment.core.PaymentInputType;
 import net.optile.payment.ui.PaymentTheme;
 import net.optile.payment.util.PaymentUtils;
 import net.optile.payment.validation.ValidationResult;
@@ -27,7 +24,7 @@ import net.optile.payment.validation.ValidationResult;
 /**
  * Base class for widgets using the TextInputLayout and TextInputEditText
  */
-abstract class InputLayoutWidget extends FormWidget {
+public abstract class InputLayoutWidget extends FormWidget {
 
     final static float REDUCED_PORTRAIT_TEXT = 0.65f;
     final static float REDUCED_PORTRAIT_HINT = 0.35f;
@@ -103,7 +100,7 @@ abstract class InputLayoutWidget extends FormWidget {
     @Override
     public void setValidation() {
 
-        if (textInput.hasFocus() || TextUtils.isEmpty(getNormalizedValue())) {
+        if (textInput.hasFocus() || TextUtils.isEmpty(getValue())) {
             setInputLayoutState(VALIDATION_UNKNOWN, false, null);
             return;
         }
@@ -118,46 +115,21 @@ abstract class InputLayoutWidget extends FormWidget {
         }
     }
 
-    public void setMaxLength(int length) {
-        InputFilter[] filters = new InputFilter[1];
-        filters[0] = new InputFilter.LengthFilter(length);
-        textInput.setFilters(filters);
-    }
-
-    void handleOnFocusChange(boolean hasFocus) {
-    }
-
-    void setReducedView() {
+    public void setReducedView() {
         boolean landscape = PaymentUtils.isLandscape(rootView.getContext());
         setReducedWidth(textLayout, landscape ? REDUCED_LANDSCAPE_TEXT : REDUCED_PORTRAIT_TEXT);
         setReducedWidth(hintLayout, landscape ? REDUCED_LANDSCAPE_HINT : REDUCED_PORTRAIT_HINT);
     }
 
-    void setTextInputType(int type, String digits) {
-        textInput.setInputType(type);
-
-        if (!TextUtils.isEmpty(digits)) {
-            textInput.setKeyListener(DigitsKeyListener.getInstance(digits));
-        }
+    void handleOnFocusChange(boolean hasFocus) {
     }
 
-    String getNormalizedValue() {
+    String getValue() {
         CharSequence cs = textInput.getText();
-        String val = cs != null ? cs.toString().trim() : "";
-
-        switch (name) {
-            case PaymentInputType.ACCOUNT_NUMBER:
-            case PaymentInputType.VERIFICATION_CODE:
-            case PaymentInputType.BANK_CODE:
-            case PaymentInputType.IBAN:
-            case PaymentInputType.BIC:
-                return val.replaceAll("[\\s|-]", "");
-        }
-        return val;
+        return cs != null ? cs.toString().trim() : "";
     }
 
     boolean setValidationResult(ValidationResult result) {
-
         if (result == null) {
             return false;
         }
@@ -174,6 +146,7 @@ abstract class InputLayoutWidget extends FormWidget {
         textLayout.setErrorEnabled(errorEnabled);
         textLayout.setError(message);
     }
+
 
     private void setReducedWidth(View view, float weight) {
         LinearLayout.LayoutParams params = (LinearLayout.LayoutParams) view.getLayoutParams();

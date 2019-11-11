@@ -8,6 +8,7 @@
 
 package net.optile.payment.localization;
 
+import static net.optile.payment.localization.LocalizationKey.BUTTON_OK;
 import static net.optile.payment.localization.LocalizationKey.BUTTON_CANCEL;
 import static net.optile.payment.localization.LocalizationKey.BUTTON_RETRY;
 import static net.optile.payment.localization.LocalizationKey.BUTTON_UPDATE;
@@ -44,6 +45,7 @@ public final class LocalTranslations {
      * @param context used to load the local translations
      */
     public void load(Context context) {
+        localTranslations.put(BUTTON_OK, context.getString(R.string.pmlocal_button_ok));
         localTranslations.put(BUTTON_CANCEL, context.getString(R.string.pmlocal_button_cancel));
         localTranslations.put(BUTTON_RETRY, context.getString(R.string.pmlocal_button_retry));
         localTranslations.put(BUTTON_UPDATE, context.getString(R.string.pmlocal_button_update));
