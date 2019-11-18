@@ -6,7 +6,7 @@
  * See the LICENSE file for more information.
  */
 
-package net.optile.payment.ui.service.basic;
+package net.optile.network.basic;
 
 import android.app.Activity;
 import net.optile.payment.core.PaymentException;
@@ -65,13 +65,9 @@ public final class BasicNetworkService extends NetworkService implements Operati
     @Override
     public void onOperationSuccess(OperationResult operation) {
         PaymentResult result = new PaymentResult(operation);
-        switch (operation.getInteraction().getCode()) {
-            case InteractionCode.PROCEED:
-                presenter.onProcessPaymentResult(PaymentUI.RESULT_CODE_OK, result);
-                break;
-            default:
-                presenter.onProcessPaymentResult(PaymentUI.RESULT_CODE_CANCELED, result);
-        }
+        int code = InteractionCode.PROCEED.equals(operation.getInteraction().getCode()) ?
+            PaymentUI.RESULT_CODE_OK : PaymentUI.RESULT_CODE_CANCELED;
+        presenter.onProcessPaymentResult(code, result);
     }
 
     /**

@@ -6,7 +6,7 @@
  * See the LICENSE file for more information.
  */
 
-package net.optile.payment.ui.service.basic;
+package net.optile.network.basic;
 
 import android.text.TextUtils;
 import net.optile.payment.core.PaymentNetworkCodes;
@@ -17,7 +17,7 @@ import net.optile.payment.ui.service.NetworkServiceFactory;
 /**
  * Specific implementation for basic networks like i.e. Visa, mastercard and sepa.
  */
-public final class BasicNetworkServiceFactory implements NetworkServiceFactory {
+public final class BasicNetworkFactory implements NetworkServiceFactory {
 
     /**
      * {@inheritDoc}

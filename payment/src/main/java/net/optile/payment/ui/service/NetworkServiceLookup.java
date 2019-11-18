@@ -8,11 +8,11 @@
 
 package net.optile.payment.ui.service;
 
+import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.CopyOnWriteArrayList;
 
+import android.util.Log;
 import net.optile.payment.model.ApplicableNetwork;
-import net.optile.payment.ui.service.basic.BasicNetworkServiceFactory;
 
 /**
  * Class for looking up a NetworkService given the ApplicableNetwork.
@@ -20,7 +20,7 @@ import net.optile.payment.ui.service.basic.BasicNetworkServiceFactory;
  */
 public class NetworkServiceLookup {
 
-    private final static List<NetworkServiceFactory> factories = new CopyOnWriteArrayList<>();
+    private static List<NetworkServiceFactory> factories = new CopyOnWriteArrayList<>();
 
     /**
      * Is the ApplicableNetwork supported by any of the NetworkServices provided in this Android SDK.
@@ -57,6 +57,19 @@ public class NetworkServiceLookup {
     }
 
     private static void initFactories() {
-        factories.add(new BasicNetworkServiceFactory());
+        synchronized (factories) {
+            if (factories.size() == 0) {
+                loadFactory(factories, "net.optile.network.basic.BasicNetworkFactory");
+            }
+        }
+    }
+
+    private static void loadFactory(List<NetworkServiceFactory> factories, String className) {
+        try {
+            NetworkServiceFactory factory = (NetworkServiceFactory) Class.forName(className).newInstance();
+            factories.add(factory);
+        } catch (Exception e) {
+            Log.w("pay", e);
+        }
     }
 }
