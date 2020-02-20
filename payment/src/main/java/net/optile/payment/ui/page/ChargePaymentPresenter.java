@@ -10,7 +10,11 @@ package net.optile.payment.ui.page;
 
 import static net.optile.payment.localization.LocalizationKey.CHARGE_INTERRUPTED;
 import static net.optile.payment.localization.LocalizationKey.ERROR_DEFAULT;
+import static net.optile.payment.localization.LocalizationKey.REDIRECT_TITLE;
+import static net.optile.payment.localization.LocalizationKey.REDIRECT_BUTTON;
 
+import android.util.Log;
+import android.content.Context;
 import android.text.TextUtils;
 import net.optile.payment.core.PaymentError;
 import net.optile.payment.core.PaymentException;
@@ -18,12 +22,17 @@ import net.optile.payment.form.Operation;
 import net.optile.payment.localization.Localization;
 import net.optile.payment.model.Interaction;
 import net.optile.payment.model.InteractionCode;
+import net.optile.payment.model.InteractionReason;
 import net.optile.payment.model.ListResult;
+import net.optile.payment.model.OperationResult;
+import net.optile.payment.model.Redirect;
 import net.optile.payment.ui.PaymentResult;
 import net.optile.payment.ui.PaymentUI;
 import net.optile.payment.ui.dialog.ThemedDialogFragment;
 import net.optile.payment.ui.dialog.ThemedDialogFragment.ThemedDialogListener;
 import net.optile.payment.ui.model.PaymentSession;
+import net.optile.payment.redirect.PaymentRedirect;
+import net.optile.payment.redirect.RedirectStyles;
 import net.optile.payment.ui.service.NetworkService;
 import net.optile.payment.ui.service.NetworkServiceLookup;
 import net.optile.payment.ui.service.NetworkServicePresenter;
@@ -187,7 +196,7 @@ final class ChargePaymentPresenter implements PaymentSessionListener, NetworkSer
     public void onProcessPaymentResult(int resultCode, PaymentResult result) {
         switch (resultCode) {
             case PaymentUI.RESULT_CODE_OK:
-                closeWithOkCode(result);
+                handleProcessPaymentOk(result);
                 break;
             case PaymentUI.RESULT_CODE_CANCELED:
                 closeWithCanceledCode(result);
@@ -195,6 +204,40 @@ final class ChargePaymentPresenter implements PaymentSessionListener, NetworkSer
             case PaymentUI.RESULT_CODE_ERROR:
                 handleProcessPaymentError(result);
                 break;
+        }
+    }
+
+    private void handleProcessPaymentOk(PaymentResult result) {
+        OperationResult op = result.getOperationResult();
+        if (op == null) {
+            closeWithOkCode(result);
+            return;
+        }
+        Interaction interaction = op.getInteraction();
+        Redirect redirect = op.getRedirect();
+        if (redirect == null || !InteractionReason.PENDING.equals(interaction.getReason())) {
+            closeWithOkCode(result);
+            return;
+        }
+        openRedirect(redirect);
+    }
+
+    private void openRedirect(Redirect redirect) {
+        Context context = view.getActivity();
+        if (!PaymentRedirect.isSupported(context)) {
+            String message = "Redirect through ChromeCustomTabs is not supported by this device";
+            PaymentError error = new PaymentError(PaymentError.INTERNAL_ERROR, message);
+            closeWithErrorCode(message, error);
+            return;
+        }
+        RedirectStyles styles = new RedirectStyles();
+        styles.setTitleLabel(Localization.translate(REDIRECT_TITLE));
+        styles.setButtonLabel(Localization.translate(REDIRECT_BUTTON));
+
+        try {
+            PaymentRedirect.open(context, redirect, styles);
+        } catch (PaymentException e) {
+            closeWithErrorCode(e.getMessage(), e.error);
         }
     }
 
@@ -215,7 +258,6 @@ final class ChargePaymentPresenter implements PaymentSessionListener, NetworkSer
                         view.close();
                 }
             }
-
             @Override
             public void onDismissed(ThemedDialogFragment dialog) {
                 view.close();

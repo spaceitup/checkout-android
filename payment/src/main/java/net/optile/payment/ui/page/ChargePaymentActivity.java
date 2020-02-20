@@ -14,6 +14,7 @@ import static net.optile.payment.localization.LocalizationKey.CHARGE_TITLE;
 import java.net.URL;
 import java.util.Map;
 
+import android.util.Log;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
@@ -24,7 +25,9 @@ import net.optile.payment.R;
 import net.optile.payment.form.Operation;
 import net.optile.payment.localization.Localization;
 import net.optile.payment.model.PresetAccount;
+import net.optile.payment.redirect.PaymentRedirectActivity;
 import net.optile.payment.ui.PaymentResult;
+import net.optile.payment.ui.PaymentUI;
 import net.optile.payment.ui.dialog.ThemedDialogFragment;
 import net.optile.payment.ui.dialog.ThemedDialogFragment.ThemedDialogListener;
 import net.optile.payment.ui.page.idlingresource.SimpleIdlingResource;
@@ -99,6 +102,12 @@ public final class ChargePaymentActivity extends BasePaymentActivity implements 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        if (getPaymentTheme()  == null || PaymentRedirectActivity.getResultUri() != null) {
+            Log.i("pay", "ChargePaymentActivity onCreate: " + (PaymentUI.getInstance().getListUrl()));
+            Log.i("pay", "TEST STRING IS: " + PaymentUI.TEST);
+            return;
+        }
         int theme = getPaymentTheme().getChargePaymentTheme();
         if (theme != 0) {
             setTheme(theme);
@@ -129,6 +138,7 @@ public final class ChargePaymentActivity extends BasePaymentActivity implements 
     @Override
     public void onResume() {
         super.onResume();
+        Log.i("pay", "ChargePaymentActivity onResume");
         presenter.onStart(operation);
     }
 
@@ -138,6 +148,8 @@ public final class ChargePaymentActivity extends BasePaymentActivity implements 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
+        Log.i("pay", "ChargePaymentActivity onActivityResult");
+
         PaymentResult result = PaymentResult.fromResultIntent(data);
         if (result != null) {
             presenter.setActivityResult(new ActivityResult(requestCode, resultCode, result));

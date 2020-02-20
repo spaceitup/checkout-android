@@ -11,7 +11,7 @@ package net.optile.payment.ui.page;
 import static net.optile.payment.localization.LocalizationKey.LIST_TITLE;
 
 import java.util.Map;
-
+import android.util.Log;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
@@ -74,6 +74,7 @@ public final class PaymentListActivity extends BasePaymentActivity implements Pa
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Log.i("pay", "PaymentListActivity onCreate");
         int theme = getPaymentTheme().getPaymentListTheme();
         if (theme != 0) {
             setTheme(theme);
@@ -126,6 +127,7 @@ public final class PaymentListActivity extends BasePaymentActivity implements Pa
     @Override
     public void onPause() {
         super.onPause();
+        Log.i("pay", "PaymentListActivity onPause");
         presenter.onStop();
     }
 
@@ -135,6 +137,7 @@ public final class PaymentListActivity extends BasePaymentActivity implements Pa
     @Override
     public void onResume() {
         super.onResume();
+        Log.i("pay", "PaymentListActivity onResume");
         presenter.onStart();
     }
 
@@ -168,6 +171,7 @@ public final class PaymentListActivity extends BasePaymentActivity implements Pa
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
+        Log.i("pay", "PaymentListActivity onActivityResult");
         PaymentResult result = PaymentResult.fromResultIntent(data);
         if (result != null) {
             presenter.setActivityResult(new ActivityResult(requestCode, resultCode, result));

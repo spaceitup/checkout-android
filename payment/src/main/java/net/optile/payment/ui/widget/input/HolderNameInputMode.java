@@ -33,6 +33,14 @@ public final class HolderNameInputMode extends TextInputMode {
      * {@inheritDoc}
      */
     @Override
+    public String normalize(String value) {
+        return value;
+    }
+    
+    /**
+     * {@inheritDoc}
+     */
+    @Override
     public void apply(TextInputEditText editText) {
         InputFilter[] filters = new InputFilter[1];
         filters[0] = new InputFilter.LengthFilter(maxLength);

@@ -13,6 +13,7 @@ import java.util.List;
 
 import android.util.Log;
 import net.optile.payment.model.ApplicableNetwork;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 /**
  * Class for looking up a NetworkService given the ApplicableNetwork.

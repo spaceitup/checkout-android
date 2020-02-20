@@ -11,7 +11,7 @@ package net.optile.payment.form;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.Objects;
-
+import android.util.Log;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -181,6 +181,7 @@ public class Operation implements Parcelable {
 
     public String toJson() throws JSONException {
         form.put("account", account);
+        Log.i("pay", "toJson: " + form.toString());
         return form.toString();
     }
 
