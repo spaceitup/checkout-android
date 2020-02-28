@@ -29,6 +29,24 @@ public class Interaction {
         return code;
     }
 
+    /** 
+     * Construct an empty Interaction Object
+     */
+    public Interaction() {
+    }
+    
+
+    /** 
+     * Construct a new Interaction Object with the predefined code and reason
+     * 
+     * @param code the code to set.
+     * @param reason the reason to set.
+     */    
+    public Interaction(@InteractionCode.Definition String code, @InteractionReason.Definition String reason) {
+        this.code = code;
+        this.reason = reason;
+    }
+
     /**
      * Sets value of code.
      *

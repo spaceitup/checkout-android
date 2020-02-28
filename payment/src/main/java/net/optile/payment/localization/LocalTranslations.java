@@ -8,8 +8,8 @@
 
 package net.optile.payment.localization;
 
-import static net.optile.payment.localization.LocalizationKey.BUTTON_OK;
 import static net.optile.payment.localization.LocalizationKey.BUTTON_CANCEL;
+import static net.optile.payment.localization.LocalizationKey.BUTTON_OK;
 import static net.optile.payment.localization.LocalizationKey.BUTTON_RETRY;
 import static net.optile.payment.localization.LocalizationKey.BUTTON_UPDATE;
 import static net.optile.payment.localization.LocalizationKey.CHARGE_INTERRUPTED;
@@ -19,8 +19,8 @@ import static net.optile.payment.localization.LocalizationKey.ERROR_CONNECTION;
 import static net.optile.payment.localization.LocalizationKey.ERROR_DEFAULT;
 import static net.optile.payment.localization.LocalizationKey.LIST_HEADER_NETWORKS;
 import static net.optile.payment.localization.LocalizationKey.LIST_TITLE;
-import static net.optile.payment.localization.LocalizationKey.REDIRECT_TITLE;
 import static net.optile.payment.localization.LocalizationKey.REDIRECT_BUTTON;
+import static net.optile.payment.localization.LocalizationKey.REDIRECT_TITLE;
 
 import java.util.HashMap;
 import java.util.Map;

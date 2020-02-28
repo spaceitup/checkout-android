@@ -6,7 +6,7 @@
  * See the LICENSE file for more information.
  */
 
-package net.optile.payment.redirect;
+package net.optile.payment.ui.redirect;
 
 /**
  * Class containing the styling of the Redirect page

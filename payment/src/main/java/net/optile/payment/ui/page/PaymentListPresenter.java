@@ -21,6 +21,7 @@ import net.optile.payment.localization.Localization;
 import net.optile.payment.model.Interaction;
 import net.optile.payment.model.InteractionCode;
 import net.optile.payment.model.ListResult;
+import net.optile.payment.model.Redirect;
 import net.optile.payment.ui.PaymentResult;
 import net.optile.payment.ui.PaymentUI;
 import net.optile.payment.ui.dialog.ThemedDialogFragment;
@@ -252,6 +253,13 @@ final class PaymentListPresenter implements PaymentSessionListener, NetworkServi
                 handlePreparePaymentError(result);
                 break;
         }
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void redirectPayment(Redirect redirect) {
     }
 
     private void handlePreparePaymentOk() {

@@ -6,7 +6,10 @@
  * See the LICENSE file for more information.
  */
 
-package net.optile.payment.redirect;
+package net.optile.payment.ui.redirect;
+
+import static android.os.Build.VERSION.SDK_INT;
+import static android.os.Build.VERSION_CODES.JELLY_BEAN_MR2;
 
 import android.content.ActivityNotFoundException;
 import android.content.ComponentName;
@@ -14,18 +17,10 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.ServiceConnection;
 import android.net.Uri;
-import android.os.Bundle;
 import android.os.IBinder;
-
-import android.util.Log;
 import androidx.browser.customtabs.CustomTabsIntent;
 import androidx.browser.customtabs.CustomTabsService;
 import net.optile.payment.core.PaymentException;
-import net.optile.payment.model.Redirect;
-import net.optile.payment.util.GsonHelper;
-    
-import static android.os.Build.VERSION.SDK_INT;
-import static android.os.Build.VERSION_CODES.JELLY_BEAN_MR2;
 
 /**
  * Helper class for working with Chrome Custom Tabs

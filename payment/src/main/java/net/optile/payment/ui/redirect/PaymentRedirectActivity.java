@@ -6,14 +6,12 @@
  * See the LICENSE file for more information.
  */
 
-package net.optile.payment.redirect;
+package net.optile.payment.ui.redirect;
 
-import android.util.Log;
 import android.app.Activity;
 import android.net.Uri;
 import android.os.Bundle;
 import net.optile.payment.R;
-import net.optile.payment.ui.PaymentUI;
 
 /** 
  * The Activity which will be launched after the browser is redirecting to the deep link url.
@@ -25,9 +23,6 @@ public class PaymentRedirectActivity extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        String listUrl = PaymentUI.getInstance().getListUrl();
-        Log.i("pay", "listUrl: " + listUrl);
-
         setContentView(R.layout.activity_redirect);
         resultUri = null;
 

@@ -8,12 +8,11 @@
 
 package net.optile.payment.ui.service;
 
-import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 import android.util.Log;
 import net.optile.payment.model.ApplicableNetwork;
-import java.util.concurrent.CopyOnWriteArrayList;
 
 /**
  * Class for looking up a NetworkService given the ApplicableNetwork.

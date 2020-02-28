@@ -11,6 +11,7 @@ package net.optile.payment.ui.service;
 import android.app.Activity;
 import net.optile.payment.core.PaymentException;
 import net.optile.payment.form.Operation;
+import net.optile.payment.model.OperationResult;
 
 /**
  * Interface for network services, a NetworkService is responsible for activating and
@@ -55,5 +56,22 @@ public abstract class NetworkService {
      * @param operation
      */
     public void processPayment(Activity activity, int requestCode, Operation operation) throws PaymentException {
+    }
+
+    /** 
+     * Notify the network service that the payment has been redirected and an operation result has been received. 
+     * 
+     * @param result containing the result of the operation, may be null if the redirect has been terminated 
+     *        without receiving an OperationResult from the backend
+     */
+    public void onRedirectSuccess(OperationResult result) {
+    }
+    
+    /** 
+     * Notify the network service that the redirect has failed to result in an OperationResult from the backend.
+     * The network service should handle this situation and make sure the NetworkServicePresenter is notified with the 
+     * appropiate PaymentResult.
+     */
+    public void onRedirectCanceled() {
     }
 }

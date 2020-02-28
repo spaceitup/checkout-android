@@ -11,11 +11,12 @@ package net.optile.payment.ui.page;
 import static net.optile.payment.localization.LocalizationKey.LIST_TITLE;
 
 import java.util.Map;
-import android.util.Log;
+
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.MenuItem;
 import androidx.annotation.VisibleForTesting;
 import androidx.appcompat.app.ActionBar;

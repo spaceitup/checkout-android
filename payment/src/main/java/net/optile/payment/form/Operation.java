@@ -11,13 +11,14 @@ package net.optile.payment.form;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.Objects;
-import android.util.Log;
+
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import android.os.Parcel;
 import android.os.Parcelable;
 import android.text.TextUtils;
+import android.util.Log;
 import net.optile.payment.core.PaymentError;
 import net.optile.payment.core.PaymentException;
 import net.optile.payment.core.PaymentInputType;

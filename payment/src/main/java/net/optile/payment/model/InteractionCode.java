@@ -25,6 +25,10 @@ public class InteractionCode {
     public final static String RETRY = "RETRY";
     public final static String RELOAD = "RELOAD";
 
+    // client side interaction codes
+    public final static String VERIFY = "VERIFY";
+    public final static String INTERRUPT = "INTERRUPT";
+    
     /**
      * Check if the given type is a valid interaction code
      *
@@ -41,6 +45,8 @@ public class InteractionCode {
                 case TRY_OTHER_ACCOUNT:
                 case RETRY:
                 case RELOAD:
+                case VERIFY:
+                case INTERRUPT:    
                     return true;
             }
         }
@@ -54,7 +60,9 @@ public class InteractionCode {
         TRY_OTHER_NETWORK,
         TRY_OTHER_ACCOUNT,
         RETRY,
-        RELOAD
+        RELOAD,
+        VERIFY,
+        INTERRUPT
     })
     public @interface Definition { }
 }

@@ -11,8 +11,12 @@ package net.optile.network.basic;
 import android.app.Activity;
 import net.optile.payment.core.PaymentException;
 import net.optile.payment.form.Operation;
+import net.optile.payment.model.Interaction;
 import net.optile.payment.model.InteractionCode;
+import net.optile.payment.model.InteractionReason;
 import net.optile.payment.model.OperationResult;
+import net.optile.payment.model.Redirect;
+import net.optile.payment.model.RedirectType;
 import net.optile.payment.ui.PaymentResult;
 import net.optile.payment.ui.PaymentUI;
 import net.optile.payment.ui.service.NetworkService;
@@ -26,7 +30,8 @@ public final class BasicNetworkService extends NetworkService implements Operati
     private final OperationService service;
 
     /**
-     * Create a new BasicNetworkService, this service is a basic implementation that simply send an operation to the Payment API.
+     * Create a new BasicNetworkService, this service is a basic implementation 
+     * that simply send an operation to the Payment API.
      */
     public BasicNetworkService() {
         service = new OperationService();
@@ -49,7 +54,7 @@ public final class BasicNetworkService extends NetworkService implements Operati
         PaymentResult result = new PaymentResult("preparePayment not required");
         presenter.onPreparePaymentResult(PaymentUI.RESULT_CODE_OK, result);
     }
-
+    
     /**
      * {@inheritDoc}
      */
@@ -63,11 +68,47 @@ public final class BasicNetworkService extends NetworkService implements Operati
      * {@inheritDoc}
      */
     @Override
-    public void onOperationSuccess(OperationResult operation) {
-        PaymentResult result = new PaymentResult(operation);
-        int code = InteractionCode.PROCEED.equals(operation.getInteraction().getCode()) ?
-            PaymentUI.RESULT_CODE_OK : PaymentUI.RESULT_CODE_CANCELED;
-        presenter.onProcessPaymentResult(code, result);
+    public void onRedirectSuccess(OperationResult result) {
+        Interaction interaction = result.getInteraction();
+        String code = interaction.getCode();
+        int resultCode = InteractionCode.PROCEED.equals(code) ? PaymentUI.RESULT_CODE_OK : PaymentUI.RESULT_CODE_CANCELED;        
+        presenter.onProcessPaymentResult(resultCode, new PaymentResult(result));
+    }
+    
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void onRedirectCanceled() {
+        Interaction interaction = new Interaction(InteractionCode.VERIFY, InteractionReason.CLIENTSIDE_CANCELED);
+        String resultInfo = "Missing OperationResult after client-side redirect";
+        PaymentResult result = new PaymentResult(resultInfo, interaction);        
+    }
+    
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void onOperationSuccess(OperationResult result) {
+        Interaction interaction = result.getInteraction();
+        String code = interaction.getCode();
+
+        if (!InteractionCode.PROCEED.equals(code)) {
+            presenter.onProcessPaymentResult(PaymentUI.RESULT_CODE_CANCELED, new PaymentResult(result));
+            return;
+        }
+        String reason = interaction.getReason();
+        Redirect redirect = result.getRedirect();
+
+        if (redirect != null) {
+            switch (redirect.getType()) {
+                case RedirectType.PROVIDER:
+                case RedirectType.HANDLER3DS2:
+                    redirectPayment(redirect);
+                    return;
+            }
+        }
+        presenter.onProcessPaymentResult(PaymentUI.RESULT_CODE_OK, new PaymentResult(result));        
     }
 
     /**
@@ -78,5 +119,14 @@ public final class BasicNetworkService extends NetworkService implements Operati
         PaymentResult result = PaymentResult.fromThrowable(cause);
         int status = result.hasError() ? PaymentUI.RESULT_CODE_ERROR : PaymentUI.RESULT_CODE_CANCELED;
         presenter.onPreparePaymentResult(status, result);
+    }
+
+    private void redirectPayment(Redirect redirect) {
+        try {
+            presenter.redirectPayment(redirect);
+        } catch (PaymentException e) {
+            PaymentResult result = PaymentResult.fromPaymentException(e);
+            presenter.onProcessPaymentResult(PaymentUI.RESULT_CODE_ERROR, result);        
+        }
     }
 }
