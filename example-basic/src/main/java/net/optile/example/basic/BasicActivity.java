@@ -22,8 +22,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import net.optile.payment.core.PaymentError;
 import net.optile.payment.model.Interaction;
 import net.optile.payment.ui.PaymentResult;
-import net.optile.payment.ui.PaymentUI;
 import net.optile.payment.ui.PaymentTheme;
+import net.optile.payment.ui.PaymentUI;
 
 /**
  * This is the main Activity of this basic example app
