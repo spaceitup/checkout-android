@@ -20,7 +20,7 @@ import net.optile.payment.model.ApplicableNetwork;
  */
 public class NetworkServiceLookup {
 
-    private static List<NetworkServiceFactory> factories = new CopyOnWriteArrayList<>();
+    private static final List<NetworkServiceFactory> factories = new CopyOnWriteArrayList<>();
 
     /**
      * Is the ApplicableNetwork supported by any of the NetworkServices provided in this Android SDK.

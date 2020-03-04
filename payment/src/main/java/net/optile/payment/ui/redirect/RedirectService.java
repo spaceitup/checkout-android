@@ -14,13 +14,11 @@ import java.util.List;
 import android.content.Context;
 import android.net.Uri;
 import android.text.TextUtils;
-import android.util.Log;
 import net.optile.payment.core.PaymentException;
 import net.optile.payment.model.Interaction;
 import net.optile.payment.model.OperationResult;
 import net.optile.payment.model.Parameter;
 import net.optile.payment.model.Redirect;
-import net.optile.payment.util.GsonHelper;
 
 /**
  * RedirectService class to handle redirect payments.

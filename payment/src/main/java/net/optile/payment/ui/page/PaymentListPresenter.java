@@ -401,7 +401,7 @@ final class PaymentListPresenter implements PaymentSessionListener, NetworkServi
      * The Charge result is received from the ChargePaymentActivity. Error messages are not displayed by this presenter since
      * the ChargePaymentActivity has taken care of displaying error and warning messages.
      *
-     * @param activityResult
+     * @param activityResult result received after a charge has been performed
      */
     private void onChargeActivityResult(ActivityResult activityResult) {
         this.operation = null;

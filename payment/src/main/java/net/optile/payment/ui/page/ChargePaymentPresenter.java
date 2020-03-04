@@ -10,8 +10,6 @@ package net.optile.payment.ui.page;
 
 import static net.optile.payment.localization.LocalizationKey.CHARGE_INTERRUPTED;
 import static net.optile.payment.localization.LocalizationKey.ERROR_DEFAULT;
-import static net.optile.payment.localization.LocalizationKey.REDIRECT_BUTTON;
-import static net.optile.payment.localization.LocalizationKey.REDIRECT_TITLE;
 
 import android.content.Context;
 import android.text.TextUtils;

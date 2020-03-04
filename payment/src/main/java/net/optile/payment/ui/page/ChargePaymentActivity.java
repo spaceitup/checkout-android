@@ -121,6 +121,7 @@ public final class ChargePaymentActivity extends BasePaymentActivity implements 
      */
     @Override
     public void onSaveInstanceState(Bundle savedInstanceState) {
+        super.onSaveInstanceState(savedInstanceState);
         if (this.operation != null) {
             savedInstanceState.putParcelable(EXTRA_OPERATION, this.operation);
         }

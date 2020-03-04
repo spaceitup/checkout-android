@@ -27,7 +27,7 @@ interface PaymentListView {
     /**
      * Show the progress animation.
      *
-     * @param show the progress when true, hide it with false
+     * @param visible true to show the progress indicator, false to hide the progress
      */
     void showProgress(boolean visible);
 
