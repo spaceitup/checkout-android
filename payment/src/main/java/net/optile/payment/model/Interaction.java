@@ -34,7 +34,6 @@ public class Interaction {
      */
     public Interaction() {
     }
-    
 
     /** 
      * Construct a new Interaction Object with the predefined code and reason

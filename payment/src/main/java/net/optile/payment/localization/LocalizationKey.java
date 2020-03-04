@@ -40,9 +40,6 @@ public final class LocalizationKey {
     public final static String ERROR_CONNECTION = "pmlocal.error.connection";
     public final static String ERROR_DEFAULT = "pmlocal.error.default";
 
-    public final static String REDIRECT_TITLE = "pmlocal.redirect.title";
-    public final static String REDIRECT_BUTTON = "pmlocal.redirect.button";    
-    
     public final static String ACCOUNTHINT_TITLE = "title";
     public final static String ACCOUNTHINT_TEXT = "text";
 

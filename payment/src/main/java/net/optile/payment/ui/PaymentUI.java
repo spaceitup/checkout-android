@@ -45,17 +45,9 @@ public final class PaymentUI {
 
     /** The group resource file id */
     private int groupResId;
-
-    public static String TEST;
     
     private PaymentUI() {
         this.orientation = ActivityInfo.SCREEN_ORIENTATION_LOCKED;
-
-        if (TEST == null) {
-            TEST = "TEST first time";
-        } else {
-            TEST = "TEST Already set";
-        }
     }
 
     /**

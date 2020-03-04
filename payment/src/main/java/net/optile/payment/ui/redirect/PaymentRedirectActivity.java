@@ -14,12 +14,15 @@ import android.os.Bundle;
 import net.optile.payment.R;
 
 /** 
- * The Activity which will be launched after the browser is redirecting to the deep link url.
+ * The Activity that is launched after the browser is redirecting to the deep link URL.
  */
 public class PaymentRedirectActivity extends Activity {
 
     private static Uri resultUri;
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

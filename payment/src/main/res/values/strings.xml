@@ -20,8 +20,4 @@
     <string name="pmlocal_button_retry">Retry</string>
     <string name="pmlocal_button_update">Update</string>
     <string name="pmlocal_button_ok">OK</string>    
-
-    <string name="pmlocal_redirect_title">Please click the button if you are not automatically redirected back to the app.</string>    
-    <string name="pmlocal_redirect_button">Continue</string>    
-    
 </resources>

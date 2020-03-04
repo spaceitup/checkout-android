@@ -19,8 +19,6 @@ import static net.optile.payment.localization.LocalizationKey.ERROR_CONNECTION;
 import static net.optile.payment.localization.LocalizationKey.ERROR_DEFAULT;
 import static net.optile.payment.localization.LocalizationKey.LIST_HEADER_NETWORKS;
 import static net.optile.payment.localization.LocalizationKey.LIST_TITLE;
-import static net.optile.payment.localization.LocalizationKey.REDIRECT_BUTTON;
-import static net.optile.payment.localization.LocalizationKey.REDIRECT_TITLE;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -58,8 +56,6 @@ public final class LocalTranslations {
         localTranslations.put(CHARGE_INTERRUPTED, context.getString(R.string.pmlocal_charge_interrupted));
         localTranslations.put(ERROR_CONNECTION, context.getString(R.string.pmlocal_error_connection));
         localTranslations.put(ERROR_DEFAULT, context.getString(R.string.pmlocal_error_default));
-        localTranslations.put(REDIRECT_TITLE, context.getString(R.string.pmlocal_redirect_title));
-        localTranslations.put(REDIRECT_BUTTON, context.getString(R.string.pmlocal_redirect_button));
     }
 
     public void clear() {

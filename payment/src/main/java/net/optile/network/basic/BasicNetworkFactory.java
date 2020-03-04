@@ -25,7 +25,7 @@ public final class BasicNetworkFactory implements NetworkServiceFactory {
     @Override
     public boolean isNetworkSupported(ApplicableNetwork network) {
         String button = network.getButton();
-        return isCodeSupported(network.getCode()) && (TextUtils.isEmpty(button) || !button.contains("activate")) && !network.getRedirect();
+        return isCodeSupported(network.getCode()) && (TextUtils.isEmpty(button) || !button.contains("activate"));
     }
 
     /**

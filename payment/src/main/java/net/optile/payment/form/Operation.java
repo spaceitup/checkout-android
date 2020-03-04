@@ -18,7 +18,6 @@ import org.json.JSONObject;
 import android.os.Parcel;
 import android.os.Parcelable;
 import android.text.TextUtils;
-import android.util.Log;
 import net.optile.payment.core.PaymentError;
 import net.optile.payment.core.PaymentException;
 import net.optile.payment.core.PaymentInputType;
@@ -182,7 +181,6 @@ public class Operation implements Parcelable {
 
     public String toJson() throws JSONException {
         form.put("account", account);
-        Log.i("pay", "toJson: " + form.toString());
         return form.toString();
     }
 

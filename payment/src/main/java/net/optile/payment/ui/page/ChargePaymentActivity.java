@@ -18,7 +18,6 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import androidx.annotation.VisibleForTesting;
 import androidx.test.espresso.IdlingResource;
 import net.optile.payment.R;
@@ -142,7 +141,6 @@ public final class ChargePaymentActivity extends BasePaymentActivity implements 
     @Override
     public void onResume() {
         super.onResume();
-        Log.i("pay", "ChargePaymentActivity onResume");
         presenter.onStart(operation);
     }
 
@@ -152,7 +150,6 @@ public final class ChargePaymentActivity extends BasePaymentActivity implements 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        Log.i("pay", "ChargePaymentActivity onActivityResult");
         PaymentResult result = PaymentResult.fromResultIntent(data);
 
         if (result != null) {

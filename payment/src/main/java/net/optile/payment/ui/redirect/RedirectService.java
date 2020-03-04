@@ -21,12 +21,13 @@ import net.optile.payment.model.Parameter;
 import net.optile.payment.model.Redirect;
 
 /**
- * RedirectService class to handle redirect payments.
+ * RedirectService class to handle redirect payments, currently redirect networks are only supported
+ * through ChromeCustomTabs.
  */
 public final class RedirectService {
 
+    private final static String KEY_INTERACTION_CODE = "interactionCode";    
     private final static String KEY_INTERACTION_REASON = "interactionReason";
-    private final static String KEY_INTERACTION_CODE = "interactionCode";
     
     /**
      * Check if payment redirects are supported for this device.
@@ -89,7 +90,7 @@ public final class RedirectService {
         redirect.setParameters(params);
 
         OperationResult result = new OperationResult();
-        result.setResultInfo("OperationResult received from mobile-redirect");
+        result.setResultInfo("OperationResult received from the mobile-redirect webapp");
         result.setRedirect(redirect);
         result.setInteraction(interaction);
         return result;
