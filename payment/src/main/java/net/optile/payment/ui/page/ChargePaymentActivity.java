@@ -109,6 +109,7 @@ public final class ChargePaymentActivity extends BasePaymentActivity implements 
             this.operation = bundle.getParcelable(EXTRA_OPERATION);
         }
         setContentView(R.layout.activity_chargepayment);
+
         progressView = new ProgressView(findViewById(R.id.layout_progress));
         progressView.setLabels(Localization.translate(CHARGE_TITLE),
             Localization.translate(CHARGE_TEXT));
@@ -175,11 +176,11 @@ public final class ChargePaymentActivity extends BasePaymentActivity implements 
      * {@inheritDoc}
      */
     @Override
-    public void showProgress() {
+    public void showProgress(boolean visible) {
         if (!active) {
             return;
         }
-        progressView.setVisible(true);
+        progressView.setVisible(visible);
     }
 
     /**

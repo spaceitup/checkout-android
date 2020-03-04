@@ -60,7 +60,7 @@ public final class BasicNetworkService extends NetworkService implements Operati
      */
     @Override
     public void processPayment(Activity activity, int requestCode, Operation operation) throws PaymentException {
-        presenter.showProgress();
+        presenter.showProgress(true);
         service.postOperation(operation);
     }
 
@@ -80,9 +80,10 @@ public final class BasicNetworkService extends NetworkService implements Operati
      */
     @Override
     public void onRedirectCanceled() {
-        Interaction interaction = new Interaction(InteractionCode.VERIFY, InteractionReason.CLIENTSIDE_CANCELED);
+        Interaction interaction = new Interaction(InteractionCode.VERIFY, InteractionReason.COMMUNICATION_FAILURE);
         String resultInfo = "Missing OperationResult after client-side redirect";
         PaymentResult result = new PaymentResult(resultInfo, interaction);        
+        presenter.onProcessPaymentResult(PaymentUI.RESULT_CODE_CANCELED, result);
     }
     
     /**

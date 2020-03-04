@@ -21,6 +21,7 @@ import android.os.IBinder;
 import androidx.browser.customtabs.CustomTabsIntent;
 import androidx.browser.customtabs.CustomTabsService;
 import net.optile.payment.core.PaymentException;
+import net.optile.payment.R;
 
 /**
  * Helper class for working with Chrome Custom Tabs

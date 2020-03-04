@@ -209,8 +209,8 @@ final class PaymentListPresenter implements PaymentSessionListener, NetworkServi
      * {@inheritDoc}
      */
     @Override
-    public void showProgress() {
-        view.showProgress();
+    public void showProgress(boolean visible) {
+        view.showProgress(visible);
     }
 
     private void handleActivityResult(ActivityResult activityResult) {
@@ -458,7 +458,7 @@ final class PaymentListPresenter implements PaymentSessionListener, NetworkServi
     private void loadPaymentSession(String listUrl) {
         this.session = null;
         view.clearList();
-        view.showProgress();
+        view.showProgress(true);
         sessionService.loadPaymentSession(listUrl, view.getActivity());
     }
 

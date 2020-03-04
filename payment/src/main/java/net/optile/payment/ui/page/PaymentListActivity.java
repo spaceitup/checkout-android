@@ -224,11 +224,11 @@ public final class PaymentListActivity extends BasePaymentActivity implements Pa
      * {@inheritDoc}
      */
     @Override
-    public void showProgress() {
+    public void showProgress(boolean visible) {
         if (!active) {
             return;
         }
-        progressView.setVisible(true);
+        progressView.setVisible(visible);
     }
 
     /**

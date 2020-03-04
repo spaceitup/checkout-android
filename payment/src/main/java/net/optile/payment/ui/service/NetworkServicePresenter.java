@@ -19,8 +19,10 @@ public interface NetworkServicePresenter {
 
     /**
      * Notify the presenter that the service is in progress and requires a progress indicator
+     *
+     * @param true when visible, false to hide the progress
      */
-    void showProgress();
+    void showProgress(boolean visible);
 
     /** 
      * Ask the network service to redirect the payment to an external address

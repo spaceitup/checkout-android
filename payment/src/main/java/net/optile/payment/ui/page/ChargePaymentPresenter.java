@@ -30,7 +30,6 @@ import net.optile.payment.ui.dialog.ThemedDialogFragment;
 import net.optile.payment.ui.dialog.ThemedDialogFragment.ThemedDialogListener;
 import net.optile.payment.ui.model.PaymentSession;
 import net.optile.payment.ui.redirect.RedirectService;
-import net.optile.payment.ui.redirect.RedirectStyles;
 import net.optile.payment.ui.service.NetworkService;
 import net.optile.payment.ui.service.NetworkServiceLookup;
 import net.optile.payment.ui.service.NetworkServicePresenter;
@@ -180,8 +179,8 @@ final class ChargePaymentPresenter implements PaymentSessionListener, NetworkSer
      * {@inheritDoc}
      */
     @Override
-    public void showProgress() {
-        view.showProgress();
+    public void showProgress(boolean visible) {
+        view.showProgress(visible);
     }
 
     /**
@@ -218,11 +217,8 @@ final class ChargePaymentPresenter implements PaymentSessionListener, NetworkSer
         if (!RedirectService.isSupported(context)) {
             throw new PaymentException("Redirect through ChromeCustomTabs is not supported by this device");
         }
-        RedirectStyles styles = new RedirectStyles();
-        styles.setTitleLabel(Localization.translate(REDIRECT_TITLE));
-        styles.setButtonLabel(Localization.translate(REDIRECT_BUTTON));
-
-        RedirectService.open(context, redirect, styles);
+        view.showProgress(false);
+        RedirectService.open(context, redirect);
         this.redirected = true;
     }
 
@@ -299,7 +295,7 @@ final class ChargePaymentPresenter implements PaymentSessionListener, NetworkSer
 
     private void loadPaymentSession(final String listUrl) {
         this.session = null;
-        view.showProgress();
+        view.showProgress(true);
         sessionService.loadPaymentSession(listUrl, view.getActivity());
     }
 

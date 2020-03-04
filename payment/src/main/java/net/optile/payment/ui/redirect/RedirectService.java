@@ -45,20 +45,19 @@ public final class RedirectService {
      * 
      * @param context in which the redirect should be started
      * @param redirect containing the address to which to redirect to
-     * @param styles defining the look and feel of the parent redirect page
      */
-    public static void open(Context context, Redirect redirect, RedirectStyles styles) throws PaymentException {
+    public static void open(Context context, Redirect redirect) throws PaymentException {
         if (!isSupported(context)) {
             throw new PaymentException("Redirect payments are not supported by this device"); 
         }
         PaymentRedirectActivity.clearResultUri();
-        Uri uri = createRedirectUri(context, redirect, styles);
+        Uri uri = Uri.parse(redirect.getUrl().toString());
         ChromeCustomTabs.open(context, uri);
     }
 
     /** 
      * Get the Redirect result if any has been received through i.e. 
-     * a deep link result
+     * a deep link callback.
      * 
      * @return the redirect OperationResult or null if not available
      */
@@ -92,27 +91,9 @@ public final class RedirectService {
         redirect.setParameters(params);
 
         OperationResult result = new OperationResult();
-        result.setResultInfo("OperationResult received from client-side redirect");
+        result.setResultInfo("OperationResult received from mobile-redirect");
         result.setRedirect(redirect);
         result.setInteraction(interaction);
         return result;
-    }
-    
-    private static Uri createRedirectUri(Context context, Redirect redirect, RedirectStyles styles) {
-        String packageName = context.getApplicationContext().getPackageName();
-        GsonHelper gson = GsonHelper.getInstance();
-        String redirectJson = gson.toJson(redirect);
-        String stylesJson = gson.toJson(styles);
-        Uri uri = Uri.parse("https://apps.integration.oscato.com/mobile-redirect/");
-
-        StringBuilder deepLink = new StringBuilder(packageName);
-        deepLink.append(".paymentredirect://");
-        Log.i("pay", "deepLink: " + deepLink.toString());
-        
-        uri = uri.buildUpon().
-            appendQueryParameter("redirect", redirectJson).
-            appendQueryParameter("styles", stylesJson).
-            appendQueryParameter("dl", deepLink.toString()).build();
-        return uri;
     }
 }

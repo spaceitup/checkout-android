@@ -26,8 +26,10 @@ interface PaymentListView {
 
     /**
      * Show the progress animation.
+     *
+     * @param show the progress when true, hide it with false
      */
-    void showProgress();
+    void showProgress(boolean visible);
 
     /**
      * Open the process payment screen to handle the operation
