@@ -59,7 +59,7 @@ public class NetworkServiceLookup {
     private static void initFactories() {
         synchronized (factories) {
             if (factories.size() == 0) {
-                loadFactory(factories, "net.optile.network.basic.BasicNetworkFactory");
+                loadFactory(factories, "net.optile.network.basic.BasicNetworkServiceFactory");
             }
         }
     }
