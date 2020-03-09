@@ -93,7 +93,6 @@ public final class BasicNetworkService extends NetworkService implements Operati
     public void onOperationSuccess(OperationResult result) {
         Interaction interaction = result.getInteraction();
         String code = interaction.getCode();
-
         if (!InteractionCode.PROCEED.equals(code)) {
             presenter.onProcessPaymentResult(PaymentUI.RESULT_CODE_CANCELED, new PaymentResult(result));
             return;
