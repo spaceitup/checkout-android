@@ -98,9 +98,7 @@ public final class BasicNetworkService extends NetworkService implements Operati
             presenter.onProcessPaymentResult(PaymentUI.RESULT_CODE_CANCELED, new PaymentResult(result));
             return;
         }
-        String reason = interaction.getReason();
         Redirect redirect = result.getRedirect();
-
         if (redirect != null) {
             switch (redirect.getType()) {
                 case RedirectType.PROVIDER:
