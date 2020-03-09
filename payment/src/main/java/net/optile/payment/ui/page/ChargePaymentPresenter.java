@@ -51,7 +51,7 @@ final class ChargePaymentPresenter implements PaymentSessionListener, NetworkSer
     private ActivityResult activityResult;
     private NetworkService networkService;
     private boolean redirected;
-    
+
     /**
      * Create a new ChargePaymentPresenter
      *
@@ -70,8 +70,7 @@ final class ChargePaymentPresenter implements PaymentSessionListener, NetworkSer
         if (redirected) {
             handleRedirectResult();
             redirected = false;
-        }
-        else if (activityResult != null) {
+        } else if (activityResult != null) {
             handleActivityResult(activityResult);
             activityResult = null;
         } else {
@@ -238,7 +237,7 @@ final class ChargePaymentPresenter implements PaymentSessionListener, NetworkSer
         PaymentError error = new PaymentError(PaymentError.INTERNAL_ERROR, message);
         closeWithErrorCode(message, error);
     }
-    
+
     private void handleProcessPaymentError(PaymentResult result) {
         if (!result.getPaymentError().isError(PaymentError.CONN_ERROR)) {
             closeWithErrorCode(result);
@@ -256,6 +255,7 @@ final class ChargePaymentPresenter implements PaymentSessionListener, NetworkSer
                         view.close();
                 }
             }
+
             @Override
             public void onDismissed(ThemedDialogFragment dialog) {
                 view.close();

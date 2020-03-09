@@ -125,7 +125,7 @@ public final class ChargePaymentActivity extends BasePaymentActivity implements 
             savedInstanceState.putParcelable(EXTRA_OPERATION, this.operation);
         }
     }
-    
+
     /**
      * {@inheritDoc}
      */

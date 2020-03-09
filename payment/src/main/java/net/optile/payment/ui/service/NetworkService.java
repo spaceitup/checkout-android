@@ -58,18 +58,18 @@ public abstract class NetworkService {
     public void processPayment(Activity activity, int requestCode, Operation operation) throws PaymentException {
     }
 
-    /** 
-     * Notify the network service that the payment has been redirected and an operation result has been received. 
-     * 
-     * @param result containing the result of the operation, may be null if the redirect has been terminated 
-     *        without receiving an OperationResult from the backend
+    /**
+     * Notify the network service that the payment has been redirected and an operation result has been received.
+     *
+     * @param result containing the result of the operation, may be null if the redirect has been terminated
+     * without receiving an OperationResult from the backend
      */
     public void onRedirectSuccess(OperationResult result) {
     }
-    
-    /** 
+
+    /**
      * Notify the network service that the redirect has failed to result in an OperationResult from the backend.
-     * The network service should handle this situation and make sure the NetworkServicePresenter is notified with the 
+     * The network service should handle this situation and make sure the NetworkServicePresenter is notified with the
      * appropiate PaymentResult.
      */
     public void onRedirectCanceled() {

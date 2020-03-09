@@ -35,13 +35,13 @@ public class GroupingTextWatcherTest {
         EditText editText = new EditText(context);
         new GroupingTextWatcher(0, editText);
     }
-    
+
     @Test
     public void pasteNumberTest() {
         Context context = ApplicationProvider.getApplicationContext();
         EditText editText = new EditText(context);
         GroupingTextWatcher watcher = new GroupingTextWatcher(4, editText);
-        validateTextInput(watcher, "", "1234567890", "1234 5678 90"); 
+        validateTextInput(watcher, "", "1234567890", "1234 5678 90");
     }
 
     @Test
@@ -53,8 +53,8 @@ public class GroupingTextWatcherTest {
         validateTextInput(watcher, "", "1234567890", "12 34 56 78 90");
 
         watcher = new GroupingTextWatcher(16, editText);
-        validateTextInput(watcher, "", "1234567890", "1234567890");         
-    }    
+        validateTextInput(watcher, "", "1234567890", "1234567890");
+    }
 
     @Test
     public void typeCharacterTest() {
@@ -69,17 +69,17 @@ public class GroupingTextWatcherTest {
         result = validateTextInput(watcher, result, "4", "1234");
         result = validateTextInput(watcher, result, "5", "1234 5");
         result = validateTextInput(watcher, result, "6", "1234 56");
-        result = validateTextInput(watcher, result, "7", "1234 567");                                
+        result = validateTextInput(watcher, result, "7", "1234 567");
         result = validateTextInput(watcher, result, "8", "1234 5678");
-        result = validateTextInput(watcher, result, "9", "1234 5678 9");                                                
+        result = validateTextInput(watcher, result, "9", "1234 5678 9");
     }
 
     private static String validateTextInput(TextWatcher watcher, String current, String input, String result) {
         String val = simulateTextInput(watcher, current, input);
-        assertEquals(result, val);        
+        assertEquals(result, val);
         return val;
     }
-    
+
     private static String simulateTextInput(TextWatcher tw, String original, String input) {
         int originalLength = original.length();
         int inputLength = input.length();

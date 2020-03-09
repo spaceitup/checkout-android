@@ -24,7 +24,7 @@ public interface NetworkServicePresenter {
      */
     void showProgress(boolean visible);
 
-    /** 
+    /**
      * Ask the network service to redirect the payment to an external address
      *
      * @param redirect containing the redirect data

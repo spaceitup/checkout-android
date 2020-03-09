@@ -30,7 +30,7 @@ public final class BasicNetworkService extends NetworkService implements Operati
     private final OperationService service;
 
     /**
-     * Create a new BasicNetworkService, this service is a basic implementation 
+     * Create a new BasicNetworkService, this service is a basic implementation
      * that simply send an operation to the Payment API.
      */
     public BasicNetworkService() {
@@ -54,7 +54,7 @@ public final class BasicNetworkService extends NetworkService implements Operati
         PaymentResult result = new PaymentResult("preparePayment not required");
         presenter.onPreparePaymentResult(PaymentUI.RESULT_CODE_OK, result);
     }
-    
+
     /**
      * {@inheritDoc}
      */
@@ -71,10 +71,10 @@ public final class BasicNetworkService extends NetworkService implements Operati
     public void onRedirectSuccess(OperationResult result) {
         Interaction interaction = result.getInteraction();
         String code = interaction.getCode();
-        int resultCode = InteractionCode.PROCEED.equals(code) ? PaymentUI.RESULT_CODE_OK : PaymentUI.RESULT_CODE_CANCELED;        
+        int resultCode = InteractionCode.PROCEED.equals(code) ? PaymentUI.RESULT_CODE_OK : PaymentUI.RESULT_CODE_CANCELED;
         presenter.onProcessPaymentResult(resultCode, new PaymentResult(result));
     }
-    
+
     /**
      * {@inheritDoc}
      */
@@ -82,10 +82,10 @@ public final class BasicNetworkService extends NetworkService implements Operati
     public void onRedirectCanceled() {
         Interaction interaction = new Interaction(InteractionCode.VERIFY, InteractionReason.COMMUNICATION_FAILURE);
         String resultInfo = "Missing OperationResult after client-side redirect";
-        PaymentResult result = new PaymentResult(resultInfo, interaction);        
+        PaymentResult result = new PaymentResult(resultInfo, interaction);
         presenter.onProcessPaymentResult(PaymentUI.RESULT_CODE_CANCELED, result);
     }
-    
+
     /**
      * {@inheritDoc}
      */
@@ -106,7 +106,7 @@ public final class BasicNetworkService extends NetworkService implements Operati
                     return;
             }
         }
-        presenter.onProcessPaymentResult(PaymentUI.RESULT_CODE_OK, new PaymentResult(result));        
+        presenter.onProcessPaymentResult(PaymentUI.RESULT_CODE_OK, new PaymentResult(result));
     }
 
     /**
@@ -124,7 +124,7 @@ public final class BasicNetworkService extends NetworkService implements Operati
             presenter.redirectPayment(redirect);
         } catch (PaymentException e) {
             PaymentResult result = PaymentResult.fromPaymentException(e);
-            presenter.onProcessPaymentResult(PaymentUI.RESULT_CODE_ERROR, result);        
+            presenter.onProcessPaymentResult(PaymentUI.RESULT_CODE_ERROR, result);
         }
     }
 }

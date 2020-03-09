@@ -28,7 +28,7 @@ import net.optile.payment.core.PaymentException;
 public class ChromeCustomTabs {
 
     private final static String PACKAGE_NAME = "com.android.chrome";
-    
+
     /**
      * Checks to see if this device supports Chrome Custom Tabs and if Chrome Custom Tabs are available.
      *
@@ -42,19 +42,21 @@ public class ChromeCustomTabs {
         Intent serviceIntent = new Intent(CustomTabsService.ACTION_CUSTOM_TABS_CONNECTION).setPackage(PACKAGE_NAME);
         ServiceConnection connection = new ServiceConnection() {
             @Override
-            public void onServiceConnected(ComponentName name, IBinder service) {}
+            public void onServiceConnected(ComponentName name, IBinder service) {
+            }
 
             @Override
-            public void onServiceDisconnected(ComponentName name) {}
+            public void onServiceDisconnected(ComponentName name) {
+            }
         };
         boolean available = context.bindService(serviceIntent, connection, Context.BIND_AUTO_CREATE | Context.BIND_WAIVE_PRIORITY);
         context.unbindService(connection);
         return available;
     }
 
-    /** 
+    /**
      * Open the url in the custom chrome tab
-     * 
+     *
      * @param context in which the browser window should be opened
      * @param uri to be opened in the external browser window
      */

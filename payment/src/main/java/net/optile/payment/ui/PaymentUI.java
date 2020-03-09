@@ -45,7 +45,7 @@ public final class PaymentUI {
 
     /** The group resource file id */
     private int groupResId;
-    
+
     private PaymentUI() {
         this.orientation = ActivityInfo.SCREEN_ORIENTATION_LOCKED;
     }

@@ -27,7 +27,7 @@ public class InteractionCode {
 
     // client side interaction codes
     public final static String VERIFY = "VERIFY";
-    
+
     /**
      * Check if the given type is a valid interaction code
      *

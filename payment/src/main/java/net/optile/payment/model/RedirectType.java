@@ -23,7 +23,7 @@ public class RedirectType {
     public final static String CANCEL = "CANCEL";
     public final static String PROVIDER = "PROVIDER";
     public final static String HANDLER3DS2 = "3DS2-HANDLER";
-    
+
     /**
      * Check if the given type is a valid Redirect type
      *

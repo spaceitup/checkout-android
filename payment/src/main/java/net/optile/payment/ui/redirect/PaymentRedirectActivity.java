@@ -13,7 +13,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import net.optile.payment.R;
 
-/** 
+/**
  * The Activity that is launched after the browser is redirecting to the deep link URL.
  */
 public class PaymentRedirectActivity extends Activity {

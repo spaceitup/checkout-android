@@ -26,9 +26,9 @@ import net.optile.payment.model.Redirect;
  */
 public final class RedirectService {
 
-    private final static String KEY_INTERACTION_CODE = "interactionCode";    
+    private final static String KEY_INTERACTION_CODE = "interactionCode";
     private final static String KEY_INTERACTION_REASON = "interactionReason";
-    
+
     /**
      * Check if payment redirects are supported for this device.
      *
@@ -39,25 +39,25 @@ public final class RedirectService {
         return ChromeCustomTabs.isSupported(context);
     }
 
-    /** 
-     * Open the Redirect for the given Context. 
-     * 
+    /**
+     * Open the Redirect for the given Context.
+     *
      * @param context in which the redirect should be started
      * @param redirect containing the address to which to redirect to
      */
     public static void open(Context context, Redirect redirect) throws PaymentException {
         if (!isSupported(context)) {
-            throw new PaymentException("Redirect payments are not supported by this device"); 
+            throw new PaymentException("Redirect payments are not supported by this device");
         }
         PaymentRedirectActivity.clearResultUri();
         Uri uri = Uri.parse(redirect.getUrl().toString());
         ChromeCustomTabs.open(context, uri);
     }
 
-    /** 
-     * Get the Redirect result if any has been received through i.e. 
+    /**
+     * Get the Redirect result if any has been received through i.e.
      * a deep link callback.
-     * 
+     *
      * @return the redirect OperationResult or null if not available
      */
     public static OperationResult getRedirectResult() {
