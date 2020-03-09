@@ -259,7 +259,8 @@ final class PaymentListPresenter implements PaymentSessionListener, NetworkServi
      * {@inheritDoc}
      */
     @Override
-    public void redirectPayment(Redirect redirect) {
+    public void redirectPayment(Redirect redirect) throws PaymentException {
+        throw new PaymentException("Redirects are not supported by this presenter");
     }
 
     private void handlePreparePaymentOk() {
