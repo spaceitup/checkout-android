@@ -9,6 +9,7 @@
 package net.optile.payment.ui.redirect;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import net.optile.payment.R;
@@ -27,11 +28,9 @@ public class PaymentRedirectActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_redirect);
-        resultUri = null;
 
-        if (getIntent() != null && getIntent().getData() != null) {
-            resultUri = getIntent().getData();
-        }
+        final Intent intent = getIntent();
+        resultUri = (intent == null) ? null : intent.getData();        
         finish();
     }
 
