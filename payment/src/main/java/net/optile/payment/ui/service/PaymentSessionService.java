@@ -145,11 +145,9 @@ public final class PaymentSessionService {
             loc.setLocalizationId(listUrl);
         }
         URL langUrl = null;
-        String code = null;
-
         for (PaymentNetwork network : networks.values()) {
             langUrl = network.getLink("lang");
-            code = network.getCode();
+            String code = network.getCode();
             if (langUrl == null) {
                 throw createPaymentException("Missing 'lang' link in PaymentNetwork: " + code, null);
             }

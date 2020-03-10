@@ -8,6 +8,8 @@
 
 package net.optile.payment.ui.service;
 
+import net.optile.payment.core.PaymentException;
+import net.optile.payment.model.Redirect;
 import net.optile.payment.ui.PaymentResult;
 
 /**
@@ -17,8 +19,17 @@ public interface NetworkServicePresenter {
 
     /**
      * Notify the presenter that the service is in progress and requires a progress indicator
+     *
+     * @param visible true to show the progress indicator, false to hide the progress
      */
-    void showProgress();
+    void showProgress(boolean visible);
+
+    /**
+     * Ask the network service to redirect the payment to an external address
+     *
+     * @param redirect containing the redirect data
+     */
+    void redirectPayment(Redirect redirect) throws PaymentException;
 
     /**
      * Called when the payment is prepared. The NetworkService can either pass the result through the Activity.onActivityResult or

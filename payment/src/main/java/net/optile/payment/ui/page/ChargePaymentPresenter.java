@@ -11,6 +11,7 @@ package net.optile.payment.ui.page;
 import static net.optile.payment.localization.LocalizationKey.CHARGE_INTERRUPTED;
 import static net.optile.payment.localization.LocalizationKey.ERROR_DEFAULT;
 
+import android.content.Context;
 import android.text.TextUtils;
 import net.optile.payment.core.PaymentError;
 import net.optile.payment.core.PaymentException;
@@ -19,11 +20,14 @@ import net.optile.payment.localization.Localization;
 import net.optile.payment.model.Interaction;
 import net.optile.payment.model.InteractionCode;
 import net.optile.payment.model.ListResult;
+import net.optile.payment.model.OperationResult;
+import net.optile.payment.model.Redirect;
 import net.optile.payment.ui.PaymentResult;
 import net.optile.payment.ui.PaymentUI;
 import net.optile.payment.ui.dialog.ThemedDialogFragment;
 import net.optile.payment.ui.dialog.ThemedDialogFragment.ThemedDialogListener;
 import net.optile.payment.ui.model.PaymentSession;
+import net.optile.payment.ui.redirect.RedirectService;
 import net.optile.payment.ui.service.NetworkService;
 import net.optile.payment.ui.service.NetworkServiceLookup;
 import net.optile.payment.ui.service.NetworkServicePresenter;
@@ -43,10 +47,10 @@ final class ChargePaymentPresenter implements PaymentSessionListener, NetworkSer
 
     private PaymentSession session;
     private String listUrl;
-
     private Operation operation;
     private ActivityResult activityResult;
     private NetworkService networkService;
+    private boolean redirected;
 
     /**
      * Create a new ChargePaymentPresenter
@@ -63,7 +67,10 @@ final class ChargePaymentPresenter implements PaymentSessionListener, NetworkSer
         this.operation = operation;
         this.listUrl = PaymentUI.getInstance().getListUrl();
 
-        if (activityResult != null) {
+        if (redirected) {
+            handleRedirectResult();
+            redirected = false;
+        } else if (activityResult != null) {
             handleActivityResult(activityResult);
             activityResult = null;
         } else {
@@ -169,8 +176,8 @@ final class ChargePaymentPresenter implements PaymentSessionListener, NetworkSer
      * {@inheritDoc}
      */
     @Override
-    public void showProgress() {
-        view.showProgress();
+    public void showProgress(boolean visible) {
+        view.showProgress(visible);
     }
 
     /**
@@ -196,6 +203,39 @@ final class ChargePaymentPresenter implements PaymentSessionListener, NetworkSer
                 handleProcessPaymentError(result);
                 break;
         }
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void redirectPayment(Redirect redirect) throws PaymentException {
+        Context context = view.getActivity();
+        if (!RedirectService.isSupported(context)) {
+            throw new PaymentException("Redirect through ChromeCustomTabs is not supported by this device");
+        }
+        view.showProgress(false);
+        RedirectService.open(context, redirect);
+        this.redirected = true;
+    }
+
+    private void handleRedirectResult() {
+        if (session == null) {
+            handleMissingCachedSession();
+            return;
+        }
+        OperationResult result = RedirectService.getRedirectResult();
+        if (result != null) {
+            networkService.onRedirectSuccess(result);
+        } else {
+            networkService.onRedirectCanceled();
+        }
+    }
+
+    private void handleMissingCachedSession() {
+        String message = "Missing cached session in ChargePaymentPresenter";
+        PaymentError error = new PaymentError(PaymentError.INTERNAL_ERROR, message);
+        closeWithErrorCode(message, error);
     }
 
     private void handleProcessPaymentError(PaymentResult result) {
@@ -243,9 +283,7 @@ final class ChargePaymentPresenter implements PaymentSessionListener, NetworkSer
 
     private void handleActivityResult(ActivityResult result) {
         if (session == null) {
-            String message = "Missing cached session in ChargePaymentPresenter";
-            PaymentError error = new PaymentError(PaymentError.INTERNAL_ERROR, message);
-            closeWithErrorCode(message, error);
+            handleMissingCachedSession();
             return;
         }
         if (result.requestCode == CHARGE_REQUEST_CODE) {
@@ -255,7 +293,7 @@ final class ChargePaymentPresenter implements PaymentSessionListener, NetworkSer
 
     private void loadPaymentSession(final String listUrl) {
         this.session = null;
-        view.showProgress();
+        view.showProgress(true);
         sessionService.loadPaymentSession(listUrl, view.getActivity());
     }
 

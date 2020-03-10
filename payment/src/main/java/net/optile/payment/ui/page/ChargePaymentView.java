@@ -19,8 +19,10 @@ interface ChargePaymentView {
 
     /**
      * Show the progress animation.
+     *
+     * @param visible show the progress when true, false otherwise
      */
-    void showProgress();
+    void showProgress(boolean visible);
 
     /**
      * Show a generic message to the user, notify the listener of events in this dialog.

@@ -33,8 +33,8 @@ public class TextInputModeFactoryTest {
         InputElement element = new InputElement();
         element.setName(name);
         element.setType(InputElementType.STRING);
-        
-        TextInputMode mode = TextInputModeFactory.createMode(10, 4, element); 
+
+        TextInputMode mode = TextInputModeFactory.createMode(10, 4, element);
         assertTrue(clazz.isInstance(mode));
     }
 }

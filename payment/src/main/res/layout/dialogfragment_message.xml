@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              android:id="@+id/layout"
-              android:layout_width="match_parent"
-              android:layout_height="wrap_content"
-              android:orientation="vertical">
+    android:id="@+id/layout"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
 
     <ScrollView
         android:id="@+id/scrollview"
@@ -27,21 +27,21 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="@dimen/pmborder_medium"
-                android:visibility="gone"/>
+                android:visibility="gone" />
 
             <TextView
                 android:id="@+id/text_message_notitle"
                 android:textAppearance="?attr/themedMessageDialogDetailsNoTitleStyle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:visibility="gone"/>
+                android:visibility="gone" />
 
             <TextView
                 android:id="@+id/text_message_title"
                 android:textAppearance="?attr/themedMessageDialogDetailsStyle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:visibility="gone"/>
+                android:visibility="gone" />
 
             <LinearLayout
                 android:id="@+id/layout_image"
@@ -56,24 +56,23 @@
                     android:textAppearance="?attr/themedMessageDialogImageLabelStyle"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:visibility="gone"/>
+                    android:visibility="gone" />
 
                 <ImageView
                     android:id="@+id/image_logo"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:contentDescription="@string/pmpage_contentdescription"/>
+                    android:contentDescription="@string/pmpage_contentdescription" />
 
                 <TextView
                     android:id="@+id/text_imagesuffix"
                     android:textAppearance="?attr/themedMessageDialogImageLabelStyle"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:visibility="gone"/>
+                    android:visibility="gone" />
             </LinearLayout>
         </LinearLayout>
     </ScrollView>
 
-    <include
-        layout="@layout/dialogfragment_buttons"/>
+    <include layout="@layout/dialogfragment_buttons" />
 </LinearLayout>

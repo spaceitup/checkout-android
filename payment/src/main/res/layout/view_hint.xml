@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              android:id="@+id/layout_hint"
-              android:layout_gravity="center"
-              android:visibility="gone"
-              android:layout_width="wrap_content"
-              android:layout_height="match_parent">
+    android:id="@+id/layout_hint"
+    android:layout_gravity="center"
+    android:visibility="gone"
+    android:layout_width="wrap_content"
+    android:layout_height="match_parent">
 
     <ImageView
         android:id="@+id/image_hint"
@@ -13,5 +13,5 @@
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:contentDescription="@string/pmpage_contentdescription"
-        android:src="?attr/widgetHintDrawable"/>
+        android:src="?attr/widgetHintDrawable" />
 </LinearLayout>
