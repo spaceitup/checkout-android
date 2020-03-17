@@ -32,5 +32,18 @@
             android:name=".confirm.ConfirmActivity"
             android:noHistory="true">
         </activity>
+
+        <activity
+            android:name="net.optile.payment.ui.redirect.PaymentRedirectActivity"
+            android:launchMode="singleTask">
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW"/>
+                <data
+                    android:scheme="${applicationId}.mobileredirect"/>
+                <category android:name="android.intent.category.DEFAULT"/>
+                <category android:name="android.intent.category.BROWSABLE"/>
+            </intent-filter>
+        </activity>
+
     </application>
 </manifest>
