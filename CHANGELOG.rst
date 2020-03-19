@@ -1,6 +1,11 @@
 Changelog - Android SDK
 -----------------------
 
+**Version android-sdk-2.1.4**
+
+* [PCX-428] - Support 3DS1 flow on Android SDK
+* [PCX-485] - Update external library versions used in the android SDK.
+
 **Version android-sdk-2.1.3**
 
 * [PCX-201] - Write Mastercard[credit cards] UI Test for Android SDK
