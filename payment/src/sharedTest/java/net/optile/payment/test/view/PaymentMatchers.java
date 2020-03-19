@@ -128,7 +128,7 @@ public final class PaymentMatchers {
                 if (!(view instanceof TextInputLayout)) {
                     return false;
                 }
-                CharSequence hintSequence = ((TextInputLayout)view).getHint();
+                CharSequence hintSequence = ((TextInputLayout) view).getHint();
                 String inputHint = "";
                 if (hintSequence != null) {
                     inputHint = hintSequence.toString();
@@ -149,13 +149,14 @@ public final class PaymentMatchers {
                 if (!(view instanceof TextInputLayout)) {
                     return false;
                 }
-                CharSequence errorSequence = ((TextInputLayout)view).getError();
+                CharSequence errorSequence = ((TextInputLayout) view).getError();
                 String inputError = "";
                 if (errorSequence != null) {
                     inputError = errorSequence.toString();
                 }
                 return expectedError.equals(inputError);
             }
+
             @Override
             public void describeTo(Description description) {
             }

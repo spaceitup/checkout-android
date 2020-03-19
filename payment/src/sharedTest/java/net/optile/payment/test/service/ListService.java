@@ -84,12 +84,12 @@ public class ListService {
         return new ListConfig(obj);
     }
 
-    /** 
+    /**
      * Helper method for creating a listUrl given the json resource id and presetFirst flag
-     * 
+     *
      * @param jsonResId resource ID pointing to the json config file
      * @param presetFirst should the ListConfig be initialized with the presetFirst true or false
-     * @return the newly created listUrl 
+     * @return the newly created listUrl
      */
     public static String createListUrl(int jsonResId, boolean presetFirst) throws JSONException, IOException {
         Context context = InstrumentationRegistry.getInstrumentation().getTargetContext();

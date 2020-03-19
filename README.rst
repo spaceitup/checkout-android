@@ -74,17 +74,17 @@ Example list request Json body:
             "email": "john.doe@example.com"
         },
         "payment": {
-            "amount": 9.99,
+            "amount": 0.99,
             "currency": "EUR",
-            "reference": "Shop optile/03-12-2018"
+            "reference": "Shop optile/04-03-2020"
         },
         "style": {
             "language": "en_US"
         },
         "callback": {
-            "returnUrl": "https://example.com/shop/success.html",
-            "summaryUrl": "https://example.com/shop/summary.html",
-            "cancelUrl": "https://example.com/shop/cancel.html",
+            "returnUrl": "https://apps.integration.oscato.com/mobile-redirect/?appId=com.example.app",
+            "summaryUrl": "https://apps.integration.oscato.com/mobile-redirect/?appId=com.example.app",
+            "cancelUrl": "https://apps.integration.oscato.com/mobile-redirect/?appId=com.example.app",
             "notificationUrl": "https://example.com/shop/notify.html"
         }
     }
@@ -149,7 +149,7 @@ Add the android-sdk dependency to the dependencies section of the app’s level 
 ::
 
     dependencies {
-        implementation "com.oscato.mobile:android-sdk:2.1.2"
+        implementation "com.oscato.mobile:android-sdk:2.1.4"
     }
 
 2 - Create payment session
@@ -304,6 +304,58 @@ Code sample how to charge a PresetAccount:
     PaymentUI paymentUI = PaymentUI.getInstance();
     paymentUI.setListUrl(listUrl);
     paymentUI.chargePresetAccount(this, PAYMENT_REQUEST_CODE, account);
+
+Redirect Networks
+=================
+
+The Android SDK supports redirect payment networks, redirect networks are networks that require a webbrowser to handle and finalize the payment. The Android SDK uses ChromeCustomTabs to open a browser window in which the payment will be completed. Once the payment is completed, the mobile app will be automatically reopened. The Android SDK will provide the PaymentResult in a similar fashion as with normal payment networks.
+
+List request setup
+------------------
+
+To enable redirect networks in the Android SDK it is important to define special callback URLs in the list request body. The "returnUrl", "cancelUrl" and "summaryUrl" must be set with special mobile-redirect URLs. These URLs must also contain the "appId" query parameter providing the unique identifier of the Android app. 
+
+Example of the callback mobile-redirect URLs:
+
+.. code-block:: json
+
+    "callback": {
+        "returnUrl": "https://apps.integration.oscato.com/mobile-redirect/?appId=com.example.app",
+        "summaryUrl": "https://apps.integration.oscato.com/mobile-redirect/?appId=com.example.app",
+        "cancelUrl": "https://apps.integration.oscato.com/mobile-redirect/?appId=com.example.app",
+        "notificationUrl": "https://example.com/shop/notify.html"
+    }
+
+Please change the environment "integration" to "sandbox" or "live" depending on the environment that is used. Also change the "com.example.app" example appId to the real application ID of the Android app. 
+
+Unique appId
+~~~~~~~~~~~~~
+
+The Android SDK uses the unique Android applicationId as the identifier for making sure the mobile app is reopened after the browser window is closed.
+
+::
+
+   https://play.google.com/store/apps/details?id=net.optile.dashboard
+
+This URL points to the Android application with the unique ID "net.optile.dashboard". The Android SDK uses this unique application ID to reopen the mobile app after the browser window is closed.
+
+AndroidManifest.xml
+-------------------
+
+The last change that should be made is to the following Activity definition in the AndroidManifest.xml file of the android app. 
+
+::
+
+     <activity
+         android:name="net.optile.payment.ui.redirect.PaymentRedirectActivity"
+         android:launchMode="singleTask">
+         <intent-filter>
+             <action android:name="android.intent.action.VIEW"/>
+             <data android:scheme="${applicationId}.mobileredirect"/>
+             <category android:name="android.intent.category.DEFAULT"/>
+             <category android:name="android.intent.category.BROWSABLE"/>
+        </intent-filter>
+    </activity>
 
 Customize Payment Page
 ======================

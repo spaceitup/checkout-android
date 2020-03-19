@@ -8,8 +8,8 @@
 
 package net.optile.payment.localization;
 
-import static net.optile.payment.localization.LocalizationKey.BUTTON_OK;
 import static net.optile.payment.localization.LocalizationKey.BUTTON_CANCEL;
+import static net.optile.payment.localization.LocalizationKey.BUTTON_OK;
 import static net.optile.payment.localization.LocalizationKey.BUTTON_RETRY;
 import static net.optile.payment.localization.LocalizationKey.BUTTON_UPDATE;
 import static net.optile.payment.localization.LocalizationKey.CHARGE_INTERRUPTED;

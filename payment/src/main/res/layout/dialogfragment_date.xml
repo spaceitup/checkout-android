@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              android:id="@+id/layout"
-              android:layout_width="wrap_content"
-              android:layout_height="wrap_content"
-              android:orientation="vertical"
-              android:paddingTop="@dimen/pmborder_large">
+    android:id="@+id/layout"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:paddingTop="@dimen/pmborder_large">
 
     <TextView
         android:id="@+id/text_title"
@@ -14,7 +14,7 @@
         android:layout_marginLeft="@dimen/pmborder_large"
         android:layout_marginRight="@dimen/pmborder_large"
         android:layout_marginBottom="@dimen/pmborder_medium"
-        android:visibility="gone"/>
+        android:visibility="gone" />
 
     <LinearLayout
         android:layout_width="wrap_content"
@@ -35,7 +35,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="@dimen/pmborder_medium"
-                android:descendantFocusability="blocksDescendants"/>
+                android:descendantFocusability="blocksDescendants" />
         </LinearLayout>
 
         <LinearLayout
@@ -48,11 +48,10 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/pmborder_medium"
-                android:descendantFocusability="blocksDescendants"/>
+                android:descendantFocusability="blocksDescendants" />
         </LinearLayout>
 
     </LinearLayout>
 
-    <include
-        layout="@layout/dialogfragment_buttons"/>
+    <include layout="@layout/dialogfragment_buttons" />
 </LinearLayout>

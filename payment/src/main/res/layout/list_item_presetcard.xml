@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              android:layout_width="match_parent"
-              android:layout_height="wrap_content">
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
 
     <com.google.android.material.card.MaterialCardView
         style="?attr/paymentCardStyle"
@@ -29,8 +29,7 @@
                 android:gravity="center_vertical"
                 android:orientation="horizontal">
 
-                <include
-                    layout="@layout/view_logos"/>
+                <include layout="@layout/view_logos" />
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -42,15 +41,16 @@
                         android:id="@+id/text_title"
                         android:textAppearance="?attr/presetCardTitleStyle"
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"/>
+                        android:layout_height="wrap_content" />
 
                     <TextView
                         android:id="@+id/text_subtitle"
                         android:textAppearance="?attr/presetCardSubtitleStyle"
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"/>
+                        android:layout_height="wrap_content" />
                 </LinearLayout>
             </LinearLayout>
+
             <LinearLayout
                 android:id="@+id/layout_form"
                 android:layout_width="match_parent"
@@ -58,7 +58,7 @@
                 android:layout_below="@id/layout_header"
                 android:orientation="vertical"
                 android:paddingEnd="@dimen/pmborder_xsmall"
-                android:visibility="gone"/>
+                android:visibility="gone" />
         </RelativeLayout>
     </com.google.android.material.card.MaterialCardView>
 

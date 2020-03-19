@@ -31,5 +31,6 @@ public class InteractionCodeTest {
         assertTrue(InteractionCode.isValid(InteractionCode.TRY_OTHER_ACCOUNT));
         assertTrue(InteractionCode.isValid(InteractionCode.RETRY));
         assertTrue(InteractionCode.isValid(InteractionCode.RELOAD));
+        assertTrue(InteractionCode.isValid(InteractionCode.VERIFY));
     }
 }

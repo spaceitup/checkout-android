@@ -67,16 +67,22 @@ public class CreditCardTests {
         onView(list).perform(actionOnViewInWidget(cardIndex, click(), "buttonWidget", R.id.button));
 
         onView(list).check(matches(isViewInWidget(cardIndex, hasTextInputLayoutHint("Card Number"), "number", R.id.textinputlayout)));
-        onView(list).check(matches(isViewInWidget(cardIndex, hasTextInputLayoutError("Missing card number"), "number", R.id.textinputlayout)));
+        onView(list)
+            .check(matches(isViewInWidget(cardIndex, hasTextInputLayoutError("Missing card number"), "number", R.id.textinputlayout)));
 
         onView(list).check(matches(isViewInWidget(cardIndex, hasTextInputLayoutHint("Holder Name"), "holderName", R.id.textinputlayout)));
-        onView(list).check(matches(isViewInWidget(cardIndex, hasTextInputLayoutError("Missing holder name"), "holderName", R.id.textinputlayout)));
+        onView(list)
+            .check(matches(isViewInWidget(cardIndex, hasTextInputLayoutError("Missing holder name"), "holderName", R.id.textinputlayout)));
 
-        onView(list).check(matches(isViewInWidget(cardIndex, hasTextInputLayoutHint("Valid Thru Month / Year"), "expiryDate", R.id.textinputlayout)));
-        onView(list).check(matches(isViewInWidget(cardIndex, hasTextInputLayoutError("Missing expiry date"), "expiryDate", R.id.textinputlayout)));
+        onView(list).check(
+            matches(isViewInWidget(cardIndex, hasTextInputLayoutHint("Valid Thru Month / Year"), "expiryDate", R.id.textinputlayout)));
+        onView(list)
+            .check(matches(isViewInWidget(cardIndex, hasTextInputLayoutError("Missing expiry date"), "expiryDate", R.id.textinputlayout)));
 
-        onView(list).check(matches(isViewInWidget(cardIndex, hasTextInputLayoutHint("Security Code"), "verificationCode", R.id.textinputlayout)));
-        onView(list).check(matches(isViewInWidget(cardIndex, hasTextInputLayoutError("Missing verification code"), "verificationCode", R.id.textinputlayout)));
+        onView(list)
+            .check(matches(isViewInWidget(cardIndex, hasTextInputLayoutHint("Security Code"), "verificationCode", R.id.textinputlayout)));
+        onView(list).check(matches(
+            isViewInWidget(cardIndex, hasTextInputLayoutError("Missing verification code"), "verificationCode", R.id.textinputlayout)));
 
         Intents.release();
     }
