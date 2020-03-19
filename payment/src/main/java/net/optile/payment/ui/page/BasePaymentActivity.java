@@ -8,6 +8,7 @@
 
 package net.optile.payment.ui.page;
 
+import static net.optile.payment.localization.LocalizationKey.BUTTON_OK;
 import static net.optile.payment.localization.LocalizationKey.BUTTON_CANCEL;
 import static net.optile.payment.localization.LocalizationKey.BUTTON_RETRY;
 import static net.optile.payment.localization.LocalizationKey.ERROR_CONNECTION;
@@ -67,7 +68,7 @@ abstract class BasePaymentActivity extends AppCompatActivity {
         MessageDialogFragment dialog = new MessageDialogFragment();
         dialog.setListener(listener);
         dialog.setMessage(message);
-        dialog.setNeutralButton(Localization.translate(BUTTON_CANCEL));
+        dialog.setNeutralButton(Localization.translate(BUTTON_OK));
         return dialog;
     }
 
