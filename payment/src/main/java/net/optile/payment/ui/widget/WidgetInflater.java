@@ -51,8 +51,8 @@ public final class WidgetInflater {
      * @return inflated and themed CheckBoxWidget
      */
     public static CheckBoxWidget inflateCheckBoxWidget(String name, ViewGroup parent, PaymentTheme theme) {
-        View layout = inflateWithThemedChild(parent, R.layout.widget_checkbox, R.layout.view_checkbox);
-        return new CheckBoxWidget(name, layout, theme);
+        View view = inflate(parent, R.layout.widget_checkbox);
+        return new CheckBoxWidget(name, view, theme);
     }
 
     /**
@@ -64,8 +64,8 @@ public final class WidgetInflater {
      * @return inflated and themed RegisterWidget
      */
     public static RegisterWidget inflateRegisterWidget(String name, ViewGroup parent, PaymentTheme theme) {
-        View layout = inflateWithThemedChild(parent, R.layout.widget_checkbox, R.layout.view_checkbox);
-        return new RegisterWidget(name, layout, theme);
+        View view = inflate(parent, R.layout.widget_checkbox);
+        return new RegisterWidget(name, view, theme);
     }
 
     /**
@@ -77,8 +77,8 @@ public final class WidgetInflater {
      * @return inflated and themed ButtonWidget
      */
     public static ButtonWidget inflateButtonWidget(String name, ViewGroup parent, PaymentTheme theme) {
-        View layout = inflateWithThemedChild(parent, R.layout.widget_button, R.layout.view_button);
-        return new ButtonWidget(name, layout, theme);
+        View view = inflate(parent, R.layout.widget_button);
+        return new ButtonWidget(name, view, theme);
     }
 
     /**
@@ -90,8 +90,8 @@ public final class WidgetInflater {
      * @return inflated and themed DateWidget
      */
     public static DateWidget inflateDateWidget(String name, ViewGroup parent, PaymentTheme theme) {
-        View layout = inflateTextInputView(parent);
-        return new DateWidget(name, layout, theme);
+        View view = inflate(parent, R.layout.widget_textinput);
+        return new DateWidget(name, view, theme);
     }
 
     /**
@@ -103,8 +103,8 @@ public final class WidgetInflater {
      * @return inflated and themed TextInputWidget
      */
     public static TextInputWidget inflateTextInputWidget(String name, ViewGroup parent, PaymentTheme theme) {
-        View layout = inflateTextInputView(parent);
-        return new TextInputWidget(name, layout, theme);
+        View view = inflate(parent, R.layout.widget_textinput);
+        return new TextInputWidget(name, view, theme);
     }
 
     /**
@@ -143,40 +143,6 @@ public final class WidgetInflater {
     private static View inflate(ViewGroup parent, int layoutResId) {
         LayoutInflater inflater = LayoutInflater.from(parent.getContext());
         return inflater.inflate(layoutResId, parent, false);
-    }
-
-    /**
-     * Inflate the input layout and add the hint element to it
-     *
-     * @param parent ViewGroup in which this inflated view will be added
-     * @return the inflated view
-     */
-    private static View inflateTextInputView(ViewGroup parent) {
-        View view = inflateWithThemedChild(parent, R.layout.widget_textinput, R.layout.view_textinput);
-        LayoutInflater inflater = LayoutInflater.from(parent.getContext());
-        ViewGroup group = view.findViewById(R.id.layout_viewholder);
-        inflater.inflate(R.layout.view_hint, group, true);
-        return view;
-    }
-
-    /**
-     * Inflate the layout and attach the themed internal view
-     *
-     * @param parent ViewGroup in which this inflated view will be added
-     * @param layoutResId layout resource id of the view that should be inflated
-     * @param childResId internal view resource id that should be inflated with the theme
-     * @return the inflated view
-     */
-    private static View inflateWithThemedChild(ViewGroup parent, int layoutResId, int childResId) {
-        Context context = parent.getContext();
-        LayoutInflater inflater = LayoutInflater.from(context);
-        View view = inflater.inflate(layoutResId, parent, false);
-        ViewGroup group = view.findViewById(R.id.layout_viewholder);
-        if (group == null) {
-            return view;
-        }
-        inflater.inflate(childResId, group, true);
-        return view;
     }
 }
 
