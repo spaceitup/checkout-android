@@ -38,9 +38,9 @@ ext {
     javaCompatVersion = JavaVersion.VERSION_1_8
 
     minSdkVersion = 19
-    compileSdkVersion = 28
-    targetSdkVersion = 28
-    buildToolsVersion = "28.0.3"
+    compileSdkVersion = 29
+    targetSdkVersion = 29
+    buildToolsVersion = "29.0.3"
     packagecloudWagonVersion = "0.0.6"
     examplesMinSdkVersion = 21
 

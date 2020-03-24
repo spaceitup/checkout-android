@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-            android:id="@+id/activity_basic"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
+    android:id="@+id/activity_basic"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
 
     <LinearLayout
         android:padding="@dimen/border_large"
@@ -23,13 +23,14 @@
                 android:layout_height="wrap_content"
                 android:checked="true"
                 android:layout_marginBottom="@dimen/border_small"
-                android:text="@string/theme_default"/>
+                android:text="@string/theme_default" />
+
             <RadioButton
                 android:id="@+id/radio_theme_custom"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="@dimen/border_small"
-                android:text="@string/theme_custom"/>
+                android:text="@string/theme_custom" />
         </RadioGroup>
 
         <EditText
@@ -38,7 +39,7 @@
             android:hint="@string/list_hint"
             android:inputType="textWebEmailAddress"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="@dimen/border_medium"/>
+            android:layout_marginBottom="@dimen/border_medium" />
 
         <Button
             style="@style/WidgetButtonStyle"
@@ -46,7 +47,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="@dimen/border_large"
-            android:text="@string/actionbutton"/>
+            android:text="@string/actionbutton" />
 
         <LinearLayout
             android:id="@+id/layout_sdkresponse"
@@ -64,47 +65,47 @@
                 android:layout_height="wrap_content"
                 android:text="@string/sdkheader"
                 android:layout_marginBottom="@dimen/border_medium"
-                android:textAppearance="@style/AppHeaderText"/>
+                android:textAppearance="@style/AppHeaderText" />
 
             <TextView
                 android:id="@+id/label_activityresultcode"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:textAppearance="@style/AppLabelText"
-                android:text="@string/activityresultcode"/>
+                android:text="@string/activityresultcode" />
 
             <TextView
                 android:id="@+id/text_activityresultcode"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="@dimen/border_medium"/>
+                android:layout_marginBottom="@dimen/border_medium" />
 
             <TextView
                 android:id="@+id/label_sdkresultinfo"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/sdkresultinfo"
-                android:textAppearance="@style/AppLabelText"/>
+                android:textAppearance="@style/AppLabelText" />
 
             <TextView
                 android:id="@+id/text_sdkresultinfo"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="@dimen/border_medium"/>
+                android:layout_marginBottom="@dimen/border_medium" />
 
             <TextView
                 android:id="@+id/label_sdkpaymenterror"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/sdkpaymenterror"
-                android:textAppearance="@style/AppLabelText"/>
+                android:textAppearance="@style/AppLabelText" />
 
             <TextView
                 android:id="@+id/text_sdkpaymenterror"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="@dimen/border_medium"
-                android:visibility="gone"/>
+                android:visibility="gone" />
         </LinearLayout>
 
         <LinearLayout
@@ -122,46 +123,46 @@
                 android:layout_height="wrap_content"
                 android:text="@string/apiheader"
                 android:layout_marginBottom="@dimen/border_medium"
-                android:textAppearance="@style/AppHeaderText"/>
+                android:textAppearance="@style/AppHeaderText" />
 
             <TextView
                 android:id="@+id/label_apiresultinfo"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/apiresultinfo"
-                android:textAppearance="@style/AppLabelText"/>
+                android:textAppearance="@style/AppLabelText" />
 
             <TextView
                 android:id="@+id/text_apiresultinfo"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="@dimen/border_medium"/>
+                android:layout_marginBottom="@dimen/border_medium" />
 
             <TextView
                 android:id="@+id/label_apiinteractioncode"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/apiinteractioncode"
-                android:textAppearance="@style/AppLabelText"/>
+                android:textAppearance="@style/AppLabelText" />
 
             <TextView
                 android:id="@+id/text_apiinteractioncode"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="@dimen/border_medium"/>
+                android:layout_marginBottom="@dimen/border_medium" />
 
             <TextView
                 android:id="@+id/label_apiinteractionreason"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/apiinteractionreason"
-                android:textAppearance="@style/AppLabelText"/>
+                android:textAppearance="@style/AppLabelText" />
 
             <TextView
                 android:id="@+id/text_apiinteractionreason"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="@dimen/border_medium"/>
+                android:layout_marginBottom="@dimen/border_medium" />
 
         </LinearLayout>
     </LinearLayout>
