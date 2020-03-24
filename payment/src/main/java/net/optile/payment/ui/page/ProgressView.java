@@ -8,11 +8,8 @@
 
 package net.optile.payment.ui.page;
 
-import android.graphics.BlendMode;
-import android.graphics.BlendModeColorFilter;
 import android.graphics.PorterDuff;
 import android.graphics.drawable.Drawable;
-import android.os.Build;
 import android.text.TextUtils;
 import android.util.TypedValue;
 import android.view.View;
@@ -74,6 +71,7 @@ class ProgressView {
      * The ProgressBar is styled programmatically since the Android SDK must support
      * the Android version 19 and indeterminateTint is not supported for older devices.
      */
+    @SuppressWarnings( "deprecation" )
     private void styleProgressBar() {
         TypedValue typedValue = new TypedValue();
         view.getContext().getTheme().resolveAttribute(R.attr.progressColor, typedValue, true);
@@ -82,15 +80,7 @@ class ProgressView {
         if (drawable == null || typedValue.resourceId == 0) {
             return;
         }
-        setColorFilter(drawable, ContextCompat.getColor(view.getContext(), typedValue.resourceId));
-    }
-
-    @SuppressWarnings("deprecation")
-    private void setColorFilter(Drawable drawable, int color) {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
-            drawable.setColorFilter(new BlendModeColorFilter(color, BlendMode.SRC_IN));
-        } else {
-            drawable.setColorFilter(color, PorterDuff.Mode.SRC_IN);
-        }
+        drawable.setColorFilter(ContextCompat.getColor(view.getContext(), typedValue.resourceId),
+            PorterDuff.Mode.SRC_IN);
     }
 }
