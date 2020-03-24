@@ -6,7 +6,7 @@
  * See the LICENSE file for more information.
  */
 
-package net.optile.payment.ui.service.basic;
+package net.optile.network.basic;
 
 import android.text.TextUtils;
 import net.optile.payment.core.PaymentNetworkCodes;
@@ -25,7 +25,7 @@ public final class BasicNetworkServiceFactory implements NetworkServiceFactory {
     @Override
     public boolean isNetworkSupported(ApplicableNetwork network) {
         String button = network.getButton();
-        return isCodeSupported(network.getCode()) && (TextUtils.isEmpty(button) || !button.contains("activate")) && !network.getRedirect();
+        return isCodeSupported(network.getCode()) && (TextUtils.isEmpty(button) || !button.contains("activate"));
     }
 
     /**

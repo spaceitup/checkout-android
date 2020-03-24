@@ -8,6 +8,7 @@
 
 package net.optile.payment.ui.page;
 
+import static net.optile.payment.localization.LocalizationKey.BUTTON_OK;
 import static net.optile.payment.localization.LocalizationKey.BUTTON_CANCEL;
 import static net.optile.payment.localization.LocalizationKey.BUTTON_RETRY;
 import static net.optile.payment.localization.LocalizationKey.ERROR_CONNECTION;
@@ -20,12 +21,12 @@ import android.view.ViewGroup;
 import androidx.appcompat.app.AppCompatActivity;
 import net.optile.payment.localization.Localization;
 import net.optile.payment.ui.PaymentResult;
+import net.optile.payment.ui.PaymentTheme;
 import net.optile.payment.ui.PaymentUI;
 import net.optile.payment.ui.dialog.DialogHelper;
 import net.optile.payment.ui.dialog.MessageDialogFragment;
 import net.optile.payment.ui.dialog.ThemedDialogFragment;
 import net.optile.payment.ui.dialog.ThemedDialogFragment.ThemedDialogListener;
-import net.optile.payment.ui.PaymentTheme;
 
 /**
  * The base activity for payment activities.
@@ -67,7 +68,7 @@ abstract class BasePaymentActivity extends AppCompatActivity {
         MessageDialogFragment dialog = new MessageDialogFragment();
         dialog.setListener(listener);
         dialog.setMessage(message);
-        dialog.setNeutralButton(Localization.translate(BUTTON_CANCEL));
+        dialog.setNeutralButton(Localization.translate(BUTTON_OK));
         return dialog;
     }
 

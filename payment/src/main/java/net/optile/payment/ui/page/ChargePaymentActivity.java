@@ -108,10 +108,22 @@ public final class ChargePaymentActivity extends BasePaymentActivity implements 
             this.operation = bundle.getParcelable(EXTRA_OPERATION);
         }
         setContentView(R.layout.activity_chargepayment);
+
         progressView = new ProgressView(findViewById(R.id.layout_progress));
         progressView.setLabels(Localization.translate(CHARGE_TITLE),
             Localization.translate(CHARGE_TEXT));
         this.presenter = new ChargePaymentPresenter(this);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void onSaveInstanceState(Bundle savedInstanceState) {
+        super.onSaveInstanceState(savedInstanceState);
+        if (this.operation != null) {
+            savedInstanceState.putParcelable(EXTRA_OPERATION, this.operation);
+        }
     }
 
     /**
@@ -139,6 +151,7 @@ public final class ChargePaymentActivity extends BasePaymentActivity implements 
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         PaymentResult result = PaymentResult.fromResultIntent(data);
+
         if (result != null) {
             presenter.setActivityResult(new ActivityResult(requestCode, resultCode, result));
         }
@@ -161,11 +174,11 @@ public final class ChargePaymentActivity extends BasePaymentActivity implements 
      * {@inheritDoc}
      */
     @Override
-    public void showProgress() {
+    public void showProgress(boolean visible) {
         if (!active) {
             return;
         }
-        progressView.setVisible(true);
+        progressView.setVisible(visible);
     }
 
     /**

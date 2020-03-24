@@ -21,6 +21,7 @@ import net.optile.payment.localization.Localization;
 import net.optile.payment.model.Interaction;
 import net.optile.payment.model.InteractionCode;
 import net.optile.payment.model.ListResult;
+import net.optile.payment.model.Redirect;
 import net.optile.payment.ui.PaymentResult;
 import net.optile.payment.ui.PaymentUI;
 import net.optile.payment.ui.dialog.ThemedDialogFragment;
@@ -244,8 +245,8 @@ final class PaymentListPresenter implements PaymentSessionListener, Localization
      * {@inheritDoc}
      */
     @Override
-    public void showProgress() {
-        view.showProgress();
+    public void showProgress(boolean visible) {
+        view.showProgress(visible);
     }
 
     private void handleActivityResult(ActivityResult activityResult) {
@@ -288,6 +289,14 @@ final class PaymentListPresenter implements PaymentSessionListener, Localization
                 handlePreparePaymentError(result);
                 break;
         }
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void redirectPayment(Redirect redirect) throws PaymentException {
+        throw new PaymentException("Redirects are not supported by this presenter");
     }
 
     private void handlePreparePaymentOk() {
@@ -429,7 +438,7 @@ final class PaymentListPresenter implements PaymentSessionListener, Localization
      * The Charge result is received from the ChargePaymentActivity. Error messages are not displayed by this presenter since
      * the ChargePaymentActivity has taken care of displaying error and warning messages.
      *
-     * @param activityResult
+     * @param activityResult result received after a charge has been performed
      */
     private void onChargeActivityResult(ActivityResult activityResult) {
         this.operation = null;
@@ -486,7 +495,7 @@ final class PaymentListPresenter implements PaymentSessionListener, Localization
     private void loadPaymentSession(String listUrl) {
         this.session = null;
         view.clearList();
-        view.showProgress();
+        view.showProgress(true);
         sessionService.loadPaymentSession(listUrl, view.getActivity());
     }
 

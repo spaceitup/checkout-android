@@ -23,15 +23,14 @@ import net.optile.payment.ui.PaymentTheme;
 import net.optile.payment.ui.PaymentUI;
 import net.optile.payment.ui.service.LocalizationService;
 
-
 /**
  * Class with helper methods to setup a PaymentSession in the Android SDK
  */
 public class PaymentSessionHelper {
 
-    /** 
+    /**
      * Setup the PaymentUI so it can be used by the internal screens in the Android SDK
-     * 
+     *
      * @param jsonResId resource id of the json list body
      * @param presetFirst set presetFirst to true or false in the list body
      */

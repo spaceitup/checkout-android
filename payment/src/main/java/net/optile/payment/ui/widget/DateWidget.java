@@ -19,10 +19,10 @@ import net.optile.payment.core.PaymentException;
 import net.optile.payment.form.Operation;
 import net.optile.payment.model.InputElement;
 import net.optile.payment.model.SelectOption;
+import net.optile.payment.ui.PaymentTheme;
 import net.optile.payment.ui.dialog.DateDialogFragment;
 import net.optile.payment.ui.dialog.ThemedDialogFragment;
 import net.optile.payment.ui.dialog.ThemedDialogFragment.ThemedDialogListener;
-import net.optile.payment.ui.PaymentTheme;
 import net.optile.payment.util.PaymentUtils;
 import net.optile.payment.validation.ValidationResult;
 
@@ -56,7 +56,6 @@ public final class DateWidget extends InputLayoutWidget implements ThemedDialogL
                 showDateDialogFragment();
             }
         });
-        setReducedView();
     }
 
     /**

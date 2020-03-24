@@ -8,7 +8,7 @@
 
 package net.optile.payment.ui.list;
 
-import static net.optile.payment.localization.LocalizationKey.BUTTON_UPDATE;
+import static net.optile.payment.localization.LocalizationKey.BUTTON_OK;
 
 import java.net.URL;
 import java.util.ArrayList;
@@ -29,7 +29,6 @@ import android.widget.LinearLayout.LayoutParams;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
-import androidx.fragment.app.DialogFragment;
 import androidx.recyclerview.widget.RecyclerView;
 import net.optile.payment.R;
 import net.optile.payment.core.PaymentInputType;
@@ -37,8 +36,8 @@ import net.optile.payment.localization.Localization;
 import net.optile.payment.model.AccountMask;
 import net.optile.payment.model.InputElement;
 import net.optile.payment.model.PaymentMethod;
-import net.optile.payment.ui.model.PaymentCard;
 import net.optile.payment.ui.PaymentTheme;
+import net.optile.payment.ui.model.PaymentCard;
 import net.optile.payment.ui.widget.ButtonWidget;
 import net.optile.payment.ui.widget.DateWidget;
 import net.optile.payment.ui.widget.FormWidget;
@@ -47,9 +46,10 @@ import net.optile.payment.ui.widget.SelectWidget;
 import net.optile.payment.ui.widget.TextInputWidget;
 import net.optile.payment.ui.widget.WidgetInflater;
 import net.optile.payment.ui.widget.WidgetPresenter;
+import net.optile.payment.ui.widget.input.TextInputMode;
+import net.optile.payment.ui.widget.input.TextInputModeFactory;
 import net.optile.payment.util.ImageHelper;
 import net.optile.payment.util.PaymentUtils;
-import net.optile.payment.validation.ValidationResult;
 
 /**
  * The PaymentCardViewHolder holding the header and input widgets
@@ -58,12 +58,12 @@ public abstract class PaymentCardViewHolder extends RecyclerView.ViewHolder {
 
     final static String BUTTON_WIDGET = "buttonWidget";
     final static String LABEL_WIDGET = "labelWidget";
-
     final static float ALPHA_SELECTED = 1f;
     final static float ALPHA_DESELECTED = 0.4f;
     final static int ANIM_DURATION = 200;
     final static int COLUMN_SIZE_LANDSCAPE = 3;
     final static int COLUMN_SIZE_PORTRAIT = 2;
+    final static int GROUPSIZE = 4;
 
     final ViewGroup formLayout;
     final ListAdapter adapter;
@@ -75,7 +75,7 @@ public abstract class PaymentCardViewHolder extends RecyclerView.ViewHolder {
     PaymentCardViewHolder(ListAdapter adapter, View parent) {
         super(parent);
         this.adapter = adapter;
-
+        this.presenter = new CardWidgetPresenter(this, adapter);
         this.formLayout = parent.findViewById(R.id.layout_form);
         this.widgets = new LinkedHashMap<>();
         this.logoLayout = parent.findViewById(R.id.tablelayout_logo);
@@ -88,43 +88,6 @@ public abstract class PaymentCardViewHolder extends RecyclerView.ViewHolder {
                 adapter.onItemClicked(getAdapterPosition());
             }
         });
-
-        this.presenter = new WidgetPresenter() {
-            @Override
-            public void onActionClicked() {
-                adapter.onActionClicked(getAdapterPosition());
-            }
-
-            @Override
-            public void onHintClicked(String type) {
-                adapter.onHintClicked(getAdapterPosition(), type);
-            }
-
-            @Override
-            public void hideKeyboard() {
-                adapter.hideKeyboard(getAdapterPosition());
-            }
-
-            @Override
-            public void showKeyboard() {
-                adapter.showKeyboard(getAdapterPosition());
-            }
-
-            @Override
-            public void showDialogFragment(DialogFragment dialog, String tag) {
-                adapter.showDialogFragment(getAdapterPosition(), dialog, tag);
-            }
-
-            @Override
-            public ValidationResult validate(String type, String value1, String value2) {
-                return adapter.validate(getAdapterPosition(), type, value1, value2);
-            }
-
-            @Override
-            public void onTextInputChanged(String type, String text) {
-                adapter.onTextInputChanged(getAdapterPosition(), type, text);
-            }
-        };
     }
 
     /**
@@ -282,7 +245,6 @@ public abstract class PaymentCardViewHolder extends RecyclerView.ViewHolder {
         }
     }
 
-
     void bindSelectWidget(SelectWidget widget, InputElement element) {
         bindIconResource(widget);
         widget.setLabel(element.getLabel());
@@ -290,14 +252,20 @@ public abstract class PaymentCardViewHolder extends RecyclerView.ViewHolder {
     }
 
     void bindTextInputWidget(TextInputWidget widget, String code, InputElement element) {
+        String name = element.getName();
         boolean visible = Localization.hasAccountHint(code, widget.getName());
+        int maxLength = adapter.getMaxLength(code, name);
+        TextInputMode mode = TextInputModeFactory.createMode(maxLength, GROUPSIZE, element);
 
         bindIconResource(widget);
-        widget.setLabel(element.getLabel());
-        widget.setInputElementType(element.getType());
-        widget.setMaxLength(adapter.getMaxLength(code, element.getName()));
         widget.setHint(visible);
+        widget.setLabel(element.getLabel());
         widget.setValidation();
+        widget.setTextInputMode(mode);
+
+        if (PaymentInputType.VERIFICATION_CODE.equals(name)) {
+            widget.setReducedView();
+        }
     }
 
     void bindIconResource(FormWidget widget) {
@@ -318,7 +286,8 @@ public abstract class PaymentCardViewHolder extends RecyclerView.ViewHolder {
         widget.setYearInputElement(card.getInputElement(PaymentInputType.EXPIRY_YEAR));
 
         widget.setLabel(Localization.translateAccountLabel(code, name));
-        widget.setDialogButtonLabel(Localization.translate(code, BUTTON_UPDATE));
+        widget.setDialogButtonLabel(Localization.translate(code, BUTTON_OK));
+        widget.setReducedView();
     }
 
     void bindButtonWidget(PaymentCard card) {
