@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <merge xmlns:android="http://schemas.android.com/apk/res/android">
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -14,7 +15,7 @@
             android:layout_marginStart="@dimen/pmborder_xsmall"
             android:layout_marginEnd="@dimen/pmborder_xxsmall"
             android:contentDescription="@string/pmpage_contentdescription"
-            android:src="@drawable/ic_checkmark"/>
+            android:src="@drawable/ic_checkmark" />
 
         <com.google.android.material.textfield.TextInputLayout
             style="@style/WidgetTextInputStyle"
@@ -28,7 +29,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/personal_name_value"
-                android:singleLine="true"/>
+                android:singleLine="true" />
         </com.google.android.material.textfield.TextInputLayout>
     </LinearLayout>
 
@@ -46,7 +47,7 @@
             android:layout_marginStart="@dimen/pmborder_xsmall"
             android:layout_marginEnd="@dimen/pmborder_xxsmall"
             android:contentDescription="@string/pmpage_contentdescription"
-            android:src="@drawable/ic_checkmark"/>
+            android:src="@drawable/ic_checkmark" />
 
         <com.google.android.material.textfield.TextInputLayout
             style="@style/WidgetTextInputStyle"
@@ -60,7 +61,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/personal_address_value"
-                android:singleLine="true"/>
+                android:singleLine="true" />
         </com.google.android.material.textfield.TextInputLayout>
     </LinearLayout>
 
@@ -78,7 +79,7 @@
             android:layout_marginStart="@dimen/pmborder_xsmall"
             android:layout_marginEnd="@dimen/pmborder_xxsmall"
             android:contentDescription="@string/pmpage_contentdescription"
-            android:src="@drawable/ic_checkmark"/>
+            android:src="@drawable/ic_checkmark" />
 
         <com.google.android.material.textfield.TextInputLayout
             style="@style/WidgetTextInputStyle"
@@ -92,7 +93,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/personal_city_value"
-                android:singleLine="true"/>
+                android:singleLine="true" />
         </com.google.android.material.textfield.TextInputLayout>
     </LinearLayout>
 
@@ -110,7 +111,7 @@
             android:layout_marginStart="@dimen/pmborder_xsmall"
             android:layout_marginEnd="@dimen/pmborder_xxsmall"
             android:contentDescription="@string/pmpage_contentdescription"
-            android:src="@drawable/ic_checkmark"/>
+            android:src="@drawable/ic_checkmark" />
 
         <com.google.android.material.textfield.TextInputLayout
             style="@style/WidgetTextInputStyle"
@@ -124,7 +125,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/personal_email_value"
-                android:singleLine="true"/>
+                android:singleLine="true" />
         </com.google.android.material.textfield.TextInputLayout>
     </LinearLayout>
 
@@ -142,7 +143,7 @@
             android:layout_marginStart="@dimen/pmborder_xsmall"
             android:layout_marginEnd="@dimen/pmborder_xxsmall"
             android:contentDescription="@string/pmpage_contentdescription"
-            android:src="@drawable/ic_checkmark"/>
+            android:src="@drawable/ic_checkmark" />
 
         <com.google.android.material.textfield.TextInputLayout
             style="@style/WidgetTextInputStyle"
@@ -156,7 +157,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/personal_phone_value"
-                android:singleLine="true"/>
+                android:singleLine="true" />
         </com.google.android.material.textfield.TextInputLayout>
     </LinearLayout>
 
