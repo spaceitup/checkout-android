@@ -85,7 +85,7 @@ class ProgressView {
         setColorFilter(drawable, ContextCompat.getColor(view.getContext(), typedValue.resourceId));
     }
 
-    @SuppressWarnings( "deprecation" )
+    @SuppressWarnings("deprecation")
     private void setColorFilter(Drawable drawable, int color) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
             drawable.setColorFilter(new BlendModeColorFilter(color, BlendMode.SRC_IN));

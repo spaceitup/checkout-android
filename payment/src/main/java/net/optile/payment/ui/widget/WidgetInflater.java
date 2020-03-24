@@ -8,7 +8,6 @@
 
 package net.optile.payment.ui.widget;
 
-import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
