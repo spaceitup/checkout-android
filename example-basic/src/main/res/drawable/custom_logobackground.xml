@@ -1,12 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <shape xmlns:android="http://schemas.android.com/apk/res/android"
-       android:shape="rectangle">
-    <stroke android:width="@dimen/custom_logostroke"
-            android:color="@color/custom_accent"/>
-    <padding android:left="@dimen/custom_logopadding"
-             android:top="@dimen/custom_logopadding"
-             android:right="@dimen/custom_logopadding"
-             android:bottom="@dimen/custom_logopadding"/>
-    <corners android:radius="@dimen/custom_logoradius"/>
+    android:shape="rectangle">
+    <stroke
+        android:width="@dimen/custom_logostroke"
+        android:color="@color/custom_accent" />
+    <padding
+        android:left="@dimen/custom_logopadding"
+        android:top="@dimen/custom_logopadding"
+        android:right="@dimen/custom_logopadding"
+        android:bottom="@dimen/custom_logopadding" />
+    <corners android:radius="@dimen/custom_logoradius" />
 </shape>
 

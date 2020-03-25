@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-          package="net.optile.example.demo">
+    package="net.optile.example.demo">
 
     <application
         android:allowBackup="true"
@@ -14,34 +14,30 @@
             android:theme="@style/SettingsTheme">
 
             <intent-filter>
-                <action android:name="android.intent.action.MAIN"/>
-                <category android:name="android.intent.category.LAUNCHER"/>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
 
         <activity
             android:name=".checkout.CheckoutActivity"
-            android:windowSoftInputMode="stateAlwaysHidden">
-        </activity>
+            android:windowSoftInputMode="stateAlwaysHidden"></activity>
 
-        <activity
-            android:name=".summary.SummaryActivity">
-        </activity>
+        <activity android:name=".summary.SummaryActivity"></activity>
 
         <activity
             android:name=".confirm.ConfirmActivity"
-            android:noHistory="true">
-        </activity>
+            android:noHistory="true"></activity>
 
         <activity
             android:name="net.optile.payment.ui.redirect.PaymentRedirectActivity"
             android:launchMode="singleTask">
             <intent-filter>
-                <action android:name="android.intent.action.VIEW"/>
-                <data
-                    android:scheme="${applicationId}.mobileredirect"/>
-                <category android:name="android.intent.category.DEFAULT"/>
-                <category android:name="android.intent.category.BROWSABLE"/>
+                <action android:name="android.intent.action.VIEW" />
+                <data android:scheme="${applicationId}.mobileredirect" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
             </intent-filter>
         </activity>
 

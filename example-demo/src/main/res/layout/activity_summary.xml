@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.coordinatorlayout.widget.CoordinatorLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/layout_coordinator"
     android:layout_width="match_parent"
@@ -8,8 +7,7 @@
     android:background="@color/pmcolor_list"
     android:fitsSystemWindows="true">
 
-    <include
-        layout="@layout/layout_header"/>
+    <include layout="@layout/layout_header" />
 
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
@@ -27,7 +25,7 @@
                 android:layout_height="@dimen/pmprogressbar_size"
                 android:layout_marginTop="@dimen/pmborder_xlarge"
                 android:indeterminateTint="@color/pmcolor_primary"
-                android:layout_centerInParent="true"/>
+                android:layout_centerInParent="true" />
 
             <LinearLayout
                 android:id="@+id/layout_content"
@@ -36,11 +34,9 @@
                 android:visibility="gone"
                 android:orientation="vertical">
 
-                <include
-                    layout="@layout/layout_product"/>
+                <include layout="@layout/layout_product" />
 
-                <include
-                    layout="@layout/layout_summarydetails"/>
+                <include layout="@layout/layout_summarydetails" />
 
             </LinearLayout>
 
