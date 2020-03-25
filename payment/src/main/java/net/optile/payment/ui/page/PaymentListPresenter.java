@@ -13,6 +13,7 @@ import static net.optile.payment.localization.LocalizationKey.ERROR_DEFAULT;
 import java.net.URL;
 import java.util.Map;
 
+import android.content.Context;
 import android.text.TextUtils;
 import net.optile.payment.core.PaymentError;
 import net.optile.payment.core.PaymentException;
@@ -67,6 +68,7 @@ final class PaymentListPresenter implements PaymentSessionListener, Localization
         this.view = view;
         sessionService = new PaymentSessionService();
         sessionService.setListener(this);
+
         localizationService = new LocalizationService();
         localizationService.setListener(this);
     }
@@ -81,7 +83,7 @@ final class PaymentListPresenter implements PaymentSessionListener, Localization
             handleActivityResult(activityResult);
             activityResult = null;
         } else if (this.session != null && this.session.isListUrl(this.listUrl)) {
-            view.showPaymentSession(this.session);
+            loadLocalizations(this.session);
         } else {
             loadPaymentSession(this.listUrl);
         }
@@ -92,7 +94,8 @@ final class PaymentListPresenter implements PaymentSessionListener, Localization
      */
     void onStop() {
         sessionService.stop();
-
+        localizationService.stop();
+        
         if (networkService != null) {
             networkService.stop();
         }
@@ -142,28 +145,10 @@ final class PaymentListPresenter implements PaymentSessionListener, Localization
      * {@inheritDoc}
      */
     @Override
-    public void onPaymentSessionSuccess(PaymentSession session) {
-        ListResult listResult = session.getListResult();
-        Interaction interaction = listResult.getInteraction();
-
-        switch (interaction.getCode()) {
-            case InteractionCode.PROCEED:
-                handleLoadSessionOk(session);
-                break;
-            default:
-                PaymentResult result = new PaymentResult(listResult.getResultInfo(), interaction);
-                closeWithCanceledCode(result);
-        }
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
     public void onPaymentSessionError(Throwable cause) {
         PaymentResult result = PaymentResult.fromThrowable(cause);
         if (result.hasError()) {
-            handleLoadSessionError(result);
+            handleLoadingError(result);
         } else {
             closeWithCanceledCode(result);
         }
@@ -191,10 +176,22 @@ final class PaymentListPresenter implements PaymentSessionListener, Localization
      * {@inheritDoc}
      */
     @Override
+    public void onLocalizationSuccess(Localization localization) {
+        if (reloadInteraction != null) {
+            showInteractionDialog(reloadInteraction);
+            reloadInteraction = null;
+        }
+        view.showPaymentSession(this.session);
+    }
+    
+    /**
+     * {@inheritDoc}
+     */
+    @Override
     public void onLocalizationError(Throwable cause) {
         PaymentResult result = PaymentResult.fromThrowable(cause);
         if (result.hasError()) {
-            handleLocalizationError(result);
+            handleLoadingError(result);
         } else {
             closeWithCanceledCode(result);
         }
@@ -203,31 +200,36 @@ final class PaymentListPresenter implements PaymentSessionListener, Localization
     private void handleLoadSessionOk(PaymentSession session) {
         this.operation = null;
         this.session = session;
-
-        if (reloadInteraction != null) {
-            showInteractionDialog(reloadInteraction);
-            reloadInteraction = null;
-        }
-        view.showPaymentSession(session);
+        loadLocalizations(session);
     }
 
-    private void handleLoadSessionError(PaymentResult result) {
+    private void loadLocalizations(PaymentSession session) {
+        Context context = view.getActivity();
+        Localization localization = Localization.getInstance();
+        localizationService.loadLocalizations(context, localization, session);
+    }
+    
+    private void handleLoadingError(PaymentResult result) {
         PaymentError error = result.getPaymentError();
         if (error.isError(PaymentError.CONN_ERROR)) {
-            handleLoadSessionConnError(result);
+            handleLoadingConnError(result);
         } else {
             closeWithErrorCode(result);
         }
     }
 
-    private void handleLoadSessionConnError(PaymentResult result) {
+    private void handleLoadingConnError(PaymentResult result) {
         view.setPaymentResult(PaymentUI.RESULT_CODE_ERROR, result);
         view.showConnectionDialog(new ThemedDialogListener() {
             @Override
             public void onButtonClicked(ThemedDialogFragment dialog, int which) {
                 switch (which) {
                     case ThemedDialogFragment.BUTTON_POSITIVE:
-                        loadPaymentSession(listUrl);
+                        if (session == null) {
+                            loadPaymentSession(listUrl);
+                        } else {
+                            loadLocalizations(session);
+                        }
                         break;
                     default:
                         view.close();

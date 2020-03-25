@@ -9,6 +9,7 @@
 package net.optile.payment.localization;
 
 import static net.optile.payment.localization.LocalizationKey.BUTTON_CANCEL;
+import static net.optile.payment.localization.LocalizationKey.BUTTON_OK;
 import static net.optile.payment.localization.LocalizationKey.BUTTON_RETRY;
 import static net.optile.payment.localization.LocalizationKey.BUTTON_UPDATE;
 import static net.optile.payment.localization.LocalizationKey.CHARGE_INTERRUPTED;
@@ -19,9 +20,11 @@ import static net.optile.payment.localization.LocalizationKey.ERROR_DEFAULT;
 import static net.optile.payment.localization.LocalizationKey.LIST_HEADER_NETWORKS;
 import static net.optile.payment.localization.LocalizationKey.LIST_TITLE;
 
+import java.util.HashMap;
 import java.util.Map;
 import android.content.Context;
 import android.text.TextUtils;
+import net.optile.payment.R;
 
 /**
  * Class storing local localizations
@@ -37,6 +40,7 @@ public final class LocalLocalizationHolder implements LocalizationHolder {
      */
     public LocalLocalizationHolder(Context context) {
         this.map = new HashMap<>();
+        map.put(BUTTON_OK, context.getString(R.string.pmlocal_button_ok));
         map.put(BUTTON_CANCEL, context.getString(R.string.pmlocal_button_cancel));
         map.put(BUTTON_RETRY, context.getString(R.string.pmlocal_button_retry));
         map.put(BUTTON_UPDATE, context.getString(R.string.pmlocal_button_update));

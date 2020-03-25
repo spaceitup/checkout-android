@@ -8,6 +8,8 @@
 
 package net.optile.payment.ui.service;
 
+import net.optile.payment.localization.Localization;
+
 /**
  * Listener to be called by the LocalizationService to inform about request updates.
  */
@@ -15,8 +17,10 @@ public interface LocalizationListener {
 
     /**
      * Called when the Localization files were successfully loaded by the service.
+     *
+     * @param localization contains the loaded localizations
      */
-    void onLocalizationSuccess();
+    void onLocalizationSuccess(Localization localization);
 
     /**
      * Called when an error occurred during loading the localization files.

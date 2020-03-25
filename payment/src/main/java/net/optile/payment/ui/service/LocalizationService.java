@@ -101,7 +101,7 @@ public final class LocalizationService {
     }
 
     /**
-     * Load all localizations for the payment session
+     * Load all localizations for the payment session in this service
      *
      * @param context needed to load the local localization store
      * @param localization in which the localizations should be stored
@@ -122,7 +122,7 @@ public final class LocalizationService {
             public void onSuccess(Localization loc) {
                 task = null;
                 if (listener != null) {
-                    listener.onLocalizationSuccess();
+                    listener.onLocalizationSuccess(loc);
                 }
             }
             @Override

@@ -28,6 +28,8 @@ import net.optile.payment.ui.dialog.ThemedDialogFragment;
 import net.optile.payment.ui.dialog.ThemedDialogFragment.ThemedDialogListener;
 import net.optile.payment.ui.model.PaymentSession;
 import net.optile.payment.ui.redirect.RedirectService;
+import net.optile.payment.ui.service.LocalizationListener;
+import net.optile.payment.ui.service.LocalizationService;
 import net.optile.payment.ui.service.NetworkService;
 import net.optile.payment.ui.service.NetworkServiceLookup;
 import net.optile.payment.ui.service.NetworkServicePresenter;
@@ -38,13 +40,13 @@ import net.optile.payment.ui.service.PaymentSessionService;
  * The ChargePaymentPresenter takes care of posting the operation to the Payment API.
  * First this presenter will load the list, checks if the operation is present in the list and then post the operation to the Payment API.
  */
-final class ChargePaymentPresenter implements PaymentSessionListener, NetworkServicePresenter {
+final class ChargePaymentPresenter implements PaymentSessionListener, NetworkServicePresenter, LocalizationListener {
 
     private final static int CHARGE_REQUEST_CODE = 1;
-
     private final ChargePaymentView view;
     private final PaymentSessionService sessionService;
-
+    private final LocalizationService localizationService;
+    
     private PaymentSession session;
     private String listUrl;
     private Operation operation;
@@ -61,6 +63,9 @@ final class ChargePaymentPresenter implements PaymentSessionListener, NetworkSer
         this.view = view;
         sessionService = new PaymentSessionService();
         sessionService.setListener(this);
+
+        localizationService = new LocalizationService();
+        localizationService.setListener(this);
     }
 
     void onStart(Operation operation) {
@@ -83,7 +88,8 @@ final class ChargePaymentPresenter implements PaymentSessionListener, NetworkSer
      */
     void onStop() {
         sessionService.stop();
-
+        localizationService.stop();
+        
         if (networkService != null) {
             networkService.stop();
         }
@@ -123,7 +129,7 @@ final class ChargePaymentPresenter implements PaymentSessionListener, NetworkSer
     public void onPaymentSessionError(Throwable cause) {
         PaymentResult result = PaymentResult.fromThrowable(cause);
         if (result.hasError()) {
-            handleLoadSessionError(result);
+            handleLoadingError(result);
         } else {
             closeWithCanceledCode(result);
         }
@@ -137,28 +143,59 @@ final class ChargePaymentPresenter implements PaymentSessionListener, NetworkSer
             return;
         }
         this.session = session;
+        loadLocalizations(session);
+    }
+
+        /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void onLocalizationSuccess(Localization localization) {
         networkService = NetworkServiceLookup.getService(operation.getCode());
         networkService.setPresenter(this);
         processPayment();
     }
+    
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void onLocalizationError(Throwable cause) {
+        PaymentResult result = PaymentResult.fromThrowable(cause);
+        if (result.hasError()) {
+            handleLoadingError(result);
+        } else {
+            closeWithCanceledCode(result);
+        }
+    }
 
-    private void handleLoadSessionError(PaymentResult result) {
+    private void loadLocalizations(PaymentSession session) {
+        Context context = view.getActivity();
+        Localization localization = Localization.getInstance();
+        localizationService.loadLocalizations(context, localization, session);
+    }
+    
+    private void handleLoadingError(PaymentResult result) {
         PaymentError error = result.getPaymentError();
         if (error.isError(PaymentError.CONN_ERROR)) {
-            handleLoadSessionConnError(result);
+            handleConnectionError(result);
         } else {
             closeWithErrorCode(result);
         }
     }
 
-    private void handleLoadSessionConnError(PaymentResult result) {
+    private void handleConnectionError(PaymentResult result) {
         view.setPaymentResult(PaymentUI.RESULT_CODE_ERROR, result);
         view.showConnectionDialog(new ThemedDialogListener() {
             @Override
             public void onButtonClicked(ThemedDialogFragment dialog, int which) {
                 switch (which) {
                     case ThemedDialogFragment.BUTTON_POSITIVE:
-                        loadPaymentSession(listUrl);
+                        if (session == null) {
+                            loadPaymentSession(listUrl);
+                        } else {
+                            loadLocalizations(session);
+                        }
                         break;
                     default:
                         view.close();

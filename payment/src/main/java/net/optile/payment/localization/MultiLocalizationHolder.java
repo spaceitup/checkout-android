@@ -12,8 +12,6 @@ import android.text.TextUtils;
 
 /**
  * LocalizationHolder containing multiple child localization holders
- *
- *
  */
 public final class MultiLocalizationHolder implements LocalizationHolder {
 
