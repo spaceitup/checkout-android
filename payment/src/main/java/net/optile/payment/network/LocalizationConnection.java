@@ -8,28 +8,18 @@
 
 package net.optile.payment.network;
 
-import static net.optile.payment.core.PaymentError.API_ERROR;
 import static net.optile.payment.core.PaymentError.CONN_ERROR;
-import static net.optile.payment.core.PaymentError.INTERNAL_ERROR;
-import static net.optile.payment.core.PaymentError.PROTOCOL_ERROR;
-import static net.optile.payment.core.PaymentError.SECURITY_ERROR;
 
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.Properties;
 
-import com.google.gson.JsonParseException;
-
-import android.net.Uri;
-import android.text.TextUtils;
 import net.optile.payment.core.PaymentException;
 import net.optile.payment.localization.LocalizationHolder;
 import net.optile.payment.localization.PropLocalizationHolder;
-import net.optile.payment.model.ListResult;
 
 /**
  * Class implementing the communication with the payment API to load localization files

@@ -15,12 +15,8 @@ import static net.optile.payment.core.PaymentError.PROTOCOL_ERROR;
 import static net.optile.payment.core.PaymentError.SECURITY_ERROR;
 
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
-import java.net.URL;
-import java.util.Properties;
 
 import com.google.gson.JsonParseException;
 

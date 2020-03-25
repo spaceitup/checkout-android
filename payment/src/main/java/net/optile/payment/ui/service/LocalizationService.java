@@ -8,50 +8,26 @@
 
 package net.optile.payment.ui.service;
 
-import java.util.HashMap;
-import java.util.Map;
-
-import android.content.Context;
-import android.text.TextUtils;
-import net.optile.payment.R;
-
 import java.net.MalformedURLException;
 import java.net.URL;
-import java.util.ArrayList;
-import java.util.LinkedHashMap;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Properties;
 import java.util.concurrent.Callable;
 
 import android.content.Context;
-import android.text.TextUtils;
-import net.optile.payment.core.PaymentError;
 import net.optile.payment.core.PaymentException;
 import net.optile.payment.core.WorkerSubscriber;
 import net.optile.payment.core.WorkerTask;
 import net.optile.payment.core.Workers;
+import net.optile.payment.localization.LocalLocalizationHolder;
 import net.optile.payment.localization.Localization;
 import net.optile.payment.localization.LocalizationCache;
 import net.optile.payment.localization.LocalizationHolder;
-import net.optile.payment.localization.LocalLocalizationHolder;
 import net.optile.payment.localization.MultiLocalizationHolder;
-import net.optile.payment.model.AccountRegistration;
-import net.optile.payment.model.ApplicableNetwork;
-import net.optile.payment.model.ListResult;
-import net.optile.payment.model.Networks;
-import net.optile.payment.model.PresetAccount;
-import net.optile.payment.network.ListConnection;
 import net.optile.payment.network.LocalizationConnection;
-import net.optile.payment.resource.PaymentGroup;
-import net.optile.payment.resource.ResourceLoader;
-import net.optile.payment.ui.PaymentUI;
-import net.optile.payment.ui.model.AccountCard;
-import net.optile.payment.ui.model.NetworkCard;
 import net.optile.payment.ui.model.PaymentNetwork;
 import net.optile.payment.ui.model.PaymentSession;
-import net.optile.payment.ui.model.PresetCard;
-import net.optile.payment.validation.Validator;
 
 /**
  * The LocalizationService providing asynchronize loading of the localizations needed for presenting the list of payment networks and showing errors.
@@ -64,7 +40,7 @@ public final class LocalizationService {
 
     /** Memory cache of localizations */
     private static LocalizationCache cache = new LocalizationCache();
-    
+
     /**
      * Create a new LocalizationService, this service is used to load the localizations.
      */
@@ -125,6 +101,7 @@ public final class LocalizationService {
                     listener.onLocalizationSuccess(loc);
                 }
             }
+
             @Override
             public void onError(Throwable cause) {
                 task = null;
@@ -135,8 +112,9 @@ public final class LocalizationService {
         });
         Workers.getInstance().forNetworkTasks().execute(task);
     }
-    
-    private Localization asyncLoadLocalizations(Context context, Localization localization, PaymentSession session) throws PaymentException {
+
+    private Localization asyncLoadLocalizations(Context context, Localization localization, PaymentSession session)
+        throws PaymentException {
         String listUrl = session.getListUrl();
         if (!listUrl.equals(cache.getCacheId())) {
             cache.clear();
@@ -152,9 +130,10 @@ public final class LocalizationService {
         return localization;
     }
 
-    private Map<String, LocalizationHolder> loadNetworkLocalizations(List<PaymentNetwork> networks, LocalizationHolder fallback) throws PaymentException {
+    private Map<String, LocalizationHolder> loadNetworkLocalizations(List<PaymentNetwork> networks, LocalizationHolder fallback)
+        throws PaymentException {
         Map<String, LocalizationHolder> map = new HashMap<>();
-        
+
         for (PaymentNetwork network : networks) {
             URL url = getNetworkLanguageUrl(network);
             String langUrl = url.toString();

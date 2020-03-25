@@ -50,7 +50,7 @@ final class PaymentListPresenter implements PaymentSessionListener, Localization
     private final PaymentListView view;
     private final PaymentSessionService sessionService;
     private final LocalizationService localizationService;
-    
+
     private PaymentSession session;
     private String listUrl;
     private Interaction reloadInteraction;
@@ -95,7 +95,7 @@ final class PaymentListPresenter implements PaymentSessionListener, Localization
     void onStop() {
         sessionService.stop();
         localizationService.stop();
-        
+
         if (networkService != null) {
             networkService.stop();
         }
@@ -183,7 +183,7 @@ final class PaymentListPresenter implements PaymentSessionListener, Localization
         }
         view.showPaymentSession(this.session);
     }
-    
+
     /**
      * {@inheritDoc}
      */
@@ -208,7 +208,7 @@ final class PaymentListPresenter implements PaymentSessionListener, Localization
         Localization localization = Localization.getInstance();
         localizationService.loadLocalizations(context, localization, session);
     }
-    
+
     private void handleLoadingError(PaymentResult result) {
         PaymentError error = result.getPaymentError();
         if (error.isError(PaymentError.CONN_ERROR)) {

@@ -46,7 +46,7 @@ final class ChargePaymentPresenter implements PaymentSessionListener, NetworkSer
     private final ChargePaymentView view;
     private final PaymentSessionService sessionService;
     private final LocalizationService localizationService;
-    
+
     private PaymentSession session;
     private String listUrl;
     private Operation operation;
@@ -89,7 +89,7 @@ final class ChargePaymentPresenter implements PaymentSessionListener, NetworkSer
     void onStop() {
         sessionService.stop();
         localizationService.stop();
-        
+
         if (networkService != null) {
             networkService.stop();
         }
@@ -146,7 +146,7 @@ final class ChargePaymentPresenter implements PaymentSessionListener, NetworkSer
         loadLocalizations(session);
     }
 
-        /**
+    /**
      * {@inheritDoc}
      */
     @Override
@@ -155,7 +155,7 @@ final class ChargePaymentPresenter implements PaymentSessionListener, NetworkSer
         networkService.setPresenter(this);
         processPayment();
     }
-    
+
     /**
      * {@inheritDoc}
      */
@@ -174,7 +174,7 @@ final class ChargePaymentPresenter implements PaymentSessionListener, NetworkSer
         Localization localization = Localization.getInstance();
         localizationService.loadLocalizations(context, localization, session);
     }
-    
+
     private void handleLoadingError(PaymentResult result) {
         PaymentError error = result.getPaymentError();
         if (error.isError(PaymentError.CONN_ERROR)) {

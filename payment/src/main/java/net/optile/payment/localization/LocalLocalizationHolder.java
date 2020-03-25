@@ -22,6 +22,7 @@ import static net.optile.payment.localization.LocalizationKey.LIST_TITLE;
 
 import java.util.HashMap;
 import java.util.Map;
+
 import android.content.Context;
 import android.text.TextUtils;
 import net.optile.payment.R;
@@ -34,7 +35,7 @@ public final class LocalLocalizationHolder implements LocalizationHolder {
     private final Map<String, String> map;
 
     /**
-     * Construct a new local localization holder 
+     * Construct a new local localization holder
      *
      * @param context containing the local localizations
      */

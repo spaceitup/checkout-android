@@ -71,7 +71,7 @@ class ProgressView {
      * The ProgressBar is styled programmatically since the Android SDK must support
      * the Android version 19 and indeterminateTint is not supported for older devices.
      */
-    @SuppressWarnings( "deprecation" )
+    @SuppressWarnings("deprecation")
     private void styleProgressBar() {
         TypedValue typedValue = new TypedValue();
         view.getContext().getTheme().resolveAttribute(R.attr.progressColor, typedValue, true);

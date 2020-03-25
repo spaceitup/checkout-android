@@ -13,9 +13,9 @@ package net.optile.payment.localization;
  */
 public interface LocalizationHolder {
 
-    /** 
-     * Translate the given key and if the key was not found return the default value 
-     * 
+    /**
+     * Translate the given key and if the key was not found return the default value
+     *
      * @param key used to identify the translation
      * @param defValue the default value to be returned if this holder does not contain the translation
      */

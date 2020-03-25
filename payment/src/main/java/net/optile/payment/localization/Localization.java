@@ -10,9 +10,7 @@ package net.optile.payment.localization;
 
 import static net.optile.payment.localization.LocalizationKey.ACCOUNTHINT_TITLE;
 
-import java.util.HashMap;
 import java.util.Map;
-import java.util.Properties;
 
 import android.text.TextUtils;
 import net.optile.payment.model.Interaction;

@@ -20,7 +20,7 @@ public final class PropLocalizationHolder implements LocalizationHolder {
     private final Properties properties;
 
     /**
-     * Construct a new localization holder 
+     * Construct a new localization holder
      *
      * @param properties containing the localizations
      */

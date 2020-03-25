@@ -18,7 +18,7 @@ public final class MultiLocalizationHolder implements LocalizationHolder {
     private final LocalizationHolder[] holders;
 
     /**
-     * Construct a new multi localization holder 
+     * Construct a new multi localization holder
      *
      * @param holders array containing the chained localization holders
      */

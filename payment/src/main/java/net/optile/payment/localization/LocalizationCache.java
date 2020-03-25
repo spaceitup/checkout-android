@@ -15,7 +15,7 @@ import java.util.concurrent.ConcurrentHashMap;
  * Class for caching the Localization files based on a cache id
  */
 public class LocalizationCache {
-    
+
     private String cacheId;
     private Map<String, LocalizationHolder> cache;
 
@@ -35,7 +35,7 @@ public class LocalizationCache {
         this.cacheId = null;
         cache.clear();
     }
-    
+
     public LocalizationHolder get(String key) {
         return cache.get(key);
     }

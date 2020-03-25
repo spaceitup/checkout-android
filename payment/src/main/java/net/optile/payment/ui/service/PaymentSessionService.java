@@ -8,13 +8,10 @@
 
 package net.optile.payment.ui.service;
 
-import java.net.MalformedURLException;
-import java.net.URL;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Properties;
 import java.util.concurrent.Callable;
 
 import android.content.Context;
@@ -24,7 +21,6 @@ import net.optile.payment.core.PaymentException;
 import net.optile.payment.core.WorkerSubscriber;
 import net.optile.payment.core.WorkerTask;
 import net.optile.payment.core.Workers;
-import net.optile.payment.localization.Localization;
 import net.optile.payment.model.AccountRegistration;
 import net.optile.payment.model.ApplicableNetwork;
 import net.optile.payment.model.ListResult;

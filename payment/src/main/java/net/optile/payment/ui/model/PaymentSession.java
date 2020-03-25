@@ -69,7 +69,7 @@ public final class PaymentSession {
         }
         return list;
     }
-    
+
     public Validator getValidator() {
         return validator;
     }
@@ -83,7 +83,7 @@ public final class PaymentSession {
         URL url = getLink("self");
         return url != null ? url.toString() : null;
     }
-    
+
     public boolean isListUrl(String listUrl) {
         URL url = getLink("self");
         return url != null && url.toString().equals(listUrl);
