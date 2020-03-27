@@ -12,7 +12,6 @@ package net.optile.payment.localization;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertTrue;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -25,7 +24,6 @@ import org.robolectric.RobolectricTestRunner;
 
 import android.content.Context;
 import androidx.test.core.app.ApplicationProvider;
-import net.optile.payment.R;
 
 @RunWith(RobolectricTestRunner.class)
 public class LocalizationTest {
@@ -50,8 +48,8 @@ public class LocalizationTest {
         Map<String, LocalizationHolder> networks = new HashMap<>();
         networks.put("NETWORK", createNetworkLocalizationHolder("networkKey", "networkValue", 5, shared));
         loc.setLocalizations(shared, networks);
-        
-        assertEquals("sharedValue2", loc.getSharedTranslation("sharedKey2", null));        
+
+        assertEquals("sharedValue2", loc.getSharedTranslation("sharedKey2", null));
         assertEquals("defValue", loc.getSharedTranslation("foo", "defValue"));
     }
 
@@ -63,14 +61,14 @@ public class LocalizationTest {
 
         Map<String, LocalizationHolder> networks = new HashMap<>();
         networks.put("VISA", createNetworkLocalizationHolder("VISA-Key", "VISA-Value", 5, fallback));
-        networks.put("MASTERCARD", createNetworkLocalizationHolder("MASTERCARD-Key", "MASTERCARD-Value", 5, fallback));        
+        networks.put("MASTERCARD", createNetworkLocalizationHolder("MASTERCARD-Key", "MASTERCARD-Value", 5, fallback));
         loc.setLocalizations(null, networks);
 
         assertEquals("VISA-Value2", loc.getNetworkTranslation("VISA", "VISA-Key2", null));
         assertEquals("defValue", loc.getNetworkTranslation("MASTERCARD", "VISA-Key2", "defValue"));
 
         assertEquals("Cancel", loc.getNetworkTranslation("VISA", LocalizationKey.BUTTON_CANCEL, null));
-        assertEquals("defValue", loc.getNetworkTranslation("VISA", "foo", "defValue"));        
+        assertEquals("defValue", loc.getNetworkTranslation("VISA", "foo", "defValue"));
     }
 
     @Test
@@ -79,37 +77,38 @@ public class LocalizationTest {
         Context context = ApplicationProvider.getApplicationContext();
         LocalizationHolder shared = new LocalLocalizationHolder(context);
         loc.setLocalizations(shared, null);
-        
+
         assertEquals("OK", loc.getSharedTranslation(LocalizationKey.BUTTON_OK, null));
         assertEquals("defValue", loc.getSharedTranslation("foo", "defValue"));
     }
-    
-    /** 
+
+    /**
      * Create a properties based localization holder with one key value pair
-     * 
+     *
      * @param propKey template for the key, index will be appended
      * @param propValue template for teh value, index will be appended
      * @param nrProps the number of property key/value pairs that should be added to the holder
-     * @return the newly created PropLocalizationHolder 
+     * @return the newly created PropLocalizationHolder
      */
     public final static PropLocalizationHolder createPropLocalizationHolder(String propKey, String propValue, int nrProps) {
         Properties prop = new Properties();
-        for (int i = 0 ; i < nrProps ; i++) {
+        for (int i = 0; i < nrProps; i++) {
             prop.put(propKey + i, propValue + i);
         }
         return new PropLocalizationHolder(prop);
     }
 
     /**
-     * Create a network localization holder for testing, 
-     * 
+     * Create a network localization holder for testing,
+     *
      * @param propKey template for the key, index will be appended
      * @param propValue template for teh value, index will be appended
      * @param nrProps the number of property key/value pairs that should be added to the holder
      * @param fallback the localization holder used as fallback
-     * @return newly created MultiLocalizationHolder 
+     * @return newly created MultiLocalizationHolder
      */
-    public final static MultiLocalizationHolder createNetworkLocalizationHolder(String propKey, String propValue, int nrProps, LocalizationHolder fallback) {
+    public final static MultiLocalizationHolder createNetworkLocalizationHolder(String propKey, String propValue, int nrProps,
+        LocalizationHolder fallback) {
         LocalizationHolder network = createPropLocalizationHolder(propKey, propValue, nrProps);
         return new MultiLocalizationHolder(network, fallback);
     }

@@ -1,6 +1,6 @@
 package net.optile.payment.localization;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -29,6 +29,6 @@ public class MultiLocalizationHolderTest {
         assertEquals("visa2", multi.translate("visa2", null));
         assertEquals("mastercard3", multi.translate("mastercard3", null));
         assertEquals("jcb1", multi.translate("jcb1", null));
-        assertEquals("defValue", multi.translate("foo", "defValue"));        
+        assertEquals("defValue", multi.translate("foo", "defValue"));
     }
 }
