@@ -14,6 +14,8 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Properties;
 
 import org.junit.Before;
@@ -31,7 +33,7 @@ public class LocalizationTest {
     @Before
     public void before() {
         Localization loc = Localization.getInstance();
-        loc.clearAll();
+        loc.clear();
     }
 
     @Test
@@ -41,104 +43,74 @@ public class LocalizationTest {
     }
 
     @Test
-    public void setLocalTranslations() {
+    public void setLocalizations() {
         Localization loc = Localization.getInstance();
-        LocalTranslations trans = new LocalTranslations();
-        loc.setLocalTranslations(trans);
-        assertTrue(loc.hasLocalTranslations());
+
+        LocalizationHolder shared = createPropLocalizationHolder("sharedKey", "sharedValue", 5);
+        Map<String, LocalizationHolder> networks = new HashMap<>();
+        networks.put("NETWORK", createNetworkLocalizationHolder("networkKey", "networkValue", 5, shared));
+        loc.setLocalizations(shared, networks);
+        
+        assertEquals("sharedValue2", loc.getSharedTranslation("sharedKey2", null));        
+        assertEquals("defValue", loc.getSharedTranslation("foo", "defValue"));
     }
 
     @Test
-    public void setSharedFile() {
-        String testKey = "testKey";
-        String testValue = "testValue";
-
+    public void getNetworkLocalizations() {
         Localization loc = Localization.getInstance();
-        Properties shared = new Properties();
-        shared.put(testKey, testValue);
-        loc.setSharedFile(shared);
-        assertEquals(Localization.translate(testKey), testValue);
-    }
-
-    @Test
-    public void hasSharedFile() {
-        Localization loc = Localization.getInstance();
-        loc.setSharedFile(new Properties());
-        assertTrue(loc.hasSharedFile());
-    }
-
-    @Test
-    public void putFile() {
-        String fileName = "fileName";
-        String testKey = "testKey";
-
-        Localization loc = Localization.getInstance();
-        Properties file = new Properties();
-        file.put(testKey, "testValue");
-        loc.putFile(fileName, file);
-        assertEquals(Localization.translate(fileName, testKey, null), "testValue");
-    }
-
-    @Test
-    public void hasFile() {
-        Localization loc = Localization.getInstance();
-        loc.putFile("testFile", new Properties());
-        assertTrue(loc.hasFile("testFile"));
-    }
-
-    @Test
-    public void translateTestMissingFileDefaultValue() {
-        String defaultValue = "defaultValue";
-        Localization loc = Localization.getInstance();
-        assertEquals(Localization.translate("fileName", "testKey", defaultValue), defaultValue);
-    }
-
-    @Test
-    public void translateTestMissingFileKeyDefaultValue() {
-        String fileName = "fileName";
-        String defaultValue = "defaultValue";
-
-        Localization loc = Localization.getInstance();
-        Properties file = new Properties();
-        loc.putFile(fileName, file);
-        assertEquals(Localization.translate(fileName, "testKey", defaultValue), defaultValue);
-    }
-
-    @Test
-    public void translateTestFallbackToShared() {
-        String fileName = "fileName";
-        String testKey = "testKey";
-
-        Localization loc = Localization.getInstance();
-        Properties file = new Properties();
-        loc.putFile(fileName, file);
-
-        Properties shared = new Properties();
-        shared.put("testKey", "testValue");
-        loc.setSharedFile(shared);
-        assertEquals(Localization.translate(fileName, "testKey", null), "testValue");
-    }
-
-    @Test
-    public void translateTestFallbackToLocalTranslations() {
-        String fileName = "fileName";
-        String testKey = "testKey";
-
         Context context = ApplicationProvider.getApplicationContext();
-        String title = context.getString(R.string.pmlocal_list_title);
+        LocalizationHolder fallback = new LocalLocalizationHolder(context);
 
+        Map<String, LocalizationHolder> networks = new HashMap<>();
+        networks.put("VISA", createNetworkLocalizationHolder("VISA-Key", "VISA-Value", 5, fallback));
+        networks.put("MASTERCARD", createNetworkLocalizationHolder("MASTERCARD-Key", "MASTERCARD-Value", 5, fallback));        
+        loc.setLocalizations(null, networks);
+
+        assertEquals("VISA-Value2", loc.getNetworkTranslation("VISA", "VISA-Key2", null));
+        assertEquals("defValue", loc.getNetworkTranslation("MASTERCARD", "VISA-Key2", "defValue"));
+
+        assertEquals("Cancel", loc.getNetworkTranslation("VISA", LocalizationKey.BUTTON_CANCEL, null));
+        assertEquals("defValue", loc.getNetworkTranslation("VISA", "foo", "defValue"));        
+    }
+
+    @Test
+    public void getSharedLocalizations() {
         Localization loc = Localization.getInstance();
-        LocalTranslations trans = new LocalTranslations();
-        trans.load(context);
-        loc.setLocalTranslations(trans);
+        Context context = ApplicationProvider.getApplicationContext();
+        LocalizationHolder shared = new LocalLocalizationHolder(context);
+        loc.setLocalizations(shared, null);
+        
+        assertEquals("OK", loc.getSharedTranslation(LocalizationKey.BUTTON_OK, null));
+        assertEquals("defValue", loc.getSharedTranslation("foo", "defValue"));
+    }
+    
+    /** 
+     * Create a properties based localization holder with one key value pair
+     * 
+     * @param propKey template for the key, index will be appended
+     * @param propValue template for teh value, index will be appended
+     * @param nrProps the number of property key/value pairs that should be added to the holder
+     * @return the newly created PropLocalizationHolder 
+     */
+    public final static PropLocalizationHolder createPropLocalizationHolder(String propKey, String propValue, int nrProps) {
+        Properties prop = new Properties();
+        for (int i = 0 ; i < nrProps ; i++) {
+            prop.put(propKey + i, propValue + i);
+        }
+        return new PropLocalizationHolder(prop);
+    }
 
-        Properties file = new Properties();
-        file.put(testKey, "fileValue");
-        loc.putFile(fileName, file);
-
-        Properties shared = new Properties();
-        shared.put(testKey, "sharedValue");
-        loc.setSharedFile(shared);
-        assertEquals(Localization.translate(fileName, LocalizationKey.LIST_TITLE, null), title);
+    /**
+     * Create a network localization holder for testing, 
+     * 
+     * @param propKey template for the key, index will be appended
+     * @param propValue template for teh value, index will be appended
+     * @param nrProps the number of property key/value pairs that should be added to the holder
+     * @param fallback the localization holder used as fallback
+     * @return newly created MultiLocalizationHolder 
+     */
+    public final static MultiLocalizationHolder createNetworkLocalizationHolder(String propKey, String propValue, int nrProps, LocalizationHolder fallback) {
+        LocalizationHolder network = createPropLocalizationHolder(propKey, propValue, nrProps);
+        return new MultiLocalizationHolder(network, fallback);
     }
 }
