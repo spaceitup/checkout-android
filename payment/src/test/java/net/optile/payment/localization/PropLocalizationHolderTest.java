@@ -20,15 +20,10 @@ import org.robolectric.RobolectricTestRunner;
 public class PropLocalizationHolderTest {
 
     @Test
-    public void translate_missingKey_defaultValue() {
+    public void translate() {
         String defValue = "defValue";
         LocalizationHolder holder = LocalizationTest.createPropLocalizationHolder("key", "value", 5);
-        assertEquals(defValue, holder.translate("foo", defValue));
-    }
-
-    @Test
-    public void translate_existingKey_keyValue() {
-        LocalizationHolder holder = LocalizationTest.createPropLocalizationHolder("key", "value", 5);
-        assertEquals("value3", holder.translate("key3", null));
+        assertEquals("value3", holder.translate("key3"));
+        assertEquals(null, holder.translate("foo"));
     }
 }

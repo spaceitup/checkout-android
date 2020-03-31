@@ -142,7 +142,7 @@ public final class Localization {
      */
     public String getNetworkTranslation(String networkCode, String key, String defValue) {
         LocalizationHolder holder = networks != null ? networks.get(networkCode) : null;
-        return holder != null ? holder.translate(key, defValue) : defValue;
+        return getTranslationFromHolder(holder, key, defValue);
     }
 
     /**
@@ -154,9 +154,14 @@ public final class Localization {
      * @return the translation or defValue if the translation was not found
      */
     public String getSharedTranslation(String key, String defValue) {
-        return shared != null ? shared.translate(key, defValue) : defValue;
+        return getTranslationFromHolder(shared, key, defValue);
     }
 
+    private String getTranslationFromHolder(LocalizationHolder holder, String key, String defValue) {
+        String value = holder != null ? holder.translate(key) : null;
+        return TextUtils.isEmpty(value) ? defValue : value;        
+    }
+    
     private static class InstanceHolder {
         static final Localization INSTANCE = new Localization();
     }

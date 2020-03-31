@@ -58,8 +58,7 @@ public final class LocalLocalizationHolder implements LocalizationHolder {
      * {@inheritDoc}
      */
     @Override
-    public String translate(String key, String defValue) {
-        String value = map.get(key);
-        return TextUtils.isEmpty(value) ? defValue : value;
+    public String translate(String key) {
+        return map.get(key);
     }
 }

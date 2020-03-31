@@ -14,10 +14,10 @@ package net.optile.payment.localization;
 public interface LocalizationHolder {
 
     /**
-     * Translate the given key and if the key was not found return the default value
+     * Translate the given key if available, return null if not found
      *
      * @param key used to identify the translation
-     * @param defValue the default value to be returned if this holder does not contain the translation
+     * @return the translated value or null if the key does not exist
      */
-    public String translate(String key, String defValue);
+    public String translate(String key);
 }

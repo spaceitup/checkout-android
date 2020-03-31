@@ -30,15 +30,13 @@ public final class MultiLocalizationHolder implements LocalizationHolder {
      * {@inheritDoc}
      */
     @Override
-    public String translate(String key, String defValue) {
-        String value;
+    public String translate(String key) {
         for (LocalizationHolder holder : holders) {
-            value = holder.translate(key, null);
-
+            String value = holder.translate(key);
             if (!TextUtils.isEmpty(value)) {
                 return value;
             }
         }
-        return defValue;
+        return null;
     }
 }

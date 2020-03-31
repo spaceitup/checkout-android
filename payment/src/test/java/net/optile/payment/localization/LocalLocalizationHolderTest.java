@@ -26,16 +26,16 @@ public class LocalLocalizationHolderTest {
     public void loadLocalLocalization() {
         Context context = ApplicationProvider.getApplicationContext();
         LocalLocalizationHolder holder = new LocalLocalizationHolder(context);
-        assertNotNull(holder.translate(LocalizationKey.BUTTON_OK, null));
-        assertNotNull(holder.translate(LocalizationKey.BUTTON_CANCEL, null));
-        assertNotNull(holder.translate(LocalizationKey.BUTTON_RETRY, null));
-        assertNotNull(holder.translate(LocalizationKey.BUTTON_UPDATE, null));
-        assertNotNull(holder.translate(LocalizationKey.LIST_TITLE, null));
-        assertNotNull(holder.translate(LocalizationKey.LIST_HEADER_NETWORKS, null));
-        assertNotNull(holder.translate(LocalizationKey.CHARGE_TITLE, null));
-        assertNotNull(holder.translate(LocalizationKey.CHARGE_TEXT, null));
-        assertNotNull(holder.translate(LocalizationKey.CHARGE_INTERRUPTED, null));
-        assertNotNull(holder.translate(LocalizationKey.ERROR_CONNECTION, null));
-        assertNotNull(holder.translate(LocalizationKey.ERROR_DEFAULT, null));
+        assertNotNull(holder.translate(LocalizationKey.BUTTON_OK));
+        assertNotNull(holder.translate(LocalizationKey.BUTTON_CANCEL));
+        assertNotNull(holder.translate(LocalizationKey.BUTTON_RETRY));
+        assertNotNull(holder.translate(LocalizationKey.BUTTON_UPDATE));
+        assertNotNull(holder.translate(LocalizationKey.LIST_TITLE));
+        assertNotNull(holder.translate(LocalizationKey.LIST_HEADER_NETWORKS));
+        assertNotNull(holder.translate(LocalizationKey.CHARGE_TITLE));
+        assertNotNull(holder.translate(LocalizationKey.CHARGE_TEXT));
+        assertNotNull(holder.translate(LocalizationKey.CHARGE_INTERRUPTED));
+        assertNotNull(holder.translate(LocalizationKey.ERROR_CONNECTION));
+        assertNotNull(holder.translate(LocalizationKey.ERROR_DEFAULT));
     }
 }

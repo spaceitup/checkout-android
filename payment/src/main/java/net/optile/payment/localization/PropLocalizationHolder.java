@@ -32,8 +32,7 @@ public final class PropLocalizationHolder implements LocalizationHolder {
      * {@inheritDoc}
      */
     @Override
-    public String translate(String key, String defValue) {
-        String value = properties.getProperty(key);
-        return TextUtils.isEmpty(value) ? defValue : value;
+    public String translate(String key) {
+        return properties.getProperty(key);
     }
 }
