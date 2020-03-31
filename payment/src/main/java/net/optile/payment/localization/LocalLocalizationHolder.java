@@ -40,7 +40,7 @@ public final class LocalLocalizationHolder implements LocalizationHolder {
      * @param context containing the local localizations
      */
     public LocalLocalizationHolder(Context context) {
-        this.map = new HashMap<>();
+        map = new HashMap<>();
         map.put(BUTTON_OK, context.getString(R.string.pmlocal_button_ok));
         map.put(BUTTON_CANCEL, context.getString(R.string.pmlocal_button_cancel));
         map.put(BUTTON_RETRY, context.getString(R.string.pmlocal_button_retry));
