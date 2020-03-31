@@ -21,7 +21,7 @@ import net.optile.payment.localization.Localization;
 import net.optile.payment.test.service.ListService;
 import net.optile.payment.ui.PaymentTheme;
 import net.optile.payment.ui.PaymentUI;
-import net.optile.payment.ui.service.LocalizationService;
+import net.optile.payment.ui.service.LocalizationLoaderService;
 
 /**
  * Class with helper methods to setup a PaymentSession in the Android SDK
@@ -46,6 +46,6 @@ public class PaymentSessionHelper {
         paymentUI.setGroupResId(R.raw.groups);
 
         Localization loc = Localization.getInstance();
-        loc.setLocalizations(LocalizationService.createLocalLocalization(context), null);
+        loc.setLocalizations(LocalizationLoaderService.createLocalLocalization(context), null);
     }
 }

@@ -28,8 +28,8 @@ import net.optile.payment.ui.dialog.ThemedDialogFragment;
 import net.optile.payment.ui.dialog.ThemedDialogFragment.ThemedDialogListener;
 import net.optile.payment.ui.model.PaymentSession;
 import net.optile.payment.ui.redirect.RedirectService;
-import net.optile.payment.ui.service.LocalizationListener;
-import net.optile.payment.ui.service.LocalizationService;
+import net.optile.payment.ui.service.LocalizationLoaderListener;
+import net.optile.payment.ui.service.LocalizationLoaderService;
 import net.optile.payment.ui.service.NetworkService;
 import net.optile.payment.ui.service.NetworkServiceLookup;
 import net.optile.payment.ui.service.NetworkServicePresenter;
@@ -40,12 +40,12 @@ import net.optile.payment.ui.service.PaymentSessionService;
  * The ChargePaymentPresenter takes care of posting the operation to the Payment API.
  * First this presenter will load the list, checks if the operation is present in the list and then post the operation to the Payment API.
  */
-final class ChargePaymentPresenter implements PaymentSessionListener, NetworkServicePresenter, LocalizationListener {
+final class ChargePaymentPresenter implements PaymentSessionListener, NetworkServicePresenter, LocalizationLoaderListener {
 
     private final static int CHARGE_REQUEST_CODE = 1;
     private final ChargePaymentView view;
     private final PaymentSessionService sessionService;
-    private final LocalizationService localizationService;
+    private final LocalizationLoaderService localizationService;
 
     private PaymentSession session;
     private String listUrl;
@@ -64,7 +64,7 @@ final class ChargePaymentPresenter implements PaymentSessionListener, NetworkSer
         sessionService = new PaymentSessionService();
         sessionService.setListener(this);
 
-        localizationService = new LocalizationService();
+        localizationService = new LocalizationLoaderService();
         localizationService.setListener(this);
     }
 

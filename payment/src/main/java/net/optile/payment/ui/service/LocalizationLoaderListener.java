@@ -13,7 +13,7 @@ import net.optile.payment.localization.Localization;
 /**
  * Listener to be called by the LocalizationService to inform about request updates.
  */
-public interface LocalizationListener {
+public interface LocalizationLoaderListener {
 
     /**
      * Called when the Localization files were successfully loaded by the service.

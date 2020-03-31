@@ -29,8 +29,8 @@ import net.optile.payment.ui.dialog.ThemedDialogFragment;
 import net.optile.payment.ui.dialog.ThemedDialogFragment.ThemedDialogListener;
 import net.optile.payment.ui.model.PaymentCard;
 import net.optile.payment.ui.model.PaymentSession;
-import net.optile.payment.ui.service.LocalizationListener;
-import net.optile.payment.ui.service.LocalizationService;
+import net.optile.payment.ui.service.LocalizationLoaderListener;
+import net.optile.payment.ui.service.LocalizationLoaderService;
 import net.optile.payment.ui.service.NetworkService;
 import net.optile.payment.ui.service.NetworkServiceLookup;
 import net.optile.payment.ui.service.NetworkServicePresenter;
@@ -41,7 +41,7 @@ import net.optile.payment.ui.widget.FormWidget;
 /**
  * The PaymentListPresenter implementing the presenter part of the MVP
  */
-final class PaymentListPresenter implements PaymentSessionListener, LocalizationListener, NetworkServicePresenter {
+final class PaymentListPresenter implements PaymentSessionListener, LocalizationLoaderListener, NetworkServicePresenter {
 
     private final static int PREPAREPAYMENT_REQUEST_CODE = 1;
     private final static int PROCESSPAYMENT_REQUEST_CODE = 2;
@@ -49,7 +49,7 @@ final class PaymentListPresenter implements PaymentSessionListener, Localization
 
     private final PaymentListView view;
     private final PaymentSessionService sessionService;
-    private final LocalizationService localizationService;
+    private final LocalizationLoaderService localizationService;
 
     private PaymentSession session;
     private String listUrl;
@@ -69,7 +69,7 @@ final class PaymentListPresenter implements PaymentSessionListener, Localization
         sessionService = new PaymentSessionService();
         sessionService.setListener(this);
 
-        localizationService = new LocalizationService();
+        localizationService = new LocalizationLoaderService();
         localizationService.setListener(this);
     }
 

@@ -33,9 +33,9 @@ import net.optile.payment.ui.model.PaymentSession;
  * The LocalizationService providing asynchronize loading of the localizations needed for presenting the list of payment networks and showing errors.
  * This service makes callbacks in the listener to notify of request completions.
  */
-public final class LocalizationService {
+public final class LocalizationLoaderService {
     private final LocalizationConnection connection;
-    private LocalizationListener listener;
+    private LocalizationLoaderListener listener;
     private WorkerTask<Localization> task;
 
     /** Memory cache of localizations */
@@ -44,7 +44,7 @@ public final class LocalizationService {
     /**
      * Create a new LocalizationService, this service is used to load the localizations.
      */
-    public LocalizationService() {
+    public LocalizationLoaderService() {
         this.connection = new LocalizationConnection();
     }
 
@@ -53,7 +53,7 @@ public final class LocalizationService {
      *
      * @param listener to be informed about the localizations being loaded
      */
-    public void setListener(LocalizationListener listener) {
+    public void setListener(LocalizationLoaderListener listener) {
         this.listener = listener;
     }
 
