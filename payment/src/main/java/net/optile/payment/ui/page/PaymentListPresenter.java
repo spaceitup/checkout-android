@@ -177,6 +177,8 @@ final class PaymentListPresenter implements PaymentSessionListener, Localization
      */
     @Override
     public void onLocalizationSuccess(Localization localization) {
+        Localization.setInstance(localization);
+
         if (reloadInteraction != null) {
             showInteractionDialog(reloadInteraction);
             reloadInteraction = null;
@@ -205,8 +207,7 @@ final class PaymentListPresenter implements PaymentSessionListener, Localization
 
     private void loadLocalizations(PaymentSession session) {
         Context context = view.getActivity();
-        Localization localization = Localization.getInstance();
-        localizationService.loadLocalizations(context, localization, session);
+        localizationService.loadLocalizations(context, session);
     }
 
     private void handleLoadingError(PaymentResult result) {

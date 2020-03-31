@@ -19,26 +19,60 @@ import net.optile.payment.model.Interaction;
  * Class holding individual localizations to provide easy access to all translations.
  */
 public final class Localization {
-    private Map<String, LocalizationHolder> networks;
-    private LocalizationHolder shared;
+    private final Map<String, LocalizationHolder> networks;
+    private final LocalizationHolder shared;
+    private static Localization instance;
 
     /**
-     * Get the instance of this Localization
+     * Get the currently set Localization instance
      *
-     * @return the instance of this localization
+     * @return the current instance or null if not previously set 
      */
     public static Localization getInstance() {
-        return InstanceHolder.INSTANCE;
+        return instance;
     }
 
-    public void clear() {
-        networks = null;
-        shared = null;
+    /**
+     * Set the current Localization instance
+     *
+     * @param newInstance to be set as the current instance
+     */
+    public static void setInstance(Localization newInstance) {
+        instance = newInstance;
     }
 
-    public void setLocalizations(LocalizationHolder shared, Map<String, LocalizationHolder> networks) {
+    /**
+     * Construct a new Localization with a shared localization and a list of network localizations
+     *
+     * @param shared the shared localization
+     * @param networks the list of network localizations
+     */
+    public Localization(LocalizationHolder shared, Map<String, LocalizationHolder> networks) {
         this.shared = shared;
         this.networks = networks;
+    }
+
+    /**
+     * Helper method to obtain the translation for the given key from the shared holder
+     *
+     * @param key of the translation
+     * @return the translation or null if not found
+     */
+    public static String translate(String key) {
+        Localization loc = getInstance();
+        return loc != null ? loc.getSharedTranslation(key) : null;
+    }
+
+    /**
+     * Helper method to obtain the translation for the given key from the localization file.
+     *
+     * @param networkCode name of the localization file
+     * @param key of the translation
+     * @return the translation or null if not found
+     */
+    public static String translate(String networkCode, String key) {
+        Localization loc = getInstance();
+        return loc != null ? loc.getNetworkTranslation(networkCode, key) : null;
     }
 
     /**
@@ -48,7 +82,8 @@ public final class Localization {
      * @return translation of the interaction or null if not found
      */
     public static String translateInteraction(Interaction interaction) {
-        return getInstance().getSharedTranslation(LocalizationKey.interactionKey(interaction), null);
+        Localization loc = getInstance();
+        return loc != null ? loc.getSharedTranslation(LocalizationKey.interactionKey(interaction)) : null;
     }
 
     /**
@@ -64,30 +99,6 @@ public final class Localization {
     }
 
     /**
-     * Helper method to obtain the translation for the given key from the localization file.
-     *
-     * @param networkCode name of the localization file
-     * @param key of the translation
-     * @return the translation or null if not found
-     */
-    public static String translate(String networkCode, String key) {
-        return translate(networkCode, key, null);
-    }
-
-    /**
-     * Helper method to obtain the translation for the given key from the localization file.
-     * If the translation could not be found then return the defValue.
-     *
-     * @param networkCode name of the localization file
-     * @param key of the translation
-     * @param defValue returned when the translation could not be found
-     * @return the translation or the defValue if the translation was not found
-     */
-    public static String translate(String networkCode, String key, String defValue) {
-        return getInstance().getNetworkTranslation(networkCode, key, defValue);
-    }
-
-    /**
      * Helper method to obtain the translation for the error from the specified file.
      *
      * @param networkCode name of the localization file
@@ -95,7 +106,7 @@ public final class Localization {
      * @return the translation or null if not found
      */
     public static String translateError(String networkCode, String error) {
-        return translate(networkCode, LocalizationKey.errorKey(error), null);
+        return translate(networkCode, LocalizationKey.errorKey(error));
     }
 
     /**
@@ -106,7 +117,7 @@ public final class Localization {
      * @return translation or null if not found
      */
     public static String translateAccountLabel(String networkCode, String account) {
-        return translate(networkCode, LocalizationKey.accountLabelKey(account), null);
+        return translate(networkCode, LocalizationKey.accountLabelKey(account));
     }
 
     /**
@@ -118,51 +129,30 @@ public final class Localization {
      * @return the translation or null if not found
      */
     public static String translateAccountHint(String networkCode, String account, String type) {
-        return translate(networkCode, LocalizationKey.accountHintKey(account, type), null);
-    }
-
-    /**
-     * Helper method to obtain the translation for the given key from the shared holder
-     *
-     * @param key of the translation
-     * @return the translation or null if not found
-     */
-    public static String translate(String key) {
-        return getInstance().getSharedTranslation(key, null);
+        return translate(networkCode, LocalizationKey.accountHintKey(account, type));
     }
 
     /**
      * Get the translation from the network localization the given network code.
-     * If the localization does not exist or does not contain the translation then return the defValue
+     * If the localization does not exist or does not contain the translation then return null
      *
      * @param networkCode name of the network localization
      * @param key of the translation
-     * @param defValue returned when the translation could not be found
-     * @return the translation or defValue if the translation was not found
+     * @return the translation or null if the translation was not found
      */
-    public String getNetworkTranslation(String networkCode, String key, String defValue) {
+    public String getNetworkTranslation(String networkCode, String key) {
         LocalizationHolder holder = networks != null ? networks.get(networkCode) : null;
-        return getTranslationFromHolder(holder, key, defValue);
+        return holder != null ? holder.translate(key) : null;
     }
 
     /**
      * Get the translation from the shared localization holder.
-     * If the shared holder does not exist or does not contain the translation then return the default value.
+     * If the shared holder does not exist or does not contain the translation then return null.
      *
      * @param key of the translation
-     * @param defValue returned when the translation could not be found
-     * @return the translation or defValue if the translation was not found
+     * @return the translation or null if the translation was not found
      */
-    public String getSharedTranslation(String key, String defValue) {
-        return getTranslationFromHolder(shared, key, defValue);
-    }
-
-    private String getTranslationFromHolder(LocalizationHolder holder, String key, String defValue) {
-        String value = holder != null ? holder.translate(key) : null;
-        return TextUtils.isEmpty(value) ? defValue : value;        
-    }
-    
-    private static class InstanceHolder {
-        static final Localization INSTANCE = new Localization();
+    public String getSharedTranslation(String key) {
+        return shared != null ? shared.translate(key) : null;
     }
 }

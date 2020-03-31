@@ -151,6 +151,7 @@ final class ChargePaymentPresenter implements PaymentSessionListener, NetworkSer
      */
     @Override
     public void onLocalizationSuccess(Localization localization) {
+        Localization.setInstance(localization);
         networkService = NetworkServiceLookup.getService(operation.getCode());
         networkService.setPresenter(this);
         processPayment();
@@ -171,8 +172,7 @@ final class ChargePaymentPresenter implements PaymentSessionListener, NetworkSer
 
     private void loadLocalizations(PaymentSession session) {
         Context context = view.getActivity();
-        Localization localization = Localization.getInstance();
-        localizationService.loadLocalizations(context, localization, session);
+        localizationService.loadLocalizations(context, session);
     }
 
     private void handleLoadingError(PaymentResult result) {

@@ -233,8 +233,8 @@ public final class PaymentUI {
     }
 
     private void initLocalization(Activity activity) {
-        Localization loc = Localization.getInstance();
-        loc.setLocalizations(new LocalLocalizationHolder(activity), null);
+        Localization loc = new Localization(new LocalLocalizationHolder(activity), null);
+        Localization.setInstance(loc);
     }
 
     private static class InstanceHolder {

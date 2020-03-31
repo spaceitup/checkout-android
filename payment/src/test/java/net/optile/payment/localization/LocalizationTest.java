@@ -12,6 +12,7 @@ package net.optile.payment.localization;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -28,58 +29,49 @@ import androidx.test.core.app.ApplicationProvider;
 @RunWith(RobolectricTestRunner.class)
 public class LocalizationTest {
 
-    @Before
-    public void before() {
-        Localization loc = Localization.getInstance();
-        loc.clear();
-    }
-
     @Test
-    public void getInstance() {
-        Localization loc = Localization.getInstance();
-        assertNotNull(loc);
+    public void setInstance() {
+        Localization.setInstance(new Localization(null, null));
+        assertNotNull(Localization.getInstance());
     }
 
     @Test
     public void setLocalizations() {
-        Localization loc = Localization.getInstance();
-
         LocalizationHolder shared = createPropLocalizationHolder("sharedKey", "sharedValue", 5);
         Map<String, LocalizationHolder> networks = new HashMap<>();
-        networks.put("NETWORK", createNetworkLocalizationHolder("networkKey", "networkValue", 5, shared));
-        loc.setLocalizations(shared, networks);
 
-        assertEquals("sharedValue2", loc.getSharedTranslation("sharedKey2", null));
-        assertEquals("defValue", loc.getSharedTranslation("foo", "defValue"));
+        networks.put("NETWORK", createNetworkLocalizationHolder("networkKey", "networkValue", 5, shared));
+        Localization loc = new Localization(shared, networks);
+
+        assertEquals("sharedValue2", loc.getSharedTranslation("sharedKey2"));
+        assertNull(loc.getSharedTranslation("foo"));
     }
 
     @Test
     public void getNetworkLocalizations() {
-        Localization loc = Localization.getInstance();
         Context context = ApplicationProvider.getApplicationContext();
         LocalizationHolder fallback = new LocalLocalizationHolder(context);
 
         Map<String, LocalizationHolder> networks = new HashMap<>();
         networks.put("VISA", createNetworkLocalizationHolder("VISA-Key", "VISA-Value", 5, fallback));
         networks.put("MASTERCARD", createNetworkLocalizationHolder("MASTERCARD-Key", "MASTERCARD-Value", 5, fallback));
-        loc.setLocalizations(null, networks);
 
-        assertEquals("VISA-Value2", loc.getNetworkTranslation("VISA", "VISA-Key2", null));
-        assertEquals("defValue", loc.getNetworkTranslation("MASTERCARD", "VISA-Key2", "defValue"));
+        Localization loc = new Localization(null, networks);
+        assertEquals("VISA-Value2", loc.getNetworkTranslation("VISA", "VISA-Key2"));
+        assertNull(loc.getNetworkTranslation("MASTERCARD", "VISA-Key2"));
 
-        assertEquals("Cancel", loc.getNetworkTranslation("VISA", LocalizationKey.BUTTON_CANCEL, null));
-        assertEquals("defValue", loc.getNetworkTranslation("VISA", "foo", "defValue"));
+        assertEquals("Cancel", loc.getNetworkTranslation("VISA", LocalizationKey.BUTTON_CANCEL));
+        assertNull(loc.getNetworkTranslation("VISA", "foo"));
     }
 
     @Test
     public void getSharedLocalizations() {
-        Localization loc = Localization.getInstance();
         Context context = ApplicationProvider.getApplicationContext();
         LocalizationHolder shared = new LocalLocalizationHolder(context);
-        loc.setLocalizations(shared, null);
 
-        assertEquals("OK", loc.getSharedTranslation(LocalizationKey.BUTTON_OK, null));
-        assertEquals("defValue", loc.getSharedTranslation("foo", "defValue"));
+        Localization loc = new Localization(shared, null);
+        assertEquals("OK", loc.getSharedTranslation(LocalizationKey.BUTTON_OK));
+        assertNull(loc.getSharedTranslation("foo"));
     }
 
     /**

@@ -80,17 +80,16 @@ public final class LocalizationLoaderService {
      * Load all localizations for the payment session in this service
      *
      * @param context needed to load the local localization store
-     * @param localization in which the localizations should be stored
      * @param session the payment session containing networks for which localizations should be loaded
      */
-    public void loadLocalizations(final Context context, final Localization localization, final PaymentSession session) {
+    public void loadLocalizations(final Context context, final PaymentSession session) {
         if (task != null) {
             throw new IllegalStateException("Already loading localizations, stop first");
         }
         task = WorkerTask.fromCallable(new Callable<Localization>() {
             @Override
             public Localization call() throws PaymentException {
-                return asyncLoadLocalizations(context, localization, session);
+                return asyncLoadLocalizations(context, session);
             }
         });
         task.subscribe(new WorkerSubscriber<Localization>() {
@@ -113,21 +112,21 @@ public final class LocalizationLoaderService {
         Workers.getInstance().forNetworkTasks().execute(task);
     }
 
-    private Localization asyncLoadLocalizations(Context context, Localization localization, PaymentSession session)
+    private Localization asyncLoadLocalizations(Context context, PaymentSession session)
         throws PaymentException {
         String listUrl = session.getListUrl();
         if (!listUrl.equals(cache.getCacheId())) {
             cache.clear();
             cache.setCacheId(listUrl);
         }
+        LocalizationHolder localHolder = new LocalLocalizationHolder(context);
         List<PaymentNetwork> networks = session.getPaymentNetworks();
         if (networks.size() == 0) {
-            return localization;
+            return new Localization(localHolder, null);
         }
-        LocalizationHolder shared = loadSharedLocalization(context, networks.get(0));
-        Map<String, LocalizationHolder> holders = loadNetworkLocalizations(networks, shared);
-        localization.setLocalizations(shared, holders);
-        return localization;
+        LocalizationHolder sharedHolder = loadSharedLocalization(context, networks.get(0), localHolder);
+        Map<String, LocalizationHolder> networkHolders = loadNetworkLocalizations(networks, sharedHolder);
+        return new Localization(sharedHolder, networkHolders);
     }
 
     private Map<String, LocalizationHolder> loadNetworkLocalizations(List<PaymentNetwork> networks, LocalizationHolder fallback)
@@ -149,7 +148,7 @@ public final class LocalizationLoaderService {
         return map;
     }
 
-    private LocalizationHolder loadSharedLocalization(Context context, PaymentNetwork network) throws PaymentException {
+    private LocalizationHolder loadSharedLocalization(Context context, PaymentNetwork network, LocalizationHolder fallback) throws PaymentException {
         try {
             URL url = getNetworkLanguageUrl(network);
             String sharedUrl = url.toString();
@@ -162,7 +161,7 @@ public final class LocalizationLoaderService {
 
             LocalizationHolder holder = cache.get(sharedUrl);
             if (holder == null) {
-                holder = new MultiLocalizationHolder(connection.loadLocalization(new URL(sharedUrl)), new LocalLocalizationHolder(context));
+                holder = new MultiLocalizationHolder(connection.loadLocalization(new URL(sharedUrl)), fallback);
                 cache.put(sharedUrl, holder);
             }
             return holder;
