@@ -9,6 +9,7 @@
 package net.optile.payment.ui.model;
 
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -61,6 +62,14 @@ public final class PaymentSession {
         return networks;
     }
 
+    public List<PaymentNetwork> getPaymentNetworks() {
+        List<PaymentNetwork> list = new ArrayList<>();
+        for (NetworkCard card : networks) {
+            list.addAll(card.getPaymentNetworks());
+        }
+        return list;
+    }
+
     public Validator getValidator() {
         return validator;
     }
@@ -68,6 +77,11 @@ public final class PaymentSession {
     public URL getLink(String name) {
         Map<String, URL> links = listResult.getLinks();
         return links != null ? links.get(name) : null;
+    }
+
+    public String getListUrl() {
+        URL url = getLink("self");
+        return url != null ? url.toString() : null;
     }
 
     public boolean isListUrl(String listUrl) {

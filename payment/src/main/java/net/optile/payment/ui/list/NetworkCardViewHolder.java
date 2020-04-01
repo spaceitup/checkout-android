@@ -122,12 +122,12 @@ final class NetworkCardViewHolder extends PaymentCardViewHolder {
     private void bindRegistrationWidget(PaymentNetwork network) {
         RegisterWidget widget = (RegisterWidget) getFormWidget(AUTO_REGISTRATION);
         widget.setRegistrationType(network.getRegistration());
-        widget.setLabel(Localization.translate(network.getCode(), LocalizationKey.AUTO_REGISTRATION, null));
+        widget.setLabel(Localization.translate(network.getCode(), LocalizationKey.AUTO_REGISTRATION));
     }
 
     private void bindRecurrenceWidget(PaymentNetwork network) {
         RegisterWidget widget = (RegisterWidget) getFormWidget(ALLOW_RECURRENCE);
         widget.setRegistrationType(network.getRecurrence());
-        widget.setLabel(Localization.translate(network.getCode(), LocalizationKey.ALLOW_RECURRENCE, null));
+        widget.setLabel(Localization.translate(network.getCode(), LocalizationKey.ALLOW_RECURRENCE));
     }
 }

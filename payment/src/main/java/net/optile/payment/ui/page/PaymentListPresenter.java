@@ -13,6 +13,7 @@ import static net.optile.payment.localization.LocalizationKey.ERROR_DEFAULT;
 import java.net.URL;
 import java.util.Map;
 
+import android.content.Context;
 import android.text.TextUtils;
 import net.optile.payment.core.PaymentError;
 import net.optile.payment.core.PaymentException;
@@ -28,6 +29,8 @@ import net.optile.payment.ui.dialog.ThemedDialogFragment;
 import net.optile.payment.ui.dialog.ThemedDialogFragment.ThemedDialogListener;
 import net.optile.payment.ui.model.PaymentCard;
 import net.optile.payment.ui.model.PaymentSession;
+import net.optile.payment.ui.service.LocalizationLoaderListener;
+import net.optile.payment.ui.service.LocalizationLoaderService;
 import net.optile.payment.ui.service.NetworkService;
 import net.optile.payment.ui.service.NetworkServiceLookup;
 import net.optile.payment.ui.service.NetworkServicePresenter;
@@ -38,7 +41,7 @@ import net.optile.payment.ui.widget.FormWidget;
 /**
  * The PaymentListPresenter implementing the presenter part of the MVP
  */
-final class PaymentListPresenter implements PaymentSessionListener, NetworkServicePresenter {
+final class PaymentListPresenter implements PaymentSessionListener, LocalizationLoaderListener, NetworkServicePresenter {
 
     private final static int PREPAREPAYMENT_REQUEST_CODE = 1;
     private final static int PROCESSPAYMENT_REQUEST_CODE = 2;
@@ -46,6 +49,7 @@ final class PaymentListPresenter implements PaymentSessionListener, NetworkServi
 
     private final PaymentListView view;
     private final PaymentSessionService sessionService;
+    private final LocalizationLoaderService localizationService;
 
     private PaymentSession session;
     private String listUrl;
@@ -64,6 +68,9 @@ final class PaymentListPresenter implements PaymentSessionListener, NetworkServi
         this.view = view;
         sessionService = new PaymentSessionService();
         sessionService.setListener(this);
+
+        localizationService = new LocalizationLoaderService();
+        localizationService.setListener(this);
     }
 
     /**
@@ -76,7 +83,7 @@ final class PaymentListPresenter implements PaymentSessionListener, NetworkServi
             handleActivityResult(activityResult);
             activityResult = null;
         } else if (this.session != null && this.session.isListUrl(this.listUrl)) {
-            view.showPaymentSession(this.session);
+            loadLocalizations(this.session);
         } else {
             loadPaymentSession(this.listUrl);
         }
@@ -87,6 +94,7 @@ final class PaymentListPresenter implements PaymentSessionListener, NetworkServi
      */
     void onStop() {
         sessionService.stop();
+        localizationService.stop();
 
         if (networkService != null) {
             networkService.stop();
@@ -137,6 +145,19 @@ final class PaymentListPresenter implements PaymentSessionListener, NetworkServi
      * {@inheritDoc}
      */
     @Override
+    public void onPaymentSessionError(Throwable cause) {
+        PaymentResult result = PaymentResult.fromThrowable(cause);
+        if (result.hasError()) {
+            handleLoadingError(result);
+        } else {
+            closeWithCanceledCode(result);
+        }
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
     public void onPaymentSessionSuccess(PaymentSession session) {
         ListResult listResult = session.getListResult();
         Interaction interaction = listResult.getInteraction();
@@ -155,10 +176,24 @@ final class PaymentListPresenter implements PaymentSessionListener, NetworkServi
      * {@inheritDoc}
      */
     @Override
-    public void onPaymentSessionError(Throwable cause) {
+    public void onLocalizationSuccess(Localization localization) {
+        Localization.setInstance(localization);
+
+        if (reloadInteraction != null) {
+            showInteractionDialog(reloadInteraction);
+            reloadInteraction = null;
+        }
+        view.showPaymentSession(this.session);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void onLocalizationError(Throwable cause) {
         PaymentResult result = PaymentResult.fromThrowable(cause);
         if (result.hasError()) {
-            handleLoadSessionError(result);
+            handleLoadingError(result);
         } else {
             closeWithCanceledCode(result);
         }
@@ -167,31 +202,35 @@ final class PaymentListPresenter implements PaymentSessionListener, NetworkServi
     private void handleLoadSessionOk(PaymentSession session) {
         this.operation = null;
         this.session = session;
-
-        if (reloadInteraction != null) {
-            showInteractionDialog(reloadInteraction);
-            reloadInteraction = null;
-        }
-        view.showPaymentSession(session);
+        loadLocalizations(session);
     }
 
-    private void handleLoadSessionError(PaymentResult result) {
+    private void loadLocalizations(PaymentSession session) {
+        Context context = view.getActivity();
+        localizationService.loadLocalizations(context, session);
+    }
+
+    private void handleLoadingError(PaymentResult result) {
         PaymentError error = result.getPaymentError();
         if (error.isError(PaymentError.CONN_ERROR)) {
-            handleLoadSessionConnError(result);
+            handleLoadingConnError(result);
         } else {
             closeWithErrorCode(result);
         }
     }
 
-    private void handleLoadSessionConnError(PaymentResult result) {
+    private void handleLoadingConnError(PaymentResult result) {
         view.setPaymentResult(PaymentUI.RESULT_CODE_ERROR, result);
         view.showConnectionDialog(new ThemedDialogListener() {
             @Override
             public void onButtonClicked(ThemedDialogFragment dialog, int which) {
                 switch (which) {
                     case ThemedDialogFragment.BUTTON_POSITIVE:
-                        loadPaymentSession(listUrl);
+                        if (session == null) {
+                            loadPaymentSession(listUrl);
+                        } else {
+                            loadLocalizations(session);
+                        }
                         break;
                     default:
                         view.close();

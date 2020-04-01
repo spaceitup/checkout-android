@@ -15,12 +15,8 @@ import static net.optile.payment.core.PaymentError.PROTOCOL_ERROR;
 import static net.optile.payment.core.PaymentError.SECURITY_ERROR;
 
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
-import java.net.URL;
-import java.util.Properties;
 
 import com.google.gson.JsonParseException;
 
@@ -135,32 +131,6 @@ public final class ListConnection extends BaseConnection {
             throw createPaymentException(CONN_ERROR, e);
         } catch (SecurityException e) {
             throw createPaymentException(SECURITY_ERROR, e);
-        } finally {
-            close(conn);
-        }
-    }
-
-    /**
-     * Load the language file given the URL and store it in the provided properties file.
-     *
-     * @param file in which the language entries should be loaded
-     * @param url containing the address of the remote language file
-     * @return Properties object containing the language entries
-     */
-    public Properties loadLanguageFile(Properties file, URL url) throws PaymentException {
-        if (url == null) {
-            throw new IllegalArgumentException("url cannot be null");
-        }
-        HttpURLConnection conn = null;
-        try {
-            conn = createGetConnection(url);
-            try (InputStream in = conn.getInputStream();
-                InputStreamReader ir = new InputStreamReader(in)) {
-                file.load(ir);
-            }
-            return file;
-        } catch (IOException e) {
-            throw createPaymentException(CONN_ERROR, e);
         } finally {
             close(conn);
         }
