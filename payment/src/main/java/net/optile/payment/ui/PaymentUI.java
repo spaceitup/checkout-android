@@ -15,7 +15,7 @@ import android.text.TextUtils;
 import android.util.Patterns;
 import androidx.annotation.RawRes;
 import net.optile.payment.R;
-import net.optile.payment.localization.LocalTranslations;
+import net.optile.payment.localization.LocalLocalizationHolder;
 import net.optile.payment.localization.Localization;
 import net.optile.payment.model.PresetAccount;
 import net.optile.payment.ui.page.ChargePaymentActivity;
@@ -217,7 +217,7 @@ public final class PaymentUI {
         if (intent == null) {
             throw new IllegalArgumentException("intent may not be null");
         }
-        initLocalTranslations(activity);
+        initLocalization(activity);
 
         if (theme == null) {
             setPaymentTheme(PaymentTheme.createDefault());
@@ -232,13 +232,9 @@ public final class PaymentUI {
         activity.startActivityForResult(intent, requestCode);
     }
 
-    private void initLocalTranslations(Activity activity) {
-        Localization localization = Localization.getInstance();
-        if (!localization.hasLocalTranslations()) {
-            LocalTranslations trans = new LocalTranslations();
-            trans.load(activity);
-            localization.setLocalTranslations(trans);
-        }
+    private void initLocalization(Activity activity) {
+        Localization loc = new Localization(new LocalLocalizationHolder(activity), null);
+        Localization.setInstance(loc);
     }
 
     private static class InstanceHolder {
