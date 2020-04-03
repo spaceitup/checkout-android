@@ -37,7 +37,7 @@ public class PaymentException extends Exception {
         super(cause.getMessage(), cause);
         this.error = new PaymentError(cause);
     }
-    
+
     /**
      * {@inheritDoc}
      *

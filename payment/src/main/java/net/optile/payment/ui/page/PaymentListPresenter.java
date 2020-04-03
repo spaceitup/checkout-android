@@ -196,7 +196,7 @@ final class PaymentListPresenter implements PaymentSessionListener, Localization
         Interaction interaction = new Interaction(InteractionCode.ABORT, reason);
         return new PaymentResult(interaction, error);
     }
-    
+
     private void handleLoadPaymentSessionOk(PaymentSession session) {
         this.operation = null;
         this.session = session;
@@ -211,7 +211,7 @@ final class PaymentListPresenter implements PaymentSessionListener, Localization
     private void handleLoadingError(Throwable cause) {
         PaymentError error = PaymentError.fromThrowable(cause);
         PaymentResult result = createPaymentResult(error);
-        
+
         if (error.getNetworkFailure()) {
             handleLoadingNetworkFailure(result);
         } else {
@@ -334,22 +334,22 @@ final class PaymentListPresenter implements PaymentSessionListener, Localization
     private void handlePrepareNetworkFailure(PaymentResult result) {
         view.setPaymentResult(PaymentUI.RESULT_CODE_CANCELED, result);
         view.showConnectionDialog(new ThemedDialogListener() {
-                @Override
-                public void onButtonClicked(ThemedDialogFragment dialog, int which) {
-                    switch (which) {
+            @Override
+            public void onButtonClicked(ThemedDialogFragment dialog, int which) {
+                switch (which) {
                     case ThemedDialogFragment.BUTTON_POSITIVE:
                         preparePayment();
                         break;
                     default:
                         view.close();
-                    }
                 }
+            }
 
-                @Override
-                public void onDismissed(ThemedDialogFragment dialog) {
-                    view.close();
-                }
-            });
+            @Override
+            public void onDismissed(ThemedDialogFragment dialog) {
+                view.close();
+            }
+        });
     }
 
     /**
@@ -425,7 +425,7 @@ final class PaymentListPresenter implements PaymentSessionListener, Localization
         try {
             networkService.processPayment(view.getActivity(), PROCESSPAYMENT_REQUEST_CODE, operation);
         } catch (PaymentException e) {
-            closeWithCanceledCode(createPaymentResult(e.error));            
+            closeWithCanceledCode(createPaymentResult(e.error));
         }
     }
 

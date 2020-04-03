@@ -32,7 +32,7 @@ public final class PaymentError implements Parcelable {
             return new PaymentError[size];
         }
     };
-    
+
     /**
      * The optional network status code like 404 or 500
      */
@@ -45,15 +45,15 @@ public final class PaymentError implements Parcelable {
      * The optional ErrorInfo received from the payment Api
      */
     private ErrorInfo errorInfo;
-    /** 
+    /**
      * The optional cause of the internal error
      */
     private Throwable cause;
-    /** 
+    /**
      * This optional flag to indicate that this error was caused by a network failure
-     */    
+     */
     private boolean networkFailure;
-    
+
     /**
      * Construct a new PaymentError containing the message what went wrong
      *
@@ -73,7 +73,7 @@ public final class PaymentError implements Parcelable {
         this.statusCode = statusCode;
         this.message = message;
     }
-    
+
     /**
      * Construct a new PaymentError containing the network failure information
      *
@@ -119,11 +119,11 @@ public final class PaymentError implements Parcelable {
         this.cause = cause;
         this.networkFailure = networkFailure;
     }
-    
+
     public int getStatusCode() {
         return statusCode;
     }
-    
+
     public String getMessage() {
         return message;
     }
@@ -139,14 +139,14 @@ public final class PaymentError implements Parcelable {
     public boolean getNetworkFailure() {
         return networkFailure;
     }
-    
+
     private PaymentError() {
     }
 
     private PaymentError(Parcel in) {
         this.statusCode = in.readInt();
         this.message = in.readString();
-        
+
         GsonHelper gson = GsonHelper.getInstance();
         try {
             String json = in.readString();
@@ -159,7 +159,7 @@ public final class PaymentError implements Parcelable {
             Log.w("pay", e);
             throw new RuntimeException(e);
         }
-        this.cause = (Throwable)in.readSerializable();
+        this.cause = (Throwable) in.readSerializable();
         this.networkFailure = in.readInt() == 1;
     }
 

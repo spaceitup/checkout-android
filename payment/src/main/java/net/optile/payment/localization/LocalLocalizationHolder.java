@@ -24,7 +24,6 @@ import java.util.HashMap;
 import java.util.Map;
 
 import android.content.Context;
-import android.text.TextUtils;
 import net.optile.payment.R;
 
 /**

@@ -1,16 +1,16 @@
 package net.optile.payment.ui;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.robolectric.RobolectricTestRunner;
 
 import android.os.Parcel;
+import net.optile.payment.core.PaymentError;
 import net.optile.payment.model.Interaction;
 import net.optile.payment.model.InteractionCode;
 import net.optile.payment.model.InteractionReason;
-import net.optile.payment.core.PaymentError;
 
 @RunWith(RobolectricTestRunner.class)
 public class PaymentResultTest {

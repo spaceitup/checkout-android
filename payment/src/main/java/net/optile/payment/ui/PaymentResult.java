@@ -53,7 +53,7 @@ public final class PaymentResult implements Parcelable {
     /**
      * Construct a new PaymentResult with resultInfo and error.
      *
-     * @param interaction describing what to do next 
+     * @param interaction describing what to do next
      * @param error the error describing the details about the error situation
      */
     public PaymentResult(Interaction interaction, PaymentError error) {
@@ -197,7 +197,7 @@ public final class PaymentResult implements Parcelable {
         }
         if (this.error != null) {
             sb.append(error.toString());
-        } 
+        }
         sb.append("]");
         return sb.toString();
     }

@@ -122,7 +122,7 @@ public final class ListConnection extends BaseConnection {
         }
     }
 
-    
+
     /**
      * Handle the create new payment session OK state
      *

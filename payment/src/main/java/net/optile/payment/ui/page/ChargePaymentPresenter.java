@@ -137,7 +137,7 @@ final class ChargePaymentPresenter implements PaymentSessionListener, NetworkSer
         Interaction interaction = new Interaction(InteractionCode.ABORT, reason);
         return new PaymentResult(interaction, error);
     }
-    
+
     private void handleLoadSessionOk(PaymentSession session) {
         if (!session.containsLink("operation", operation.getURL())) {
             String message = "operation not found in ListResult";
