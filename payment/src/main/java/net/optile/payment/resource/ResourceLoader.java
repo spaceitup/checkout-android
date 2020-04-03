@@ -22,7 +22,7 @@ import com.google.gson.JsonSyntaxException;
 import com.google.gson.reflect.TypeToken;
 
 import android.content.res.Resources;
-import net.optile.payment.core.PaymentError;
+import net.optile.payment.core.InternalError;
 import net.optile.payment.core.PaymentException;
 import net.optile.payment.util.GsonHelper;
 
@@ -52,9 +52,7 @@ public final class ResourceLoader {
             }
             return map;
         } catch (IOException | JsonSyntaxException e) {
-            String msg = "ResourceLoader.loadPaymentGroups failed: " + e.toString();
-            PaymentError error = new PaymentError(PaymentError.INTERNAL_ERROR, msg);
-            throw new PaymentException(error, msg, e);
+            throw new PaymentException(e);
         }
     }
 
@@ -79,9 +77,7 @@ public final class ResourceLoader {
             }
             return map;
         } catch (IOException | JsonSyntaxException e) {
-            String msg = "ResourceLoader.loadValidationGroup failed: " + e.toString();
-            PaymentError error = new PaymentError(PaymentError.INTERNAL_ERROR, msg);
-            throw new PaymentException(error, msg, e);
+            throw new PaymentException(e);
         }
     }
 

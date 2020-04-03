@@ -18,7 +18,7 @@ import org.json.JSONObject;
 import android.os.Parcel;
 import android.os.Parcelable;
 import android.text.TextUtils;
-import net.optile.payment.core.PaymentError;
+import net.optile.payment.core.InternalError;
 import net.optile.payment.core.PaymentException;
 import net.optile.payment.core.PaymentInputType;
 
@@ -137,8 +137,7 @@ public class Operation implements Parcelable {
             }
         } catch (JSONException e) {
             String msg = "Operation.putValue failed for name: " + name;
-            PaymentError error = new PaymentError(PaymentError.INTERNAL_ERROR, msg);
-            throw new PaymentException(error, msg, e);
+            throw new PaymentException(msg, e);
         }
     }
 

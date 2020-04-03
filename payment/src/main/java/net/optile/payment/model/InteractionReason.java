@@ -49,7 +49,7 @@ public class InteractionReason {
 
     // client side interaction reasons
     public final static String COMMUNICATION_FAILURE = "COMMUNICATION_FAILURE";
-    public final static String CLIENTSIDE_EXCEPTION = "CLIENTSIDE_EXCEPTION";
+    public final static String CLIENTSIDE_ERROR = "CLIENTSIDE_ERROR";
 
     /**
      * Check if the given reason is a valid interaction reason
@@ -90,7 +90,7 @@ public class InteractionReason {
                 case UPDATED:
                 case TAKE_ACTION:
                 case COMMUNICATION_FAILURE:
-                case CLIENTSIDE_EXCEPTION:
+                case CLIENTSIDE_ERROR:
                     return true;
             }
         }
@@ -128,7 +128,7 @@ public class InteractionReason {
         UPDATED,
         TAKE_ACTION,
         COMMUNICATION_FAILURE,
-        CLIENTSIDE_EXCEPTION })
+        CLIENTSIDE_ERROR })
     public @interface Definition { }
 }
 

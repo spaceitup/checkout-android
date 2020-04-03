@@ -30,7 +30,7 @@ import com.google.gson.JsonParseException;
 import android.os.Build;
 import android.text.TextUtils;
 import android.util.Log;
-import net.optile.payment.core.PaymentError;
+import net.optile.payment.core.InternalError;
 import net.optile.payment.core.PaymentException;
 import net.optile.payment.model.ErrorInfo;
 
@@ -263,41 +263,45 @@ abstract class BaseConnection {
     /**
      * Handle the error response from the Payment API
      *
-     * @param errorType the error type
      * @param statusCode the status code
      * @param conn the conn
      * @return PaymentException network exception
      */
-    PaymentException createPaymentException(final String errorType, final int statusCode, final HttpURLConnection conn) {
+    PaymentException createPaymentException(final int statusCode, final HttpURLConnection conn) {
         String data = null;
-        ErrorInfo info = null;
+        ErrorInfo errorInfo = null;
 
         try {
             data = readFromErrorStream(conn);
             String contentType = conn.getContentType();
 
             if (!TextUtils.isEmpty(data) && !TextUtils.isEmpty(contentType) && contentType.contains(CONTENTTYPE_JSON)) {
-                info = gson.fromJson(data, ErrorInfo.class);
+                errorInfo = gson.fromJson(data, ErrorInfo.class);
             }
         } catch (IOException | JsonParseException e) {
             // Ignore the exceptions since the ErrorInfo is an optional field
             // and it is more important to not lose the status error code
-            Log.w("pay_BaseConnection", e);
+            Log.w("androidsdk", e);
         }
-        final PaymentError error = new PaymentError(errorType, statusCode, data, info);
-        return new PaymentException(error, null);
+        InternalError error;
+        if (errorInfo != null) {
+            error = new InternalError(statusCode, errorInfo);
+        } else {
+            error = new InternalError(statusCode, data);
+        }
+        return new PaymentException(error);
     }
 
     /**
      * Handle the error response from the Payment API
      *
-     * @param errorType the error type
      * @param cause the cause
+     * @param networkFailure was the error caused by a network failure
      * @return NetworkResponse network exception
      */
-    PaymentException createPaymentException(String errorType, Exception cause) {
-        final PaymentError error = new PaymentError(errorType, 0, null, null);
-        return new PaymentException(error, null, cause);
+    PaymentException createPaymentException(Throwable cause, boolean networkFailure) {
+        final InternalError error = new InternalError(cause, networkFailure);
+        return new PaymentException(error);
     }
 
     /**

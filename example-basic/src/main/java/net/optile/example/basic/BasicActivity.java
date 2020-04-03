@@ -19,7 +19,7 @@ import android.widget.EditText;
 import android.widget.RadioGroup;
 import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
-import net.optile.payment.core.PaymentError;
+import net.optile.payment.core.InternalError;
 import net.optile.payment.model.Interaction;
 import net.optile.payment.ui.PaymentResult;
 import net.optile.payment.ui.PaymentTheme;
@@ -106,7 +106,7 @@ public final class BasicActivity extends AppCompatActivity {
         String val = interaction == null ? pr.getResultInfo() : null;
         setText(val, R.id.label_sdkresultinfo, R.id.text_sdkresultinfo);
 
-        PaymentError error = pr.getPaymentError();
+        InternalError error = pr.getPaymentError();
         val = error != null ? error.toString() : null;
         setText(val, R.id.label_sdkpaymenterror, R.id.text_sdkpaymenterror);
     }

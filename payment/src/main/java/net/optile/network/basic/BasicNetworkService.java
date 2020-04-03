@@ -9,8 +9,10 @@
 package net.optile.network.basic;
 
 import android.app.Activity;
+import net.optile.payment.core.InternalError;
 import net.optile.payment.core.PaymentException;
 import net.optile.payment.form.Operation;
+import net.optile.payment.model.ErrorInfo;
 import net.optile.payment.model.Interaction;
 import net.optile.payment.model.InteractionCode;
 import net.optile.payment.model.InteractionReason;
@@ -114,17 +116,30 @@ public final class BasicNetworkService extends NetworkService implements Operati
      */
     @Override
     public void onOperationError(Throwable cause) {
-        PaymentResult result = PaymentResult.fromThrowable(cause);
-        int status = result.hasError() ? PaymentUI.RESULT_CODE_ERROR : PaymentUI.RESULT_CODE_CANCELED;
-        presenter.onPreparePaymentResult(status, result);
+        InternalError error = InternalError.fromThrowable(cause);
+        PaymentResult result = createPaymentResultFromError(error);
+        presenter.onProcessPaymentResult(PaymentUI.RESULT_CODE_CANCELED, result);
     }
 
     private void redirectPayment(Redirect redirect) {
         try {
             presenter.redirectPayment(redirect);
         } catch (PaymentException e) {
-            PaymentResult result = PaymentResult.fromPaymentException(e);
-            presenter.onProcessPaymentResult(PaymentUI.RESULT_CODE_ERROR, result);
+            PaymentResult result = createPaymentResultFromError(e.error);
+            presenter.onProcessPaymentResult(PaymentUI.RESULT_CODE_CANCELED, result);
         }
+    }
+
+    private PaymentResult createPaymentResultFromError(InternalError error) {
+        Interaction interaction;
+        ErrorInfo errorInfo = error.getErrorInfo();
+        if (errorInfo != null) {
+            interaction = errorInfo.getInteraction();
+        } else if (error.getNetworkFailure()) {
+            interaction = new Interaction(InteractionCode.VERIFY, InteractionReason.COMMUNICATION_FAILURE);
+        } else {
+            interaction = new Interaction(InteractionCode.VERIFY, InteractionReason.CLIENTSIDE_ERROR);
+        }
+        return new PaymentResult(interaction, error);
     }
 }
