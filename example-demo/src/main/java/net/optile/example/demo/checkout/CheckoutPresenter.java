@@ -75,12 +75,12 @@ final class CheckoutPresenter {
                 if (result.hasNetworkFailureError()) {
                     return;
                 }
-                view.closePayment(null);
+                view.closePayment();
                 break;
             case InteractionCode.VERIFY:
                 // VERIFY means that a charge request has been made but the status of the payment could
                 // not be verified by the Android-SDK, i.e. because of a network error
-                view.closePayment(null);
+                view.closePayment();
         }
     }
 }
