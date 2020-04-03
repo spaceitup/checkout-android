@@ -16,21 +16,20 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.robolectric.RobolectricTestRunner;
 
-import android.os.Bundle;
 import android.os.Parcel;
 
 @RunWith(RobolectricTestRunner.class)
-public class InternalErrorTest {
+public class PaymentErrorTest {
 
     @Test
     public void writeToParcel() {
-        InternalError writeError = new InternalError("foo", new Exception("cause"));
+        PaymentError writeError = new PaymentError("foo", new Exception("cause"));
 
         Parcel parcel = Parcel.obtain();
         writeError.writeToParcel(parcel, 0);
 
         parcel.setDataPosition(0);
-        InternalError readError = InternalError.CREATOR.createFromParcel(parcel);
+        PaymentError readError = PaymentError.CREATOR.createFromParcel(parcel);
 
         assertEquals(readError.toString(), writeError.toString());
     }

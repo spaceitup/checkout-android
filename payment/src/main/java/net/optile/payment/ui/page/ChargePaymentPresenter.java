@@ -13,7 +13,7 @@ import static net.optile.payment.localization.LocalizationKey.ERROR_DEFAULT;
 
 import android.content.Context;
 import android.text.TextUtils;
-import net.optile.payment.core.InternalError;
+import net.optile.payment.core.PaymentError;
 import net.optile.payment.core.PaymentException;
 import net.optile.payment.form.Operation;
 import net.optile.payment.localization.Localization;
@@ -131,7 +131,7 @@ final class ChargePaymentPresenter implements PaymentSessionListener, NetworkSer
         handleLoadingError(cause);
     }
 
-    private PaymentResult createPaymentResult(InternalError error) {
+    private PaymentResult createPaymentResult(PaymentError error) {
         String reason = error.getNetworkFailure() ? InteractionReason.COMMUNICATION_FAILURE :
             InteractionReason.CLIENTSIDE_ERROR;
         Interaction interaction = new Interaction(InteractionCode.ABORT, reason);
@@ -141,7 +141,7 @@ final class ChargePaymentPresenter implements PaymentSessionListener, NetworkSer
     private void handleLoadSessionOk(PaymentSession session) {
         if (!session.containsLink("operation", operation.getURL())) {
             String message = "operation not found in ListResult";
-            InternalError error = new InternalError(message);
+            PaymentError error = new PaymentError(message);
             closeWithCanceledCode(createPaymentResult(error));
             return;
         }
@@ -174,7 +174,7 @@ final class ChargePaymentPresenter implements PaymentSessionListener, NetworkSer
     }
 
     private void handleLoadingError(Throwable cause) {
-        InternalError error = InternalError.fromThrowable(cause);
+        PaymentError error = PaymentError.fromThrowable(cause);
         PaymentResult result = createPaymentResult(error);
 
         if (error.getNetworkFailure()) {
@@ -268,7 +268,7 @@ final class ChargePaymentPresenter implements PaymentSessionListener, NetworkSer
 
     private void handleMissingCachedSession() {
         String message = "Missing cached session in ChargePaymentPresenter";
-        InternalError error = new InternalError(message);
+        PaymentError error = new PaymentError(message);
         closeWithCanceledCode(createPaymentResult(error));
     }
 

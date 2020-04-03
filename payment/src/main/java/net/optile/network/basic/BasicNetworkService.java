@@ -9,7 +9,7 @@
 package net.optile.network.basic;
 
 import android.app.Activity;
-import net.optile.payment.core.InternalError;
+import net.optile.payment.core.PaymentError;
 import net.optile.payment.core.PaymentException;
 import net.optile.payment.form.Operation;
 import net.optile.payment.model.ErrorInfo;
@@ -116,7 +116,7 @@ public final class BasicNetworkService extends NetworkService implements Operati
      */
     @Override
     public void onOperationError(Throwable cause) {
-        InternalError error = InternalError.fromThrowable(cause);
+        PaymentError error = PaymentError.fromThrowable(cause);
         PaymentResult result = createPaymentResultFromError(error);
         presenter.onProcessPaymentResult(PaymentUI.RESULT_CODE_CANCELED, result);
     }
@@ -130,7 +130,7 @@ public final class BasicNetworkService extends NetworkService implements Operati
         }
     }
 
-    private PaymentResult createPaymentResultFromError(InternalError error) {
+    private PaymentResult createPaymentResultFromError(PaymentError error) {
         Interaction interaction;
         ErrorInfo errorInfo = error.getErrorInfo();
         if (errorInfo != null) {

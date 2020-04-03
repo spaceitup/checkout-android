@@ -30,7 +30,7 @@ import com.google.gson.JsonParseException;
 import android.os.Build;
 import android.text.TextUtils;
 import android.util.Log;
-import net.optile.payment.core.InternalError;
+import net.optile.payment.core.PaymentError;
 import net.optile.payment.core.PaymentException;
 import net.optile.payment.model.ErrorInfo;
 
@@ -283,11 +283,11 @@ abstract class BaseConnection {
             // and it is more important to not lose the status error code
             Log.w("androidsdk", e);
         }
-        InternalError error;
+        PaymentError error;
         if (errorInfo != null) {
-            error = new InternalError(statusCode, errorInfo);
+            error = new PaymentError(statusCode, errorInfo);
         } else {
-            error = new InternalError(statusCode, data);
+            error = new PaymentError(statusCode, data);
         }
         return new PaymentException(error);
     }
@@ -300,7 +300,7 @@ abstract class BaseConnection {
      * @return NetworkResponse network exception
      */
     PaymentException createPaymentException(Throwable cause, boolean networkFailure) {
-        final InternalError error = new InternalError(cause, networkFailure);
+        final PaymentError error = new PaymentError(cause, networkFailure);
         return new PaymentException(error);
     }
 

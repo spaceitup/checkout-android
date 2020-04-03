@@ -22,7 +22,6 @@ import com.google.gson.JsonSyntaxException;
 import com.google.gson.reflect.TypeToken;
 
 import android.content.res.Resources;
-import net.optile.payment.core.InternalError;
 import net.optile.payment.core.PaymentException;
 import net.optile.payment.util.GsonHelper;
 

@@ -16,7 +16,7 @@ public class PaymentException extends Exception {
     /**
      * The details of the error
      */
-    public final InternalError error;
+    public final PaymentError error;
 
     /**
      * {@inheritDoc}
@@ -25,7 +25,7 @@ public class PaymentException extends Exception {
      */
     public PaymentException(final String message) {
         super(message);
-        this.error = new InternalError(message);
+        this.error = new PaymentError(message);
     }
 
     /**
@@ -35,7 +35,7 @@ public class PaymentException extends Exception {
      */
     public PaymentException(final Throwable cause) {
         super(cause.getMessage(), cause);
-        this.error = new InternalError(cause);
+        this.error = new PaymentError(cause);
     }
     
     /**
@@ -46,7 +46,7 @@ public class PaymentException extends Exception {
      */
     public PaymentException(final String message, final Throwable cause) {
         super(message, cause);
-        this.error = new InternalError(message, cause);
+        this.error = new PaymentError(message, cause);
     }
 
     /**
@@ -54,7 +54,7 @@ public class PaymentException extends Exception {
      *
      * @param error the internal error
      */
-    public PaymentException(final InternalError error) {
+    public PaymentException(final PaymentError error) {
         super(error.getMessage(), error.getCause());
         this.error = error;
     }

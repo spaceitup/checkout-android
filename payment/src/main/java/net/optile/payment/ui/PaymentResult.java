@@ -15,9 +15,7 @@ import android.os.Parcel;
 import android.os.Parcelable;
 import android.text.TextUtils;
 import android.util.Log;
-import net.optile.payment.core.InternalError;
-import net.optile.payment.core.PaymentException;
-import net.optile.payment.model.ErrorInfo;
+import net.optile.payment.core.PaymentError;
 import net.optile.payment.model.Interaction;
 import net.optile.payment.model.OperationResult;
 import net.optile.payment.util.GsonHelper;
@@ -41,7 +39,7 @@ public final class PaymentResult implements Parcelable {
     private String resultInfo;
     private Interaction interaction;
     private OperationResult operationResult;
-    private InternalError error;
+    private PaymentError error;
 
     /**
      * Construct a new PaymentResult with only the resultInfo.
@@ -58,7 +56,7 @@ public final class PaymentResult implements Parcelable {
      * @param interaction describing what to do next 
      * @param error the error describing the details about the error situation
      */
-    public PaymentResult(Interaction interaction, InternalError error) {
+    public PaymentResult(Interaction interaction, PaymentError error) {
         this.interaction = interaction;
         this.error = error;
         this.resultInfo = error.getMessage();
@@ -108,7 +106,7 @@ public final class PaymentResult implements Parcelable {
             Log.w("pay_PaymentResult", e);
             throw new RuntimeException(e);
         }
-        this.error = in.readParcelable(InternalError.class.getClassLoader());
+        this.error = in.readParcelable(PaymentError.class.getClassLoader());
     }
 
     /**
@@ -133,7 +131,7 @@ public final class PaymentResult implements Parcelable {
         intent.putExtra(EXTRA_PAYMENT_RESULT, this);
     }
 
-    public InternalError getInternalError() {
+    public PaymentError getInternalError() {
         return error;
     }
 

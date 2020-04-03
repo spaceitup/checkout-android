@@ -10,37 +10,26 @@ package net.optile.payment.core;
 
 import com.google.gson.JsonSyntaxException;
 
-import android.content.Intent;
 import android.os.Parcel;
 import android.os.Parcelable;
 import android.text.TextUtils;
 import android.util.Log;
-import net.optile.payment.core.InternalError;
-import net.optile.payment.core.PaymentException;
 import net.optile.payment.model.ErrorInfo;
-import net.optile.payment.model.Interaction;
-import net.optile.payment.model.OperationResult;
 import net.optile.payment.util.GsonHelper;
-
-import java.lang.annotation.Retention;
-import java.lang.annotation.RetentionPolicy;
-
-import androidx.annotation.StringDef;
-import net.optile.payment.model.ErrorInfo;
 
 /**
  * A class representing the details about the error
  */
-public final class InternalError implements Parcelable {
+public final class PaymentError implements Parcelable {
 
-    public final static Parcelable.Creator<InternalError> CREATOR = new Parcelable.Creator<InternalError>() {
+    public final static Parcelable.Creator<PaymentError> CREATOR = new Parcelable.Creator<PaymentError>() {
 
-        public InternalError createFromParcel(Parcel in) {
-            return new InternalError(in);
+        public PaymentError createFromParcel(Parcel in) {
+            return new PaymentError(in);
         }
 
-        public InternalError[] newArray(int size) {
-            return new InternalError[size];
+        public PaymentError[] newArray(int size) {
+            return new PaymentError[size];
         }
     };
     
@@ -66,66 +55,66 @@ public final class InternalError implements Parcelable {
     private boolean networkFailure;
     
     /**
-     * Construct a new InternalError containing the message what went wrong
+     * Construct a new PaymentError containing the message what went wrong
      *
      * @param message the error message
      */
-    public InternalError(final String message) {
+    public PaymentError(final String message) {
         this.message = message;
     }
 
     /**
-     * Construct a new InternalError containing the network failure information
+     * Construct a new PaymentError containing the network failure information
      *
      * @param statusCode the status code
      * @param message the error message
      */
-    public InternalError(final int statusCode, final String message) {
+    public PaymentError(final int statusCode, final String message) {
         this.statusCode = statusCode;
         this.message = message;
     }
     
     /**
-     * Construct a new InternalError containing the network failure information
+     * Construct a new PaymentError containing the network failure information
      *
      * @param statusCode the status code
      * @param errorInfo the error info
      */
-    public InternalError(final int statusCode, final ErrorInfo errorInfo) {
+    public PaymentError(final int statusCode, final ErrorInfo errorInfo) {
         this.statusCode = statusCode;
         this.message = errorInfo.getResultInfo();
         this.errorInfo = errorInfo;
     }
 
     /**
-     * Construct a new InternalError containing the cause of the internal error
+     * Construct a new PaymentError containing the cause of the internal error
      *
      * @param cause the cause of the internal error
      */
-    public InternalError(final Throwable cause) {
+    public PaymentError(final Throwable cause) {
         this.message = cause.getMessage();
         this.cause = cause;
     }
 
     /**
-     * Construct a new InternalError containing information what caused the error
+     * Construct a new PaymentError containing information what caused the error
      *
      * @param message the error message
      * @param cause the cause of the internal error
      */
-    public InternalError(final String message, final Throwable cause) {
+    public PaymentError(final String message, final Throwable cause) {
         this.message = message;
         this.cause = cause;
     }
 
     /**
-     * Construct a new InternalError containing information what caused the error
+     * Construct a new PaymentError containing information what caused the error
      * A network failure may be caused by an IOException.
      *
      * @param cause the cause of the internal error
      * @param networkFailure indicating if this error was caused by a network failure
      */
-    public InternalError(final Throwable cause, final boolean networkFailure) {
+    public PaymentError(final Throwable cause, final boolean networkFailure) {
         this.message = cause.getMessage();
         this.cause = cause;
         this.networkFailure = networkFailure;
@@ -151,10 +140,10 @@ public final class InternalError implements Parcelable {
         return networkFailure;
     }
     
-    private InternalError() {
+    private PaymentError() {
     }
 
-    private InternalError(Parcel in) {
+    private PaymentError(Parcel in) {
         this.statusCode = in.readInt();
         this.message = in.readString();
         
@@ -181,11 +170,11 @@ public final class InternalError implements Parcelable {
      * @param cause of the error
      * @return the InternalError containing detailed information about the error
      */
-    public static InternalError fromThrowable(Throwable cause) {
+    public static PaymentError fromThrowable(Throwable cause) {
         if (cause instanceof PaymentException) {
             return ((PaymentException) cause).error;
         }
-        return new InternalError(cause);
+        return new PaymentError(cause);
     }
 
     /**

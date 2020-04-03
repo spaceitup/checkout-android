@@ -15,7 +15,7 @@ import java.util.Map;
 
 import android.content.Context;
 import android.text.TextUtils;
-import net.optile.payment.core.InternalError;
+import net.optile.payment.core.PaymentError;
 import net.optile.payment.core.PaymentException;
 import net.optile.payment.form.Operation;
 import net.optile.payment.localization.Localization;
@@ -190,7 +190,7 @@ final class PaymentListPresenter implements PaymentSessionListener, Localization
         handleLoadingError(cause);
     }
 
-    private PaymentResult createPaymentResult(InternalError error) {
+    private PaymentResult createPaymentResult(PaymentError error) {
         String reason = error.getNetworkFailure() ? InteractionReason.COMMUNICATION_FAILURE :
             InteractionReason.CLIENTSIDE_ERROR;
         Interaction interaction = new Interaction(InteractionCode.ABORT, reason);
@@ -209,7 +209,7 @@ final class PaymentListPresenter implements PaymentSessionListener, Localization
     }
 
     private void handleLoadingError(Throwable cause) {
-        InternalError error = InternalError.fromThrowable(cause);
+        PaymentError error = PaymentError.fromThrowable(cause);
         PaymentResult result = createPaymentResult(error);
         
         if (error.getNetworkFailure()) {
@@ -254,7 +254,7 @@ final class PaymentListPresenter implements PaymentSessionListener, Localization
 
     private void handleActivityResult(ActivityResult activityResult) {
         if (this.session == null) {
-            InternalError error = new InternalError("Missing cached PaymentSession in PaymentListPresenter");
+            PaymentError error = new PaymentError("Missing cached PaymentSession in PaymentListPresenter");
             closeWithCanceledCode(createPaymentResult(error));
             return;
         }
