@@ -106,7 +106,7 @@ public final class BasicActivity extends AppCompatActivity {
         String val = interaction == null ? pr.getResultInfo() : null;
         setText(val, R.id.label_sdkresultinfo, R.id.text_sdkresultinfo);
 
-        InternalError error = pr.getPaymentError();
+        InternalError error = pr.getInternalError();
         val = error != null ? error.toString() : null;
         setText(val, R.id.label_sdkpaymenterror, R.id.text_sdkpaymenterror);
     }

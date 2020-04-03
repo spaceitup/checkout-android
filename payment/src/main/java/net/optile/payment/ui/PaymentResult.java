@@ -91,7 +91,6 @@ public final class PaymentResult implements Parcelable {
 
     private PaymentResult(Parcel in) {
         this.resultInfo = in.readString();
-        this.error = in.readParcelable(InternalError.class.getClassLoader());
 
         GsonHelper gson = GsonHelper.getInstance();
         try {
@@ -109,7 +108,7 @@ public final class PaymentResult implements Parcelable {
             Log.w("pay_PaymentResult", e);
             throw new RuntimeException(e);
         }
-
+        this.error = in.readParcelable(InternalError.class.getClassLoader());
     }
 
     /**

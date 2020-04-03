@@ -110,10 +110,6 @@ final class SummaryPresenter {
             case PaymentUI.RESULT_CODE_CANCELED:
                 handleResultCanceled(result.paymentResult);
                 break;
-            case PaymentUI.RESULT_CODE_ERROR:
-                // Android SDK already shows errors to the user so
-                // we ignore this state.
-                break;
         }
     }
 
@@ -125,17 +121,18 @@ final class SummaryPresenter {
             case PaymentUI.RESULT_CODE_CANCELED:
                 handleResultCanceled(result.paymentResult);
                 break;
-            case PaymentUI.RESULT_CODE_ERROR:
-                // Android SDK already shows errors to the user so
-                // we ignore this state.
-                break;
         }
     }
 
     private void handleResultCanceled(PaymentResult result) {
         Interaction interaction = result.getInteraction();
-        if (interaction != null && interaction.getCode() == InteractionCode.ABORT) {
-            view.closePayment(null);
+        if (interaction == null) {
+            return;
+        }
+        switch (interaction.getCode()) {
+            case InteractionCode.ABORT:
+            case InteractionCode.VERIFY:
+                view.closePayment(null);
         }
     }
 
