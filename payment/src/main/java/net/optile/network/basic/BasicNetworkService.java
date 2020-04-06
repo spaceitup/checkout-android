@@ -161,11 +161,12 @@ public final class BasicNetworkService extends NetworkService implements Operati
     private String getErrorInteractionCode(Operation operation) {
         if (operation != null) {
             switch (operation.getType()) {
-                case Operation.CHARGE:
-                case Operation.PAYOUT:
-                    return InteractionCode.VERIFY;
+                case Operation.PRESET:
+                case Operation.UPDATE:
+                case Operation.ACTIVATE:
+                    return InteractionCode.ABORT;
             }
         }
-        return InteractionCode.ABORT;
+        return InteractionCode.VERIFY;
     }
 }
