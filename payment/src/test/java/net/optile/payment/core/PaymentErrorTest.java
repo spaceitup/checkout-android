@@ -11,15 +11,65 @@
 package net.optile.payment.core;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.robolectric.RobolectricTestRunner;
 
 import android.os.Parcel;
+import net.optile.payment.model.ErrorInfo;
 
 @RunWith(RobolectricTestRunner.class)
 public class PaymentErrorTest {
+
+    @Test
+    public void construct_withMessage() {
+        PaymentError error = new PaymentError("errorMessage");
+        assertEquals("errorMessage", error.getMessage());
+    }
+
+    @Test
+    public void construct_withStatusCode() {
+        PaymentError error = new PaymentError(500, "errorMessage");
+        assertEquals(500, error.getStatusCode());
+        assertEquals("errorMessage", error.getMessage());
+    }
+
+    @Test
+    public void construct_withErrorInfo() {
+        ErrorInfo errorInfo = new ErrorInfo();
+        errorInfo.setResultInfo("resultInfo");
+        PaymentError error = new PaymentError(404, errorInfo);
+        assertEquals(errorInfo.getResultInfo(), error.getMessage());
+        assertEquals(404, error.getStatusCode());
+        assertEquals(errorInfo, error.getErrorInfo());
+    }
+
+    @Test
+    public void construct_withCause() {
+        Throwable cause = new Exception("cause of error");
+        PaymentError error = new PaymentError(cause);
+        assertEquals(cause.getMessage(), error.getMessage());
+        assertEquals(cause, error.getCause());
+    }
+
+    @Test
+    public void construct_withMessageAndCause() {
+        Throwable cause = new Exception("cause of error");
+        PaymentError error = new PaymentError("foo", cause);
+        assertEquals("foo", error.getMessage());
+        assertEquals(cause, error.getCause());
+    }
+
+    @Test
+    public void construct_withNetworkFailure() {
+        Throwable cause = new Exception("cause of error");
+        PaymentError error = new PaymentError(cause, true);
+        assertEquals(cause.getMessage(), error.getMessage());
+        assertEquals(cause, error.getCause());
+        assertTrue(error.getNetworkFailure());
+    }
 
     @Test
     public void writeToParcel() {

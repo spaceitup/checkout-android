@@ -131,7 +131,7 @@ public final class PaymentResult implements Parcelable {
         intent.putExtra(EXTRA_PAYMENT_RESULT, this);
     }
 
-    public PaymentError getInternalError() {
+    public PaymentError getPaymentError() {
         return error;
     }
 
