@@ -21,6 +21,7 @@ import net.optile.payment.core.PaymentException;
 import net.optile.payment.core.WorkerSubscriber;
 import net.optile.payment.core.WorkerTask;
 import net.optile.payment.core.Workers;
+import net.optile.payment.form.Operation;
 import net.optile.payment.model.AccountRegistration;
 import net.optile.payment.model.ApplicableNetwork;
 import net.optile.payment.model.ListResult;
@@ -122,12 +123,19 @@ public final class PaymentSessionService {
 
     private PaymentSession asyncLoadPaymentSession(String listUrl, Context context) throws PaymentException {
         ListResult listResult = listConnection.getListResult(listUrl);
+        String operationType = listResult.getOperationType();
+        if (!(Operation.CHARGE.equals(operationType) || Operation.PRESET.equals(operationType))) {
+            throw new PaymentException("List operationType: " + operationType + " is not supported");
+        }
         Map<String, PaymentNetwork> networks = loadPaymentNetworks(listResult);
         Map<String, PaymentGroup> groups = loadPaymentGroups(context);
+
         Validator validator = loadValidator(context);
+
         PresetCard presetCard = createPresetCard(listResult, networks);
         List<AccountCard> accountCards = createAccountCards(listResult, networks);
         List<NetworkCard> networkCards = createNetworkCards(networks, groups);
+
         return new PaymentSession(listResult, presetCard, accountCards, networkCards, validator);
     }
 
