@@ -26,7 +26,7 @@ public final class Localization {
     /**
      * Get the currently set Localization instance
      *
-     * @return the current instance or null if not previously set 
+     * @return the current instance or null if not previously set
      */
     public static Localization getInstance() {
         return instance;

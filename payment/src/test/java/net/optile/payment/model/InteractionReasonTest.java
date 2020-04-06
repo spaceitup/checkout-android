@@ -54,6 +54,6 @@ public class InteractionReasonTest {
         assertTrue(InteractionReason.isValid(InteractionReason.UPDATED));
         assertTrue(InteractionReason.isValid(InteractionReason.TAKE_ACTION));
         assertTrue(InteractionReason.isValid(InteractionReason.COMMUNICATION_FAILURE));
-        assertTrue(InteractionReason.isValid(InteractionReason.CLIENTSIDE_EXCEPTION));
+        assertTrue(InteractionReason.isValid(InteractionReason.CLIENTSIDE_ERROR));
     }
 }

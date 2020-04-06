@@ -25,40 +25,37 @@ public class PaymentException extends Exception {
      */
     public PaymentException(final String message) {
         super(message);
-        this.error = new PaymentError(PaymentError.INTERNAL_ERROR, message);
+        this.error = new PaymentError(message);
     }
 
     /**
      * {@inheritDoc}
      *
-     * @param message the extra error info
+     * @param cause the cause
+     */
+    public PaymentException(final Throwable cause) {
+        super(cause.getMessage(), cause);
+        this.error = new PaymentError(cause);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @param message the error message
      * @param cause the cause
      */
     public PaymentException(final String message, final Throwable cause) {
         super(message, cause);
-        this.error = new PaymentError(PaymentError.INTERNAL_ERROR, message);
+        this.error = new PaymentError(message, cause);
     }
 
     /**
      * {@inheritDoc}
      *
-     * @param error the error
-     * @param message the extra error info
+     * @param error the internal error
      */
-    public PaymentException(final PaymentError error, final String message) {
-        super(message);
-        this.error = error;
-    }
-
-    /**
-     * {@inheritDoc}
-     *
-     * @param error the error
-     * @param message the extra error info
-     * @param cause the cause
-     */
-    public PaymentException(final PaymentError error, final String message, final Throwable cause) {
-        super(message, cause);
+    public PaymentException(final PaymentError error) {
+        super(error.getMessage(), error.getCause());
         this.error = error;
     }
 }

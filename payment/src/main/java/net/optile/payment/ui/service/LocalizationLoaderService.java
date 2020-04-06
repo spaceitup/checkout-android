@@ -148,7 +148,8 @@ public final class LocalizationLoaderService {
         return map;
     }
 
-    private LocalizationHolder loadSharedLocalization(Context context, PaymentNetwork network, LocalizationHolder fallback) throws PaymentException {
+    private LocalizationHolder loadSharedLocalization(Context context, PaymentNetwork network, LocalizationHolder fallback)
+        throws PaymentException {
         try {
             URL url = getNetworkLanguageUrl(network);
             String sharedUrl = url.toString();
