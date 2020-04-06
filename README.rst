@@ -273,7 +273,7 @@ The following table describes the combination of InteractionCode and Interaction
 +------------------+-----------------------+-----------------------------------------------------------------+
 | VERIFY           | CLIENTSIDE_ERROR      | An error occurred during a Charge operation.                    |
 |                  |                       | The charge may have been successful, therefor the status of the | 
-|                  |                       | payment (list) must be verified.                           |
+|                  |                       | payment (list) must be verified.                                |
 +------------------+-----------------------+-----------------------------------------------------------------+
 | VERIFY           | COMMUNICATION_FAILURE | A network failure occurred while performing a Charge operation. |
 |                  |                       | The charge may have been successful, therefor the status of the |
