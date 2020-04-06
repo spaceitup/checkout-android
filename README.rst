@@ -48,9 +48,9 @@ Payment Methods
 ---------------
 
 All “direct” payment methods are supported, this includes Credit, Debit
-cards and Sepa. Payments that require “redirects” (external WebView) like
-Paypal and Sofort are not supported. The option “presetFirst”
-is also supported and provides the option to show a summary page to your users
+cards and Sepa. Payments that require “redirects” (ChromeCustomTab) like
+Paypal and Sofort are only supported if they are redirected using the GET HTTP Method.
+The option “presetFirst” is also supported and provides the option to show a summary page to your users
 before finalizing the payment.
 
 Integration Scenario
