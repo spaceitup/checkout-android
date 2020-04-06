@@ -15,6 +15,7 @@ import android.content.Context;
 import android.net.Uri;
 import android.text.TextUtils;
 import net.optile.payment.core.PaymentException;
+import net.optile.payment.model.HttpMethod;
 import net.optile.payment.model.Interaction;
 import net.optile.payment.model.OperationResult;
 import net.optile.payment.model.Parameter;
@@ -33,10 +34,11 @@ public final class RedirectService {
      * Check if payment redirects are supported for this device.
      *
      * @param context The context in which this tabs is used
+     * @param redirect containing the address to which to redirect to
      * @return true if payment redirects are supported, false otherwise
      */
-    public static boolean isSupported(Context context) {
-        return ChromeCustomTabs.isSupported(context);
+    public static boolean isSupported(Context context, Redirect redirect) {
+        return ChromeCustomTabs.isSupported(context) && HttpMethod.GET.equals(redirect.getMethod());
     }
 
     /**
@@ -46,8 +48,8 @@ public final class RedirectService {
      * @param redirect containing the address to which to redirect to
      */
     public static void open(Context context, Redirect redirect) throws PaymentException {
-        if (!isSupported(context)) {
-            throw new PaymentException("Redirect payments are not supported by this device");
+        if (!isSupported(context, redirect)) {
+            throw new PaymentException("Redirect payment is not supported by the Android-SDK");
         }
         PaymentRedirectActivity.clearResultUri();
         Uri uri = Uri.parse(redirect.getUrl().toString());
