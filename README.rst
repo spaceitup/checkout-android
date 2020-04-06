@@ -198,9 +198,7 @@ Code sample how to initialize and display the Payment Page:
 Payment Result
 ==============
 
-Payment results are returned through the onActivityResult() method in your Activity. When the page is closed, the returned PaymentResult class contains information about the performed operation. I.e. it may contain an Interaction and OperationResult object describing the state of the latest Charge operation.
-
-The Interaction and OperationResult objects are never created by the Android SDK but instead come from the Optile Payment API. The PaymentError object inside the PaymentResult class is created by the Android SDK and contains information about an error that happened inside the Android SDK. 
+Payment results are returned through the onActivityResult() method in your Activity. When the payment page is closed, the returned PaymentResult class contains information about the operation request. I.e. it may contain an Interaction and OperationResult describing the state of a Charge operation. The PaymentError object inside the PaymentResult class is created when an error occurred inside the Android-SDK.
 
 Code sample how to obtain the PaymentResult inside the onActivityResult() method:
 
@@ -218,22 +216,18 @@ Code sample how to obtain the PaymentResult inside the onActivityResult() method
         }
         String resultInfo = result.getResultInfo();
 
-        // Operation request has been made and "result" contains
-        // an Interaction and optional OperationResult describing the operation result
+        // Operation request has been made and "result" contains a resultInfo, an optional Interaction and OperationResult object.
+        // The Interaction object is null when the user selected the same PresetAccount again. 
         if (resultCode == PaymentUI.RESULT_CODE_OK) {
             Interaction interaction = result.getInteraction();
             OperationResult operationResult = result.getOperationResult();
         } 
 
-        //"result" contains a resultInfo and an optional Interaction and optional OperationResult. 
-        //If the Interaction is null then the user closed the page before any request was made.
+        // "result" contains a resultInfo and optional Interaction, OperationResult or PaymentError. 
+        // The Interaction object is null when the user closed the page before any request was made.
         if (resultCode == PaymentUI.RESULT_CODE_CANCELED) {
             Interaction interaction = result.getInteraction();
             OperationResult operationResult = result.getOperationResult();
-        }
-       
-        // "result" contains a PaymentError explaining the error that occurred i.e. connection error.
-        if (resultCode == PaymentUI.RESULT_CODE_ERROR) {
             PaymentError error = result.getPaymentError();
         }
     }
@@ -241,24 +235,54 @@ Code sample how to obtain the PaymentResult inside the onActivityResult() method
 Successful
 ----------
 
-The RESULT_CODE_OK code indicates that the operation request was successful, there are two situations when this result is returned:
+The RESULT_CODE_OK code indicates that the operation request was successful, there are three situations when this result is returned:
 
-1. InteractionCode is PROCEED - the PaymentResult contains an OperationResult with detailed information about the operation. 
+1. The user selected the already selected PresetAccount from the list, in this case both Interaction and OperationResult objects are null.
 
-2. InteractionCode is ABORT and InteractionReason is DUPLICATE_OPERATION, this means that a previous operation on the same list has already been performed. This may happen if there was a network error during the first operation and the Android SDK was unable to receive a proper response from the Payment API.
+2. InteractionCode is PROCEED. The PaymentResult contains an OperationResult with detailed information about the operation.
+
+3. InteractionCode is ABORT and InteractionReason is DUPLICATE_OPERATION, this means that a previous operation on the same list has already been performed. This may happen if there was a network error during the first operation and the Android SDK was unable to receive a proper response from the Payment API.
 
 Canceled
 ---------
 
-The RESULT_CODE_CANCELED code indicates that the Android SDK did not perform a successful operation. This may happen for different reasons, i.e. the user clicked the back button. The PaymentResult may contain an Interaction and an OperationResult with details about the failed operation. If both Interaction and OperationResult are null then the user closed the page before any request was made. 
-    
-Error
------
+The RESULT_CODE_CANCELED code indicates that the Android SDK did not perform a successful operation. This may happen for different reasons, i.e. the user clicked the back button on the payment page. 
 
-The RESULT_CODE_ERROR code indicates that an unrecoverable error has occurred, i.e. a SecurityException has been thrown inside the Android SDK. The PaymentResult contains a PaymentError Object with the error details.
+1. The user closed the payment page without performing any operation, in this case the Interaction object is null.
+
+2. The Interaction object is set and provides details which steps to take next. When the code of the Interaction is VERIFY, this means that the Android-SDK was not able to determine the current state of the list. The status of the list should be verified before continuing. 
+
+3. The user performed an operation and the result contains an OperationResult containing detailed information about the operation. When the OperationResult is set, the Interaction object is also set.
+
+4. An error occurred inside the Android-SDK and the result contains a PaymentError. When the PaymentError is set, the Interaction object is also set but is created by the Android-SDK. The following paragraph describes which types of Interactions are created by the Android-SDK.
+
     
+Client-Side Interactions 
+------------------------
+
+The following table describes the combination of InteractionCode and InteractionReason created by the Android-SDK.
+
++------------------+-----------------------+-----------------------------------------------------------------+
+| InteractionCode  | InteractionReason     | Description                                                     |
++==================+=======================+=================================================================+
+| ABORT            | CLIENTSIDE_ERROR      | An internal error occurred inside the Android-SDK, i.e. a       |
+|                  |                       | SecurityException was thrown. The list may still be valid.      |      
++------------------+-----------------------+-----------------------------------------------------------------+
+| ABORT            | COMMUNICATION_FAILURE | A network failure occurred while communicating with the         |            
+|                  |                       | Optile Payment API. The list may still be valid.                |
++------------------+-----------------------+-----------------------------------------------------------------+
+| VERIFY           | CLIENTSIDE_ERROR      | An error occurred during a Charge operation.                    |
+|                  |                       | The charge may have been successful, therefor the status of the | 
+|                  |                       | payment (list) must be verified.                           |
++------------------+-----------------------+-----------------------------------------------------------------+
+| VERIFY           | COMMUNICATION_FAILURE | A network failure occurred while performing a Charge operation. |
+|                  |                       | The charge may have been successful, therefor the status of the |
+|                  |                       | payment (list) must be verified.                                |
++------------------+-----------------------+-----------------------------------------------------------------+
+
+
 Summary Page (Delayed Payment Submission)
-===========
+=========================================
 
 Showing a summary page before a user makes the final charge (i.e. display the cart contents, final price, selected payment method etc.) can be achieved by implementing the Delayed Payment Submission flow supported by the Android SDK in three simple steps. Please see documentation at `optile.io <https://www.optile.io/opg#292155>`_ for more information about Delayed Payment Submission.
 
