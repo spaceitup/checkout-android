@@ -249,7 +249,7 @@ The RESULT_CODE_CANCELED code indicates that the Android SDK did not perform a s
 
 2. The user performed an operation and the result contains an OperationResult containing detailed information why the operation failed.
 
-3. An error occurred inside the Android-SDK and the result contains a PaymentError. The following paragraph describes which types of Interactions are created by the Android-SDK.
+3. An error occurred inside the Android-SDK and the result contains a PaymentError. When the PaymentResult contains a PaymentError, the PaymentResult will also contain a client-side created Interaction object. The following paragraph describes which types of Interactions are created by the Android-SDK when an internal error occurred.
 
     
 Client-Side Interactions 
