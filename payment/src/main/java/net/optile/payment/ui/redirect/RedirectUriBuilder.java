@@ -19,11 +19,11 @@ import net.optile.payment.model.Redirect;
  */
 public final class RedirectUriBuilder {
 
-    /** 
+    /**
      * Construct a Uri from the provided redirect
-     * 
-     * @param redirect to be converted into a Uri 
-     * @return the created Uri 
+     *
+     * @param redirect to be converted into a Uri
+     * @return the created Uri
      */
     public static Uri createUri(Redirect redirect) {
         Uri uri = Uri.parse(redirect.getUrl().toString());

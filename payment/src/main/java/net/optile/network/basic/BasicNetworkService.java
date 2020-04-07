@@ -18,7 +18,6 @@ import net.optile.payment.form.Operation;
 import net.optile.payment.model.ErrorInfo;
 import net.optile.payment.model.Interaction;
 import net.optile.payment.model.InteractionCode;
-import net.optile.payment.model.InteractionReason;
 import net.optile.payment.model.OperationResult;
 import net.optile.payment.model.Redirect;
 import net.optile.payment.model.RedirectType;
@@ -34,7 +33,7 @@ import net.optile.payment.ui.service.OperationService;
 public final class BasicNetworkService extends NetworkService implements OperationListener {
     private final OperationService service;
     private Operation operation;
-    
+
     /**
      * Create a new BasicNetworkService, this service is a basic implementation
      * that simply send an operation to the Payment API.
@@ -105,7 +104,7 @@ public final class BasicNetworkService extends NetworkService implements Operati
     public void onOperationSuccess(OperationResult operationResult) {
         Interaction interaction = operationResult.getInteraction();
         PaymentResult result = new PaymentResult(operationResult);
-        
+
         if (!InteractionCode.PROCEED.equals(interaction.getCode())) {
             presenter.onProcessPaymentResult(PaymentUI.RESULT_CODE_CANCELED, result);
             return;
