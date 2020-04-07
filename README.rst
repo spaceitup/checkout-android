@@ -217,14 +217,13 @@ Code sample how to obtain the PaymentResult inside the onActivityResult() method
         String resultInfo = result.getResultInfo();
 
         // Operation request has been made and "result" contains a resultInfo, an optional Interaction and OperationResult object.
-        // The Interaction object is null when the user selected the same PresetAccount again. 
+        // The Interaction object is null when the user selected the same PresetAccount again or closed the page. 
         if (resultCode == PaymentUI.RESULT_CODE_OK) {
             Interaction interaction = result.getInteraction();
             OperationResult operationResult = result.getOperationResult();
         } 
 
-        // "result" contains a resultInfo and optional Interaction, OperationResult or PaymentError. 
-        // The Interaction object is null when the user closed the page before any request was made.
+        // "result" contains a resultInfo and Interaction with optional OperationResult or PaymentError. 
         if (resultCode == PaymentUI.RESULT_CODE_CANCELED) {
             Interaction interaction = result.getInteraction();
             OperationResult operationResult = result.getOperationResult();
@@ -237,24 +236,20 @@ Successful
 
 The RESULT_CODE_OK code indicates that the operation request was successful, there are three situations when this result is returned:
 
-1. The user selected the already selected PresetAccount from the list, in this case both Interaction and OperationResult objects are null.
+1. The user closed the page or selected an already selected PresetAccount from the list, in both cases the Interaction and OperationResult objects are null.
 
-2. InteractionCode is PROCEED. The PaymentResult contains an OperationResult with detailed information about the operation.
-
-3. InteractionCode is ABORT and InteractionReason is DUPLICATE_OPERATION, this means that a previous operation on the same list has already been performed. This may happen if there was a network error during the first operation and the Android SDK was unable to receive a proper response from the Payment API.
+2. InteractionCode is PROCEED. The PaymentResult contains an OperationResult with detailed information about the successful operation.
 
 Canceled
 ---------
 
-The RESULT_CODE_CANCELED code indicates that the Android SDK did not perform a successful operation. This may happen for different reasons, i.e. the user clicked the back button on the payment page. 
+The RESULT_CODE_CANCELED code indicates that the Android SDK did not perform a successful operation. The PaymentResult will always contain an Interaction and optional OperationResult or PaymentError indicating what went wrong and what should be done next. 
 
-1. The user closed the payment page without performing any operation, in this case the Interaction object is null.
+1. When the code of the Interaction is VERIFY, it means that the Android-SDK was not able to determine the current state of the list and should be verified before continuing.
 
-2. The Interaction object is set and provides details which steps to take next. When the code of the Interaction is VERIFY, this means that the Android-SDK was not able to determine the current state of the list. The status of the list should be verified before continuing. 
+2. The user performed an operation and the result contains an OperationResult containing detailed information why the operation failed.
 
-3. The user performed an operation and the result contains an OperationResult containing detailed information about the operation. When the OperationResult is set, the Interaction object is also set.
-
-4. An error occurred inside the Android-SDK and the result contains a PaymentError. When the PaymentError is set, the Interaction object is also set but is created by the Android-SDK. The following paragraph describes which types of Interactions are created by the Android-SDK.
+3. An error occurred inside the Android-SDK and the result contains a PaymentError. The following paragraph describes which types of Interactions are created by the Android-SDK.
 
     
 Client-Side Interactions 
