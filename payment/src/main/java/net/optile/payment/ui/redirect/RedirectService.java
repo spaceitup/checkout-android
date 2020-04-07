@@ -52,8 +52,7 @@ public final class RedirectService {
             throw new PaymentException("Redirect payment is not supported by the Android-SDK");
         }
         PaymentRedirectActivity.clearResultUri();
-        Uri uri = Uri.parse(redirect.getUrl().toString());
-        ChromeCustomTabs.open(context, uri);
+        ChromeCustomTabs.open(context, RedirectUriBuilder.createUri(redirect));
     }
 
     /**
