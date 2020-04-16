@@ -156,7 +156,7 @@ public final class PaymentError implements Parcelable {
         } catch (JsonSyntaxException e) {
             // this should never happen since we use the same GsonHelper
             // to produce these Json strings
-            Log.w("pay", e);
+            Log.w("sdk_PaymentError", e);
             throw new RuntimeException(e);
         }
         this.cause = (Throwable) in.readSerializable();
