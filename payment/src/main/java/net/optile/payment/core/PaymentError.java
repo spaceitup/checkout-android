@@ -168,7 +168,7 @@ public final class PaymentError implements Parcelable {
      * Constructs a new PaymentError from the given Throwable
      *
      * @param cause of the error
-     * @return the InternalError containing detailed information about the error
+     * @return the PaymentError containing detailed information about the error
      */
     public static PaymentError fromThrowable(Throwable cause) {
         if (cause instanceof PaymentException) {
