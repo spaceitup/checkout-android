@@ -165,7 +165,7 @@ public final class PaymentError implements Parcelable {
 
 
     /**
-     * Helper class to construct a new InternalError from the given Throwable
+     * Constructs a new PaymentError from the given Throwable
      *
      * @param cause of the error
      * @return the InternalError containing detailed information about the error
