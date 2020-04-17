@@ -111,6 +111,21 @@ public final class PaymentResult implements Parcelable {
         this.error = in.readParcelable(PaymentError.class.getClassLoader());
     }
 
+    /** 
+     * Create a PaymentResult from the provided PaymentError. 
+     * The InteractionCode will be ABORT and the InteractionReason will either be COMMUNICATION_FAILURE for network failures
+     * or CLIENTSIDE_ERROR for any other errors
+     *
+     * @param error to be used to create a new PaymentResult 
+     * @return the newly created PaymentResult 
+     */
+    public static PaymentResult fromPaymentError(PaymentError error) {
+        String reason = error.isNetworkFailure() ? InteractionReason.COMMUNICATION_FAILURE :
+            InteractionReason.CLIENTSIDE_ERROR;
+        Interaction interaction = new Interaction(InteractionCode.ABORT, reason);
+        return new PaymentResult(interaction, error);
+    }
+    
     /**
      * Get the PaymentResult from the result intent.
      *
@@ -153,13 +168,6 @@ public final class PaymentResult implements Parcelable {
         return error != null && error.isNetworkFailure();
     }
 
-    public static PaymentResult fromPaymentError(PaymentError error) {
-        String reason = error.isNetworkFailure() ? InteractionReason.COMMUNICATION_FAILURE :
-            InteractionReason.CLIENTSIDE_ERROR;
-        Interaction interaction = new Interaction(InteractionCode.ABORT, reason);
-        return new PaymentResult(interaction, error);
-    }
-    
     /**
      * {@inheritDoc}
      */
