@@ -203,7 +203,7 @@ final class PaymentListPresenter implements PaymentSessionListener, Localization
 
     private void handleLoadingError(Throwable cause) {
         PaymentError error = PaymentError.fromThrowable(cause);
-        if (error.getNetworkFailure()) {
+        if (error.isNetworkFailure()) {
             handleLoadingNetworkFailure(error);
         } else {
             closeWithErrorMessage(error);

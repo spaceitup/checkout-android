@@ -150,11 +150,11 @@ public final class PaymentResult implements Parcelable {
     }
 
     public boolean hasNetworkFailureError() {
-        return error != null && error.getNetworkFailure();
+        return error != null && error.isNetworkFailure();
     }
 
     public static PaymentResult fromPaymentError(PaymentError error) {
-        String reason = error.getNetworkFailure() ? InteractionReason.COMMUNICATION_FAILURE :
+        String reason = error.isNetworkFailure() ? InteractionReason.COMMUNICATION_FAILURE :
             InteractionReason.CLIENTSIDE_ERROR;
         Interaction interaction = new Interaction(InteractionCode.ABORT, reason);
         return new PaymentResult(interaction, error);

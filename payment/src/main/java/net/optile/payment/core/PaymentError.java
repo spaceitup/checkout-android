@@ -136,7 +136,7 @@ public final class PaymentError implements Parcelable {
         return cause;
     }
 
-    public boolean getNetworkFailure() {
+    public boolean isNetworkFailure() {
         return networkFailure;
     }
 
