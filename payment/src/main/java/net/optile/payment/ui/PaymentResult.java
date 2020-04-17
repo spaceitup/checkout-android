@@ -17,6 +17,8 @@ import android.text.TextUtils;
 import android.util.Log;
 import net.optile.payment.core.PaymentError;
 import net.optile.payment.model.Interaction;
+import net.optile.payment.model.InteractionCode;
+import net.optile.payment.model.InteractionReason;
 import net.optile.payment.model.OperationResult;
 import net.optile.payment.util.GsonHelper;
 
@@ -151,6 +153,13 @@ public final class PaymentResult implements Parcelable {
         return error != null && error.getNetworkFailure();
     }
 
+    public static PaymentResult fromPaymentError(PaymentError error) {
+        String reason = error.getNetworkFailure() ? InteractionReason.COMMUNICATION_FAILURE :
+            InteractionReason.CLIENTSIDE_ERROR;
+        Interaction interaction = new Interaction(InteractionCode.ABORT, reason);
+        return new PaymentResult(interaction, error);
+    }
+    
     /**
      * {@inheritDoc}
      */
