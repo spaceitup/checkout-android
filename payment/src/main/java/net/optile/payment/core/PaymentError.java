@@ -136,7 +136,7 @@ public final class PaymentError implements Parcelable {
         return cause;
     }
 
-    public boolean getNetworkFailure() {
+    public boolean isNetworkFailure() {
         return networkFailure;
     }
 
@@ -156,7 +156,7 @@ public final class PaymentError implements Parcelable {
         } catch (JsonSyntaxException e) {
             // this should never happen since we use the same GsonHelper
             // to produce these Json strings
-            Log.w("pay", e);
+            Log.w("sdk_PaymentError", e);
             throw new RuntimeException(e);
         }
         this.cause = (Throwable) in.readSerializable();
@@ -165,10 +165,10 @@ public final class PaymentError implements Parcelable {
 
 
     /**
-     * Helper class to construct a new InternalError from the given Throwable
+     * Constructs a new PaymentError from the given Throwable
      *
      * @param cause of the error
-     * @return the InternalError containing detailed information about the error
+     * @return the PaymentError containing detailed information about the error
      */
     public static PaymentError fromThrowable(Throwable cause) {
         if (cause instanceof PaymentException) {

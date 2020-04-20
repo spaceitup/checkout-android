@@ -71,11 +71,9 @@ final class CheckoutPresenter {
         }
         switch (interaction.getCode()) {
             case InteractionCode.ABORT:
-                // When hasNetworkFailure() is true then the interaction reason is COMMUNICATION_FAILURE
-                if (result.hasNetworkFailureError()) {
-                    return;
+                if (!result.hasNetworkFailureError()) {
+                    view.closePayment();
                 }
-                view.closePayment();
                 break;
             case InteractionCode.VERIFY:
                 // VERIFY means that a charge request has been made but the status of the payment could

@@ -17,6 +17,8 @@ import android.text.TextUtils;
 import android.util.Log;
 import net.optile.payment.core.PaymentError;
 import net.optile.payment.model.Interaction;
+import net.optile.payment.model.InteractionCode;
+import net.optile.payment.model.InteractionReason;
 import net.optile.payment.model.OperationResult;
 import net.optile.payment.util.GsonHelper;
 
@@ -103,12 +105,27 @@ public final class PaymentResult implements Parcelable {
         } catch (JsonSyntaxException e) {
             // this should never happen since we use the same GsonHelper
             // to produce these Json strings
-            Log.w("pay_PaymentResult", e);
+            Log.w("sdk_PaymentResult", e);
             throw new RuntimeException(e);
         }
         this.error = in.readParcelable(PaymentError.class.getClassLoader());
     }
 
+    /** 
+     * Create a PaymentResult from the provided PaymentError. 
+     * The InteractionCode will be ABORT and the InteractionReason will either be COMMUNICATION_FAILURE for network failures
+     * or CLIENTSIDE_ERROR for any other errors
+     *
+     * @param error to be used to create a new PaymentResult 
+     * @return the newly created PaymentResult 
+     */
+    public static PaymentResult fromPaymentError(PaymentError error) {
+        String reason = error.isNetworkFailure() ? InteractionReason.COMMUNICATION_FAILURE :
+            InteractionReason.CLIENTSIDE_ERROR;
+        Interaction interaction = new Interaction(InteractionCode.ABORT, reason);
+        return new PaymentResult(interaction, error);
+    }
+    
     /**
      * Get the PaymentResult from the result intent.
      *
@@ -148,7 +165,7 @@ public final class PaymentResult implements Parcelable {
     }
 
     public boolean hasNetworkFailureError() {
-        return error != null && error.getNetworkFailure();
+        return error != null && error.isNetworkFailure();
     }
 
     /**
