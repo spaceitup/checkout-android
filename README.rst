@@ -198,11 +198,11 @@ Code sample how to initialize and display the Payment Page:
 Payment Result
 ==============
 
-Payment results are returned through the onActivityResult() method in your Activity. The Intent from the activity result can be converted to a PaymentResult, depending on what happened while processing the payment, the PaymentResult may contain an Interaction, OperationResult or PaymentError. 
+Payment results are returned through the onActivityResult() method in your Activity. The Intent from the activity result can be converted to a PaymentResult. Depending on what happened while processing the payment, the PaymentResult may contain an Interaction, OperationResult or PaymentError. 
 
-- Interaction: provides recommendations for the merchant how to proceed after a payment
-- OperationResult: is designed to hold information about the operation request
-- PaymentError: contains information about an error that happened inside the Android SDK 
+- Interaction - provides recommendations for the merchant how to proceed after a payment
+- OperationResult - is designed to hold information about the payment operation request
+- PaymentError - contains information about an error that happened inside the Android SDK 
 
 Code sample how to obtain the PaymentResult from inside the onActivityResult() method:
 
@@ -232,11 +232,20 @@ Code sample how to obtain the PaymentResult from inside the onActivityResult() m
         }
     }
 
-To make processing of the payment result easier, the resultCode provided in the onActivityResult() method indicates two different flows. The first flow is the OK flow and is used when no changes were made or the payment was successful (RESULT_CODE_OK). The second flow is when the payment was canceled or an error occurred (RESULT_CODE_CANCELED).
+Success or failure
+------------------
 
-- RESULT_CODE_OK is used to indicate the payment was successful and in this case the PaymentResult contains both the Interaction and OperationResult. The result code is also used to indicate the user closed the payment page or selected an already selected preset account, both Interaction and OperationResult will be null.
+To make processing of the payment result easier, the resultCode provided in the onActivityResult() method defines two different flows. The first is the success flow (RESULT_CODE_OK) and is used when no changes were made or the payment was successful. The second is the failure flow (RESULT_CODE_CANCELED) and is used when the payment was canceled or an error occurred.
 
-- RESULT_CODE_CANCELED means the payment was canceled or an internal error occurred inside the Android SDK. For both cases the Interaction is set in the PaymentResult. The OperationResult is optional and if set, it provides more information why the payment failed. The PaymentError is also optional and if set, it provides more information about an internal error occurred inside the Android SDK. The OperationResult and PaymentError are never set together in the PaymentResult. 
+Success
+~~~~~~~
+
+RESULT_CODE_OK is used to indicate the payment was successful, the payment result will contain both the Interaction and OperationResult. This result code is also used to indicate that nothing has changed, e.g. the user closed the payment page or selected an already selected preset account, both Interaction and OperationResult will then be null.
+
+Failure
+~~~~~~~
+
+RESULT_CODE_CANCELED is used when the payment was canceled or an internal error occurred inside the Android SDK. For both cases the Interaction is set in the payment result. The OperationResult is optional and if set, it provides more information why the payment operation failed. The PaymentError is also optional and if set, it provides more information about an internal error that occurred inside the Android SDK. The OperationResult and PaymentError are never set together in the same payment result. 
 
 Internal Errors
 ---------------
