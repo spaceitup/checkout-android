@@ -144,16 +144,17 @@ public final class BasicNetworkService extends NetworkService implements Operati
     }
 
     private void handleProcessPaymentError(PaymentError error) {
-        ErrorInfo errorInfo = error.getErrorInfo();
-        PaymentResult result;
+        presenter.onProcessPaymentResult(PaymentUI.RESULT_CODE_CANCELED, toPaymentResult(error));
+    }
 
+    private PaymentResult toPaymentResult(PaymentError error) {
+        ErrorInfo errorInfo = error.getErrorInfo();
         if (errorInfo != null) {
-            result = new PaymentResult(errorInfo.getInteraction(), error);
-        } else {
-            result = PaymentResult.fromPaymentError(error);
-            result.getInteraction().setCode(getErrorInteractionCode(operation));
+            return new PaymentResult(errorInfo.getInteraction(), error);
         }
-        presenter.onProcessPaymentResult(PaymentUI.RESULT_CODE_CANCELED, result);
+        String reason = error.isNetworkFailure() ? InteractionReason.COMMUNICATION_FAILURE : InteractionReason.CLIENTSIDE_ERROR;
+        Interaction interaction = new Interaction(getErrorInteractionCode(operation), reason); 
+        return new PaymentResult(interaction, error);
     }
 
     private String getErrorInteractionCode(Operation operation) {
