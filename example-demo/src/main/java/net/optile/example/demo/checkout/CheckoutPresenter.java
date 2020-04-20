@@ -42,15 +42,19 @@ final class CheckoutPresenter {
     void handleSdkResult(SdkResult result) {
         switch (result.resultCode) {
             case PaymentUI.RESULT_CODE_OK:
-                handlePaymentSuccess(result.paymentResult);
+                handleResultOk(result.paymentResult);
                 break;
             case PaymentUI.RESULT_CODE_CANCELED:
-                handlePaymentCanceled(result.paymentResult);
+                handleResultCanceled(result.paymentResult);
                 break;
         }
     }
 
-    private void handlePaymentSuccess(PaymentResult result) {
+    private void handleResultOk(PaymentResult result) {
+        Interaction interaction = result.getInteraction();
+        if (interaction == null) {
+            return;
+        }
         OperationResult op = result.getOperationResult();
         if (op != null) {
             Redirect redirect = op.getRedirect();
@@ -64,11 +68,8 @@ final class CheckoutPresenter {
     }
 
 
-    private void handlePaymentCanceled(PaymentResult result) {
+    private void handleResultCanceled(PaymentResult result) {
         Interaction interaction = result.getInteraction();
-        if (interaction == null) {
-            return;
-        }
         switch (interaction.getCode()) {
             case InteractionCode.ABORT:
                 if (!result.hasNetworkFailureError()) {
