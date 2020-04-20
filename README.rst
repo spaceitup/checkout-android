@@ -198,10 +198,10 @@ Code sample how to initialize and display the Payment Page:
 Payment Result
 ==============
 
-Payment results are returned through the onActivityResult() method in your Activity. The Intent from the activity result can be converted to a PaymentResult, depending on what happened while processing the payment, the PaymentResult may contain an Interaction, OperationResult or PaymentError. 
+Payment results are returned through the onActivityResult() method in your Activity. The Intent from the activity result can be converted to a PaymentResult. Depending on what happened while processing the payment, the PaymentResult may contain an Interaction, OperationResult or PaymentError. 
 
 - Interaction: provides recommendations for the merchant how to proceed after a payment
-- OperationResult: is designed to hold information about the operation request
+- OperationResult: is designed to hold information about the payment operation request
 - PaymentError: contains information about an error that happened inside the Android SDK 
 
 Code sample how to obtain the PaymentResult from inside the onActivityResult() method:
