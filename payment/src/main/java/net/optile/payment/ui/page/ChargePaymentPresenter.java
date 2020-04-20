@@ -19,6 +19,7 @@ import net.optile.payment.form.Operation;
 import net.optile.payment.localization.Localization;
 import net.optile.payment.model.Interaction;
 import net.optile.payment.model.InteractionCode;
+import net.optile.payment.model.InteractionReason;
 import net.optile.payment.model.ListResult;
 import net.optile.payment.model.OperationResult;
 import net.optile.payment.model.Redirect;
@@ -118,7 +119,7 @@ final class ChargePaymentPresenter implements PaymentSessionListener, NetworkSer
                 break;
             default:
                 PaymentResult result = new PaymentResult(listResult.getResultInfo(), interaction);
-                closeWithCanceledCode(result);
+                closeWithErrorMessage(result);
         }
     }
 
@@ -127,19 +128,13 @@ final class ChargePaymentPresenter implements PaymentSessionListener, NetworkSer
      */
     @Override
     public void onPaymentSessionError(Throwable cause) {
-        PaymentResult result = PaymentResult.fromThrowable(cause);
-        if (result.hasError()) {
-            handleLoadingError(result);
-        } else {
-            closeWithCanceledCode(result);
-        }
+        handleLoadingError(cause);
     }
 
     private void handleLoadSessionOk(PaymentSession session) {
         if (!session.containsLink("operation", operation.getURL())) {
             String message = "operation not found in ListResult";
-            PaymentError error = new PaymentError(PaymentError.INTERNAL_ERROR, message);
-            closeWithErrorCode(message, error);
+            closeWithErrorMessage(new PaymentError(message));
             return;
         }
         this.session = session;
@@ -162,12 +157,7 @@ final class ChargePaymentPresenter implements PaymentSessionListener, NetworkSer
      */
     @Override
     public void onLocalizationError(Throwable cause) {
-        PaymentResult result = PaymentResult.fromThrowable(cause);
-        if (result.hasError()) {
-            handleLoadingError(result);
-        } else {
-            closeWithCanceledCode(result);
-        }
+        handleLoadingError(cause);
     }
 
     private void loadLocalizations(PaymentSession session) {
@@ -175,17 +165,17 @@ final class ChargePaymentPresenter implements PaymentSessionListener, NetworkSer
         localizationService.loadLocalizations(context, session);
     }
 
-    private void handleLoadingError(PaymentResult result) {
-        PaymentError error = result.getPaymentError();
-        if (error.isError(PaymentError.CONN_ERROR)) {
-            handleConnectionError(result);
+    private void handleLoadingError(Throwable cause) {
+        PaymentError error = PaymentError.fromThrowable(cause);
+
+        if (error.isNetworkFailure()) {
+            handleLoadingNetworkFailure(error);
         } else {
-            closeWithErrorCode(result);
+            closeWithErrorMessage(error);
         }
     }
 
-    private void handleConnectionError(PaymentResult result) {
-        view.setPaymentResult(PaymentUI.RESULT_CODE_ERROR, result);
+    private void handleLoadingNetworkFailure(final PaymentError error) {
         view.showConnectionDialog(new ThemedDialogListener() {
             @Override
             public void onButtonClicked(ThemedDialogFragment dialog, int which) {
@@ -198,13 +188,13 @@ final class ChargePaymentPresenter implements PaymentSessionListener, NetworkSer
                         }
                         break;
                     default:
-                        view.close();
+                        closeWithCanceledCode(error);
                 }
             }
 
             @Override
             public void onDismissed(ThemedDialogFragment dialog) {
-                view.close();
+                closeWithCanceledCode(error);
             }
         });
     }
@@ -234,10 +224,7 @@ final class ChargePaymentPresenter implements PaymentSessionListener, NetworkSer
                 closeWithOkCode(result);
                 break;
             case PaymentUI.RESULT_CODE_CANCELED:
-                closeWithCanceledCode(result);
-                break;
-            case PaymentUI.RESULT_CODE_ERROR:
-                handleProcessPaymentError(result);
+                handleProcessPaymentCanceled(result);
                 break;
         }
     }
@@ -271,16 +258,18 @@ final class ChargePaymentPresenter implements PaymentSessionListener, NetworkSer
 
     private void handleMissingCachedSession() {
         String message = "Missing cached session in ChargePaymentPresenter";
-        PaymentError error = new PaymentError(PaymentError.INTERNAL_ERROR, message);
-        closeWithErrorCode(message, error);
+        closeWithErrorMessage(new PaymentError(message));
     }
 
-    private void handleProcessPaymentError(PaymentResult result) {
-        if (!result.getPaymentError().isError(PaymentError.CONN_ERROR)) {
-            closeWithErrorCode(result);
-            return;
+    private void handleProcessPaymentCanceled(PaymentResult result) {
+        if (result.hasNetworkFailureError()) {
+            handleProcessNetworkFailure(result);
+        } else {
+            closeWithErrorMessage(result);
         }
-        view.setPaymentResult(PaymentUI.RESULT_CODE_ERROR, result);
+    }
+
+    private void handleProcessNetworkFailure(final PaymentResult result) {
         view.showConnectionDialog(new ThemedDialogListener() {
             @Override
             public void onButtonClicked(ThemedDialogFragment dialog, int which) {
@@ -289,13 +278,13 @@ final class ChargePaymentPresenter implements PaymentSessionListener, NetworkSer
                         processPayment();
                         break;
                     default:
-                        view.close();
+                        closeWithCanceledCode(result);
                 }
             }
 
             @Override
             public void onDismissed(ThemedDialogFragment dialog) {
-                view.close();
+                closeWithCanceledCode(result);
             }
         });
     }
@@ -314,7 +303,7 @@ final class ChargePaymentPresenter implements PaymentSessionListener, NetworkSer
         try {
             networkService.processPayment(view.getActivity(), CHARGE_REQUEST_CODE, operation);
         } catch (PaymentException e) {
-            closeWithErrorCode(e.getMessage(), e.error);
+            closeWithErrorMessage(e.error);
         }
     }
 
@@ -339,26 +328,30 @@ final class ChargePaymentPresenter implements PaymentSessionListener, NetworkSer
         view.close();
     }
 
+    private void closeWithCanceledCode(PaymentError error) {
+        PaymentResult result = PaymentResult.fromPaymentError(error);
+        closeWithCanceledCode(result);
+    }
+    
     private void closeWithCanceledCode(PaymentResult result) {
         view.setPaymentResult(PaymentUI.RESULT_CODE_CANCELED, result);
+        view.close();
+    }
 
+    private void closeWithErrorMessage(PaymentError error) {
+        closeWithErrorMessage(PaymentResult.fromPaymentError(error));
+    }
+    
+    private void closeWithErrorMessage(PaymentResult result) {
+        view.setPaymentResult(PaymentUI.RESULT_CODE_CANCELED, result);
         String msg = translateInteraction(result.getInteraction());
         if (TextUtils.isEmpty(msg)) {
             msg = Localization.translate(ERROR_DEFAULT);
         }
-        closeWithMessage(msg);
+        showMessageAndClose(msg);
     }
 
-    private void closeWithErrorCode(PaymentResult result) {
-        view.setPaymentResult(PaymentUI.RESULT_CODE_ERROR, result);
-        closeWithMessage(Localization.translate(ERROR_DEFAULT));
-    }
-
-    private void closeWithErrorCode(String resultInfo, PaymentError error) {
-        closeWithErrorCode(new PaymentResult(resultInfo, error));
-    }
-
-    private void closeWithMessage(String message) {
+    private void showMessageAndClose(String message) {
         view.showMessageDialog(message, new ThemedDialogListener() {
             @Override
             public void onButtonClicked(ThemedDialogFragment dialog, int which) {
@@ -384,9 +377,5 @@ final class ChargePaymentPresenter implements PaymentSessionListener, NetworkSer
             return null;
         }
         return Localization.translateInteraction(interaction);
-    }
-
-    private String getString(int resId) {
-        return view.getActivity().getString(resId);
     }
 }

@@ -29,7 +29,6 @@ public final class PaymentUI {
 
     public final static int RESULT_CODE_OK = Activity.RESULT_FIRST_USER;
     public final static int RESULT_CODE_CANCELED = Activity.RESULT_FIRST_USER + 1;
-    public final static int RESULT_CODE_ERROR = Activity.RESULT_FIRST_USER + 2;
 
     /** The orientation of the Payment page, by default it is in locked mode */
     private int orientation;

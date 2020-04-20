@@ -179,7 +179,8 @@ public final class PaymentSessionService {
         String regex = group.getSmartSelectionRegex(code);
 
         if (TextUtils.isEmpty(regex)) {
-            throw createPaymentException("Missing regex for network: " + code + " in group: " + groupId, null);
+            PaymentError error = new PaymentError("Missing regex for network: " + code + " in group: " + groupId);
+            throw new PaymentException(error);
         }
         NetworkCard card = cards.get(groupId);
         if (card == null) {
@@ -235,11 +236,6 @@ public final class PaymentSessionService {
     private Map<String, PaymentGroup> loadPaymentGroups(Context context) throws PaymentException {
         int groupResId = PaymentUI.getInstance().getGroupResId();
         return ResourceLoader.loadPaymentGroups(context.getResources(), groupResId);
-    }
-
-    private PaymentException createPaymentException(String message, Throwable cause) {
-        PaymentError error = new PaymentError(PaymentError.INTERNAL_ERROR, message);
-        return new PaymentException(error, message, cause);
     }
 
     private Validator loadValidator(Context context) throws PaymentException {

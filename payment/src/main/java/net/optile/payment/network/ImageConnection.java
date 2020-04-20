@@ -8,8 +8,6 @@
 
 package net.optile.payment.network;
 
-import static net.optile.payment.core.PaymentError.CONN_ERROR;
-
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.HttpURLConnection;
@@ -47,7 +45,7 @@ public final class ImageConnection extends BaseConnection {
                 return BitmapFactory.decodeStream(in);
             }
         } catch (IOException e) {
-            throw createPaymentException(CONN_ERROR, e);
+            throw createPaymentException(e, true);
         } finally {
             close(conn);
         }

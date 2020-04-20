@@ -10,8 +10,6 @@ package net.optile.payment.localization;
 
 import java.util.Properties;
 
-import android.text.TextUtils;
-
 /**
  * Class storing localizations in a Properties object
  */

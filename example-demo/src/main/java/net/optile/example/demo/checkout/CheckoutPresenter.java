@@ -47,10 +47,6 @@ final class CheckoutPresenter {
             case PaymentUI.RESULT_CODE_CANCELED:
                 handlePaymentCanceled(result.paymentResult);
                 break;
-            case PaymentUI.RESULT_CODE_ERROR:
-                // Android SDK already shows errors to the user so
-                // we ignore this state.
-                break;
         }
     }
 
@@ -70,8 +66,19 @@ final class CheckoutPresenter {
 
     private void handlePaymentCanceled(PaymentResult result) {
         Interaction interaction = result.getInteraction();
-        if (interaction != null && interaction.getCode() == InteractionCode.ABORT) {
-            view.closePayment();
+        if (interaction == null) {
+            return;
+        }
+        switch (interaction.getCode()) {
+            case InteractionCode.ABORT:
+                if (!result.hasNetworkFailureError()) {
+                    view.closePayment();
+                }
+                break;
+            case InteractionCode.VERIFY:
+                // VERIFY means that a charge request has been made but the status of the payment could
+                // not be verified by the Android-SDK, i.e. because of a network error
+                view.closePayment();
         }
     }
 }

@@ -8,12 +8,6 @@
 
 package net.optile.payment.network;
 
-import static net.optile.payment.core.PaymentError.API_ERROR;
-import static net.optile.payment.core.PaymentError.CONN_ERROR;
-import static net.optile.payment.core.PaymentError.INTERNAL_ERROR;
-import static net.optile.payment.core.PaymentError.PROTOCOL_ERROR;
-import static net.optile.payment.core.PaymentError.SECURITY_ERROR;
-
 import java.io.IOException;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
@@ -78,16 +72,12 @@ public final class ListConnection extends BaseConnection {
                 case HttpURLConnection.HTTP_OK:
                     return handleCreatePaymentSessionOk(readFromInputStream(conn));
                 default:
-                    throw createPaymentException(API_ERROR, rc, conn);
+                    throw createPaymentException(rc, conn);
             }
-        } catch (JsonParseException e) {
-            throw createPaymentException(PROTOCOL_ERROR, e);
-        } catch (MalformedURLException e) {
-            throw createPaymentException(INTERNAL_ERROR, e);
+        } catch (JsonParseException | MalformedURLException | SecurityException e) {
+            throw createPaymentException(e, false);
         } catch (IOException e) {
-            throw createPaymentException(CONN_ERROR, e);
-        } catch (SecurityException e) {
-            throw createPaymentException(SECURITY_ERROR, e);
+            throw createPaymentException(e, true);
         } finally {
             close(conn);
         }
@@ -121,20 +111,17 @@ public final class ListConnection extends BaseConnection {
                 case HttpURLConnection.HTTP_OK:
                     return handleGetListResultOk(readFromInputStream(conn));
                 default:
-                    throw createPaymentException(API_ERROR, rc, conn);
+                    throw createPaymentException(rc, conn);
             }
-        } catch (JsonParseException e) {
-            throw createPaymentException(PROTOCOL_ERROR, e);
-        } catch (MalformedURLException e) {
-            throw createPaymentException(INTERNAL_ERROR, e);
+        } catch (JsonParseException | MalformedURLException | SecurityException e) {
+            throw createPaymentException(e, false);
         } catch (IOException e) {
-            throw createPaymentException(CONN_ERROR, e);
-        } catch (SecurityException e) {
-            throw createPaymentException(SECURITY_ERROR, e);
+            throw createPaymentException(e, true);
         } finally {
             close(conn);
         }
     }
+
 
     /**
      * Handle the create new payment session OK state

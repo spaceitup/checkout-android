@@ -8,8 +8,6 @@
 
 package net.optile.payment.network;
 
-import static net.optile.payment.core.PaymentError.CONN_ERROR;
-
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -51,7 +49,7 @@ public final class LocalizationConnection extends BaseConnection {
             }
             return new PropLocalizationHolder(prop);
         } catch (IOException e) {
-            throw createPaymentException(CONN_ERROR, e);
+            throw createPaymentException(e, true);
         } finally {
             close(conn);
         }

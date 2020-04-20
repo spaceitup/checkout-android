@@ -8,74 +8,199 @@
 
 package net.optile.payment.core;
 
-import java.lang.annotation.Retention;
-import java.lang.annotation.RetentionPolicy;
+import com.google.gson.JsonSyntaxException;
 
-import androidx.annotation.StringDef;
+import android.os.Parcel;
+import android.os.Parcelable;
+import android.text.TextUtils;
+import android.util.Log;
 import net.optile.payment.model.ErrorInfo;
+import net.optile.payment.util.GsonHelper;
 
 /**
  * A class representing the details about the error
  */
-public final class PaymentError {
+public final class PaymentError implements Parcelable {
 
-    public final static String API_ERROR = "API_ERROR";
-    public final static String CONN_ERROR = "CONN_ERROR";
-    public final static String INTERNAL_ERROR = "INTERNAL_ERROR";
-    public final static String SECURITY_ERROR = "SECURITY_ERROR";
-    public final static String PROTOCOL_ERROR = "PROTOCOL_ERROR";
+    public final static Parcelable.Creator<PaymentError> CREATOR = new Parcelable.Creator<PaymentError>() {
 
-    /**
-     * The mandatory error type
-     */
-    public final String errorType;
-    /**
-     * The optional network status code like 400 or 500
-     */
-    public final int statusCode;
-    /**
-     * The optional error data
-     */
-    public final String errorData;
-    /**
-     * The optional error info
-     */
-    public final ErrorInfo errorInfo;
+        public PaymentError createFromParcel(Parcel in) {
+            return new PaymentError(in);
+        }
+
+        public PaymentError[] newArray(int size) {
+            return new PaymentError[size];
+        }
+    };
 
     /**
-     * Construct a new PaymentError object containing the information about the payment failure
+     * The optional network status code like 404 or 500
+     */
+    private int statusCode;
+    /**
+     * The optional message containing details about the error
+     */
+    private String message;
+    /**
+     * The optional ErrorInfo received from the payment Api
+     */
+    private ErrorInfo errorInfo;
+    /**
+     * The optional cause of the internal error
+     */
+    private Throwable cause;
+    /**
+     * This optional flag to indicate that this error was caused by a network failure
+     */
+    private boolean networkFailure;
+
+    /**
+     * Construct a new PaymentError containing the message what went wrong
      *
-     * @param errorType the error type
-     * @param errorData the error data
+     * @param message the error message
      */
-    public PaymentError(@ErrorType final String errorType, final String errorData) {
-        this(errorType, 0, errorData, null);
+    public PaymentError(final String message) {
+        this.message = message;
     }
 
     /**
-     * Construct a new PaymentError object containing all information about a network error
+     * Construct a new PaymentError containing the network failure information
      *
-     * @param errorType the error type
      * @param statusCode the status code
-     * @param errorData the error data
+     * @param message the error message
+     */
+    public PaymentError(final int statusCode, final String message) {
+        this.statusCode = statusCode;
+        this.message = message;
+    }
+
+    /**
+     * Construct a new PaymentError containing the network failure information
+     *
+     * @param statusCode the status code
      * @param errorInfo the error info
      */
-    public PaymentError(@ErrorType final String errorType, final int statusCode, final String errorData,
-        final ErrorInfo errorInfo) {
-        this.errorType = errorType;
+    public PaymentError(final int statusCode, final ErrorInfo errorInfo) {
         this.statusCode = statusCode;
-        this.errorData = errorData;
+        this.message = errorInfo.getResultInfo();
         this.errorInfo = errorInfo;
     }
 
     /**
-     * Check if this error is of the given type
+     * Construct a new PaymentError containing the cause of the internal error
      *
-     * @param errorType the error type
-     * @return true when it is the same error, false otherwise
+     * @param cause the cause of the internal error
      */
-    public boolean isError(@ErrorType final String errorType) {
-        return this.errorType.equals(errorType);
+    public PaymentError(final Throwable cause) {
+        this.message = cause.getMessage();
+        this.cause = cause;
+    }
+
+    /**
+     * Construct a new PaymentError containing information what caused the error
+     *
+     * @param message the error message
+     * @param cause the cause of the internal error
+     */
+    public PaymentError(final String message, final Throwable cause) {
+        this.message = message;
+        this.cause = cause;
+    }
+
+    /**
+     * Construct a new PaymentError containing information what caused the error
+     * A network failure may be caused by an IOException.
+     *
+     * @param cause the cause of the internal error
+     * @param networkFailure indicating if this error was caused by a network failure
+     */
+    public PaymentError(final Throwable cause, final boolean networkFailure) {
+        this.message = cause.getMessage();
+        this.cause = cause;
+        this.networkFailure = networkFailure;
+    }
+
+    public int getStatusCode() {
+        return statusCode;
+    }
+
+    public String getMessage() {
+        return message;
+    }
+
+    public ErrorInfo getErrorInfo() {
+        return errorInfo;
+    }
+
+    public Throwable getCause() {
+        return cause;
+    }
+
+    public boolean isNetworkFailure() {
+        return networkFailure;
+    }
+
+    private PaymentError() {
+    }
+
+    private PaymentError(Parcel in) {
+        this.statusCode = in.readInt();
+        this.message = in.readString();
+
+        GsonHelper gson = GsonHelper.getInstance();
+        try {
+            String json = in.readString();
+            if (!TextUtils.isEmpty(json)) {
+                this.errorInfo = gson.fromJson(json, ErrorInfo.class);
+            }
+        } catch (JsonSyntaxException e) {
+            // this should never happen since we use the same GsonHelper
+            // to produce these Json strings
+            Log.w("sdk_PaymentError", e);
+            throw new RuntimeException(e);
+        }
+        this.cause = (Throwable) in.readSerializable();
+        this.networkFailure = in.readInt() == 1;
+    }
+
+
+    /**
+     * Constructs a new PaymentError from the given Throwable
+     *
+     * @param cause of the error
+     * @return the PaymentError containing detailed information about the error
+     */
+    public static PaymentError fromThrowable(Throwable cause) {
+        if (cause instanceof PaymentException) {
+            return ((PaymentException) cause).error;
+        }
+        return new PaymentError(cause);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void writeToParcel(Parcel out, int flags) {
+        out.writeInt(statusCode);
+        out.writeString(message);
+
+        GsonHelper gson = GsonHelper.getInstance();
+        String errorInfoJson = null;
+        if (errorInfo != null) {
+            errorInfoJson = gson.toJson(errorInfo);
+        }
+        out.writeString(errorInfoJson);
+        out.writeSerializable(cause);
+        out.writeInt(networkFailure ? 1 : 0);
     }
 
     /**
@@ -86,32 +211,22 @@ public final class PaymentError {
 
         final StringBuilder sb = new StringBuilder();
         sb.append("PaymentError[");
-        sb.append("errorType: ");
-        sb.append(this.errorType);
 
-        if (this.statusCode != 0) {
-            sb.append(", statusCode: ");
-            sb.append(this.statusCode);
+        if (statusCode != 0) {
+            sb.append(" statusCode: ");
+            sb.append(statusCode);
         }
-        if (this.errorData != null) {
-            sb.append(", errorData: ");
-            sb.append(this.errorData);
+        if (message != null) {
+            sb.append(" message: ");
+            sb.append(message);
         }
+        if (cause != null) {
+            sb.append(" cause: ");
+            sb.append(cause.toString());
+        }
+        sb.append(" networkFailure: ");
+        sb.append(networkFailure);
         sb.append("]");
         return sb.toString();
-    }
-
-    /**
-     * The interface Error type.
-     */
-    @Retention(RetentionPolicy.SOURCE)
-    @StringDef({
-        API_ERROR,
-        CONN_ERROR,
-        INTERNAL_ERROR,
-        SECURITY_ERROR,
-        PROTOCOL_ERROR
-    })
-    public @interface ErrorType {
     }
 }

@@ -1,6 +1,13 @@
 Changelog - Android SDK
 -----------------------
 
+**Version android-sdk-3.0.0**
+
+Note: version 3.0.0 is a major release with a breaking change, the PaymentUI.RESULT_CODE_ERROR has been removed.
+The rules when Interaction and PaymentError objects are included in the PaymentResult Object has changed. Please check the README.rst
+for the new rule set on PaymentResult information.
+
+
 **Version android-sdk-2.1.4**
 
 * [PCX-428] - Support 3DS1 flow on Android SDK
