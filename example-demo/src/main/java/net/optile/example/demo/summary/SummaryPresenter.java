@@ -116,7 +116,7 @@ final class SummaryPresenter {
     private void handlePaymentResult(SdkResult result) {
         switch (result.resultCode) {
             case PaymentUI.RESULT_CODE_OK:
-                view.showPaymentSuccess();
+                handleResultOk(result.paymentResult);
                 break;
             case PaymentUI.RESULT_CODE_CANCELED:
                 handleResultCanceled(result.paymentResult);
@@ -124,11 +124,15 @@ final class SummaryPresenter {
         }
     }
 
+    private void handleResultOk(PaymentResult result) {
+        Interaction interaction = result.getInteraction();
+        if (interaction != null) {
+            view.showPaymentSuccess();
+        }
+    }
+    
     private void handleResultCanceled(PaymentResult result) {
         Interaction interaction = result.getInteraction();
-        if (interaction == null) {
-            return;
-        }
         switch (interaction.getCode()) {
             case InteractionCode.ABORT:
                 if (!result.hasNetworkFailureError()) {
