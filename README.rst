@@ -232,11 +232,11 @@ Code sample how to obtain the PaymentResult from inside the onActivityResult() m
         }
     }
 
-To make processing of the payment result easier, the resultCode provided in the onActivityResult() method indicates two different flows. The first flow is the OK flow and is used when no changes were made or the payment was successful (RESULT_CODE_OK). The second flow is when the payment was canceled or an error occurred (RESULT_CODE_CANCELED).
+To make processing of the payment result easier, the resultCode provided in the onActivityResult() method defines two different flows. The first is the OK flow (RESULT_CODE_OK) and is used when no changes were made or the payment was successful or the payment was successful. The second flow (RESULT_CODE_CANCELED) is when the payment was canceled or an error occurred.
 
-- RESULT_CODE_OK is used to indicate the payment was successful and in this case the PaymentResult contains both the Interaction and OperationResult. The result code is also used to indicate the user closed the payment page or selected an already selected preset account, both Interaction and OperationResult will be null.
+- RESULT_CODE_OK is used to indicate the payment was successful and in this case the payment result contains both the Interaction and OperationResult. The result code is also used to indicate that nothing has changed, e.g. the user closed the payment page or selected an already selected preset account, both Interaction and OperationResult will be null.
 
-- RESULT_CODE_CANCELED means the payment was canceled or an internal error occurred inside the Android SDK. For both cases the Interaction is set in the PaymentResult. The OperationResult is optional and if set, it provides more information why the payment failed. The PaymentError is also optional and if set, it provides more information about an internal error occurred inside the Android SDK. The OperationResult and PaymentError are never set together in the PaymentResult. 
+- RESULT_CODE_CANCELED means the payment was canceled or an internal error occurred inside the Android SDK. For both cases the Interaction is set in the payment result. The OperationResult is optional and if set, it provides more information why the payment failed. The PaymentError is also optional and if set, it provides more information about an internal error that occurred inside the Android SDK. The OperationResult and PaymentError are never set together in the payment result. 
 
 Internal Errors
 ---------------
