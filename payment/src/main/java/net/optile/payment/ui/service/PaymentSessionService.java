@@ -128,16 +128,7 @@ public final class PaymentSessionService {
      * @return true when supported, false otherwise 
      */
     public boolean isSupportedOperationType(String operationType) {
-        if (operationType == null) {
-            return false;
-        }
-        switch (operationType) {
-            case Operation.CHARGE:
-            case Operation.PRESET:
-                return true;
-            default:
-                return false;
-        }
+        return Operation.CHARGE.equals(operationType) || Operation.PRESET.equals(operationType);
     }
     
     private PaymentSession asyncLoadPaymentSession(String listUrl, Context context) throws PaymentException {
