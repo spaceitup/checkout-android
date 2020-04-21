@@ -91,9 +91,9 @@ abstract class BaseConnection {
                 try {
                     socketFactory = new TLSSocketFactory();
                 } catch (KeyManagementException e) {
-                    Log.w("pay_BaseConnection", e);
+                    Log.w("sdk_BaseConnection", e);
                 } catch (NoSuchAlgorithmException e) {
-                    Log.w("pay_BaseConnection", e);
+                    Log.w("sdk_BaseConnection", e);
                 }
             }
         }
@@ -281,7 +281,7 @@ abstract class BaseConnection {
         } catch (IOException | JsonParseException e) {
             // Ignore the exceptions since the ErrorInfo is an optional field
             // and it is more important to not lose the status error code
-            Log.w("androidsdk", e);
+            Log.w("sdk_BaseConnection", e);
         }
         PaymentError error;
         if (errorInfo != null) {

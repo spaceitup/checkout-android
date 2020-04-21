@@ -116,7 +116,7 @@ final class SummaryPresenter {
     private void handlePaymentResult(SdkResult result) {
         switch (result.resultCode) {
             case PaymentUI.RESULT_CODE_OK:
-                view.showPaymentSuccess();
+                handleResultOk(result.paymentResult);
                 break;
             case PaymentUI.RESULT_CODE_CANCELED:
                 handleResultCanceled(result.paymentResult);
@@ -124,18 +124,20 @@ final class SummaryPresenter {
         }
     }
 
+    private void handleResultOk(PaymentResult result) {
+        Interaction interaction = result.getInteraction();
+        if (interaction != null) {
+            view.showPaymentSuccess();
+        }
+    }
+    
     private void handleResultCanceled(PaymentResult result) {
         Interaction interaction = result.getInteraction();
-        if (interaction == null) {
-            return;
-        }
         switch (interaction.getCode()) {
             case InteractionCode.ABORT:
-                // When hasNetworkFailure() is true then the interaction reason is COMMUNICATION_FAILURE
-                if (result.hasNetworkFailureError()) {
-                    return;
+                if (!result.hasNetworkFailureError()) {
+                    view.closePayment(null);
                 }
-                view.closePayment(null);
                 break;
             case InteractionCode.VERIFY:
                 // VERIFY means that a charge request has been made but the status of the payment could

@@ -42,15 +42,19 @@ final class CheckoutPresenter {
     void handleSdkResult(SdkResult result) {
         switch (result.resultCode) {
             case PaymentUI.RESULT_CODE_OK:
-                handlePaymentSuccess(result.paymentResult);
+                handleResultOk(result.paymentResult);
                 break;
             case PaymentUI.RESULT_CODE_CANCELED:
-                handlePaymentCanceled(result.paymentResult);
+                handleResultCanceled(result.paymentResult);
                 break;
         }
     }
 
-    private void handlePaymentSuccess(PaymentResult result) {
+    private void handleResultOk(PaymentResult result) {
+        Interaction interaction = result.getInteraction();
+        if (interaction == null) {
+            return;
+        }
         OperationResult op = result.getOperationResult();
         if (op != null) {
             Redirect redirect = op.getRedirect();
@@ -64,18 +68,13 @@ final class CheckoutPresenter {
     }
 
 
-    private void handlePaymentCanceled(PaymentResult result) {
+    private void handleResultCanceled(PaymentResult result) {
         Interaction interaction = result.getInteraction();
-        if (interaction == null) {
-            return;
-        }
         switch (interaction.getCode()) {
             case InteractionCode.ABORT:
-                // When hasNetworkFailure() is true then the interaction reason is COMMUNICATION_FAILURE
-                if (result.hasNetworkFailureError()) {
-                    return;
+                if (!result.hasNetworkFailureError()) {
+                    view.closePayment();
                 }
-                view.closePayment();
                 break;
             case InteractionCode.VERIFY:
                 // VERIFY means that a charge request has been made but the status of the payment could

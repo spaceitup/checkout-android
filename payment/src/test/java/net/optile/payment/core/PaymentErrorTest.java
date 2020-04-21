@@ -68,7 +68,7 @@ public class PaymentErrorTest {
         PaymentError error = new PaymentError(cause, true);
         assertEquals(cause.getMessage(), error.getMessage());
         assertEquals(cause, error.getCause());
-        assertTrue(error.getNetworkFailure());
+        assertTrue(error.isNetworkFailure());
     }
 
     @Test

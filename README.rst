@@ -198,33 +198,33 @@ Code sample how to initialize and display the Payment Page:
 Payment Result
 ==============
 
-Payment results are returned through the onActivityResult() method in your Activity. When the payment page is closed, the returned PaymentResult class contains information about the operation request. I.e. it may contain an Interaction and OperationResult describing the state of a Charge operation. The PaymentError object inside the PaymentResult class is created when an error occurred inside the Android-SDK.
+Payment results are returned through the onActivityResult() method in your Activity. The Intent from the activity result can be converted to a PaymentResult. Depending on what happened while processing the payment, the PaymentResult may contain an Interaction, OperationResult or PaymentError. 
 
-Code sample how to obtain the PaymentResult inside the onActivityResult() method:
+- Interaction - provides recommendations for the merchant how to proceed after a payment
+- OperationResult - is designed to hold information about the payment operation request
+- PaymentError - contains information about an error that happened inside the Android SDK 
+
+Code sample how to obtain the PaymentResult from inside the onActivityResult() method:
 
 .. code-block:: java
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
     
-        if (requestCode != PAYMENT_REQUEST_CODE || data == null) {
-            return;
-        }
         PaymentResult result = PaymentResult.fromResultIntent(data);        
         if (result == null) {
             return;
         }
+	handlePaymentActivityResult(resultCode, result);
+    }
+
+    private void handlePaymentActivityResult(int resultCode, PaymentResult result) {
         String resultInfo = result.getResultInfo();
 
-        // Operation request has been made and "result" contains a resultInfo, an optional Interaction and OperationResult object.
-        // The Interaction object is null when the user selected the same PresetAccount again. 
         if (resultCode == PaymentUI.RESULT_CODE_OK) {
             Interaction interaction = result.getInteraction();
             OperationResult operationResult = result.getOperationResult();
-        } 
-
-        // "result" contains a resultInfo and optional Interaction, OperationResult or PaymentError. 
-        // The Interaction object is null when the user closed the page before any request was made.
+        }
         if (resultCode == PaymentUI.RESULT_CODE_CANCELED) {
             Interaction interaction = result.getInteraction();
             OperationResult operationResult = result.getOperationResult();
@@ -232,33 +232,25 @@ Code sample how to obtain the PaymentResult inside the onActivityResult() method
         }
     }
 
-Successful
-----------
+Success or failure
+------------------
 
-The RESULT_CODE_OK code indicates that the operation request was successful, there are three situations when this result is returned:
+To make processing of the payment result easier, the resultCode provided in the onActivityResult() method defines two different flows. The first is the success flow (RESULT_CODE_OK) and is used when no changes were made or the payment was successful. The second is the failure flow (RESULT_CODE_CANCELED) and is used when the payment was canceled or an error occurred.
 
-1. The user selected the already selected PresetAccount from the list, in this case both Interaction and OperationResult objects are null.
+Success
+~~~~~~~
 
-2. InteractionCode is PROCEED. The PaymentResult contains an OperationResult with detailed information about the operation.
+RESULT_CODE_OK is used to indicate the payment was successful, the payment result will contain both the Interaction and OperationResult. This result code is also used to indicate that nothing has changed, e.g. the user closed the payment page or selected an already selected preset account, both Interaction and OperationResult will then be null.
 
-3. InteractionCode is ABORT and InteractionReason is DUPLICATE_OPERATION, this means that a previous operation on the same list has already been performed. This may happen if there was a network error during the first operation and the Android SDK was unable to receive a proper response from the Payment API.
+Failure
+~~~~~~~
 
-Canceled
----------
+RESULT_CODE_CANCELED is used when the payment was canceled or an internal error occurred inside the Android SDK. For both cases the Interaction is set in the payment result. The OperationResult is optional and if set, it provides more information why the payment operation failed. The PaymentError is also optional and if set, it provides more information about an internal error that occurred inside the Android SDK. The OperationResult and PaymentError are never set together in the same payment result. 
 
-The RESULT_CODE_CANCELED code indicates that the Android SDK did not perform a successful operation. This may happen for different reasons, i.e. the user clicked the back button on the payment page. 
+Internal Errors
+---------------
 
-1. The user closed the payment page without performing any operation, in this case the Interaction object is null.
-
-2. The Interaction object is set and provides details which steps to take next. When the code of the Interaction is VERIFY, this means that the Android-SDK was not able to determine the current state of the list. The status of the list should be verified before continuing. 
-
-3. The user performed an operation and the result contains an OperationResult containing detailed information about the operation. When the OperationResult is set, the Interaction object is also set.
-
-4. An error occurred inside the Android-SDK and the result contains a PaymentError. When the PaymentError is set, the Interaction object is also set but is created by the Android-SDK. The following paragraph describes which types of Interactions are created by the Android-SDK.
-
-    
-Client-Side Interactions 
-------------------------
+It may happen, while handling a payment, that an error occurred inside the Android SDK. A connection failure due to bad internet reception or a security exception are some of these internal errors. To still provide a recommendation of how to proceed, the Android SDK creates an Interaction and sets it in the payment result together with the PaymentError. The following table gives an overview of Interaction code and reasons that are used to create these Interactions.    
 
 The following table describes the combination of InteractionCode and InteractionReason created by the Android-SDK.
 
@@ -273,11 +265,17 @@ The following table describes the combination of InteractionCode and Interaction
 +------------------+-----------------------+-----------------------------------------------------------------+
 | VERIFY           | CLIENTSIDE_ERROR      | An error occurred during a Charge operation.                    |
 |                  |                       | The charge may have been successful, therefor the status of the | 
-|                  |                       | payment (list) must be verified.                                |
+|                  |                       | payment (list) must be verified before re-using the same list   |
+|                  |                       | for a second payment attempt. Verifying may be done by          |
+|                  |                       | reloading the list or validating the status of the payment      |
+|                  |                       | on the merchant backend.                                        |
 +------------------+-----------------------+-----------------------------------------------------------------+
 | VERIFY           | COMMUNICATION_FAILURE | A network failure occurred while performing a Charge operation. |
 |                  |                       | The charge may have been successful, therefor the status of the |
-|                  |                       | payment (list) must be verified.                                |
+|                  |                       | payment (list) must be verified before re-using the same list   |
+|                  |                       | for a second payment attempt. Verifying may be done by          |
+|                  |                       | reloading the list or validating the status of the payment      |
+|                  |                       | on the merchant backend.                                        |
 +------------------+-----------------------+-----------------------------------------------------------------+
 
 
