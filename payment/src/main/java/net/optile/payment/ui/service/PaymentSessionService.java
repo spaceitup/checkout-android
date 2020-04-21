@@ -121,10 +121,20 @@ public final class PaymentSessionService {
         Workers.getInstance().forNetworkTasks().execute(sessionTask);
     }
 
+    /** 
+     * Check if the provided operationType is supported by this PaymentSessionService
+     * 
+     * @param operationType the operation type to check
+     * @return true when supported, false otherwise 
+     */
+    public boolean isSupportedOperationType(String operationType) {
+        return Operation.CHARGE.equals(operationType) || Operation.PRESET.equals(operationType);
+    }
+    
     private PaymentSession asyncLoadPaymentSession(String listUrl, Context context) throws PaymentException {
         ListResult listResult = listConnection.getListResult(listUrl);
         String operationType = listResult.getOperationType();
-        if (!(Operation.CHARGE.equals(operationType) || Operation.PRESET.equals(operationType))) {
+        if (!isSupportedOperationType(operationType)) {
             throw new PaymentException("List operationType: " + operationType + " is not supported");
         }
         Map<String, PaymentNetwork> networks = loadPaymentNetworks(listResult);
