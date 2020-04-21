@@ -124,7 +124,7 @@ public final class PaymentSessionService {
     private PaymentSession asyncLoadPaymentSession(String listUrl, Context context) throws PaymentException {
         ListResult listResult = listConnection.getListResult(listUrl);
         String operationType = listResult.getOperationType();
-        if (!(Operation.CHARGE.equals(operationType) || Operation.PRESET.equals(operationType))) {
+        if (!isSupportedOperationType(operationType)) {
             throw new PaymentException("List operationType: " + operationType + " is not supported");
         }
         Map<String, PaymentNetwork> networks = loadPaymentNetworks(listResult);
@@ -158,6 +158,19 @@ public final class PaymentSessionService {
         return items;
     }
 
+    private boolean isSupportedOperationType(String operationType) {
+        if (operationType == null) {
+            return false;
+        }
+        switch (operationType) {
+            case Operation.CHARGE:
+            case Operation.PRESET:
+                return true;
+            default:
+                return false;
+        }
+    }
+    
     private List<NetworkCard> createNetworkCards(Map<String, PaymentNetwork> networks, Map<String, PaymentGroup> groups)
         throws PaymentException {
         Map<String, NetworkCard> cards = new LinkedHashMap<>();
