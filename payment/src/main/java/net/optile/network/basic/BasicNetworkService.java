@@ -18,6 +18,7 @@ import net.optile.payment.form.Operation;
 import net.optile.payment.model.ErrorInfo;
 import net.optile.payment.model.Interaction;
 import net.optile.payment.model.InteractionCode;
+import net.optile.payment.model.InteractionReason;
 import net.optile.payment.model.OperationResult;
 import net.optile.payment.model.Redirect;
 import net.optile.payment.model.RedirectType;
