@@ -38,7 +38,7 @@ public final class RedirectService {
      * @return true if payment redirects are supported, false otherwise
      */
     public static boolean isSupported(Context context, Redirect redirect) {
-        return ChromeCustomTabs.isSupported(context) && HttpMethod.GET.equals(redirect.getMethod());
+        return HttpMethod.GET.equals(redirect.getMethod()) && ChromeCustomTabs.isSupported(context);
     }
 
     /**
