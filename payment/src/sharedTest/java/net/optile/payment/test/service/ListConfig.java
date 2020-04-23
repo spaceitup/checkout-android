@@ -41,7 +41,22 @@ public final class ListConfig {
         source.put("presetFirst", val);
     }
 
+    public void setCallbackAppId(String appId) throws JSONException {
+        JSONObject callback = source.getJSONObject("callback");
+        appendAppId(callback, "returnUrl", appId);
+        appendAppId(callback, "summaryUrl", appId);
+        appendAppId(callback, "cancelUrl", appId);
+    }
+
     public String toJsonString() {
         return source.toString();
+    }
+
+    private void appendAppId(JSONObject callback, String urlName, String appId) throws JSONException {
+        if (callback.isNull(urlName)) {
+            return;
+        }
+        String value = callback.getString(urlName);
+        callback.put(urlName, value + appId);
     }
 }
