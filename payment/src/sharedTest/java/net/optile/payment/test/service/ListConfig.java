@@ -53,10 +53,8 @@ public final class ListConfig {
     }
 
     private void appendAppId(JSONObject callback, String urlName, String appId) throws JSONException {
-        if (callback.isNull(urlName)) {
-            return;
+        if (callback.has(urlName)) {
+            callback.put(urlName, callback.getString(urlName) + appId);
         }
-        String value = callback.getString(urlName);
-        callback.put(urlName, value + appId);
     }
 }
