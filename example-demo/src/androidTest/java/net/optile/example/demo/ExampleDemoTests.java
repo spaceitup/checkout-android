@@ -136,7 +136,12 @@ public final class ExampleDemoTests {
 
         // Wait for the summary activity to load and click on pay button
         intended(hasComponent(SummaryActivity.class.getName()));
+        SummaryActivity summaryActivity = (SummaryActivity) ActivityHelper.getCurrentActivity();
+        IdlingResource loadIdlingResource = summaryActivity.getLoadIdlingResource();        
+        IdlingRegistry.getInstance().register(loadIdlingResource);
         onView(withId(R.id.button_pay)).perform(PaymentActions.scrollToView(), click());
+
+        IdlingRegistry.getInstance().unregister(loadIdlingResource);
         IdlingRegistry.getInstance().unregister(closeIdlingResource);
     }
 
