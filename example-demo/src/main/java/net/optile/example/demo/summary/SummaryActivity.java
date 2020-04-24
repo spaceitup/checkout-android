@@ -13,6 +13,10 @@ import java.util.Map;
 
 import com.google.android.material.appbar.CollapsingToolbarLayout;
 
+import androidx.annotation.VisibleForTesting;
+import androidx.test.espresso.IdlingResource;
+import net.optile.payment.ui.page.idlingresource.SimpleIdlingResource;
+
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Typeface;
@@ -48,6 +52,10 @@ public final class SummaryActivity extends BaseActivity implements SummaryView {
     private SdkResult sdkResult;
     private PresetAccount account;
 
+    // For automated UI Testing
+    private boolean loadCompleted;    
+    private SimpleIdlingResource loadIdlingResource;
+    
     /**
      * Create an Intent to launch this checkout activity
      *
@@ -173,6 +181,11 @@ public final class SummaryActivity extends BaseActivity implements SummaryView {
         } else {
             text.setVisibility(View.GONE);
         }
+        // For automated UI testing
+        this.loadCompleted = true;
+        if (loadIdlingResource != null) {
+            loadIdlingResource.setIdleState(loadCompleted);
+        }
     }
 
     /**
@@ -268,5 +281,19 @@ public final class SummaryActivity extends BaseActivity implements SummaryView {
     private URL getLink(PresetAccount account, String name) {
         Map<String, URL> links = account.getLinks();
         return links != null ? links.get(name) : null;
+    }
+
+    /**
+     * Only called from test, creates and returns a new IdlingResource
+     */
+    @VisibleForTesting
+    public IdlingResource getLoadIdlingResource() {
+        if (loadIdlingResource == null) {
+            loadIdlingResource = new SimpleIdlingResource("summaryLoadIdlingResource");
+        }
+        if (loadCompleted) {
+            loadIdlingResource.setIdleState(loadCompleted);
+        }
+        return loadIdlingResource;
     }
 }
