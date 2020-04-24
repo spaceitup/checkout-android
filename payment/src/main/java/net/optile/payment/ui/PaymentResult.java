@@ -16,9 +16,9 @@ import android.os.Parcelable;
 import android.text.TextUtils;
 import android.util.Log;
 import net.optile.payment.core.PaymentError;
-import net.optile.payment.core.PaymentException;
-import net.optile.payment.model.ErrorInfo;
 import net.optile.payment.model.Interaction;
+import net.optile.payment.model.InteractionCode;
+import net.optile.payment.model.InteractionReason;
 import net.optile.payment.model.OperationResult;
 import net.optile.payment.util.GsonHelper;
 
@@ -55,12 +55,13 @@ public final class PaymentResult implements Parcelable {
     /**
      * Construct a new PaymentResult with resultInfo and error.
      *
-     * @param resultInfo a string containing a description of the payment error
+     * @param interaction describing what to do next
      * @param error the error describing the details about the error situation
      */
-    public PaymentResult(String resultInfo, PaymentError error) {
-        this.resultInfo = resultInfo;
+    public PaymentResult(Interaction interaction, PaymentError error) {
+        this.interaction = interaction;
         this.error = error;
+        this.resultInfo = error.getMessage();
     }
 
     /**
@@ -90,8 +91,8 @@ public final class PaymentResult implements Parcelable {
 
     private PaymentResult(Parcel in) {
         this.resultInfo = in.readString();
-        GsonHelper gson = GsonHelper.getInstance();
 
+        GsonHelper gson = GsonHelper.getInstance();
         try {
             String json = in.readString();
             if (!TextUtils.isEmpty(json)) {
@@ -101,47 +102,30 @@ public final class PaymentResult implements Parcelable {
             if (!TextUtils.isEmpty(json)) {
                 this.operationResult = gson.fromJson(json, OperationResult.class);
             }
-            json = in.readString();
-            if (!TextUtils.isEmpty(json)) {
-                this.error = gson.fromJson(json, PaymentError.class);
-            }
         } catch (JsonSyntaxException e) {
             // this should never happen since we use the same GsonHelper
             // to produce these Json strings
-            Log.w("pay_PaymentResult", e);
+            Log.w("sdk_PaymentResult", e);
             throw new RuntimeException(e);
         }
+        this.error = in.readParcelable(PaymentError.class.getClassLoader());
     }
 
-    /**
-     * Construct a new PaymentResult given the cause, the cause can either be a PaymentException or any other exception
+    /** 
+     * Create a PaymentResult from the provided PaymentError. 
+     * The InteractionCode will be ABORT and the InteractionReason will either be COMMUNICATION_FAILURE for network failures
+     * or CLIENTSIDE_ERROR for any other errors
      *
-     * @param cause of the error
+     * @param error to be used to create a new PaymentResult 
+     * @return the newly created PaymentResult 
      */
-    public static PaymentResult fromThrowable(Throwable cause) {
-        if (cause instanceof PaymentException) {
-            return fromPaymentException((PaymentException) cause);
-        }
-        String resultInfo = cause.toString();
-        PaymentError error = new PaymentError(PaymentError.INTERNAL_ERROR, resultInfo);
-        return new PaymentResult(resultInfo, error);
+    public static PaymentResult fromPaymentError(PaymentError error) {
+        String reason = error.isNetworkFailure() ? InteractionReason.COMMUNICATION_FAILURE :
+            InteractionReason.CLIENTSIDE_ERROR;
+        Interaction interaction = new Interaction(InteractionCode.ABORT, reason);
+        return new PaymentResult(interaction, error);
     }
-
-    /**
-     * Construct a new PaymentResult from the given PaymentException
-     *
-     * @param exception containing the error details
-     * @return the newly created PaymentResult
-     */
-    public static PaymentResult fromPaymentException(PaymentException exception) {
-        ErrorInfo info = exception.error.errorInfo;
-        if (info != null) {
-            return new PaymentResult(info.getResultInfo(), info.getInteraction());
-        } else {
-            return new PaymentResult(exception.getMessage(), exception.error);
-        }
-    }
-
+    
     /**
      * Get the PaymentResult from the result intent.
      *
@@ -180,8 +164,8 @@ public final class PaymentResult implements Parcelable {
         return operationResult;
     }
 
-    public boolean hasError() {
-        return error != null;
+    public boolean hasNetworkFailureError() {
+        return error != null && error.isNetworkFailure();
     }
 
     /**
@@ -208,13 +192,9 @@ public final class PaymentResult implements Parcelable {
         if (operationResult != null) {
             operationResultJson = gson.toJson(this.operationResult);
         }
-        String errorJson = null;
-        if (error != null) {
-            errorJson = gson.toJson(this.error);
-        }
         out.writeString(interactionJson);
         out.writeString(operationResultJson);
-        out.writeString(errorJson);
+        out.writeParcelable(error, 0);
     }
 
     /**
@@ -223,19 +203,17 @@ public final class PaymentResult implements Parcelable {
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder("PaymentResult[");
+        sb.append("resultInfo: ");
+        sb.append(this.resultInfo);
 
+        if (interaction != null) {
+            sb.append(", code: ");
+            sb.append(interaction.getCode());
+            sb.append(", reason: ");
+            sb.append(interaction.getReason());
+        }
         if (this.error != null) {
             sb.append(error.toString());
-        } else {
-            sb.append("resultInfo: ");
-            sb.append(this.resultInfo);
-
-            if (interaction != null) {
-                sb.append(", code: ");
-                sb.append(interaction.getCode());
-                sb.append(", reason: ");
-                sb.append(interaction.getReason());
-            }
         }
         sb.append("]");
         return sb.toString();

@@ -1,11 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/layout_viewholder"
+<com.google.android.material.button.MaterialButton xmlns:android="http://schemas.android.com/apk/res/android"
+    style="?attr/widgetButtonStyle"
+    android:id="@+id/button"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_marginStart="@dimen/pmborder_xsmall"
-    android:layout_marginTop="@dimen/pmborder_large"
-    android:orientation="horizontal" />
-
-
-
+    android:layout_marginTop="@dimen/pmborder_large" />

@@ -8,11 +8,11 @@
     android:paddingTop="@dimen/pmborder_medium"
     android:paddingBottom="@dimen/pmwidget_padding">
 
-    <LinearLayout
-        android:id="@+id/layout_viewholder"
+    <com.google.android.material.checkbox.MaterialCheckBox
+        style="?attr/widgetCheckBoxStyle"
+        android:id="@+id/checkbox_value"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal" />
+        android:layout_height="wrap_content" />
 
     <TextView
         android:id="@+id/label_value_unchecked"

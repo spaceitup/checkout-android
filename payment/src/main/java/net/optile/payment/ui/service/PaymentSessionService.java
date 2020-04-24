@@ -8,13 +8,10 @@
 
 package net.optile.payment.ui.service;
 
-import java.net.MalformedURLException;
-import java.net.URL;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Properties;
 import java.util.concurrent.Callable;
 
 import android.content.Context;
@@ -24,7 +21,7 @@ import net.optile.payment.core.PaymentException;
 import net.optile.payment.core.WorkerSubscriber;
 import net.optile.payment.core.WorkerTask;
 import net.optile.payment.core.Workers;
-import net.optile.payment.localization.Localization;
+import net.optile.payment.form.Operation;
 import net.optile.payment.model.AccountRegistration;
 import net.optile.payment.model.ApplicableNetwork;
 import net.optile.payment.model.ListResult;
@@ -124,61 +121,32 @@ public final class PaymentSessionService {
         Workers.getInstance().forNetworkTasks().execute(sessionTask);
     }
 
+    /** 
+     * Check if the provided operationType is supported by this PaymentSessionService
+     * 
+     * @param operationType the operation type to check
+     * @return true when supported, false otherwise 
+     */
+    public boolean isSupportedOperationType(String operationType) {
+        return Operation.CHARGE.equals(operationType) || Operation.PRESET.equals(operationType);
+    }
+    
     private PaymentSession asyncLoadPaymentSession(String listUrl, Context context) throws PaymentException {
         ListResult listResult = listConnection.getListResult(listUrl);
+        String operationType = listResult.getOperationType();
+        if (!isSupportedOperationType(operationType)) {
+            throw new PaymentException("List operationType: " + operationType + " is not supported");
+        }
         Map<String, PaymentNetwork> networks = loadPaymentNetworks(listResult);
-        loadLocalization(context, listUrl, networks);
-
         Map<String, PaymentGroup> groups = loadPaymentGroups(context);
+
         Validator validator = loadValidator(context);
+
         PresetCard presetCard = createPresetCard(listResult, networks);
         List<AccountCard> accountCards = createAccountCards(listResult, networks);
         List<NetworkCard> networkCards = createNetworkCards(networks, groups);
+
         return new PaymentSession(listResult, presetCard, accountCards, networkCards, validator);
-    }
-
-    private void loadLocalization(Context context, String listUrl, Map<String, PaymentNetwork> networks) throws PaymentException {
-        Localization loc = Localization.getInstance();
-
-        if (!listUrl.equals(loc.getLocalizationId())) {
-            loc.clearFiles();
-            loc.setLocalizationId(listUrl);
-        }
-        URL langUrl = null;
-        for (PaymentNetwork network : networks.values()) {
-            langUrl = network.getLink("lang");
-            String code = network.getCode();
-            if (langUrl == null) {
-                throw createPaymentException("Missing 'lang' link in PaymentNetwork: " + code, null);
-            }
-            if (!loc.hasFile(code)) {
-                loc.putFile(code, listConnection.loadLanguageFile(new Properties(), langUrl));
-            }
-        }
-        if (!loc.hasSharedFile() && langUrl != null) {
-            loc.setSharedFile(loadPaymentPageLocalization(context, langUrl));
-        }
-    }
-
-    /**
-     * This method loads the payment page language file.
-     *
-     * @param langUrl the URL pointing to one of the PaymentNetwork language URLs
-     * @return the properties object containing the language entries
-     */
-    private Properties loadPaymentPageLocalization(Context context, URL langUrl) throws PaymentException {
-        try {
-            String pageUrl = langUrl.toString();
-            int index = pageUrl.lastIndexOf('/');
-
-            if (index < 0 || !pageUrl.endsWith(".properties")) {
-                throw createPaymentException("Invalid URL for creating paymentpage language URL", null);
-            }
-            pageUrl = pageUrl.substring(0, index) + "/paymentpage.properties";
-            return listConnection.loadLanguageFile(new Properties(), new URL(pageUrl));
-        } catch (MalformedURLException e) {
-            throw createPaymentException("Malformed paymentpage language URL", e);
-        }
     }
 
     private Map<String, PaymentNetwork> loadPaymentNetworks(ListResult listResult) throws PaymentException {
@@ -229,7 +197,8 @@ public final class PaymentSessionService {
         String regex = group.getSmartSelectionRegex(code);
 
         if (TextUtils.isEmpty(regex)) {
-            throw createPaymentException("Missing regex for network: " + code + " in group: " + groupId, null);
+            PaymentError error = new PaymentError("Missing regex for network: " + code + " in group: " + groupId);
+            throw new PaymentException(error);
         }
         NetworkCard card = cards.get(groupId);
         if (card == null) {
@@ -285,11 +254,6 @@ public final class PaymentSessionService {
     private Map<String, PaymentGroup> loadPaymentGroups(Context context) throws PaymentException {
         int groupResId = PaymentUI.getInstance().getGroupResId();
         return ResourceLoader.loadPaymentGroups(context.getResources(), groupResId);
-    }
-
-    private PaymentException createPaymentException(String message, Throwable cause) {
-        PaymentError error = new PaymentError(PaymentError.INTERNAL_ERROR, message);
-        return new PaymentException(error, message, cause);
     }
 
     private Validator loadValidator(Context context) throws PaymentException {

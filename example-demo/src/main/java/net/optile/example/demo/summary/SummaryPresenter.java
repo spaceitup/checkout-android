@@ -110,32 +110,39 @@ final class SummaryPresenter {
             case PaymentUI.RESULT_CODE_CANCELED:
                 handleResultCanceled(result.paymentResult);
                 break;
-            case PaymentUI.RESULT_CODE_ERROR:
-                // Android SDK already shows errors to the user so
-                // we ignore this state.
-                break;
         }
     }
 
     private void handlePaymentResult(SdkResult result) {
         switch (result.resultCode) {
             case PaymentUI.RESULT_CODE_OK:
-                view.showPaymentSuccess();
+                handleResultOk(result.paymentResult);
                 break;
             case PaymentUI.RESULT_CODE_CANCELED:
                 handleResultCanceled(result.paymentResult);
                 break;
-            case PaymentUI.RESULT_CODE_ERROR:
-                // Android SDK already shows errors to the user so
-                // we ignore this state.
-                break;
         }
     }
 
+    private void handleResultOk(PaymentResult result) {
+        Interaction interaction = result.getInteraction();
+        if (interaction != null) {
+            view.showPaymentSuccess();
+        }
+    }
+    
     private void handleResultCanceled(PaymentResult result) {
         Interaction interaction = result.getInteraction();
-        if (interaction != null && interaction.getCode() == InteractionCode.ABORT) {
-            view.closePayment(null);
+        switch (interaction.getCode()) {
+            case InteractionCode.ABORT:
+                if (!result.hasNetworkFailureError()) {
+                    view.closePayment(null);
+                }
+                break;
+            case InteractionCode.VERIFY:
+                // VERIFY means that a charge request has been made but the status of the payment could
+                // not be verified by the Android-SDK, i.e. because of a network error
+                view.closePayment(null);
         }
     }
 

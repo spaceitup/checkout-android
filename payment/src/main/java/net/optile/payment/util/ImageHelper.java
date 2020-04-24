@@ -32,8 +32,6 @@ import net.optile.payment.network.ImageConnection;
  * TLS1.2 for secure connections.
  */
 public final class ImageHelper {
-
-    private final static String TAG = "pay_ImageHelper";
     private final ImageConnection imageConnection;
 
     private ImageHelper() {
@@ -87,7 +85,7 @@ public final class ImageHelper {
 
             @Override
             public void onError(Throwable cause) {
-                Log.w(TAG, cause);
+                Log.w("sdk_ImageHelper", cause);
                 // we ignore image loading failures
             }
         });
@@ -109,7 +107,7 @@ public final class ImageHelper {
         try {
             view.setImageBitmap(bitmap);
         } catch (Exception e) {
-            Log.w(TAG, e);
+            Log.w("sdk_ImageHelper", e);
             // we ignore image loading failures
         }
     }

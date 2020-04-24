@@ -8,8 +8,8 @@
 
 package net.optile.payment.ui.page;
 
-import static net.optile.payment.localization.LocalizationKey.BUTTON_OK;
 import static net.optile.payment.localization.LocalizationKey.BUTTON_CANCEL;
+import static net.optile.payment.localization.LocalizationKey.BUTTON_OK;
 import static net.optile.payment.localization.LocalizationKey.BUTTON_RETRY;
 import static net.optile.payment.localization.LocalizationKey.ERROR_CONNECTION;
 
@@ -42,7 +42,7 @@ abstract class BasePaymentActivity extends AppCompatActivity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setResultIntent(PaymentUI.RESULT_CODE_CANCELED, new PaymentResult("Initializing page."));
+        setResultIntent(PaymentUI.RESULT_CODE_OK, new PaymentResult("Initializing page."));
         setRequestedOrientation(PaymentUI.getInstance().getOrientation());
     }
 
@@ -114,7 +114,7 @@ abstract class BasePaymentActivity extends AppCompatActivity {
      * Set the PaymentResult indicating that the user has closed the page.
      */
     void setUserClosedPageResult() {
-        setResultIntent(PaymentUI.RESULT_CODE_CANCELED, new PaymentResult("Page closed by user."));
+        setResultIntent(PaymentUI.RESULT_CODE_OK, new PaymentResult("Page closed by user."));
     }
 
     /**

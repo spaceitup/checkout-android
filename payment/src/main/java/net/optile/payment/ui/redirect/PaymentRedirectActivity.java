@@ -30,7 +30,7 @@ public class PaymentRedirectActivity extends Activity {
         setContentView(R.layout.activity_redirect);
 
         final Intent intent = getIntent();
-        resultUri = (intent == null) ? null : intent.getData();        
+        resultUri = (intent == null) ? null : intent.getData();
         finish();
     }
 

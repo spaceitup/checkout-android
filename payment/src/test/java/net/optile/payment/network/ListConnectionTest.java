@@ -8,12 +8,6 @@
 
 package net.optile.payment.network;
 
-import static org.junit.Assert.assertNotNull;
-
-import java.net.MalformedURLException;
-import java.net.URL;
-import java.util.Properties;
-
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.robolectric.RobolectricTestRunner;
@@ -69,26 +63,5 @@ public class ListConnectionTest {
     public void getListResult_invalidURL_IllegalArgumentException() throws PaymentException {
         ListConnection conn = new ListConnection();
         ListResult result = conn.getListResult(null);
-    }
-
-    /**
-     * Gets language Properties invalid url
-     */
-    @Test(expected = IllegalArgumentException.class)
-    public void loadLanguageFile_invalidURL_IllegalArgumentException() throws PaymentException {
-        ListConnection conn = new ListConnection();
-        Properties prop = conn.loadLanguageFile(new Properties(), null);
-    }
-
-    private URL createTestURL() {
-        URL url = null;
-
-        try {
-            url = new URL("http://localhost");
-        } catch (MalformedURLException e) {
-            e.printStackTrace();
-        }
-        assertNotNull(url);
-        return url;
     }
 }

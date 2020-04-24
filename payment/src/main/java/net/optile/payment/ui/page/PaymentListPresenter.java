@@ -13,6 +13,7 @@ import static net.optile.payment.localization.LocalizationKey.ERROR_DEFAULT;
 import java.net.URL;
 import java.util.Map;
 
+import android.content.Context;
 import android.text.TextUtils;
 import net.optile.payment.core.PaymentError;
 import net.optile.payment.core.PaymentException;
@@ -20,6 +21,7 @@ import net.optile.payment.form.Operation;
 import net.optile.payment.localization.Localization;
 import net.optile.payment.model.Interaction;
 import net.optile.payment.model.InteractionCode;
+import net.optile.payment.model.InteractionReason;
 import net.optile.payment.model.ListResult;
 import net.optile.payment.model.Redirect;
 import net.optile.payment.ui.PaymentResult;
@@ -28,6 +30,8 @@ import net.optile.payment.ui.dialog.ThemedDialogFragment;
 import net.optile.payment.ui.dialog.ThemedDialogFragment.ThemedDialogListener;
 import net.optile.payment.ui.model.PaymentCard;
 import net.optile.payment.ui.model.PaymentSession;
+import net.optile.payment.ui.service.LocalizationLoaderListener;
+import net.optile.payment.ui.service.LocalizationLoaderService;
 import net.optile.payment.ui.service.NetworkService;
 import net.optile.payment.ui.service.NetworkServiceLookup;
 import net.optile.payment.ui.service.NetworkServicePresenter;
@@ -38,7 +42,7 @@ import net.optile.payment.ui.widget.FormWidget;
 /**
  * The PaymentListPresenter implementing the presenter part of the MVP
  */
-final class PaymentListPresenter implements PaymentSessionListener, NetworkServicePresenter {
+final class PaymentListPresenter implements PaymentSessionListener, LocalizationLoaderListener, NetworkServicePresenter {
 
     private final static int PREPAREPAYMENT_REQUEST_CODE = 1;
     private final static int PROCESSPAYMENT_REQUEST_CODE = 2;
@@ -46,6 +50,7 @@ final class PaymentListPresenter implements PaymentSessionListener, NetworkServi
 
     private final PaymentListView view;
     private final PaymentSessionService sessionService;
+    private final LocalizationLoaderService localizationService;
 
     private PaymentSession session;
     private String listUrl;
@@ -64,6 +69,9 @@ final class PaymentListPresenter implements PaymentSessionListener, NetworkServi
         this.view = view;
         sessionService = new PaymentSessionService();
         sessionService.setListener(this);
+
+        localizationService = new LocalizationLoaderService();
+        localizationService.setListener(this);
     }
 
     /**
@@ -76,7 +84,7 @@ final class PaymentListPresenter implements PaymentSessionListener, NetworkServi
             handleActivityResult(activityResult);
             activityResult = null;
         } else if (this.session != null && this.session.isListUrl(this.listUrl)) {
-            view.showPaymentSession(this.session);
+            loadLocalizations(this.session);
         } else {
             loadPaymentSession(this.listUrl);
         }
@@ -87,6 +95,7 @@ final class PaymentListPresenter implements PaymentSessionListener, NetworkServi
      */
     void onStop() {
         sessionService.stop();
+        localizationService.stop();
 
         if (networkService != null) {
             networkService.stop();
@@ -129,8 +138,16 @@ final class PaymentListPresenter implements PaymentSessionListener, NetworkServi
             networkService.setPresenter(this);
             preparePayment();
         } catch (PaymentException e) {
-            closeWithErrorCode(e.getMessage(), e.error);
+            closeWithErrorMessage(e.error);
         }
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void onPaymentSessionError(Throwable cause) {
+        handleLoadingError(cause);
     }
 
     /**
@@ -143,11 +160,11 @@ final class PaymentListPresenter implements PaymentSessionListener, NetworkServi
 
         switch (interaction.getCode()) {
             case InteractionCode.PROCEED:
-                handleLoadSessionOk(session);
+                handleLoadPaymentSessionOk(session);
                 break;
             default:
                 PaymentResult result = new PaymentResult(listResult.getResultInfo(), interaction);
-                closeWithCanceledCode(result);
+                closeWithErrorMessage(result);
         }
     }
 
@@ -155,52 +172,64 @@ final class PaymentListPresenter implements PaymentSessionListener, NetworkServi
      * {@inheritDoc}
      */
     @Override
-    public void onPaymentSessionError(Throwable cause) {
-        PaymentResult result = PaymentResult.fromThrowable(cause);
-        if (result.hasError()) {
-            handleLoadSessionError(result);
-        } else {
-            closeWithCanceledCode(result);
-        }
-    }
-
-    private void handleLoadSessionOk(PaymentSession session) {
-        this.operation = null;
-        this.session = session;
+    public void onLocalizationSuccess(Localization localization) {
+        Localization.setInstance(localization);
 
         if (reloadInteraction != null) {
             showInteractionDialog(reloadInteraction);
             reloadInteraction = null;
         }
-        view.showPaymentSession(session);
+        view.showPaymentSession(this.session);
     }
 
-    private void handleLoadSessionError(PaymentResult result) {
-        PaymentError error = result.getPaymentError();
-        if (error.isError(PaymentError.CONN_ERROR)) {
-            handleLoadSessionConnError(result);
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void onLocalizationError(Throwable cause) {
+        handleLoadingError(cause);
+    }
+
+    private void handleLoadPaymentSessionOk(PaymentSession session) {
+        this.operation = null;
+        this.session = session;
+        loadLocalizations(session);
+    }
+
+    private void loadLocalizations(PaymentSession session) {
+        Context context = view.getActivity();
+        localizationService.loadLocalizations(context, session);
+    }
+
+    private void handleLoadingError(Throwable cause) {
+        PaymentError error = PaymentError.fromThrowable(cause);
+        if (error.isNetworkFailure()) {
+            handleLoadingNetworkFailure(error);
         } else {
-            closeWithErrorCode(result);
+            closeWithErrorMessage(error);
         }
     }
 
-    private void handleLoadSessionConnError(PaymentResult result) {
-        view.setPaymentResult(PaymentUI.RESULT_CODE_ERROR, result);
+    private void handleLoadingNetworkFailure(final PaymentError error) {
         view.showConnectionDialog(new ThemedDialogListener() {
             @Override
             public void onButtonClicked(ThemedDialogFragment dialog, int which) {
                 switch (which) {
                     case ThemedDialogFragment.BUTTON_POSITIVE:
-                        loadPaymentSession(listUrl);
+                        if (session == null) {
+                            loadPaymentSession(listUrl);
+                        } else {
+                            loadLocalizations(session);
+                        }
                         break;
                     default:
-                        view.close();
+                        closeWithCanceledCode(error);
                 }
             }
 
             @Override
             public void onDismissed(ThemedDialogFragment dialog) {
-                view.close();
+                closeWithCanceledCode(error);
             }
         });
     }
@@ -215,9 +244,8 @@ final class PaymentListPresenter implements PaymentSessionListener, NetworkServi
 
     private void handleActivityResult(ActivityResult activityResult) {
         if (this.session == null) {
-            String resultInfo = "Missing cached session in PaymentListPresenter";
-            PaymentError error = new PaymentError(PaymentError.INTERNAL_ERROR, resultInfo);
-            closeWithErrorCode(resultInfo, error);
+            PaymentError error = new PaymentError("Missing cached PaymentSession in PaymentListPresenter");
+            closeWithErrorMessage(error);
             return;
         }
         PaymentResult result = activityResult.paymentResult;
@@ -249,9 +277,6 @@ final class PaymentListPresenter implements PaymentSessionListener, NetworkServi
             case PaymentUI.RESULT_CODE_CANCELED:
                 handlePreparePaymentCanceled(result);
                 break;
-            case PaymentUI.RESULT_CODE_ERROR:
-                handlePreparePaymentError(result);
-                break;
         }
     }
 
@@ -272,6 +297,10 @@ final class PaymentListPresenter implements PaymentSessionListener, NetworkServi
     }
 
     private void handlePreparePaymentCanceled(PaymentResult result) {
+        if (result.hasNetworkFailureError()) {
+            handlePrepareNetworkFailure(result);
+            return;
+        }
         this.operation = null;
         Interaction interaction = result.getInteraction();
         if (interaction == null) {
@@ -288,17 +317,11 @@ final class PaymentListPresenter implements PaymentSessionListener, NetworkServi
                 showPaymentSessionWithMessage(result);
                 break;
             default:
-                closeWithCanceledCode(result);
+                closeWithErrorMessage(result);
         }
     }
 
-    private void handlePreparePaymentError(PaymentResult result) {
-        this.operation = null;
-        if (!result.getPaymentError().isError(PaymentError.CONN_ERROR)) {
-            closeWithErrorCode(result);
-            return;
-        }
-        view.setPaymentResult(PaymentUI.RESULT_CODE_ERROR, result);
+    private void handlePrepareNetworkFailure(PaymentResult result) {
         view.showConnectionDialog(new ThemedDialogListener() {
             @Override
             public void onButtonClicked(ThemedDialogFragment dialog, int which) {
@@ -307,13 +330,13 @@ final class PaymentListPresenter implements PaymentSessionListener, NetworkServi
                         preparePayment();
                         break;
                     default:
-                        view.close();
+                        closeWithCanceledCode(result);
                 }
             }
 
             @Override
             public void onDismissed(ThemedDialogFragment dialog) {
-                view.close();
+                closeWithCanceledCode(result);
             }
         });
     }
@@ -330,13 +353,14 @@ final class PaymentListPresenter implements PaymentSessionListener, NetworkServi
             case PaymentUI.RESULT_CODE_CANCELED:
                 handleProcessPaymentCanceled(result);
                 break;
-            case PaymentUI.RESULT_CODE_ERROR:
-                handleProcessPaymentError(result);
-                break;
         }
     }
 
     private void handleProcessPaymentCanceled(PaymentResult result) {
+        if (result.hasNetworkFailureError()) {
+            handleProcessNetworkFailure(result);
+            return;
+        }
         this.operation = null;
         Interaction interaction = result.getInteraction();
         if (interaction == null) {
@@ -353,16 +377,11 @@ final class PaymentListPresenter implements PaymentSessionListener, NetworkServi
                 showPaymentSessionWithMessage(result);
                 break;
             default:
-                closeWithCanceledCode(result);
+                closeWithErrorMessage(result);
         }
     }
 
-    private void handleProcessPaymentError(PaymentResult result) {
-        if (!result.getPaymentError().isError(PaymentError.CONN_ERROR)) {
-            closeWithErrorCode(result);
-            return;
-        }
-        view.setPaymentResult(PaymentUI.RESULT_CODE_ERROR, result);
+    private void handleProcessNetworkFailure(final PaymentResult result) {
         view.showConnectionDialog(new ThemedDialogListener() {
             @Override
             public void onButtonClicked(ThemedDialogFragment dialog, int which) {
@@ -371,13 +390,13 @@ final class PaymentListPresenter implements PaymentSessionListener, NetworkServi
                         processPayment();
                         break;
                     default:
-                        view.close();
+                        closeWithCanceledCode(result);
                 }
             }
 
             @Override
             public void onDismissed(ThemedDialogFragment dialog) {
-                view.close();
+                closeWithCanceledCode(result);
             }
         });
     }
@@ -386,7 +405,7 @@ final class PaymentListPresenter implements PaymentSessionListener, NetworkServi
         try {
             networkService.preparePayment(view.getActivity(), PREPAREPAYMENT_REQUEST_CODE, operation);
         } catch (PaymentException e) {
-            closeWithErrorCode(e.getMessage(), e.error);
+            closeWithErrorMessage(e.error);
         }
     }
 
@@ -394,7 +413,7 @@ final class PaymentListPresenter implements PaymentSessionListener, NetworkServi
         try {
             networkService.processPayment(view.getActivity(), PROCESSPAYMENT_REQUEST_CODE, operation);
         } catch (PaymentException e) {
-            closeWithErrorCode(e.getMessage(), e.error);
+            closeWithErrorMessage(e.error);
         }
     }
 
@@ -473,26 +492,30 @@ final class PaymentListPresenter implements PaymentSessionListener, NetworkServi
         view.close();
     }
 
+    private void closeWithCanceledCode(PaymentError error) {
+        PaymentResult result = PaymentResult.fromPaymentError(error);
+        closeWithCanceledCode(result);
+    }
+    
     private void closeWithCanceledCode(PaymentResult result) {
         view.setPaymentResult(PaymentUI.RESULT_CODE_CANCELED, result);
+        view.close();
+    }
 
+    private void closeWithErrorMessage(PaymentError error) {
+        closeWithErrorMessage(PaymentResult.fromPaymentError(error));
+    }
+    
+    private void closeWithErrorMessage(PaymentResult result) {
+        view.setPaymentResult(PaymentUI.RESULT_CODE_CANCELED, result);
         String msg = translateInteraction(result.getInteraction());
         if (TextUtils.isEmpty(msg)) {
             msg = Localization.translate(ERROR_DEFAULT);
         }
-        closeWithMessage(msg);
+        showMessageAndClose(msg);
     }
 
-    private void closeWithErrorCode(String resultInfo, PaymentError error) {
-        closeWithErrorCode(new PaymentResult(resultInfo, error));
-    }
-
-    private void closeWithErrorCode(PaymentResult result) {
-        view.setPaymentResult(PaymentUI.RESULT_CODE_ERROR, result);
-        closeWithMessage(Localization.translate(ERROR_DEFAULT));
-    }
-
-    private void closeWithMessage(String message) {
+    private void showMessageAndClose(String message) {
         view.showMessageDialog(message, new ThemedDialogListener() {
             @Override
             public void onButtonClicked(ThemedDialogFragment dialog, int which) {
@@ -523,9 +546,5 @@ final class PaymentListPresenter implements PaymentSessionListener, NetworkServi
             return null;
         }
         return Localization.translateInteraction(interaction);
-    }
-
-    private String getString(int resId) {
-        return view.getActivity().getString(resId);
     }
 }

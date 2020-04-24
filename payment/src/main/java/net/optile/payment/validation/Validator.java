@@ -295,7 +295,7 @@ public class Validator {
             }
         } catch (NumberFormatException e) {
             // this should never happen since the regex makes sure both are integers
-            Log.wtf("pay_DateValidator", e);
+            Log.w("sdk_Validator", e);
         }
         return false;
     }

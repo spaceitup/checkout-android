@@ -1,6 +1,14 @@
 apply plugin: 'com.android.application'
+apply plugin: "com.browserstack.gradle"
 
 android {
+
+    testOptions {
+        unitTests {
+            includeAndroidResources = true
+        }
+    }
+
     compileOptions {
         sourceCompatibility rootProject.javaCompatVersion
         targetCompatibility rootProject.javaCompatVersion
@@ -21,9 +29,17 @@ android {
     }
 
     buildTypes {
-        release {
-            minifyEnabled false
-            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        debug {
+            testVariants.all { testVariant ->
+                testVariant.outputs.all { output ->
+                    outputFileName = "Example-Demo-${getCurrentBranch()}-debug-androidTest.apk"
+                }
+            }
+            applicationVariants.all { variant ->
+                variant.outputs.all {
+                    outputFileName = "Example-Demo-${getCurrentBranch()}-debug.apk"
+                }
+            }
         }
     }
     sourceSets {
@@ -52,3 +68,25 @@ dependencies {
     androidTestImplementation "androidx.test.espresso:espresso-intents:${rootProject.androidxTestEspressoVersion}"
     androidTestImplementation "androidx.test.espresso:espresso-contrib:${rootProject.androidxTestEspressoVersion}"
 }
+
+task runFunctionalTest {
+    if (System.getenv('ANDROIDSDK_PAYMENTAPI_AUTH') == null || System.getenv('ANDROIDSDK_PAYMENTAPI_AUTH') == null) {
+        logger.warn('Missing Android-SDK functional test environment variables')
+        return
+    }
+    if (System.getenv('BROWSERSTACK_USER') == null || System.getenv('BROWSERSTACK_KEY') == null) {
+        logger.warn('Missing Browserstack functional test environment variables')
+        return
+    }
+    dependsOn('executeDebugTestsOnBrowserstack')
+    dependsOn('clean')
+    clean.mustRunAfter('executeDebugTestsOnBrowserstack')
+}
+
+browserStackConfig {
+    username = "$System.env.BROWSERSTACK_USER"
+    accessKey = "$System.env.BROWSERSTACK_KEY"
+    customBuildName = "Example-Demo ${getCurrentBranch()}"
+    devices = ['Google Pixel 3a-9.0']
+}
+

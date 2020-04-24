@@ -44,8 +44,6 @@ class SdkResult {
                 return "RESULT_CODE_OK";
             case PaymentUI.RESULT_CODE_CANCELED:
                 return "RESULT_CODE_CANCELED";
-            case PaymentUI.RESULT_CODE_ERROR:
-                return "RESULT_CODE_ERROR";
             default:
                 return "Unknown";
         }
