@@ -98,18 +98,6 @@ task buildci(type: GradleBuild) {
     }
 }
 
-task testbuild(type: GradleBuild) {
-    if (versionName.endsWith('SNAPSHOT')) {
-        // tasks for SNAPSHOT builds
-        printf "Task for SNAPSHOT builds, uploading only to Nexus."
-        tasks = ['clean', ':payment:test', ':payment:assemble', ':example-basic:runFunctionalTest', ':example-demo:runFunctionalTest']
-    } else {
-        // tasks for RELEASE builds, this will also upload to the external packagecloud.io
-        printf "Task for RELEASE builds, uploading to Nexus and packagecloud.io."
-        tasks = ['clean', ':payment:test', ':payment:assemble', ':example-basic:runFunctionalTest', ':example-demo:runFunctionalTest']
-    }
-}
-
 def getCurrentBranch() {
     def branch = ""
     def proc = "git rev-parse --abbrev-ref HEAD".execute()
