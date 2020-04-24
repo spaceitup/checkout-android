@@ -235,8 +235,8 @@ final class ChargePaymentPresenter implements PaymentSessionListener, NetworkSer
     @Override
     public void redirectPayment(Redirect redirect) throws PaymentException {
         Context context = view.getActivity();
-        if (!RedirectService.isSupported(context)) {
-            throw new PaymentException("Redirect through ChromeCustomTabs is not supported by this device");
+        if (!RedirectService.isSupported(context, redirect)) {
+            throw new PaymentException("This Redirect payment method is not supported by the Android-SDK");
         }
         view.showProgress(false);
         RedirectService.open(context, redirect);
