@@ -149,7 +149,7 @@ Add the android-sdk dependency to the dependencies section of the app’s level 
 ::
 
     dependencies {
-        implementation "com.oscato.mobile:android-sdk:2.1.4"
+        implementation "com.oscato.mobile:android-sdk:3.0.0"
     }
 
 2 - Create payment session

@@ -4,9 +4,18 @@ Changelog - Android SDK
 **Version android-sdk-3.0.0**
 
 Note: version 3.0.0 is a major release with a breaking change, the PaymentUI.RESULT_CODE_ERROR has been removed.
-The rules when Interaction and PaymentError objects are included in the PaymentResult Object has changed. Please check the README.rst
-for the new rule set on PaymentResult information.
+The rules when Interaction, PaymentError and OperationResults are set in the PaymentResult Object has changed.
+Please check the README.rst for more information.
 
+* [PCX-500] - Avoid returning Internet errors to the merchant resulthandler
+* [PCX-729] - POST redirects should not be followed
+* [PCX-788] - Remove check for activate button label
+* [PCX-287] - Run functional tests automatically for each release build
+* [PCX-483] - [Android SDK] Optimize inflation of Widgets
+* [PCX-484] - [Android SDK] Move Localization handling in own service
+* [PCX-717] - Update images for CVV popup (Android)
+* [PCX-720] - Reject LISTs with operationType other than CHARGE/PRESET
+* [PCX-789] - Update documentation using resources subdomain for redirects
 
 **Version android-sdk-2.1.4**
 
