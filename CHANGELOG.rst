@@ -3,9 +3,9 @@ Changelog - Android SDK
 
 **Version android-sdk-3.0.0**
 
-Note: version 3.0.0 is a major release with a breaking change, the PaymentUI.RESULT_CODE_ERROR has been removed.
-The situations when Interaction, PaymentError and OperationResults are set in the PaymentResult Object has changed.
-Please check the README.rst for more information.
+Note: version 3.0.0 is a major release with a breaking change, the PaymentUI.RESULT_CODE_ERROR is removed.
+When Interaction, PaymentError and OperationResult objects are set in the PaymentResult Object has changed as well,
+please check the README.rst for more information.
 
 * [PCX-500] - Avoid returning Internet errors to the merchant resulthandler
 * [PCX-729] - POST redirects should not be followed
