@@ -99,6 +99,7 @@ public class ListService {
         ListService service = ListService.createInstance(url, auth);
         ListConfig config = service.createListConfig(jsonResId);
         config.setPresetFirst(presetFirst);
+        config.setCallbackAppId(context.getPackageName());
         return service.createListUrl(config);
     }
 }

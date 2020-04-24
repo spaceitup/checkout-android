@@ -82,9 +82,9 @@ Example list request Json body:
             "language": "en_US"
         },
         "callback": {
-            "returnUrl": "https://apps.integration.oscato.com/mobile-redirect/?appId=com.example.app",
-            "summaryUrl": "https://apps.integration.oscato.com/mobile-redirect/?appId=com.example.app",
-            "cancelUrl": "https://apps.integration.oscato.com/mobile-redirect/?appId=com.example.app",
+            "returnUrl": "https://resources.integration.oscato.com/mobile-redirect/?appId=com.example.app",
+            "summaryUrl": "https://resources.integration.oscato.com/mobile-redirect/?appId=com.example.app",
+            "cancelUrl": "https://resources.integration.oscato.com/mobile-redirect/?appId=com.example.app",
             "notificationUrl": "https://example.com/shop/notify.html"
         }
     }
@@ -342,9 +342,9 @@ Example of the callback mobile-redirect URLs:
 .. code-block:: json
 
     "callback": {
-        "returnUrl": "https://apps.integration.oscato.com/mobile-redirect/?appId=com.example.app",
-        "summaryUrl": "https://apps.integration.oscato.com/mobile-redirect/?appId=com.example.app",
-        "cancelUrl": "https://apps.integration.oscato.com/mobile-redirect/?appId=com.example.app",
+        "returnUrl": "https://resources.integration.oscato.com/mobile-redirect/?appId=com.example.app",
+        "summaryUrl": "https://resources.integration.oscato.com/mobile-redirect/?appId=com.example.app",
+        "cancelUrl": "https://resources.integration.oscato.com/mobile-redirect/?appId=com.example.app",
         "notificationUrl": "https://example.com/shop/notify.html"
     }
 
