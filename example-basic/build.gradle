@@ -57,6 +57,7 @@ dependencies {
     androidTestImplementation "androidx.test:rules:${rootProject.androidxTestRulesVersion}"
     androidTestImplementation "androidx.test.espresso:espresso-core:${rootProject.androidxTestEspressoVersion}"
     androidTestImplementation "androidx.test.espresso:espresso-intents:${rootProject.androidxTestEspressoVersion}"
+    androidTestImplementation "androidx.test.espresso:espresso-contrib:${rootProject.androidxTestEspressoVersion}"
 }
 
 task runFunctionalTest {
