@@ -8,43 +8,31 @@
 package net.optile.example.demo;
 
 import static androidx.test.espresso.Espresso.onView;
-import static androidx.test.espresso.action.ViewActions.click;
-import static androidx.test.espresso.action.ViewActions.typeText;
 import static androidx.test.espresso.assertion.ViewAssertions.matches;
-import static androidx.test.espresso.contrib.RecyclerViewActions.actionOnItemAtPosition;
 import static androidx.test.espresso.intent.Intents.intended;
 import static androidx.test.espresso.intent.matcher.IntentMatchers.hasComponent;
 import static androidx.test.espresso.matcher.ViewMatchers.isDisplayed;
 import static androidx.test.espresso.matcher.ViewMatchers.withId;
-import static net.optile.payment.test.view.PaymentActions.actionOnViewInWidget;
-import static net.optile.payment.test.view.PaymentActions.setValueInNumberPicker;
-import static net.optile.payment.test.view.PaymentMatchers.isCardWithTestId;
 
 import java.io.IOException;
 
-import org.hamcrest.Matcher;
 import org.json.JSONException;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
-import android.view.View;
-import androidx.test.espresso.Espresso;
-import androidx.test.espresso.IdlingRegistry;
-import androidx.test.espresso.IdlingResource;
 import androidx.test.espresso.intent.Intents;
 import androidx.test.ext.junit.runners.AndroidJUnit4;
 import androidx.test.filters.LargeTest;
+import androidx.test.platform.app.InstrumentationRegistry;
 import androidx.test.rule.ActivityTestRule;
-import net.optile.example.demo.checkout.CheckoutActivity;
-import net.optile.example.demo.confirm.ConfirmActivity;
+import androidx.test.uiautomator.By;
+import androidx.test.uiautomator.UiDevice;
+import androidx.test.uiautomator.UiObject2;
+import androidx.test.uiautomator.UiObjectNotFoundException;
+import androidx.test.uiautomator.Until;
 import net.optile.example.demo.settings.SettingsActivity;
-import net.optile.example.demo.summary.SummaryActivity;
-import net.optile.payment.test.service.ListService;
-import net.optile.payment.test.view.ActivityHelper;
-import net.optile.payment.test.view.PaymentActions;
 import net.optile.payment.ui.page.ChargePaymentActivity;
-import net.optile.payment.ui.page.PaymentListActivity;
 
 @RunWith(AndroidJUnit4.class)
 @LargeTest
@@ -54,7 +42,7 @@ public final class RedirectPaypalTests extends AbstractTest {
     public ActivityTestRule<SettingsActivity> settingsActivityRule = new ActivityTestRule<>(SettingsActivity.class);
 
     @Test
-    public void test() throws JSONException, IOException {
+    public void testPaypalSuccess() throws JSONException, IOException, UiObjectNotFoundException {
         Intents.init();
         int cardIndex = 3;
 
@@ -62,19 +50,45 @@ public final class RedirectPaypalTests extends AbstractTest {
         openPaymentCard(cardIndex, "card_network");
         clickCardButton(cardIndex);
 
+        checkPayPalChromeDisplayed();
         Intents.release();
     }
 
-    private void waitForChargeCompleted() {
-        intended(hasComponent(ChargePaymentActivity.class.getName()));
-        onView(withId(R.id.layout_chargepayment)).check(matches(isDisplayed()));
-        ChargePaymentActivity chargeActivity = (ChargePaymentActivity) ActivityHelper.getCurrentActivity();
-        IdlingResource chargeIdlingResource = chargeActivity.getChargeIdlingResource();
-        IdlingRegistry.getInstance().register(chargeIdlingResource);
+    @Test
+    public void testPaypalBrowserClosed() throws JSONException, IOException, UiObjectNotFoundException {
+        Intents.init();
+        int cardIndex = 3;
 
-        // Check that the confirm activity is shown and that it is displayed
-        intended(hasComponent(ConfirmActivity.class.getName()));
-        onView(withId(R.id.layout_confirm)).check(matches(isDisplayed()));
-        IdlingRegistry.getInstance().unregister(chargeIdlingResource);
+        openPaymentList(false);
+        openPaymentCard(cardIndex, "card_network");
+        clickCardButton(cardIndex);
+        closeChromeBrowser();
+
+        intended(hasComponent(ChargePaymentActivity.class.getName()));
+        onView(withId(R.id.dialogfragment_layout)).check(matches(isDisplayed()));
+        Intents.release();
+    }
+
+    private void closeChromeBrowser() throws UiObjectNotFoundException {
+        UiDevice uiDevice = UiDevice.getInstance(InstrumentationRegistry.getInstrumentation());
+        UiObject2 uiObject = uiDevice.wait(Until.findObject(By.res("com.android.chrome:id/close_button")), CHROME_TIMEOUT);
+        uiObject.wait(Until.enabled(true), CHROME_TIMEOUT);
+        uiObject.click();
+    }
+
+    private void checkPayPalChromeDisplayed() throws UiObjectNotFoundException {
+        UiDevice uiDevice = UiDevice.getInstance(InstrumentationRegistry.getInstrumentation());
+        UiObject2 uiObject = uiDevice.wait(Until.findObject(By.res("com.android.chrome:id/url_bar")), CHROME_TIMEOUT);
+        uiObject.wait(Until.textContains("https://www.sandbox.paypal.com"), CHROME_TIMEOUT);
+    }
+
+    void clickUiObjectByResource(UiDevice uiDevice, String resourceName) throws UiObjectNotFoundException {
+        UiObject2 uiObject = uiDevice.wait(Until.findObject(By.res(resourceName)), CHROME_TIMEOUT);
+        uiObject.wait(Until.enabled(true), CHROME_TIMEOUT);
+        uiObject.click();
+    }
+
+    private void waitForAppRestarted(UiDevice uiDevice) {
+        uiDevice.wait(Until.hasObject(By.pkg("net.optile.example.demo")), CHROME_TIMEOUT);
     }
 }

@@ -25,30 +25,20 @@ import java.io.IOException;
 
 import org.hamcrest.Matcher;
 import org.json.JSONException;
-import org.junit.Rule;
-import org.junit.Test;
-import org.junit.runner.RunWith;
 
-import android.content.Context;
 import android.view.View;
 import androidx.test.espresso.Espresso;
 import androidx.test.espresso.IdlingRegistry;
 import androidx.test.espresso.IdlingResource;
-import androidx.test.espresso.intent.Intents;
-import androidx.test.ext.junit.runners.AndroidJUnit4;
-import androidx.test.filters.LargeTest;
-import androidx.test.platform.app.InstrumentationRegistry;
-import androidx.test.rule.ActivityTestRule;
 import net.optile.example.demo.checkout.CheckoutActivity;
-import net.optile.payment.test.service.ListConfig;
 import net.optile.payment.test.service.ListService;
 import net.optile.payment.test.view.ActivityHelper;
 import net.optile.payment.test.view.PaymentActions;
 import net.optile.payment.ui.page.PaymentListActivity;
 
-@RunWith(AndroidJUnit4.class)
-@LargeTest
 public class AbstractTest {
+
+    public final static long CHROME_TIMEOUT = 20000;
 
     void openPaymentList(boolean presetFirst) throws IOException, JSONException {
         String listUrl = ListService.createListUrl(net.optile.example.demo.test.R.raw.listtemplate, presetFirst);
