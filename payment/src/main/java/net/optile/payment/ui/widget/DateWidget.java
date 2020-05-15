@@ -69,7 +69,7 @@ public final class DateWidget extends TextInputWidget {
         String year = split.length > 1 ? split[1] : "";
 
         int century = (Calendar.getInstance().get(Calendar.YEAR) / 100);
-        return new ExpiryDate(month, century + year);
+        return new ExpiryDate(month, Integer.toString(century) + year);
     }
 
     private class ExpiryDate {
