@@ -280,13 +280,15 @@ public abstract class PaymentCardViewHolder extends RecyclerView.ViewHolder {
         if (widget == null) {
             return;
         }
+        TextInputMode mode = TextInputModeFactory.createExpiryDateInputMode();
         String code = card.getCode();
-        bindIconResource(widget);
-        widget.setMonthInputElement(card.getInputElement(PaymentInputType.EXPIRY_MONTH));
-        widget.setYearInputElement(card.getInputElement(PaymentInputType.EXPIRY_YEAR));
 
+        bindIconResource(widget);
+        widget.setInputElements(card.getInputElement(PaymentInputType.EXPIRY_MONTH),
+                                card.getInputElement(PaymentInputType.EXPIRY_YEAR));
         widget.setLabel(Localization.translateAccountLabel(code, name));
-        widget.setDialogButtonLabel(Localization.translate(code, BUTTON_OK));
+        widget.setValidation();
+        widget.setTextInputMode(mode);
         widget.setReducedView();
     }
 

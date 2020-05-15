@@ -18,6 +18,8 @@ import android.text.InputType;
  */
 public final class IBANInputMode extends TextInputMode {
 
+    private GroupingTextWatcher textWatcher;
+    
     /**
      * Construct an IBANInputMode
      *
@@ -47,9 +49,16 @@ public final class IBANInputMode extends TextInputMode {
         filters[2] = new AlphaNumericInputFilter(true);
         editText.setFilters(filters);
         editText.setInputType(InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD);
+        textWatcher = new GroupingTextWatcher(groupSize, editText);
+    }
 
-        if (groupSize > 0) {
-            editText.addTextChangedListener(new GroupingTextWatcher(groupSize, editText));
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void reset() {
+        if (textWatcher != null) {
+            textWatcher.reset();
         }
     }
 }

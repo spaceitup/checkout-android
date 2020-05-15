@@ -46,11 +46,18 @@ public abstract class TextInputMode {
     }
 
     /**
+     * Reset this mode when it is not used anymore
+     */
+    public void reset() {
+    }
+    
+    /**
      * Apply the mode to the TextInputEditText
      *
      * @param editText to apply the mode to
      */
     public abstract void apply(TextInputEditText editText);
+
 }
 
 

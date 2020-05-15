@@ -24,7 +24,7 @@ import net.optile.payment.validation.ValidationResult;
 /**
  * Widget for handling text input
  */
-public final class TextInputWidget extends InputLayoutWidget {
+public class TextInputWidget extends InputLayoutWidget {
     private TextInputMode mode;
 
     /**
@@ -79,6 +79,9 @@ public final class TextInputWidget extends InputLayoutWidget {
     }
 
     public void setTextInputMode(TextInputMode mode) {
+        if (this.mode != null) {
+            this.mode.reset();
+        }
         this.mode = mode;
         mode.apply(textInput);
     }

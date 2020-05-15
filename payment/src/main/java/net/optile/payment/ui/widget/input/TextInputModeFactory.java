@@ -40,5 +40,14 @@ public final class TextInputModeFactory {
                 return new ElementInputMode(maxLength, element);
         }
     }
+
+    /** 
+     * Create a new ExpiryDateInputMode 
+     * 
+     * @return the newly created expiry date mode 
+     */
+    public static TextInputMode createExpiryDateInputMode() {
+        return new ExpiryDateInputMode();
+    }
 }
 
