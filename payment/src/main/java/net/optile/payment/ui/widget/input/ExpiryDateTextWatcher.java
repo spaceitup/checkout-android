@@ -3,21 +3,14 @@ package net.optile.payment.ui.widget.input;
 import static net.optile.payment.ui.widget.input.ExpiryDateInputMode.DIVIDER;
 import static net.optile.payment.ui.widget.input.ExpiryDateInputMode.MAXLENGTH;
 
-import android.util.Log;
-import android.graphics.Canvas;
-import android.graphics.Paint;
 import android.text.Editable;
-import android.text.Spannable;
-import android.text.TextWatcher;
-import android.text.style.ReplacementSpan;
 import android.widget.EditText;
-import androidx.annotation.NonNull;
 
 public class ExpiryDateTextWatcher extends EditTextWatcher {
 
     /** The size of the month field which is always 2 (e.g. 01, 12) */
     private final static int MONTHLENGTH = 2;
-    
+
     public ExpiryDateTextWatcher(final EditText editText) {
         super(editText);
     }
@@ -39,14 +32,13 @@ public class ExpiryDateTextWatcher extends EditTextWatcher {
         StringBuilder sb = new StringBuilder(afterNormalized);
         formatExpiryDate(sb);
         int afterLength = sb.length();
-        
+
         // text has been deleted by the user
         if (beforeCount > beforeAfter) {
             // Special case to keep divider when only the month is left after deleting the year
             if (beforeStart > MONTHLENGTH && afterLength == MONTHLENGTH && beforeLength > MONTHLENGTH) {
                 sb.insert(MONTHLENGTH, DIVIDER);
-            }
-            else if (afterLength > 2) {                
+            } else if (afterLength > 2) {
                 sb.insert(MONTHLENGTH, DIVIDER);
             }
         }
@@ -69,7 +61,7 @@ public class ExpiryDateTextWatcher extends EditTextWatcher {
         if (c == '0') {
             // Cannot recover from 2 zeros, replace all with one zero
             if (sb.length() > 1 && sb.charAt(1) == '0') {
-                sb.replace(0, sb.length(), "0");                
+                sb.replace(0, sb.length(), "0");
             }
             return;
         }

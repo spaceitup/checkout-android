@@ -23,13 +23,13 @@ public class EditTextWatcher implements TextWatcher {
     int beforeCount;
     int beforeAfter;
     boolean internalLock;
-    
+
     public EditTextWatcher(EditText editText) {
         this.editText = editText;
         editText.addTextChangedListener(this);
     }
 
-    /** 
+    /**
      * Reset this EditTextWatcher
      */
     public void reset() {
@@ -67,18 +67,18 @@ public class EditTextWatcher implements TextWatcher {
         internalLock = false;
     }
 
-    /** 
+    /**
      * Validate and change the input if required by the custom TextWatcher
-     * 
+     *
      * @param s editable to be changed
      */
     public void validate(Editable s) {
     }
 
-    /** 
+    /**
      * Set the cursor in the edit text
-     * 
-     * @param cursor new cursor position to be set 
+     *
+     * @param cursor new cursor position to be set
      */
     public void setCursor(int cursor) {
         if (cursor >= 0 && cursor <= editText.length()) {

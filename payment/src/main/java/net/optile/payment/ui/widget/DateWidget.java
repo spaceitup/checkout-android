@@ -9,31 +9,14 @@
 package net.optile.payment.ui.widget;
 
 import java.util.Calendar;
-import java.util.List;
 
-import com.google.android.material.textfield.TextInputEditText;
-
-import android.util.Log;
-import android.text.InputFilter;
-import android.text.InputType;
 import android.text.TextUtils;
-import android.text.method.DigitsKeyListener;
-import android.view.KeyEvent;
 import android.view.View;
-import android.view.inputmethod.EditorInfo;
-import android.widget.TextView;
-import net.optile.payment.R;
 import net.optile.payment.core.PaymentException;
 import net.optile.payment.form.Operation;
 import net.optile.payment.model.InputElement;
-import net.optile.payment.model.SelectOption;
 import net.optile.payment.ui.PaymentTheme;
-import net.optile.payment.ui.dialog.DateDialogFragment;
-import net.optile.payment.ui.dialog.ThemedDialogFragment;
-import net.optile.payment.ui.dialog.ThemedDialogFragment.ThemedDialogListener;
 import net.optile.payment.ui.widget.input.ExpiryDateInputMode;
-import net.optile.payment.ui.widget.input.ExpiryDateTextWatcher;
-import net.optile.payment.util.PaymentUtils;
 import net.optile.payment.validation.ValidationResult;
 
 /**
@@ -88,7 +71,7 @@ public final class DateWidget extends TextInputWidget {
         String year = split.length > 1 ? split[1] : "";
 
         int century = (Calendar.getInstance().get(Calendar.YEAR) / 100);
-        return new ExpiryDate(month, Integer.toString(century) + year);
+        return new ExpiryDate(month, century + year);
     }
 
     private class ExpiryDate {

@@ -50,7 +50,7 @@ public abstract class TextInputMode {
      */
     public void reset() {
     }
-    
+
     /**
      * Apply the mode to the TextInputEditText
      *

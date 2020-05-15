@@ -41,10 +41,10 @@ public final class TextInputModeFactory {
         }
     }
 
-    /** 
-     * Create a new ExpiryDateInputMode 
-     * 
-     * @return the newly created expiry date mode 
+    /**
+     * Create a new ExpiryDateInputMode
+     *
+     * @return the newly created expiry date mode
      */
     public static TextInputMode createExpiryDateInputMode() {
         return new ExpiryDateInputMode();
