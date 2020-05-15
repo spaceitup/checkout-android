@@ -53,7 +53,7 @@ public class ExpiryDateTextWatcher extends EditTextWatcher {
 
     private void updateEditable(final Editable editable, final String value) {
         String newValue = value.substring(0, Math.min(MAXLENGTH, value.length()));
-        editable.replace(0, editable.length(), value);
+        editable.replace(0, editable.length(), newValue);
     }
 
     private void formatExpiryDate(final StringBuilder sb) {
