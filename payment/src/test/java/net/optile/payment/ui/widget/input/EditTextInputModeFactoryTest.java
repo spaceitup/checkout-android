@@ -34,7 +34,7 @@ public class EditTextInputModeFactoryTest {
         element.setName(name);
         element.setType(InputElementType.STRING);
 
-        EditTextInputMode mode = EditTextInputModeFactory.createMode(10, 4, element);
+        EditTextInputMode mode = EditTextInputModeFactory.createMode(10, element);
         assertTrue(clazz.isInstance(mode));
     }
 }
