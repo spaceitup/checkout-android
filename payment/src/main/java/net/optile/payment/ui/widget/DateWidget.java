@@ -10,7 +10,6 @@ package net.optile.payment.ui.widget;
 
 import java.util.Calendar;
 
-import android.text.TextUtils;
 import android.view.View;
 import net.optile.payment.core.PaymentException;
 import net.optile.payment.form.Operation;

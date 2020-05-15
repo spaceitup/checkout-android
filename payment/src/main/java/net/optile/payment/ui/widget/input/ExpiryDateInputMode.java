@@ -17,7 +17,7 @@ import android.text.method.DigitsKeyListener;
 /**
  * InputMode for IBAN numbers
  */
-public final class ExpiryDateInputMode extends TextInputMode {
+public final class ExpiryDateInputMode extends EditTextInputMode {
 
     public final static int MAXLENGTH = 7;
     public final static String DIVIDER = " / ";

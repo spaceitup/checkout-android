@@ -20,7 +20,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import net.optile.payment.R;
 import net.optile.payment.ui.PaymentTheme;
-import net.optile.payment.ui.widget.input.TextInputMode;
+import net.optile.payment.ui.widget.input.EditTextInputMode;
 import net.optile.payment.util.PaymentUtils;
 import net.optile.payment.validation.ValidationResult;
 
@@ -40,7 +40,7 @@ public abstract class InputLayoutWidget extends FormWidget {
     final View hintLayout;
     final ImageView hintImage;
 
-    TextInputMode mode;
+    EditTextInputMode mode;
     String label;
 
     /**
@@ -148,7 +148,7 @@ public abstract class InputLayoutWidget extends FormWidget {
         presenter.hideKeyboard();
     }
 
-    void setTextInputMode(TextInputMode mode) {
+    void setTextInputMode(EditTextInputMode mode) {
         if (this.mode != null) {
             this.mode.reset();
         }

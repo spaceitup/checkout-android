@@ -14,7 +14,7 @@ import net.optile.payment.model.InputElement;
 /**
  * Class for creating TextInputModes for the InputElement
  */
-public final class TextInputModeFactory {
+public final class EditTextInputModeFactory {
 
     /**
      * Create a TextInputMode for the given input element
@@ -23,7 +23,7 @@ public final class TextInputModeFactory {
      * @param element contains the name and type of the input element
      * @return the TextInputMode for the given InputElement
      */
-    public static TextInputMode createMode(int maxLength, InputElement element) {
+    public static EditTextInputMode createMode(int maxLength, InputElement element) {
         switch (element.getName()) {
             case PaymentInputType.ACCOUNT_NUMBER:
                 return new AccountNumberInputMode(maxLength);

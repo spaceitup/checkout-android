@@ -16,7 +16,7 @@ import android.text.InputType;
 /**
  * InputMode for VerificationCode numbers
  */
-public final class VerificationCodeInputMode extends TextInputMode {
+public final class VerificationCodeInputMode extends EditTextInputMode {
 
     /**
      * Construct an VerificationCodeInputMode

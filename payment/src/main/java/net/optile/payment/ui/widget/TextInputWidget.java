@@ -11,16 +11,13 @@ package net.optile.payment.ui.widget;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
-import android.view.KeyEvent;
 import android.view.View;
-import android.view.inputmethod.EditorInfo;
-import android.widget.TextView;
 import net.optile.payment.core.PaymentException;
 import net.optile.payment.form.Operation;
 import net.optile.payment.model.InputElement;
 import net.optile.payment.ui.PaymentTheme;
-import net.optile.payment.ui.widget.input.TextInputMode;
-import net.optile.payment.ui.widget.input.TextInputModeFactory;
+import net.optile.payment.ui.widget.input.EditTextInputMode;
+import net.optile.payment.ui.widget.input.EditTextInputModeFactory;
 import net.optile.payment.validation.ValidationResult;
 
 /**
@@ -77,7 +74,7 @@ public class TextInputWidget extends InputLayoutWidget {
      * @param element to be bound with
      */
     public void bind(int maxLength, InputElement element) {
-        TextInputMode mode = TextInputModeFactory.createMode(maxLength, element);
+        EditTextInputMode mode = EditTextInputModeFactory.createMode(maxLength, element);
         setTextInputMode(mode);
         setValidation();
     }

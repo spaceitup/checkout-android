@@ -15,13 +15,13 @@ import android.text.TextWatcher;
 /**
  * Base class for defining the mode for the TextInputWidget
  */
-public abstract class TextInputMode {
+public abstract class EditTextInputMode {
 
     final int maxLength;
     final int groupSize;
     EditTextWatcher textWatcher;
     
-    TextInputMode(int maxLength, int groupSize) {
+    EditTextInputMode(int maxLength, int groupSize) {
         this.maxLength = maxLength;
         this.groupSize = groupSize;
     }

@@ -16,7 +16,7 @@ import android.text.InputType;
 /**
  * InputMode for BIC numbers
  */
-public final class BICInputMode extends TextInputMode {
+public final class BICInputMode extends EditTextInputMode {
 
     /**
      * Construct an BICInputMode

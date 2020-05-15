@@ -18,7 +18,7 @@ import android.text.InputFilter;
 /**
  * InputMode for holder names
  */
-public final class HolderNameInputMode extends TextInputMode {
+public final class HolderNameInputMode extends EditTextInputMode {
 
     /**
      * Construct an HolderNameInputMode

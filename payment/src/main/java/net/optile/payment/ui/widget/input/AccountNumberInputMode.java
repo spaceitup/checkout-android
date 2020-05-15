@@ -17,7 +17,7 @@ import android.text.method.DigitsKeyListener;
 /**
  * InputMode for account numbers
  */
-public final class AccountNumberInputMode extends TextInputMode {
+public final class AccountNumberInputMode extends EditTextInputMode {
 
     private final static String ACCOUNTNUMBER_DIGITS = "0123456789 ";
 

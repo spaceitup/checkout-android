@@ -19,7 +19,7 @@ import net.optile.payment.model.InputElementType;
 /**
  * InputMode for InputElements received in the ListResult
  */
-public final class ElementInputMode extends TextInputMode {
+public final class ElementInputMode extends EditTextInputMode {
 
     private final static String NUMERIC_DIGITS = "0123456789- ";
     private final InputElement element;

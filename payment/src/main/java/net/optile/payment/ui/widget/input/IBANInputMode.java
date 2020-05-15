@@ -16,7 +16,7 @@ import android.text.InputType;
 /**
  * InputMode for IBAN numbers
  */
-public final class IBANInputMode extends TextInputMode {
+public final class IBANInputMode extends EditTextInputMode {
 
     /**
      * Construct an IBANInputMode

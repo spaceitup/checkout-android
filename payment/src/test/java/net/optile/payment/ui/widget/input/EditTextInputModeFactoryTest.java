@@ -16,7 +16,7 @@ import net.optile.payment.core.PaymentInputType;
 import net.optile.payment.model.InputElement;
 import net.optile.payment.model.InputElementType;
 
-public class TextInputModeFactoryTest {
+public class EditTextInputModeFactoryTest {
 
     @Test
     public void createMode() {
@@ -34,7 +34,7 @@ public class TextInputModeFactoryTest {
         element.setName(name);
         element.setType(InputElementType.STRING);
 
-        TextInputMode mode = TextInputModeFactory.createMode(10, 4, element);
+        EditTextInputMode mode = EditTextInputModeFactory.createMode(10, 4, element);
         assertTrue(clazz.isInstance(mode));
     }
 }

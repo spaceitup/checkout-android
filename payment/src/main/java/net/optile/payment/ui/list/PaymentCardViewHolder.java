@@ -8,8 +8,6 @@
 
 package net.optile.payment.ui.list;
 
-import static net.optile.payment.localization.LocalizationKey.BUTTON_OK;
-
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -46,8 +44,6 @@ import net.optile.payment.ui.widget.SelectWidget;
 import net.optile.payment.ui.widget.TextInputWidget;
 import net.optile.payment.ui.widget.WidgetInflater;
 import net.optile.payment.ui.widget.WidgetPresenter;
-import net.optile.payment.ui.widget.input.TextInputMode;
-import net.optile.payment.ui.widget.input.TextInputModeFactory;
 import net.optile.payment.util.ImageHelper;
 import net.optile.payment.util.PaymentUtils;
 
