@@ -22,7 +22,7 @@ import net.optile.payment.validation.ValidationResult;
 /**
  * Widget for handling the date input
  */
-public final class DateWidget extends TextInputWidget {
+public final class DateWidget extends InputLayoutWidget {
 
     private InputElement monthElement;
     private InputElement yearElement;
@@ -58,9 +58,18 @@ public final class DateWidget extends TextInputWidget {
         operation.putValue(yearElement.getName(), date.year);
     }
 
-    public void setInputElements(InputElement monthElement, InputElement yearElement) {
+    /** 
+     * Bind this date widget to the month and year InputElements
+     * 
+     * @param monthElement element to be bound with
+     * @param yearElement element to be bound with
+     */
+    public void bind(InputElement monthElement, InputElement yearElement) {
         this.monthElement = monthElement;
         this.yearElement = yearElement;
+
+        setTextInputMode(new ExpiryDateInputMode());
+        setValidation();
     }
 
     private ExpiryDate getExpiryDate() {

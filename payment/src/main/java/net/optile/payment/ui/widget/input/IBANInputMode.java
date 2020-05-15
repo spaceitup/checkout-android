@@ -18,16 +18,13 @@ import android.text.InputType;
  */
 public final class IBANInputMode extends TextInputMode {
 
-    private GroupingTextWatcher textWatcher;
-
     /**
      * Construct an IBANInputMode
      *
      * @param maxLength maximum length of the input field
-     * @param groupSize size of the groups
      */
-    public IBANInputMode(int maxLength, int groupSize) {
-        super(maxLength, groupSize);
+    public IBANInputMode(int maxLength) {
+        super(maxLength, 4);
     }
 
     /**
@@ -50,15 +47,5 @@ public final class IBANInputMode extends TextInputMode {
         editText.setFilters(filters);
         editText.setInputType(InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD);
         textWatcher = new GroupingTextWatcher(groupSize, editText);
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public void reset() {
-        if (textWatcher != null) {
-            textWatcher.reset();
-        }
     }
 }

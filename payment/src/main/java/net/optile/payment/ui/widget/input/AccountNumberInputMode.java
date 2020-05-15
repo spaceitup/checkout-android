@@ -25,10 +25,9 @@ public final class AccountNumberInputMode extends TextInputMode {
      * Construct an AccountNumberInputMode
      *
      * @param maxLength maximum length of the input field
-     * @param groupSize size of the grouped digits
      */
-    public AccountNumberInputMode(int maxLength, int groupSize) {
-        super(maxLength, groupSize);
+    public AccountNumberInputMode(int maxLength) {
+        super(maxLength, 4);
     }
 
     /**
@@ -49,9 +48,6 @@ public final class AccountNumberInputMode extends TextInputMode {
         editText.setFilters(filters);
         editText.setInputType(InputType.TYPE_CLASS_NUMBER);
         editText.setKeyListener(DigitsKeyListener.getInstance(ACCOUNTNUMBER_DIGITS));
-
-        if (groupSize > 0) {
-            editText.addTextChangedListener(new GroupingTextWatcher(groupSize, editText));
-        }
+        textWatcher = new GroupingTextWatcher(groupSize, editText);
     }
 }

@@ -253,15 +253,13 @@ public abstract class PaymentCardViewHolder extends RecyclerView.ViewHolder {
 
     void bindTextInputWidget(TextInputWidget widget, String code, InputElement element) {
         String name = element.getName();
-        boolean visible = Localization.hasAccountHint(code, widget.getName());
+        boolean visible = Localization.hasAccountHint(code, name);
         int maxLength = adapter.getMaxLength(code, name);
-        TextInputMode mode = TextInputModeFactory.createMode(maxLength, GROUPSIZE, element);
 
         bindIconResource(widget);
         widget.setHint(visible);
-        widget.setLabel(element.getLabel());
-        widget.setValidation();
-        widget.setTextInputMode(mode);
+        widget.setLabel(Localization.translateAccountLabel(code, name));
+        widget.bind(maxLength, element);
 
         if (PaymentInputType.VERIFICATION_CODE.equals(name)) {
             widget.setReducedView();
@@ -280,15 +278,10 @@ public abstract class PaymentCardViewHolder extends RecyclerView.ViewHolder {
         if (widget == null) {
             return;
         }
-        TextInputMode mode = TextInputModeFactory.createExpiryDateInputMode();
-        String code = card.getCode();
-
         bindIconResource(widget);
-        widget.setInputElements(card.getInputElement(PaymentInputType.EXPIRY_MONTH),
-                                card.getInputElement(PaymentInputType.EXPIRY_YEAR));
-        widget.setLabel(Localization.translateAccountLabel(code, name));
-        widget.setValidation();
-        widget.setTextInputMode(mode);
+        widget.setLabel(Localization.translateAccountLabel(card.getCode(), name));
+        widget.bind(card.getInputElement(PaymentInputType.EXPIRY_MONTH),
+                    card.getInputElement(PaymentInputType.EXPIRY_YEAR));
         widget.setReducedView();
     }
 
