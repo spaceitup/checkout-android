@@ -19,7 +19,7 @@ import android.text.InputType;
 public final class IBANInputMode extends TextInputMode {
 
     private GroupingTextWatcher textWatcher;
-    
+
     /**
      * Construct an IBANInputMode
      *

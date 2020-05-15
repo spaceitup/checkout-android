@@ -9,7 +9,7 @@
 package net.optile.payment.ui.widget.input;
 
 import com.google.android.material.textfield.TextInputEditText;
-import android.util.Log;
+
 import android.text.InputFilter;
 import android.text.InputType;
 import android.text.method.DigitsKeyListener;
@@ -24,7 +24,7 @@ public final class ExpiryDateInputMode extends TextInputMode {
     public final static String DATE_DIGITS = "0123456789/ ";
 
     private ExpiryDateTextWatcher textWatcher;
-    
+
     /**
      * Construct an IBANInputMode
      */

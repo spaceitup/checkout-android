@@ -4,7 +4,6 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import android.text.Editable;
-import android.text.TextWatcher;
 import android.widget.EditText;
 
 /**
