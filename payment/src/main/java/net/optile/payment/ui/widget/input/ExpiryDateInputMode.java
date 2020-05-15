@@ -23,8 +23,6 @@ public final class ExpiryDateInputMode extends EditTextInputMode {
     public final static String DIVIDER = " / ";
     public final static String DATE_DIGITS = "0123456789/ ";
 
-    private ExpiryDateTextWatcher textWatcher;
-
     /**
      * Construct an IBANInputMode
      */
@@ -43,15 +41,5 @@ public final class ExpiryDateInputMode extends EditTextInputMode {
         editText.setInputType(InputType.TYPE_CLASS_NUMBER);
         editText.setKeyListener(DigitsKeyListener.getInstance(DATE_DIGITS));
         textWatcher = new ExpiryDateTextWatcher(editText);
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public void reset() {
-        if (textWatcher != null) {
-            textWatcher.reset();
-        }
     }
 }
