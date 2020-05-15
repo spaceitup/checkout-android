@@ -24,7 +24,7 @@ import androidx.test.core.app.ApplicationProvider;
 @RunWith(RobolectricTestRunner.class)
 public class GroupingTextWatcherTest {
 
-    @Test(expected = IllegalArgumentException.class)
+    @Test(expected = NullPointerException.class)
     public void createGroupingTextWatcher_invalid_EditText() {
         new GroupingTextWatcher(4, null);
     }
