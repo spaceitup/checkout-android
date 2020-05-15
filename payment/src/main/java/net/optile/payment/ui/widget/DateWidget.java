@@ -54,10 +54,8 @@ public final class DateWidget extends TextInputWidget {
     @Override
     public void putValue(Operation operation) throws PaymentException {
         ExpiryDate date = getExpiryDate();
-        if (!(TextUtils.isEmpty(date.month) || TextUtils.isEmpty(date.year))) {
-            operation.putValue(monthElement.getName(), date.month);
-            operation.putValue(yearElement.getName(), date.year);
-        }
+        operation.putValue(monthElement.getName(), date.month);
+        operation.putValue(yearElement.getName(), date.year);
     }
 
     public void setInputElements(InputElement monthElement, InputElement yearElement) {
