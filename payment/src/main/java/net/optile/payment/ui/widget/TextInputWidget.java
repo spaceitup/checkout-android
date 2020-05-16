@@ -68,12 +68,12 @@ public class TextInputWidget extends InputLayoutWidget {
     }
 
     /** 
-     * Bind this widget with the provider InputElement.
+     * Set the InputElement into this TextInputWidget
      * 
      * @param maxLength the maxLength hint for the TextInput 
-     * @param element to be bound with
+     * @param element to be set in this widget
      */
-    public void bind(int maxLength, InputElement element) {
+    public void setInputElement(int maxLength, InputElement element) {
         EditTextInputMode mode = EditTextInputModeFactory.createMode(maxLength, element);
         setTextInputMode(mode);
         setValidation();

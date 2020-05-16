@@ -255,7 +255,7 @@ public abstract class PaymentCardViewHolder extends RecyclerView.ViewHolder {
         bindIconResource(widget);
         widget.setHint(visible);
         widget.setLabel(Localization.translateAccountLabel(code, name));
-        widget.bind(maxLength, element);
+        widget.setInputElement(maxLength, element);
 
         if (PaymentInputType.VERIFICATION_CODE.equals(name)) {
             widget.setReducedView();
@@ -276,8 +276,8 @@ public abstract class PaymentCardViewHolder extends RecyclerView.ViewHolder {
         }
         bindIconResource(widget);
         widget.setLabel(Localization.translateAccountLabel(card.getCode(), name));
-        widget.bind(card.getInputElement(PaymentInputType.EXPIRY_MONTH),
-                    card.getInputElement(PaymentInputType.EXPIRY_YEAR));
+        widget.setInputElements(card.getInputElement(PaymentInputType.EXPIRY_MONTH),
+                                card.getInputElement(PaymentInputType.EXPIRY_YEAR));
         widget.setReducedView();
     }
 

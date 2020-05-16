@@ -25,7 +25,7 @@ public final class DateWidget extends InputLayoutWidget {
 
     private InputElement monthElement;
     private InputElement yearElement;
-
+    
     /**
      * Construct a new DateWidget
      *
@@ -58,15 +58,14 @@ public final class DateWidget extends InputLayoutWidget {
     }
 
     /** 
-     * Bind this date widget to the month and year InputElements
+     * Set the InputElements in this DateWidget
      * 
-     * @param monthElement element to be bound with
-     * @param yearElement element to be bound with
+     * @param monthElement expiry month element
+     * @param yearElement expiry year element
      */
-    public void bind(InputElement monthElement, InputElement yearElement) {
+    public void setInputElements(InputElement monthElement, InputElement yearElement) {
         this.monthElement = monthElement;
         this.yearElement = yearElement;
-
         setTextInputMode(new ExpiryDateInputMode());
         setValidation();
     }
