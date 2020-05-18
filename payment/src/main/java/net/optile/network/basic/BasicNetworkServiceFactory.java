@@ -24,7 +24,13 @@ public final class BasicNetworkServiceFactory implements NetworkServiceFactory {
      */
     @Override
     public boolean isNetworkSupported(ApplicableNetwork network) {
-        return isCodeSupported(network.getCode());
+        String code = network.getCode();
+
+        // This service only supports redirect Paypal
+        if (PaymentNetworkCodes.PAYPAL.equals(code)) {
+            return network.getRedirect();
+        }
+        return isCodeSupported(code);
     }
 
     /**
@@ -48,12 +54,13 @@ public final class BasicNetworkServiceFactory implements NetworkServiceFactory {
             case PaymentNetworkCodes.POSTEPAY:
             case PaymentNetworkCodes.SEPADD:
             case PaymentNetworkCodes.JCB:
+            case PaymentNetworkCodes.PAYPAL:
                 return true;
             default:
                 return false;
         }
     }
-
+    
     /**
      * {@inheritDoc}
      */
