@@ -36,6 +36,8 @@ public class Validator {
     public final static int MAXLENGTH_IBAN = 34;
     public final static int MAXLENGTH_BIC = 11;
 
+    public final static int MAX_EXPIRY_YEAR = 15;
+    
     private final Map<String, ValidationGroup> validations;
 
     /**
@@ -290,9 +292,13 @@ public class Validator {
             int curMonth = cal.get(Calendar.MONTH) + 1;
             int curYear = cal.get(Calendar.YEAR);
 
-            if (expYear > curYear || (expYear == curYear && expMonth >= curMonth)) {
-                return true;
+            if (expYear < curYear) {
+                return false;
             }
+            if (expYear == curYear) {
+                return expMonth >= curMonth;
+            }
+            return expYear <= (curYear + MAX_EXPIRY_YEAR);
         } catch (NumberFormatException e) {
             // this should never happen since the regex makes sure both are integers
             Log.w("sdk_Validator", e);

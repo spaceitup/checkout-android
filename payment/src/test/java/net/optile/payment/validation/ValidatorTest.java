@@ -18,6 +18,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.robolectric.RobolectricTestRunner;
 
+import java.util.Calendar;
 import android.content.res.Resources;
 import androidx.test.core.app.ApplicationProvider;
 import net.optile.payment.R;
@@ -771,6 +772,16 @@ public class ValidatorTest {
 
         result = validator.validate(method, code, type, null, "2020");
         assertEquals(ValidationResult.MISSING_EXPIRY_DATE, result.getError());
+
+        result = validator.validate(method, code, type, "04", "1999");
+        assertEquals(ValidationResult.INVALID_EXPIRY_DATE, result.getError());
+
+        int year = Calendar.getInstance().get(Calendar.YEAR);
+        result = validator.validate(method, code, type, "04", Integer.toString(year + 15));
+        assertFalse(result.isError());
+
+        result = validator.validate(method, code, type, "04", Integer.toString(year + 16));
+        assertEquals(ValidationResult.INVALID_EXPIRY_DATE, result.getError());
     }
 
     @Test
