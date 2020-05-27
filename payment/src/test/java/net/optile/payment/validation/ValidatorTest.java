@@ -777,10 +777,10 @@ public class ValidatorTest {
         assertEquals(ValidationResult.INVALID_EXPIRY_DATE, result.getError());
 
         int year = Calendar.getInstance().get(Calendar.YEAR);
-        result = validator.validate(method, code, type, "04", Integer.toString(year + 15));
+        result = validator.validate(method, code, type, "04", Integer.toString(year + 50));
         assertFalse(result.isError());
 
-        result = validator.validate(method, code, type, "04", Integer.toString(year + 16));
+        result = validator.validate(method, code, type, "04", Integer.toString(year + 51));
         assertEquals(ValidationResult.INVALID_EXPIRY_DATE, result.getError());
     }
 
