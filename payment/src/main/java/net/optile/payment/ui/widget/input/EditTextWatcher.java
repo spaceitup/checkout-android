@@ -63,8 +63,11 @@ public class EditTextWatcher implements TextWatcher {
             return;
         }
         internalLock = true;
-        validate(editable);
-        internalLock = false;
+        try {
+            validate(editable);
+        } finally {
+            internalLock = false;
+        }
     }
 
     /**
