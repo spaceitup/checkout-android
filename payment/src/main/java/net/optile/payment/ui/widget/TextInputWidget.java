@@ -23,7 +23,7 @@ import net.optile.payment.validation.ValidationResult;
 /**
  * Widget for handling text input
  */
-public class TextInputWidget extends InputLayoutWidget {
+public final class TextInputWidget extends InputLayoutWidget {
 
     /**
      * Construct a new TextInputWidget
