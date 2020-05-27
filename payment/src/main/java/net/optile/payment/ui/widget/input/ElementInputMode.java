@@ -51,9 +51,9 @@ public final class ElementInputMode extends EditTextInputMode {
      */
     @Override
     public void apply(TextInputEditText editText) {
-        InputFilter[] filters = new InputFilter[1];
-        filters[0] = new InputFilter.LengthFilter(maxLength);
-        editText.setFilters(filters);
+        editText.setFilters(new InputFilter[] {
+                new InputFilter.LengthFilter(maxLength)
+            });
 
         switch (element.getType()) {
             case InputElementType.NUMERIC:

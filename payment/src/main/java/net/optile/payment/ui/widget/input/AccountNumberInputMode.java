@@ -43,9 +43,9 @@ public final class AccountNumberInputMode extends EditTextInputMode {
      */
     @Override
     public void apply(TextInputEditText editText) {
-        InputFilter[] filters = new InputFilter[1];
-        filters[0] = new InputFilter.LengthFilter(getMaxLengthForGrouping());
-        editText.setFilters(filters);
+        editText.setFilters(new InputFilter[] {
+            new InputFilter.LengthFilter(getMaxLengthForGrouping())
+        });
         editText.setInputType(InputType.TYPE_CLASS_NUMBER);
         editText.setKeyListener(DigitsKeyListener.getInstance(ACCOUNTNUMBER_DIGITS));
         textWatcher = new GroupingTextWatcher(groupSize, editText);

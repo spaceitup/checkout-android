@@ -40,11 +40,11 @@ public final class IBANInputMode extends EditTextInputMode {
      */
     @Override
     public void apply(TextInputEditText editText) {
-        InputFilter[] filters = new InputFilter[3];
-        filters[0] = new InputFilter.LengthFilter(getMaxLengthForGrouping());
-        filters[1] = new InputFilter.AllCaps();
-        filters[2] = new AlphaNumericInputFilter(true);
-        editText.setFilters(filters);
+        editText.setFilters(new InputFilter[] {
+                new InputFilter.LengthFilter(getMaxLengthForGrouping()),
+                new InputFilter.AllCaps(),
+                new AlphaNumericInputFilter(true)
+            });
         editText.setInputType(InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD);
         textWatcher = new GroupingTextWatcher(groupSize, editText);
     }
