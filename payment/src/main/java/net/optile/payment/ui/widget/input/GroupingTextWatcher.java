@@ -44,21 +44,21 @@ public class GroupingTextWatcher extends EditTextWatcher {
     public void validate(final Editable s) {
         String afterText = s.toString();
 
-        if (!beforeText.equals(afterText) && !isInputCorrect(afterText)) {
-            String newString = beforeText.substring(0, beforeStart);
-            int cursor = beforeStart;
+        if (!previousText.equals(afterText) && !isInputCorrect(afterText)) {
+            String newString = previousText.substring(0, start);
+            int cursor = start;
 
-            if (beforeCount > 0 && s.length() > 0 && (beforeText.charAt(beforeStart) == DIVIDER || beforeStart == s.length())) {
-                newString = beforeText.substring(0, beforeStart - 1);
+            if (deleteLength > 0 && s.length() > 0 && (previousText.charAt(start) == DIVIDER || start == s.length())) {
+                newString = previousText.substring(0, start - 1);
                 --cursor;
             }
 
-            if (beforeAfter > 0) {
-                newString += afterText.substring(beforeStart, beforeStart + beforeAfter);
+            if (insertLength > 0) {
+                newString += afterText.substring(start, start + insertLength);
                 newString = buildCorrectInput(newString);
                 cursor = newString.length();
             }
-            newString += beforeText.substring(beforeStart + beforeCount);
+            newString += previousText.substring(start + deleteLength);
             s.replace(0, s.length(), buildCorrectInput(newString));
 
             setCursor(cursor);

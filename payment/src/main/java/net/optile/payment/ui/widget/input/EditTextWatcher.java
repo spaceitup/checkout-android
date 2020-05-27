@@ -18,10 +18,10 @@ import android.widget.EditText;
 public class EditTextWatcher implements TextWatcher {
 
     final EditText editText;
-    String beforeText;
-    int beforeStart;
-    int beforeCount;
-    int beforeAfter;
+    String previousText;
+    int start;
+    int deleteLength;
+    int insertLength;
     boolean internalLock;
 
     public EditTextWatcher(EditText editText) {
@@ -41,10 +41,10 @@ public class EditTextWatcher implements TextWatcher {
      */
     @Override
     public void beforeTextChanged(final CharSequence s, final int start, final int count, final int after) {
-        this.beforeText = s.toString();
-        this.beforeStart = start;
-        this.beforeCount = count;
-        this.beforeAfter = after;
+        this.previousText = s.toString();
+        this.start = start;
+        this.deleteLength = count;
+        this.insertLength = after;
     }
 
     /**

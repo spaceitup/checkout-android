@@ -25,7 +25,7 @@ public class ExpiryDateTextWatcher extends EditTextWatcher {
             updateEditable(s, afterNormalized);
             return;
         }
-        String beforeNormalized = normalize(beforeText);
+        String beforeNormalized = normalize(previousText);
         int beforeLength = beforeNormalized.length();
         int cursor = -1;
 
@@ -34,9 +34,9 @@ public class ExpiryDateTextWatcher extends EditTextWatcher {
         int afterLength = sb.length();
 
         // text has been deleted by the user
-        if (beforeCount > beforeAfter) {
+        if (deleteLength > insertLength) {
             // Special case to keep divider when only the month is left after deleting the year
-            if (beforeStart > MONTHLENGTH && afterLength == MONTHLENGTH && beforeLength > MONTHLENGTH) {
+            if (start > MONTHLENGTH && afterLength == MONTHLENGTH && beforeLength > MONTHLENGTH) {
                 sb.insert(MONTHLENGTH, DIVIDER);
             } else if (afterLength > 2) {
                 sb.insert(MONTHLENGTH, DIVIDER);
