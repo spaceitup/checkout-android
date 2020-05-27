@@ -10,12 +10,14 @@ package net.optile.payment.ui.widget;
 
 import java.util.Calendar;
 
+import android.text.TextUtils;
 import android.view.View;
 import net.optile.payment.core.PaymentException;
 import net.optile.payment.form.Operation;
 import net.optile.payment.model.InputElement;
 import net.optile.payment.ui.PaymentTheme;
 import net.optile.payment.ui.widget.input.ExpiryDateInputMode;
+import net.optile.payment.util.PaymentUtils;
 import net.optile.payment.validation.ValidationResult;
 
 /**
@@ -74,9 +76,12 @@ public final class DateWidget extends InputLayoutWidget {
         String[] split = getValue().split(ExpiryDateInputMode.DIVIDER);
         String month = split.length > 0 ? split[0] : "";
         String year = split.length > 1 ? split[1] : "";
-
-        int century = (Calendar.getInstance().get(Calendar.YEAR) / 100);
-        return new ExpiryDate(month, Integer.toString(century) + year);
+        
+        if (!TextUtils.isEmpty(year)) {
+            int expiryYear = PaymentUtils.createExpiryYear(Integer.parseInt(year));
+            year = Integer.toString(expiryYear);
+        }
+        return new ExpiryDate(month, year);
     }
 
     private class ExpiryDate {
