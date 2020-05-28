@@ -117,6 +117,6 @@ public final class AccountCard implements PaymentCard {
     }
 
     public String lookupPaymentMethod(String code) {
-        return account.getCode().equals(code) ? network.getPaymentMethod() : null; 
+        return account.getCode().equals(code) ? account.getMethod() : null; 
     }
 }

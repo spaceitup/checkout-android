@@ -150,12 +150,12 @@ final class ChargePaymentPresenter implements PaymentSessionListener, NetworkSer
         String code = operation.getCode();
         String method = session.lookupPaymentMethod(code);
         if (method == null) {
-            closeWithErrorMessage(new PaymentError("Could not determine payment method for code: " + code));
+            closeWithErrorMessage(new PaymentError("Payment method lookup failed for code: " + code));
             return;
         }
         networkService = NetworkServiceLookup.getService(code, method);
         if (networkService == null) {
-            closeWithErrorMessage(new PaymentError("No such NetworkService available for: " + code + ", " + method));
+            closeWithErrorMessage(new PaymentError("NetworkService lookup failed for: " + code + ", " + method));
             return;
         }
         networkService.setPresenter(this);
