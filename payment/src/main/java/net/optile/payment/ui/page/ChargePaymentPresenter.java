@@ -147,7 +147,9 @@ final class ChargePaymentPresenter implements PaymentSessionListener, NetworkSer
     @Override
     public void onLocalizationSuccess(Localization localization) {
         Localization.setInstance(localization);
-        networkService = NetworkServiceLookup.getService(operation.getCode());
+        String code = operation.getCode();
+        String method = session.lookupPaymentMethod(code);
+        networkService = NetworkServiceLookup.getService(code, method);
         networkService.setPresenter(this);
         processPayment();
     }

@@ -21,6 +21,9 @@ public class AccountRegistration {
     /** Simple API, always present */
     private String code;
     /** Simple API, always present */
+    @PaymentMethod.Definition
+    private String method;
+    /** Simple API, always present */
     private String label;
     /** Simple API, always present */
     private AccountMask maskedAccount;
@@ -28,6 +31,8 @@ public class AccountRegistration {
     private Boolean selected;
     /** IFrame height for selective native, only supplied if "iFrame" link is present. */
     private Integer iFrameHeight;
+    /** code of button-label if this network is selected */
+    private String button;
     /** An indicator that a form for this network is an empty one, without any text and input elements */
     private Boolean emptyForm;
     /** Form elements descriptions */
@@ -71,6 +76,43 @@ public class AccountRegistration {
         this.code = code;
     }
 
+    /**
+     * Gets value of method.
+     *
+     * @return the method.
+     */
+    @PaymentMethod.Definition
+    public String getMethod() {
+        return method;
+    }
+
+    /**
+     * Sets value of method.
+     *
+     * @param method the method to set.
+     */
+    public void setMethod(@PaymentMethod.Definition final String method) {
+        this.method = method;
+    }
+
+    /**
+     * Gets code of button's label what should be used if this network is selected.
+     *
+     * @return Code of button'S label.
+     */
+    public String getButton() {
+        return button;
+    }
+
+    /**
+     * Sets code of button's label what should be used if this network is selected.
+     *
+     * @param button Code of button'S label.
+     */
+    public void setButton(final String button) {
+        this.button = button;
+    }
+    
     /**
      * Gets value of label.
      *

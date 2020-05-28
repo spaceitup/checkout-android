@@ -15,7 +15,7 @@ import android.util.Log;
 import net.optile.payment.model.ApplicableNetwork;
 
 /**
- * Class for looking up a NetworkService given the ApplicableNetwork.
+ * Class for looking up a NetworkService given the code and payment method.
  * This will later be implemented by a ServiceLoader.
  */
 public class NetworkServiceLookup {
@@ -23,33 +23,35 @@ public class NetworkServiceLookup {
     private static final List<NetworkServiceFactory> factories = new CopyOnWriteArrayList<>();
 
     /**
-     * Is the ApplicableNetwork supported by any of the NetworkServices provided in this Android SDK.
+     * Check if there is a NetworkService that supports the network code and payment method 
      *
-     * @param network check if this network is supported
+     * @param code to be checked if it is supported
+     * @param method to be checked if it is supported
      * @return true when supported, false otherwise
      */
-    public static boolean isNetworkSupported(ApplicableNetwork network) {
-        NetworkServiceFactory factory = getFactory(network.getCode());
-        return factory != null && factory.isNetworkSupported(network);
+    public static boolean isSupported(String code, String method) {
+        NetworkServiceFactory factory = getFactory(code, method);
+        return factory != null;
     }
 
     /**
-     * Lookup a NetworkService for the provided applicable network
+     * Lookup a NetworkService for the network code and payment method
      *
-     * @param code the applicable network code
+     * @param code to be used to lookup a NetworkService
+     * @param method to be used to lookup a NetworkService
      * @return the NetworkService that can handle the network or null if none found
      */
-    public static NetworkService getService(String code) {
-        NetworkServiceFactory factory = getFactory(code);
+    public static NetworkService getService(String code, String method) {
+        NetworkServiceFactory factory = getFactory(code, method);
         return factory != null ? factory.createService() : null;
     }
 
-    private static NetworkServiceFactory getFactory(String code) {
+    private static NetworkServiceFactory getFactory(String code, String method) {
         if (factories.size() == 0) {
             initFactories();
         }
         for (NetworkServiceFactory factory : factories) {
-            if (factory.isCodeSupported(code)) {
+            if (factory.isSupported(code, method)) {
                 return factory;
             }
         }

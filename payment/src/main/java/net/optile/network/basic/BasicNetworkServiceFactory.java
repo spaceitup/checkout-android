@@ -9,8 +9,10 @@
 package net.optile.network.basic;
 
 import android.text.TextUtils;
+import java.util.Objects;
 import net.optile.payment.core.PaymentNetworkCodes;
 import net.optile.payment.model.ApplicableNetwork;
+import net.optile.payment.model.PaymentMethod;
 import net.optile.payment.ui.service.NetworkService;
 import net.optile.payment.ui.service.NetworkServiceFactory;
 
@@ -23,42 +25,26 @@ public final class BasicNetworkServiceFactory implements NetworkServiceFactory {
      * {@inheritDoc}
      */
     @Override
-    public boolean isNetworkSupported(ApplicableNetwork network) {
-        String code = network.getCode();
+    public boolean isSupported(String code, String method) {
+        Objects.requireNonNull(code);
+        Objects.requireNonNull(method);
 
-        // This service only supports redirect Paypal
-        if (PaymentNetworkCodes.PAYPAL.equals(code)) {
-            return network.getRedirect();
-        }
-        return isCodeSupported(code);
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public boolean isCodeSupported(String code) {
-        switch (code) {
-            case PaymentNetworkCodes.AMEX:
-            case PaymentNetworkCodes.CASTORAMA:
-            case PaymentNetworkCodes.DINERS:
-            case PaymentNetworkCodes.DISCOVER:
-            case PaymentNetworkCodes.MASTERCARD:
-            case PaymentNetworkCodes.UNIONPAY:
-            case PaymentNetworkCodes.VISA:
-            case PaymentNetworkCodes.VISA_DANKORT:
-            case PaymentNetworkCodes.VISAELECTRON:
-            case PaymentNetworkCodes.CARTEBANCAIRE:
-            case PaymentNetworkCodes.MAESTRO:
-            case PaymentNetworkCodes.MAESTROUK:
-            case PaymentNetworkCodes.POSTEPAY:
-            case PaymentNetworkCodes.SEPADD:
-            case PaymentNetworkCodes.JCB:
-            case PaymentNetworkCodes.PAYPAL:
+        switch (method) {
+            case PaymentMethod.CREDIT_CARD:
+            case PaymentMethod.DEBIT_CARD:
                 return true;
             default:
-                return false;
+                return isCodeSupported(code);
         }
+    }
+
+    private boolean isCodeSupported(String code) {
+        switch (code) {
+            case PaymentNetworkCodes.SEPADD:
+            case PaymentNetworkCodes.PAYPAL:
+                return true;
+        }
+        return false;
     }
     
     /**
