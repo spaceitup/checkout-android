@@ -96,18 +96,18 @@ public class AccountRegistration {
     }
 
     /**
-     * Gets code of button's label what should be used if this network is selected.
+     * Gets code of button label what should be used if this network is selected.
      *
-     * @return Code of button'S label.
+     * @return Code of button label.
      */
     public String getButton() {
         return button;
     }
 
     /**
-     * Sets code of button's label what should be used if this network is selected.
+     * Sets code of button label what should be used if this network is selected.
      *
-     * @param button Code of button'S label.
+     * @param button Code of button label.
      */
     public void setButton(final String button) {
         this.button = button;
