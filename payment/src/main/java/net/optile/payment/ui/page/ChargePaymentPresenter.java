@@ -153,7 +153,7 @@ final class ChargePaymentPresenter implements PaymentSessionListener, NetworkSer
             closeWithErrorMessage(new PaymentError("Payment method lookup failed for code: " + code));
             return;
         }
-        networkService = NetworkServiceLookup.getService(code, method);
+        networkService = NetworkServiceLookup.createService(code, method);
         if (networkService == null) {
             closeWithErrorMessage(new PaymentError("NetworkService lookup failed for: " + code + ", " + method));
             return;

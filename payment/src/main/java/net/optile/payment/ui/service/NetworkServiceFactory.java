@@ -22,7 +22,7 @@ public interface NetworkServiceFactory {
      * @param method to be checked if it is supported by this factory
      * @return true when supported, false otherwise
      */
-    boolean isSupported(String code, String method);
+    boolean supports(String code, String method);
 
     /**
      * Create a service for this specific payment network

@@ -29,7 +29,7 @@ public class NetworkServiceLookup {
      * @param method to be checked if it is supported
      * @return true when supported, false otherwise
      */
-    public static boolean isSupported(String code, String method) {
+    public static boolean supports(String code, String method) {
         NetworkServiceFactory factory = getFactory(code, method);
         return factory != null;
     }
@@ -41,7 +41,7 @@ public class NetworkServiceLookup {
      * @param method to be used to lookup a NetworkService
      * @return the NetworkService that can handle the network or null if none found
      */
-    public static NetworkService getService(String code, String method) {
+    public static NetworkService createService(String code, String method) {
         NetworkServiceFactory factory = getFactory(code, method);
         return factory != null ? factory.createService() : null;
     }
@@ -54,7 +54,7 @@ public class NetworkServiceLookup {
             initFactories();
         }
         for (NetworkServiceFactory factory : factories) {
-            if (factory.isSupported(code, method)) {
+            if (factory.supports(code, method)) {
                 return factory;
             }
         }

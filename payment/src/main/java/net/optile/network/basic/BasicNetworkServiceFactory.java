@@ -24,17 +24,17 @@ public final class BasicNetworkServiceFactory implements NetworkServiceFactory {
      * {@inheritDoc}
      */
     @Override
-    public boolean isSupported(String code, String method) {
+    public boolean supports(String code, String method) {
         switch (method) {
             case PaymentMethod.CREDIT_CARD:
             case PaymentMethod.DEBIT_CARD:
                 return true;
             default:
-                return isCodeSupported(code);
+                return supportsCode(code);
         }
     }
 
-    private boolean isCodeSupported(String code) {
+    private boolean supportsCode(String code) {
         switch (code) {
             case PaymentNetworkCodes.SEPADD:
             case PaymentNetworkCodes.PAYPAL:

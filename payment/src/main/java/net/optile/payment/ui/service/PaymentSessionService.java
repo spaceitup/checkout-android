@@ -162,7 +162,7 @@ public final class PaymentSessionService {
         }
         for (ApplicableNetwork network : an) {
             String code = network.getCode();
-            if (NetworkServiceLookup.isSupported(code, network.getMethod())) {
+            if (NetworkServiceLookup.supports(code, network.getMethod())) {
                 items.put(code, new PaymentNetwork(network));
             }
         }
