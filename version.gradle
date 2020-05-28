@@ -7,12 +7,19 @@ ext.VERSIONNAME = file('VERSIONNAME').text.trim()
 ext.increaseVersionName = { index ->
     def curName = VERSIONNAME.split("\\-")
     def newName = curName[0].split("\\.")
+    def nrParts = 3
 
-    if (newName.length != 3) {
+    if (newName.length != nrParts) {
         throw new GradleException("versionName has invalid format, should be: <major>.<minor>.<patch> with optional -SNAPSHOT")
     }
-    def val = Integer.parseInt(newName[index])
-    newName[index] = Integer.toString(val + 1)
+    index.upto(nrParts - 1) {
+        if (it == index) {
+            def val = Integer.parseInt(newName[it])
+            newName[it] = Integer.toString(val + 1)
+        } else if (it > index) {
+            newName[it] = Integer.toString(0)
+        }
+    }
     newName = newName.join(".")
 
     if (curName.length == 2) {
@@ -56,5 +63,3 @@ task('versionCode') {
         increaseVersionCode()
     }
 }
-
-
