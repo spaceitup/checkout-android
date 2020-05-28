@@ -9,7 +9,6 @@
 package net.optile.network.basic;
 
 import android.text.TextUtils;
-import java.util.Objects;
 import net.optile.payment.core.PaymentNetworkCodes;
 import net.optile.payment.model.ApplicableNetwork;
 import net.optile.payment.model.PaymentMethod;
@@ -26,9 +25,6 @@ public final class BasicNetworkServiceFactory implements NetworkServiceFactory {
      */
     @Override
     public boolean isSupported(String code, String method) {
-        Objects.requireNonNull(code);
-        Objects.requireNonNull(method);
-
         switch (method) {
             case PaymentMethod.CREDIT_CARD:
             case PaymentMethod.DEBIT_CARD:

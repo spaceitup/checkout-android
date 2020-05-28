@@ -10,9 +10,9 @@ package net.optile.payment.ui.service;
 
 import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
+import java.util.Objects;
 
 import android.util.Log;
-import net.optile.payment.model.ApplicableNetwork;
 
 /**
  * Class for looking up a NetworkService given the code and payment method.
@@ -47,6 +47,9 @@ public class NetworkServiceLookup {
     }
 
     private static NetworkServiceFactory getFactory(String code, String method) {
+        Objects.requireNonNull(code);
+        Objects.requireNonNull(method);
+
         if (factories.size() == 0) {
             initFactories();
         }
