@@ -12,12 +12,15 @@ import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
 
 import android.text.TextUtils;
+import android.view.KeyEvent;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 import net.optile.payment.R;
 import net.optile.payment.ui.PaymentTheme;
+import net.optile.payment.ui.widget.input.EditTextInputMode;
 import net.optile.payment.util.PaymentUtils;
 import net.optile.payment.validation.ValidationResult;
 
@@ -37,6 +40,7 @@ public abstract class InputLayoutWidget extends FormWidget {
     final View hintLayout;
     final ImageView hintImage;
 
+    EditTextInputMode mode;
     String label;
 
     /**
@@ -53,6 +57,16 @@ public abstract class InputLayoutWidget extends FormWidget {
         this.hintLayout = rootView.findViewById(R.id.layout_hint);
         this.hintImage = rootView.findViewById(R.id.image_hint);
 
+        textInput.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+            @Override
+            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+                if (actionId == EditorInfo.IME_ACTION_DONE) {
+                    handleOnKeyboardDone();
+                }
+                return false;
+            }
+        });
+        
         textInput.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
             public void onFocusChange(View v, boolean hasFocus) {
@@ -122,8 +136,26 @@ public abstract class InputLayoutWidget extends FormWidget {
     }
 
     void handleOnFocusChange(boolean hasFocus) {
+        if (hasFocus) {
+            setInputLayoutState(VALIDATION_UNKNOWN, false, null);
+        } else if (state == VALIDATION_UNKNOWN && !TextUtils.isEmpty(getValue())) {
+            validate();
+        }
     }
 
+    void handleOnKeyboardDone() {
+        textInput.clearFocus();
+        presenter.hideKeyboard();
+    }
+
+    void setTextInputMode(EditTextInputMode mode) {
+        if (this.mode != null) {
+            this.mode.reset();
+        }
+        this.mode = mode;
+        mode.apply(textInput);
+    }
+    
     String getValue() {
         CharSequence cs = textInput.getText();
         return cs != null ? cs.toString().trim() : "";
@@ -146,7 +178,6 @@ public abstract class InputLayoutWidget extends FormWidget {
         textLayout.setErrorEnabled(errorEnabled);
         textLayout.setError(message);
     }
-
 
     private void setReducedWidth(View view, float weight) {
         LinearLayout.LayoutParams params = (LinearLayout.LayoutParams) view.getLayoutParams();

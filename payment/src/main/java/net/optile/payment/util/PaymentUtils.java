@@ -12,6 +12,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.util.Calendar;
 import java.util.List;
 
 import android.content.Context;
@@ -28,7 +29,7 @@ import net.optile.payment.model.InputElement;
  * The PaymentUtils class containing helper methods
  */
 public final class PaymentUtils {
-
+    
     /**
      * Check if the Boolean object is true, the Boolean object may be null.
      *
@@ -95,6 +96,25 @@ public final class PaymentUtils {
         return hasExpiryYear && hasExpiryMonth;
     }
 
+    /** 
+     * Create a full expiry year from the last part of the expiry year.
+     * This will use dynamic windowing of -30 years and +70 year.
+     *
+     * @param inputYear the year which the user entered, e.g. 1 or 99
+     * @return complete expiry year value
+     */
+    public static int createExpiryYear(int inputYear) {
+        if (inputYear < 0 || inputYear >= 100) {
+            throw new IllegalArgumentException("Input year must be >= 0 and < 100: " + inputYear);
+        }
+        final int curYear = Calendar.getInstance().get(Calendar.YEAR);
+        final int startYear = curYear - 30;
+        final int endYear = curYear + 70;
+
+        int year = inputYear > (startYear % 100) ? startYear : endYear;
+        return (year - (year % 100)) + inputYear;
+    }
+    
     /**
      * Set the TextAppearance in the TextView
      *

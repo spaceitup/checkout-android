@@ -11,21 +11,19 @@ package net.optile.payment.ui.widget;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
-import android.view.KeyEvent;
 import android.view.View;
-import android.view.inputmethod.EditorInfo;
-import android.widget.TextView;
 import net.optile.payment.core.PaymentException;
 import net.optile.payment.form.Operation;
+import net.optile.payment.model.InputElement;
 import net.optile.payment.ui.PaymentTheme;
-import net.optile.payment.ui.widget.input.TextInputMode;
+import net.optile.payment.ui.widget.input.EditTextInputMode;
+import net.optile.payment.ui.widget.input.EditTextInputModeFactory;
 import net.optile.payment.validation.ValidationResult;
 
 /**
  * Widget for handling text input
  */
 public final class TextInputWidget extends InputLayoutWidget {
-    private TextInputMode mode;
 
     /**
      * Construct a new TextInputWidget
@@ -36,15 +34,6 @@ public final class TextInputWidget extends InputLayoutWidget {
      */
     public TextInputWidget(String name, View rootView, PaymentTheme theme) {
         super(name, rootView, theme);
-        textInput.setOnEditorActionListener(new TextView.OnEditorActionListener() {
-            @Override
-            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
-                if (actionId == EditorInfo.IME_ACTION_DONE) {
-                    handleOnKeyboardDone();
-                }
-                return false;
-            }
-        });
         textInput.addTextChangedListener(new TextWatcher() {
             public void onTextChanged(CharSequence s, int start, int before, int count) {
                 presenter.onTextInputChanged(name, getValue());
@@ -78,27 +67,20 @@ public final class TextInputWidget extends InputLayoutWidget {
         }
     }
 
-    public void setTextInputMode(TextInputMode mode) {
-        this.mode = mode;
-        mode.apply(textInput);
+    /** 
+     * Set the InputElement into this TextInputWidget
+     * 
+     * @param maxLength the maxLength hint for the TextInput 
+     * @param element to be set in this widget
+     */
+    public void setInputElement(int maxLength, InputElement element) {
+        EditTextInputMode mode = EditTextInputModeFactory.createMode(maxLength, element);
+        setTextInputMode(mode);
+        setValidation();
     }
 
     String getValue() {
         String val = super.getValue();
         return mode != null ? mode.normalize(val) : val;
-    }
-
-    void handleOnFocusChange(boolean hasFocus) {
-
-        if (hasFocus) {
-            setInputLayoutState(VALIDATION_UNKNOWN, false, null);
-        } else if (state == VALIDATION_UNKNOWN && !TextUtils.isEmpty(getValue())) {
-            validate();
-        }
-    }
-
-    void handleOnKeyboardDone() {
-        textInput.clearFocus();
-        presenter.hideKeyboard();
     }
 }

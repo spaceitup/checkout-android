@@ -71,6 +71,17 @@ dependencies {
     androidTestImplementation "androidx.test.espresso:espresso-contrib:${rootProject.androidxTestEspressoVersion}"
 }
 
+task uploadToAppLive {
+    if (System.getenv('BROWSERSTACK_USER') == null || System.getenv('BROWSERSTACK_KEY') == null) {
+        logger.warn('Missing Browserstack functional test environment variables')
+        return
+    }
+    dependsOn('uploadDebugToBrowserstackAppLive')
+    dependsOn('clean')
+    clean.mustRunAfter('uploadDebugToBrowserstackAppLive')
+}
+
+
 task runFunctionalTest {
     if (System.getenv('ANDROIDSDK_PAYMENTAPI_AUTH') == null || System.getenv('ANDROIDSDK_PAYMENTAPI_AUTH') == null) {
         logger.warn('Missing Android-SDK functional test environment variables')
