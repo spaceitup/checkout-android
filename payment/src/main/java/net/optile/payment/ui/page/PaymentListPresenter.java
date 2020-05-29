@@ -134,7 +134,9 @@ final class PaymentListPresenter implements PaymentSessionListener, Localization
         }
         try {
             operation = createOperation(card, widgets);
-            networkService = NetworkServiceLookup.getService(card.getCode());
+            String code = card.getCode();
+            String method = card.getPaymentMethod();
+            networkService = NetworkServiceLookup.createService(code, method);
             networkService.setPresenter(this);
             preparePayment();
         } catch (PaymentException e) {

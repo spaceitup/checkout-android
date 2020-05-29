@@ -129,6 +129,15 @@ public final class NetworkCard implements PaymentCard {
         return false;
     }
 
+    public String lookupPaymentMethod(String code) {
+        for (PaymentNetwork network : networks) {
+            if (network.getCode().equals(code)) {
+                return network.getPaymentMethod();
+            }
+        }
+        return null;
+    }
+    
     /**
      * Add a PaymentNetwork to this NetworkCard, adding may fail if InputElements of this PaymentNetwork are not similar with InputElements
      * of previously added PaymentNetworks.
