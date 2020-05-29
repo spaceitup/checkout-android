@@ -11,6 +11,5 @@ package net.optile.example.demo;
 import org.junit.runner.RunWith;
 import org.junit.runners.Suite;
 
-@RunWith(Suite.class)
 @Suite.SuiteClasses({ GroupedCardsTests.class, RedirectPaypalTests.class })
 public class UITestSuite { }
