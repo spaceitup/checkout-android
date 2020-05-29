@@ -70,6 +70,22 @@ public final class PaymentSession {
         return list;
     }
 
+    public String lookupPaymentMethod(String code) {
+        for (NetworkCard card : networks) {
+            String method = card.lookupPaymentMethod(code);
+            if (method != null) {
+                return method;
+            }
+        }
+        for (AccountCard card : accounts) {
+            String method = card.lookupPaymentMethod(code);
+            if (method != null) {
+                return method;
+            }
+        }
+        return null;
+    }
+    
     public Validator getValidator() {
         return validator;
     }

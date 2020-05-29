@@ -16,20 +16,13 @@ import net.optile.payment.model.ApplicableNetwork;
 public interface NetworkServiceFactory {
 
     /**
-     * Check if the ApplicableNetwork is supported by this factory.
+     * Check if the network code and payment method are supported by this factory.
      *
-     * @param network to be checked if it is supported
+     * @param code to be checked if it is supported by this factory
+     * @param method to be checked if it is supported by this factory
      * @return true when supported, false otherwise
      */
-    boolean isNetworkSupported(ApplicableNetwork network);
-
-    /**
-     * Check if the network code is supported by this factory.
-     *
-     * @param code to be checked if it is supported by this factory.
-     * @return true when supported, false otherwise
-     */
-    boolean isCodeSupported(String code);
+    boolean supports(String code, String method);
 
     /**
      * Create a service for this specific payment network
