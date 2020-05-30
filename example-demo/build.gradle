@@ -24,6 +24,7 @@ android {
         versionCode rootProject.versionCode
         versionName rootProject.versionName
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+
         resValue "string", "paymentapi_auth", "$System.env.ANDROIDSDK_PAYMENTAPI_AUTH"
         resValue "string", "paymentapi_url", "$System.env.ANDROIDSDK_PAYMENTAPI_URL"
     }
@@ -61,6 +62,7 @@ dependencies {
     testImplementation "androidx.test.ext:junit:${rootProject.androidxTestJunitVersion}"
     testImplementation "org.hamcrest:hamcrest-library:${rootProject.harmcrestVersion}"
 
+    androidTestImplementation "androidx.test.uiautomator:uiautomator:${rootProject.androidxTestUIAutomatorVersion}"
     androidTestImplementation "androidx.test.ext:junit:${rootProject.androidxTestJunitVersion}"
     androidTestImplementation "androidx.test:runner:${rootProject.androidxTestRunnerVersion}"
     androidTestImplementation "androidx.test:rules:${rootProject.androidxTestRulesVersion}"
@@ -68,6 +70,17 @@ dependencies {
     androidTestImplementation "androidx.test.espresso:espresso-intents:${rootProject.androidxTestEspressoVersion}"
     androidTestImplementation "androidx.test.espresso:espresso-contrib:${rootProject.androidxTestEspressoVersion}"
 }
+
+task uploadToAppLive {
+    if (System.getenv('BROWSERSTACK_USER') == null || System.getenv('BROWSERSTACK_KEY') == null) {
+        logger.warn('Missing Browserstack functional test environment variables')
+        return
+    }
+    dependsOn('uploadDebugToBrowserstackAppLive')
+    dependsOn('clean')
+    clean.mustRunAfter('uploadDebugToBrowserstackAppLive')
+}
+
 
 task runFunctionalTest {
     if (System.getenv('ANDROIDSDK_PAYMENTAPI_AUTH') == null || System.getenv('ANDROIDSDK_PAYMENTAPI_AUTH') == null) {

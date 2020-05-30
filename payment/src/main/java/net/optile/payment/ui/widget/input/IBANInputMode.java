@@ -16,16 +16,15 @@ import android.text.InputType;
 /**
  * InputMode for IBAN numbers
  */
-public final class IBANInputMode extends TextInputMode {
+public final class IBANInputMode extends EditTextInputMode {
 
     /**
      * Construct an IBANInputMode
      *
      * @param maxLength maximum length of the input field
-     * @param groupSize size of the groups
      */
-    public IBANInputMode(int maxLength, int groupSize) {
-        super(maxLength, groupSize);
+    public IBANInputMode(int maxLength) {
+        super(maxLength, 4);
     }
 
     /**
@@ -41,15 +40,12 @@ public final class IBANInputMode extends TextInputMode {
      */
     @Override
     public void apply(TextInputEditText editText) {
-        InputFilter[] filters = new InputFilter[3];
-        filters[0] = new InputFilter.LengthFilter(getMaxLengthForGrouping());
-        filters[1] = new InputFilter.AllCaps();
-        filters[2] = new AlphaNumericInputFilter(true);
-        editText.setFilters(filters);
+        editText.setFilters(new InputFilter[] {
+                new InputFilter.LengthFilter(getMaxLengthForGrouping()),
+                new InputFilter.AllCaps(),
+                new AlphaNumericInputFilter(true)
+            });
         editText.setInputType(InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD);
-
-        if (groupSize > 0) {
-            editText.addTextChangedListener(new GroupingTextWatcher(groupSize, editText));
-        }
+        textWatcher = new GroupingTextWatcher(groupSize, editText);
     }
 }

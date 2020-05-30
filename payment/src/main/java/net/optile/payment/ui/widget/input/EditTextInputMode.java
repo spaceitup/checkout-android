@@ -10,15 +10,18 @@ package net.optile.payment.ui.widget.input;
 
 import com.google.android.material.textfield.TextInputEditText;
 
+import android.text.TextWatcher;
+
 /**
  * Base class for defining the mode for the TextInputWidget
  */
-public abstract class TextInputMode {
+public abstract class EditTextInputMode {
 
     final int maxLength;
     final int groupSize;
-
-    TextInputMode(int maxLength, int groupSize) {
+    EditTextWatcher textWatcher;
+    
+    EditTextInputMode(int maxLength, int groupSize) {
         this.maxLength = maxLength;
         this.groupSize = groupSize;
     }
@@ -43,6 +46,15 @@ public abstract class TextInputMode {
             return maxLength;
         }
         return maxLength + (maxLength / groupSize);
+    }
+
+    /**
+     * Reset this mode when it is not used anymore
+     */
+    public void reset() {
+        if (textWatcher != null) {
+            textWatcher.reset();
+        }
     }
 
     /**

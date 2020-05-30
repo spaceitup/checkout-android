@@ -8,8 +8,6 @@
 
 package net.optile.payment.ui.list;
 
-import static net.optile.payment.localization.LocalizationKey.BUTTON_OK;
-
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -46,8 +44,6 @@ import net.optile.payment.ui.widget.SelectWidget;
 import net.optile.payment.ui.widget.TextInputWidget;
 import net.optile.payment.ui.widget.WidgetInflater;
 import net.optile.payment.ui.widget.WidgetPresenter;
-import net.optile.payment.ui.widget.input.TextInputMode;
-import net.optile.payment.ui.widget.input.TextInputModeFactory;
 import net.optile.payment.util.ImageHelper;
 import net.optile.payment.util.PaymentUtils;
 
@@ -253,15 +249,13 @@ public abstract class PaymentCardViewHolder extends RecyclerView.ViewHolder {
 
     void bindTextInputWidget(TextInputWidget widget, String code, InputElement element) {
         String name = element.getName();
-        boolean visible = Localization.hasAccountHint(code, widget.getName());
+        boolean visible = Localization.hasAccountHint(code, name);
         int maxLength = adapter.getMaxLength(code, name);
-        TextInputMode mode = TextInputModeFactory.createMode(maxLength, GROUPSIZE, element);
 
         bindIconResource(widget);
         widget.setHint(visible);
-        widget.setLabel(element.getLabel());
-        widget.setValidation();
-        widget.setTextInputMode(mode);
+        widget.setLabel(Localization.translateAccountLabel(code, name));
+        widget.setInputElement(maxLength, element);
 
         if (PaymentInputType.VERIFICATION_CODE.equals(name)) {
             widget.setReducedView();
@@ -280,13 +274,10 @@ public abstract class PaymentCardViewHolder extends RecyclerView.ViewHolder {
         if (widget == null) {
             return;
         }
-        String code = card.getCode();
         bindIconResource(widget);
-        widget.setMonthInputElement(card.getInputElement(PaymentInputType.EXPIRY_MONTH));
-        widget.setYearInputElement(card.getInputElement(PaymentInputType.EXPIRY_YEAR));
-
-        widget.setLabel(Localization.translateAccountLabel(code, name));
-        widget.setDialogButtonLabel(Localization.translate(code, BUTTON_OK));
+        widget.setLabel(Localization.translateAccountLabel(card.getCode(), name));
+        widget.setInputElements(card.getInputElement(PaymentInputType.EXPIRY_MONTH),
+                                card.getInputElement(PaymentInputType.EXPIRY_YEAR));
         widget.setReducedView();
     }
 

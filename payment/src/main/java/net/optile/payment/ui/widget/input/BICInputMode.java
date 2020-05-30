@@ -16,7 +16,7 @@ import android.text.InputType;
 /**
  * InputMode for BIC numbers
  */
-public final class BICInputMode extends TextInputMode {
+public final class BICInputMode extends EditTextInputMode {
 
     /**
      * Construct an BICInputMode
@@ -40,11 +40,11 @@ public final class BICInputMode extends TextInputMode {
      */
     @Override
     public void apply(TextInputEditText editText) {
-        InputFilter[] filters = new InputFilter[3];
-        filters[0] = new InputFilter.LengthFilter(maxLength);
-        filters[1] = new InputFilter.AllCaps();
-        filters[2] = new AlphaNumericInputFilter(false);
-        editText.setFilters(filters);
+        editText.setFilters(new InputFilter[] {
+                new InputFilter.LengthFilter(maxLength),
+                new InputFilter.AllCaps(),
+                new AlphaNumericInputFilter(false)
+            });
         editText.setInputType(InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD);
     }
 }

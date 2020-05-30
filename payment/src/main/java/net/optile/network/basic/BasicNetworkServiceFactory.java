@@ -11,6 +11,7 @@ package net.optile.network.basic;
 import android.text.TextUtils;
 import net.optile.payment.core.PaymentNetworkCodes;
 import net.optile.payment.model.ApplicableNetwork;
+import net.optile.payment.model.PaymentMethod;
 import net.optile.payment.ui.service.NetworkService;
 import net.optile.payment.ui.service.NetworkServiceFactory;
 
@@ -23,37 +24,25 @@ public final class BasicNetworkServiceFactory implements NetworkServiceFactory {
      * {@inheritDoc}
      */
     @Override
-    public boolean isNetworkSupported(ApplicableNetwork network) {
-        return isCodeSupported(network.getCode());
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public boolean isCodeSupported(String code) {
-        switch (code) {
-            case PaymentNetworkCodes.AMEX:
-            case PaymentNetworkCodes.CASTORAMA:
-            case PaymentNetworkCodes.DINERS:
-            case PaymentNetworkCodes.DISCOVER:
-            case PaymentNetworkCodes.MASTERCARD:
-            case PaymentNetworkCodes.UNIONPAY:
-            case PaymentNetworkCodes.VISA:
-            case PaymentNetworkCodes.VISA_DANKORT:
-            case PaymentNetworkCodes.VISAELECTRON:
-            case PaymentNetworkCodes.CARTEBANCAIRE:
-            case PaymentNetworkCodes.MAESTRO:
-            case PaymentNetworkCodes.MAESTROUK:
-            case PaymentNetworkCodes.POSTEPAY:
-            case PaymentNetworkCodes.SEPADD:
-            case PaymentNetworkCodes.JCB:
+    public boolean supports(String code, String method) {
+        switch (method) {
+            case PaymentMethod.CREDIT_CARD:
+            case PaymentMethod.DEBIT_CARD:
                 return true;
             default:
-                return false;
+                return supportsCode(code);
         }
     }
 
+    private boolean supportsCode(String code) {
+        switch (code) {
+            case PaymentNetworkCodes.SEPADD:
+            case PaymentNetworkCodes.PAYPAL:
+                return true;
+        }
+        return false;
+    }
+    
     /**
      * {@inheritDoc}
      */

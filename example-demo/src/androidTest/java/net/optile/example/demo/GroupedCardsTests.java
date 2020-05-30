@@ -48,7 +48,7 @@ import net.optile.payment.ui.page.PaymentListActivity;
 
 @RunWith(AndroidJUnit4.class)
 @LargeTest
-public final class ExampleDemoTests {
+public final class GroupedCardsTests extends AbstractTest {
 
     @Rule
     public ActivityTestRule<SettingsActivity> settingsActivityRule = new ActivityTestRule<>(SettingsActivity.class);
@@ -59,8 +59,10 @@ public final class ExampleDemoTests {
         int cardIndex = 1;
 
         openPaymentList(false);
-        fillGroupedNetworkCard(cardIndex);
-        performDirectCharge(cardIndex);
+        openPaymentCard(cardIndex, "card_group");
+        fillCreditCardData(cardIndex);
+        clickCardButton(cardIndex);
+
         waitForChargeCompleted();
         Intents.release();
     }
@@ -71,69 +73,21 @@ public final class ExampleDemoTests {
         int cardIndex = 1;
 
         openPaymentList(true);
-        fillGroupedNetworkCard(cardIndex);
+        openPaymentCard(cardIndex, "card_group");
+        fillCreditCardData(cardIndex);
         performPresetCharge(cardIndex);
+
         waitForChargeCompleted();
         Intents.release();
-    }
-
-    private void openPaymentList(boolean presetFirst) throws IOException, JSONException {
-        String listUrl = ListService.createListUrl(net.optile.example.demo.test.R.raw.listtemplate, presetFirst);
-
-        // enter the listUrl in the settings screen and click the button
-        onView(withId(R.id.layout_settings)).check(matches(isDisplayed()));
-        onView(withId(R.id.input_listurl)).perform(typeText(listUrl));
-        onView(withId(R.id.button_settings)).perform(click());
-
-        // Wait for CheckoutActivity to be visible and click the pay button
-        intended(hasComponent(CheckoutActivity.class.getName()));
-        onView(withId(R.id.button_checkout)).perform(PaymentActions.scrollToView(), click());
-
-        // Obtain the PaymentListActivity 
-        intended(hasComponent(PaymentListActivity.class.getName()));
-        PaymentListActivity listActivity = (PaymentListActivity) ActivityHelper.getCurrentActivity();
-        IdlingResource loadIdlingResource = listActivity.getLoadIdlingResource();
-
-        // Wait for the loadIdlingResource until the PaymentList is loaded
-        IdlingRegistry.getInstance().register(loadIdlingResource);
-        onView(withId(R.id.recyclerview_paymentlist)).check(matches(isDisplayed()));
-        IdlingRegistry.getInstance().unregister(loadIdlingResource);
-    }
-
-    private void fillGroupedNetworkCard(int cardIndex) {
-        PaymentListActivity listActivity = (PaymentListActivity) ActivityHelper.getCurrentActivity();
-        Matcher<View> list = withId(R.id.recyclerview_paymentlist);
-
-        // Check and fill the payment card
-        onView(list).check(matches(isCardWithTestId(cardIndex, "card_group")));
-        onView(list).perform(actionOnItemAtPosition(cardIndex, click()));
-        onView(list).perform(actionOnViewInWidget(cardIndex, typeText("4111111111111111"), "number", R.id.textinputedittext));
-        onView(list).perform(actionOnViewInWidget(cardIndex, typeText("John Doe"), "holderName", R.id.textinputedittext));
-
-        // Wait for the DialogIdlingResource until the DateDialog is visible and fill in the date
-        IdlingResource dialogIdlingResource = listActivity.getDialogIdlingResource();
-        onView(list).perform(actionOnViewInWidget(1, click(), "expiryDate", R.id.textinputedittext));
-        IdlingRegistry.getInstance().register(dialogIdlingResource);
-
-        onView(withId(R.id.dialogbutton_neutral)).check(matches(isDisplayed()));
-        onView(withId(R.id.numberpicker_year)).perform(setValueInNumberPicker(4));
-        onView(withId(R.id.dialogbutton_neutral)).perform(click());
-        IdlingRegistry.getInstance().unregister(dialogIdlingResource);
-
-        onView(list).perform(actionOnViewInWidget(cardIndex, typeText("123"), "verificationCode", R.id.textinputedittext));
-        Espresso.closeSoftKeyboard();
-    }
-
-    private void performDirectCharge(int cardIndex) {
-        onView(withId(R.id.recyclerview_paymentlist)).perform(actionOnViewInWidget(cardIndex, click(), "buttonWidget", R.id.button));
     }
 
     private void performPresetCharge(int cardIndex) {
         PaymentListActivity listActivity = (PaymentListActivity) ActivityHelper.getCurrentActivity();
         IdlingResource closeIdlingResource = listActivity.getCloseIdlingResource();
-        onView(withId(R.id.recyclerview_paymentlist)).perform(actionOnViewInWidget(cardIndex, click(), "buttonWidget", R.id.button));
-        IdlingRegistry.getInstance().register(closeIdlingResource);
 
+        clickCardButton(cardIndex);
+        IdlingRegistry.getInstance().register(closeIdlingResource);
+        
         // Wait for the summary activity to load and click on pay button
         intended(hasComponent(SummaryActivity.class.getName()));
         SummaryActivity summaryActivity = (SummaryActivity) ActivityHelper.getCurrentActivity();

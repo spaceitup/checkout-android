@@ -17,7 +17,7 @@ import android.text.method.DigitsKeyListener;
 /**
  * InputMode for account numbers
  */
-public final class AccountNumberInputMode extends TextInputMode {
+public final class AccountNumberInputMode extends EditTextInputMode {
 
     private final static String ACCOUNTNUMBER_DIGITS = "0123456789 ";
 
@@ -25,10 +25,9 @@ public final class AccountNumberInputMode extends TextInputMode {
      * Construct an AccountNumberInputMode
      *
      * @param maxLength maximum length of the input field
-     * @param groupSize size of the grouped digits
      */
-    public AccountNumberInputMode(int maxLength, int groupSize) {
-        super(maxLength, groupSize);
+    public AccountNumberInputMode(int maxLength) {
+        super(maxLength, 4);
     }
 
     /**
@@ -44,14 +43,11 @@ public final class AccountNumberInputMode extends TextInputMode {
      */
     @Override
     public void apply(TextInputEditText editText) {
-        InputFilter[] filters = new InputFilter[1];
-        filters[0] = new InputFilter.LengthFilter(getMaxLengthForGrouping());
-        editText.setFilters(filters);
+        editText.setFilters(new InputFilter[] {
+            new InputFilter.LengthFilter(getMaxLengthForGrouping())
+        });
         editText.setInputType(InputType.TYPE_CLASS_NUMBER);
         editText.setKeyListener(DigitsKeyListener.getInstance(ACCOUNTNUMBER_DIGITS));
-
-        if (groupSize > 0) {
-            editText.addTextChangedListener(new GroupingTextWatcher(groupSize, editText));
-        }
+        textWatcher = new GroupingTextWatcher(groupSize, editText);
     }
 }

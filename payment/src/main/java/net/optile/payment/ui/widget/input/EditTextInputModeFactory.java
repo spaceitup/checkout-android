@@ -14,20 +14,19 @@ import net.optile.payment.model.InputElement;
 /**
  * Class for creating TextInputModes for the InputElement
  */
-public final class TextInputModeFactory {
+public final class EditTextInputModeFactory {
 
     /**
      * Create a TextInputMode for the given input element
      *
      * @param maxLength the maximum length of the input field
-     * @param groupSize the size of character grouping if the mode supports grouping
      * @param element contains the name and type of the input element
      * @return the TextInputMode for the given InputElement
      */
-    public static TextInputMode createMode(int maxLength, int groupSize, InputElement element) {
+    public static EditTextInputMode createMode(int maxLength, InputElement element) {
         switch (element.getName()) {
             case PaymentInputType.ACCOUNT_NUMBER:
-                return new AccountNumberInputMode(maxLength, groupSize);
+                return new AccountNumberInputMode(maxLength);
             case PaymentInputType.BIC:
                 return new BICInputMode(maxLength);
             case PaymentInputType.HOLDER_NAME:
@@ -35,7 +34,7 @@ public final class TextInputModeFactory {
             case PaymentInputType.VERIFICATION_CODE:
                 return new VerificationCodeInputMode(maxLength);
             case PaymentInputType.IBAN:
-                return new IBANInputMode(maxLength, groupSize);
+                return new IBANInputMode(maxLength);
             default:
                 return new ElementInputMode(maxLength, element);
         }

@@ -35,6 +35,7 @@ public class PaymentNetworkCodes {
     public final static String SEPADD = "SEPADD";
     public final static String JCB = "JCB";
     public final static String GOOGLEPAY = "GOOGLEPAY";
+    public final static String PAYPAL = "PAYPAL";
 
     /**
      * Check if the given type is a valid payment input type
@@ -62,6 +63,7 @@ public class PaymentNetworkCodes {
                 case SEPADD:
                 case JCB:
                 case GOOGLEPAY:
+                case PAYPAL:
                     return true;
             }
         }
@@ -85,7 +87,8 @@ public class PaymentNetworkCodes {
         POSTEPAY,
         SEPADD,
         JCB,
-        GOOGLEPAY
+        GOOGLEPAY,
+        PAYPAL
     })
     public @interface Definition { }
 }

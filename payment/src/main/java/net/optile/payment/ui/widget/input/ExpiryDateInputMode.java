@@ -12,19 +12,22 @@ import com.google.android.material.textfield.TextInputEditText;
 
 import android.text.InputFilter;
 import android.text.InputType;
+import android.text.method.DigitsKeyListener;
 
 /**
- * InputMode for VerificationCode numbers
+ * InputMode for IBAN numbers
  */
-public final class VerificationCodeInputMode extends EditTextInputMode {
+public final class ExpiryDateInputMode extends EditTextInputMode {
+
+    public final static int MAXLENGTH = 7;
+    public final static String DIVIDER = " / ";
+    public final static String DATE_DIGITS = "0123456789/ ";
 
     /**
-     * Construct an VerificationCodeInputMode
-     *
-     * @param maxLength maximum length of the input field
+     * Construct an IBANInputMode
      */
-    public VerificationCodeInputMode(int maxLength) {
-        super(maxLength, 0);
+    public ExpiryDateInputMode() {
+        super(MAXLENGTH, 0);
     }
 
     /**
@@ -33,8 +36,10 @@ public final class VerificationCodeInputMode extends EditTextInputMode {
     @Override
     public void apply(TextInputEditText editText) {
         editText.setFilters(new InputFilter[] {
-                new InputFilter.LengthFilter(maxLength)
-            });
+            new InputFilter.LengthFilter(maxLength)
+        });
         editText.setInputType(InputType.TYPE_CLASS_NUMBER);
+        editText.setKeyListener(DigitsKeyListener.getInstance(DATE_DIGITS));
+        textWatcher = new ExpiryDateTextWatcher(editText);
     }
 }

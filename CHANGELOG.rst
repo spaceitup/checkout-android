@@ -1,6 +1,13 @@
 Changelog - Android SDK
 -----------------------
 
+** Version android-sdk-3.1.0**
+
+    * [PCX-849] - Reset minor & patch version part when major is increased
+    * [PCX-721] - Support PayPal redirect flow
+    * [PCX-780] - Redo expiry date field
+    * [PCX-840] - Support all credit and debit cards in Android-SDK
+
 **Version android-sdk-3.0.0**
 
 Note: version 3.0.0 is a major release with a breaking change, the PaymentUI.RESULT_CODE_ERROR is removed.
