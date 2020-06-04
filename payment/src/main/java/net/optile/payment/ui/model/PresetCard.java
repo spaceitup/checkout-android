@@ -66,6 +66,14 @@ public final class PresetCard implements PaymentCard {
      * {@inheritDoc}
      */
     @Override
+    public String getLabel() {
+        return network.getLabel();
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
     public List<InputElement> getInputElements() {
         return new ArrayList<>();
     }

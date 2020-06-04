@@ -12,6 +12,7 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
+import android.text.TextUtils;
 import net.optile.payment.core.PaymentInputType;
 import net.optile.payment.model.InputElement;
 import net.optile.payment.model.PaymentMethod;
@@ -68,6 +69,22 @@ public final class NetworkCard implements PaymentCard {
         return getVisibleNetwork().getCode();
     }
 
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public String getLabel() {
+        List<PaymentNetwork> networks = smartSwitch.getAllSelected();
+        if (networks.size() == 0) {
+            networks = getPaymentNetworks();
+        }
+        List<String> labels = new ArrayList<>();
+        for (PaymentNetwork network : networks) {
+            labels.add(network.getLabel());
+        }
+        return TextUtils.join(" / ", labels);
+    }
+    
     /**
      * {@inheritDoc}
      */

@@ -79,8 +79,7 @@ final class NetworkCardViewHolder extends PaymentCardViewHolder {
         PaymentNetwork network = networkCard.getVisibleNetwork();
         int size = networkCard.getPaymentNetworkSize();
         PaymentUtils.setTestId(itemView, "card", size == 1 ? "network" : "group");
-
-        bindTitle(networkCard);
+        title.setText(networkCard.getLabel());
         bindLogos(networkCard);
         bindRegistrationWidget(network);
         bindRecurrenceWidget(network);
@@ -91,21 +90,6 @@ final class NetworkCardViewHolder extends PaymentCardViewHolder {
         addWidget(widget);
         widget = WidgetInflater.inflateRegisterWidget(ALLOW_RECURRENCE, formLayout, theme);
         addWidget(widget);
-    }
-
-    private void bindTitle(NetworkCard card) {
-        SmartSwitch smartSwitch = card.getSmartSwitch();
-        List<PaymentNetwork> networks = smartSwitch.getAllSelected();
-
-        if (networks.size() == 0) {
-            networks = card.getPaymentNetworks();
-        }
-        List<String> labels = new ArrayList<>();
-
-        for (PaymentNetwork network : networks) {
-            labels.add(network.getLabel());
-        }
-        title.setText(TextUtils.join(" / ", labels));
     }
 
     private void bindLogos(NetworkCard card) {

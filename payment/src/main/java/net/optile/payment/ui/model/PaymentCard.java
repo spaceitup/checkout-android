@@ -37,17 +37,24 @@ public interface PaymentCard {
     /**
      * Get the paymentMethod of this PaymentCard
      *
-     * @return paymentMethod
+     * @return paymentMethod of this PaymentCard
      */
     String getPaymentMethod();
 
     /**
-     * Get the code of this visible PaymentCard.
+     * Get the code of this PaymentCard.
      *
-     * @return code of the visible network, preset or account
+     * @return code of this PaymentCard
      */
     String getCode();
 
+    /** 
+     * Get the label of this PaymentCard
+     * 
+     * @return label of this PaymentCard 
+     */
+    String getLabel();
+    
     /**
      * Get the action button label
      *

@@ -29,12 +29,12 @@ import net.optile.payment.util.PaymentUtils;
 final class PresetCardViewHolder extends PaymentCardViewHolder {
 
     private final TextView title;
-    private final TextView subTitle;
+    private final TextView subtitle;
 
     private PresetCardViewHolder(ListAdapter adapter, View parent, PresetCard presetCard) {
         super(adapter, parent);
         this.title = parent.findViewById(R.id.text_title);
-        this.subTitle = parent.findViewById(R.id.text_subtitle);
+        this.subtitle = parent.findViewById(R.id.text_subtitle);
         addLogoView(parent, presetCard.getCode());
         PaymentTheme theme = adapter.getPaymentTheme();
         addButtonWidget(theme);
@@ -56,8 +56,12 @@ final class PresetCardViewHolder extends PaymentCardViewHolder {
         PaymentUtils.setTestId(itemView, "card", "preset");
         PresetCard card = (PresetCard) paymentCard;
         AccountMask mask = card.getMaskedAccount();
-        bindMaskedTitle(title, mask, card.getPaymentMethod());
-        bindMaskedSubTitle(subTitle, mask);
+        subtitle.setVisibility(View.GONE);
+        if (mask != null) {
+            bindAccountMask(title, subtitle, mask, card.getPaymentMethod());
+        } else {
+            title.setText(card.getLabel());
+        }
         bindLogoView(paymentCard.getCode(), card.getLink("logo"), true);
         bindLabelWidget(Localization.translate(LIST_PRESET_TEXT));
     }
