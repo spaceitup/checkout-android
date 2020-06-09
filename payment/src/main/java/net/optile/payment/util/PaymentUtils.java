@@ -23,6 +23,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import androidx.core.widget.TextViewCompat;
 import net.optile.payment.core.PaymentInputType;
+import net.optile.payment.model.AccountMask;
 import net.optile.payment.model.InputElement;
 
 /**
@@ -73,7 +74,23 @@ public final class PaymentUtils {
     public static int toInt(Integer value) {
         return value == null ? 0 : value;
     }
-
+    
+    /** 
+     * Create am expiry date string from the AccountMask. 
+     * If the AccountMask does not contain the expiryMonth and expiryYear values then return null.
+     * 
+     * @param mask AccountMask containing the expiryMonth and expiryYear fields
+     * @return the expiry date or null if it could not be created 
+     */
+    public static String getExpiryDateString(AccountMask mask) {
+        int month = toInt(mask.getExpiryMonth());
+        int year = toInt(mask.getExpiryYear());
+        if (month == 0 || year == 0) {
+            return null;
+        }
+        return String.format("%1$02d / %2$d", month, (year % 100));
+    }
+    
     /**
      * Does the list of InputElements contain both the expiry month and year fields.
      *

@@ -3,9 +3,6 @@
     <string name="pmpage_error_notsupported">The payment methods in the current payment session are not supported by this app.</string>
     <string name="pmpage_contentdescription">PaymentImage</string>
 
-    <string name="pmlist_subtitle_date">%1$02d / %2$d</string>
-    <string name="pmlist_widget_date">%1$s / %2$s</string>
-
     <string name="pmlocal_list_title">Payment methods</string>
     <string name="pmlocal_list_header_networks">Choose a method</string>
 

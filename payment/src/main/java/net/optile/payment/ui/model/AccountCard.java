@@ -71,6 +71,14 @@ public final class AccountCard implements PaymentCard {
      * {@inheritDoc}
      */
     @Override
+    public String getLabel() {
+        return account.getLabel();
+    }
+    
+    /**
+     * {@inheritDoc}
+     */
+    @Override
     public List<InputElement> getInputElements() {
         List<InputElement> elements = account.getLocalizedInputElements();
         return elements == null ? new ArrayList<>() : elements;
