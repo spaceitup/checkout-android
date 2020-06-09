@@ -213,6 +213,11 @@ public final class PaymentListActivity extends BasePaymentActivity implements Pa
         Intent intent = ChargePaymentActivity.createStartIntent(this, operation);
         startActivityForResult(intent, requestCode);
         overridePendingTransition(ChargePaymentActivity.getStartTransition(), R.anim.no_animation);
+
+        // For automated UI testing
+        if (closeIdlingResource != null) {
+            closeIdlingResource.setIdleState(true);
+        }
     }
 
     /**
