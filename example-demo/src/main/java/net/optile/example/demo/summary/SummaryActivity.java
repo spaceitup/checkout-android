@@ -50,7 +50,9 @@ public final class SummaryActivity extends BaseActivity implements SummaryView {
 
     private SummaryPresenter presenter;
     private SdkResult sdkResult;
-    private PresetAccount account;
+    private PresetAccount presetAccount;
+    private TextView presetTitle;
+    private TextView presetSubtitle;    
 
     // For automated UI Testing
     private boolean loadCompleted;    
@@ -84,6 +86,8 @@ public final class SummaryActivity extends BaseActivity implements SummaryView {
         setTheme(R.style.DefaultCollapsingToolbarTheme);
         setContentView(R.layout.activity_summary);
         initToolbar();
+        presetTitle = findViewById(R.id.label_title);
+        presetSubtitle = findViewById(R.id.label_subtitle);        
 
         View edit = findViewById(R.id.text_edit);
         edit.setOnClickListener(new View.OnClickListener() {
@@ -147,44 +151,46 @@ public final class SummaryActivity extends BaseActivity implements SummaryView {
      * {@inheritDoc}
      */
     @Override
-    public void showPaymentDetails(PresetAccount account, String method) {
+    public void showPaymentDetails(PresetAccount presetAccount, String method) {
+
         if (!active) {
             return;
         }
         showLoading(false);
-        this.account = account;
-        AccountMask mask = account.getMaskedAccount();
+        this.presetAccount = presetAccount;
+        AccountMask mask = presetAccount.getMaskedAccount();
         ImageView view = findViewById(R.id.image_logo);
-        URL url = getLink(account, "logo");
+        URL url = getLink(presetAccount, "logo");
 
         if (url != null) {
             ImageHelper.getInstance().loadImage(view, url);
         }
-        TextView text = findViewById(R.id.label_title);
-
-        switch (method) {
-            case PaymentMethod.CREDIT_CARD:
-            case PaymentMethod.DEBIT_CARD:
-                text.setText(mask.getNumber());
-                break;
-            default:
-                text.setText(mask.getDisplayLabel());
-        }
-        text = findViewById(R.id.label_subtitle);
-        int expiryMonth = PaymentUtils.toInt(mask.getExpiryMonth());
-        int expiryYear = PaymentUtils.toInt(mask.getExpiryYear());
-
-        if (expiryMonth > 0 && expiryYear > 0) {
-            String format = getString(R.string.pmlist_subtitle_date);
-            text.setText(String.format(format, expiryMonth, expiryYear));
-            text.setVisibility(View.VISIBLE);
+        presetSubtitle.setVisibility(View.GONE);
+        if (mask != null) {
+            setAccountMask(mask, method);
         } else {
-            text.setVisibility(View.GONE);
+            presetTitle.setText(presetAccount.getCode());
         }
         // For automated UI testing
         this.loadCompleted = true;
         if (loadIdlingResource != null) {
             loadIdlingResource.setIdleState(loadCompleted);
+        }
+    }
+
+    private void setAccountMask(AccountMask mask, String method) {
+        switch (method) {
+            case PaymentMethod.CREDIT_CARD:
+            case PaymentMethod.DEBIT_CARD:
+                presetTitle.setText(mask.getNumber());
+                String date = PaymentUtils.getExpiryDateString(mask);
+                if (date != null) {
+                    presetSubtitle.setVisibility(View.VISIBLE);                    
+                    presetSubtitle.setText(date);
+                } 
+                break;
+            default:
+                presetTitle.setText(mask.getDisplayLabel());
         }
     }
 
@@ -267,9 +273,9 @@ public final class SummaryActivity extends BaseActivity implements SummaryView {
     }
 
     private void onPayClicked() {
-        if (account != null) {
+        if (presetAccount != null) {
             PaymentUI paymentUI = PaymentUI.getInstance();
-            paymentUI.chargePresetAccount(this, PAYMENT_REQUEST_CODE, account);
+            paymentUI.chargePresetAccount(this, PAYMENT_REQUEST_CODE, presetAccount);
         }
     }
 

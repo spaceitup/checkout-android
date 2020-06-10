@@ -1,6 +1,10 @@
 Changelog - Android SDK
 -----------------------
 
+** Version android-sdk-3.1.1**
+
+    * [PCX-873] - Demo app and Android SDK crash when PresetAccount has no AccountMask
+
 ** Version android-sdk-3.1.0**
 
     * [PCX-849] - Reset minor & patch version part when major is increased

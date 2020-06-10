@@ -21,6 +21,7 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
+import androidx.test.espresso.IdlingResource;
 import androidx.test.espresso.intent.Intents;
 import androidx.test.ext.junit.runners.AndroidJUnit4;
 import androidx.test.filters.LargeTest;
@@ -44,28 +45,29 @@ public final class RedirectPaypalTests extends AbstractTest {
     @Test
     public void testPaypalSuccess() throws JSONException, IOException, UiObjectNotFoundException {
         Intents.init();
-        int cardIndex = 3;
+        int networkCardIndex = 3;
 
         openPaymentList(false);
-        openPaymentCard(cardIndex, "card_network");
-        clickCardButton(cardIndex);
-
+        openPaymentCard(networkCardIndex, "card_network");
+        IdlingResource closeIdlingResource = clickCardButton(networkCardIndex);
         checkPayPalChromeDisplayed();
+        unregister(closeIdlingResource);
         Intents.release();
     }
 
     @Test
     public void testPaypalBrowserClosed() throws JSONException, IOException, UiObjectNotFoundException {
         Intents.init();
-        int cardIndex = 3;
+        int networkCardIndex = 3;
 
         openPaymentList(false);
-        openPaymentCard(cardIndex, "card_network");
-        clickCardButton(cardIndex);
+        openPaymentCard(networkCardIndex, "card_network");
+        IdlingResource closeIdlingResource = clickCardButton(networkCardIndex);
         closeChromeBrowser();
 
         intended(hasComponent(ChargePaymentActivity.class.getName()));
         onView(withId(R.id.dialogfragment_layout)).check(matches(isDisplayed()));
+        unregister(closeIdlingResource);
         Intents.release();
     }
 
