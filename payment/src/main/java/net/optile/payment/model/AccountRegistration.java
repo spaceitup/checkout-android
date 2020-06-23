@@ -112,7 +112,7 @@ public class AccountRegistration {
     public void setButton(final String button) {
         this.button = button;
     }
-    
+
     /**
      * Gets value of label.
      *

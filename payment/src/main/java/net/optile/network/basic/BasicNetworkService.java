@@ -8,7 +8,6 @@
 
 package net.optile.network.basic;
 
-import static net.optile.payment.model.InteractionReason.CLIENTSIDE_ERROR;
 import static net.optile.payment.model.InteractionReason.COMMUNICATION_FAILURE;
 
 import android.app.Activity;
@@ -154,7 +153,7 @@ public final class BasicNetworkService extends NetworkService implements Operati
             return new PaymentResult(errorInfo.getInteraction(), error);
         }
         String reason = error.isNetworkFailure() ? InteractionReason.COMMUNICATION_FAILURE : InteractionReason.CLIENTSIDE_ERROR;
-        Interaction interaction = new Interaction(getErrorInteractionCode(operation), reason); 
+        Interaction interaction = new Interaction(getErrorInteractionCode(operation), reason);
         return new PaymentResult(interaction, error);
     }
 

@@ -21,7 +21,6 @@ import net.optile.payment.form.Operation;
 import net.optile.payment.localization.Localization;
 import net.optile.payment.model.Interaction;
 import net.optile.payment.model.InteractionCode;
-import net.optile.payment.model.InteractionReason;
 import net.optile.payment.model.ListResult;
 import net.optile.payment.model.OperationType;
 import net.optile.payment.model.Redirect;
@@ -499,7 +498,7 @@ final class PaymentListPresenter implements PaymentSessionListener, Localization
         PaymentResult result = PaymentResult.fromPaymentError(error);
         closeWithCanceledCode(result);
     }
-    
+
     private void closeWithCanceledCode(PaymentResult result) {
         view.setPaymentResult(PaymentUI.RESULT_CODE_CANCELED, result);
         view.close();
@@ -508,7 +507,7 @@ final class PaymentListPresenter implements PaymentSessionListener, Localization
     private void closeWithErrorMessage(PaymentError error) {
         closeWithErrorMessage(PaymentResult.fromPaymentError(error));
     }
-    
+
     private void closeWithErrorMessage(PaymentResult result) {
         view.setPaymentResult(PaymentUI.RESULT_CODE_CANCELED, result);
         String msg = translateInteraction(result.getInteraction());

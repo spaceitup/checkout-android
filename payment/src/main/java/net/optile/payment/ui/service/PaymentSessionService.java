@@ -21,7 +21,6 @@ import net.optile.payment.core.PaymentException;
 import net.optile.payment.core.WorkerSubscriber;
 import net.optile.payment.core.WorkerTask;
 import net.optile.payment.core.Workers;
-import net.optile.payment.form.Operation;
 import net.optile.payment.model.AccountRegistration;
 import net.optile.payment.model.ApplicableNetwork;
 import net.optile.payment.model.ListResult;
@@ -122,16 +121,16 @@ public final class PaymentSessionService {
         Workers.getInstance().forNetworkTasks().execute(sessionTask);
     }
 
-    /** 
+    /**
      * Check if the provided operationType is supported by this PaymentSessionService
-     * 
+     *
      * @param operationType the operation type to check
-     * @return true when supported, false otherwise 
+     * @return true when supported, false otherwise
      */
     public boolean isSupportedOperationType(String operationType) {
         return OperationType.CHARGE.equals(operationType) || OperationType.PRESET.equals(operationType);
     }
-    
+
     private PaymentSession asyncLoadPaymentSession(String listUrl, Context context) throws PaymentException {
         ListResult listResult = listConnection.getListResult(listUrl);
         String operationType = listResult.getOperationType();

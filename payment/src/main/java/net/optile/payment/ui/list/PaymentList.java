@@ -9,10 +9,10 @@
 package net.optile.payment.ui.list;
 
 import static net.optile.payment.localization.LocalizationKey.BUTTON_BACK;
+import static net.optile.payment.localization.LocalizationKey.LIST_HEADER_ACCOUNTS;
 import static net.optile.payment.localization.LocalizationKey.LIST_HEADER_NETWORKS;
 import static net.optile.payment.localization.LocalizationKey.LIST_HEADER_NETWORKS_OTHER;
 import static net.optile.payment.localization.LocalizationKey.LIST_HEADER_PRESET;
-import static net.optile.payment.localization.LocalizationKey.LIST_HEADER_ACCOUNTS;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -33,8 +33,8 @@ public final class VerificationCodeInputMode extends EditTextInputMode {
     @Override
     public void apply(TextInputEditText editText) {
         editText.setFilters(new InputFilter[] {
-                new InputFilter.LengthFilter(maxLength)
-            });
+            new InputFilter.LengthFilter(maxLength)
+        });
         editText.setInputType(InputType.TYPE_CLASS_NUMBER);
     }
 }

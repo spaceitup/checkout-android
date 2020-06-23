@@ -70,7 +70,7 @@ public class ChromeCustomTabs {
             CustomTabsIntent customTabsIntent = builder.build();
             customTabsIntent.intent.setPackage(PACKAGE_NAME);
             customTabsIntent.intent.addFlags(Intent.FLAG_ACTIVITY_MULTIPLE_TASK | Intent.FLAG_ACTIVITY_NEW_TASK |
-                                             Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NO_HISTORY);
+                Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NO_HISTORY);
             customTabsIntent.launchUrl(context, uri);
         } catch (ActivityNotFoundException e) {
             throw new PaymentException("Error ocurred while opening ChromeCustomTabs", e);

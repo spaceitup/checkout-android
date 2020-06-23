@@ -23,6 +23,6 @@ public class RedirectServiceTest {
         assertTrue(RedirectService.isSupported(context, redirect));
 
         redirect.setMethod(HttpMethod.POST);
-        assertFalse(RedirectService.isSupported(context, redirect));        
+        assertFalse(RedirectService.isSupported(context, redirect));
     }
 }

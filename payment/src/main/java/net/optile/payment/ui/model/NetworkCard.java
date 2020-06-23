@@ -86,7 +86,7 @@ public final class NetworkCard implements PaymentCard {
         }
         return TextUtils.join(" / ", labels);
     }
-    
+
     /**
      * {@inheritDoc}
      */
@@ -157,7 +157,7 @@ public final class NetworkCard implements PaymentCard {
         }
         return null;
     }
-    
+
     /**
      * Add a PaymentNetwork to this NetworkCard, adding may fail if InputElements of this PaymentNetwork are not similar with InputElements
      * of previously added PaymentNetworks.

@@ -75,7 +75,7 @@ public final class AccountCard implements PaymentCard {
     public String getLabel() {
         return account.getLabel();
     }
-    
+
     /**
      * {@inheritDoc}
      */
@@ -127,6 +127,6 @@ public final class AccountCard implements PaymentCard {
     }
 
     public String lookupPaymentMethod(String code) {
-        return account.getCode().equals(code) ? account.getMethod() : null; 
+        return account.getCode().equals(code) ? account.getMethod() : null;
     }
 }

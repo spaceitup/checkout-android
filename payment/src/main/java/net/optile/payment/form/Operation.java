@@ -20,7 +20,6 @@ import android.os.Parcelable;
 import android.text.TextUtils;
 import net.optile.payment.core.PaymentException;
 import net.optile.payment.core.PaymentInputType;
-import net.optile.payment.model.OperationType;
 import net.optile.payment.util.PaymentUtils;
 
 /**

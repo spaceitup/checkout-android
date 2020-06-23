@@ -8,8 +8,6 @@
 
 package net.optile.payment.ui.service;
 
-import net.optile.payment.model.ApplicableNetwork;
-
 /**
  * Interface for all payment network factories. A payment network factory is capable of creating a NetworkService instance for a specific PaymentNetwork type.
  */
