@@ -14,8 +14,10 @@ import java.util.List;
 
 import android.text.TextUtils;
 import net.optile.payment.core.PaymentInputType;
+import net.optile.payment.localization.LocalizationKey;
 import net.optile.payment.model.InputElement;
 import net.optile.payment.model.PaymentMethod;
+import net.optile.payment.util.PaymentUtils;
 
 /**
  * Class for holding the data of a NetworkCard in the list
@@ -125,7 +127,8 @@ public final class NetworkCard implements PaymentCard {
      */
     @Override
     public String getButton() {
-        return getVisibleNetwork().getButton();
+        String operationType = PaymentUtils.getOperationType(getOperationLink());
+        return LocalizationKey.operationButtonKey(operationType);
     }
 
     /**

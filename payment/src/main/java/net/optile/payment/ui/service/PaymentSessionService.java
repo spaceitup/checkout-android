@@ -26,6 +26,7 @@ import net.optile.payment.model.AccountRegistration;
 import net.optile.payment.model.ApplicableNetwork;
 import net.optile.payment.model.ListResult;
 import net.optile.payment.model.Networks;
+import net.optile.payment.model.OperationType;
 import net.optile.payment.model.PresetAccount;
 import net.optile.payment.network.ListConnection;
 import net.optile.payment.resource.PaymentGroup;
@@ -128,7 +129,7 @@ public final class PaymentSessionService {
      * @return true when supported, false otherwise 
      */
     public boolean isSupportedOperationType(String operationType) {
-        return Operation.CHARGE.equals(operationType) || Operation.PRESET.equals(operationType);
+        return OperationType.CHARGE.equals(operationType) || OperationType.PRESET.equals(operationType);
     }
     
     private PaymentSession asyncLoadPaymentSession(String listUrl, Context context) throws PaymentException {

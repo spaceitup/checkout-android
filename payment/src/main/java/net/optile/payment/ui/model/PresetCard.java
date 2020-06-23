@@ -13,8 +13,10 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import net.optile.payment.localization.LocalizationKey;
 import net.optile.payment.model.AccountMask;
 import net.optile.payment.model.InputElement;
+import net.optile.payment.model.OperationType;
 import net.optile.payment.model.PresetAccount;
 import net.optile.payment.util.PaymentUtils;
 
@@ -91,7 +93,7 @@ public final class PresetCard implements PaymentCard {
      */
     @Override
     public String getButton() {
-        return network.getButton();
+        return LocalizationKey.operationButtonKey(OperationType.PRESET);
     }
 
     /**

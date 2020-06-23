@@ -11,7 +11,7 @@ package net.optile.payment.ui.page;
 import static net.optile.payment.localization.LocalizationKey.BUTTON_CANCEL;
 import static net.optile.payment.localization.LocalizationKey.BUTTON_OK;
 import static net.optile.payment.localization.LocalizationKey.BUTTON_RETRY;
-import static net.optile.payment.localization.LocalizationKey.ERROR_CONNECTION;
+import static net.optile.payment.localization.LocalizationKey.ERROR_CONNECTION_TEXT;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -75,7 +75,7 @@ abstract class BasePaymentActivity extends AppCompatActivity {
     ThemedDialogFragment createConnectionDialog(ThemedDialogListener listener) {
         MessageDialogFragment dialog = new MessageDialogFragment();
         dialog.setListener(listener);
-        dialog.setMessage(Localization.translate(ERROR_CONNECTION));
+        dialog.setMessage(Localization.translate(ERROR_CONNECTION_TEXT));
         dialog.setNeutralButton(Localization.translate(BUTTON_CANCEL));
         dialog.setPositiveButton(Localization.translate(BUTTON_RETRY));
         return dialog;

@@ -9,7 +9,7 @@
 package net.optile.payment.ui.page;
 
 import static net.optile.payment.localization.LocalizationKey.CHARGE_INTERRUPTED;
-import static net.optile.payment.localization.LocalizationKey.ERROR_DEFAULT;
+import static net.optile.payment.localization.LocalizationKey.ERROR_DEFAULT_TEXT;
 
 import android.content.Context;
 import android.text.TextUtils;
@@ -356,7 +356,7 @@ final class ChargePaymentPresenter implements PaymentSessionListener, NetworkSer
         view.setPaymentResult(PaymentUI.RESULT_CODE_CANCELED, result);
         String msg = translateInteraction(result.getInteraction());
         if (TextUtils.isEmpty(msg)) {
-            msg = Localization.translate(ERROR_DEFAULT);
+            msg = Localization.translate(ERROR_DEFAULT_TEXT);
         }
         showMessageAndClose(msg);
     }

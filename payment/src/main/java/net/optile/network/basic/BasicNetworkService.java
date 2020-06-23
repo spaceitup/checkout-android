@@ -20,6 +20,7 @@ import net.optile.payment.model.Interaction;
 import net.optile.payment.model.InteractionCode;
 import net.optile.payment.model.InteractionReason;
 import net.optile.payment.model.OperationResult;
+import net.optile.payment.model.OperationType;
 import net.optile.payment.model.Redirect;
 import net.optile.payment.model.RedirectType;
 import net.optile.payment.ui.PaymentResult;
@@ -160,9 +161,9 @@ public final class BasicNetworkService extends NetworkService implements Operati
     private String getErrorInteractionCode(Operation operation) {
         if (operation != null) {
             switch (operation.getType()) {
-                case Operation.PRESET:
-                case Operation.UPDATE:
-                case Operation.ACTIVATE:
+                case OperationType.PRESET:
+                case OperationType.UPDATE:
+                case OperationType.ACTIVATION:
                     return InteractionCode.ABORT;
             }
         }

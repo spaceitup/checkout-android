@@ -20,19 +20,15 @@ import android.os.Parcelable;
 import android.text.TextUtils;
 import net.optile.payment.core.PaymentException;
 import net.optile.payment.core.PaymentInputType;
+import net.optile.payment.model.OperationType;
+import net.optile.payment.util.PaymentUtils;
 
 /**
  * Class holding Operation form values
  */
 public class Operation implements Parcelable {
 
-    public final static String CHARGE = "CHARGE";
-    public final static String PRESET = "PRESET";
-    public final static String PAYOUT = "PAYOUT";
-    public final static String UPDATE = "UPDATE";
-    public final static String ACTIVATE = "ACTIVATE";
     public final static Parcelable.Creator<Operation> CREATOR = new Parcelable.Creator<Operation>() {
-
         public Operation createFromParcel(Parcel in) {
             return new Operation(in);
         }
@@ -141,26 +137,13 @@ public class Operation implements Parcelable {
     }
 
     /**
-     * Get the type of this operation, this will either be PRESET, CHARGE, UPDATE or PAYOUT.
+     * Get the type of this operation, this will either be PRESET, CHARGE, UPDATE, ACTIVATION or PAYOUT.
      * If the type cannot be determined from the URl then null will be returned.
      *
      * @return the type of the operation or null if it cannot be determined.
      */
     public String getType() {
-        String path = this.url.getPath();
-
-        if (path.endsWith("preset")) {
-            return PRESET;
-        } else if (path.endsWith("charge")) {
-            return CHARGE;
-        } else if (path.endsWith("update")) {
-            return UPDATE;
-        } else if (path.endsWith("payout")) {
-            return PAYOUT;
-        } else if (path.endsWith("activate")) {
-            return ACTIVATE;
-        }
-        return null;
+        return PaymentUtils.getOperationType(url);
     }
 
     /**

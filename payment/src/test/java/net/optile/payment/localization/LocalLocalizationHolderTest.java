@@ -29,13 +29,8 @@ public class LocalLocalizationHolderTest {
         assertNotNull(holder.translate(LocalizationKey.BUTTON_OK));
         assertNotNull(holder.translate(LocalizationKey.BUTTON_CANCEL));
         assertNotNull(holder.translate(LocalizationKey.BUTTON_RETRY));
-        assertNotNull(holder.translate(LocalizationKey.BUTTON_UPDATE));
-        assertNotNull(holder.translate(LocalizationKey.LIST_TITLE));
-        assertNotNull(holder.translate(LocalizationKey.LIST_HEADER_NETWORKS));
-        assertNotNull(holder.translate(LocalizationKey.CHARGE_TITLE));
-        assertNotNull(holder.translate(LocalizationKey.CHARGE_TEXT));
-        assertNotNull(holder.translate(LocalizationKey.CHARGE_INTERRUPTED));
-        assertNotNull(holder.translate(LocalizationKey.ERROR_CONNECTION));
-        assertNotNull(holder.translate(LocalizationKey.ERROR_DEFAULT));
+
+        assertNotNull(holder.translate(LocalizationKey.ERROR_CONNECTION_TEXT));
+        assertNotNull(holder.translate(LocalizationKey.ERROR_DEFAULT_TEXT));
     }
 }
