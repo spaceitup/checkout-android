@@ -7,7 +7,6 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.robolectric.RobolectricTestRunner;
 
-import net.optile.payment.form.Operation;
 import net.optile.payment.model.OperationType;
 
 @RunWith(RobolectricTestRunner.class)

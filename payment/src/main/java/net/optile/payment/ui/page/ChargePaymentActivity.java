@@ -14,34 +14,24 @@ import static net.optile.payment.localization.LocalizationKey.CHARGE_TITLE;
 import java.net.URL;
 import java.util.Map;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import androidx.annotation.VisibleForTesting;
-import androidx.test.espresso.IdlingResource;
 import net.optile.payment.R;
 import net.optile.payment.form.Operation;
 import net.optile.payment.localization.Localization;
 import net.optile.payment.model.PresetAccount;
 import net.optile.payment.ui.PaymentResult;
-import net.optile.payment.ui.dialog.ThemedDialogFragment;
-import net.optile.payment.ui.dialog.ThemedDialogFragment.ThemedDialogListener;
-import net.optile.payment.ui.page.idlingresource.SimpleIdlingResource;
 
 /**
  * The ChargePaymentActivity is the view displaying the loading animation while posting the operation.
  * The presenter of this view will post the PresetAccount operation to the Payment API.
  */
-public final class ChargePaymentActivity extends BasePaymentActivity implements ChargePaymentView {
+public final class ChargePaymentActivity extends BasePaymentActivity implements BasePaymentView {
 
     private final static String EXTRA_OPERATION = "operation";
     private ChargePaymentPresenter presenter;
     private Operation operation;
-
-    // For automated UI testing
-    private boolean chargeCompleted;
-    private SimpleIdlingResource chargeIdlingResource;
 
     /**
      * Create the start intent for this ChargePaymentActivity
@@ -167,105 +157,14 @@ public final class ChargePaymentActivity extends BasePaymentActivity implements 
         }
         setUserClosedPageResult();
         super.onBackPressed();
+        setOverridePendingTransition();
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    void setOverridePendingTransition() {
         overridePendingTransition(R.anim.no_animation, R.anim.fade_out);
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public void showProgress(boolean visible) {
-        if (!active) {
-            return;
-        }
-        progressView.setVisible(visible);
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public void showWarningMessage(String message) {
-        if (!active) {
-            return;
-        }
-        showSnackbar(message);
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public void showMessageDialog(String message, ThemedDialogListener listener) {
-        if (!active) {
-            return;
-        }
-        progressView.setVisible(false);
-        ThemedDialogFragment dialog = createMessageDialog(message, listener);
-        dialog.show(getSupportFragmentManager(), "dialog_message");
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public void showConnectionDialog(ThemedDialogListener listener) {
-        if (!active) {
-            return;
-        }
-        progressView.setVisible(false);
-        ThemedDialogFragment dialog = createConnectionDialog(listener);
-        dialog.show(getSupportFragmentManager(), "dialog_connection");
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public Activity getActivity() {
-        return this;
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public void close() {
-        if (!active) {
-            return;
-        }
-        supportFinishAfterTransition();
-        overridePendingTransition(R.anim.no_animation, R.anim.fade_out);
-
-        // For automated UI testing
-        chargeCompleted = true;
-        if (chargeIdlingResource != null) {
-            chargeIdlingResource.setIdleState(true);
-        }
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public void setPaymentResult(int resultCode, PaymentResult result) {
-        if (!active) {
-            return;
-        }
-        setResultIntent(resultCode, result);
-    }
-
-    /**
-     * Only called from test, creates and returns a new IdlingResource
-     */
-    @VisibleForTesting
-    public IdlingResource getChargeIdlingResource() {
-        if (chargeIdlingResource == null) {
-            chargeIdlingResource = new SimpleIdlingResource("chargeIdlingResource");
-        }
-        if (chargeCompleted) {
-            chargeIdlingResource.setIdleState(chargeCompleted);
-        }
-        return chargeIdlingResource;
     }
 }

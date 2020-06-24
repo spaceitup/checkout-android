@@ -8,7 +8,7 @@
 
 package net.optile.payment.localization;
 
-import static net.optile.payment.localization.LocalizationKey.ACCOUNTHINT_TITLE;
+import static net.optile.payment.localization.LocalizationKey.LABEL_TEXT;
 
 import java.util.Map;
 
@@ -79,11 +79,23 @@ public final class Localization {
      * Helper method to obtain the translation for the interaction.
      *
      * @param interaction to be translated
+     * @param type of the interaction value, either LABEL_TEXT or LABEL_TITLE
      * @return translation of the interaction or null if not found
      */
-    public static String translateInteraction(Interaction interaction) {
+    public static String translateInteraction(Interaction interaction, String type) {
         Localization loc = getInstance();
-        return loc != null ? loc.getSharedTranslation(LocalizationKey.interactionKey(interaction)) : null;
+        return loc != null ? loc.getSharedTranslation(LocalizationKey.interactionKey(interaction, type)) : null;
+    }
+
+    /**
+     * Helper method to check if a translation exist for the Interaction.
+     *
+     * @param interaction to check if a translation exists
+     * @return true if it has a translation for the interaction, false otherwise
+     */
+    public static boolean hasInteraction(Interaction interaction) {
+        String val = translateInteraction(interaction, LABEL_TEXT);
+        return !TextUtils.isEmpty(val);
     }
 
     /**
@@ -94,7 +106,7 @@ public final class Localization {
      * @return true if it has a translation for the account hint, false otherwise
      */
     public static boolean hasAccountHint(String networkCode, String account) {
-        String val = translateAccountHint(networkCode, account, ACCOUNTHINT_TITLE);
+        String val = translateAccountHint(networkCode, account, LABEL_TEXT);
         return !TextUtils.isEmpty(val);
     }
 
@@ -125,7 +137,7 @@ public final class Localization {
      *
      * @param networkCode name of the localization file
      * @param account name of the account
-     * @param type of the account hint, either ACCOUNTHINT_TEXT or ACCOUNTHINT_TITLE
+     * @param type of the account hint, either LABEL_TITLE or LABEL_TEXT
      * @return the translation or null if not found
      */
     public static String translateAccountHint(String networkCode, String account, String type) {
