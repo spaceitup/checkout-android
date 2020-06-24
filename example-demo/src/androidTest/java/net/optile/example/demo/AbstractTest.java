@@ -75,17 +75,13 @@ public class AbstractTest {
 
 
     void openPaymentCard(int cardIndex, String cardTestId) {
-        PaymentListActivity listActivity = (PaymentListActivity) ActivityHelper.getCurrentActivity();
         Matcher<View> list = withId(R.id.recyclerview_paymentlist);
-
         onView(list).check(matches(isCardWithTestId(cardIndex, cardTestId)));
         onView(list).perform(actionOnItemAtPosition(cardIndex, click()));
     }
 
     void fillCreditCardData(int cardIndex) {
-        PaymentListActivity listActivity = (PaymentListActivity) ActivityHelper.getCurrentActivity();
         Matcher<View> list = withId(R.id.recyclerview_paymentlist);
-
         onView(list).perform(actionOnViewInWidget(cardIndex, typeText("4111111111111111"), "number", R.id.textinputedittext));
         onView(list).perform(actionOnViewInWidget(cardIndex, typeText("John Doe"), "holderName", R.id.textinputedittext));
         onView(list).perform(actionOnViewInWidget(cardIndex, typeText("1245"), "expiryDate", R.id.textinputedittext));
@@ -97,12 +93,12 @@ public class AbstractTest {
         intended(hasComponent(ChargePaymentActivity.class.getName()));
         onView(withId(R.id.layout_chargepayment)).check(matches(isDisplayed()));
         ChargePaymentActivity chargeActivity = (ChargePaymentActivity) ActivityHelper.getCurrentActivity();
-        IdlingResource chargeIdlingResource = chargeActivity.getChargeIdlingResource();
-        register(chargeIdlingResource);
+        IdlingResource closeIdlingResource = chargeActivity.getCloseIdlingResource();
+        register(closeIdlingResource);
 
         intended(hasComponent(ConfirmActivity.class.getName()));
         onView(withId(R.id.layout_confirm)).check(matches(isDisplayed()));
-        unregister(chargeIdlingResource);
+        unregister(closeIdlingResource);
     }
 
     IdlingResource clickCardButton(int cardIndex) {
