@@ -54,7 +54,6 @@ public final class RegisterWidget extends CheckBoxWidget {
 
     public void setRegistrationType(String type) {
         this.type = type;
-
         if (!RegistrationType.isValid(type)) {
             setVisible(false);
             return;
@@ -62,14 +61,15 @@ public final class RegisterWidget extends CheckBoxWidget {
         switch (type) {
             case RegistrationType.OPTIONAL:
                 setVisible(true);
+                initCheckBox(true, true, false);                
                 break;
             case RegistrationType.OPTIONAL_PRESELECTED:
                 setVisible(true);
-                initCheckBox(true, true);
+                initCheckBox(true, true, true);
                 break;
             case RegistrationType.FORCED_DISPLAYED:
                 setVisible(true);
-                initCheckBox(false, true);
+                initCheckBox(false, false, true);
                 break;
             default:
                 setVisible(false);

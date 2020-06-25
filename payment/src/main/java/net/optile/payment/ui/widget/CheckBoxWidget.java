@@ -16,13 +16,14 @@ import net.optile.payment.R;
 import net.optile.payment.core.PaymentException;
 import net.optile.payment.form.Operation;
 import net.optile.payment.ui.PaymentTheme;
+import com.google.android.material.switchmaterial.SwitchMaterial;
 
 /**
  * Widget for showing the CheckBox input element
  */
 public class CheckBoxWidget extends FormWidget {
 
-    private final CheckBox value;
+    private final SwitchMaterial value;
     private final TextView labelUnchecked;
     private final TextView labelChecked;
 
@@ -64,9 +65,10 @@ public class CheckBoxWidget extends FormWidget {
         return value.isChecked();
     }
 
-    void initCheckBox(boolean clickable, boolean checked) {
+    void initCheckBox(boolean visible, boolean clickable, boolean checked) {
         value.setClickable(clickable);
         value.setChecked(checked);
+        value.setVisibility(visible ? View.VISIBLE : View.GONE);
     }
 
     private void handleOnCheckedChanged(boolean isChecked) {
