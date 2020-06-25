@@ -16,7 +16,7 @@ import net.optile.payment.ui.dialog.ThemedDialogFragment.ThemedDialogListener;
 /**
  * The BasePaymentView interface is the View part of the MVP
  */
-interface BasePaymentView {
+interface PaymentView {
 
     /**
      * Show the progress animation.

@@ -30,7 +30,7 @@ import net.optile.payment.ui.page.idlingresource.SimpleIdlingResource;
 /**
  * The base activity for payment activities.
  */
-abstract class BasePaymentActivity extends AppCompatActivity implements BasePaymentView {
+abstract class BasePaymentActivity extends AppCompatActivity implements PaymentView {
 
     boolean active;
     ProgressView progressView;

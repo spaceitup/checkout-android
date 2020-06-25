@@ -27,7 +27,7 @@ import net.optile.payment.ui.PaymentResult;
  * The ChargePaymentActivity is the view displaying the loading animation while posting the operation.
  * The presenter of this view will post the PresetAccount operation to the Payment API.
  */
-public final class ChargePaymentActivity extends BasePaymentActivity implements BasePaymentView {
+public final class ChargePaymentActivity extends BasePaymentActivity implements PaymentView {
 
     private final static String EXTRA_OPERATION = "operation";
     private ChargePaymentPresenter presenter;

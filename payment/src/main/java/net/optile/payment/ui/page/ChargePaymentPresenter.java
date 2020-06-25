@@ -41,7 +41,7 @@ import net.optile.payment.ui.service.PaymentSessionService;
 final class ChargePaymentPresenter implements PaymentSessionListener, NetworkServicePresenter, LocalizationLoaderListener {
 
     private final static int CHARGE_REQUEST_CODE = 1;
-    private final BasePaymentView view;
+    private final PaymentView view;
     private final PaymentSessionService sessionService;
     private final LocalizationLoaderService localizationService;
 
@@ -57,7 +57,7 @@ final class ChargePaymentPresenter implements PaymentSessionListener, NetworkSer
      *
      * @param view The ChargePaymentView displaying the progress animation
      */
-    ChargePaymentPresenter(BasePaymentView view) {
+    ChargePaymentPresenter(PaymentView view) {
         this.view = view;
         sessionService = new PaymentSessionService();
         sessionService.setListener(this);
