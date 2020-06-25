@@ -14,7 +14,7 @@ import net.optile.payment.ui.PaymentResult;
 import net.optile.payment.ui.dialog.ThemedDialogFragment.ThemedDialogListener;
 
 /**
- * The BasePaymentView interface is the View part of the MVP
+ * The view (MVP) interface for screens that handle payments
  */
 interface PaymentView {
 

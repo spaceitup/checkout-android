@@ -88,7 +88,7 @@ public class DialogHelper {
     public static DialogFragment createConnectionErrorDialog(ThemedDialogFragment.ThemedDialogListener listener) {
         MessageDialogFragment dialog = new MessageDialogFragment();
         dialog.setListener(listener);
-        dialog.setMessage(Localization.translate(ERROR_CONNECTION_TITLE));
+        dialog.setTitle(Localization.translate(ERROR_CONNECTION_TITLE));
         dialog.setMessage(Localization.translate(ERROR_CONNECTION_TEXT));
         dialog.setNeutralButton(Localization.translate(BUTTON_CANCEL));
         dialog.setPositiveButton(Localization.translate(BUTTON_RETRY));

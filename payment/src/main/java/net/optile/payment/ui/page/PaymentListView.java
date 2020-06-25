@@ -14,7 +14,7 @@ import net.optile.payment.ui.model.PaymentSession;
 /**
  * The PaymentListView is the interface is the View part of the MVP, this is implemented by the PaymentListActivity
  */
-interface PaymentListView extends BasePaymentView {
+interface PaymentListView extends PaymentView {
 
     /**
      * Clear the payment list
