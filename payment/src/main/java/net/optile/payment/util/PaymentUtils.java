@@ -147,13 +147,17 @@ public final class PaymentUtils {
         String path = url.getPath();
         if (path.endsWith("preset")) {
             return OperationType.PRESET;
-        } else if (path.endsWith("charge")) {
+        }
+        if (path.endsWith("charge")) {
             return OperationType.CHARGE;
-        } else if (path.endsWith("update")) {
+        }
+        if (path.endsWith("update")) {
             return OperationType.UPDATE;
-        } else if (path.endsWith("payout")) {
+        }
+        if (path.endsWith("payout")) {
             return OperationType.PAYOUT;
-        } else if (path.endsWith("activate")) {
+        }
+        if (path.endsWith("activate")) {
             return OperationType.ACTIVATION;
         }
         return null;
