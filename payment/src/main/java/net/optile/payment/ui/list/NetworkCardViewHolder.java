@@ -26,7 +26,6 @@ import android.widget.TextSwitcher;
 import androidx.recyclerview.widget.RecyclerView.ViewHolder;
 import net.optile.payment.R;
 import net.optile.payment.localization.Localization;
-import net.optile.payment.localization.LocalizationKey;
 import net.optile.payment.model.RegistrationType;
 import net.optile.payment.ui.PaymentTheme;
 import net.optile.payment.ui.model.NetworkCard;
@@ -110,7 +109,7 @@ final class NetworkCardViewHolder extends PaymentCardViewHolder {
     private void bindRegistrationWidget(PaymentNetwork network) {
         RegisterWidget widget = (RegisterWidget) getFormWidget(AUTO_REGISTRATION);
         String type = network.getRegistration();
-        String key = isForcedRegistration(type) ? AUTO_REGISTRATION_FORCED : AUTO_REGISTRATION_OPTIONAL; 
+        String key = isForcedRegistration(type) ? AUTO_REGISTRATION_FORCED : AUTO_REGISTRATION_OPTIONAL;
         widget.setRegistrationType(type);
         widget.setLabel(Localization.translate(network.getCode(), key));
     }
@@ -118,7 +117,7 @@ final class NetworkCardViewHolder extends PaymentCardViewHolder {
     private void bindRecurrenceWidget(PaymentNetwork network) {
         RegisterWidget widget = (RegisterWidget) getFormWidget(ALLOW_RECURRENCE);
         String type = network.getRecurrence();
-        String key = isForcedRegistration(type) ? ALLOW_RECURRENCE_FORCED : ALLOW_RECURRENCE_OPTIONAL; 
+        String key = isForcedRegistration(type) ? ALLOW_RECURRENCE_FORCED : ALLOW_RECURRENCE_OPTIONAL;
         widget.setRegistrationType(type);
         widget.setLabel(Localization.translate(network.getCode(), key));
     }

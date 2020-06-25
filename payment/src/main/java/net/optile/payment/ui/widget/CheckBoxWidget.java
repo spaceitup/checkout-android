@@ -8,15 +8,15 @@
 
 package net.optile.payment.ui.widget;
 
+import com.google.android.material.switchmaterial.SwitchMaterial;
+
 import android.view.View;
-import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.TextView;
 import net.optile.payment.R;
 import net.optile.payment.core.PaymentException;
 import net.optile.payment.form.Operation;
 import net.optile.payment.ui.PaymentTheme;
-import com.google.android.material.switchmaterial.SwitchMaterial;
 
 /**
  * Widget for showing the CheckBox input element

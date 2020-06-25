@@ -61,7 +61,7 @@ public final class RegisterWidget extends CheckBoxWidget {
         switch (type) {
             case RegistrationType.OPTIONAL:
                 setVisible(true);
-                initCheckBox(true, true, false);                
+                initCheckBox(true, true, false);
                 break;
             case RegistrationType.OPTIONAL_PRESELECTED:
                 setVisible(true);
