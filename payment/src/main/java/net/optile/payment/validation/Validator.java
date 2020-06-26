@@ -37,7 +37,7 @@ public class Validator {
     public final static int MAXLENGTH_BIC = 11;
 
     public final static int MAX_EXPIRY_YEAR = 50;
-    
+
     private final Map<String, ValidationGroup> validations;
 
     /**

@@ -48,13 +48,13 @@ public interface PaymentCard {
      */
     String getCode();
 
-    /** 
+    /**
      * Get the label of this PaymentCard
-     * 
-     * @return label of this PaymentCard 
+     *
+     * @return label of this PaymentCard
      */
     String getLabel();
-    
+
     /**
      * Get the action button label
      *

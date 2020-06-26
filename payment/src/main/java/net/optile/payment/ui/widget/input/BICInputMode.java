@@ -41,10 +41,10 @@ public final class BICInputMode extends EditTextInputMode {
     @Override
     public void apply(TextInputEditText editText) {
         editText.setFilters(new InputFilter[] {
-                new InputFilter.LengthFilter(maxLength),
-                new InputFilter.AllCaps(),
-                new AlphaNumericInputFilter(false)
-            });
+            new InputFilter.LengthFilter(maxLength),
+            new InputFilter.AllCaps(),
+            new AlphaNumericInputFilter(false)
+        });
         editText.setInputType(InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD);
     }
 }

@@ -85,7 +85,7 @@ public final class PaymentSession {
         }
         return null;
     }
-    
+
     public Validator getValidator() {
         return validator;
     }

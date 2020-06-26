@@ -13,6 +13,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import net.optile.payment.localization.LocalizationKey;
 import net.optile.payment.model.AccountMask;
 import net.optile.payment.model.AccountRegistration;
 import net.optile.payment.model.InputElement;
@@ -74,7 +75,7 @@ public final class AccountCard implements PaymentCard {
     public String getLabel() {
         return account.getLabel();
     }
-    
+
     /**
      * {@inheritDoc}
      */
@@ -109,7 +110,8 @@ public final class AccountCard implements PaymentCard {
      */
     @Override
     public String getButton() {
-        return network.getButton();
+        String operationType = PaymentUtils.getOperationType(getOperationLink());
+        return LocalizationKey.operationButtonKey(operationType);
     }
 
     /**
@@ -125,6 +127,6 @@ public final class AccountCard implements PaymentCard {
     }
 
     public String lookupPaymentMethod(String code) {
-        return account.getCode().equals(code) ? account.getMethod() : null; 
+        return account.getCode().equals(code) ? account.getMethod() : null;
     }
 }

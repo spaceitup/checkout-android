@@ -9,7 +9,7 @@
 package net.optile.payment.ui.page;
 
 import static net.optile.payment.localization.LocalizationKey.CHARGE_INTERRUPTED;
-import static net.optile.payment.localization.LocalizationKey.ERROR_DEFAULT;
+import static net.optile.payment.localization.LocalizationKey.ERROR_DEFAULT_TEXT;
 
 import android.content.Context;
 import android.text.TextUtils;
@@ -19,7 +19,6 @@ import net.optile.payment.form.Operation;
 import net.optile.payment.localization.Localization;
 import net.optile.payment.model.Interaction;
 import net.optile.payment.model.InteractionCode;
-import net.optile.payment.model.InteractionReason;
 import net.optile.payment.model.ListResult;
 import net.optile.payment.model.OperationResult;
 import net.optile.payment.model.Redirect;
@@ -342,7 +341,7 @@ final class ChargePaymentPresenter implements PaymentSessionListener, NetworkSer
         PaymentResult result = PaymentResult.fromPaymentError(error);
         closeWithCanceledCode(result);
     }
-    
+
     private void closeWithCanceledCode(PaymentResult result) {
         view.setPaymentResult(PaymentUI.RESULT_CODE_CANCELED, result);
         view.close();
@@ -351,12 +350,12 @@ final class ChargePaymentPresenter implements PaymentSessionListener, NetworkSer
     private void closeWithErrorMessage(PaymentError error) {
         closeWithErrorMessage(PaymentResult.fromPaymentError(error));
     }
-    
+
     private void closeWithErrorMessage(PaymentResult result) {
         view.setPaymentResult(PaymentUI.RESULT_CODE_CANCELED, result);
         String msg = translateInteraction(result.getInteraction());
         if (TextUtils.isEmpty(msg)) {
-            msg = Localization.translate(ERROR_DEFAULT);
+            msg = Localization.translate(ERROR_DEFAULT_TEXT);
         }
         showMessageAndClose(msg);
     }

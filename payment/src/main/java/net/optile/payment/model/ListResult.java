@@ -172,6 +172,7 @@ public class ListResult {
      *
      * @return Operation of referred actions.
      */
+    @OperationType.Definition
     public String getOperationType() {
         return operationType;
     }
@@ -181,7 +182,7 @@ public class ListResult {
      *
      * @param operationType Operation type value.
      */
-    public void setOperationType(final String operationType) {
+    public void setOperationType(@OperationType.Definition final String operationType) {
         this.operationType = operationType;
     }
 

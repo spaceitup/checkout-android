@@ -8,7 +8,7 @@
 
 package net.optile.payment.ui.page;
 
-import static net.optile.payment.localization.LocalizationKey.ERROR_DEFAULT;
+import static net.optile.payment.localization.LocalizationKey.ERROR_DEFAULT_TEXT;
 
 import java.net.URL;
 import java.util.Map;
@@ -21,8 +21,8 @@ import net.optile.payment.form.Operation;
 import net.optile.payment.localization.Localization;
 import net.optile.payment.model.Interaction;
 import net.optile.payment.model.InteractionCode;
-import net.optile.payment.model.InteractionReason;
 import net.optile.payment.model.ListResult;
+import net.optile.payment.model.OperationType;
 import net.optile.payment.model.Redirect;
 import net.optile.payment.ui.PaymentResult;
 import net.optile.payment.ui.PaymentUI;
@@ -291,7 +291,7 @@ final class PaymentListPresenter implements PaymentSessionListener, Localization
     }
 
     private void handlePreparePaymentOk() {
-        if (Operation.CHARGE.equals(operation.getType())) {
+        if (OperationType.CHARGE.equals(operation.getType())) {
             view.showChargePaymentScreen(CHARGEPAYMENT_REQUEST_CODE, operation);
         } else {
             processPayment();
@@ -498,7 +498,7 @@ final class PaymentListPresenter implements PaymentSessionListener, Localization
         PaymentResult result = PaymentResult.fromPaymentError(error);
         closeWithCanceledCode(result);
     }
-    
+
     private void closeWithCanceledCode(PaymentResult result) {
         view.setPaymentResult(PaymentUI.RESULT_CODE_CANCELED, result);
         view.close();
@@ -507,12 +507,12 @@ final class PaymentListPresenter implements PaymentSessionListener, Localization
     private void closeWithErrorMessage(PaymentError error) {
         closeWithErrorMessage(PaymentResult.fromPaymentError(error));
     }
-    
+
     private void closeWithErrorMessage(PaymentResult result) {
         view.setPaymentResult(PaymentUI.RESULT_CODE_CANCELED, result);
         String msg = translateInteraction(result.getInteraction());
         if (TextUtils.isEmpty(msg)) {
-            msg = Localization.translate(ERROR_DEFAULT);
+            msg = Localization.translate(ERROR_DEFAULT_TEXT);
         }
         showMessageAndClose(msg);
     }

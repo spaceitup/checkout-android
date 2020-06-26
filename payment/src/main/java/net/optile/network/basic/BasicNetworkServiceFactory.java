@@ -8,9 +8,7 @@
 
 package net.optile.network.basic;
 
-import android.text.TextUtils;
 import net.optile.payment.core.PaymentNetworkCodes;
-import net.optile.payment.model.ApplicableNetwork;
 import net.optile.payment.model.PaymentMethod;
 import net.optile.payment.ui.service.NetworkService;
 import net.optile.payment.ui.service.NetworkServiceFactory;
@@ -42,7 +40,7 @@ public final class BasicNetworkServiceFactory implements NetworkServiceFactory {
         }
         return false;
     }
-    
+
     /**
      * {@inheritDoc}
      */

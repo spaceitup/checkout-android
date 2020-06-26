@@ -8,6 +8,7 @@ import org.junit.runner.RunWith;
 import org.robolectric.RobolectricTestRunner;
 
 import net.optile.payment.form.Operation;
+import net.optile.payment.model.OperationType;
 
 @RunWith(RobolectricTestRunner.class)
 public class PaymentSessionServiceTest {
@@ -15,9 +16,11 @@ public class PaymentSessionServiceTest {
     @Test
     public void isSupportedOperationType() {
         PaymentSessionService service = new PaymentSessionService();
-        assertTrue(service.isSupportedOperationType(Operation.CHARGE));
-        assertTrue(service.isSupportedOperationType(Operation.PRESET));
-        assertFalse(service.isSupportedOperationType(Operation.UPDATE));
+        assertTrue(service.isSupportedOperationType(OperationType.CHARGE));
+        assertTrue(service.isSupportedOperationType(OperationType.PRESET));
+        assertFalse(service.isSupportedOperationType(OperationType.UPDATE));
+        assertFalse(service.isSupportedOperationType(OperationType.ACTIVATION));
+        assertFalse(service.isSupportedOperationType(OperationType.PAYOUT));
         assertFalse(service.isSupportedOperationType(null));
     }
 }

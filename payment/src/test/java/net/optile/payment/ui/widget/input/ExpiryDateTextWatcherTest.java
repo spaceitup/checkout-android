@@ -52,7 +52,7 @@ public class ExpiryDateTextWatcherTest {
         ExpiryDateTextWatcher watcher = new ExpiryDateTextWatcher(editText);
         validateTextInput(watcher, "", "0345", "03 / 45");
     }
-    
+
     @Test
     public void testInvalidDoubleZero() {
         Context context = ApplicationProvider.getApplicationContext();
@@ -100,7 +100,7 @@ public class ExpiryDateTextWatcherTest {
         ExpiryDateTextWatcher watcher = new ExpiryDateTextWatcher(editText);
         validateTextInput(watcher, "", "10", "10 / ");
     }
-    
+
     private static String validateTextInput(TextWatcher watcher, String current, String input, String result) {
         String val = simulateTextInput(watcher, current, input);
         assertEquals(result, val);

@@ -9,8 +9,8 @@
 package net.optile.payment.ui.service;
 
 import java.util.List;
-import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.Objects;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 import android.util.Log;
 
@@ -23,7 +23,7 @@ public class NetworkServiceLookup {
     private static final List<NetworkServiceFactory> factories = new CopyOnWriteArrayList<>();
 
     /**
-     * Check if there is a NetworkService that supports the network code and payment method 
+     * Check if there is a NetworkService that supports the network code and payment method
      *
      * @param code to be checked if it is supported
      * @param method to be checked if it is supported
