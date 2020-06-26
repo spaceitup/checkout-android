@@ -44,10 +44,6 @@ public final class RegisterWidget extends CheckBoxWidget {
      */
     @Override
     public void putValue(Operation operation) throws PaymentException {
-
-        if (!RegistrationType.isValid(type)) {
-            return;
-        }
         switch (type) {
             case RegistrationType.FORCED:
             case RegistrationType.FORCED_DISPLAYED:
@@ -61,10 +57,6 @@ public final class RegisterWidget extends CheckBoxWidget {
 
     public void setRegistrationType(String type) {
         this.type = type;
-        if (!RegistrationType.isValid(type)) {
-            setVisible(false);
-            return;
-        }
         switch (type) {
             case RegistrationType.OPTIONAL:
                 setVisible(true);
