@@ -79,12 +79,12 @@ public final class Localization {
      * Helper method to obtain the translation for the interaction.
      *
      * @param interaction to be translated
-     * @param type of the interaction value, either LABEL_TEXT or LABEL_TITLE
+     * @param labelType type of the interaction label that is required, either LABEL_TEXT or LABEL_TITLE
      * @return translation of the interaction or null if not found
      */
-    public static String translateInteraction(Interaction interaction, String type) {
+    public static String translateInteraction(Interaction interaction, String labelType) {
         Localization loc = getInstance();
-        return loc != null ? loc.getSharedTranslation(LocalizationKey.interactionKey(interaction, type)) : null;
+        return loc != null ? loc.getSharedTranslation(LocalizationKey.interactionKey(interaction, labelType)) : null;
     }
 
     /**
@@ -133,15 +133,15 @@ public final class Localization {
     }
 
     /**
-     * Helper method to obtain the translation of the account hint with the given type.
+     * Helper method to obtain the translation of the account hint with the given label type.
      *
      * @param networkCode name of the localization file
      * @param account name of the account
-     * @param type of the account hint, either LABEL_TITLE or LABEL_TEXT
+     * @param labelType type of the account hint, either LABEL_TITLE or LABEL_TEXT
      * @return the translation or null if not found
      */
-    public static String translateAccountHint(String networkCode, String account, String type) {
-        return translate(networkCode, LocalizationKey.accountHintKey(account, type));
+    public static String translateAccountHint(String networkCode, String account, String labelType) {
+        return translate(networkCode, LocalizationKey.accountHintKey(account, labelType));
     }
 
     /**
