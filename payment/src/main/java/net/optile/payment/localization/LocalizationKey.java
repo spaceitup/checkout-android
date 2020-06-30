@@ -52,15 +52,15 @@ public final class LocalizationKey {
         return "account." + account + ".label";
     }
 
-    public static String accountHintKey(String account, String type) {
-        return "account." + account + "." + "hint." + "where." + type;
+    public static String accountHintKey(String account, String labelType) {
+        return "account." + account + "." + "hint." + "where." + labelType;
     }
 
     public static String operationButtonKey(String operationType) {
         return "button.operation." + operationType + ".label";
     }
 
-    public static String interactionKey(Interaction interaction, String type) {
-        return "interaction." + interaction.getCode() + "." + interaction.getReason() + "." + type;
+    public static String interactionKey(Interaction interaction, String labelType) {
+        return "interaction." + interaction.getCode() + "." + interaction.getReason() + "." + labelType;
     }
 }
