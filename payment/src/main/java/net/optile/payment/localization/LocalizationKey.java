@@ -34,11 +34,13 @@ public final class LocalizationKey {
     public final static String CHARGE_TEXT = "messages.processing.text";
     public final static String CHARGE_INTERRUPTED = "messages.processing.interrupted.text";
 
+    public final static String ERROR_CONNECTION_TITLE = "messages.error.internet.title";
     public final static String ERROR_CONNECTION_TEXT = "messages.error.internet.text";
+    public final static String ERROR_DEFAULT_TITLE = "messages.error.default.title";
     public final static String ERROR_DEFAULT_TEXT = "messages.error.default.text";
 
-    public final static String ACCOUNTHINT_TITLE = "title";
-    public final static String ACCOUNTHINT_TEXT = "text";
+    public final static String LABEL_TITLE = "title";
+    public final static String LABEL_TEXT = "text";
 
     public static String errorKey(String error) {
         return "error." + error;
@@ -48,15 +50,15 @@ public final class LocalizationKey {
         return "account." + account + ".label";
     }
 
-    public static String accountHintKey(String account, String type) {
-        return "account." + account + "." + "hint." + "where." + type;
+    public static String accountHintKey(String account, String labelType) {
+        return "account." + account + "." + "hint." + "where." + labelType;
     }
 
     public static String operationButtonKey(String operationType) {
         return "button.operation." + operationType + ".label";
     }
 
-    public static String interactionKey(Interaction interaction) {
-        return "interaction." + interaction.getCode() + "." + interaction.getReason();
+    public static String interactionKey(Interaction interaction, String labelType) {
+        return "interaction." + interaction.getCode() + "." + interaction.getReason() + "." + labelType;
     }
 }

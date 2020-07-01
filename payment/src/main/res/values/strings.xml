@@ -3,7 +3,9 @@
     <string name="pmpage_error_notsupported">The payment methods in the current payment session are not supported by this app.</string>
     <string name="pmpage_contentdescription">PaymentImage</string>
 
+    <string name="error_connection_title">Oops!</string>
     <string name="error_connection_text">There was a problem with your internet connection</string>
+    <string name="error_default_title">Oops!</string>
     <string name="error_default_text">An error occurred while handling your payment. Please try again.</string>
 
     <string name="button_cancel_label">Cancel</string>

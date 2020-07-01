@@ -8,13 +8,10 @@
 
 package net.optile.payment.ui.page;
 
-import static net.optile.payment.localization.LocalizationKey.ERROR_DEFAULT_TEXT;
-
 import java.net.URL;
 import java.util.Map;
 
 import android.content.Context;
-import android.text.TextUtils;
 import net.optile.payment.core.PaymentError;
 import net.optile.payment.core.PaymentException;
 import net.optile.payment.form.Operation;
@@ -213,7 +210,7 @@ final class PaymentListPresenter implements PaymentSessionListener, Localization
     }
 
     private void handleLoadingNetworkFailure(final PaymentError error) {
-        view.showConnectionDialog(new ThemedDialogListener() {
+        view.showConnectionErrorDialog(new ThemedDialogListener() {
             @Override
             public void onButtonClicked(ThemedDialogFragment dialog, int which) {
                 switch (which) {
@@ -324,7 +321,7 @@ final class PaymentListPresenter implements PaymentSessionListener, Localization
     }
 
     private void handlePrepareNetworkFailure(PaymentResult result) {
-        view.showConnectionDialog(new ThemedDialogListener() {
+        view.showConnectionErrorDialog(new ThemedDialogListener() {
             @Override
             public void onButtonClicked(ThemedDialogFragment dialog, int which) {
                 switch (which) {
@@ -384,7 +381,7 @@ final class PaymentListPresenter implements PaymentSessionListener, Localization
     }
 
     private void handleProcessNetworkFailure(final PaymentResult result) {
-        view.showConnectionDialog(new ThemedDialogListener() {
+        view.showConnectionErrorDialog(new ThemedDialogListener() {
             @Override
             public void onButtonClicked(ThemedDialogFragment dialog, int which) {
                 switch (which) {
@@ -510,15 +507,8 @@ final class PaymentListPresenter implements PaymentSessionListener, Localization
 
     private void closeWithErrorMessage(PaymentResult result) {
         view.setPaymentResult(PaymentUI.RESULT_CODE_CANCELED, result);
-        String msg = translateInteraction(result.getInteraction());
-        if (TextUtils.isEmpty(msg)) {
-            msg = Localization.translate(ERROR_DEFAULT_TEXT);
-        }
-        showMessageAndClose(msg);
-    }
-
-    private void showMessageAndClose(String message) {
-        view.showMessageDialog(message, new ThemedDialogListener() {
+        Interaction interaction = result.getInteraction();
+        ThemedDialogListener listener = new ThemedDialogListener() {
             @Override
             public void onButtonClicked(ThemedDialogFragment dialog, int which) {
                 view.close();
@@ -528,25 +518,22 @@ final class PaymentListPresenter implements PaymentSessionListener, Localization
             public void onDismissed(ThemedDialogFragment dialog) {
                 view.close();
             }
-        });
+        };
+        if (Localization.hasInteraction(interaction)) {
+            view.showInteractionDialog(interaction, listener);
+        } else {
+            view.showDefaultErrorDialog(listener);
+        }
     }
 
     private void showInteractionDialog(Interaction interaction) {
-        String msg = translateInteraction(interaction);
-        if (!TextUtils.isEmpty(msg)) {
-            view.showMessageDialog(msg, null);
+        if (Localization.hasInteraction(interaction)) {
+            view.showInteractionDialog(interaction, null);
         }
     }
 
     private void showPaymentSessionWithMessage(PaymentResult result) {
         view.showPaymentSession(this.session);
         showInteractionDialog(result.getInteraction());
-    }
-
-    private String translateInteraction(Interaction interaction) {
-        if (session == null || interaction == null) {
-            return null;
-        }
-        return Localization.translateInteraction(interaction);
     }
 }

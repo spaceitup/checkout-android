@@ -9,13 +9,14 @@
 package net.optile.payment.ui.page;
 
 import android.app.Activity;
+import net.optile.payment.model.Interaction;
 import net.optile.payment.ui.PaymentResult;
 import net.optile.payment.ui.dialog.ThemedDialogFragment.ThemedDialogListener;
 
 /**
- * The ChargePaymentView interface is the View part of the MVP, this is implemented by the ChargePaymentActivity
+ * The view (MVP) interface for screens that handle payments
  */
-interface ChargePaymentView {
+interface PaymentView {
 
     /**
      * Show the progress animation.
@@ -25,19 +26,25 @@ interface ChargePaymentView {
     void showProgress(boolean visible);
 
     /**
-     * Show a generic message to the user, notify the listener of events in this dialog.
+     * Show the default error dialog to the user, notify the listener of events in this dialog.
      *
-     * @param message the message to show in the dialog
      * @param listener to be notified of dialog events
      */
-    void showMessageDialog(String message, ThemedDialogListener listener);
+    void showDefaultErrorDialog(ThemedDialogListener listener);
 
     /**
      * Show the connection error dialog to the user, notify the listener of events in this dialog.
      *
      * @param listener to be notified of dialog events
      */
-    void showConnectionDialog(ThemedDialogListener listener);
+    void showConnectionErrorDialog(ThemedDialogListener listener);
+
+    /**
+     * Show the interaction text to the user, notify the listener of events in this dialog.
+     *
+     * @param listener to be notified of dialog events
+     */
+    void showInteractionDialog(Interaction interaction, ThemedDialogListener listener);
 
     /**
      * Show a warning message to the user
@@ -47,13 +54,8 @@ interface ChargePaymentView {
     void showWarningMessage(String message);
 
     /**
-     * Close this view and return to the parent who launched it
-     */
-    void close();
-
-    /**
      * Set the current activity payment result, this is either PaymentUI.RESULT_CODE_OK,
-     * PaymentUI.RESULT_CODE_CANCELED, PaymentUI.RESULT_CODE_ERROR
+     * PaymentUI.RESULT_CODE_CANCELED
      *
      * @param resultCode the current resultCode
      * @param result containing the Payment result state
@@ -61,9 +63,21 @@ interface ChargePaymentView {
     void setPaymentResult(int resultCode, PaymentResult result);
 
     /**
+     * Pass on the ActivityResult to the activity that started this View.
+     *
+     * @param activityResult to be pass on
+     */
+    void passOnActivityResult(ActivityResult activityResult);
+
+    /**
      * Get the Android Context of this view.
      *
      * @return the Context of this view
      */
     Activity getActivity();
+
+    /**
+     * Close this payment view
+     */
+    void close();
 }
