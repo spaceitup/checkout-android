@@ -15,8 +15,10 @@ import net.optile.payment.model.Interaction;
  */
 public final class LocalizationKey {
 
-    public final static String AUTO_REGISTRATION = "networks.registration.optional.label";
-    public final static String ALLOW_RECURRENCE = "networks.recurrence.optional.label";
+    public final static String AUTO_REGISTRATION_OPTIONAL = "networks.registration.optional.label";
+    public final static String AUTO_REGISTRATION_FORCED = "networks.registration.forced.label";
+    public final static String ALLOW_RECURRENCE_OPTIONAL = "networks.recurrence.optional.label";
+    public final static String ALLOW_RECURRENCE_FORCED = "networks.recurrence.forced.label";
 
     public final static String BUTTON_OK = "button.ok.label";
     public final static String BUTTON_BACK = "button.back.label";

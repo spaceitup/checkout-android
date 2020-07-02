@@ -8,9 +8,16 @@
 
 package net.optile.payment.ui.widget;
 
+import static net.optile.payment.localization.LocalizationKey.ALLOW_RECURRENCE_FORCED;
+import static net.optile.payment.localization.LocalizationKey.ALLOW_RECURRENCE_OPTIONAL;
+import static net.optile.payment.localization.LocalizationKey.AUTO_REGISTRATION_FORCED;
+import static net.optile.payment.localization.LocalizationKey.AUTO_REGISTRATION_OPTIONAL;
+
 import android.view.View;
 import net.optile.payment.core.PaymentException;
+import net.optile.payment.core.PaymentInputType;
 import net.optile.payment.form.Operation;
+import net.optile.payment.localization.Localization;
 import net.optile.payment.model.RegistrationType;
 import net.optile.payment.ui.PaymentTheme;
 
@@ -37,10 +44,6 @@ public final class RegisterWidget extends CheckBoxWidget {
      */
     @Override
     public void putValue(Operation operation) throws PaymentException {
-
-        if (!RegistrationType.isValid(type)) {
-            return;
-        }
         switch (type) {
             case RegistrationType.FORCED:
             case RegistrationType.FORCED_DISPLAYED:
@@ -54,25 +57,36 @@ public final class RegisterWidget extends CheckBoxWidget {
 
     public void setRegistrationType(String type) {
         this.type = type;
-
-        if (!RegistrationType.isValid(type)) {
-            setVisible(false);
-            return;
-        }
         switch (type) {
             case RegistrationType.OPTIONAL:
                 setVisible(true);
+                setCheckboxVisible(true);
+                setChecked(false);
+                setRegistrationLabel(false);
                 break;
             case RegistrationType.OPTIONAL_PRESELECTED:
                 setVisible(true);
-                initCheckBox(true, true);
+                setCheckboxVisible(true);
+                setChecked(true);
+                setRegistrationLabel(false);
                 break;
             case RegistrationType.FORCED_DISPLAYED:
                 setVisible(true);
-                initCheckBox(false, true);
+                setCheckboxVisible(false);
+                setRegistrationLabel(true);
                 break;
             default:
                 setVisible(false);
         }
+    }
+
+    private void setRegistrationLabel(boolean forced) {
+        String key;
+        if (PaymentInputType.ALLOW_RECURRENCE.equals(name)) {
+            key = forced ? ALLOW_RECURRENCE_FORCED : ALLOW_RECURRENCE_OPTIONAL;
+        } else {
+            key = forced ? AUTO_REGISTRATION_FORCED : AUTO_REGISTRATION_OPTIONAL;
+        }
+        setLabel(Localization.translate(key));
     }
 }

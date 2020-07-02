@@ -118,7 +118,7 @@
 
     </style>
 
-    <style name="WidgetCheckBoxStyle" parent="@style/Widget.MaterialComponents.CompoundButton.CheckBox">
+    <style name="WidgetCheckBoxStyle" parent="@style/Widget.MaterialComponents.CompoundButton.Switch">
         <item name="colorControlNormal">@color/pmcolor_controlnormal</item>
         <item name="colorControlActivated">@color/pmvalidation_ok</item>
         <item name="useMaterialThemeColors">false</item>

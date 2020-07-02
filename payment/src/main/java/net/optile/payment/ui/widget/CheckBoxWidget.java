@@ -8,8 +8,9 @@
 
 package net.optile.payment.ui.widget;
 
+import com.google.android.material.switchmaterial.SwitchMaterial;
+
 import android.view.View;
-import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.TextView;
 import net.optile.payment.R;
@@ -22,7 +23,7 @@ import net.optile.payment.ui.PaymentTheme;
  */
 public class CheckBoxWidget extends FormWidget {
 
-    private final CheckBox value;
+    private final SwitchMaterial value;
     private final TextView labelUnchecked;
     private final TextView labelChecked;
 
@@ -64,8 +65,11 @@ public class CheckBoxWidget extends FormWidget {
         return value.isChecked();
     }
 
-    void initCheckBox(boolean clickable, boolean checked) {
-        value.setClickable(clickable);
+    void setCheckboxVisible(boolean visible) {
+        value.setVisibility(visible ? View.VISIBLE : View.GONE);        
+    }
+    
+    void setChecked(boolean checked) {
         value.setChecked(checked);
     }
 
