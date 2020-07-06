@@ -9,17 +9,14 @@
 package net.optile.payment.ui.page;
 
 import static net.optile.payment.localization.LocalizationKey.CHARGE_INTERRUPTED;
-import static net.optile.payment.localization.LocalizationKey.ERROR_DEFAULT;
 
 import android.content.Context;
-import android.text.TextUtils;
 import net.optile.payment.core.PaymentError;
 import net.optile.payment.core.PaymentException;
 import net.optile.payment.form.Operation;
 import net.optile.payment.localization.Localization;
 import net.optile.payment.model.Interaction;
 import net.optile.payment.model.InteractionCode;
-import net.optile.payment.model.InteractionReason;
 import net.optile.payment.model.ListResult;
 import net.optile.payment.model.OperationResult;
 import net.optile.payment.model.Redirect;
@@ -44,7 +41,7 @@ import net.optile.payment.ui.service.PaymentSessionService;
 final class ChargePaymentPresenter implements PaymentSessionListener, NetworkServicePresenter, LocalizationLoaderListener {
 
     private final static int CHARGE_REQUEST_CODE = 1;
-    private final ChargePaymentView view;
+    private final PaymentView view;
     private final PaymentSessionService sessionService;
     private final LocalizationLoaderService localizationService;
 
@@ -60,7 +57,7 @@ final class ChargePaymentPresenter implements PaymentSessionListener, NetworkSer
      *
      * @param view The ChargePaymentView displaying the progress animation
      */
-    ChargePaymentPresenter(ChargePaymentView view) {
+    ChargePaymentPresenter(PaymentView view) {
         this.view = view;
         sessionService = new PaymentSessionService();
         sessionService.setListener(this);
@@ -186,7 +183,7 @@ final class ChargePaymentPresenter implements PaymentSessionListener, NetworkSer
     }
 
     private void handleLoadingNetworkFailure(final PaymentError error) {
-        view.showConnectionDialog(new ThemedDialogListener() {
+        view.showConnectionErrorDialog(new ThemedDialogListener() {
             @Override
             public void onButtonClicked(ThemedDialogFragment dialog, int which) {
                 switch (which) {
@@ -280,7 +277,7 @@ final class ChargePaymentPresenter implements PaymentSessionListener, NetworkSer
     }
 
     private void handleProcessNetworkFailure(final PaymentResult result) {
-        view.showConnectionDialog(new ThemedDialogListener() {
+        view.showConnectionErrorDialog(new ThemedDialogListener() {
             @Override
             public void onButtonClicked(ThemedDialogFragment dialog, int which) {
                 switch (which) {
@@ -342,7 +339,7 @@ final class ChargePaymentPresenter implements PaymentSessionListener, NetworkSer
         PaymentResult result = PaymentResult.fromPaymentError(error);
         closeWithCanceledCode(result);
     }
-    
+
     private void closeWithCanceledCode(PaymentResult result) {
         view.setPaymentResult(PaymentUI.RESULT_CODE_CANCELED, result);
         view.close();
@@ -351,18 +348,11 @@ final class ChargePaymentPresenter implements PaymentSessionListener, NetworkSer
     private void closeWithErrorMessage(PaymentError error) {
         closeWithErrorMessage(PaymentResult.fromPaymentError(error));
     }
-    
+
     private void closeWithErrorMessage(PaymentResult result) {
         view.setPaymentResult(PaymentUI.RESULT_CODE_CANCELED, result);
-        String msg = translateInteraction(result.getInteraction());
-        if (TextUtils.isEmpty(msg)) {
-            msg = Localization.translate(ERROR_DEFAULT);
-        }
-        showMessageAndClose(msg);
-    }
-
-    private void showMessageAndClose(String message) {
-        view.showMessageDialog(message, new ThemedDialogListener() {
+        Interaction interaction = result.getInteraction();
+        ThemedDialogListener listener = new ThemedDialogListener() {
             @Override
             public void onButtonClicked(ThemedDialogFragment dialog, int which) {
                 view.close();
@@ -372,20 +362,11 @@ final class ChargePaymentPresenter implements PaymentSessionListener, NetworkSer
             public void onDismissed(ThemedDialogFragment dialog) {
                 view.close();
             }
-        });
-    }
-
-    private void showInteractionDialog(Interaction interaction) {
-        String msg = translateInteraction(interaction);
-        if (!TextUtils.isEmpty(msg)) {
-            view.showMessageDialog(msg, null);
+        };
+        if (Localization.hasInteraction(interaction)) {
+            view.showInteractionDialog(interaction, listener);
+        } else {
+            view.showDefaultErrorDialog(listener);
         }
-    }
-
-    private String translateInteraction(Interaction interaction) {
-        if (session == null || interaction == null) {
-            return null;
-        }
-        return Localization.translateInteraction(interaction);
     }
 }

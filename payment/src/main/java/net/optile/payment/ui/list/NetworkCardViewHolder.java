@@ -11,11 +11,14 @@ package net.optile.payment.ui.list;
 
 import static net.optile.payment.core.PaymentInputType.ALLOW_RECURRENCE;
 import static net.optile.payment.core.PaymentInputType.AUTO_REGISTRATION;
+import static net.optile.payment.localization.LocalizationKey.ALLOW_RECURRENCE_FORCED;
+import static net.optile.payment.localization.LocalizationKey.ALLOW_RECURRENCE_OPTIONAL;
+import static net.optile.payment.localization.LocalizationKey.AUTO_REGISTRATION_FORCED;
+import static net.optile.payment.localization.LocalizationKey.AUTO_REGISTRATION_OPTIONAL;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -23,7 +26,7 @@ import android.widget.TextSwitcher;
 import androidx.recyclerview.widget.RecyclerView.ViewHolder;
 import net.optile.payment.R;
 import net.optile.payment.localization.Localization;
-import net.optile.payment.localization.LocalizationKey;
+import net.optile.payment.model.RegistrationType;
 import net.optile.payment.ui.PaymentTheme;
 import net.optile.payment.ui.model.NetworkCard;
 import net.optile.payment.ui.model.PaymentCard;
@@ -106,12 +109,10 @@ final class NetworkCardViewHolder extends PaymentCardViewHolder {
     private void bindRegistrationWidget(PaymentNetwork network) {
         RegisterWidget widget = (RegisterWidget) getFormWidget(AUTO_REGISTRATION);
         widget.setRegistrationType(network.getRegistration());
-        widget.setLabel(Localization.translate(network.getCode(), LocalizationKey.AUTO_REGISTRATION));
     }
 
     private void bindRecurrenceWidget(PaymentNetwork network) {
         RegisterWidget widget = (RegisterWidget) getFormWidget(ALLOW_RECURRENCE);
         widget.setRegistrationType(network.getRecurrence());
-        widget.setLabel(Localization.translate(network.getCode(), LocalizationKey.ALLOW_RECURRENCE));
     }
 }

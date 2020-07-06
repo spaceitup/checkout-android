@@ -158,7 +158,7 @@ public final class LocalizationLoaderService {
             if (index < 0 || !sharedUrl.endsWith(".properties")) {
                 throw new PaymentException("Invalid URL for creating shared language URL");
             }
-            sharedUrl = sharedUrl.substring(0, index) + "/paymentpage.properties";
+            sharedUrl = sharedUrl.substring(0, index) + "/checkout.properties";
 
             LocalizationHolder holder = cache.get(sharedUrl);
             if (holder == null) {

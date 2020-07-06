@@ -26,6 +26,7 @@ import org.robolectric.RobolectricTestRunner;
 
 import net.optile.payment.core.PaymentException;
 import net.optile.payment.core.PaymentInputType;
+import net.optile.payment.model.OperationType;
 
 @RunWith(RobolectricTestRunner.class)
 public class OperationTest {
@@ -72,7 +73,7 @@ public class OperationTest {
         }
         assertNotNull(url);
         Operation srcOperation = new Operation("VISA", url);
-        Operation dstOperation = Operation.create(srcOperation, Operation.PRESET.toLowerCase());
+        Operation dstOperation = Operation.create(srcOperation, OperationType.PRESET.toLowerCase());
         String dstUrl = dstOperation.getURL().toString();
         assertEquals(dstUrl, "http://localhost/test/preset");
     }

@@ -12,6 +12,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.net.URL;
 import java.util.Calendar;
 import java.util.List;
 
@@ -25,12 +26,13 @@ import androidx.core.widget.TextViewCompat;
 import net.optile.payment.core.PaymentInputType;
 import net.optile.payment.model.AccountMask;
 import net.optile.payment.model.InputElement;
+import net.optile.payment.model.OperationType;
 
 /**
  * The PaymentUtils class containing helper methods
  */
 public final class PaymentUtils {
-    
+
     /**
      * Check if the Boolean object is true, the Boolean object may be null.
      *
@@ -74,13 +76,13 @@ public final class PaymentUtils {
     public static int toInt(Integer value) {
         return value == null ? 0 : value;
     }
-    
-    /** 
-     * Create am expiry date string from the AccountMask. 
+
+    /**
+     * Create am expiry date string from the AccountMask.
      * If the AccountMask does not contain the expiryMonth and expiryYear values then return null.
-     * 
+     *
      * @param mask AccountMask containing the expiryMonth and expiryYear fields
-     * @return the expiry date or null if it could not be created 
+     * @return the expiry date or null if it could not be created
      */
     public static String getExpiryDateString(AccountMask mask) {
         int month = toInt(mask.getExpiryMonth());
@@ -90,7 +92,7 @@ public final class PaymentUtils {
         }
         return String.format("%1$02d / %2$d", month, (year % 100));
     }
-    
+
     /**
      * Does the list of InputElements contain both the expiry month and year fields.
      *
@@ -113,7 +115,7 @@ public final class PaymentUtils {
         return hasExpiryYear && hasExpiryMonth;
     }
 
-    /** 
+    /**
      * Create a full expiry year from the last part of the expiry year.
      * This will use dynamic windowing of -30 years and +70 year.
      *
@@ -131,7 +133,36 @@ public final class PaymentUtils {
         int year = inputYear > (startYear % 100) ? startYear : endYear;
         return (year - (year % 100)) + inputYear;
     }
-    
+
+    /**
+     * Get the operationType from the operation url
+     *
+     * @param url to obtain the operationType from
+     * @return the operationType or null if not found from the url
+     */
+    public final static String getOperationType(URL url) {
+        if (url == null) {
+            return null;
+        }
+        String path = url.getPath();
+        if (path.endsWith("preset")) {
+            return OperationType.PRESET;
+        }
+        if (path.endsWith("charge")) {
+            return OperationType.CHARGE;
+        }
+        if (path.endsWith("update")) {
+            return OperationType.UPDATE;
+        }
+        if (path.endsWith("payout")) {
+            return OperationType.PAYOUT;
+        }
+        if (path.endsWith("activate")) {
+            return OperationType.ACTIVATION;
+        }
+        return null;
+    }
+
     /**
      * Set the TextAppearance in the TextView
      *

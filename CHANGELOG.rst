@@ -1,6 +1,13 @@
 Changelog - Android SDK
 -----------------------
 
+** Version android-sdk-3.2.0**
+
+    * [PCX-767] - Apply changes to registration checkboxes/labels
+    * [PCX-768] - Show title and text for interactions
+    * [PCX-868] - Refer to new names of renamed keys
+    * [PCX-922] - Lint is disabled in build      
+
 ** Version android-sdk-3.1.1**
 
     * [PCX-873] - Demo app and Android SDK crash when PresetAccount has no AccountMask

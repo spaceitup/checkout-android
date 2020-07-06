@@ -12,7 +12,6 @@ import static net.optile.payment.localization.LocalizationKey.LIST_TITLE;
 
 import java.util.Map;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -20,14 +19,11 @@ import android.view.MenuItem;
 import androidx.annotation.VisibleForTesting;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.widget.Toolbar;
-import androidx.fragment.app.DialogFragment;
 import androidx.test.espresso.IdlingResource;
 import net.optile.payment.R;
 import net.optile.payment.form.Operation;
 import net.optile.payment.localization.Localization;
 import net.optile.payment.ui.PaymentResult;
-import net.optile.payment.ui.dialog.ThemedDialogFragment;
-import net.optile.payment.ui.dialog.ThemedDialogFragment.ThemedDialogListener;
 import net.optile.payment.ui.list.PaymentList;
 import net.optile.payment.ui.model.PaymentCard;
 import net.optile.payment.ui.model.PaymentSession;
@@ -43,11 +39,9 @@ public final class PaymentListActivity extends BasePaymentActivity implements Pa
     private PaymentList paymentList;
     private int cachedListIndex;
 
-    // For automated UI Testing
+    // For automated testing
     private boolean loadCompleted;
     private SimpleIdlingResource loadIdlingResource;
-    private SimpleIdlingResource dialogIdlingResource;
-    private SimpleIdlingResource closeIdlingResource;
 
     /**
      * Create the start intent for this PaymentListActivity.
@@ -135,6 +129,7 @@ public final class PaymentListActivity extends BasePaymentActivity implements Pa
     @Override
     public void onResume() {
         super.onResume();
+        loadCompleted = false;
         presenter.onStart();
     }
 
@@ -214,106 +209,8 @@ public final class PaymentListActivity extends BasePaymentActivity implements Pa
         startActivityForResult(intent, requestCode);
         overridePendingTransition(ChargePaymentActivity.getStartTransition(), R.anim.no_animation);
 
-        // For automated UI testing
-        if (closeIdlingResource != null) {
-            closeIdlingResource.setIdleState(true);
-        }
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public void showProgress(boolean visible) {
-        if (!active) {
-            return;
-        }
-        progressView.setVisible(visible);
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public void close() {
-        if (!active) {
-            return;
-        }
-        supportFinishAfterTransition();
-        overridePendingTransition(R.anim.no_animation, R.anim.no_animation);
-
-        // For automated UI testing
-        if (closeIdlingResource != null) {
-            closeIdlingResource.setIdleState(true);
-        }
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public void passOnActivityResult(ActivityResult activityResult) {
-        if (!active) {
-            return;
-        }
-        setResultIntent(activityResult.resultCode, activityResult.paymentResult);
-        supportFinishAfterTransition();
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public void setPaymentResult(int resultCode, PaymentResult result) {
-        if (!active) {
-            return;
-        }
-        setResultIntent(resultCode, result);
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public void showMessageDialog(String message, ThemedDialogListener listener) {
-        if (!active) {
-            return;
-        }
-        progressView.setVisible(false);
-        ThemedDialogFragment dialog = createMessageDialog(message, listener);
-        showDialogFragment(dialog, "dialog_message");
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public void showConnectionDialog(ThemedDialogListener listener) {
-        if (!active) {
-            return;
-        }
-        progressView.setVisible(false);
-        ThemedDialogFragment dialog = createConnectionDialog(listener);
-        showDialogFragment(dialog, "dialog_connection");
-
-
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public Activity getActivity() {
-        return this;
-    }
-
-    public void showDialogFragment(DialogFragment dialog, String tag) {
-        dialog.show(getSupportFragmentManager(), tag);
-
-        // For automated UI testing
-        if (dialogIdlingResource != null) {
-            dialogIdlingResource.setIdleState(true);
-        }
+        // for automated testing
+        setCloseIdleState();
     }
 
     public void onActionClicked(PaymentCard item, Map<String, FormWidget> widgets) {
@@ -331,35 +228,13 @@ public final class PaymentListActivity extends BasePaymentActivity implements Pa
     @VisibleForTesting
     public IdlingResource getLoadIdlingResource() {
         if (loadIdlingResource == null) {
-            loadIdlingResource = new SimpleIdlingResource("listLoadIdlingResource");
+            loadIdlingResource = new SimpleIdlingResource(getClass().getSimpleName() + "-loadIdlingResource");
         }
         if (loadCompleted) {
             loadIdlingResource.setIdleState(loadCompleted);
+        } else {
+            loadIdlingResource.reset();
         }
         return loadIdlingResource;
-    }
-
-    /**
-     * Only called from test, creates and returns a new IdlingResource
-     */
-    @VisibleForTesting
-    public IdlingResource getDialogIdlingResource() {
-        if (dialogIdlingResource == null) {
-            dialogIdlingResource = new SimpleIdlingResource("listDialogIdlingResource");
-        }
-        dialogIdlingResource.reset();
-        return dialogIdlingResource;
-    }
-
-    /**
-     * Only called from test, creates and returns a new IdlingResource
-     */
-    @VisibleForTesting
-    public IdlingResource getCloseIdlingResource() {
-        if (closeIdlingResource == null) {
-            closeIdlingResource = new SimpleIdlingResource("listCloseIdlingResource");
-        }
-        closeIdlingResource.reset();
-        return closeIdlingResource;
     }
 }

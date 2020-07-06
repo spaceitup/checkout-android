@@ -3,18 +3,12 @@
     <string name="pmpage_error_notsupported">The payment methods in the current payment session are not supported by this app.</string>
     <string name="pmpage_contentdescription">PaymentImage</string>
 
-    <string name="pmlocal_list_title">Payment methods</string>
-    <string name="pmlocal_list_header_networks">Choose a method</string>
+    <string name="error_connection_title">Oops!</string>
+    <string name="error_connection_text">There was a problem with your internet connection</string>
+    <string name="error_default_title">Oops!</string>
+    <string name="error_default_text">An error occurred while handling your payment. Please try again.</string>
 
-    <string name="pmlocal_charge_title">Payment processing…</string>
-    <string name="pmlocal_charge_text">Confirmation may take up to 30 seconds. Don\'t close or click the back button.</string>
-    <string name="pmlocal_charge_interrupted">Please wait for the payment to process.</string>
-
-    <string name="pmlocal_error_connection">There was a problem with your internet connection.</string>
-    <string name="pmlocal_error_default">Unfortunately we were unable to continue with your payment request. Maybe it was submitted already or timed out. You could start the payment checkout again.</string>
-
-    <string name="pmlocal_button_cancel">Cancel</string>
-    <string name="pmlocal_button_retry">Retry</string>
-    <string name="pmlocal_button_update">Update</string>
-    <string name="pmlocal_button_ok">OK</string>
+    <string name="button_cancel_label">Cancel</string>
+    <string name="button_retry_label">Retry</string>
+    <string name="button_ok_label">OK</string>
 </resources>

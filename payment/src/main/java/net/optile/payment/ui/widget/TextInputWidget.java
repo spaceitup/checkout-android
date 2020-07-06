@@ -67,10 +67,10 @@ public final class TextInputWidget extends InputLayoutWidget {
         }
     }
 
-    /** 
+    /**
      * Set the InputElement into this TextInputWidget
-     * 
-     * @param maxLength the maxLength hint for the TextInput 
+     *
+     * @param maxLength the maxLength hint for the TextInput
      * @param element to be set in this widget
      */
     public void setInputElement(int maxLength, InputElement element) {

@@ -8,8 +8,6 @@
 
 package net.optile.payment.ui.widget;
 
-import java.util.Calendar;
-
 import android.text.TextUtils;
 import android.view.View;
 import net.optile.payment.core.PaymentException;
@@ -27,7 +25,7 @@ public final class DateWidget extends InputLayoutWidget {
 
     private InputElement monthElement;
     private InputElement yearElement;
-    
+
     /**
      * Construct a new DateWidget
      *
@@ -59,9 +57,9 @@ public final class DateWidget extends InputLayoutWidget {
         operation.putValue(yearElement.getName(), date.year);
     }
 
-    /** 
+    /**
      * Set the InputElements in this DateWidget
-     * 
+     *
      * @param monthElement expiry month element
      * @param yearElement expiry year element
      */
@@ -76,7 +74,7 @@ public final class DateWidget extends InputLayoutWidget {
         String[] split = getValue().split(ExpiryDateInputMode.DIVIDER);
         String month = split.length > 0 ? split[0] : "";
         String year = split.length > 1 ? split[1] : "";
-        
+
         if (!TextUtils.isEmpty(year)) {
             int expiryYear = PaymentUtils.createExpiryYear(Integer.parseInt(year));
             year = Integer.toString(expiryYear);

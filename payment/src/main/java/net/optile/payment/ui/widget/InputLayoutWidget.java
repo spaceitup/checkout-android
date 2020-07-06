@@ -66,7 +66,7 @@ public abstract class InputLayoutWidget extends FormWidget {
                 return false;
             }
         });
-        
+
         textInput.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
             public void onFocusChange(View v, boolean hasFocus) {
@@ -155,7 +155,7 @@ public abstract class InputLayoutWidget extends FormWidget {
         this.mode = mode;
         mode.apply(textInput);
     }
-    
+
     String getValue() {
         CharSequence cs = textInput.getText();
         return cs != null ? cs.toString().trim() : "";

@@ -224,9 +224,9 @@ public abstract class PaymentCardViewHolder extends RecyclerView.ViewHolder {
                 title.setText(mask.getNumber());
                 String date = PaymentUtils.getExpiryDateString(mask);
                 if (date != null) {
-                    subtitle.setVisibility(View.VISIBLE);                    
+                    subtitle.setVisibility(View.VISIBLE);
                     subtitle.setText(date);
-                } 
+                }
                 break;
             default:
                 title.setText(mask.getDisplayLabel());
@@ -269,7 +269,7 @@ public abstract class PaymentCardViewHolder extends RecyclerView.ViewHolder {
         bindIconResource(widget);
         widget.setLabel(Localization.translateAccountLabel(card.getCode(), name));
         widget.setInputElements(card.getInputElement(PaymentInputType.EXPIRY_MONTH),
-                                card.getInputElement(PaymentInputType.EXPIRY_YEAR));
+            card.getInputElement(PaymentInputType.EXPIRY_YEAR));
         widget.setReducedView();
     }
 
