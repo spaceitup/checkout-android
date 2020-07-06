@@ -11,12 +11,6 @@ android {
         ignoreWarnings true
     }
 
-    testOptions {
-        unitTests {
-            includeAndroidResources true
-        }
-    }
-
     compileOptions {
         sourceCompatibility rootProject.javaCompatVersion
         targetCompatibility rootProject.javaCompatVersion
