@@ -6,6 +6,7 @@ Changelog - Android SDK
     * [PCX-767] - Apply changes to registration checkboxes/labels
     * [PCX-768] - Show title and text for interactions
     * [PCX-868] - Refer to new names of renamed keys
+    * [PCX-922] - Lint is disabled in build      
 
 ** Version android-sdk-3.1.1**
 
