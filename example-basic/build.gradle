@@ -1,7 +1,15 @@
 apply plugin: 'com.android.application'
 apply plugin: "com.browserstack.gradle"
 
+assemble.dependsOn('lint')
+
 android {
+
+    lintOptions {
+        abortOnError true
+        checkDependencies true
+        ignoreWarnings true
+    }
 
     compileOptions {
         sourceCompatibility rootProject.javaCompatVersion

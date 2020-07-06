@@ -9,6 +9,12 @@ configurations {
 
 android {
 
+    lintOptions {
+        abortOnError true
+        checkDependencies true
+        ignoreWarnings true
+    }
+
     testOptions {
         unitTests {
             includeAndroidResources = true
@@ -108,10 +114,10 @@ uploadArchives {
 //
 // This contains an additional task to upload to external packagecloud.io.
 // Run using: gradle uploadExternal
-// 
+//
 // Documentation about packagecloud gradle at:
 // https://packagecloud.io/docs#gradle_deploy
-// 
+//
 task uploadExternal(type: Upload) {
     if (!project.hasProperty('packageCloudMavenPassword')) {
         logger.warn('Missing packageCloudMavenPassword from ~/.gradle/gradle.properties in uploadExternal task')

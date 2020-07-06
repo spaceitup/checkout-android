@@ -1,11 +1,19 @@
 apply plugin: 'com.android.application'
 apply plugin: "com.browserstack.gradle"
 
+assemble.dependsOn('lint')
+
 android {
+
+    lintOptions {
+        abortOnError true
+        checkDependencies true
+        ignoreWarnings true
+    }
 
     testOptions {
         unitTests {
-            includeAndroidResources = true
+            includeAndroidResources true
         }
     }
 
@@ -102,4 +110,3 @@ browserStackConfig {
     customBuildName = "Example-Demo ${getCurrentBranch()}"
     devices = ['Google Pixel 3a-9.0']
 }
-
