@@ -82,7 +82,7 @@ public final class MessageDialogFragment extends ThemedDialogFragment {
 
     private void initTexts(View rootView) {
         initTextView(rootView.findViewById(R.id.text_title), title);
-        initTextView(rootView.findViewById(R.id.text_message), message);        
+        initTextView(rootView.findViewById(R.id.text_message), message);
     }
 
     private void initTextView(TextView textView, String text) {

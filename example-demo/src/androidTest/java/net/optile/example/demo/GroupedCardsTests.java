@@ -14,15 +14,14 @@ import static androidx.test.espresso.matcher.ViewMatchers.withId;
 import java.io.IOException;
 
 import org.json.JSONException;
-import org.junit.Ignore;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
-import androidx.test.filters.LargeTest;
 import androidx.test.espresso.IdlingResource;
 import androidx.test.espresso.intent.Intents;
 import androidx.test.ext.junit.runners.AndroidJUnit4;
+import androidx.test.filters.LargeTest;
 import androidx.test.rule.ActivityTestRule;
 import net.optile.example.demo.settings.SettingsActivity;
 import net.optile.payment.test.view.PaymentActions;

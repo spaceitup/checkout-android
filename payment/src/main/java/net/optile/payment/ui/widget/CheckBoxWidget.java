@@ -11,7 +11,6 @@ package net.optile.payment.ui.widget;
 import com.google.android.material.switchmaterial.SwitchMaterial;
 
 import android.view.View;
-import android.widget.CompoundButton;
 import android.widget.TextView;
 import net.optile.payment.R;
 import net.optile.payment.core.PaymentException;
@@ -56,9 +55,9 @@ public class CheckBoxWidget extends FormWidget {
     }
 
     void setCheckboxVisible(boolean visible) {
-        value.setVisibility(visible ? View.VISIBLE : View.GONE);        
+        value.setVisibility(visible ? View.VISIBLE : View.GONE);
     }
-    
+
     void setChecked(boolean checked) {
         value.setChecked(checked);
     }

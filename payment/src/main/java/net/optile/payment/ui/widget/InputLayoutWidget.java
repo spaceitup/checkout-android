@@ -15,13 +15,10 @@ import android.text.TextUtils;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
-import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 import net.optile.payment.R;
 import net.optile.payment.ui.PaymentTheme;
 import net.optile.payment.ui.widget.input.EditTextInputMode;
-import net.optile.payment.util.PaymentUtils;
 import net.optile.payment.validation.ValidationResult;
 
 /**

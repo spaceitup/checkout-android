@@ -8,13 +8,7 @@
 
 package net.optile.payment.ui;
 
-import java.util.HashMap;
-import java.util.Map;
-
-import androidx.annotation.ColorRes;
-import androidx.annotation.DrawableRes;
 import net.optile.payment.R;
-import net.optile.payment.core.PaymentInputType;
 
 /**
  * Class to hold the theme settings of the payment screens in the Android SDK

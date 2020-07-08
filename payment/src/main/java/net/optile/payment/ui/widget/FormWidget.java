@@ -9,10 +9,6 @@
 package net.optile.payment.ui.widget;
 
 import android.view.View;
-import android.widget.ImageView;
-import androidx.annotation.DrawableRes;
-import androidx.core.content.ContextCompat;
-import net.optile.payment.R;
 import net.optile.payment.core.PaymentException;
 import net.optile.payment.form.Operation;
 import net.optile.payment.ui.PaymentTheme;

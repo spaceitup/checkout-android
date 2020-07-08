@@ -8,14 +8,10 @@
 
 package net.optile.payment.ui.page;
 
-import android.graphics.PorterDuff;
-import android.graphics.drawable.Drawable;
 import android.text.TextUtils;
-import android.util.TypedValue;
 import android.view.View;
 import android.widget.ProgressBar;
 import android.widget.TextView;
-import androidx.core.content.ContextCompat;
 import net.optile.payment.R;
 
 /**
