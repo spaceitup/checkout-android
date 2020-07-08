@@ -25,8 +25,6 @@ public final class MessageDialogFragment extends ThemedDialogFragment {
 
     private String title;
     private String message;
-    private String imagePrefix;
-    private String imageSuffix;
     private int imageResId;
 
     /**
@@ -56,11 +54,6 @@ public final class MessageDialogFragment extends ThemedDialogFragment {
         this.message = message;
     }
 
-    public void setImageLabels(String imagePrefix, String imageSuffix) {
-        this.imagePrefix = imagePrefix;
-        this.imageSuffix = imageSuffix;
-    }
-
     public void setImageResId(int imageResId) {
         this.imageResId = imageResId;
     }
@@ -71,66 +64,34 @@ public final class MessageDialogFragment extends ThemedDialogFragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.dialogfragment_message, container, false);
-        initTitle(v);
-        initMessage(v);
+        initTexts(v);
         initImage(v);
         initButtons(v);
         return v;
     }
 
     private void initImage(View rootView) {
-
-        View layout = rootView.findViewById(R.id.layout_image);
+        ImageView imageView = rootView.findViewById(R.id.image_logo);
         if (imageResId == 0) {
-            layout.setVisibility(View.GONE);
+            imageView.setVisibility(View.GONE);
             return;
         }
-        layout.setVisibility(View.VISIBLE);
-        initImageLabel(rootView.findViewById(R.id.text_imageprefix), imagePrefix);
-        initImageLabel(rootView.findViewById(R.id.text_imagesuffix), imageSuffix);
-        ImageView view = rootView.findViewById(R.id.image_logo);
-        view.setVisibility(View.VISIBLE);
-        view.setImageResource(imageResId);
+        imageView.setVisibility(View.VISIBLE);
+        imageView.setImageResource(imageResId);
     }
 
-    private void initImageLabel(TextView tv, String label) {
-        if (TextUtils.isEmpty(label)) {
-            tv.setVisibility(View.GONE);
-            return;
-        }
-        tv.setVisibility(View.VISIBLE);
-        tv.setText(label);
+    private void initTexts(View rootView) {
+        initTextView(rootView.findViewById(R.id.text_title), title);
+        initTextView(rootView.findViewById(R.id.text_message), message);        
     }
 
-
-    private void initTitle(View rootView) {
-        TextView tv = rootView.findViewById(R.id.text_title);
-        if (TextUtils.isEmpty(title)) {
-            tv.setVisibility(View.GONE);
-            return;
-        }
-        tv.setVisibility(View.VISIBLE);
-        tv.setText(title);
-    }
-
-    private void initMessage(View rootView) {
-        TextView tvTitle = rootView.findViewById(R.id.text_message_title);
-        TextView tvNoTitle = rootView.findViewById(R.id.text_message_notitle);
-        if (TextUtils.isEmpty(title)) {
-            tvTitle.setVisibility(View.GONE);
-            initMessage(tvNoTitle);
-        } else {
-            tvNoTitle.setVisibility(View.GONE);
-            initMessage(tvTitle);
-        }
-    }
-
-    private void initMessage(TextView textView) {
-        if (TextUtils.isEmpty(message)) {
+    private void initTextView(TextView textView, String text) {
+        if (TextUtils.isEmpty(text)) {
             textView.setVisibility(View.GONE);
             return;
         }
         textView.setVisibility(View.VISIBLE);
-        textView.setText(message);
+        textView.setText(text);
     }
+
 }
