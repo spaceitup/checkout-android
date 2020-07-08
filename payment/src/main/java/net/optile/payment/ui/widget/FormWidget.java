@@ -29,7 +29,6 @@ public abstract class FormWidget {
 
     final View rootView;
     final String name;
-    final ImageView icon;
     final PaymentTheme theme;
 
     WidgetPresenter presenter;
@@ -40,7 +39,6 @@ public abstract class FormWidget {
         this.name = name;
         this.rootView = rootView;
         this.theme = theme;
-        this.icon = rootView.findViewById(R.id.image_icon);
     }
 
     /**
@@ -68,19 +66,6 @@ public abstract class FormWidget {
      */
     public final String getName() {
         return name;
-    }
-
-    /**
-     * Set the resource ID of the validation icon in front of this widget
-     *
-     * @param resId resource id of the icon
-     */
-    public final void setIconResource(@DrawableRes int resId) {
-
-        if (icon != null) {
-            icon.setImageResource(resId);
-            setIconColor(this.state);
-        }
     }
 
     /**
@@ -138,24 +123,5 @@ public abstract class FormWidget {
      */
     final void setValidationState(int state) {
         this.state = state;
-        setIconColor(state);
-    }
-
-    private void setIconColor(int state) {
-
-        if (icon == null) {
-            return;
-        }
-        int colorResId = theme.getValidationColorUnknown();
-        switch (state) {
-            case VALIDATION_OK:
-                colorResId = theme.getValidationColorOk();
-                break;
-            case VALIDATION_ERROR:
-                colorResId = theme.getValidationColorError();
-        }
-        if (colorResId != 0) {
-            icon.setColorFilter(ContextCompat.getColor(rootView.getContext(), colorResId));
-        }
     }
 }

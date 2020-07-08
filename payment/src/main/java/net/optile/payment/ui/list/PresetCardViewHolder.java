@@ -38,7 +38,6 @@ final class PresetCardViewHolder extends PaymentCardViewHolder {
         addLogoView(parent, presetCard.getCode());
         PaymentTheme theme = adapter.getPaymentTheme();
         addButtonWidget(theme);
-        addLabelWidget(theme);
     }
 
     static RecyclerView.ViewHolder createInstance(ListAdapter adapter, PresetCard presetCard, ViewGroup parent) {
@@ -63,6 +62,5 @@ final class PresetCardViewHolder extends PaymentCardViewHolder {
             title.setText(card.getLabel());
         }
         bindLogoView(paymentCard.getCode(), card.getLink("logo"), true);
-        bindLabelWidget(Localization.translate(LIST_PRESET_TEXT));
     }
 }
