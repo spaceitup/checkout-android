@@ -38,7 +38,7 @@ class ProgressView {
         progressBar = view.findViewById(R.id.progressbar);
         textHeader = view.findViewById(R.id.text_header);
         textInfo = view.findViewById(R.id.text_info);
-        styleProgressBar();
+        //styleProgressBar();
     }
 
     /**
@@ -73,14 +73,14 @@ class ProgressView {
      */
     @SuppressWarnings("deprecation")
     private void styleProgressBar() {
-        TypedValue typedValue = new TypedValue();
-        view.getContext().getTheme().resolveAttribute(R.attr.progressColor, typedValue, true);
+        //TypedValue typedValue = new TypedValue();
+        //view.getContext().getTheme().resolveAttribute(R.attr.progressColor, typedValue, true);
 
-        Drawable drawable = progressBar.getIndeterminateDrawable();
-        if (drawable == null || typedValue.resourceId == 0) {
-            return;
-        }
-        drawable.setColorFilter(ContextCompat.getColor(view.getContext(), typedValue.resourceId),
-            PorterDuff.Mode.SRC_IN);
+        //Drawable drawable = progressBar.getIndeterminateDrawable();
+        //if (drawable == null || typedValue.resourceId == 0) {
+        //    return;
+        //}
+        //drawable.setColorFilter(ContextCompat.getColor(view.getContext(), typedValue.resourceId),
+        //    PorterDuff.Mode.SRC_IN);
     }
 }
