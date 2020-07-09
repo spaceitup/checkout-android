@@ -37,15 +37,6 @@ public final class MessageDialogFragment extends ThemedDialogFragment {
     }
 
     /**
-     * {@inheritDoc}
-     */
-    @Override
-    public int getTheme() {
-        int theme = PaymentUI.getInstance().getPaymentTheme().getMessageDialogTheme();
-        return theme == 0 ? super.getTheme() : theme;
-    }
-
-    /**
      * Set the message in this message dialog that should be shown to the user
      *
      * @param message shown in the middle of the message dialog

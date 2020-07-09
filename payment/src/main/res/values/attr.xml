@@ -1,11 +1,3 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <attr name="paymentListToolbarTheme" type="reference" />
-    <attr name="paymentCardStyle" type="reference" />
-    <attr name="paymentCardLogoBackground" type="reference" />
-
-    <attr name="widgetHintDrawable" type="reference" />
-    <attr name="widgetButtonStyle" type="reference" />
-    <attr name="widgetCheckBoxStyle" type="reference" />
-    <attr name="themedDialogButtonStyle" type="reference" />
 </resources>

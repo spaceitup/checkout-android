@@ -1,19 +1,2 @@
 <resources>
-    <style name="WidgetTextInputStyle" parent="@style/Widget.MaterialComponents.TextInputLayout.FilledBox">
-    </style>
-
-    <style name="WidgetEditTextStyle" parent="@style/ThemeOverlay.MaterialComponents.TextInputEditText.FilledBox">
-    </style>
-
-    <style name="PaymentCardStyle" parent="@style/Widget.MaterialComponents.CardView">
-    </style>
-
-    <style name="WidgetButtonStyle" parent="@style/Widget.MaterialComponents.Button.UnelevatedButton">
-    </style>
-
-    <style name="DialogButtonStyle" parent="@style/Widget.MaterialComponents.Button.TextButton.Dialog">
-    </style>
-
-    <style name="WidgetCheckBoxStyle" parent="@style/Widget.MaterialComponents.CompoundButton.Switch">
-    </style>
 </resources>

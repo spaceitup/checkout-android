@@ -9,12 +9,4 @@
     <style name="PaymentTheme.ChargePayment">
     </style>
 
-    <style name="PaymentDialogTheme" parent="Theme.MaterialComponents.Light.Dialog">
-    </style>
-
-    <style name="PaymentDialogTheme.Message">
-    </style>
-
-    <style name="PaymentToolbarTheme" parent="ThemeOverlay.MaterialComponents.Dark.ActionBar"></style>
-
 </resources>
