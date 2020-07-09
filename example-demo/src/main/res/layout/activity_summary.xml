@@ -4,7 +4,6 @@
     android:id="@+id/layout_coordinator"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/pmcolor_list"
     android:fitsSystemWindows="true">
 
     <include layout="@layout/layout_header" />
@@ -24,7 +23,6 @@
                 android:layout_width="@dimen/pmprogressbar_size"
                 android:layout_height="@dimen/pmprogressbar_size"
                 android:layout_marginTop="@dimen/pmborder_xlarge"
-                android:indeterminateTint="@color/pmcolor_primary"
                 android:layout_centerInParent="true" />
 
             <LinearLayout

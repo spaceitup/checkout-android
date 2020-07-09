@@ -42,7 +42,6 @@
             android:layout_marginBottom="@dimen/border_medium" />
 
         <Button
-            style="@style/WidgetButtonStyle"
             android:id="@+id/button_action"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

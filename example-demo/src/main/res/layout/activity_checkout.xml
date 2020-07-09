@@ -4,7 +4,6 @@
     android:id="@+id/layout_checkout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/pmcolor_list"
     android:fitsSystemWindows="true">
 
     <include layout="@layout/layout_header" />
@@ -28,7 +27,6 @@
                 android:paddingBottom="@dimen/pmborder_xlarge"
                 android:paddingLeft="@dimen/pmborder_medium"
                 android:paddingRight="@dimen/pmborder_medium"
-                android:background="@color/pmcolor_background"
                 android:orientation="vertical">
 
                 <LinearLayout
@@ -46,14 +44,12 @@
                         android:contentDescription="TODO" />
 
                     <TextView
-                        style="@style/PaymentText.Medium"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:text="@string/product_date" />
 
                     <TextView
-                        style="@style/PaymentText.Medium.Bold"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/product_price" />
@@ -72,7 +68,6 @@
                         android:src="@drawable/ic_count" />
 
                     <TextView
-                        style="@style/PaymentText.Medium"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/product_count" />
@@ -80,7 +75,6 @@
             </LinearLayout>
 
             <TextView
-                style="@style/PaymentText.Medium.Bold"
                 android:layout_marginTop="@dimen/pmborder_medium"
                 android:layout_marginLeft="@dimen/pmborder_medium"
                 android:layout_marginRight="@dimen/pmborder_medium"
@@ -90,7 +84,6 @@
                 android:text="@string/checkout_personal_details" />
 
             <com.google.android.material.card.MaterialCardView
-                style="@style/PaymentCardStyle"
                 android:layout_marginLeft="@dimen/pmborder_medium"
                 android:layout_marginRight="@dimen/pmborder_medium"
                 android:layout_width="match_parent"
@@ -105,7 +98,6 @@
                     <include layout="@layout/layout_checkoutdetails" />
 
                     <com.google.android.material.button.MaterialButton
-                        style="@style/WidgetButtonStyle"
                         android:id="@+id/button_checkout"
                         android:layout_marginTop="@dimen/pmborder_large"
                         android:layout_width="match_parent"
@@ -119,21 +111,15 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center_vertical"
-                android:layout_marginTop="@dimen/pmborder_large"
-                android:layout_marginLeft="@dimen/pmborder_medium"
-                android:layout_marginRight="@dimen/pmborder_medium"
-                android:layout_marginBottom="@dimen/pmborder_large"
                 android:orientation="horizontal">
 
                 <TextView
-                    style="@style/PaymentText.Medium.Bold"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:text="@string/product_total" />
 
                 <TextView
-                    style="@style/PaymentText.XLarge.Bold"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/product_price" />

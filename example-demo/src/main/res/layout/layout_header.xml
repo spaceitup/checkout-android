@@ -13,9 +13,7 @@
         android:layout_width="match_parent"
         android:layout_height="@dimen/toolbar_height"
         android:fitsSystemWindows="true"
-        app:collapsedTitleTextAppearance="@style/PaymentText.Medium.Bold.Light"
         app:layout_scrollFlags="scroll|exitUntilCollapsed"
-        app:expandedTitleTextAppearance="@style/TransparentText"
         app:contentScrim="?attr/colorPrimary">
 
         <ImageView
@@ -43,19 +41,16 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    style="@style/DefaultHeaderSubtitle"
                     android:text="@string/product_subtitle" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    style="@style/DefaultHeaderTitle"
                     android:text="@string/product_title1" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    style="@style/DefaultHeaderTitle"
                     android:text="@string/product_title2" />
             </LinearLayout>
         </FrameLayout>
@@ -64,8 +59,6 @@
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
-            android:theme="@style/PaymentToolbarTheme"
-            app:titleTextAppearance="@style/PaymentText.Medium.Bold.Light"
             app:layout_collapseMode="pin" />
 
     </com.google.android.material.appbar.CollapsingToolbarLayout>
