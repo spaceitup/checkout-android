@@ -1,4 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <resources>
+    <color name="pm_green700">#008940</color>
+    <color name="pm_green400">#49B66E</color>
+
+    <color name="pm_gray800">#424242</color>
+    <color name="pm_gray300">#E0E0E0</color>
+    <color name="pm_gray800_alpha32">#CC424242</color>            
+
+    <color name="pm_black">#000000</color>
+    <color name="pm_white">#FFFFFF</color>        
+    
+    <color name="pm_black_alpha32">#52000000</color>    
+    <color name="pm_white_alpha80">#CCFFFFFF</color>
 </resources>
  
