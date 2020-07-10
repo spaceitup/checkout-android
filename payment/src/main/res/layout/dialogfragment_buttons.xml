@@ -10,12 +10,14 @@
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/dialogbutton_neutral"
+        style="?attr/borderlessButtonStyle"
         android:visibility="gone"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/dialogbutton_positive"
+        style="?attr/borderlessButtonStyle"
         android:visibility="gone"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />

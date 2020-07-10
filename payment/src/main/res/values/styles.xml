@@ -30,6 +30,21 @@
         <item name="colorOnSurface">@color/pm_gray800</item>
     </style>
 
+    <style name="Widget.Payment.Button.TextButton" parent="Widget.MaterialComponents.Button.TextButton">
+        <item name="materialThemeOverlay">@style/ThemeOverlay.Payment.Button.TextButton</item>
+        <item name="shapeAppearance">@style/ShapeAppearance.Payment.SmallComponent</item>
+    </style>
+    
+    <style name="Widget.Payment.Button.UnelevatedButton" parent="Widget.MaterialComponents.Button.UnelevatedButton">
+        <item name="materialThemeOverlay">@style/ThemeOverlay.Payment.Button.TextButton</item>
+        <item name="android:textAppearance">@style/TextAppearance.Payment.Button</item>
+        <item name="shapeAppearance">@style/ShapeAppearance.Payment.SmallComponent</item>
+    </style>
+
+    <style name="ThemeOverlay.Payment.Button.TextButton" parent="">
+        <item name="colorPrimary">@color/pm_green700</item>
+    </style>
+    
     <style name="Widget.Payment.CardView" parent="Widget.MaterialComponents.CardView">
         <item name="materialThemeOverlay">@style/ThemeOverlay.Payment.Card</item>
         <item name="shapeAppearance">@style/ShapeAppearance.Payment.MediumComponent</item>
@@ -37,9 +52,13 @@
         <item name="strokeWidth">@dimen/pmcard_stroke</item>
         <item name="strokeColor">@color/pm_gray300</item>                
     </style>
+
+    <style name="ShapeAppearance.Payment.SmallComponent" parent="ShapeAppearance.MaterialComponents.SmallComponent">
+        <item name="cornerSize">@dimen/pmradius</item>
+    </style>
     ​
     <style name="ShapeAppearance.Payment.MediumComponent" parent="ShapeAppearance.MaterialComponents.MediumComponent">
-        <item name="cornerSize">@dimen/pmradius_medium</item>
+        <item name="cornerSize">@dimen/pmradius</item>
     </style>
     
 </resources>

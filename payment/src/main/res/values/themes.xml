@@ -12,6 +12,9 @@
         <item name="textAppearanceBody2">@style/TextAppearance.Payment.Body2</item>                
         <item name="textAppearanceHeadline6">@style/TextAppearance.Payment.Body2</item>
         <item name="textAppearanceButton">@style/TextAppearance.Payment.Button</item>                        
+
+        <item name="borderlessButtonStyle">@style/Widget.Payment.Button.TextButton</item>
+        <item name="materialButtonStyle">@style/Widget.Payment.Button.UnelevatedButton</item>
     </style>
 
     <style name="PaymentTheme.PaymentList">
