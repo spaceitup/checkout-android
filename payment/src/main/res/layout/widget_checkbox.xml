@@ -17,6 +17,8 @@
     
         <TextView
             android:id="@+id/label_value"
+            android:textAppearance="?attr/textAppearanceBody2"
+            android:textColor="?attr/colorOnSurface"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
     </LinearLayout>

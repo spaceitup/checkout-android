@@ -12,5 +12,11 @@
     
     <color name="pm_black_alpha32">#52000000</color>    
     <color name="pm_white_alpha80">#CCFFFFFF</color>
+
+    <color name="clown1">#FF0000</color>
+    <color name="clown2">#00FF00</color>
+    <color name="clown3">#0000FF</color>            
+    
+
 </resources>
  
