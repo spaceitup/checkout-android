@@ -1,6 +1,8 @@
 <resources>
     <style name="PaymentTheme" parent="Theme.MaterialComponents.Light.NoActionBar">
         <item name="colorPrimary">@color/pm_green700</item>
+        <item name="colorSecondary">@color/pm_green700</item>                
+        <item name="colorOnPrimary">@color/pm_white</item>        
         <item name="android:colorBackground">@color/pm_white</item>
         <item name="colorOnBackground">@color/pm_gray800</item>
         <item name="colorSurface">@color/pm_white</item>
