@@ -13,6 +13,7 @@
     <dimen name="pmcard_logos_landscape">166dp</dimen>
 
     <dimen name="pmradius">4dp</dimen>
+    <dimen name="pmtoolbar_elevation">0dp</dimen>    
 
     <dimen name="pmlogo_width">50dp</dimen>
     <dimen name="pmlogo_height">40dp</dimen>

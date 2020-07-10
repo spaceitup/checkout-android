@@ -1,0 +1,14 @@
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <style name="PaymentTheme.PaymentList">
+        <item name="materialCardViewStyle">@style/Widget.Payment.CardView</item>
+        <item name="toolbarStyle">@style/Widget.Payment.Toolbar</item>
+        <item name="android:statusBarColor">@color/pm_white</item>
+        <item name="android:windowLightStatusBar">true</item>
+    </style>
+
+    <style name="PaymentTheme.ChargePayment">
+        <item name="android:statusBarColor">@color/pm_white</item>
+        <item name="android:windowLightStatusBar">true</item>
+    </style>
+
+</resources>

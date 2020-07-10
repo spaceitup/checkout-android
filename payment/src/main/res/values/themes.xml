@@ -1,6 +1,8 @@
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
     <style name="PaymentTheme" parent="Theme.MaterialComponents.Light.NoActionBar">
         <item name="colorPrimary">@color/pm_green700</item>
+        <item name="colorPrimaryDark">@color/pm_green700</item>
+        <item name="colorControlNormal">@color/pm_green700</item>                
         <item name="colorSecondary">@color/pm_green700</item>                
         <item name="colorOnPrimary">@color/pm_white</item>        
         <item name="android:colorBackground">@color/pm_white</item>
@@ -21,6 +23,7 @@
 
     <style name="PaymentTheme.PaymentList">
         <item name="materialCardViewStyle">@style/Widget.Payment.CardView</item>
+        <item name="toolbarStyle">@style/Widget.Payment.Toolbar</item>
     </style>
 
     <style name="PaymentTheme.ChargePayment">
