@@ -8,10 +8,14 @@
 
 package net.optile.payment.ui.page;
 
+import android.graphics.PorterDuff;
+import android.graphics.drawable.Drawable;
 import android.text.TextUtils;
+import android.util.TypedValue;
 import android.view.View;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import androidx.core.content.ContextCompat;
 import net.optile.payment.R;
 
 /**
@@ -34,7 +38,7 @@ class ProgressView {
         progressBar = view.findViewById(R.id.progressbar);
         textHeader = view.findViewById(R.id.text_header);
         textInfo = view.findViewById(R.id.text_info);
-        //styleProgressBar();
+        styleProgressBar();
     }
 
     /**
@@ -69,14 +73,14 @@ class ProgressView {
      */
     @SuppressWarnings("deprecation")
     private void styleProgressBar() {
-        //TypedValue typedValue = new TypedValue();
-        //view.getContext().getTheme().resolveAttribute(R.attr.progressColor, typedValue, true);
+        TypedValue typedValue = new TypedValue();
+        view.getContext().getTheme().resolveAttribute(R.attr.colorPrimary, typedValue, true);
 
-        //Drawable drawable = progressBar.getIndeterminateDrawable();
-        //if (drawable == null || typedValue.resourceId == 0) {
-        //    return;
-        //}
-        //drawable.setColorFilter(ContextCompat.getColor(view.getContext(), typedValue.resourceId),
-        //    PorterDuff.Mode.SRC_IN);
+        Drawable drawable = progressBar.getIndeterminateDrawable();
+        if (drawable == null || typedValue.resourceId == 0) {
+            return;
+        }
+        drawable.setColorFilter(ContextCompat.getColor(view.getContext(), typedValue.resourceId),
+                                PorterDuff.Mode.SRC_IN);
     }
 }
