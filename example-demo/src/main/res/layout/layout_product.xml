@@ -8,7 +8,6 @@
         android:paddingBottom="@dimen/pmborder_xlarge"
         android:paddingLeft="@dimen/pmborder_medium"
         android:paddingRight="@dimen/pmborder_medium"
-        android:background="@color/pmcolor_background"
         android:orientation="vertical">
 
         <LinearLayout
@@ -26,14 +25,12 @@
                 android:contentDescription="TODO" />
 
             <TextView
-                style="@style/PaymentText.Medium"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:text="@string/product_date" />
 
             <TextView
-                style="@style/PaymentText.Medium.Bold"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/product_price" />
@@ -52,7 +49,6 @@
                 android:src="@drawable/ic_count" />
 
             <TextView
-                style="@style/PaymentText.Medium"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/product_count" />

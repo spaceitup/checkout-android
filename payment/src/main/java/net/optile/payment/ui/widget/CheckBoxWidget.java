@@ -11,7 +11,6 @@ package net.optile.payment.ui.widget;
 import com.google.android.material.switchmaterial.SwitchMaterial;
 
 import android.view.View;
-import android.widget.CompoundButton;
 import android.widget.TextView;
 import net.optile.payment.R;
 import net.optile.payment.core.PaymentException;
@@ -24,8 +23,7 @@ import net.optile.payment.ui.PaymentTheme;
 public class CheckBoxWidget extends FormWidget {
 
     private final SwitchMaterial value;
-    private final TextView labelUnchecked;
-    private final TextView labelChecked;
+    private final TextView label;
 
     /**
      * Construct a new CheckBoxWidget
@@ -36,21 +34,12 @@ public class CheckBoxWidget extends FormWidget {
      */
     public CheckBoxWidget(String name, View rootView, PaymentTheme theme) {
         super(name, rootView, theme);
-        labelUnchecked = rootView.findViewById(R.id.label_value_unchecked);
-        labelChecked = rootView.findViewById(R.id.label_value_checked);
-
+        label = rootView.findViewById(R.id.label_value);
         value = rootView.findViewById(R.id.checkbox_value);
-        value.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                handleOnCheckedChanged(isChecked);
-            }
-        });
     }
 
     public void setLabel(String label) {
-        this.labelUnchecked.setText(label);
-        this.labelChecked.setText(label);
+        this.label.setText(label);
     }
 
     /**
@@ -66,15 +55,10 @@ public class CheckBoxWidget extends FormWidget {
     }
 
     void setCheckboxVisible(boolean visible) {
-        value.setVisibility(visible ? View.VISIBLE : View.GONE);        
-    }
-    
-    void setChecked(boolean checked) {
-        value.setChecked(checked);
+        value.setVisibility(visible ? View.VISIBLE : View.GONE);
     }
 
-    private void handleOnCheckedChanged(boolean isChecked) {
-        labelUnchecked.setVisibility(isChecked ? View.GONE : View.VISIBLE);
-        labelChecked.setVisibility(isChecked ? View.VISIBLE : View.GONE);
+    void setChecked(boolean checked) {
+        value.setChecked(checked);
     }
 }

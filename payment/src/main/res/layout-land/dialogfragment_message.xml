@@ -23,7 +23,6 @@
 
             <TextView
                 android:id="@+id/text_title"
-                android:textAppearance="?attr/themedMessageDialogTitleStyle"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="@dimen/pmborder_medium"
@@ -35,56 +34,16 @@
                 android:gravity="center_vertical"
                 android:orientation="horizontal">
 
-                <LinearLayout
-                    android:id="@+id/layout_image"
+                <ImageView
+                    android:id="@+id/image_logo"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginEnd="@dimen/pmborder_medium"
-                    android:visibility="gone"
-                    android:orientation="vertical">
+                    android:contentDescription="@string/pmpage_contentdescription" />
 
-                    <TextView
-                        android:id="@+id/text_imageprefix"
-                        android:textAppearance="?attr/themedMessageDialogImageLabelStyle"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:visibility="gone" />
-
-                    <ImageView
-                        android:id="@+id/image_logo"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:contentDescription="@string/pmpage_contentdescription" />
-
-                    <TextView
-                        android:id="@+id/text_imagesuffix"
-                        android:textAppearance="?attr/themedMessageDialogImageLabelStyle"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:visibility="gone" />
-                </LinearLayout>
-
-                <LinearLayout
-                    android:id="@+id/layout_text"
+                <TextView
+                    android:id="@+id/text_message"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:orientation="vertical">
-
-                    <TextView
-                        android:id="@+id/text_message_notitle"
-                        android:textAppearance="?attr/themedMessageDialogDetailsNoTitleStyle"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:visibility="gone" />
-
-                    <TextView
-                        android:id="@+id/text_message_title"
-                        android:textAppearance="?attr/themedMessageDialogDetailsStyle"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:visibility="gone" />
-                </LinearLayout>
+                    android:layout_height="wrap_content" />
             </LinearLayout>
         </LinearLayout>
     </ScrollView>

@@ -130,7 +130,7 @@ final class SummaryPresenter {
             view.showPaymentSuccess();
         }
     }
-    
+
     private void handleResultCanceled(PaymentResult result) {
         Interaction interaction = result.getInteraction();
         switch (interaction.getCode()) {

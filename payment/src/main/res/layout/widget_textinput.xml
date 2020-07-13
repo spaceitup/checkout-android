@@ -7,15 +7,6 @@
               android:paddingTop="@dimen/pmwidget_padding"
               android:paddingBottom="@dimen/pmwidget_padding">
 
-    <ImageView
-        android:id="@+id/image_icon"
-        android:layout_width="@dimen/pmwidget_iconsize"
-        android:layout_height="@dimen/pmwidget_iconsize"
-        android:layout_marginStart="@dimen/pmborder_xsmall"
-        android:layout_marginEnd="@dimen/pmborder_xxsmall"
-        android:contentDescription="@string/pmpage_contentdescription"
-        android:src="@drawable/ic_default" />
-
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -23,14 +14,12 @@
         android:weightSum="1" >
 
         <com.google.android.material.textfield.TextInputLayout
-            style="?attr/widgetTextInputStyle"
             android:id="@+id/textinputlayout"
             android:layout_weight="1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content">
 
             <com.google.android.material.textfield.TextInputEditText
-                style="?attr/widgetEditTextStyle"
                 android:id="@+id/textinputedittext"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -38,21 +27,5 @@
                 android:singleLine="true" />
         </com.google.android.material.textfield.TextInputLayout>
 
-        <LinearLayout
-            android:id="@+id/layout_hint"
-            android:layout_gravity="center"
-            android:visibility="gone"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent">
-
-            <ImageView
-                android:id="@+id/image_hint"
-                android:paddingStart="@dimen/pmborder_xxsmall"
-                android:paddingEnd="@dimen/pmborder_small"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:contentDescription="@string/pmpage_contentdescription"
-                android:src="?attr/widgetHintDrawable" />
-        </LinearLayout>
     </LinearLayout>
 </LinearLayout>

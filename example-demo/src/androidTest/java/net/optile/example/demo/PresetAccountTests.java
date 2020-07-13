@@ -10,9 +10,6 @@ package net.optile.example.demo;
 import static androidx.test.espresso.Espresso.onView;
 import static androidx.test.espresso.action.ViewActions.click;
 import static androidx.test.espresso.assertion.ViewAssertions.matches;
-import static androidx.test.espresso.intent.Intents.intended;
-import static androidx.test.espresso.intent.matcher.IntentMatchers.hasComponent;
-import static androidx.test.espresso.matcher.ViewMatchers.isDisplayed;
 import static androidx.test.espresso.matcher.ViewMatchers.withId;
 import static androidx.test.espresso.matcher.ViewMatchers.withText;
 import static net.optile.payment.test.view.PaymentMatchers.isViewInCard;
@@ -23,28 +20,17 @@ import org.hamcrest.Matcher;
 import org.json.JSONException;
 import org.junit.Rule;
 import org.junit.Test;
-import org.junit.Ignore;
 import org.junit.runner.RunWith;
 
 import android.view.View;
-import androidx.test.espresso.IdlingRegistry;
 import androidx.test.espresso.IdlingResource;
 import androidx.test.espresso.intent.Intents;
 import androidx.test.ext.junit.runners.AndroidJUnit4;
 import androidx.test.filters.LargeTest;
-import androidx.test.platform.app.InstrumentationRegistry;
 import androidx.test.rule.ActivityTestRule;
-import androidx.test.uiautomator.By;
-import androidx.test.uiautomator.UiDevice;
-import androidx.test.uiautomator.UiObject2;
 import androidx.test.uiautomator.UiObjectNotFoundException;
-import androidx.test.uiautomator.Until;
 import net.optile.example.demo.settings.SettingsActivity;
-import net.optile.example.demo.summary.SummaryActivity;
-import net.optile.payment.test.view.ActivityHelper;
 import net.optile.payment.test.view.PaymentActions;
-import net.optile.payment.ui.page.ChargePaymentActivity;
-import net.optile.payment.ui.page.PaymentListActivity;
 
 @RunWith(AndroidJUnit4.class)
 @LargeTest

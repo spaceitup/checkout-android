@@ -9,14 +9,12 @@
         android:orientation="vertical">
 
         <TextView
-            style="@style/PaymentText.Medium.Bold"
             android:layout_marginBottom="@dimen/pmborder_xxsmall"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/summary_personal_details" />
 
         <com.google.android.material.card.MaterialCardView
-            style="@style/PaymentCardStyle"
             android:layout_marginBottom="@dimen/pmborder_medium"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
@@ -28,13 +26,11 @@
                 android:orientation="vertical">
 
                 <TextView
-                    style="@style/PaymentText.Medium.Bold"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/personal_name_value" />
 
                 <TextView
-                    style="@style/PaymentText.Medium"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/personal_details" />
@@ -43,14 +39,12 @@
         </com.google.android.material.card.MaterialCardView>
 
         <TextView
-            style="@style/PaymentText.Medium.Bold"
             android:layout_marginBottom="@dimen/pmborder_xxsmall"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/summary_payment_details" />
 
         <com.google.android.material.card.MaterialCardView
-            style="@style/PaymentCardStyle"
             android:layout_marginBottom="@dimen/pmborder_medium"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
@@ -73,13 +67,11 @@
 
                     <TextView
                         android:id="@+id/label_title"
-                        style="@style/PaymentText.Medium.Bold"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content" />
 
                     <TextView
                         android:id="@+id/label_subtitle"
-                        style="@style/PaymentText.Small"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content" />
 
@@ -87,7 +79,6 @@
 
                 <TextView
                     android:id="@+id/text_edit"
-                    style="@style/DefaultTextButton"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:paddingLeft="@dimen/pmborder_small"
@@ -101,14 +92,12 @@
         </com.google.android.material.card.MaterialCardView>
 
         <TextView
-            style="@style/PaymentText.Medium.Bold"
             android:layout_marginBottom="@dimen/pmborder_xxsmall"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/summary_payment_amount" />
 
         <com.google.android.material.card.MaterialCardView
-            style="@style/PaymentCardStyle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
@@ -125,21 +114,18 @@
                     android:orientation="horizontal">
 
                     <TextView
-                        style="@style/PaymentText.Medium.Bold"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:text="@string/product_total" />
 
                     <TextView
-                        style="@style/PaymentText.XLarge.Bold"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/product_price" />
                 </LinearLayout>
 
                 <Button
-                    style="@style/WidgetButtonStyle"
                     android:id="@+id/button_pay"
                     android:layout_marginTop="@dimen/pmborder_large"
                     android:layout_width="match_parent"

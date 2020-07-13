@@ -31,14 +31,6 @@ final class SdkThemeBuilder {
      */
     public static PaymentTheme createCustomTheme() {
         return PaymentTheme.createBuilder().
-            setPaymentListTheme(R.style.CustomPaymentTheme_PaymentList).
-            setChargePaymentTheme(R.style.CustomPaymentTheme_ChargePayment).
-            setDateDialogTheme(R.style.CustomDialogTheme_Date).
-            setMessageDialogTheme(R.style.CustomDialogTheme_Message).
-            setValidationColorOk(R.color.custom_validationok).
-            setValidationColorUnknown(R.color.custom_validationunknown).
-            setValidationColorError(R.color.custom_validationerror).
-            setDefaultIconMapping().
             build();
     }
 }

@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/layout_confirm"
-    android:background="@color/pmcolor_background"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
@@ -28,7 +27,6 @@
             android:contentDescription="TODO" />
 
         <TextView
-            style="@style/DefaultConfirmText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:gravity="center"
@@ -37,7 +35,6 @@
     </LinearLayout>
 
     <com.google.android.material.button.MaterialButton
-        style="@style/WidgetButtonStyle"
         android:id="@+id/button_neworder"
         android:layout_margin="@dimen/pmborder_medium"
         android:layout_width="match_parent"

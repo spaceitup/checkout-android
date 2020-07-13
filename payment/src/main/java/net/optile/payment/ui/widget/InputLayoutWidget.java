@@ -15,30 +15,18 @@ import android.text.TextUtils;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
-import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 import net.optile.payment.R;
 import net.optile.payment.ui.PaymentTheme;
 import net.optile.payment.ui.widget.input.EditTextInputMode;
-import net.optile.payment.util.PaymentUtils;
 import net.optile.payment.validation.ValidationResult;
 
 /**
  * Base class for widgets using the TextInputLayout and TextInputEditText
  */
 public abstract class InputLayoutWidget extends FormWidget {
-
-    final static float REDUCED_PORTRAIT_TEXT = 0.65f;
-    final static float REDUCED_PORTRAIT_HINT = 0.35f;
-    final static float REDUCED_LANDSCAPE_TEXT = 0.5f;
-    final static float REDUCED_LANDSCAPE_HINT = 0.5f;
-
     final TextInputEditText textInput;
     final TextInputLayout textLayout;
-
-    final View hintLayout;
-    final ImageView hintImage;
 
     EditTextInputMode mode;
     String label;
@@ -52,11 +40,8 @@ public abstract class InputLayoutWidget extends FormWidget {
      */
     InputLayoutWidget(String name, View rootView, PaymentTheme theme) {
         super(name, rootView, theme);
-        this.textLayout = rootView.findViewById(R.id.textinputlayout);
-        this.textInput = rootView.findViewById(R.id.textinputedittext);
-        this.hintLayout = rootView.findViewById(R.id.layout_hint);
-        this.hintImage = rootView.findViewById(R.id.image_hint);
-
+        textLayout = rootView.findViewById(R.id.textinputlayout);
+        textInput = rootView.findViewById(R.id.textinputedittext);
         textInput.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override
             public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
@@ -71,13 +56,6 @@ public abstract class InputLayoutWidget extends FormWidget {
             @Override
             public void onFocusChange(View v, boolean hasFocus) {
                 handleOnFocusChange(hasFocus);
-            }
-        });
-
-        hintImage.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                presenter.onHintClicked(name);
             }
         });
     }
@@ -122,17 +100,6 @@ public abstract class InputLayoutWidget extends FormWidget {
     }
 
     public void setHint(boolean visible) {
-        if (visible) {
-            hintLayout.setVisibility(View.VISIBLE);
-        } else {
-            hintLayout.setVisibility(View.GONE);
-        }
-    }
-
-    public void setReducedView() {
-        boolean landscape = PaymentUtils.isLandscape(rootView.getContext());
-        setReducedWidth(textLayout, landscape ? REDUCED_LANDSCAPE_TEXT : REDUCED_PORTRAIT_TEXT);
-        setReducedWidth(hintLayout, landscape ? REDUCED_LANDSCAPE_HINT : REDUCED_PORTRAIT_HINT);
     }
 
     void handleOnFocusChange(boolean hasFocus) {
@@ -177,12 +144,5 @@ public abstract class InputLayoutWidget extends FormWidget {
         setValidationState(state);
         textLayout.setErrorEnabled(errorEnabled);
         textLayout.setError(message);
-    }
-
-    private void setReducedWidth(View view, float weight) {
-        LinearLayout.LayoutParams params = (LinearLayout.LayoutParams) view.getLayoutParams();
-        params.weight = weight;
-        params.width = 0;
-        view.setLayoutParams(params);
     }
 }

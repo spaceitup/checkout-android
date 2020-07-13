@@ -16,21 +16,12 @@
         android:orientation="vertical">
     
         <TextView
-            android:id="@+id/label_value_unchecked"
-            android:textAppearance="?attr/widgetCheckBoxLabelUncheckedStyle"
+            android:id="@+id/label_value"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
-
-        <TextView
-            android:id="@+id/label_value_checked"
-            android:textAppearance="?attr/widgetCheckBoxLabelCheckedStyle"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:visibility="gone" />
     </LinearLayout>
 
     <com.google.android.material.switchmaterial.SwitchMaterial
-        style="?attr/widgetCheckBoxStyle"
         android:id="@+id/checkbox_value"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />

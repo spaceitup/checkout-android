@@ -39,7 +39,6 @@ import net.optile.payment.ui.model.PaymentCard;
 import net.optile.payment.ui.widget.ButtonWidget;
 import net.optile.payment.ui.widget.DateWidget;
 import net.optile.payment.ui.widget.FormWidget;
-import net.optile.payment.ui.widget.LabelWidget;
 import net.optile.payment.ui.widget.SelectWidget;
 import net.optile.payment.ui.widget.TextInputWidget;
 import net.optile.payment.ui.widget.WidgetInflater;
@@ -98,11 +97,6 @@ public abstract class PaymentCardViewHolder extends RecyclerView.ViewHolder {
 
     void addButtonWidget(PaymentTheme theme) {
         FormWidget widget = WidgetInflater.inflateButtonWidget(BUTTON_WIDGET, formLayout, theme);
-        addWidget(widget);
-    }
-
-    void addLabelWidget(PaymentTheme theme) {
-        FormWidget widget = WidgetInflater.inflateLabelWidget(LABEL_WIDGET, formLayout, theme);
         addWidget(widget);
     }
 
@@ -197,14 +191,6 @@ public abstract class PaymentCardViewHolder extends RecyclerView.ViewHolder {
         bindButtonWidget(paymentCard);
     }
 
-    void bindLabelWidget(String label) {
-        LabelWidget widget = (LabelWidget) getFormWidget(LABEL_WIDGET);
-
-        if (widget != null) {
-            widget.setLabel(label);
-        }
-    }
-
     void bindElementWidgets(PaymentCard card) {
         FormWidget widget;
         for (InputElement element : card.getInputElements()) {
@@ -234,7 +220,6 @@ public abstract class PaymentCardViewHolder extends RecyclerView.ViewHolder {
     }
 
     void bindSelectWidget(SelectWidget widget, InputElement element) {
-        bindIconResource(widget);
         widget.setLabel(element.getLabel());
         widget.setSelectOptions(element.getOptions());
     }
@@ -244,19 +229,9 @@ public abstract class PaymentCardViewHolder extends RecyclerView.ViewHolder {
         boolean visible = Localization.hasAccountHint(code, name);
         int maxLength = adapter.getMaxLength(code, name);
 
-        bindIconResource(widget);
         widget.setHint(visible);
         widget.setLabel(Localization.translateAccountLabel(code, name));
         widget.setInputElement(maxLength, element);
-
-        if (PaymentInputType.VERIFICATION_CODE.equals(name)) {
-            widget.setReducedView();
-        }
-    }
-
-    void bindIconResource(FormWidget widget) {
-        PaymentTheme theme = adapter.getPaymentTheme();
-        widget.setIconResource(theme.getInputTypeIcon(widget.getName()));
     }
 
     void bindDateWidget(PaymentCard card) {
@@ -266,11 +241,9 @@ public abstract class PaymentCardViewHolder extends RecyclerView.ViewHolder {
         if (widget == null) {
             return;
         }
-        bindIconResource(widget);
         widget.setLabel(Localization.translateAccountLabel(card.getCode(), name));
         widget.setInputElements(card.getInputElement(PaymentInputType.EXPIRY_MONTH),
             card.getInputElement(PaymentInputType.EXPIRY_YEAR));
-        widget.setReducedView();
     }
 
     void bindButtonWidget(PaymentCard card) {
