@@ -1,4 +1,5 @@
 <resources>
+
     <style name="PaymentTheme.PaymentList">
         <item name="materialCardViewStyle">@style/Widget.Payment.CardView</item>
         <item name="toolbarStyle">@style/Widget.Payment.Toolbar</item>
