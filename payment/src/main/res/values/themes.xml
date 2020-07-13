@@ -8,7 +8,8 @@
         <item name="android:colorBackground">@color/pm_white</item>
         <item name="colorOnBackground">@color/pm_gray800</item>
         <item name="colorSurface">@color/pm_white</item>
-        <item name="colorOnSurface">@color/pm_gray800</item>        
+        <item name="colorOnSurface">@color/pm_gray800</item>
+        <item name="colorError">@color/pm_red</item>
 
         <item name="textAppearanceSubtitle1">@style/TextAppearance.Payment.Subtitle1</item>
         <item name="textAppearanceSubtitle2">@style/TextAppearance.Payment.Subtitle2</item>
@@ -20,8 +21,8 @@
 
         <item name="borderlessButtonStyle">@style/Widget.Payment.Button.TextButton</item>
         <item name="materialButtonStyle">@style/Widget.Payment.Button.UnelevatedButton</item>
-
         <item name="textInputStyle">@style/Widget.Payment.TextInputLayout</item>
+        <item name="switchStyle">@style/Widget.Payment.Switch</item>
     </style>
 
     <style name="PaymentTheme.PaymentList">

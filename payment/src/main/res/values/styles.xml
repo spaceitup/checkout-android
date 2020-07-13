@@ -31,41 +31,28 @@
     <style name="Widget.Payment.Toolbar" parent="Widget.MaterialComponents.Toolbar.Primary">
         <item name="materialThemeOverlay">@style/ThemeOverlay.Payment.Toolbar</item>
         <item name="titleTextAppearance">@style/TextAppearance.Payment.Headline6</item>
-        <item name="titleTextColor">@color/pm_gray800</item>        
+        <item name="titleTextColor">?attr/colorOnBackground</item>        
         <item name="android:elevation">@dimen/pmtoolbar_elevation</item>
     </style>
 
     <style name="ThemeOverlay.Payment.Toolbar" parent="">
-        <item name="colorPrimary">@color/pm_white</item>
+        <item name="colorPrimary">?android:attr/colorBackground</item>
     </style>
     
     <style name="Widget.Payment.Button.TextButton" parent="Widget.MaterialComponents.Button.TextButton">
-        <item name="materialThemeOverlay">@style/ThemeOverlay.Payment.Button</item>
         <item name="shapeAppearance">@style/ShapeAppearance.Payment.SmallComponent</item>
     </style>
     
     <style name="Widget.Payment.Button.UnelevatedButton" parent="Widget.MaterialComponents.Button.UnelevatedButton">
-        <item name="materialThemeOverlay">@style/ThemeOverlay.Payment.Button</item>
         <item name="android:textAppearance">@style/TextAppearance.Payment.Button</item>
         <item name="shapeAppearance">@style/ShapeAppearance.Payment.SmallComponent</item>
     </style>
 
-    <style name="ThemeOverlay.Payment.Button" parent="">
-        <item name="colorPrimary">@color/pm_green700</item>
-    </style>
-    
     <style name="Widget.Payment.CardView" parent="Widget.MaterialComponents.CardView">
-        <item name="materialThemeOverlay">@style/ThemeOverlay.Payment.Card</item>
         <item name="shapeAppearance">@style/ShapeAppearance.Payment.MediumComponent</item>
         <item name="cardElevation">@dimen/pmcard_elevation</item>
         <item name="strokeWidth">@dimen/pmcard_stroke</item>
-        <item name="strokeColor">@color/pm_gray300</item>                
-    </style>
-
-    <style name="ThemeOverlay.Payment.Card" parent="">
-        <item name="colorPrimary">@color/pm_green700</item>
-        <item name="colorSurface">@color/pm_white</item>
-        <item name="colorOnSurface">@color/pm_gray800</item>
+        <item name="strokeColor">@color/pm_gray300</item>
     </style>
 
     <style name="Widget.Payment.TextInputLayout" parent="Widget.MaterialComponents.TextInputLayout.FilledBox">
@@ -78,11 +65,12 @@
     </style>
 
     <style name="ThemeOverlay.Payment.TextInputLayout" parent="">
-        <item name="colorPrimary">@color/pm_green700</item>
-        <item name="colorOnSurface">@color/pm_gray800</item>
-        <item name="colorError">@color/pm_red</item>
         <item name="textAppearanceSubtitle1">@style/TextAppearance.Payment.Body1</item>
         <item name="editTextStyle">@style/Widget.MaterialComponents.TextInputEditText.FilledBox</item>
+    </style>
+
+    <style name="Widget.Payment.Switch" parent="Widget.MaterialComponents.CompoundButton.Switch">
+        <item name="trackTint">@color/payment_switch_track_color</item>
     </style>
 
     <style name="ShapeAppearance.Payment.SmallComponent" parent="ShapeAppearance.MaterialComponents.SmallComponent">
