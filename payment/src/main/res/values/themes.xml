@@ -23,6 +23,7 @@
         <item name="materialButtonStyle">@style/Widget.Payment.Button.UnelevatedButton</item>
         <item name="textInputStyle">@style/Widget.Payment.TextInputLayout</item>
         <item name="switchStyle">@style/Widget.Payment.Switch</item>
+        <item name="snackbarStyle">@style/Widget.Payment.Snackbar</item>
     </style>
 
     <style name="PaymentTheme.PaymentList">

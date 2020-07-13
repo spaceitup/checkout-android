@@ -73,6 +73,10 @@
         <item name="trackTint">@color/payment_switch_track_color</item>
     </style>
 
+    <style name="Widget.Payment.Snackbar" parent="Widget.MaterialComponents.Snackbar">
+        <item name="backgroundTint">?attr/colorOnSurface</item>
+    </style>
+    
     <style name="ShapeAppearance.Payment.SmallComponent" parent="ShapeAppearance.MaterialComponents.SmallComponent">
         <item name="cornerSize">@dimen/pmradius</item>
     </style>
