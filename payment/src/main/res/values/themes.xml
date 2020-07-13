@@ -15,10 +15,13 @@
         <item name="textAppearanceBody1">@style/TextAppearance.Payment.Body1</item>
         <item name="textAppearanceBody2">@style/TextAppearance.Payment.Body2</item>                
         <item name="textAppearanceHeadline6">@style/TextAppearance.Payment.Body2</item>
-        <item name="textAppearanceButton">@style/TextAppearance.Payment.Button</item>                        
+        <item name="textAppearanceButton">@style/TextAppearance.Payment.Button</item>
+        <item name="textAppearanceCaption">@style/TextAppearance.Payment.Caption</item>                                
 
         <item name="borderlessButtonStyle">@style/Widget.Payment.Button.TextButton</item>
         <item name="materialButtonStyle">@style/Widget.Payment.Button.UnelevatedButton</item>
+
+        <item name="textInputStyle">@style/Widget.Payment.TextInputLayout</item>
     </style>
 
     <style name="PaymentTheme.PaymentList">
