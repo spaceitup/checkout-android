@@ -14,7 +14,7 @@
         android:layout_height="wrap_content"
         android:layout_weight="1"
         android:orientation="vertical">
-    
+
         <TextView
             android:id="@+id/label_value"
             android:textAppearance="?attr/textAppearanceBody2"
@@ -27,5 +27,5 @@
         android:id="@+id/checkbox_value"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
-    
+
 </LinearLayout>
