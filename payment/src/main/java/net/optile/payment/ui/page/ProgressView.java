@@ -81,6 +81,6 @@ class ProgressView {
             return;
         }
         drawable.setColorFilter(ContextCompat.getColor(view.getContext(), typedValue.resourceId),
-                                PorterDuff.Mode.SRC_IN);
+            PorterDuff.Mode.SRC_IN);
     }
 }
