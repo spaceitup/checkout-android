@@ -10,8 +10,8 @@
         android:paddingBottom="@dimen/pmwidget_padding">
 
         <ImageView
-            android:layout_width="@dimen/pmwidget_iconsize"
-            android:layout_height="@dimen/pmwidget_iconsize"
+            android:layout_width="@dimen/iconsize"
+            android:layout_height="@dimen/iconsize"
             android:layout_marginStart="@dimen/pmborder_xsmall"
             android:layout_marginEnd="@dimen/pmborder_xxsmall"
             android:contentDescription="@string/pmpage_contentdescription"
@@ -40,8 +40,8 @@
         android:paddingBottom="@dimen/pmwidget_padding">
 
         <ImageView
-            android:layout_width="@dimen/pmwidget_iconsize"
-            android:layout_height="@dimen/pmwidget_iconsize"
+            android:layout_width="@dimen/iconsize"
+            android:layout_height="@dimen/iconsize"
             android:layout_marginStart="@dimen/pmborder_xsmall"
             android:layout_marginEnd="@dimen/pmborder_xxsmall"
             android:contentDescription="@string/pmpage_contentdescription"
@@ -70,8 +70,8 @@
         android:paddingBottom="@dimen/pmwidget_padding">
 
         <ImageView
-            android:layout_width="@dimen/pmwidget_iconsize"
-            android:layout_height="@dimen/pmwidget_iconsize"
+            android:layout_width="@dimen/iconsize"
+            android:layout_height="@dimen/iconsize"
             android:layout_marginStart="@dimen/pmborder_xsmall"
             android:layout_marginEnd="@dimen/pmborder_xxsmall"
             android:contentDescription="@string/pmpage_contentdescription"
@@ -100,8 +100,8 @@
         android:paddingBottom="@dimen/pmwidget_padding">
 
         <ImageView
-            android:layout_width="@dimen/pmwidget_iconsize"
-            android:layout_height="@dimen/pmwidget_iconsize"
+            android:layout_width="@dimen/iconsize"
+            android:layout_height="@dimen/iconsize"
             android:layout_marginStart="@dimen/pmborder_xsmall"
             android:layout_marginEnd="@dimen/pmborder_xxsmall"
             android:contentDescription="@string/pmpage_contentdescription"
@@ -130,8 +130,8 @@
         android:paddingBottom="@dimen/pmwidget_padding">
 
         <ImageView
-            android:layout_width="@dimen/pmwidget_iconsize"
-            android:layout_height="@dimen/pmwidget_iconsize"
+            android:layout_width="@dimen/iconsize"
+            android:layout_height="@dimen/iconsize"
             android:layout_marginStart="@dimen/pmborder_xsmall"
             android:layout_marginEnd="@dimen/pmborder_xxsmall"
             android:contentDescription="@string/pmpage_contentdescription"

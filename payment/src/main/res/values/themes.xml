@@ -1,12 +1,36 @@
 <resources>
 
     <style name="PaymentTheme" parent="Theme.MaterialComponents.Light.NoActionBar">
+        <item name="colorPrimary">@color/pm_green700</item>
+        <item name="colorPrimaryDark">@color/pm_green700</item>
+        <item name="colorControlNormal">@color/pm_green700</item>
+        <item name="colorSecondary">@color/pm_green700</item>
+        <item name="colorOnPrimary">@color/pm_white</item>
+        <item name="android:colorBackground">@color/pm_white</item>
+        <item name="colorOnBackground">@color/pm_gray800</item>
+        <item name="colorSurface">@color/pm_white</item>
+        <item name="colorOnSurface">@color/pm_gray800</item>
+        <item name="colorError">@color/pm_red</item>
+
+        <item name="textAppearanceSubtitle1">@style/TextAppearance.Payment.Subtitle1</item>
+        <item name="textAppearanceSubtitle2">@style/TextAppearance.Payment.Subtitle2</item>
+        <item name="textAppearanceBody1">@style/TextAppearance.Payment.Body1</item>
+        <item name="textAppearanceBody2">@style/TextAppearance.Payment.Body2</item>
+        <item name="textAppearanceHeadline6">@style/TextAppearance.Payment.Body2</item>
+        <item name="textAppearanceButton">@style/TextAppearance.Payment.Button</item>
+        <item name="textAppearanceCaption">@style/TextAppearance.Payment.Caption</item>
+
+        <item name="borderlessButtonStyle">@style/Widget.Payment.Button.TextButton</item>
+        <item name="materialButtonStyle">@style/Widget.Payment.Button.UnelevatedButton</item>
+        <item name="textInputStyle">@style/Widget.Payment.TextInputLayout</item>
+        <item name="switchStyle">@style/Widget.Payment.Switch</item>
+        <item name="snackbarStyle">@style/Widget.Payment.Snackbar</item>
     </style>
 
     <style name="PaymentTheme.PaymentList">
+        <item name="materialCardViewStyle">@style/Widget.Payment.CardView</item>
+        <item name="toolbarStyle">@style/Widget.Payment.Toolbar</item>
     </style>
 
-    <style name="PaymentTheme.ChargePayment">
-    </style>
-
+    <style name="PaymentTheme.ChargePayment"></style>
 </resources>
