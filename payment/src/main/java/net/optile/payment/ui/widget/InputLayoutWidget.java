@@ -41,6 +41,9 @@ public abstract class InputLayoutWidget extends FormWidget {
     InputLayoutWidget(String name, View rootView, PaymentTheme theme) {
         super(name, rootView, theme);
         textLayout = rootView.findViewById(R.id.textinputlayout);
+        textLayout.setHelperTextEnabled(true);
+        textLayout.setErrorEnabled(true);
+
         textInput = rootView.findViewById(R.id.textinputedittext);
         textInput.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override
@@ -142,7 +145,6 @@ public abstract class InputLayoutWidget extends FormWidget {
 
     void setInputLayoutState(int state, boolean errorEnabled, String message) {
         setValidationState(state);
-        textLayout.setErrorEnabled(errorEnabled);
-        textLayout.setError(message);
+        textLayout.setError(errorEnabled ? message : null);
     }
 }

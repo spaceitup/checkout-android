@@ -23,17 +23,22 @@
                 android:layout_alignParentTop="true"
                 android:clickable="true"
                 android:focusable="true"
-                android:paddingStart="@dimen/pmborder_xsmall"
-                android:paddingEnd="@dimen/pmborder_xsmall"
+                android:paddingTop="@dimen/pmborder_xsmall"
+                android:paddingBottom="@dimen/pmborder_xsmall"
                 android:gravity="center_vertical"
                 android:orientation="horizontal">
 
-                <include layout="@layout/view_logos" />
+                <ImageView
+                    android:id="@+id/image_logo"
+                    android:layout_width="@dimen/pmlogo_width"
+                    android:layout_height="@dimen/pmlogo_height"
+                    android:adjustViewBounds="true"
+                    android:layout_marginEnd="@dimen/pmborder_medium"
+                    android:contentDescription="@string/pmpage_contentdescription" />    
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/pmborder_small"
                     android:orientation="vertical">
 
                     <TextView
@@ -56,9 +61,9 @@
                 android:id="@+id/layout_form"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:paddingTop="@dimen/pmborder_medium"
                 android:layout_below="@id/layout_header"
                 android:orientation="vertical"
-                android:paddingEnd="@dimen/pmborder_xsmall"
                 android:visibility="gone" />
         </RelativeLayout>
     </com.google.android.material.card.MaterialCardView>

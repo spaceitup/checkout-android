@@ -3,6 +3,4 @@
     android:id="@+id/button"
     style="?attr/materialButtonStyle"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:layout_marginStart="@dimen/pmborder_xsmall"
-    android:layout_marginTop="@dimen/pmborder_large" />
+    android:layout_height="wrap_content" />

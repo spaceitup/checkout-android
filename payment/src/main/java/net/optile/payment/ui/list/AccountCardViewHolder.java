@@ -33,7 +33,6 @@ public final class AccountCardViewHolder extends PaymentCardViewHolder {
         this.title = parent.findViewById(R.id.text_title);
         this.subtitle = parent.findViewById(R.id.text_subtitle);
         PaymentTheme theme = adapter.getPaymentTheme();
-        addLogoView(parent, accountCard.getCode());
         addElementWidgets(accountCard, theme);
         addButtonWidget(theme);
         setLastImeOptions();
@@ -60,6 +59,6 @@ public final class AccountCardViewHolder extends PaymentCardViewHolder {
         } else {
             title.setText(card.getLabel());
         }
-        bindLogoView(card.getCode(), card.getLink("logo"), true);
+        bindLogoView(card.getCode(), card.getLink("logo"));
     }
 }

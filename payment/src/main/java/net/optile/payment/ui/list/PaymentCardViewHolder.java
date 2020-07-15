@@ -11,21 +11,13 @@ package net.optile.payment.ui.list;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
-import android.animation.ObjectAnimator;
-import android.content.Context;
-import android.content.res.Resources;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.LinearLayout.LayoutParams;
-import android.widget.TableLayout;
-import android.widget.TableRow;
 import android.widget.TextView;
 import androidx.recyclerview.widget.RecyclerView;
 import net.optile.payment.R;
@@ -64,8 +56,7 @@ public abstract class PaymentCardViewHolder extends RecyclerView.ViewHolder {
     final ListAdapter adapter;
     final WidgetPresenter presenter;
     final Map<String, FormWidget> widgets;
-    final TableLayout logoLayout;
-    final Map<String, ImageView> logos;
+    final ImageView logoView;
 
     PaymentCardViewHolder(ListAdapter adapter, View parent) {
         super(parent);
@@ -73,8 +64,7 @@ public abstract class PaymentCardViewHolder extends RecyclerView.ViewHolder {
         this.presenter = new CardWidgetPresenter(this, adapter);
         this.formLayout = parent.findViewById(R.id.layout_form);
         this.widgets = new LinkedHashMap<>();
-        this.logoLayout = parent.findViewById(R.id.tablelayout_logo);
-        this.logos = new HashMap<>();
+        this.logoView = parent.findViewById(R.id.image_logo);
 
         View view = parent.findViewById(R.id.layout_header);
         view.setOnClickListener(new View.OnClickListener() {
@@ -139,42 +129,6 @@ public abstract class PaymentCardViewHolder extends RecyclerView.ViewHolder {
         widget.setPresenter(presenter);
         widgets.put(name, widget);
         formLayout.addView(widget.getRootView());
-    }
-
-    void addLogoView(View parent, String name) {
-        addLogoViews(parent, Collections.singletonList(name));
-    }
-
-    void addLogoViews(View parent, List<String> names) {
-        LayoutInflater inflater = LayoutInflater.from(parent.getContext());
-        Context context = parent.getContext();
-
-        TableRow row = null;
-        Resources res = context.getResources();
-        int border = res.getDimensionPixelSize(R.dimen.pmborder_xsmall);
-        int columnsPerRow = PaymentUtils.isLandscape(context) ? COLUMN_SIZE_LANDSCAPE : COLUMN_SIZE_PORTRAIT;
-        int columnIndex = 0;
-        int rowCount = 0;
-
-        for (String name : names) {
-
-            if (columnIndex % columnsPerRow == 0) {
-                rowCount++;
-                columnIndex = 0;
-                row = new TableRow(context);
-                logoLayout.addView(row);
-            }
-            int marginTop = rowCount > 1 ? border : 0;
-            int marginRight = ++columnIndex < columnsPerRow ? border : 0;
-
-            ImageView view = (ImageView) inflater.inflate(R.layout.list_item_logo, row, false);
-            LayoutParams params = (LayoutParams) view.getLayoutParams();
-
-            params.setMargins(0, marginTop, marginRight, 0);
-            view.setLayoutParams(params);
-            logos.put(name, view);
-            row.addView(view);
-        }
     }
 
     void expand(boolean expand) {
@@ -255,15 +209,11 @@ public abstract class PaymentCardViewHolder extends RecyclerView.ViewHolder {
         widget.setLabel(Localization.translate(card.getCode(), card.getButton()));
     }
 
-    void bindLogoView(String name, URL url, boolean selected) {
-        ImageView view = logos.get(name);
-
-        if (view == null || url == null) {
+    void bindLogoView(String name, URL url) {
+        if (name == null || url == null) {
             return;
         }
-        ImageHelper.getInstance().loadImage(view, url);
-        float alpha = selected ? ALPHA_SELECTED : ALPHA_DESELECTED;
-        ObjectAnimator.ofFloat(view, "alpha", alpha).setDuration(ANIM_DURATION).start();
+        ImageHelper.getInstance().loadImage(logoView, url);
     }
 
     void setLastImeOptions() {

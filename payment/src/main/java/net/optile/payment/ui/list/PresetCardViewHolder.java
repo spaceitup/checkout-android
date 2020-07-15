@@ -32,7 +32,6 @@ final class PresetCardViewHolder extends PaymentCardViewHolder {
         super(adapter, parent);
         this.title = parent.findViewById(R.id.text_title);
         this.subtitle = parent.findViewById(R.id.text_subtitle);
-        addLogoView(parent, presetCard.getCode());
         PaymentTheme theme = adapter.getPaymentTheme();
         addButtonWidget(theme);
     }
@@ -58,6 +57,6 @@ final class PresetCardViewHolder extends PaymentCardViewHolder {
         } else {
             title.setText(card.getLabel());
         }
-        bindLogoView(paymentCard.getCode(), card.getLink("logo"), true);
+        bindLogoView(paymentCard.getCode(), card.getLink("logo"));
     }
 }

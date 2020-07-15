@@ -31,6 +31,7 @@ public final class LocalizationKey {
     public final static String LIST_HEADER_ACCOUNTS = "accounts.title";
     public final static String LIST_HEADER_NETWORKS = "networks.title";
     public final static String LIST_HEADER_NETWORKS_OTHER = "networks.other.title";
+    public final static String LIST_GROUPEDCARDS_TITLE = "groups.cards.title";
 
     public final static String CHARGE_TITLE = "messages.processing.title";
     public final static String CHARGE_TEXT = "messages.processing.text";
