@@ -141,10 +141,9 @@ public abstract class PaymentCardViewHolder extends RecyclerView.ViewHolder {
 
     void onBind(PaymentCard paymentCard) {
         for (Map.Entry<String, FormWidget> entry : widgets.entrySet()) {
-            String name = entry.getKey();
             FormWidget widget = entry.getValue();
 
-            switch (name) {
+            switch (entry.getKey()) {
                 case BUTTON_WIDGET:
                     bindButtonWidget((ButtonWidget) widget, paymentCard);
                     break;
