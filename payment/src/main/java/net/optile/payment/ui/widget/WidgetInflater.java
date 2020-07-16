@@ -42,6 +42,19 @@ public final class WidgetInflater {
     }
 
     /**
+     * Inflate a VerificationCodeWidget with the proper theming
+     *
+     * @param name unique name of the widget
+     * @param parent the parent ViewGroup in which this VerificationCodeWidget will be placed
+     * @param theme used to style the VerificationCodeWidget
+     * @return inflated and themed VerificationCodeWidget
+     */
+    public static VerificationCodeWidget inflateVerificationCodeWidget(String name, ViewGroup parent, PaymentTheme theme) {
+        View view = inflate(parent, R.layout.widget_textinput);
+        return new VerificationCodeWidget(name, view, theme);
+    }
+    
+    /**
      * Inflate a CheckBoxWidget with the proper theming
      *
      * @param name unique name of the widget

@@ -17,6 +17,8 @@ import android.view.View;
 import android.view.inputmethod.EditorInfo;
 import android.widget.TextView;
 import net.optile.payment.R;
+import net.optile.payment.core.PaymentException;
+import net.optile.payment.form.Operation;
 import net.optile.payment.ui.PaymentTheme;
 import net.optile.payment.ui.widget.input.EditTextInputMode;
 import net.optile.payment.validation.ValidationResult;
@@ -29,7 +31,6 @@ public abstract class InputLayoutWidget extends FormWidget {
     final TextInputLayout textLayout;
 
     EditTextInputMode mode;
-    String label;
 
     /**
      * Construct a new TextInputWidget
@@ -64,12 +65,15 @@ public abstract class InputLayoutWidget extends FormWidget {
     }
 
     public void setLabel(String label) {
-        this.label = label;
         textLayout.setHintAnimationEnabled(false);
         textLayout.setHint(label);
         textLayout.setHintAnimationEnabled(true);
     }
 
+    public void setHelperText(String helperText) {
+        textLayout.setHelperText(helperText);
+    }
+    
     /**
      * {@inheritDoc}
      */
@@ -102,7 +106,24 @@ public abstract class InputLayoutWidget extends FormWidget {
         validate();
     }
 
-    public void setHint(boolean visible) {
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public boolean validate() {
+        ValidationResult result = presenter.validate(name, getValue(), null);
+        return setValidationResult(result);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void putValue(Operation operation) throws PaymentException {
+        String val = getValue();
+        if (!TextUtils.isEmpty(val)) {
+            operation.putValue(name, val);
+        }
     }
 
     void handleOnFocusChange(boolean hasFocus) {
@@ -128,7 +149,8 @@ public abstract class InputLayoutWidget extends FormWidget {
 
     String getValue() {
         CharSequence cs = textInput.getText();
-        return cs != null ? cs.toString().trim() : "";
+        String val = cs != null ? cs.toString().trim() : "";
+        return mode != null ? mode.normalize(val) : val;
     }
 
     boolean setValidationResult(ValidationResult result) {

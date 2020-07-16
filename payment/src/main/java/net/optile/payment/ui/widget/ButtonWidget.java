@@ -11,6 +11,7 @@ package net.optile.payment.ui.widget;
 import android.view.View;
 import android.widget.Button;
 import net.optile.payment.R;
+import net.optile.payment.localization.Localization;
 import net.optile.payment.ui.PaymentTheme;
 
 /**
@@ -38,7 +39,8 @@ public final class ButtonWidget extends FormWidget {
         });
     }
 
-    public void setLabel(String label) {
+    public void onBind(String code, String buttonKey) {
+        String label = Localization.translate(code, buttonKey);
         button.setText(label);
     }
 

@@ -125,6 +125,13 @@ public final class NetworkCard implements PaymentCard {
     /**
      * {@inheritDoc}
      */
+    public boolean selected() {
+        return smartSwitch.getAllSelected().size() == 1;
+    }
+    
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public String getButton() {
         String operationType = PaymentUtils.getOperationType(getOperationLink());

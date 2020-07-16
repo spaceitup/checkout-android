@@ -37,6 +37,9 @@ public final class LocalizationKey {
     public final static String CHARGE_TEXT = "messages.processing.text";
     public final static String CHARGE_INTERRUPTED = "messages.processing.interrupted.text";
 
+    public final static String VERIFICATIONCODE_GENERIC_PLACEHOLDER = "account.verificationCode.generic.placeholder";
+    public final static String VERIFICATIONCODE_SPECIFIC_PLACEHOLDER = "account.verificationCode.specific.placeholder";
+    
     public final static String ERROR_CONNECTION_TITLE = "messages.error.internet.title";
     public final static String ERROR_CONNECTION_TEXT = "messages.error.internet.text";
     public final static String ERROR_DEFAULT_TITLE = "messages.error.default.title";
@@ -51,6 +54,10 @@ public final class LocalizationKey {
 
     public static String accountLabelKey(String account) {
         return "account." + account + ".label";
+    }
+
+    public static String accountPlaceholderKey(String account) {
+        return "account." + account + ".placeholder";
     }
 
     public static String accountHintKey(String account, String labelType) {

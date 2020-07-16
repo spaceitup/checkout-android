@@ -61,7 +61,6 @@ final class NetworkCardViewHolder extends PaymentCardViewHolder {
     }
 
     void onBind(PaymentCard paymentCard) {
-
         if (!(paymentCard instanceof NetworkCard)) {
             throw new IllegalArgumentException("Expected Networkcard in onBind");
         }
@@ -104,12 +103,12 @@ final class NetworkCardViewHolder extends PaymentCardViewHolder {
 
     private void bindRegistrationWidget(PaymentNetwork network) {
         RegisterWidget widget = (RegisterWidget) getFormWidget(AUTO_REGISTRATION);
-        widget.setRegistrationType(network.getRegistration());
+        widget.onBind(network.getRegistration());
     }
 
     private void bindRecurrenceWidget(PaymentNetwork network) {
         RegisterWidget widget = (RegisterWidget) getFormWidget(ALLOW_RECURRENCE);
-        widget.setRegistrationType(network.getRecurrence());
+        widget.onBind(network.getRecurrence());
     }
 
     /*

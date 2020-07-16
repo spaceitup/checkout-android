@@ -13,7 +13,9 @@ import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.view.View;
 import net.optile.payment.core.PaymentException;
+import net.optile.payment.core.PaymentInputType;
 import net.optile.payment.form.Operation;
+import net.optile.payment.localization.Localization;
 import net.optile.payment.model.InputElement;
 import net.optile.payment.ui.PaymentTheme;
 import net.optile.payment.ui.widget.input.EditTextInputMode;
@@ -48,39 +50,16 @@ public final class TextInputWidget extends InputLayoutWidget {
     }
 
     /**
-     * {@inheritDoc}
-     */
-    @Override
-    public boolean validate() {
-        ValidationResult result = presenter.validate(name, getValue(), null);
-        return setValidationResult(result);
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public void putValue(Operation operation) throws PaymentException {
-        String val = getValue();
-        if (!TextUtils.isEmpty(val)) {
-            operation.putValue(name, val);
-        }
-    }
-
-    /**
      * Set the InputElement into this TextInputWidget
      *
-     * @param maxLength the maxLength hint for the TextInput
+     * @param code of the network
      * @param element to be set in this widget
      */
-    public void setInputElement(int maxLength, InputElement element) {
-        EditTextInputMode mode = EditTextInputModeFactory.createMode(maxLength, element);
-        setTextInputMode(mode);
+    public void onBind(String code, InputElement element) {
+        int maxLength = presenter.getMaxLength(code, name);
+        setTextInputMode(EditTextInputModeFactory.createMode(maxLength, element));
         setValidation();
-    }
-
-    String getValue() {
-        String val = super.getValue();
-        return mode != null ? mode.normalize(val) : val;
+        setLabel(Localization.translateAccountLabel(code, name));
+        setHelperText(Localization.translateAccountPlaceholder(code, name));        
     }
 }

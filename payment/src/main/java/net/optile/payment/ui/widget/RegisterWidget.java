@@ -55,7 +55,7 @@ public final class RegisterWidget extends CheckBoxWidget {
         }
     }
 
-    public void setRegistrationType(String type) {
+    public void onBind(String type) {
         this.type = type;
         switch (type) {
             case RegistrationType.OPTIONAL:

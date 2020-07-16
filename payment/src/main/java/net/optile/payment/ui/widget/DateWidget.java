@@ -12,6 +12,7 @@ import android.text.TextUtils;
 import android.view.View;
 import net.optile.payment.core.PaymentException;
 import net.optile.payment.form.Operation;
+import net.optile.payment.localization.Localization;
 import net.optile.payment.model.InputElement;
 import net.optile.payment.ui.PaymentTheme;
 import net.optile.payment.ui.widget.input.ExpiryDateInputMode;
@@ -63,7 +64,10 @@ public final class DateWidget extends InputLayoutWidget {
      * @param monthElement expiry month element
      * @param yearElement expiry year element
      */
-    public void setInputElements(InputElement monthElement, InputElement yearElement) {
+    public void onBind(String code, InputElement monthElement, InputElement yearElement) { 
+        setLabel(Localization.translateAccountPlaceholder(code, name));
+        setHelperText(Localization.translateAccountLabel(code, name));
+
         this.monthElement = monthElement;
         this.yearElement = yearElement;
         setTextInputMode(new ExpiryDateInputMode());

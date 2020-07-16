@@ -158,7 +158,10 @@ final class ListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         return validator.isHidden(code, type);
     }
 
-    int getMaxLength(String code, String type) {
+    int getMaxLength(int position, String code, String type) {
+        if (isInvalidPosition(position)) {
+            return -1;
+        }
         Validator validator = list.getPaymentSession().getValidator();
         return validator.getMaxLength(code, type);
     }

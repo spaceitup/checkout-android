@@ -19,6 +19,8 @@ import androidx.annotation.NonNull;
 import net.optile.payment.R;
 import net.optile.payment.core.PaymentException;
 import net.optile.payment.form.Operation;
+import net.optile.payment.localization.Localization;
+import net.optile.payment.model.InputElement;
 import net.optile.payment.model.SelectOption;
 import net.optile.payment.ui.PaymentTheme;
 import net.optile.payment.util.PaymentUtils;
@@ -58,10 +60,6 @@ public final class SelectWidget extends FormWidget {
         });
     }
 
-    public void setLabel(String label) {
-        this.label.setText(label);
-    }
-
     /**
      * {@inheritDoc}
      */
@@ -74,8 +72,10 @@ public final class SelectWidget extends FormWidget {
         }
     }
 
-    public void setSelectOptions(List<SelectOption> options) {
+    public void onBind(String code, InputElement element) {
+        label.setText(Localization.translateAccountLabel(code, name));
         adapter.clear();
+        List<SelectOption> options = element.getOptions();
 
         if (options == null || options.size() == 0) {
             return;
