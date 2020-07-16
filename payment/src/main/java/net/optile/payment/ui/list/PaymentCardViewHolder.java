@@ -26,8 +26,6 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import androidx.recyclerview.widget.RecyclerView;
 import net.optile.payment.R;
-import net.optile.payment.core.PaymentInputType;
-import net.optile.payment.localization.Localization;
 import net.optile.payment.model.AccountMask;
 import net.optile.payment.model.InputElement;
 import net.optile.payment.model.PaymentMethod;
@@ -72,11 +70,11 @@ public abstract class PaymentCardViewHolder extends RecyclerView.ViewHolder {
 
         View view = parent.findViewById(R.id.layout_header);
         view.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    adapter.onItemClicked(getAdapterPosition());
-                }
-            });
+            @Override
+            public void onClick(View v) {
+                adapter.onItemClicked(getAdapterPosition());
+            }
+        });
     }
 
     /**
@@ -105,19 +103,19 @@ public abstract class PaymentCardViewHolder extends RecyclerView.ViewHolder {
                 continue;
             }
             switch (element.getName()) {
-            case VERIFICATION_CODE:
-                addWidget(WidgetInflater.inflateVerificationCodeWidget(VERIFICATION_CODE, formLayout));
-                break;
-            case EXPIRY_MONTH:
-            case EXPIRY_YEAR:
-                if (!containsExpiryDate) {
+                case VERIFICATION_CODE:
+                    addWidget(WidgetInflater.inflateVerificationCodeWidget(VERIFICATION_CODE, formLayout));
+                    break;
+                case EXPIRY_MONTH:
+                case EXPIRY_YEAR:
+                    if (!containsExpiryDate) {
+                        addWidget(WidgetInflater.inflateElementWidget(element, formLayout));
+                    } else if (!widgets.containsKey(EXPIRY_DATE)) {
+                        addWidget(WidgetInflater.inflateDateWidget(EXPIRY_DATE, formLayout));
+                    }
+                    break;
+                default:
                     addWidget(WidgetInflater.inflateElementWidget(element, formLayout));
-                } else if (!widgets.containsKey(EXPIRY_DATE)) {
-                    addWidget(WidgetInflater.inflateDateWidget(EXPIRY_DATE, formLayout));
-                }
-                break;
-            default:
-                addWidget(WidgetInflater.inflateElementWidget(element, formLayout));
             }
         }
     }
@@ -148,13 +146,13 @@ public abstract class PaymentCardViewHolder extends RecyclerView.ViewHolder {
 
             switch (name) {
                 case BUTTON_WIDGET:
-                    bindButtonWidget((ButtonWidget)widget, paymentCard);
+                    bindButtonWidget((ButtonWidget) widget, paymentCard);
                     break;
                 case VERIFICATION_CODE:
-                    bindVerificationCodeWidget((VerificationCodeWidget)widget, paymentCard);
+                    bindVerificationCodeWidget((VerificationCodeWidget) widget, paymentCard);
                     break;
                 case EXPIRY_DATE:
-                    bindDateWidget((DateWidget)widget, paymentCard);
+                    bindDateWidget((DateWidget) widget, paymentCard);
                     break;
                 default:
                     bindElementWidget(widget, paymentCard);
@@ -165,7 +163,7 @@ public abstract class PaymentCardViewHolder extends RecyclerView.ViewHolder {
     void bindButtonWidget(ButtonWidget widget, PaymentCard card) {
         widget.onBind(card.getCode(), card.getButton());
     }
-    
+
     void bindVerificationCodeWidget(VerificationCodeWidget widget, PaymentCard card) {
         InputElement element = card.getInputElement(VERIFICATION_CODE);
         widget.onBind(card.getCode(), element);
@@ -182,25 +180,25 @@ public abstract class PaymentCardViewHolder extends RecyclerView.ViewHolder {
         String code = card.getCode();
 
         if (widget instanceof SelectWidget) {
-            ((SelectWidget)widget).onBind(code, element);
+            ((SelectWidget) widget).onBind(code, element);
         } else if (widget instanceof TextInputWidget) {
-            ((TextInputWidget)widget).onBind(code, element);
+            ((TextInputWidget) widget).onBind(code, element);
         }
     }
-    
+
     void bindAccountMask(TextView title, TextView subtitle, AccountMask mask, String method) {
         switch (method) {
-        case PaymentMethod.CREDIT_CARD:
-        case PaymentMethod.DEBIT_CARD:
-            title.setText(mask.getNumber());
-            String date = PaymentUtils.getExpiryDateString(mask);
-            if (date != null) {
-                subtitle.setVisibility(View.VISIBLE);
-                subtitle.setText(date);
-            }
-            break;
-        default:
-            title.setText(mask.getDisplayLabel());
+            case PaymentMethod.CREDIT_CARD:
+            case PaymentMethod.DEBIT_CARD:
+                title.setText(mask.getNumber());
+                String date = PaymentUtils.getExpiryDateString(mask);
+                if (date != null) {
+                    subtitle.setVisibility(View.VISIBLE);
+                    subtitle.setText(date);
+                }
+                break;
+            default:
+                title.setText(mask.getDisplayLabel());
         }
     }
 

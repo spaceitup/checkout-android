@@ -49,7 +49,7 @@ class CardWidgetPresenter implements WidgetPresenter {
     public int getMaxLength(String code, String type) {
         return adapter.getMaxLength(holder.getAdapterPosition(), code, type);
     }
-    
+
     @Override
     public void showDialogFragment(DialogFragment dialog, String tag) {
         adapter.showDialogFragment(holder.getAdapterPosition(), dialog, tag);

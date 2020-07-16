@@ -38,15 +38,15 @@ public interface WidgetPresenter {
      */
     void showKeyboard();
 
-    /** 
+    /**
      * Get the max length for the given input type
-     * 
+     *
      * @param code of the network
      * @param type of the input
-     * @return the max length or -1 if not available 
+     * @return the max length or -1 if not available
      */
     int getMaxLength(String code, String type);
-    
+
     /**
      * Ask the presenter to show the DialogFragment
      *
