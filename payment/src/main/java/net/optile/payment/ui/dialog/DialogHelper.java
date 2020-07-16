@@ -50,15 +50,14 @@ public class DialogHelper {
      *
      * @param card PaymentCard from which this request originated
      * @param type input type, i.e. number or verificationCode.
-     * @param button label of the back button
      */
-    public static DialogFragment createHintDialog(PaymentCard card, String type, String button) {
+    public static DialogFragment createHintDialog(PaymentCard card, String type) {
         String code = card.getCode();
         MessageDialogFragment dialog = new MessageDialogFragment();
         dialog.setTitle(Localization.translateAccountHint(code, type, LABEL_TITLE));
         dialog.setMessage(Localization.translateAccountHint(code, type, LABEL_TEXT));
         dialog.setImageResId(getHintImageResId(card, type));
-        dialog.setNeutralButton(button);
+        dialog.setNeutralButton(Localization.translate(BUTTON_OK));
         return dialog;
     }
 

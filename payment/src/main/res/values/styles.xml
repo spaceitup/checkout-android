@@ -84,7 +84,6 @@
         <item name="cornerSize">@dimen/pmradius</item>
     </style>
     ​
-
     <style name="ShapeAppearance.Payment.MediumComponent" parent="ShapeAppearance.MaterialComponents.MediumComponent">
         <item name="cornerSize">@dimen/pmradius</item>
     </style>

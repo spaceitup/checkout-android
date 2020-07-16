@@ -17,8 +17,8 @@
             android:layout_gravity="top"
             android:paddingLeft="@dimen/pmborder_large"
             android:paddingRight="@dimen/pmborder_large"
-            android:paddingTop="@dimen/pmborder_large"
-            android:paddingBottom="@dimen/pmborder_small"
+            android:paddingTop="@dimen/pmborder_xmedium"
+            android:paddingBottom="@dimen/pmborder_xmedium"
             android:orientation="vertical">
 
             <TextView
@@ -40,6 +40,7 @@
                 android:id="@+id/image_logo"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/pmborder_xmedium"
                 android:contentDescription="@string/pmpage_contentdescription" />
         </LinearLayout>
     </ScrollView>

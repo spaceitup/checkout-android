@@ -8,7 +8,6 @@
 
 package net.optile.payment.ui.list;
 
-import static net.optile.payment.localization.LocalizationKey.BUTTON_BACK;
 import static net.optile.payment.localization.LocalizationKey.LIST_HEADER_ACCOUNTS;
 import static net.optile.payment.localization.LocalizationKey.LIST_HEADER_NETWORKS;
 import static net.optile.payment.localization.LocalizationKey.LIST_HEADER_NETWORKS_OTHER;
@@ -142,8 +141,7 @@ public final class PaymentList {
         PaymentCard card = item.getPaymentCard();
 
         if (card != null) {
-            String button = Localization.translate(card.getCode(), BUTTON_BACK);
-            DialogFragment dialog = DialogHelper.createHintDialog(card, type, button);
+            DialogFragment dialog = DialogHelper.createHintDialog(card, type);
             showDialogFragment(dialog, "hint_dialog");
         }
     }
