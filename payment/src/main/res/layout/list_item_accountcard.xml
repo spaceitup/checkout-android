@@ -33,7 +33,6 @@
                     android:layout_width="@dimen/pmlogo_width"
                     android:layout_height="@dimen/pmlogo_height"
                     android:adjustViewBounds="true"
-                    android:background="@color/clown1"
                     android:layout_marginEnd="@dimen/pmborder_medium"
                     android:contentDescription="@string/pmpage_contentdescription" />    
 

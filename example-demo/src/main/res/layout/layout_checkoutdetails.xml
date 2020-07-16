@@ -6,8 +6,8 @@
         android:layout_height="wrap_content"
         android:gravity="center"
         android:orientation="horizontal"
-        android:paddingTop="@dimen/pmwidget_padding"
-        android:paddingBottom="@dimen/pmwidget_padding">
+        android:paddingTop="@dimen/pmborder_xxsmall"
+        android:paddingBottom="@dimen/pmborder_xxsmall">
 
         <ImageView
             android:layout_width="@dimen/iconsize"
@@ -36,8 +36,8 @@
         android:layout_height="wrap_content"
         android:gravity="center"
         android:orientation="horizontal"
-        android:paddingTop="@dimen/pmwidget_padding"
-        android:paddingBottom="@dimen/pmwidget_padding">
+        android:paddingTop="@dimen/pmborder_xxsmall"
+        android:paddingBottom="@dimen/pmborder_xxsmall">
 
         <ImageView
             android:layout_width="@dimen/iconsize"
@@ -66,8 +66,8 @@
         android:layout_height="wrap_content"
         android:gravity="center"
         android:orientation="horizontal"
-        android:paddingTop="@dimen/pmwidget_padding"
-        android:paddingBottom="@dimen/pmwidget_padding">
+        android:paddingTop="@dimen/pmborder_xxsmall"
+        android:paddingBottom="@dimen/pmborder_xxsmall">
 
         <ImageView
             android:layout_width="@dimen/iconsize"
@@ -96,8 +96,8 @@
         android:layout_height="wrap_content"
         android:gravity="center"
         android:orientation="horizontal"
-        android:paddingTop="@dimen/pmwidget_padding"
-        android:paddingBottom="@dimen/pmwidget_padding">
+        android:paddingTop="@dimen/pmborder_xxsmall"
+        android:paddingBottom="@dimen/pmborder_xxsmall">
 
         <ImageView
             android:layout_width="@dimen/iconsize"
@@ -126,8 +126,8 @@
         android:layout_height="wrap_content"
         android:gravity="center"
         android:orientation="horizontal"
-        android:paddingTop="@dimen/pmwidget_padding"
-        android:paddingBottom="@dimen/pmwidget_padding">
+        android:paddingTop="@dimen/pmborder_xxsmall"
+        android:paddingBottom="@dimen/pmborder_xxsmall">
 
         <ImageView
             android:layout_width="@dimen/iconsize"

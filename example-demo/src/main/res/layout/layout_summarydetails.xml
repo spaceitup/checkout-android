@@ -56,7 +56,13 @@
                 android:gravity="center_vertical"
                 android:orientation="horizontal">
 
-                <include layout="@layout/list_item_logo" />
+                <ImageView
+                    android:id="@+id/image_logo"
+                    android:layout_width="@dimen/pmlogo_width"
+                    android:layout_height="@dimen/pmlogo_height"
+                    android:adjustViewBounds="true"
+                    android:layout_marginEnd="@dimen/pmborder_medium"
+                    android:contentDescription="@string/pmpage_contentdescription" />    
 
                 <LinearLayout
                     android:layout_width="match_parent"
