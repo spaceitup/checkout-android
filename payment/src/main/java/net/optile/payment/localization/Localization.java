@@ -142,7 +142,7 @@ public final class Localization {
     public static String translateAccountPlaceholder(String networkCode, String account) {
         return translate(networkCode, LocalizationKey.accountPlaceholderKey(account));
     }
-    
+
     /**
      * Helper method to obtain the translation of the account hint with the given label type.
      *

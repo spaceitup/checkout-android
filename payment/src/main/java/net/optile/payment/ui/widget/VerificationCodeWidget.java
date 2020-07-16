@@ -33,9 +33,9 @@ public final class VerificationCodeWidget extends InputLayoutWidget {
         setEndIcon(END_ICON_CUSTOM, R.drawable.ic_tooltip);
     }
 
-    /** 
+    /**
      * Bind this verification code widget to the InputElement.
-     * 
+     *
      * @param code of the payment network this widget belongs to
      * @param element to bind this widget to
      */
@@ -48,6 +48,6 @@ public final class VerificationCodeWidget extends InputLayoutWidget {
     }
 
     void handleOnEndIconClicked() {
-        presenter.onHintClicked(name);        
+        presenter.onHintClicked(name);
     }
 }

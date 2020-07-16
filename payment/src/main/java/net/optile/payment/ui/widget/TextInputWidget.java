@@ -8,20 +8,12 @@
 
 package net.optile.payment.ui.widget;
 
-import static com.google.android.material.textfield.TextInputLayout.END_ICON_CUSTOM;
-
 import android.text.Editable;
-import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.view.View;
-import net.optile.payment.core.PaymentException;
-import net.optile.payment.core.PaymentInputType;
-import net.optile.payment.form.Operation;
 import net.optile.payment.localization.Localization;
 import net.optile.payment.model.InputElement;
-import net.optile.payment.ui.widget.input.EditTextInputMode;
 import net.optile.payment.ui.widget.input.EditTextInputModeFactory;
-import net.optile.payment.validation.ValidationResult;
 
 /**
  * Widget for handling text input
@@ -60,6 +52,6 @@ public final class TextInputWidget extends InputLayoutWidget {
         setTextInputMode(EditTextInputModeFactory.createMode(maxLength, element));
         setValidation();
         setLabel(Localization.translateAccountLabel(code, name));
-        setHelperText(Localization.translateAccountPlaceholder(code, name));        
+        setHelperText(Localization.translateAccountPlaceholder(code, name));
     }
 }

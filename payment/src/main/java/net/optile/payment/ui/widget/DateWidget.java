@@ -8,11 +8,8 @@
 
 package net.optile.payment.ui.widget;
 
-import static com.google.android.material.textfield.TextInputLayout.END_ICON_CUSTOM;
-
 import android.text.TextUtils;
 import android.view.View;
-import net.optile.payment.R;
 import net.optile.payment.core.PaymentException;
 import net.optile.payment.form.Operation;
 import net.optile.payment.localization.Localization;
@@ -65,7 +62,7 @@ public final class DateWidget extends InputLayoutWidget {
      * @param monthElement expiry month element
      * @param yearElement expiry year element
      */
-    public void onBind(String code, InputElement monthElement, InputElement yearElement) { 
+    public void onBind(String code, InputElement monthElement, InputElement yearElement) {
         setLabel(Localization.translateAccountLabel(code, name));
         setHelperText(Localization.translateAccountPlaceholder(code, name));
 

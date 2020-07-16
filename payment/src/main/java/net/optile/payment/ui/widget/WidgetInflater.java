@@ -16,7 +16,7 @@ import net.optile.payment.model.InputElement;
 import net.optile.payment.model.InputElementType;
 
 /**
- * Class with helper methods to inflate widgets 
+ * Class with helper methods to inflate widgets
  */
 public final class WidgetInflater {
 
@@ -50,7 +50,7 @@ public final class WidgetInflater {
         View view = inflate(parent, R.layout.widget_textinput);
         return new VerificationCodeWidget(name, view);
     }
-    
+
     /**
      * Inflate a CheckBoxWidget
      *

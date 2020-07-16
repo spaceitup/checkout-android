@@ -8,12 +8,11 @@
 
 package net.optile.payment.ui.widget;
 
-import com.google.android.material.textfield.TextInputEditText;
-import com.google.android.material.textfield.TextInputLayout;
-import static com.google.android.material.textfield.TextInputLayout.END_ICON_CLEAR_TEXT;
 import static com.google.android.material.textfield.TextInputLayout.END_ICON_NONE;
 
-import android.util.Log;
+import com.google.android.material.textfield.TextInputEditText;
+import com.google.android.material.textfield.TextInputLayout;
+
 import android.text.TextUtils;
 import android.view.KeyEvent;
 import android.view.View;
@@ -31,10 +30,10 @@ import net.optile.payment.validation.ValidationResult;
 public abstract class InputLayoutWidget extends FormWidget {
     final TextInputEditText textInput;
     final TextInputLayout textLayout;
-    
+
     EditTextInputMode mode;
     private String helperText;
-    
+
     /**
      * Construct a new TextInputWidget
      *
@@ -75,7 +74,7 @@ public abstract class InputLayoutWidget extends FormWidget {
     public void setHelperText(String helperText) {
         this.helperText = helperText;
     }
-    
+
     /**
      * {@inheritDoc}
      */
@@ -132,18 +131,18 @@ public abstract class InputLayoutWidget extends FormWidget {
         textLayout.setEndIconMode(mode);
         textLayout.setEndIconDrawable(resourceId);
         textLayout.setEndIconOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    handleOnEndIconClicked();
-                }
-            });
+            @Override
+            public void onClick(View view) {
+                handleOnEndIconClicked();
+            }
+        });
     }
 
     void removeEndIcon() {
         textLayout.setEndIconMode(END_ICON_NONE);
         textLayout.setEndIconOnClickListener(null);
     }
-    
+
     void handleOnFocusChange(boolean hasFocus) {
         if (hasFocus) {
             textLayout.setHelperText(helperText);
@@ -158,7 +157,7 @@ public abstract class InputLayoutWidget extends FormWidget {
 
     void handleOnEndIconClicked() {
     }
-        
+
     void handleOnKeyboardDone() {
         textInput.clearFocus();
         presenter.hideKeyboard();

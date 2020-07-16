@@ -39,7 +39,7 @@ public final class LocalizationKey {
 
     public final static String VERIFICATIONCODE_GENERIC_PLACEHOLDER = "account.verificationCode.generic.placeholder";
     public final static String VERIFICATIONCODE_SPECIFIC_PLACEHOLDER = "account.verificationCode.specific.placeholder";
-    
+
     public final static String ERROR_CONNECTION_TITLE = "messages.error.internet.title";
     public final static String ERROR_CONNECTION_TEXT = "messages.error.internet.text";
     public final static String ERROR_DEFAULT_TITLE = "messages.error.default.title";
