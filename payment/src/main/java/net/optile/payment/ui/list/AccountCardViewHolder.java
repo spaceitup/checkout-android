@@ -15,7 +15,6 @@ import android.widget.TextView;
 import androidx.recyclerview.widget.RecyclerView.ViewHolder;
 import net.optile.payment.R;
 import net.optile.payment.model.AccountMask;
-import net.optile.payment.ui.PaymentTheme;
 import net.optile.payment.ui.model.AccountCard;
 import net.optile.payment.ui.model.PaymentCard;
 import net.optile.payment.util.PaymentUtils;
@@ -32,9 +31,8 @@ public final class AccountCardViewHolder extends PaymentCardViewHolder {
         super(adapter, parent);
         this.title = parent.findViewById(R.id.text_title);
         this.subtitle = parent.findViewById(R.id.text_subtitle);
-        PaymentTheme theme = adapter.getPaymentTheme();
-        addElementWidgets(accountCard, theme);
-        addButtonWidget(theme);
+        addElementWidgets(accountCard);
+        addButtonWidget();
         setLastImeOptions();
     }
 

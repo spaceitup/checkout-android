@@ -14,7 +14,6 @@ import net.optile.payment.core.PaymentException;
 import net.optile.payment.form.Operation;
 import net.optile.payment.localization.Localization;
 import net.optile.payment.model.InputElement;
-import net.optile.payment.ui.PaymentTheme;
 import net.optile.payment.ui.widget.input.ExpiryDateInputMode;
 import net.optile.payment.util.PaymentUtils;
 import net.optile.payment.validation.ValidationResult;
@@ -32,10 +31,9 @@ public final class DateWidget extends InputLayoutWidget {
      *
      * @param name name identifying this widget
      * @param rootView the root view of this input
-     * @param theme the PaymentTheme to apply
      */
-    public DateWidget(String name, View rootView, PaymentTheme theme) {
-        super(name, rootView, theme);
+    public DateWidget(String name, View rootView) {
+        super(name, rootView);
     }
 
     /**
@@ -65,8 +63,8 @@ public final class DateWidget extends InputLayoutWidget {
      * @param yearElement expiry year element
      */
     public void onBind(String code, InputElement monthElement, InputElement yearElement) { 
-        setLabel(Localization.translateAccountPlaceholder(code, name));
-        setHelperText(Localization.translateAccountLabel(code, name));
+        setLabel(Localization.translateAccountLabel(code, name));
+        setHelperText(Localization.translateAccountPlaceholder(code, name));
 
         this.monthElement = monthElement;
         this.yearElement = yearElement;

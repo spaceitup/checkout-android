@@ -31,7 +31,6 @@ import net.optile.payment.localization.Localization;
 import net.optile.payment.model.AccountMask;
 import net.optile.payment.model.InputElement;
 import net.optile.payment.model.PaymentMethod;
-import net.optile.payment.ui.PaymentTheme;
 import net.optile.payment.ui.model.PaymentCard;
 import net.optile.payment.ui.widget.ButtonWidget;
 import net.optile.payment.ui.widget.DateWidget;
@@ -90,12 +89,12 @@ public abstract class PaymentCardViewHolder extends RecyclerView.ViewHolder {
         return widgets.get(name);
     }
 
-    void addButtonWidget(PaymentTheme theme) {
-        FormWidget widget = WidgetInflater.inflateButtonWidget(BUTTON_WIDGET, formLayout, theme);
+    void addButtonWidget() {
+        FormWidget widget = WidgetInflater.inflateButtonWidget(BUTTON_WIDGET, formLayout);
         addWidget(widget);
     }
 
-    void addElementWidgets(PaymentCard card, PaymentTheme theme) {
+    void addElementWidgets(PaymentCard card) {
         String code = card.getCode();
         List<InputElement> elements = card.getInputElements();
         boolean containsExpiryDate = PaymentUtils.containsExpiryDate(elements);
@@ -107,18 +106,18 @@ public abstract class PaymentCardViewHolder extends RecyclerView.ViewHolder {
             }
             switch (element.getName()) {
             case VERIFICATION_CODE:
-                addWidget(WidgetInflater.inflateVerificationCodeWidget(VERIFICATION_CODE, formLayout, theme));
+                addWidget(WidgetInflater.inflateVerificationCodeWidget(VERIFICATION_CODE, formLayout));
                 break;
             case EXPIRY_MONTH:
             case EXPIRY_YEAR:
                 if (!containsExpiryDate) {
-                    addWidget(WidgetInflater.inflateElementWidget(element, formLayout, theme));
+                    addWidget(WidgetInflater.inflateElementWidget(element, formLayout));
                 } else if (!widgets.containsKey(EXPIRY_DATE)) {
-                    addWidget(WidgetInflater.inflateDateWidget(EXPIRY_DATE, formLayout, theme));
+                    addWidget(WidgetInflater.inflateDateWidget(EXPIRY_DATE, formLayout));
                 }
                 break;
             default:
-                addWidget(WidgetInflater.inflateElementWidget(element, formLayout, theme));
+                addWidget(WidgetInflater.inflateElementWidget(element, formLayout));
             }
         }
     }

@@ -17,7 +17,6 @@ import androidx.fragment.app.DialogFragment;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.recyclerview.widget.RecyclerView.ViewHolder;
 import net.optile.payment.localization.Localization;
-import net.optile.payment.ui.PaymentTheme;
 import net.optile.payment.ui.PaymentUI;
 import net.optile.payment.ui.model.AccountCard;
 import net.optile.payment.ui.model.NetworkCard;
@@ -184,10 +183,6 @@ final class ListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         }
         result.setMessage(Localization.translateError(card.getCode(), result.getError()));
         return result;
-    }
-
-    PaymentTheme getPaymentTheme() {
-        return PaymentUI.getInstance().getPaymentTheme();
     }
 
     private ListItem getItemWithViewType(int viewType) {

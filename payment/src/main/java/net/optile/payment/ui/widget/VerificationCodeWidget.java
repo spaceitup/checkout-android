@@ -12,7 +12,6 @@ import android.view.View;
 import net.optile.payment.localization.Localization;
 import net.optile.payment.localization.LocalizationKey;
 import net.optile.payment.model.InputElement;
-import net.optile.payment.ui.PaymentTheme;
 import net.optile.payment.ui.widget.input.EditTextInputModeFactory;
 
 /**
@@ -25,10 +24,9 @@ public final class VerificationCodeWidget extends InputLayoutWidget {
      *
      * @param name name identifying this widget
      * @param rootView the root view of this input
-     * @param theme the PaymentTheme to apply
      */
-    public VerificationCodeWidget(String name, View rootView, PaymentTheme theme) {
-        super(name, rootView, theme);
+    public VerificationCodeWidget(String name, View rootView) {
+        super(name, rootView);
     }
 
     /** 
@@ -45,7 +43,7 @@ public final class VerificationCodeWidget extends InputLayoutWidget {
 
         String key = selected ? LocalizationKey.VERIFICATIONCODE_SPECIFIC_PLACEHOLDER :
             LocalizationKey.VERIFICATIONCODE_GENERIC_PLACEHOLDER;
-        setLabel(Localization.translate(code, key));
-        setHelperText(Localization.translateAccountLabel(code, name));
+        setLabel(Localization.translateAccountLabel(code, name));
+        setHelperText(Localization.translate(code, key));
     }
 }

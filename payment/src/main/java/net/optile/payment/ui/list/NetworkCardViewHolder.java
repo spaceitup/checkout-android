@@ -24,7 +24,6 @@ import androidx.recyclerview.widget.RecyclerView.ViewHolder;
 import net.optile.payment.R;
 import net.optile.payment.localization.Localization;
 import net.optile.payment.localization.LocalizationKey;
-import net.optile.payment.ui.PaymentTheme;
 import net.optile.payment.ui.model.NetworkCard;
 import net.optile.payment.ui.model.PaymentCard;
 import net.optile.payment.ui.model.PaymentNetwork;
@@ -44,13 +43,12 @@ final class NetworkCardViewHolder extends PaymentCardViewHolder {
     public NetworkCardViewHolder(ListAdapter adapter, View parent, NetworkCard networkCard) {
         super(adapter, parent);
 
-        PaymentTheme theme = adapter.getPaymentTheme();
         this.title = parent.findViewById(R.id.text_title);
         this.logos = new HashMap<>();
 
-        addElementWidgets(networkCard, theme);
-        addRegisterWidgets(theme);
-        addButtonWidget(theme);
+        addElementWidgets(networkCard);
+        addRegisterWidgets();
+        addButtonWidget();
         setLastImeOptions();
     }
 
@@ -94,10 +92,10 @@ final class NetworkCardViewHolder extends PaymentCardViewHolder {
         bindRecurrenceWidget(network);
     }
 
-    private void addRegisterWidgets(PaymentTheme theme) {
-        FormWidget widget = WidgetInflater.inflateRegisterWidget(AUTO_REGISTRATION, formLayout, theme);
+    private void addRegisterWidgets() {
+        FormWidget widget = WidgetInflater.inflateRegisterWidget(AUTO_REGISTRATION, formLayout);
         addWidget(widget);
-        widget = WidgetInflater.inflateRegisterWidget(ALLOW_RECURRENCE, formLayout, theme);
+        widget = WidgetInflater.inflateRegisterWidget(ALLOW_RECURRENCE, formLayout);
         addWidget(widget);
     }
 

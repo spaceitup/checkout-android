@@ -17,7 +17,6 @@ import net.optile.payment.core.PaymentInputType;
 import net.optile.payment.form.Operation;
 import net.optile.payment.localization.Localization;
 import net.optile.payment.model.InputElement;
-import net.optile.payment.ui.PaymentTheme;
 import net.optile.payment.ui.widget.input.EditTextInputMode;
 import net.optile.payment.ui.widget.input.EditTextInputModeFactory;
 import net.optile.payment.validation.ValidationResult;
@@ -32,10 +31,9 @@ public final class TextInputWidget extends InputLayoutWidget {
      *
      * @param name name identifying this widget
      * @param rootView the root view of this input
-     * @param theme PaymentTheme to apply to this widget
      */
-    public TextInputWidget(String name, View rootView, PaymentTheme theme) {
-        super(name, rootView, theme);
+    public TextInputWidget(String name, View rootView) {
+        super(name, rootView);
         textInput.addTextChangedListener(new TextWatcher() {
             public void onTextChanged(CharSequence s, int start, int before, int count) {
                 presenter.onTextInputChanged(name, getValue());
