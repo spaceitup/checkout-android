@@ -28,9 +28,10 @@ import net.optile.payment.validation.ValidationResult;
 public abstract class InputLayoutWidget extends FormWidget {
     final TextInputEditText textInput;
     final TextInputLayout textLayout;
-
+    
     EditTextInputMode mode;
-
+    private String helperText;
+    
     /**
      * Construct a new TextInputWidget
      *
@@ -40,9 +41,8 @@ public abstract class InputLayoutWidget extends FormWidget {
     InputLayoutWidget(String name, View rootView) {
         super(name, rootView);
         textLayout = rootView.findViewById(R.id.textinputlayout);
-        textLayout.setHelperTextEnabled(true);
         textLayout.setErrorEnabled(true);
-
+        textLayout.setHelperTextEnabled(true);
         textInput = rootView.findViewById(R.id.textinputedittext);
         textInput.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override
@@ -69,7 +69,7 @@ public abstract class InputLayoutWidget extends FormWidget {
     }
 
     public void setHelperText(String helperText) {
-        textLayout.setHelperText(helperText);
+        this.helperText = helperText;
     }
     
     /**
@@ -126,9 +126,13 @@ public abstract class InputLayoutWidget extends FormWidget {
 
     void handleOnFocusChange(boolean hasFocus) {
         if (hasFocus) {
+            textLayout.setHelperText(helperText);
             setInputLayoutState(VALIDATION_UNKNOWN, false, null);
-        } else if (state == VALIDATION_UNKNOWN && !TextUtils.isEmpty(getValue())) {
-            validate();
+        } else {
+            textLayout.setHelperText(null);
+            if (state == VALIDATION_UNKNOWN && !TextUtils.isEmpty(getValue())) {
+                validate();
+            }
         }
     }
 

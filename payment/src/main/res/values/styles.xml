@@ -61,8 +61,9 @@
         <item name="shapeAppearance">@style/ShapeAppearance.Payment.SmallComponent</item>
         <item name="errorIconDrawable">@null</item>
         <item name="boxBackgroundColor">@color/pm_gray100</item>
-        <item name="boxStrokeColor">@color/payment_textinputlayout_stroke_color</item>
         <item name="android:textColorHint">@color/pm_gray_dark</item>
+        <item name="helperTextTextColor">?attr/colorPrimary</item>
+        <item name="boxStrokeColor">@color/payment_textinputlayout_stroke_color</item>
     </style>
 
     <style name="ThemeOverlay.Payment.TextInputLayout" parent="">
