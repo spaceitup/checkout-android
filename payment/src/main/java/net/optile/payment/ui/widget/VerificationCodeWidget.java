@@ -8,7 +8,10 @@
 
 package net.optile.payment.ui.widget;
 
+import static com.google.android.material.textfield.TextInputLayout.END_ICON_CUSTOM;
+
 import android.view.View;
+import net.optile.payment.R;
 import net.optile.payment.localization.Localization;
 import net.optile.payment.localization.LocalizationKey;
 import net.optile.payment.model.InputElement;
@@ -27,6 +30,7 @@ public final class VerificationCodeWidget extends InputLayoutWidget {
      */
     public VerificationCodeWidget(String name, View rootView) {
         super(name, rootView);
+        setEndIcon(END_ICON_CUSTOM, R.drawable.ic_tooltip);
     }
 
     /** 
@@ -34,16 +38,16 @@ public final class VerificationCodeWidget extends InputLayoutWidget {
      * 
      * @param code of the payment network this widget belongs to
      * @param element to bind this widget to
-     * @param selected indicates that this widget is bound to a network selected by the user
      */
-    public void onBind(String code, InputElement element, boolean selected) {
+    public void onBind(String code, InputElement element) {
         int maxLength = presenter.getMaxLength(code, name);
         setTextInputMode(EditTextInputModeFactory.createMode(maxLength, element));
         setValidation();
-
-        String key = selected ? LocalizationKey.VERIFICATIONCODE_SPECIFIC_PLACEHOLDER :
-            LocalizationKey.VERIFICATIONCODE_GENERIC_PLACEHOLDER;
         setLabel(Localization.translateAccountLabel(code, name));
-        setHelperText(Localization.translate(code, key));
+        setHelperText(Localization.translate(code, LocalizationKey.VERIFICATIONCODE_SPECIFIC_PLACEHOLDER));
+    }
+
+    void handleOnEndIconClicked() {
+        presenter.onHintClicked(name);        
     }
 }

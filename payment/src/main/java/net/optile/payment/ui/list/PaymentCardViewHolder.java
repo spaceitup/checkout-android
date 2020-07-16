@@ -168,7 +168,7 @@ public abstract class PaymentCardViewHolder extends RecyclerView.ViewHolder {
     
     void bindVerificationCodeWidget(VerificationCodeWidget widget, PaymentCard card) {
         InputElement element = card.getInputElement(VERIFICATION_CODE);
-        widget.onBind(card.getCode(), element, card.selected());
+        widget.onBind(card.getCode(), element);
     }
 
     void bindDateWidget(DateWidget widget, PaymentCard card) {

@@ -8,6 +8,8 @@
 
 package net.optile.payment.ui.widget;
 
+import static com.google.android.material.textfield.TextInputLayout.END_ICON_CUSTOM;
+
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;

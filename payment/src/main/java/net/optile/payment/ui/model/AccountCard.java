@@ -72,14 +72,6 @@ public final class AccountCard implements PaymentCard {
      * {@inheritDoc}
      */
     @Override
-    public boolean selected() {
-        return true;
-    }
-    
-    /**
-     * {@inheritDoc}
-     */
-    @Override
     public String getLabel() {
         return account.getLabel();
     }

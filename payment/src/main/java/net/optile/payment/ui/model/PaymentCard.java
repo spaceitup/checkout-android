@@ -62,15 +62,6 @@ public interface PaymentCard {
      */
     String getButton();
 
-    /** 
-     * Indicating if a network was selected in this payment card.
-     * In case of a network card with smartswitch, this method would return false when the user has not 
-     * entered a credit card number yet and no network was selected.
-     *
-     * @return true when a network was selected in this card, false otherwise 
-     */
-    boolean selected();
-    
     /**
      * Get the list of input elements supported by this  payment card
      *

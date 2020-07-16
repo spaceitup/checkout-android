@@ -8,8 +8,11 @@
 
 package net.optile.payment.ui.widget;
 
+import static com.google.android.material.textfield.TextInputLayout.END_ICON_CUSTOM;
+
 import android.text.TextUtils;
 import android.view.View;
+import net.optile.payment.R;
 import net.optile.payment.core.PaymentException;
 import net.optile.payment.form.Operation;
 import net.optile.payment.localization.Localization;

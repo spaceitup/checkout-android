@@ -10,7 +10,10 @@ package net.optile.payment.ui.widget;
 
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
+import static com.google.android.material.textfield.TextInputLayout.END_ICON_CLEAR_TEXT;
+import static com.google.android.material.textfield.TextInputLayout.END_ICON_NONE;
 
+import android.util.Log;
 import android.text.TextUtils;
 import android.view.KeyEvent;
 import android.view.View;
@@ -43,6 +46,7 @@ public abstract class InputLayoutWidget extends FormWidget {
         textLayout = rootView.findViewById(R.id.textinputlayout);
         textLayout.setErrorEnabled(true);
         textLayout.setHelperTextEnabled(true);
+
         textInput = rootView.findViewById(R.id.textinputedittext);
         textInput.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override
@@ -124,6 +128,22 @@ public abstract class InputLayoutWidget extends FormWidget {
         }
     }
 
+    void setEndIcon(int mode, int resourceId) {
+        textLayout.setEndIconMode(mode);
+        textLayout.setEndIconDrawable(resourceId);
+        textLayout.setEndIconOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    handleOnEndIconClicked();
+                }
+            });
+    }
+
+    void removeEndIcon() {
+        textLayout.setEndIconMode(END_ICON_NONE);
+        textLayout.setEndIconOnClickListener(null);
+    }
+    
     void handleOnFocusChange(boolean hasFocus) {
         if (hasFocus) {
             textLayout.setHelperText(helperText);
@@ -136,6 +156,9 @@ public abstract class InputLayoutWidget extends FormWidget {
         }
     }
 
+    void handleOnEndIconClicked() {
+    }
+        
     void handleOnKeyboardDone() {
         textInput.clearFocus();
         presenter.hideKeyboard();
