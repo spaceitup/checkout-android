@@ -56,13 +56,12 @@
                 android:gravity="center_vertical"
                 android:orientation="horizontal">
 
-                <include layout="@layout/view_logo"
-                         android:layout_marginEnd="@dimen/pmborder_medium" />
+                <include layout="@layout/view_logo" />
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="@dimen/pmlogo_width"
+                    android:layout_marginEnd="@dimen/pmborder_medium"
                     android:layout_weight="1"
                     android:orientation="vertical">
 

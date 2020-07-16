@@ -28,12 +28,12 @@
                 android:gravity="center_vertical"
                 android:orientation="horizontal">
 
-                <include layout="@layout/view_logo"
-                         android:layout_marginEnd="@dimen/pmborder_medium" />
+                <include layout="@layout/view_logo" />
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/pmborder_medium"
                     android:orientation="vertical">
 
                     <TextView

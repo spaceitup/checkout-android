@@ -28,13 +28,13 @@
                 android:gravity="center_vertical"
                 android:orientation="horizontal">
 
-                <include layout="@layout/view_logo"
-                         android:layout_marginEnd="@dimen/pmborder_medium" />
+                <include layout="@layout/view_logo" />
 
                 <TextView
                     android:id="@+id/text_title"
                     android:textAppearance="?attr/textAppearanceSubtitle1"
                     android:textColor="?attr/colorOnSurface"
+                    android:layout_marginStart="@dimen/pmborder_medium"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content" />
             </LinearLayout>
