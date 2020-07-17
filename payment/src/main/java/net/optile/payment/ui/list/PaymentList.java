@@ -28,7 +28,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import androidx.recyclerview.widget.SimpleItemAnimator;
 import net.optile.payment.R;
 import net.optile.payment.localization.Localization;
-import net.optile.payment.ui.dialog.DialogHelper;
+import net.optile.payment.ui.dialog.PaymentDialogHelper;
 import net.optile.payment.ui.model.AccountCard;
 import net.optile.payment.ui.model.NetworkCard;
 import net.optile.payment.ui.model.PaymentCard;
@@ -141,7 +141,7 @@ public final class PaymentList {
         PaymentCard card = item.getPaymentCard();
 
         if (card != null) {
-            DialogFragment dialog = DialogHelper.createHintDialog(card, type);
+            DialogFragment dialog = PaymentDialogHelper.createHintDialog(card, type);
             showDialogFragment(dialog, "hint_dialog");
         }
     }

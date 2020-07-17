@@ -40,12 +40,7 @@
         <item name="colorPrimary">?android:attr/colorBackground</item>
     </style>
 
-    <style name="Widget.Payment.Button.TextButton" parent="Widget.MaterialComponents.Button.TextButton">
-        <item name="shapeAppearance">@style/ShapeAppearance.Payment.SmallComponent</item>
-    </style>
-
     <style name="Widget.Payment.Button.UnelevatedButton" parent="Widget.MaterialComponents.Button.UnelevatedButton">
-        <item name="android:textAppearance">@style/TextAppearance.Payment.Button</item>
         <item name="shapeAppearance">@style/ShapeAppearance.Payment.SmallComponent</item>
     </style>
 
@@ -78,6 +73,22 @@
 
     <style name="Widget.Payment.Snackbar" parent="Widget.MaterialComponents.Snackbar">
         <item name="backgroundTint">?attr/colorOnSurface</item>
+    </style>
+
+    <style name="MaterialAlertDialog.Payment" parent="MaterialAlertDialog.MaterialComponents">
+        <item name="shapeAppearance">@style/ShapeAppearance.Payment.MediumComponent</item>
+    </style>
+
+    <style name="MaterialAlertDialog.Payment.Title.Text" parent="MaterialAlertDialog.MaterialComponents.Title.Text">
+        <item name="android:textColor">?attr/colorOnSurface</item>
+    </style>
+
+    <style name="MaterialAlertDialog.Payment.Body.Text" parent="MaterialAlertDialog.MaterialComponents.Body.Text">
+        <item name="android:textColor">?attr/colorOnSurface</item>
+    </style>
+    
+    <style name="Widget.Payment.Button.TextButton.Dialog" parent="Widget.MaterialComponents.Button.TextButton.Dialog">
+        <item name="shapeAppearance">@style/ShapeAppearance.Payment.SmallComponent</item>
     </style>
 
     <style name="ShapeAppearance.Payment.SmallComponent" parent="ShapeAppearance.MaterialComponents.SmallComponent">
