@@ -17,6 +17,10 @@
 
     <dimen name="pmlogo_width">52dp</dimen>
     <dimen name="pmlogo_height">36dp</dimen>
+
+    <dimen name="pmlogosmall_width">36dp</dimen>
+    <dimen name="pmlogosmall_height">24dp</dimen>
+
     <dimen name="pmprogressbar_size">44dp</dimen>
 
 </resources>

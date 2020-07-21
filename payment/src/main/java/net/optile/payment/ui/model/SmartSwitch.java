@@ -66,6 +66,15 @@ public final class SmartSwitch {
         return smartSelected.size() > 0;
     }
 
+    /** 
+     * Get the number of selected networks 
+     * 
+     * @return the number of selected networks 
+     */
+    public int getSelectedSize() {
+        return smartSelected.size();
+    }
+    
     /**
      * Check if the PaymentNetwork is smart selected, it is smart selected when the provided number input matches
      * the regex of this PaymentMethod in the groups settings file. A PaymentMethod is always smart selected when

@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<ViewSwitcher xmlns:android="http://schemas.android.com/apk/res/android"        
+              android:id="@+id/viewswitcher_logos"
+              android:visibility="gone"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:layout_marginBottom="@dimen/pmborder_large"
+              android:inAnimation="@anim/fade_in"
+              android:outAnimation="@anim/fade_out">
+
+    <LinearLayout
+        android:id="@+id/layout_logos"
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <ImageView
+        android:id="@+id/image_selected"
+        android:layout_width="@dimen/pmlogosmall_width"
+        android:layout_height="@dimen/pmlogosmall_height"
+        android:adjustViewBounds="true"
+        android:contentDescription="@string/pmpage_contentdescription" />    
+
+</ViewSwitcher>

@@ -8,10 +8,14 @@
 
 package net.optile.payment.util;
 
+import static com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions.withCrossFade;
+
 import java.net.URL;
 import java.util.concurrent.Callable;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.resource.bitmap.BitmapTransitionOptions;
+import com.bumptech.glide.request.transition.DrawableCrossFadeFactory;
 
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
@@ -63,7 +67,9 @@ public final class ImageHelper {
     }
 
     private void loadImageWithGlide(final ImageView view, final URL url) {
-        Glide.with(view.getContext()).asBitmap().load(url.toString()).into(view);
+        Glide.with(view.getContext()).
+            load(url.toString()).
+            into(view);
     }
 
     private void loadImageWithNetwork(final ImageView view, final URL url) {

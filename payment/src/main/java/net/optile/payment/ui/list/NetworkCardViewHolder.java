@@ -27,6 +27,7 @@ import net.optile.payment.localization.LocalizationKey;
 import net.optile.payment.ui.model.NetworkCard;
 import net.optile.payment.ui.model.PaymentCard;
 import net.optile.payment.ui.model.PaymentNetwork;
+import net.optile.payment.ui.model.SmartSwitch;
 import net.optile.payment.ui.widget.FormWidget;
 import net.optile.payment.ui.widget.RegisterWidget;
 import net.optile.payment.ui.widget.WidgetInflater;
@@ -38,17 +39,16 @@ import net.optile.payment.util.PaymentUtils;
 final class NetworkCardViewHolder extends PaymentCardViewHolder {
 
     private final TextView title;
-    final Map<String, ImageView> logos;
-
+    private NetworkLogosView logosView;
+    
     public NetworkCardViewHolder(ListAdapter adapter, View parent, NetworkCard networkCard) {
         super(adapter, parent);
 
         this.title = parent.findViewById(R.id.text_title);
-        this.logos = new HashMap<>();
-
         addElementWidgets(networkCard);
         addRegisterWidgets();
         addButtonWidget();
+        addNetworkLogos(parent, networkCard);
         setLastImeOptions();
     }
 
@@ -90,8 +90,26 @@ final class NetworkCardViewHolder extends PaymentCardViewHolder {
         title.setText(Localization.translate(LocalizationKey.LIST_GROUPEDCARDS_TITLE));
         bindRegistrationWidget(network);
         bindRecurrenceWidget(network);
+        bindLogos(networkCard);
     }
 
+    private void bindLogos(NetworkCard card) {
+        SmartSwitch smartSwitch = card.getSmartSwitch();
+
+        if (smartSwitch.getSelectedSize() == 1) {
+            PaymentNetwork network = smartSwitch.getFirstSelected();
+            logosView.setSelected(network.getCode());
+            return;
+        }
+        logosView.setSelected(null);
+    }
+
+    private void addNetworkLogos(View parent, NetworkCard networkCard) {
+        if (networkCard.getPaymentNetworkSize() > 1) {
+            this.logosView = new NetworkLogosView(parent, networkCard.getPaymentNetworks());
+        }
+    }
+    
     private void addRegisterWidgets() {
         FormWidget widget = WidgetInflater.inflateRegisterWidget(AUTO_REGISTRATION, formLayout);
         addWidget(widget);
