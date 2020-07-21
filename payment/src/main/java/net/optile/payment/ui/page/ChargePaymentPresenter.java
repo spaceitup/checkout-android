@@ -22,7 +22,6 @@ import net.optile.payment.model.OperationResult;
 import net.optile.payment.model.Redirect;
 import net.optile.payment.ui.PaymentResult;
 import net.optile.payment.ui.PaymentUI;
-import net.optile.payment.ui.dialog.PaymentDialogFragment;
 import net.optile.payment.ui.dialog.PaymentDialogFragment.PaymentDialogListener;
 import net.optile.payment.ui.model.PaymentSession;
 import net.optile.payment.ui.redirect.RedirectService;
@@ -192,10 +191,12 @@ final class ChargePaymentPresenter implements PaymentSessionListener, NetworkSer
                     loadLocalizations(session);
                 }
             }
+
             @Override
             public void onNegativeButtonClicked() {
                 closeWithCanceledCode(error);
             }
+
             @Override
             public void onDismissed() {
                 closeWithCanceledCode(error);
@@ -279,10 +280,12 @@ final class ChargePaymentPresenter implements PaymentSessionListener, NetworkSer
             public void onPositiveButtonClicked() {
                 processPayment();
             }
+
             @Override
             public void onNegativeButtonClicked() {
                 closeWithCanceledCode(result);
             }
+
             @Override
             public void onDismissed() {
                 closeWithCanceledCode(result);
@@ -351,10 +354,12 @@ final class ChargePaymentPresenter implements PaymentSessionListener, NetworkSer
             public void onPositiveButtonClicked() {
                 view.close();
             }
+
             @Override
             public void onNegativeButtonClicked() {
                 view.close();
             }
+
             @Override
             public void onDismissed() {
                 view.close();

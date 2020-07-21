@@ -12,13 +12,9 @@ package net.optile.payment.ui.list;
 import static net.optile.payment.core.PaymentInputType.ALLOW_RECURRENCE;
 import static net.optile.payment.core.PaymentInputType.AUTO_REGISTRATION;
 
-import java.util.HashMap;
-import java.util.Map;
-
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.TextView;
 import androidx.recyclerview.widget.RecyclerView.ViewHolder;
 import net.optile.payment.R;
@@ -40,7 +36,7 @@ final class NetworkCardViewHolder extends PaymentCardViewHolder {
 
     private final TextView title;
     private NetworkLogosView logosView;
-    
+
     public NetworkCardViewHolder(ListAdapter adapter, View parent, NetworkCard networkCard) {
         super(adapter, parent);
 
@@ -109,7 +105,7 @@ final class NetworkCardViewHolder extends PaymentCardViewHolder {
             this.logosView = new NetworkLogosView(parent, networkCard.getPaymentNetworks());
         }
     }
-    
+
     private void addRegisterWidgets() {
         FormWidget widget = WidgetInflater.inflateRegisterWidget(AUTO_REGISTRATION, formLayout);
         addWidget(widget);

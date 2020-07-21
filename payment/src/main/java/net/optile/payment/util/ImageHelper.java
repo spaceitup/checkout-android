@@ -8,14 +8,10 @@
 
 package net.optile.payment.util;
 
-import static com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions.withCrossFade;
-
 import java.net.URL;
 import java.util.concurrent.Callable;
 
 import com.bumptech.glide.Glide;
-import com.bumptech.glide.load.resource.bitmap.BitmapTransitionOptions;
-import com.bumptech.glide.request.transition.DrawableCrossFadeFactory;
 
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;

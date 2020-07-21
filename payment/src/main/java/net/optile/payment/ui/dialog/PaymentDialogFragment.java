@@ -10,7 +10,6 @@ package net.optile.payment.ui.dialog;
 
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 
-import android.util.Log;
 import android.app.Activity;
 import android.app.Dialog;
 import android.content.DialogInterface;
@@ -18,14 +17,13 @@ import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.widget.Button;
 import android.widget.ImageView;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.DialogFragment;
 import net.optile.payment.R;
 
 /**
- * Payment Dialog Fragment used to create Alert Dialog 
+ * Payment Dialog Fragment used to create Alert Dialog
  */
 public class PaymentDialogFragment extends DialogFragment {
 
@@ -35,55 +33,55 @@ public class PaymentDialogFragment extends DialogFragment {
     private String positiveButton;
     private int imageResId;
     private PaymentDialogListener listener;
-    
-    /** 
+
+    /**
      * Set the title in this payment dialog
-     * 
+     *
      * @param title to be set
      */
     public void setTitle(String title) {
         this.title = title;
     }
 
-    /** 
+    /**
      * Set the message in this payment dialog
-     * 
+     *
      * @param message to be set
      */
     public void setMessage(String message) {
         this.message = message;
     }
 
-    /** 
+    /**
      * Set the Negative button label
-     * 
+     *
      * @param negativeButton label to be shown
      */
     public void setNegativeButton(String negativeButton) {
         this.negativeButton = negativeButton;
     }
 
-    /** 
+    /**
      * Set the positive button label
-     * 
+     *
      * @param positiveButton label
      */
     public void setPositiveButton(String positiveButton) {
         this.positiveButton = positiveButton;
     }
 
-    /** 
-     * Set the image resource id 
-     * 
+    /**
+     * Set the image resource id
+     *
      * @param imageResId to be set and shown in the dialog
      */
     public void setImageResId(int imageResId) {
         this.imageResId = imageResId;
     }
 
-    /** 
+    /**
      * Set the dialog listener
-     * 
+     *
      * @param listener to be notified of events in this dialog
      */
     public void setListener(PaymentDialogListener listener) {
@@ -96,7 +94,7 @@ public class PaymentDialogFragment extends DialogFragment {
             listener.onDismissed();
         }
     }
-    
+
     /**
      * {@inheritDoc}
      */
@@ -124,24 +122,24 @@ public class PaymentDialogFragment extends DialogFragment {
             builder.setMessage(message);
         }
     }
-    
+
     private void addButtons(MaterialAlertDialogBuilder builder) {
         if (!TextUtils.isEmpty(negativeButton)) {
             builder.setNegativeButton(negativeButton, new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int id) {
-                        handleNegativeButtonClicked();
-                    }
-                });
+                public void onClick(DialogInterface dialog, int id) {
+                    handleNegativeButtonClicked();
+                }
+            });
         }
         if (!TextUtils.isEmpty(positiveButton)) {
             builder.setPositiveButton(positiveButton, new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int id) {
-                        handlePositiveButtonClicked();
-                    }
-                });
+                public void onClick(DialogInterface dialog, int id) {
+                    handlePositiveButtonClicked();
+                }
+            });
         }
     }
-    
+
     private void addImageView(Activity activity, MaterialAlertDialogBuilder builder) {
         if (imageResId == 0) {
             return;
@@ -158,7 +156,7 @@ public class PaymentDialogFragment extends DialogFragment {
             listener.onNegativeButtonClicked();
         }
     }
-    
+
     private void handlePositiveButtonClicked() {
         if (listener != null) {
             listener.onPositiveButtonClicked();
@@ -167,7 +165,9 @@ public class PaymentDialogFragment extends DialogFragment {
 
     public interface PaymentDialogListener {
         void onNegativeButtonClicked();
+
         void onPositiveButtonClicked();
+
         void onDismissed();
     }
 }

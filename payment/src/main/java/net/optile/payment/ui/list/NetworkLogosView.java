@@ -9,21 +9,16 @@
 package net.optile.payment.ui.list;
 
 import java.net.URL;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import android.animation.ObjectAnimator;
-import android.widget.LinearLayout;
-import android.widget.LinearLayout.LayoutParams;
-import android.content.Context;
 import android.content.res.Resources;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.LinearLayout.LayoutParams;
 import android.widget.ViewSwitcher;
 import net.optile.payment.R;
 import net.optile.payment.ui.model.PaymentNetwork;
@@ -42,7 +37,7 @@ class NetworkLogosView {
     private final Map<String, NetworkLogo> logos;
     private final ImageView selImage;
     private final int margin;
-    
+
     /**
      * Construct a new NetworkLogosView
      *
@@ -54,11 +49,11 @@ class NetworkLogosView {
 
         logos = new HashMap<>();
         selImage = parent.findViewById(R.id.image_selected);
-        
-        Resources resources = parent.getContext().getResources();        
-        margin = (int)resources.getDimension(R.dimen.pmborder_small);
 
-        LinearLayout layout = parent.findViewById(R.id.layout_logos);        
+        Resources resources = parent.getContext().getResources();
+        margin = (int) resources.getDimension(R.dimen.pmborder_small);
+
+        LinearLayout layout = parent.findViewById(R.id.layout_logos);
         for (PaymentNetwork network : networks) {
             addNetworkLogo(network, layout);
         }
@@ -71,11 +66,11 @@ class NetworkLogosView {
         layout.addView(imageView);
     }
 
-    private ImageView inflateLogoImage(LinearLayout layout) { 
+    private ImageView inflateLogoImage(LinearLayout layout) {
         LayoutInflater inflater = LayoutInflater.from(layout.getContext());
         ImageView view = (ImageView) inflater.inflate(R.layout.view_logosmall, layout, false);
         LayoutParams params = (LayoutParams) view.getLayoutParams();
-        params.setMargins(0, 0, (int)margin, 0);
+        params.setMargins(0, 0, (int) margin, 0);
         view.setLayoutParams(params);
         return view;
     }

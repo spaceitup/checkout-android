@@ -23,8 +23,8 @@ import net.optile.payment.model.Interaction;
 import net.optile.payment.ui.PaymentResult;
 import net.optile.payment.ui.PaymentTheme;
 import net.optile.payment.ui.PaymentUI;
-import net.optile.payment.ui.dialog.PaymentDialogHelper;
 import net.optile.payment.ui.dialog.PaymentDialogFragment.PaymentDialogListener;
+import net.optile.payment.ui.dialog.PaymentDialogHelper;
 import net.optile.payment.ui.page.idlingresource.SimpleIdlingResource;
 
 /**
