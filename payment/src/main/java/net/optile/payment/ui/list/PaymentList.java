@@ -226,7 +226,7 @@ public final class PaymentList {
         if (holder != null) {
             holder.expand(true);
             adapter.notifyItemChanged(position);
-            smoothScrollToPosition(position);
+            //smoothScrollToPosition(position);
         }
     }
 
