@@ -60,17 +60,17 @@ final class NetworkCardViewHolder extends PaymentCardViewHolder {
 
         if (networkCard.getPaymentNetworkSize() == 1) {
             bindLogoView(networkCard.getCode(), networkCard.getLink("logo"));
-            bindPaymentNetwork("network", network);
+            setTestId("network");
         } else {
             logoView.setImageResource(R.drawable.ic_card);
-            bindPaymentNetwork("group", network);
+            setTestId("group");
         }
-    }
-
-    private void bindPaymentNetwork(String testId, PaymentNetwork network) {
-        PaymentUtils.setTestId(itemView, "card", testId);
         bindRegistrationWidget(network);
         bindRecurrenceWidget(network);
+    }
+
+    private void setTestId(String testId) {
+        PaymentUtils.setTestId(itemView, "card", testId);
     }
 
     private void addRegisterWidgets() {
