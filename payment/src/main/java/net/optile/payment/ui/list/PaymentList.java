@@ -227,8 +227,8 @@ public final class PaymentList {
 
         if (holder != null) {
             holder.expand(true);
+            holder.focusFirstInputField();
             adapter.notifyItemChanged(position);
-            smoothScrollToPosition(position);
         }
     }
 
