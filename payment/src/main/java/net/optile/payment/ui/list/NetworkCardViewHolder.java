@@ -12,18 +12,12 @@ package net.optile.payment.ui.list;
 import static net.optile.payment.core.PaymentInputType.ALLOW_RECURRENCE;
 import static net.optile.payment.core.PaymentInputType.AUTO_REGISTRATION;
 
-import java.util.HashMap;
-import java.util.Map;
-
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.TextView;
 import androidx.recyclerview.widget.RecyclerView.ViewHolder;
 import net.optile.payment.R;
-import net.optile.payment.localization.Localization;
-import net.optile.payment.localization.LocalizationKey;
 import net.optile.payment.ui.model.NetworkCard;
 import net.optile.payment.ui.model.PaymentCard;
 import net.optile.payment.ui.model.PaymentNetwork;
@@ -38,14 +32,11 @@ import net.optile.payment.util.PaymentUtils;
 final class NetworkCardViewHolder extends PaymentCardViewHolder {
 
     private final TextView title;
-    final Map<String, ImageView> logos;
 
     public NetworkCardViewHolder(ListAdapter adapter, View parent, NetworkCard networkCard) {
         super(adapter, parent);
 
         this.title = parent.findViewById(R.id.text_title);
-        this.logos = new HashMap<>();
-
         addElementWidgets(networkCard);
         addRegisterWidgets();
         addButtonWidget();
@@ -64,30 +55,20 @@ final class NetworkCardViewHolder extends PaymentCardViewHolder {
         }
         super.onBind(paymentCard);
         NetworkCard networkCard = (NetworkCard) paymentCard;
+        PaymentNetwork network = networkCard.getVisibleNetwork();
+        title.setText(networkCard.getLabel());
 
         if (networkCard.getPaymentNetworkSize() == 1) {
-            bindSinglePaymentNetwork(networkCard);
+            bindLogoView(networkCard.getCode(), networkCard.getLink("logo"));
+            bindPaymentNetwork("network", network);
         } else {
-            bindGroupedPaymentNetworks(networkCard);
+            logoView.setImageResource(R.drawable.ic_card);
+            bindPaymentNetwork("group", network);
         }
     }
 
-    private void bindSinglePaymentNetwork(NetworkCard networkCard) {
-        PaymentUtils.setTestId(itemView, "card", "network");
-
-        PaymentNetwork network = networkCard.getVisibleNetwork();
-        title.setText(networkCard.getLabel());
-        bindLogoView(network.getCode(), network.getLink("logo"));
-        bindRegistrationWidget(network);
-        bindRecurrenceWidget(network);
-    }
-
-    private void bindGroupedPaymentNetworks(NetworkCard networkCard) {
-        PaymentUtils.setTestId(itemView, "card", "group");
-
-        PaymentNetwork network = networkCard.getVisibleNetwork();
-        logoView.setImageResource(R.drawable.ic_card);
-        title.setText(Localization.translate(LocalizationKey.LIST_GROUPEDCARDS_TITLE));
+    private void bindPaymentNetwork(String testId, PaymentNetwork network) {
+        PaymentUtils.setTestId(itemView, "card", testId);
         bindRegistrationWidget(network);
         bindRecurrenceWidget(network);
     }

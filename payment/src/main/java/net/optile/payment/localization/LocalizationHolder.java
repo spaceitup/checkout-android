@@ -19,5 +19,5 @@ public interface LocalizationHolder {
      * @param key used to identify the translation
      * @return the translated value or null if the key does not exist
      */
-    public String translate(String key);
+    String translate(String key);
 }
