@@ -18,8 +18,6 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 import androidx.recyclerview.widget.RecyclerView.ViewHolder;
 import net.optile.payment.R;
-import net.optile.payment.localization.Localization;
-import net.optile.payment.localization.LocalizationKey;
 import net.optile.payment.ui.model.NetworkCard;
 import net.optile.payment.ui.model.PaymentCard;
 import net.optile.payment.ui.model.PaymentNetwork;
@@ -60,33 +58,19 @@ final class NetworkCardViewHolder extends PaymentCardViewHolder {
         }
         super.onBind(paymentCard);
         NetworkCard networkCard = (NetworkCard) paymentCard;
-
-        if (networkCard.getPaymentNetworkSize() == 1) {
-            bindSinglePaymentNetwork(networkCard);
-        } else {
-            bindGroupedPaymentNetworks(networkCard);
-        }
-    }
-
-    private void bindSinglePaymentNetwork(NetworkCard networkCard) {
-        PaymentUtils.setTestId(itemView, "card", "network");
-
         PaymentNetwork network = networkCard.getVisibleNetwork();
         title.setText(networkCard.getLabel());
-        bindLogoView(network.getCode(), network.getLink("logo"));
+
+        if (networkCard.getPaymentNetworkSize() == 1) {
+            bindLogoView(networkCard.getCode(), networkCard.getLink("logo"));
+            setTestId("network");
+        } else {
+            logoView.setImageResource(R.drawable.ic_card);
+            bindLogos(networkCard);
+            setTestId("group");
+        }
         bindRegistrationWidget(network);
         bindRecurrenceWidget(network);
-    }
-
-    private void bindGroupedPaymentNetworks(NetworkCard networkCard) {
-        PaymentUtils.setTestId(itemView, "card", "group");
-
-        PaymentNetwork network = networkCard.getVisibleNetwork();
-        logoView.setImageResource(R.drawable.ic_card);
-        title.setText(Localization.translate(LocalizationKey.LIST_GROUPEDCARDS_TITLE));
-        bindRegistrationWidget(network);
-        bindRecurrenceWidget(network);
-        bindLogos(networkCard);
     }
 
     private void bindLogos(NetworkCard card) {
@@ -104,6 +88,10 @@ final class NetworkCardViewHolder extends PaymentCardViewHolder {
         if (networkCard.getPaymentNetworkSize() > 1) {
             this.logosView = new NetworkLogosView(parent, networkCard.getPaymentNetworks());
         }
+    }
+        
+    private void setTestId(String testId) {
+        PaymentUtils.setTestId(itemView, "card", testId);
     }
 
     private void addRegisterWidgets() {
