@@ -88,6 +88,18 @@ public abstract class InputLayoutWidget extends FormWidget {
      * {@inheritDoc}
      */
     @Override
+    public boolean requestFocus() {
+        if (textInput.requestFocus()) {
+            presenter.showKeyboard();
+            return true;
+        }
+        return false;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
     public void clearFocus() {
         if (textInput.hasFocus()) {
             textInput.clearFocus();
@@ -173,8 +185,8 @@ public abstract class InputLayoutWidget extends FormWidget {
 
     String getValue() {
         CharSequence cs = textInput.getText();
-        String val = cs != null ? cs.toString().trim() : "";
-        return mode != null ? mode.normalize(val) : val;
+        String val = (cs != null) ? cs.toString().trim() : "";
+        return (mode != null) ? mode.normalize(val) : val;
     }
 
     boolean setValidationResult(ValidationResult result) {

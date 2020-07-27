@@ -95,7 +95,7 @@ public abstract class PaymentCardViewHolder extends RecyclerView.ViewHolder {
     void addElementWidgets(PaymentCard card) {
         String code = card.getCode();
         List<InputElement> elements = card.getInputElements();
-        boolean containsExpiryDate = PaymentUtils.containsExpiryDate(elements);
+        boolean elementsContainExpiryDate = PaymentUtils.containsExpiryDate(elements);
 
         for (InputElement element : elements) {
             String name = element.getName();
@@ -108,7 +108,7 @@ public abstract class PaymentCardViewHolder extends RecyclerView.ViewHolder {
                     break;
                 case EXPIRY_MONTH:
                 case EXPIRY_YEAR:
-                    if (!containsExpiryDate) {
+                    if (!elementsContainExpiryDate) {
                         addWidget(WidgetInflater.inflateElementWidget(element, formLayout));
                     } else if (!widgets.containsKey(EXPIRY_DATE)) {
                         addWidget(WidgetInflater.inflateDateWidget(EXPIRY_DATE, formLayout));
@@ -116,6 +116,14 @@ public abstract class PaymentCardViewHolder extends RecyclerView.ViewHolder {
                     break;
                 default:
                     addWidget(WidgetInflater.inflateElementWidget(element, formLayout));
+            }
+        }
+    }
+
+    void focusFirstInputField() {
+        for (FormWidget widget : widgets.values()) {
+            if (widget.requestFocus()) {
+                return;
             }
         }
     }
@@ -133,7 +141,6 @@ public abstract class PaymentCardViewHolder extends RecyclerView.ViewHolder {
 
     void expand(boolean expand) {
         formLayout.setVisibility(expand ? View.VISIBLE : View.GONE);
-
         for (FormWidget widget : widgets.values()) {
             widget.setValidation();
         }
