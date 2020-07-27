@@ -58,7 +58,7 @@ public abstract class PaymentCardViewHolder extends RecyclerView.ViewHolder {
     final ListAdapter adapter;
     final WidgetPresenter presenter;
     final Map<String, FormWidget> widgets;
-    final ImageView logoView;
+    final ImageView cardLogoView;
 
     PaymentCardViewHolder(ListAdapter adapter, View parent) {
         super(parent);
@@ -66,7 +66,7 @@ public abstract class PaymentCardViewHolder extends RecyclerView.ViewHolder {
         this.presenter = new CardWidgetPresenter(this, adapter);
         this.formLayout = parent.findViewById(R.id.layout_form);
         this.widgets = new LinkedHashMap<>();
-        this.logoView = parent.findViewById(R.id.image_logo);
+        this.cardLogoView = parent.findViewById(R.id.image_logo);
 
         View view = parent.findViewById(R.id.layout_header);
         view.setOnClickListener(new View.OnClickListener() {
@@ -201,11 +201,15 @@ public abstract class PaymentCardViewHolder extends RecyclerView.ViewHolder {
         }
     }
 
-    void bindLogoView(String name, URL url) {
+    void bindCardLogo(int logoResId) {
+        cardLogoView.setImageResource(logoResId);
+    }
+    
+    void bindCardLogo(String name, URL url) {
         if (name == null || url == null) {
             return;
         }
-        ImageHelper.getInstance().loadImage(logoView, url);
+        ImageHelper.getInstance().loadImage(cardLogoView, url);
     }
 
     void setLastImeOptions() {

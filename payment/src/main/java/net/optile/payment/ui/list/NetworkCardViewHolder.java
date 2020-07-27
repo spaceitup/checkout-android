@@ -33,7 +33,7 @@ import net.optile.payment.util.PaymentUtils;
 final class NetworkCardViewHolder extends PaymentCardViewHolder {
 
     private final TextView title;
-    private NetworkLogosView logosView;
+    private NetworkLogosView networkLogosView;
 
     public NetworkCardViewHolder(ListAdapter adapter, View parent, NetworkCard networkCard) {
         super(adapter, parent);
@@ -62,31 +62,31 @@ final class NetworkCardViewHolder extends PaymentCardViewHolder {
         title.setText(networkCard.getLabel());
 
         if (networkCard.getPaymentNetworkSize() == 1) {
-            bindLogoView(networkCard.getCode(), networkCard.getLink("logo"));
+            bindCardLogo(networkCard.getCode(), networkCard.getLink("logo"));
             setTestId("network");
         } else {
-            logoView.setImageResource(R.drawable.ic_card);
-            bindLogos(networkCard);
+            bindCardLogo(R.drawable.ic_card);
+            bindNetworkLogos(networkCard);
             setTestId("group");
         }
         bindRegistrationWidget(network);
         bindRecurrenceWidget(network);
     }
 
-    private void bindLogos(NetworkCard card) {
+    private void bindNetworkLogos(NetworkCard card) {
         SmartSwitch smartSwitch = card.getSmartSwitch();
 
         if (smartSwitch.getSelectedSize() == 1) {
             PaymentNetwork network = smartSwitch.getFirstSelected();
-            logosView.setSelected(network.getCode());
+            networkLogosView.setSelected(network.getCode());
             return;
         }
-        logosView.setSelected(null);
+        networkLogosView.setSelected(null);
     }
 
     private void addNetworkLogos(View parent, NetworkCard networkCard) {
         if (networkCard.getPaymentNetworkSize() > 1) {
-            this.logosView = new NetworkLogosView(parent, networkCard.getPaymentNetworks());
+            this.networkLogosView = new NetworkLogosView(parent, networkCard.getPaymentNetworks());
         }
     }
         
