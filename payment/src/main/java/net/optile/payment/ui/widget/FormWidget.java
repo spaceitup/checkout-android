@@ -11,7 +11,6 @@ package net.optile.payment.ui.widget;
 import android.view.View;
 import net.optile.payment.core.PaymentException;
 import net.optile.payment.form.Operation;
-import net.optile.payment.ui.PaymentTheme;
 import net.optile.payment.util.PaymentUtils;
 
 /**
@@ -25,16 +24,14 @@ public abstract class FormWidget {
 
     final View rootView;
     final String name;
-    final PaymentTheme theme;
 
     WidgetPresenter presenter;
     int state;
 
-    FormWidget(String name, View rootView, PaymentTheme theme) {
+    FormWidget(String name, View rootView) {
         PaymentUtils.setTestId(rootView, "widget", name);
         this.name = name;
         this.rootView = rootView;
-        this.theme = theme;
     }
 
     /**

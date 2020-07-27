@@ -15,7 +15,6 @@ import android.widget.TextView;
 import net.optile.payment.R;
 import net.optile.payment.core.PaymentException;
 import net.optile.payment.form.Operation;
-import net.optile.payment.ui.PaymentTheme;
 
 /**
  * Widget for showing the CheckBox input element
@@ -30,10 +29,9 @@ public class CheckBoxWidget extends FormWidget {
      *
      * @param name name identifying this widget
      * @param rootView the root view of this input
-     * @param theme PaymentTheme to apply
      */
-    public CheckBoxWidget(String name, View rootView, PaymentTheme theme) {
-        super(name, rootView, theme);
+    public CheckBoxWidget(String name, View rootView) {
+        super(name, rootView);
         label = rootView.findViewById(R.id.label_value);
         value = rootView.findViewById(R.id.checkbox_value);
     }

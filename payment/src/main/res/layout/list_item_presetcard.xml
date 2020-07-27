@@ -23,17 +23,17 @@
                 android:layout_alignParentTop="true"
                 android:clickable="true"
                 android:focusable="true"
-                android:paddingStart="@dimen/pmborder_xsmall"
-                android:paddingEnd="@dimen/pmborder_xsmall"
+                android:paddingTop="@dimen/pmborder_xsmall"
+                android:paddingBottom="@dimen/pmborder_xsmall"
                 android:gravity="center_vertical"
                 android:orientation="horizontal">
 
-                <include layout="@layout/view_logos" />
+                <include layout="@layout/view_logo" />
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/pmborder_small"
+                    android:layout_marginStart="@dimen/pmborder_medium"
                     android:orientation="vertical">
 
                     <TextView
@@ -56,9 +56,9 @@
                 android:id="@+id/layout_form"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:paddingTop="@dimen/pmborder_medium"
                 android:layout_below="@id/layout_header"
                 android:orientation="vertical"
-                android:paddingEnd="@dimen/pmborder_xsmall"
                 android:visibility="gone" />
         </RelativeLayout>
     </com.google.android.material.card.MaterialCardView>

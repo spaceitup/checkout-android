@@ -61,8 +61,10 @@
         <item name="shapeAppearance">@style/ShapeAppearance.Payment.SmallComponent</item>
         <item name="errorIconDrawable">@null</item>
         <item name="boxBackgroundColor">@color/pm_gray100</item>
-        <item name="boxStrokeColor">@color/payment_textinputlayout_stroke_color</item>
         <item name="android:textColorHint">@color/pm_gray_dark</item>
+        <item name="helperTextTextColor">?attr/colorPrimary</item>
+        <item name="endIconTint">@color/payment_filled_icon_tint</item>
+        <item name="boxStrokeColor">@color/payment_textinputlayout_stroke_color</item>
     </style>
 
     <style name="ThemeOverlay.Payment.TextInputLayout" parent="">
@@ -71,7 +73,7 @@
     </style>
 
     <style name="Widget.Payment.Switch" parent="Widget.MaterialComponents.CompoundButton.Switch">
-        <item name="trackTint">@color/payment_switch_track_color</item>
+        <item name="trackTint">@color/payment_switch_track_tint</item>
     </style>
 
     <style name="Widget.Payment.Snackbar" parent="Widget.MaterialComponents.Snackbar">

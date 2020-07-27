@@ -12,20 +12,15 @@ package net.optile.payment.ui.list;
 import static net.optile.payment.core.PaymentInputType.ALLOW_RECURRENCE;
 import static net.optile.payment.core.PaymentInputType.AUTO_REGISTRATION;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextSwitcher;
+import android.widget.TextView;
 import androidx.recyclerview.widget.RecyclerView.ViewHolder;
 import net.optile.payment.R;
-import net.optile.payment.ui.PaymentTheme;
 import net.optile.payment.ui.model.NetworkCard;
 import net.optile.payment.ui.model.PaymentCard;
 import net.optile.payment.ui.model.PaymentNetwork;
-import net.optile.payment.ui.model.SmartSwitch;
 import net.optile.payment.ui.widget.FormWidget;
 import net.optile.payment.ui.widget.RegisterWidget;
 import net.optile.payment.ui.widget.WidgetInflater;
@@ -36,17 +31,15 @@ import net.optile.payment.util.PaymentUtils;
  */
 final class NetworkCardViewHolder extends PaymentCardViewHolder {
 
-    private final TextSwitcher title;
+    private final TextView title;
 
     public NetworkCardViewHolder(ListAdapter adapter, View parent, NetworkCard networkCard) {
         super(adapter, parent);
 
-        PaymentTheme theme = adapter.getPaymentTheme();
-        this.title = parent.findViewById(R.id.textswitcher_title);
-        addNetworkLogos(parent, networkCard);
-        addElementWidgets(networkCard, theme);
-        addRegisterWidgets(theme);
-        addButtonWidget(theme);
+        this.title = parent.findViewById(R.id.text_title);
+        addElementWidgets(networkCard);
+        addRegisterWidgets();
+        addButtonWidget();
         setLastImeOptions();
     }
 
@@ -56,57 +49,44 @@ final class NetworkCardViewHolder extends PaymentCardViewHolder {
         return new NetworkCardViewHolder(adapter, view, networkCard);
     }
 
-    private void addNetworkLogos(View parent, NetworkCard networkCard) {
-        List<String> names = new ArrayList<>();
-        List<PaymentNetwork> networks = networkCard.getPaymentNetworks();
-
-        for (PaymentNetwork network : networks) {
-            names.add(network.getCode());
-        }
-        addLogoViews(parent, names);
-    }
-
     void onBind(PaymentCard paymentCard) {
-
         if (!(paymentCard instanceof NetworkCard)) {
             throw new IllegalArgumentException("Expected Networkcard in onBind");
         }
         super.onBind(paymentCard);
         NetworkCard networkCard = (NetworkCard) paymentCard;
         PaymentNetwork network = networkCard.getVisibleNetwork();
-        int size = networkCard.getPaymentNetworkSize();
-        PaymentUtils.setTestId(itemView, "card", size == 1 ? "network" : "group");
         title.setText(networkCard.getLabel());
-        bindLogos(networkCard);
+
+        if (networkCard.getPaymentNetworkSize() == 1) {
+            bindLogoView(networkCard.getCode(), networkCard.getLink("logo"));
+            setTestId("network");
+        } else {
+            logoView.setImageResource(R.drawable.ic_card);
+            setTestId("group");
+        }
         bindRegistrationWidget(network);
         bindRecurrenceWidget(network);
     }
 
-    private void addRegisterWidgets(PaymentTheme theme) {
-        FormWidget widget = WidgetInflater.inflateRegisterWidget(AUTO_REGISTRATION, formLayout, theme);
-        addWidget(widget);
-        widget = WidgetInflater.inflateRegisterWidget(ALLOW_RECURRENCE, formLayout, theme);
-        addWidget(widget);
+    private void setTestId(String testId) {
+        PaymentUtils.setTestId(itemView, "card", testId);
     }
 
-    private void bindLogos(NetworkCard card) {
-        List<PaymentNetwork> networks = card.getPaymentNetworks();
-        SmartSwitch smartSwitch = card.getSmartSwitch();
-        boolean selected;
-
-        for (PaymentNetwork network : networks) {
-            selected = !smartSwitch.hasSelected() || smartSwitch.isSelected(network);
-            bindLogoView(network.getCode(), network.getLink("logo"), selected);
-        }
+    private void addRegisterWidgets() {
+        FormWidget widget = WidgetInflater.inflateRegisterWidget(AUTO_REGISTRATION, formLayout);
+        addWidget(widget);
+        widget = WidgetInflater.inflateRegisterWidget(ALLOW_RECURRENCE, formLayout);
+        addWidget(widget);
     }
 
     private void bindRegistrationWidget(PaymentNetwork network) {
         RegisterWidget widget = (RegisterWidget) getFormWidget(AUTO_REGISTRATION);
-        widget.setRegistrationType(network.getRegistration());
+        widget.onBind(network.getRegistration());
     }
 
     private void bindRecurrenceWidget(PaymentNetwork network) {
         RegisterWidget widget = (RegisterWidget) getFormWidget(ALLOW_RECURRENCE);
-        widget.setRegistrationType(network.getRecurrence());
+        widget.onBind(network.getRecurrence());
     }
 }

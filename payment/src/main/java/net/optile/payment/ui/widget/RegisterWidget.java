@@ -19,7 +19,6 @@ import net.optile.payment.core.PaymentInputType;
 import net.optile.payment.form.Operation;
 import net.optile.payment.localization.Localization;
 import net.optile.payment.model.RegistrationType;
-import net.optile.payment.ui.PaymentTheme;
 
 /**
  * Widget for handling the Register input
@@ -33,10 +32,9 @@ public final class RegisterWidget extends CheckBoxWidget {
      *
      * @param name name identifying this widget
      * @param rootView the root view of this input
-     * @param theme PaymentTheme to be applied
      */
-    public RegisterWidget(String name, View rootView, PaymentTheme theme) {
-        super(name, rootView, theme);
+    public RegisterWidget(String name, View rootView) {
+        super(name, rootView);
     }
 
     /**
@@ -55,7 +53,7 @@ public final class RegisterWidget extends CheckBoxWidget {
         }
     }
 
-    public void setRegistrationType(String type) {
+    public void onBind(String type) {
         this.type = type;
         switch (type) {
             case RegistrationType.OPTIONAL:
