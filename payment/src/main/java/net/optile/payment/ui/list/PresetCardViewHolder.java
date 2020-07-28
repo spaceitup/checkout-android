@@ -55,6 +55,6 @@ final class PresetCardViewHolder extends PaymentCardViewHolder {
         } else {
             title.setText(card.getLabel());
         }
-        bindLogoView(paymentCard.getCode(), card.getLink("logo"));
+        bindCardLogo(paymentCard.getCode(), card.getLink("logo"));
     }
 }

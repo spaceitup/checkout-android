@@ -23,7 +23,6 @@ import net.optile.payment.model.OperationType;
 import net.optile.payment.model.Redirect;
 import net.optile.payment.ui.PaymentResult;
 import net.optile.payment.ui.PaymentUI;
-import net.optile.payment.ui.dialog.PaymentDialogFragment;
 import net.optile.payment.ui.dialog.PaymentDialogFragment.PaymentDialogListener;
 import net.optile.payment.ui.model.PaymentCard;
 import net.optile.payment.ui.model.PaymentSession;
@@ -219,10 +218,12 @@ final class PaymentListPresenter implements PaymentSessionListener, Localization
                     loadLocalizations(session);
                 }
             }
+
             @Override
             public void onNegativeButtonClicked() {
                 closeWithCanceledCode(error);
             }
+
             @Override
             public void onDismissed() {
                 closeWithCanceledCode(error);
@@ -323,10 +324,12 @@ final class PaymentListPresenter implements PaymentSessionListener, Localization
             public void onPositiveButtonClicked() {
                 preparePayment();
             }
+
             @Override
             public void onNegativeButtonClicked() {
                 closeWithCanceledCode(result);
             }
+
             @Override
             public void onDismissed() {
                 closeWithCanceledCode(result);
@@ -380,10 +383,12 @@ final class PaymentListPresenter implements PaymentSessionListener, Localization
             public void onPositiveButtonClicked() {
                 processPayment();
             }
+
             @Override
             public void onNegativeButtonClicked() {
                 closeWithCanceledCode(result);
             }
+
             @Override
             public void onDismissed() {
                 closeWithCanceledCode(result);
@@ -504,10 +509,12 @@ final class PaymentListPresenter implements PaymentSessionListener, Localization
             public void onPositiveButtonClicked() {
                 view.close();
             }
+
             @Override
             public void onNegativeButtonClicked() {
                 view.close();
             }
+
             @Override
             public void onDismissed() {
                 view.close();

@@ -46,7 +46,11 @@
                 android:layout_below="@id/layout_header"
                 android:paddingTop="@dimen/pmborder_medium"
                 android:orientation="vertical"
-                android:visibility="gone" />
+                android:visibility="gone">
+
+                <include layout="@layout/view_networklogos" />
+                
+            </LinearLayout>
         </RelativeLayout>
 
     </com.google.android.material.card.MaterialCardView>
