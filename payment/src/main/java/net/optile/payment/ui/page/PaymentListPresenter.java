@@ -8,10 +8,14 @@
 
 package net.optile.payment.ui.page;
 
+import static net.optile.payment.model.InteractionCode.PROCEED;
+import static net.optile.payment.model.InteractionReason.PRESETACCOUNT_SELECTED;
+
 import java.net.URL;
 import java.util.Map;
 
 import android.content.Context;
+import android.util.Log;
 import net.optile.payment.core.PaymentError;
 import net.optile.payment.core.PaymentException;
 import net.optile.payment.form.Operation;
@@ -121,8 +125,7 @@ final class PaymentListPresenter implements PaymentSessionListener, Localization
             return;
         }
         if (session.getPresetCard() == card) {
-            PaymentResult result = new PaymentResult("Same presetAccount selected");
-            closeWithOkCode(result);
+            onPresetAccountSelected();
             return;
         }
         if (!validateWidgets(card, widgets)) {
@@ -157,7 +160,7 @@ final class PaymentListPresenter implements PaymentSessionListener, Localization
         Interaction interaction = listResult.getInteraction();
 
         switch (interaction.getCode()) {
-            case InteractionCode.PROCEED:
+            case PROCEED:
                 handleLoadPaymentSessionOk(session);
                 break;
             default:
@@ -344,12 +347,14 @@ final class PaymentListPresenter implements PaymentSessionListener, Localization
     public void onProcessPaymentResult(int resultCode, PaymentResult result) {
         switch (resultCode) {
             case PaymentUI.RESULT_CODE_OK:
+                Interaction interaction = result.getInteraction();
+                Log.i("AAAAAAAAA", "interaction: " + interaction.getCode() + ", " + interaction.getReason());
                 closeWithOkCode(result);
                 break;
             case PaymentUI.RESULT_CODE_CANCELED:
                 handleProcessPaymentCanceled(result);
                 break;
-        }
+        }  
     }
 
     private void handleProcessPaymentCanceled(PaymentResult result) {
@@ -470,8 +475,14 @@ final class PaymentListPresenter implements PaymentSessionListener, Localization
         return operation;
     }
 
+    private void onPresetAccountSelected() {
+        Interaction interaction = new Interaction(PROCEED, PRESETACCOUNT_SELECTED);
+        PaymentResult result = new PaymentResult("PresetAccount selected", interaction);
+        closeWithOkCode(result);
+    }
+    
     private void loadPaymentSession(String listUrl) {
-        this.session = null;
+        this.session = null;  
         view.clearList();
         view.showProgress(true);
         sessionService.loadPaymentSession(listUrl, view.getActivity());

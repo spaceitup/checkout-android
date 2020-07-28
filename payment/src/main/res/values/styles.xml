@@ -64,6 +64,7 @@
 
     <style name="ThemeOverlay.Payment.TextInputLayout" parent="">
         <item name="textAppearanceSubtitle1">@style/TextAppearance.Payment.Body1</item>
+        <item name="android:textColorPrimary">?attr/colorOnBackground</item>
         <item name="editTextStyle">@style/Widget.MaterialComponents.TextInputEditText.FilledBox</item>
     </style>
 

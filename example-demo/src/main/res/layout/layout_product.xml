@@ -4,10 +4,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:paddingTop="@dimen/pmborder_xlarge"
-        android:paddingBottom="@dimen/pmborder_xlarge"
-        android:paddingLeft="@dimen/pmborder_medium"
-        android:paddingRight="@dimen/pmborder_medium"
+        android:padding="@dimen/pmborder_medium"
         android:orientation="vertical">
 
         <LinearLayout
@@ -25,12 +22,16 @@
                 android:contentDescription="TODO" />
 
             <TextView
+                android:textAppearance="?attr/textAppearanceBody2"
+                android:textColor="?attr/colorOnBackground"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:text="@string/product_date" />
 
             <TextView
+                android:textAppearance="?attr/textAppearanceSubtitle2"
+                android:textColor="?attr/colorOnBackground"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/product_price" />
@@ -49,6 +50,8 @@
                 android:src="@drawable/ic_count" />
 
             <TextView
+                android:textAppearance="?attr/textAppearanceBody2"
+                android:textColor="?attr/colorOnBackground"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/product_count" />

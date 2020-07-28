@@ -18,16 +18,24 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:padding="@dimen/pmborder_large"
+                android:padding="@dimen/pmborder_medium"
                 android:orientation="vertical">
 
-                <EditText
-                    android:id="@+id/input_listurl"
-                    android:layout_width="match_parent"
+                <com.google.android.material.textfield.TextInputLayout
+                    android:layout_weight="1"
                     android:hint="@string/settings_hint"
-                    android:inputType="textWebEmailAddress"
-                    android:layout_height="wrap_content"
-                    android:layout_marginBottom="@dimen/pmborder_large" />
+                    android:layout_marginBottom="@dimen/pmborder_medium"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/input_listurl"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="https://api.sandbox.oscato.com/api/lists/5f202b6ec4ffdf199400db06lcennqq4njnveg50l1hjt1gtd8"
+                        android:inputType="textWebEmailAddress"
+                        android:singleLine="true" />
+                </com.google.android.material.textfield.TextInputLayout>
 
                 <com.google.android.material.button.MaterialButton
                     android:id="@+id/button_settings"

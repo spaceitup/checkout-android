@@ -8,7 +8,10 @@
 
 package net.optile.example.demo.summary;
 
+import static net.optile.payment.model.InteractionReason.PRESETACCOUNT_SELECTED;
+
 import java.util.List;
+import java.util.Objects;
 import java.util.concurrent.Callable;
 
 import net.optile.example.demo.shared.DemoException;
@@ -126,7 +129,10 @@ final class SummaryPresenter {
 
     private void handleResultOk(PaymentResult result) {
         Interaction interaction = result.getInteraction();
-        if (interaction != null) {
+        if (interaction == null) {
+            return;
+        }
+        if (!Objects.equals(PRESETACCOUNT_SELECTED, interaction.getReason())) {
             view.showPaymentSuccess();
         }
     }

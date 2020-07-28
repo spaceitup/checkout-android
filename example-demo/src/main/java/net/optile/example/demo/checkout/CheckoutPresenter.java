@@ -8,13 +8,18 @@
 
 package net.optile.example.demo.checkout;
 
+import static net.optile.payment.model.InteractionReason.PRESETACCOUNT_SELECTED;
+import static net.optile.payment.model.RedirectType.SUMMARY;
+
 import java.util.Objects;
 
 import net.optile.example.demo.shared.SdkResult;
 import net.optile.payment.model.Interaction;
 import net.optile.payment.model.InteractionCode;
 import net.optile.payment.model.OperationResult;
+import net.optile.payment.model.OperationType;
 import net.optile.payment.model.Redirect;
+import net.optile.payment.model.RedirectType;
 import net.optile.payment.ui.PaymentResult;
 import net.optile.payment.ui.PaymentUI;
 
@@ -55,11 +60,14 @@ final class CheckoutPresenter {
         if (interaction == null) {
             return;
         }
+        if (Objects.equals(PRESETACCOUNT_SELECTED, interaction.getReason())) {
+            view.showPaymentSummary();
+            return;
+        }
         OperationResult op = result.getOperationResult();
         if (op != null) {
             Redirect redirect = op.getRedirect();
-
-            if (redirect != null && Objects.equals("SUMMARY", redirect.getType())) {
+            if (redirect != null && Objects.equals(SUMMARY, redirect.getType())) {
                 view.showPaymentSummary();
                 return;
             }

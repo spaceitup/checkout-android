@@ -7,7 +7,7 @@
     <string name="button_edit">Edit</string>
 
     <string name="settings_header">Demo settings</string>
-    <string name="settings_hint">Paste list URL here</string>
+    <string name="settings_hint">List URL</string>
 
     <string name="checkout_collapsed_title">Checkout details</string>
     <string name="checkout_personal_details">Enter your personal details</string>

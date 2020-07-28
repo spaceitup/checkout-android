@@ -13,6 +13,7 @@
 
     <color name="pm_black">#000000</color>
     <color name="pm_white">#FFFFFF</color>
+    <color name="pm_transparent">#00000000</color>
 
     <color name="pm_black_alpha32">#52000000</color>
     <color name="pm_white_alpha80">#CCFFFFFF</color>

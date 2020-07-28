@@ -6,8 +6,7 @@
         android:layout_height="wrap_content"
         android:gravity="center"
         android:orientation="horizontal"
-        android:paddingTop="@dimen/pmborder_xxsmall"
-        android:paddingBottom="@dimen/pmborder_xxsmall">
+        android:paddingBottom="@dimen/pmborder_medium">
 
         <com.google.android.material.textfield.TextInputLayout
             android:layout_weight="1"
@@ -28,8 +27,7 @@
         android:layout_height="wrap_content"
         android:gravity="center"
         android:orientation="horizontal"
-        android:paddingTop="@dimen/pmborder_xxsmall"
-        android:paddingBottom="@dimen/pmborder_xxsmall">
+        android:paddingBottom="@dimen/pmborder_medium">
 
         <com.google.android.material.textfield.TextInputLayout
             android:layout_weight="1"
@@ -50,8 +48,7 @@
         android:layout_height="wrap_content"
         android:gravity="center"
         android:orientation="horizontal"
-        android:paddingTop="@dimen/pmborder_xxsmall"
-        android:paddingBottom="@dimen/pmborder_xxsmall">
+        android:paddingBottom="@dimen/pmborder_medium">
 
         <com.google.android.material.textfield.TextInputLayout
             android:layout_weight="1"
@@ -72,8 +69,7 @@
         android:layout_height="wrap_content"
         android:gravity="center"
         android:orientation="horizontal"
-        android:paddingTop="@dimen/pmborder_xxsmall"
-        android:paddingBottom="@dimen/pmborder_xxsmall">
+        android:paddingBottom="@dimen/pmborder_medium">
 
         <com.google.android.material.textfield.TextInputLayout
             android:layout_weight="1"
@@ -94,8 +90,7 @@
         android:layout_height="wrap_content"
         android:gravity="center"
         android:orientation="horizontal"
-        android:paddingTop="@dimen/pmborder_xxsmall"
-        android:paddingBottom="@dimen/pmborder_xxsmall">
+        android:paddingBottom="@dimen/pmborder_medium">
 
         <com.google.android.material.textfield.TextInputLayout
             android:layout_weight="1"

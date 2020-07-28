@@ -1,7 +1,6 @@
 <resources>
 
     <style name="PaymentTheme.Toolbar">
-        <item name="materialCardViewStyle">@style/Widget.Payment.CardView</item>
         <item name="toolbarStyle">@style/Widget.Payment.Toolbar</item>
         <item name="android:statusBarColor">@color/pm_white</item>
         <item name="android:windowLightStatusBar">true</item>

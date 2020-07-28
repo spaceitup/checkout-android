@@ -22,12 +22,12 @@
         <activity
             android:name=".checkout.CheckoutActivity"
             android:windowSoftInputMode="stateAlwaysHidden"
-            android:theme="@style/PaymentTheme.Toolbar" >
+            android:theme="@style/PaymentTheme.CollapsingToolbar" >
         </activity>
 
         <activity
             android:name=".summary.SummaryActivity"
-            android:theme="@style/PaymentTheme.Toolbar" >
+            android:theme="@style/PaymentTheme.CollapsingToolbar" >
         </activity>
 
         <activity
