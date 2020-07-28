@@ -25,14 +25,13 @@
                     android:layout_weight="1"
                     android:hint="@string/settings_hint"
                     android:layout_marginBottom="@dimen/pmborder_medium"
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content">
 
                     <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/input_listurl"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="https://api.sandbox.oscato.com/api/lists/5f202b6ec4ffdf199400db06lcennqq4njnveg50l1hjt1gtd8"
                         android:inputType="textWebEmailAddress"
                         android:singleLine="true" />
                 </com.google.android.material.textfield.TextInputLayout>
