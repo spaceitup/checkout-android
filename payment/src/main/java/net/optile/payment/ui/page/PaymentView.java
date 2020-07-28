@@ -11,7 +11,7 @@ package net.optile.payment.ui.page;
 import android.app.Activity;
 import net.optile.payment.model.Interaction;
 import net.optile.payment.ui.PaymentResult;
-import net.optile.payment.ui.dialog.ThemedDialogFragment.ThemedDialogListener;
+import net.optile.payment.ui.dialog.PaymentDialogFragment.PaymentDialogListener;
 
 /**
  * The view (MVP) interface for screens that handle payments
@@ -30,21 +30,21 @@ interface PaymentView {
      *
      * @param listener to be notified of dialog events
      */
-    void showDefaultErrorDialog(ThemedDialogListener listener);
+    void showDefaultErrorDialog(PaymentDialogListener listener);
 
     /**
      * Show the connection error dialog to the user, notify the listener of events in this dialog.
      *
      * @param listener to be notified of dialog events
      */
-    void showConnectionErrorDialog(ThemedDialogListener listener);
+    void showConnectionErrorDialog(PaymentDialogListener listener);
 
     /**
      * Show the interaction text to the user, notify the listener of events in this dialog.
      *
      * @param listener to be notified of dialog events
      */
-    void showInteractionDialog(Interaction interaction, ThemedDialogListener listener);
+    void showInteractionDialog(Interaction interaction, PaymentDialogListener listener);
 
     /**
      * Show a warning message to the user

@@ -22,8 +22,8 @@ import net.optile.payment.model.OperationResult;
 import net.optile.payment.model.Redirect;
 import net.optile.payment.ui.PaymentResult;
 import net.optile.payment.ui.PaymentUI;
-import net.optile.payment.ui.dialog.ThemedDialogFragment;
-import net.optile.payment.ui.dialog.ThemedDialogFragment.ThemedDialogListener;
+import net.optile.payment.ui.dialog.PaymentDialogFragment;
+import net.optile.payment.ui.dialog.PaymentDialogFragment.PaymentDialogListener;
 import net.optile.payment.ui.model.PaymentSession;
 import net.optile.payment.ui.redirect.RedirectService;
 import net.optile.payment.ui.service.LocalizationLoaderListener;
@@ -183,24 +183,21 @@ final class ChargePaymentPresenter implements PaymentSessionListener, NetworkSer
     }
 
     private void handleLoadingNetworkFailure(final PaymentError error) {
-        view.showConnectionErrorDialog(new ThemedDialogListener() {
+        view.showConnectionErrorDialog(new PaymentDialogListener() {
             @Override
-            public void onButtonClicked(ThemedDialogFragment dialog, int which) {
-                switch (which) {
-                    case ThemedDialogFragment.BUTTON_POSITIVE:
-                        if (session == null) {
-                            loadPaymentSession(listUrl);
-                        } else {
-                            loadLocalizations(session);
-                        }
-                        break;
-                    default:
-                        closeWithCanceledCode(error);
+            public void onPositiveButtonClicked() {
+                if (session == null) {
+                    loadPaymentSession(listUrl);
+                } else {
+                    loadLocalizations(session);
                 }
             }
-
             @Override
-            public void onDismissed(ThemedDialogFragment dialog) {
+            public void onNegativeButtonClicked() {
+                closeWithCanceledCode(error);
+            }
+            @Override
+            public void onDismissed() {
                 closeWithCanceledCode(error);
             }
         });
@@ -277,20 +274,17 @@ final class ChargePaymentPresenter implements PaymentSessionListener, NetworkSer
     }
 
     private void handleProcessNetworkFailure(final PaymentResult result) {
-        view.showConnectionErrorDialog(new ThemedDialogListener() {
+        view.showConnectionErrorDialog(new PaymentDialogListener() {
             @Override
-            public void onButtonClicked(ThemedDialogFragment dialog, int which) {
-                switch (which) {
-                    case ThemedDialogFragment.BUTTON_POSITIVE:
-                        processPayment();
-                        break;
-                    default:
-                        closeWithCanceledCode(result);
-                }
+            public void onPositiveButtonClicked() {
+                processPayment();
             }
-
             @Override
-            public void onDismissed(ThemedDialogFragment dialog) {
+            public void onNegativeButtonClicked() {
+                closeWithCanceledCode(result);
+            }
+            @Override
+            public void onDismissed() {
                 closeWithCanceledCode(result);
             }
         });
@@ -352,14 +346,17 @@ final class ChargePaymentPresenter implements PaymentSessionListener, NetworkSer
     private void closeWithErrorMessage(PaymentResult result) {
         view.setPaymentResult(PaymentUI.RESULT_CODE_CANCELED, result);
         Interaction interaction = result.getInteraction();
-        ThemedDialogListener listener = new ThemedDialogListener() {
+        PaymentDialogListener listener = new PaymentDialogListener() {
             @Override
-            public void onButtonClicked(ThemedDialogFragment dialog, int which) {
+            public void onPositiveButtonClicked() {
                 view.close();
             }
-
             @Override
-            public void onDismissed(ThemedDialogFragment dialog) {
+            public void onNegativeButtonClicked() {
+                view.close();
+            }
+            @Override
+            public void onDismissed() {
                 view.close();
             }
         };

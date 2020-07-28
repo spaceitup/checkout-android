@@ -23,8 +23,8 @@ import net.optile.payment.model.Interaction;
 import net.optile.payment.ui.PaymentResult;
 import net.optile.payment.ui.PaymentTheme;
 import net.optile.payment.ui.PaymentUI;
-import net.optile.payment.ui.dialog.DialogHelper;
-import net.optile.payment.ui.dialog.ThemedDialogFragment.ThemedDialogListener;
+import net.optile.payment.ui.dialog.PaymentDialogHelper;
+import net.optile.payment.ui.dialog.PaymentDialogFragment.PaymentDialogListener;
 import net.optile.payment.ui.page.idlingresource.SimpleIdlingResource;
 
 /**
@@ -85,7 +85,7 @@ abstract class BasePaymentActivity extends AppCompatActivity implements PaymentV
     @Override
     public void showWarningMessage(String message) {
         if (active && !TextUtils.isEmpty(message)) {
-            DialogHelper.createSnackbar(getRootView(), message).show();
+            PaymentDialogHelper.createSnackbar(getRootView(), message).show();
         }
     }
 
@@ -93,12 +93,12 @@ abstract class BasePaymentActivity extends AppCompatActivity implements PaymentV
      * {@inheritDoc}
      */
     @Override
-    public void showDefaultErrorDialog(ThemedDialogListener listener) {
+    public void showDefaultErrorDialog(PaymentDialogListener listener) {
         if (!active) {
             return;
         }
         progressView.setVisible(false);
-        DialogFragment dialog = DialogHelper.createDefaultErrorDialog(listener);
+        DialogFragment dialog = PaymentDialogHelper.createDefaultErrorDialog(listener);
         showDialogFragment(dialog, "dialog_defaulterror");
     }
 
@@ -106,12 +106,12 @@ abstract class BasePaymentActivity extends AppCompatActivity implements PaymentV
      * {@inheritDoc}
      */
     @Override
-    public void showConnectionErrorDialog(ThemedDialogListener listener) {
+    public void showConnectionErrorDialog(PaymentDialogListener listener) {
         if (!active) {
             return;
         }
         progressView.setVisible(false);
-        DialogFragment dialog = DialogHelper.createConnectionErrorDialog(listener);
+        DialogFragment dialog = PaymentDialogHelper.createConnectionErrorDialog(listener);
         showDialogFragment(dialog, "dialog_connectionerror");
     }
 
@@ -119,12 +119,12 @@ abstract class BasePaymentActivity extends AppCompatActivity implements PaymentV
      * {@inheritDoc}
      */
     @Override
-    public void showInteractionDialog(Interaction interaction, ThemedDialogListener listener) {
+    public void showInteractionDialog(Interaction interaction, PaymentDialogListener listener) {
         if (!active) {
             return;
         }
         progressView.setVisible(false);
-        DialogFragment dialog = DialogHelper.createInteractionDialog(interaction, listener);
+        DialogFragment dialog = PaymentDialogHelper.createInteractionDialog(interaction, listener);
         showDialogFragment(dialog, "dialog_interaction");
     }
 
