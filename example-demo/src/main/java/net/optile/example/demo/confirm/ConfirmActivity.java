@@ -40,7 +40,6 @@ public final class ConfirmActivity extends BaseActivity {
     @Override
     public void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setTheme(R.style.DefaultConfirmTheme);
         setContentView(R.layout.activity_confirm);
 
         Button button = findViewById(R.id.button_neworder);

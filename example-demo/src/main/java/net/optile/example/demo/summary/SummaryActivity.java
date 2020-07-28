@@ -82,7 +82,6 @@ public final class SummaryActivity extends BaseActivity implements SummaryView {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setTheme(R.style.DefaultCollapsingToolbarTheme);
         setContentView(R.layout.activity_summary);
         initToolbar();
         presetTitle = findViewById(R.id.label_title);

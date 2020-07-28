@@ -27,10 +27,10 @@
         <item name="snackbarStyle">@style/Widget.Payment.Snackbar</item>
     </style>
 
-    <style name="PaymentTheme.PaymentList">
+    <style name="PaymentTheme.Toolbar">
         <item name="materialCardViewStyle">@style/Widget.Payment.CardView</item>
         <item name="toolbarStyle">@style/Widget.Payment.Toolbar</item>
     </style>
 
-    <style name="PaymentTheme.ChargePayment"></style>
+    <style name="PaymentTheme.NoToolbar"></style>
 </resources>
