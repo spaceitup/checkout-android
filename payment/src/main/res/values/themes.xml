@@ -20,13 +20,21 @@
         <item name="textAppearanceButton">@style/TextAppearance.Payment.Button</item>
         <item name="textAppearanceCaption">@style/TextAppearance.Payment.Caption</item>
 
-        <item name="borderlessButtonStyle">@style/Widget.Payment.Button.TextButton</item>
         <item name="materialButtonStyle">@style/Widget.Payment.Button.UnelevatedButton</item>
         <item name="textInputStyle">@style/Widget.Payment.TextInputLayout</item>
         <item name="switchStyle">@style/Widget.Payment.Switch</item>
         <item name="snackbarStyle">@style/Widget.Payment.Snackbar</item>
+        <item name="materialAlertDialogTheme">@style/ThemeOverlay.Payment.MaterialAlertDialog</item>
     </style>
 
+    <style name="ThemeOverlay.Payment.MaterialAlertDialog" parent="ThemeOverlay.MaterialComponents.MaterialAlertDialog">
+        <item name="alertDialogStyle">@style/MaterialAlertDialog.Payment</item>
+        <item name="materialAlertDialogTitleTextStyle">@style/MaterialAlertDialog.Payment.Title.Text</item>
+        <item name="materialAlertDialogBodyTextStyle">@style/MaterialAlertDialog.Payment.Body.Text</item>        
+        <item name="buttonBarPositiveButtonStyle">@style/Widget.Payment.Button.TextButton.Dialog</item>
+        <item name="buttonBarNegativeButtonStyle">@style/Widget.Payment.Button.TextButton.Dialog</item>
+    </style>
+    
     <style name="PaymentTheme.PaymentList">
         <item name="materialCardViewStyle">@style/Widget.Payment.CardView</item>
         <item name="toolbarStyle">@style/Widget.Payment.Toolbar</item>
