@@ -107,9 +107,7 @@ public class PaymentDialogFragment extends DialogFragment {
         if (activity == null) {
             return super.onCreateDialog(savedInstanceState);
         }
-        LayoutInflater inflater = activity.getLayoutInflater();
         MaterialAlertDialogBuilder builder = new MaterialAlertDialogBuilder(activity);
-
         addTexts(builder);
         addButtons(builder);
         addImageView(activity, builder);
