@@ -85,9 +85,10 @@ final class NetworkCardViewHolder extends PaymentCardViewHolder {
     }
 
     private void addNetworkLogos(View parent, NetworkCard networkCard) {
-        if (networkCard.getPaymentNetworkSize() > 1) {
-            this.networkLogosView = new NetworkLogosView(parent, networkCard.getPaymentNetworks());
+        if (networkCard.getPaymentNetworkSize() <= 1) {
+            return;
         }
+        this.networkLogosView = new NetworkLogosView(parent, networkCard.getPaymentNetworks());
     }
         
     private void setTestId(String testId) {
