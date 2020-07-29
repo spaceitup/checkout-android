@@ -83,6 +83,15 @@ public abstract class FormWidget {
     }
 
     /**
+     * Set this widget to be focussed.
+     *
+     * @return true when focussed, false otherwise
+     */
+    public boolean requestFocus() {
+        return false;
+    }
+
+    /**
      * Request the widget to inject its input value into the operation Object.
      *
      * @param operation in which the input value should be added

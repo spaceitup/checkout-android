@@ -88,6 +88,18 @@ public abstract class InputLayoutWidget extends FormWidget {
      * {@inheritDoc}
      */
     @Override
+    public boolean requestFocus() {
+        if (textInput.requestFocus()) {
+            presenter.showKeyboard();
+            return true;
+        }
+        return false;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
     public void clearFocus() {
         if (textInput.hasFocus()) {
             textInput.clearFocus();
