@@ -29,10 +29,6 @@ import net.optile.payment.util.ImageHelper;
  */
 class NetworkLogosView {
 
-    private final static float ALPHA_SELECTED = 1f;
-    private final static float ALPHA_DESELECTED = 0f;
-    private final static int ANIM_DURATION = 200;
-
     private final ViewSwitcher switcher;
     private final Map<String, NetworkLogo> logos;
     private final ImageView selImage;
@@ -42,6 +38,7 @@ class NetworkLogosView {
      * Construct a new NetworkLogosView
      *
      * @param parent of this view
+     * @param networks list of payment networks for which logos should be shown
      */
     NetworkLogosView(View parent, List<PaymentNetwork> networks) {
         switcher = parent.findViewById(R.id.viewswitcher_logos);
@@ -70,7 +67,7 @@ class NetworkLogosView {
         LayoutInflater inflater = LayoutInflater.from(layout.getContext());
         ImageView view = (ImageView) inflater.inflate(R.layout.view_logosmall, layout, false);
         LayoutParams params = (LayoutParams) view.getLayoutParams();
-        params.setMargins(0, 0, (int) margin, 0);
+        params.setMargins(0, 0, margin, 0);
         view.setLayoutParams(params);
         return view;
     }

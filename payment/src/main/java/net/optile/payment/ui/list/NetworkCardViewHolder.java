@@ -74,8 +74,10 @@ final class NetworkCardViewHolder extends PaymentCardViewHolder {
     }
 
     private void bindNetworkLogos(NetworkCard card) {
+        if (networkLogosView == null) {
+            return;
+        }
         SmartSwitch smartSwitch = card.getSmartSwitch();
-
         if (smartSwitch.getSelectedSize() == 1) {
             PaymentNetwork network = smartSwitch.getFirstSelected();
             networkLogosView.setSelected(network.getCode());
@@ -85,9 +87,10 @@ final class NetworkCardViewHolder extends PaymentCardViewHolder {
     }
 
     private void addNetworkLogos(View parent, NetworkCard networkCard) {
-        if (networkCard.getPaymentNetworkSize() > 1) {
-            this.networkLogosView = new NetworkLogosView(parent, networkCard.getPaymentNetworks());
+        if (networkCard.getPaymentNetworkSize() <= 1) {
+            return;
         }
+        networkLogosView = new NetworkLogosView(parent, networkCard.getPaymentNetworks());
     }
         
     private void setTestId(String testId) {
