@@ -63,9 +63,7 @@ public final class ImageHelper {
     }
 
     private void loadImageWithGlide(final ImageView view, final URL url) {
-        Glide.with(view.getContext()).
-            load(url.toString()).
-            into(view);
+        Glide.with(view.getContext()).asBitmap().load(url.toString()).into(view);
     }
 
     private void loadImageWithNetwork(final ImageView view, final URL url) {
