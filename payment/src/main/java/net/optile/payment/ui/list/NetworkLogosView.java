@@ -67,7 +67,7 @@ class NetworkLogosView {
         LayoutInflater inflater = LayoutInflater.from(layout.getContext());
         ImageView view = (ImageView) inflater.inflate(R.layout.view_logosmall, layout, false);
         LayoutParams params = (LayoutParams) view.getLayoutParams();
-        params.setMargins(0, 0, (int) margin, 0);
+        params.setMargins(0, 0, margin, 0);
         view.setLayoutParams(params);
         return view;
     }
