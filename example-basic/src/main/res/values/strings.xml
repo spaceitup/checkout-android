@@ -7,7 +7,7 @@
     <string name="list_hint">List URL</string>
     <string name="empty_label">n/a</string>    
 
-    <string name="resultheader">SDK Result</string>
+    <string name="resultheader">Result Received</string>
     <string name="resultcode">onActivityResult(resultCode)</string>
     <string name="resultinfo">resultInfo</string>
     <string name="paymenterror">paymentError</string>

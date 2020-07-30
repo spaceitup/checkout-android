@@ -5,59 +5,70 @@
             android:layout_height="match_parent">
 
     <LinearLayout
-        android:padding="@dimen/pmborder_large"
+        android:padding="@dimen/pmborder_medium"
         android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
-        <RadioGroup
-            android:id="@+id/radio_themes"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="@dimen/pmborder_medium"
-            android:orientation="vertical">
-
-            <RadioButton
-                android:id="@+id/radio_theme_default"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:checked="true"
-                android:layout_marginBottom="@dimen/pmborder_small"
-                android:text="@string/theme_default" />
-
-            <RadioButton
-                android:id="@+id/radio_theme_custom"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="@dimen/pmborder_small"
-                android:text="@string/theme_custom" />
-        </RadioGroup>
-
-        <com.google.android.material.textfield.TextInputLayout
-            android:layout_weight="1"
-            android:hint="@string/list_hint"
-            android:layout_marginBottom="@dimen/pmborder_medium"
+        <com.google.android.material.card.MaterialCardView
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/input_listurl"
+            <LinearLayout
+                android:padding="@dimen/pmborder_medium"
+                android:orientation="vertical"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:inputType="textWebEmailAddress"
-                android:singleLine="true" />
-        </com.google.android.material.textfield.TextInputLayout>
+                android:layout_height="wrap_content">
 
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/button_action"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="@dimen/pmborder_large"
-            android:text="@string/actionbutton" />
+                <com.google.android.material.textfield.TextInputLayout
+                    android:layout_weight="1"
+                    android:hint="@string/list_hint"
+                    android:layout_marginBottom="@dimen/pmborder_medium"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/input_listurl"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:inputType="textWebEmailAddress"
+                        android:singleLine="true" />
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <RadioGroup
+                    android:id="@+id/radio_themes"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="@dimen/pmborder_medium"
+                    android:orientation="vertical">
+
+                    <RadioButton
+                        android:id="@+id/radio_theme_default"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:checked="true"
+                        android:text="@string/theme_default" />
+
+                    <RadioButton
+                        android:id="@+id/radio_theme_custom"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/theme_custom" />
+                </RadioGroup>
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/button_action"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/actionbutton" />
+            </LinearLayout>
+
+        </com.google.android.material.card.MaterialCardView>
 
         <com.google.android.material.card.MaterialCardView
             android:id="@+id/layout_sdkresult"
             android:visibility="gone"
+            android:layout_marginTop="@dimen/pmborder_medium"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" >
 
