@@ -1,8 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#299928</color>
-    <color name="colorPrimaryDark">#298226</color>
-    <color name="colorAccent">#207a20</color>
-    <color name="responsecard_background">#FFFFFF</color>
-    <color name="responsecard_border">#A0A0A0</color>
+    <color name="custom_blue">#039BE5</color>
 </resources>
