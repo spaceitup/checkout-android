@@ -33,15 +33,22 @@
                 android:text="@string/theme_custom" />
         </RadioGroup>
 
-        <EditText
-            android:id="@+id/input_listurl"
-            android:layout_width="match_parent"
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_weight="1"
             android:hint="@string/list_hint"
-            android:inputType="textWebEmailAddress"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="@dimen/border_medium" />
+            android:layout_marginBottom="@dimen/pmborder_medium"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
 
-        <Button
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/input_listurl"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="textWebEmailAddress"
+                android:singleLine="true" />
+        </com.google.android.material.textfield.TextInputLayout>        
+
+        <com.google.android.material.button.MaterialButton
             android:id="@+id/button_action"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -49,7 +56,7 @@
             android:text="@string/actionbutton" />
 
         <LinearLayout
-            android:id="@+id/layout_sdkresponse"
+            android:id="@+id/layout_sdkresult"
             android:background="@drawable/response_background"
             android:orientation="vertical"
             android:visibility="gone"
@@ -59,110 +66,94 @@
             android:layout_height="wrap_content">
 
             <TextView
-                android:id="@+id/label_sdkheader"
+                android:id="@+id/label_header"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/sdkheader"
+                android:text="@string/resultheader"
+                android:textAppearance="?attr/textAppearanceHeadline6"
+                android:textColor="?attr/colorOnBackground"
+                android:layout_marginBottom="@dimen/border_medium" />
+
+            <TextView
+                android:id="@+id/label_resultcode"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textAppearance="?attr/textAppearanceSubtitle2"
+                android:textColor="?attr/colorOnBackground"
+                android:text="@string/resultcode" />
+
+            <TextView
+                android:id="@+id/text_resultcode"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textAppearance="?attr/textAppearanceBody2"
+                android:textColor="?attr/colorOnBackground"
+                android:layout_marginBottom="@dimen/border_medium" />
+
+            <TextView
+                android:id="@+id/label_resultinfo"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textAppearance="?attr/textAppearanceSubtitle2"
+                android:textColor="?attr/colorOnBackground"
+                android:text="@string/resultinfo" />
+
+            <TextView
+                android:id="@+id/text_resultinfo"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textAppearance="?attr/textAppearanceBody2"
+                android:textColor="?attr/colorOnBackground"
+                android:layout_marginBottom="@dimen/border_medium" />
+
+            <TextView
+                android:id="@+id/label_interactioncode"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textAppearance="?attr/textAppearanceSubtitle2"
+                android:textColor="?attr/colorOnBackground"
+                android:text="@string/interactioncode" />
+
+            <TextView
+                android:id="@+id/text_interactioncode"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textAppearance="?attr/textAppearanceBody2"
+                android:textColor="?attr/colorOnBackground"
+                android:layout_marginBottom="@dimen/border_medium" />
+
+            <TextView
+                android:id="@+id/label_interactionreason"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textAppearance="?attr/textAppearanceSubtitle2"
+                android:textColor="?attr/colorOnBackground"
+                android:text="@string/interactionreason" />
+
+            <TextView
+                android:id="@+id/text_interactionreason"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textAppearance="?attr/textAppearanceBody2"
+                android:textColor="?attr/colorOnBackground"
+                android:layout_marginBottom="@dimen/border_medium" />
+
+            <TextView
+                android:id="@+id/label_paymenterror"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textAppearance="?attr/textAppearanceSubtitle2"
+                android:textColor="?attr/colorOnBackground"
+                android:text="@string/paymenterror" />
+
+            <TextView
+                android:id="@+id/text_paymenterror"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
                 android:layout_marginBottom="@dimen/border_medium"
-                android:textAppearance="@style/AppHeaderText" />
-
-            <TextView
-                android:id="@+id/label_activityresultcode"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:textAppearance="@style/AppLabelText"
-                android:text="@string/activityresultcode" />
-
-            <TextView
-                android:id="@+id/text_activityresultcode"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="@dimen/border_medium" />
-
-            <TextView
-                android:id="@+id/label_sdkresultinfo"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="@string/sdkresultinfo"
-                android:textAppearance="@style/AppLabelText" />
-
-            <TextView
-                android:id="@+id/text_sdkresultinfo"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="@dimen/border_medium" />
-
-            <TextView
-                android:id="@+id/label_sdkpaymenterror"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="@string/sdkpaymenterror"
-                android:textAppearance="@style/AppLabelText" />
-
-            <TextView
-                android:id="@+id/text_sdkpaymenterror"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="@dimen/border_medium"
-                android:visibility="gone" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:id="@+id/layout_apiresponse"
-            android:background="@drawable/response_background"
-            android:padding="@dimen/border_medium"
-            android:orientation="vertical"
-            android:visibility="gone"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-
-            <TextView
-                android:id="@+id/label_apiheader"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="@string/apiheader"
-                android:layout_marginBottom="@dimen/border_medium"
-                android:textAppearance="@style/AppHeaderText" />
-
-            <TextView
-                android:id="@+id/label_apiresultinfo"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="@string/apiresultinfo"
-                android:textAppearance="@style/AppLabelText" />
-
-            <TextView
-                android:id="@+id/text_apiresultinfo"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="@dimen/border_medium" />
-
-            <TextView
-                android:id="@+id/label_apiinteractioncode"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="@string/apiinteractioncode"
-                android:textAppearance="@style/AppLabelText" />
-
-            <TextView
-                android:id="@+id/text_apiinteractioncode"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="@dimen/border_medium" />
-
-            <TextView
-                android:id="@+id/label_apiinteractionreason"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="@string/apiinteractionreason"
-                android:textAppearance="@style/AppLabelText" />
-
-            <TextView
-                android:id="@+id/text_apiinteractionreason"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="@dimen/border_medium" />
-
+                android:textAppearance="?attr/textAppearanceBody2"
+                android:textColor="?attr/colorOnBackground" />
+            
         </LinearLayout>
     </LinearLayout>
 </ScrollView>

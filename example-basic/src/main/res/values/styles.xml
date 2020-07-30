@@ -1,11 +1,2 @@
 <resources>
-
-    <style name="AppLabelText" parent="@android:style/TextAppearance">
-        <item name="android:textSize">14sp</item>
-        <item name="android:textStyle">bold</item>
-    </style>
-
-    <style name="AppHeaderText" parent="@android:style/TextAppearance">
-        <item name="android:textSize">14sp</item>
-    </style>
 </resources>

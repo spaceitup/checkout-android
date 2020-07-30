@@ -6,19 +6,16 @@
     <string name="theme_empty">Empty Theme</string>
     <string name="actionbutton">Open PaymentPage</string>
     <string name="list_hint">Paste list URL here</string>
+    <string name="empty_label">n/a</string>    
 
-    <string name="activityresultcode">onActivityResult(resultCode)</string>
-
-    <string name="sdkheader">ANDROID SDK</string>
-    <string name="sdkresultinfo">resultInfo</string>
-    <string name="sdkpaymenterror">paymentError</string>
-
-    <string name="apiheader">OPTILE PAYMENT API</string>
-    <string name="apiresultinfo">resultInfo</string>
-    <string name="apiinteractioncode">Interaction Code</string>
-    <string name="apiinteractionreason">Interaction Reason</string>
+    <string name="resultheader">SDK Result</string>
+    <string name="resultcode">onActivityResult(resultCode)</string>
+    <string name="resultinfo">resultInfo</string>
+    <string name="paymenterror">paymentError</string>
+    <string name="interactioncode">Interaction.code</string>
+    <string name="interactionreason">Interaction.reason</string>
 
     <string name="dialog_error_title">Example Error</string>
     <string name="dialog_error_button">Close</string>
-    <string name="dialog_error_listurl_invalid">Please paste a valid optile List Url in the input field.</string>
+    <string name="dialog_error_listurl_invalid">Please paste a valid optile List URL in the input field.</string>
 </resources>

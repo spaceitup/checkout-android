@@ -35,9 +35,13 @@ public final class BasicActivity extends AppCompatActivity {
     private SdkResult sdkResult;
     private RadioGroup themeGroup;
     private EditText listInput;
-    private View sdkResponseLayout;
-    private View apiResponseLayout;
-
+    private View sdkResultLayout;
+    private TextView resultInfoView;
+    private TextView resultCodeView;
+    private TextView interactionCodeView;
+    private TextView interactionReasonView;
+    private TextView paymentErrorView;    
+    
     /**
      * {@inheritDoc}
      */
@@ -45,11 +49,16 @@ public final class BasicActivity extends AppCompatActivity {
     public void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_basic);
+
         themeGroup = findViewById(R.id.radio_themes);
         listInput = findViewById(R.id.input_listurl);
-        sdkResponseLayout = findViewById(R.id.layout_sdkresponse);
-        apiResponseLayout = findViewById(R.id.layout_apiresponse);
-
+        sdkResultLayout = findViewById(R.id.layout_sdkresult);
+        resultCodeView = findViewById(R.id.text_resultcode);
+        resultInfoView = findViewById(R.id.text_resultinfo);
+        interactionCodeView = findViewById(R.id.text_interactioncode);
+        interactionReasonView = findViewById(R.id.text_interactionreason);
+        paymentErrorView = findViewById(R.id.text_paymenterror);        
+        
         Button button = findViewById(R.id.button_action);
         button.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
@@ -74,8 +83,7 @@ public final class BasicActivity extends AppCompatActivity {
         super.onResume();
 
         if (sdkResult != null) {
-            showSdkResponse(sdkResult);
-            showApiResponse(sdkResult);
+            showSdkResult(sdkResult);
             this.sdkResult = null;
         }
     }
@@ -89,61 +97,42 @@ public final class BasicActivity extends AppCompatActivity {
         if (requestCode != PAYMENT_REQUEST_CODE) {
             return;
         }
-        PaymentResult result = PaymentResult.fromResultIntent(data);
-        if (result != null) {
-            this.sdkResult = new SdkResult(resultCode, result);
+        PaymentResult paymentResult = PaymentResult.fromResultIntent(data);
+        if (paymentResult != null) {
+            this.sdkResult = new SdkResult(resultCode, paymentResult);
         }
     }
 
-    private void showSdkResponse(SdkResult result) {
-        PaymentResult pr = result.paymentResult;
+    private void showSdkResult(SdkResult sdkResult) {
+        PaymentResult paymentResult = sdkResult.paymentResult;
 
-        apiResponseLayout.setVisibility(View.VISIBLE);
-        setText(result.getResultCodeString(), R.id.label_activityresultcode, R.id.text_activityresultcode);
+        sdkResultLayout.setVisibility(View.VISIBLE);
+        setText(resultCodeView, sdkResult.getResultCodeString());
+        setText(resultInfoView, paymentResult.getResultInfo());
 
-        sdkResponseLayout.setVisibility(View.VISIBLE);
-        Interaction interaction = pr.getInteraction();
-        String val = interaction == null ? pr.getResultInfo() : null;
-        setText(val, R.id.label_sdkresultinfo, R.id.text_sdkresultinfo);
+        Interaction interaction = paymentResult.getInteraction();
+        String code = interaction != null ? interaction.getCode() : null;
+        String reason = interaction != null ? interaction.getReason() : null; 
+        setText(interactionCodeView, code);
+        setText(interactionReasonView, reason);
 
-        PaymentError error = pr.getPaymentError();
-        val = error != null ? error.toString() : null;
-        setText(val, R.id.label_sdkpaymenterror, R.id.text_sdkpaymenterror);
+        PaymentError paymentError = paymentResult.getPaymentError();
+        String text = paymentError != null ? paymentError.toString() : null;
+        setText(paymentErrorView, text);        
     }
-
-    private void showApiResponse(SdkResult result) {
-        PaymentResult pr = result.paymentResult;
-        Interaction interaction = pr.getInteraction();
-
-        if (interaction == null) {
-            apiResponseLayout.setVisibility(View.GONE);
-            return;
-        }
-        apiResponseLayout.setVisibility(View.VISIBLE);
-        setText(pr.getResultInfo(), R.id.label_apiresultinfo, R.id.text_apiresultinfo);
-        setText(interaction.getCode(), R.id.label_apiinteractioncode, R.id.text_apiinteractioncode);
-        setText(interaction.getReason(), R.id.label_apiinteractionreason, R.id.text_apiinteractionreason);
-    }
-
-    private void setText(String text, int labelResId, int textResId) {
-        TextView labelView = findViewById(labelResId);
-        TextView textView = findViewById(textResId);
-
+    
+    private void setText(TextView textView, String text) {
         if (TextUtils.isEmpty(text)) {
-            labelView.setVisibility(View.GONE);
-            textView.setVisibility(View.GONE);
-            return;
+            text = getString(R.string.empty_label);
         }
-        labelView.setVisibility(View.VISIBLE);
-        textView.setVisibility(View.VISIBLE);
         textView.setText(text);
     }
 
-    private void showPaymentError(String message) {
+    private void showErrorDialog(String message) {
         AlertDialog alertDialog = new AlertDialog.Builder(this).create();
         alertDialog.setTitle(R.string.dialog_error_title);
         alertDialog.setMessage(message);
-        alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, getString(R.string.dialog_error_button),
+        alertDialog.setButton(AlertDialog.BUTTON_POSITIVE, getString(R.string.dialog_error_button),
             new DialogInterface.OnClickListener() {
                 public void onClick(DialogInterface dialog, int which) {
                     dialog.dismiss();
@@ -156,7 +145,7 @@ public final class BasicActivity extends AppCompatActivity {
         String listUrl = listInput.getText().toString().trim();
 
         if (TextUtils.isEmpty(listUrl) || !Patterns.WEB_URL.matcher(listUrl).matches()) {
-            showPaymentError(getString(R.string.dialog_error_listurl_invalid));
+            showErrorDialog(getString(R.string.dialog_error_listurl_invalid));
             return;
         }
         PaymentUI paymentUI = PaymentUI.getInstance();
@@ -171,7 +160,6 @@ public final class BasicActivity extends AppCompatActivity {
 
         // The custom payment method group settings file
         // paymentUI.setGroupResId(R.raw.customgroups);
-
         paymentUI.showPaymentPage(this, PAYMENT_REQUEST_CODE);
     }
 
