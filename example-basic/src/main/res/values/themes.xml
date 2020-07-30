@@ -6,7 +6,7 @@
         <item name="colorControlNormal">@color/custom_blue</item>
         <item name="colorSecondary">@color/custom_blue</item>
     </style>
-    
+
     <style name="CustomTheme.Toolbar">
         <item name="toolbarStyle">@style/Widget.Payment.Toolbar</item>
     </style>

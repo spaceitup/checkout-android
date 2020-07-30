@@ -21,7 +21,6 @@
         <item name="android:textColor">?attr/colorOnPrimary</item>
     </style>
 
-    <style name="Widget.ExampleDemo.Button.TextButton" parent="Widget.MaterialComponents.Button.TextButton">
-    </style>
+    <style name="Widget.ExampleDemo.Button.TextButton" parent="Widget.MaterialComponents.Button.TextButton"></style>
 
 </resources>

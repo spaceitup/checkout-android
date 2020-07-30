@@ -22,19 +22,16 @@
         <activity
             android:name=".checkout.CheckoutActivity"
             android:windowSoftInputMode="stateAlwaysHidden"
-            android:theme="@style/PaymentTheme.CollapsingToolbar" >
-        </activity>
+            android:theme="@style/PaymentTheme.CollapsingToolbar"></activity>
 
         <activity
             android:name=".summary.SummaryActivity"
-            android:theme="@style/PaymentTheme.CollapsingToolbar" >
-        </activity>
+            android:theme="@style/PaymentTheme.CollapsingToolbar"></activity>
 
         <activity
             android:name=".confirm.ConfirmActivity"
             android:noHistory="true"
-            android:theme="@style/PaymentTheme.NoToolbar">
-        </activity>
+            android:theme="@style/PaymentTheme.NoToolbar"></activity>
 
         <activity
             android:name="net.optile.payment.ui.redirect.PaymentRedirectActivity"

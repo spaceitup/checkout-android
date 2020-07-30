@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-            android:id="@+id/activity_basic"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
+    android:id="@+id/activity_basic"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
 
     <LinearLayout
         android:padding="@dimen/pmborder_medium"
@@ -20,6 +20,14 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/header_settings"
+                    android:textAppearance="?attr/textAppearanceHeadline6"
+                    android:textColor="?attr/colorOnBackground"
+                    android:layout_marginBottom="@dimen/pmborder_medium" />
+                
                 <com.google.android.material.textfield.TextInputLayout
                     android:layout_weight="1"
                     android:hint="@string/list_hint"
@@ -70,19 +78,18 @@
             android:visibility="gone"
             android:layout_marginTop="@dimen/pmborder_medium"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" >
+            android:layout_height="wrap_content">
 
             <LinearLayout
                 android:orientation="vertical"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:padding="@dimen/pmborder_medium" >
+                android:padding="@dimen/pmborder_medium">
 
                 <TextView
-                    android:id="@+id/label_header"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="@string/resultheader"
+                    android:text="@string/header_result"
                     android:textAppearance="?attr/textAppearanceHeadline6"
                     android:textColor="?attr/colorOnBackground"
                     android:layout_marginBottom="@dimen/pmborder_medium" />

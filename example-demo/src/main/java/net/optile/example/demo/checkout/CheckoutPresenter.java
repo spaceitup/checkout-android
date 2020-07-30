@@ -17,9 +17,7 @@ import net.optile.example.demo.shared.SdkResult;
 import net.optile.payment.model.Interaction;
 import net.optile.payment.model.InteractionCode;
 import net.optile.payment.model.OperationResult;
-import net.optile.payment.model.OperationType;
 import net.optile.payment.model.Redirect;
-import net.optile.payment.model.RedirectType;
 import net.optile.payment.ui.PaymentResult;
 import net.optile.payment.ui.PaymentUI;
 

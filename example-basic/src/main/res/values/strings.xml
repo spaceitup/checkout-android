@@ -5,9 +5,10 @@
     <string name="theme_custom">Custom Theme</string>
     <string name="actionbutton">Open PaymentPage</string>
     <string name="list_hint">List URL</string>
-    <string name="empty_label">n/a</string>    
+    <string name="empty_label">n/a</string>
 
-    <string name="resultheader">Result Received</string>
+    <string name="header_settings">Settings</string>    
+    <string name="header_result">Result</string>
     <string name="resultcode">onActivityResult(resultCode)</string>
     <string name="resultinfo">resultInfo</string>
     <string name="paymenterror">paymentError</string>

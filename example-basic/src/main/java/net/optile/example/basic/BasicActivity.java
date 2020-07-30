@@ -40,8 +40,8 @@ public final class BasicActivity extends AppCompatActivity {
     private TextView resultCodeView;
     private TextView interactionCodeView;
     private TextView interactionReasonView;
-    private TextView paymentErrorView;    
-    
+    private TextView paymentErrorView;
+
     /**
      * {@inheritDoc}
      */
@@ -57,8 +57,8 @@ public final class BasicActivity extends AppCompatActivity {
         resultInfoView = findViewById(R.id.text_resultinfo);
         interactionCodeView = findViewById(R.id.text_interactioncode);
         interactionReasonView = findViewById(R.id.text_interactionreason);
-        paymentErrorView = findViewById(R.id.text_paymenterror);        
-        
+        paymentErrorView = findViewById(R.id.text_paymenterror);
+
         Button button = findViewById(R.id.button_action);
         button.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
@@ -112,15 +112,15 @@ public final class BasicActivity extends AppCompatActivity {
 
         Interaction interaction = paymentResult.getInteraction();
         String code = interaction != null ? interaction.getCode() : null;
-        String reason = interaction != null ? interaction.getReason() : null; 
+        String reason = interaction != null ? interaction.getReason() : null;
         setText(interactionCodeView, code);
         setText(interactionReasonView, reason);
 
         PaymentError paymentError = paymentResult.getPaymentError();
         String text = paymentError != null ? paymentError.toString() : null;
-        setText(paymentErrorView, text);        
+        setText(paymentErrorView, text);
     }
-    
+
     private void setText(TextView textView, String text) {
         if (TextUtils.isEmpty(text)) {
             text = getString(R.string.empty_label);

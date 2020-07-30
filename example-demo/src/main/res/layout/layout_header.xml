@@ -46,14 +46,14 @@
 
                 <TextView
                     android:textAppearance="?attr/textAppearanceHeadline6"
-                    android:textColor="?attr/colorOnPrimary"                    
+                    android:textColor="?attr/colorOnPrimary"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/product_title1" />
 
                 <TextView
                     android:textAppearance="?attr/textAppearanceHeadline6"
-                    android:textColor="?attr/colorOnPrimary"                    
+                    android:textColor="?attr/colorOnPrimary"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/product_title2" />
