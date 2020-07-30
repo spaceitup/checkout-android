@@ -71,7 +71,7 @@ public final class SmartSwitch {
      *
      * @return the number of selected networks
      */
-    public int getSelectedSize() {
+    public int getSelectedCount() {
         return smartSelected.size();
     }
 
