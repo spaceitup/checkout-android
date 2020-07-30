@@ -66,7 +66,7 @@ public final class RedirectPaypalTests extends AbstractTest {
         closeChromeBrowser();
 
         intended(hasComponent(ChargePaymentActivity.class.getName()));
-        onView(withId(R.id.dialogfragment_layout)).check(matches(isDisplayed()));
+        onView(withId(R.id.alertTitle)).check(matches(isDisplayed()));
         unregister(closeIdlingResource);
         Intents.release();
     }

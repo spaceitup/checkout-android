@@ -184,7 +184,7 @@ public final class NetworkCard implements PaymentCard {
      *
      * @return the number of networks stored in this card
      */
-    public int getPaymentNetworkSize() {
+    public int getPaymentNetworkCount() {
         return networks.size();
     }
 

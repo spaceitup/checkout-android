@@ -60,7 +60,7 @@ public class PaymentDialogHelper {
         dialog.setPositiveButton(Localization.translate(BUTTON_OK));
         return dialog;
     }
-    
+
     public static DialogFragment createMessageDialog(String title, String message,
         PaymentDialogFragment.PaymentDialogListener listener) {
         PaymentDialogFragment dialog = new PaymentDialogFragment();

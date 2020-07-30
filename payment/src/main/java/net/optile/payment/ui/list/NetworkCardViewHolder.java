@@ -21,6 +21,7 @@ import net.optile.payment.R;
 import net.optile.payment.ui.model.NetworkCard;
 import net.optile.payment.ui.model.PaymentCard;
 import net.optile.payment.ui.model.PaymentNetwork;
+import net.optile.payment.ui.model.SmartSwitch;
 import net.optile.payment.ui.widget.FormWidget;
 import net.optile.payment.ui.widget.RegisterWidget;
 import net.optile.payment.ui.widget.WidgetInflater;
@@ -32,6 +33,7 @@ import net.optile.payment.util.PaymentUtils;
 final class NetworkCardViewHolder extends PaymentCardViewHolder {
 
     private final TextView title;
+    private NetworkLogosView networkLogosView;
 
     public NetworkCardViewHolder(ListAdapter adapter, View parent, NetworkCard networkCard) {
         super(adapter, parent);
@@ -40,6 +42,7 @@ final class NetworkCardViewHolder extends PaymentCardViewHolder {
         addElementWidgets(networkCard);
         addRegisterWidgets();
         addButtonWidget();
+        addNetworkLogos(parent, networkCard);
         setLastImeOptions();
     }
 
@@ -58,17 +61,38 @@ final class NetworkCardViewHolder extends PaymentCardViewHolder {
         PaymentNetwork network = networkCard.getVisibleNetwork();
         title.setText(networkCard.getLabel());
 
-        if (networkCard.getPaymentNetworkSize() == 1) {
-            bindLogoView(networkCard.getCode(), networkCard.getLink("logo"));
+        if (networkCard.getPaymentNetworkCount() == 1) {
+            bindCardLogo(networkCard.getCode(), networkCard.getLink("logo"));
             setTestId("network");
         } else {
-            logoView.setImageResource(R.drawable.ic_card);
+            bindCardLogo(R.drawable.ic_card);
+            bindNetworkLogos(networkCard);
             setTestId("group");
         }
         bindRegistrationWidget(network);
         bindRecurrenceWidget(network);
     }
 
+    private void bindNetworkLogos(NetworkCard card) {
+        if (networkLogosView == null) {
+            return;
+        }
+        SmartSwitch smartSwitch = card.getSmartSwitch();
+        if (smartSwitch.getSelectedCount() == 1) {
+            PaymentNetwork network = smartSwitch.getFirstSelected();
+            networkLogosView.setSelected(network.getCode());
+            return;
+        }
+        networkLogosView.setSelected(null);
+    }
+
+    private void addNetworkLogos(View parent, NetworkCard networkCard) {
+        if (networkCard.getPaymentNetworkCount() <= 1) {
+            return;
+        }
+        networkLogosView = new NetworkLogosView(parent, networkCard.getPaymentNetworks());
+    }
+        
     private void setTestId(String testId) {
         PaymentUtils.setTestId(itemView, "card", testId);
     }

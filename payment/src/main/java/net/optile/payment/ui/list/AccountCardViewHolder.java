@@ -57,6 +57,6 @@ public final class AccountCardViewHolder extends PaymentCardViewHolder {
         } else {
             title.setText(card.getLabel());
         }
-        bindLogoView(card.getCode(), card.getLink("logo"));
+        bindCardLogo(card.getCode(), card.getLink("logo"));
     }
 }
