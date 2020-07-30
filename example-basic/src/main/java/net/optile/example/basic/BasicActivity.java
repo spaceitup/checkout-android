@@ -35,7 +35,8 @@ public final class BasicActivity extends AppCompatActivity {
     private SdkResult sdkResult;
     private RadioGroup themeGroup;
     private EditText listInput;
-    private View sdkResultLayout;
+    private View resultLayout;
+    private TextView resultHeaderView;
     private TextView resultInfoView;
     private TextView resultCodeView;
     private TextView interactionCodeView;
@@ -52,7 +53,8 @@ public final class BasicActivity extends AppCompatActivity {
 
         themeGroup = findViewById(R.id.radio_themes);
         listInput = findViewById(R.id.input_listurl);
-        sdkResultLayout = findViewById(R.id.layout_sdkresult);
+        resultLayout = findViewById(R.id.layout_result);
+        resultHeaderView = findViewById(R.id.label_resultheader);
         resultCodeView = findViewById(R.id.text_resultcode);
         resultInfoView = findViewById(R.id.text_resultinfo);
         interactionCodeView = findViewById(R.id.text_interactioncode);
@@ -106,7 +108,8 @@ public final class BasicActivity extends AppCompatActivity {
     private void showSdkResult(SdkResult sdkResult) {
         PaymentResult paymentResult = sdkResult.paymentResult;
 
-        sdkResultLayout.setVisibility(View.VISIBLE);
+        resultHeaderView.setVisibility(View.VISIBLE);
+        resultLayout.setVisibility(View.VISIBLE);
         setText(resultCodeView, sdkResult.getResultCodeString());
         setText(resultInfoView, paymentResult.getResultInfo());
 

@@ -10,6 +10,14 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/settings_header"
+            android:layout_marginBottom="@dimen/pmborder_xxsmall"            
+            android:textAppearance="?attr/textAppearanceSubtitle2"
+            android:textColor="?attr/colorOnBackground" />
+        
         <com.google.android.material.card.MaterialCardView
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
@@ -20,14 +28,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="@string/header_settings"
-                    android:textAppearance="?attr/textAppearanceHeadline6"
-                    android:textColor="?attr/colorOnBackground"
-                    android:layout_marginBottom="@dimen/pmborder_medium" />
-                
                 <com.google.android.material.textfield.TextInputLayout
                     android:layout_weight="1"
                     android:hint="@string/list_hint"
@@ -73,10 +73,20 @@
 
         </com.google.android.material.card.MaterialCardView>
 
-        <com.google.android.material.card.MaterialCardView
-            android:id="@+id/layout_sdkresult"
+        <TextView
+            android:id="@+id/label_resultheader"            
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
             android:visibility="gone"
-            android:layout_marginTop="@dimen/pmborder_medium"
+            android:text="@string/result_header"
+            android:textAppearance="?attr/textAppearanceSubtitle2"
+            android:textColor="?attr/colorOnBackground"
+            android:layout_marginBottom="@dimen/pmborder_xxsmall" 
+            android:layout_marginTop="@dimen/pmborder_medium" />
+        
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/layout_result"
+            android:visibility="gone"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
@@ -85,14 +95,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:padding="@dimen/pmborder_medium">
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="@string/header_result"
-                    android:textAppearance="?attr/textAppearanceHeadline6"
-                    android:textColor="?attr/colorOnBackground"
-                    android:layout_marginBottom="@dimen/pmborder_medium" />
 
                 <TextView
                     android:id="@+id/label_resultcode"
