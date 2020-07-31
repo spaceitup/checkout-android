@@ -60,7 +60,9 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:padding="@dimen/pmborder_medium"
+                android:paddingTop="@dimen/pmborder_medium"
+                android:paddingBottom="@dimen/pmborder_medium"
+                android:paddingStart="@dimen/pmborder_medium"                                
                 android:gravity="center_vertical"
                 android:orientation="horizontal">
 
