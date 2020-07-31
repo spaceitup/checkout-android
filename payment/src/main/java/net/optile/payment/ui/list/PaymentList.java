@@ -212,18 +212,15 @@ public final class PaymentList {
     }
 
     private void collapseViewHolder(int position) {
-        PaymentCardViewHolder holder = (PaymentCardViewHolder) recyclerView.findViewHolderForAdapterPosition(position);
         adapter.notifyItemChanged(position);
-        if (holder != null) {
-            holder.expand(false);
-        }
     }
 
     private void expandViewHolder(int position) {
-        PaymentCardViewHolder holder = (PaymentCardViewHolder) recyclerView.findViewHolderForAdapterPosition(position);
         adapter.notifyItemChanged(position);
+        smoothScrollToPosition(position);
+
+        PaymentCardViewHolder holder = (PaymentCardViewHolder) recyclerView.findViewHolderForAdapterPosition(position);
         if (holder != null) {
-            holder.expand(true);
             holder.focusFirstInputField();
         }
     }
