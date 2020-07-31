@@ -8,7 +8,6 @@
 
 package net.optile.example.demo.checkout;
 
-import static net.optile.payment.model.InteractionReason.PRESETACCOUNT_SELECTED;
 import static net.optile.payment.model.RedirectType.SUMMARY;
 
 import java.util.Objects;
@@ -56,10 +55,6 @@ final class CheckoutPresenter {
     private void handleResultOk(PaymentResult result) {
         Interaction interaction = result.getInteraction();
         if (interaction == null) {
-            return;
-        }
-        if (Objects.equals(PRESETACCOUNT_SELECTED, interaction.getReason())) {
-            view.showPaymentSummary();
             return;
         }
         OperationResult op = result.getOperationResult();

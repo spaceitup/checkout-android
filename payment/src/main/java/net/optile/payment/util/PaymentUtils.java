@@ -27,6 +27,7 @@ import net.optile.payment.core.PaymentInputType;
 import net.optile.payment.model.AccountMask;
 import net.optile.payment.model.InputElement;
 import net.optile.payment.model.OperationType;
+import net.optile.payment.model.Parameter;
 
 /**
  * The PaymentUtils class containing helper methods
@@ -222,6 +223,25 @@ public final class PaymentUtils {
         return sb.toString();
     }
 
+    /** 
+     * Get the parameter value given the key of the parameter
+     * 
+     * @param key name of the parameter
+     * @param parameters list of parameters to search through
+     * @return the value of the parameter or null if the parameter does not exist 
+     */
+    public static String getParameterValue(String key, List<Parameter> parameters) {
+        if (parameters == null) {
+            return null;
+        }
+        for (Parameter parameter : parameters) {
+            if (key.equals(parameter.getName())) {
+                return parameter.getValue();
+            }
+        }
+        return null;
+    }
+    
     /**
      * Set the test Id to the view with the proper formatting understood by the automated UI tests.
      *

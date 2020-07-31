@@ -107,6 +107,10 @@ public final class PresetCard implements PaymentCard {
         return false;
     }
 
+    public PresetAccount getPresetAccount() {
+        return account;
+    }
+
     public URL getLink(String name) {
         Map<String, URL> links = account.getLinks();
         return links != null ? links.get(name) : null;

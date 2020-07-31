@@ -9,12 +9,15 @@
 package net.optile.payment.ui.page;
 
 import static net.optile.payment.model.InteractionCode.PROCEED;
-import static net.optile.payment.model.InteractionReason.PRESETACCOUNT_SELECTED;
+import static net.optile.payment.ui.redirect.RedirectService.INTERACTION_CODE;
+import static net.optile.payment.ui.redirect.RedirectService.INTERACTION_REASON;
 
 import java.net.URL;
+import java.util.List;
 import java.util.Map;
 
 import android.content.Context;
+import android.text.TextUtils;
 import android.util.Log;
 import net.optile.payment.core.PaymentError;
 import net.optile.payment.core.PaymentException;
@@ -23,13 +26,16 @@ import net.optile.payment.localization.Localization;
 import net.optile.payment.model.Interaction;
 import net.optile.payment.model.InteractionCode;
 import net.optile.payment.model.ListResult;
+import net.optile.payment.model.OperationResult;
 import net.optile.payment.model.OperationType;
+import net.optile.payment.model.Parameter;
 import net.optile.payment.model.Redirect;
 import net.optile.payment.ui.PaymentResult;
 import net.optile.payment.ui.PaymentUI;
 import net.optile.payment.ui.dialog.PaymentDialogFragment.PaymentDialogListener;
 import net.optile.payment.ui.model.PaymentCard;
 import net.optile.payment.ui.model.PaymentSession;
+import net.optile.payment.ui.model.PresetCard;
 import net.optile.payment.ui.service.LocalizationLoaderListener;
 import net.optile.payment.ui.service.LocalizationLoaderService;
 import net.optile.payment.ui.service.NetworkService;
@@ -38,6 +44,7 @@ import net.optile.payment.ui.service.NetworkServicePresenter;
 import net.optile.payment.ui.service.PaymentSessionListener;
 import net.optile.payment.ui.service.PaymentSessionService;
 import net.optile.payment.ui.widget.FormWidget;
+import net.optile.payment.util.PaymentUtils;
 
 /**
  * The PaymentListPresenter implementing the presenter part of the MVP
@@ -125,7 +132,7 @@ final class PaymentListPresenter implements PaymentSessionListener, Localization
             return;
         }
         if (session.getPresetCard() == card) {
-            onPresetAccountSelected();
+            onPresetCardSelected((PresetCard)card);
             return;
         }
         if (!validateWidgets(card, widgets)) {
@@ -475,10 +482,22 @@ final class PaymentListPresenter implements PaymentSessionListener, Localization
         return operation;
     }
 
-    private void onPresetAccountSelected() {
-        Interaction interaction = new Interaction(PROCEED, PRESETACCOUNT_SELECTED);
-        PaymentResult result = new PaymentResult("PresetAccount selected", interaction);
-        closeWithOkCode(result);
+    private void onPresetCardSelected(PresetCard card) {
+        Redirect redirect = card.getPresetAccount().getRedirect();
+        List<Parameter> parameters = redirect.getParameters();
+
+        String code = PaymentUtils.getParameterValue(INTERACTION_CODE, parameters);
+        String reason = PaymentUtils.getParameterValue(INTERACTION_REASON, parameters);
+        if (TextUtils.isEmpty(code) || TextUtils.isEmpty(reason)) {
+            PaymentError error = new PaymentError("Missing Interaction code and reason inside PresetAccount.redirect");
+            closeWithErrorMessage(error);
+            return;
+        }
+        OperationResult result = new OperationResult();
+        result.setResultInfo("PresetAccount selected");
+        result.setInteraction(new Interaction(code, reason));
+        result.setRedirect(redirect);
+        closeWithOkCode(new PaymentResult(result));
     }
     
     private void loadPaymentSession(String listUrl) {
