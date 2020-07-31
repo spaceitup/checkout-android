@@ -41,6 +41,7 @@
     </style>
 
     <style name="Widget.Payment.Button.UnelevatedButton" parent="Widget.MaterialComponents.Button.UnelevatedButton">
+        <item name="android:minHeight">@dimen/pmbutton_height</item>
         <item name="shapeAppearance">@style/ShapeAppearance.Payment.SmallComponent</item>
     </style>
 
@@ -48,7 +49,8 @@
         <item name="shapeAppearance">@style/ShapeAppearance.Payment.MediumComponent</item>
         <item name="cardElevation">@dimen/pmcard_elevation</item>
         <item name="strokeWidth">@dimen/pmcard_stroke</item>
-        <item name="strokeColor">@color/pm_gray300</item>
+        <item name="cardForegroundColor">@color/pm_transparent</item>
+        <item name="strokeColor">@color/payment_card_stroke_color</item>
     </style>
 
     <style name="Widget.Payment.TextInputLayout" parent="Widget.MaterialComponents.TextInputLayout.FilledBox">
