@@ -7,6 +7,8 @@
  */
 package net.optile.example.basic;
 
+import com.google.android.material.dialog.MaterialAlertDialogBuilder;
+
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -132,16 +134,11 @@ public final class BasicActivity extends AppCompatActivity {
     }
 
     private void showErrorDialog(String message) {
-        AlertDialog alertDialog = new AlertDialog.Builder(this).create();
-        alertDialog.setTitle(R.string.dialog_error_title);
-        alertDialog.setMessage(message);
-        alertDialog.setButton(AlertDialog.BUTTON_POSITIVE, getString(R.string.dialog_error_button),
-            new DialogInterface.OnClickListener() {
-                public void onClick(DialogInterface dialog, int which) {
-                    dialog.dismiss();
-                }
-            });
-        alertDialog.show();
+        MaterialAlertDialogBuilder builder = new MaterialAlertDialogBuilder(this);
+        builder.setTitle(R.string.dialog_error_title);
+        builder.setMessage(message);
+        builder.setPositiveButton(getString(R.string.dialog_error_button), null);
+        builder.create().show();
     }
 
     private void openPaymentPage() {

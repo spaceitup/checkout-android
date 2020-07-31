@@ -8,6 +8,8 @@
 
 package net.optile.example.demo.shared;
 
+import com.google.android.material.dialog.MaterialAlertDialogBuilder;
+
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.os.Bundle;
@@ -86,24 +88,23 @@ public abstract class BaseActivity extends AppCompatActivity {
      * @param error the error message to be shown in the dialog
      */
     public void showErrorDialog(String error) {
-        AlertDialog alertDialog = new AlertDialog.Builder(this).create();
-        alertDialog.setTitle(R.string.dialog_error_title);
-        alertDialog.setMessage(String.format(getString(R.string.dialog_error_message), error));
-        alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, getString(R.string.dialog_error_button),
-            new DialogInterface.OnClickListener() {
+        String message = String.format(getString(R.string.dialog_error_message), error);
+        MaterialAlertDialogBuilder builder = new MaterialAlertDialogBuilder(this);
+        builder.setTitle(R.string.dialog_error_title);
+        builder.setMessage(message);
+        builder.setPositiveButton(getString(R.string.dialog_error_button), new DialogInterface.OnClickListener() {
                 public void onClick(DialogInterface dialog, int which) {
-                    dialog.dismiss();
                     onErrorDialogClosed();
                 }
             });
 
-        alertDialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
+        builder.setOnDismissListener(new DialogInterface.OnDismissListener() {
             @Override
             public void onDismiss(DialogInterface dialog) {
                 onErrorDialogClosed();
             }
         });
-        alertDialog.show();
+        builder.create().show();    
     }
 
     /**
