@@ -10,7 +10,6 @@ package net.optile.example.demo.shared;
 
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 
-import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.view.MenuItem;
@@ -93,10 +92,10 @@ public abstract class BaseActivity extends AppCompatActivity {
         builder.setTitle(R.string.dialog_error_title);
         builder.setMessage(message);
         builder.setPositiveButton(getString(R.string.dialog_error_button), new DialogInterface.OnClickListener() {
-                public void onClick(DialogInterface dialog, int which) {
-                    onErrorDialogClosed();
-                }
-            });
+            public void onClick(DialogInterface dialog, int which) {
+                onErrorDialogClosed();
+            }
+        });
 
         builder.setOnDismissListener(new DialogInterface.OnDismissListener() {
             @Override
@@ -104,7 +103,7 @@ public abstract class BaseActivity extends AppCompatActivity {
                 onErrorDialogClosed();
             }
         });
-        builder.create().show();    
+        builder.create().show();
     }
 
     /**

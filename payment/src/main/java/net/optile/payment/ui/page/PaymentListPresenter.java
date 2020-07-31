@@ -132,7 +132,7 @@ final class PaymentListPresenter implements PaymentSessionListener, Localization
             return;
         }
         if (session.getPresetCard() == card) {
-            onPresetCardSelected((PresetCard)card);
+            onPresetCardSelected((PresetCard) card);
             return;
         }
         if (!validateWidgets(card, widgets)) {
@@ -361,7 +361,7 @@ final class PaymentListPresenter implements PaymentSessionListener, Localization
             case PaymentUI.RESULT_CODE_CANCELED:
                 handleProcessPaymentCanceled(result);
                 break;
-        }  
+        }
     }
 
     private void handleProcessPaymentCanceled(PaymentResult result) {
@@ -499,9 +499,9 @@ final class PaymentListPresenter implements PaymentSessionListener, Localization
         result.setRedirect(redirect);
         closeWithOkCode(new PaymentResult(result));
     }
-    
+
     private void loadPaymentSession(String listUrl) {
-        this.session = null;  
+        this.session = null;
         view.clearList();
         view.showProgress(true);
         sessionService.loadPaymentSession(listUrl, view.getActivity());

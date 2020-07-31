@@ -9,8 +9,6 @@ package net.optile.example.basic;
 
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 
-import android.app.AlertDialog;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;

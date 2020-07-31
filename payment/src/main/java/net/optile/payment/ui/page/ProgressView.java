@@ -8,7 +8,6 @@
 
 package net.optile.payment.ui.page;
 
-import android.util.Log;
 import android.graphics.PorterDuff;
 import android.graphics.drawable.Drawable;
 import android.text.TextUtils;
@@ -49,7 +48,6 @@ class ProgressView {
      * @param info label
      */
     public void setLabels(String header, String info) {
-        Log.i("AAAAAAAAAAA", "header: " + header + ", " + info);
         if (!TextUtils.isEmpty(header)) {
             textHeader.setText(header);
             textHeader.setVisibility(View.VISIBLE);

@@ -155,7 +155,7 @@ public final class ChargePaymentActivity extends BasePaymentActivity implements 
             progressView.setLabels(Localization.translate(CHARGE_TITLE), Localization.translate(CHARGE_TEXT));
         }
     }
-    
+
     /**
      * {@inheritDoc}
      */

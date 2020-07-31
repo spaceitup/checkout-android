@@ -211,7 +211,7 @@ public abstract class PaymentCardViewHolder extends RecyclerView.ViewHolder {
     void bindCardLogo(int logoResId) {
         cardLogoView.setImageResource(logoResId);
     }
-    
+
     void bindCardLogo(String name, URL url) {
         if (name == null || url == null) {
             return;
