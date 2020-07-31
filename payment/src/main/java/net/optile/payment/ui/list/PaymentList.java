@@ -69,6 +69,10 @@ public final class PaymentList {
         return selIndex;
     }
 
+    public void onStop() {
+        hideKeyboard();
+    }
+    
     public void clear() {
         this.session = null;
         this.selIndex = -1;
