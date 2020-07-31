@@ -8,6 +8,8 @@
 
 package net.optile.payment.ui.list;
 
+import com.google.android.material.card.MaterialCardView;
+
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -26,11 +28,14 @@ final class PresetCardViewHolder extends PaymentCardViewHolder {
 
     private final TextView title;
     private final TextView subtitle;
-
+    private final MaterialCardView card;
+    
     private PresetCardViewHolder(ListAdapter adapter, View parent, PresetCard presetCard) {
         super(adapter, parent);
-        this.title = parent.findViewById(R.id.text_title);
-        this.subtitle = parent.findViewById(R.id.text_subtitle);
+        title = parent.findViewById(R.id.text_title);
+        subtitle = parent.findViewById(R.id.text_subtitle);
+        card = parent.findViewById(R.id.card_preset);
+        card.setCheckable(true);
         addButtonWidget();
     }
 
@@ -56,5 +61,10 @@ final class PresetCardViewHolder extends PaymentCardViewHolder {
             title.setText(card.getLabel());
         }
         bindCardLogo(paymentCard.getCode(), card.getLink("logo"));
+    }
+
+    void expand(boolean expand) {
+        super.expand(expand);
+        card.setChecked(expand);
     }
 }
