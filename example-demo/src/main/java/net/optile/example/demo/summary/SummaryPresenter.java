@@ -126,10 +126,9 @@ final class SummaryPresenter {
 
     private void handleResultOk(PaymentResult result) {
         Interaction interaction = result.getInteraction();
-        if (interaction == null) {
-            return;
+        if (interaction != null) {
+            view.showPaymentSuccess();
         }
-        view.showPaymentSuccess();
     }
 
     private void handleResultCanceled(PaymentResult result) {
