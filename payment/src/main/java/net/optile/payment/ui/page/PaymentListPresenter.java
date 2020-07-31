@@ -18,7 +18,6 @@ import java.util.Map;
 
 import android.content.Context;
 import android.text.TextUtils;
-import android.util.Log;
 import net.optile.payment.core.PaymentError;
 import net.optile.payment.core.PaymentException;
 import net.optile.payment.form.Operation;
@@ -355,7 +354,6 @@ final class PaymentListPresenter implements PaymentSessionListener, Localization
         switch (resultCode) {
             case PaymentUI.RESULT_CODE_OK:
                 Interaction interaction = result.getInteraction();
-                Log.i("AAAAAAAAA", "interaction: " + interaction.getCode() + ", " + interaction.getReason());
                 closeWithOkCode(result);
                 break;
             case PaymentUI.RESULT_CODE_CANCELED:
