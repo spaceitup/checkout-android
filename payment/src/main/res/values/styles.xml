@@ -89,7 +89,7 @@
     <style name="MaterialAlertDialog.Payment.Body.Text" parent="MaterialAlertDialog.MaterialComponents.Body.Text">
         <item name="android:textColor">?attr/colorOnSurface</item>
     </style>
-    
+
     <style name="Widget.Payment.Button.TextButton.Dialog" parent="Widget.MaterialComponents.Button.TextButton.Dialog">
         <item name="shapeAppearance">@style/ShapeAppearance.Payment.SmallComponent</item>
     </style>
@@ -98,6 +98,7 @@
         <item name="cornerSize">@dimen/pmradius</item>
     </style>
     ​
+
     <style name="ShapeAppearance.Payment.MediumComponent" parent="ShapeAppearance.MaterialComponents.MediumComponent">
         <item name="cornerSize">@dimen/pmradius</item>
     </style>

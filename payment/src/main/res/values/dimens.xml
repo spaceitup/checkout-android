@@ -14,7 +14,7 @@
 
     <dimen name="pmradius">4dp</dimen>
     <dimen name="pmtoolbar_elevation">0dp</dimen>
-    <dimen name="pmbutton_height">52dp</dimen>    
+    <dimen name="pmbutton_height">52dp</dimen>
 
     <dimen name="pmlogo_width">52dp</dimen>
     <dimen name="pmlogo_height">36dp</dimen>

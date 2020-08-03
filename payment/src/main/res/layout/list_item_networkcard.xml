@@ -49,7 +49,7 @@
                 android:visibility="gone">
 
                 <include layout="@layout/view_networklogos" />
-                
+
             </LinearLayout>
         </RelativeLayout>
 

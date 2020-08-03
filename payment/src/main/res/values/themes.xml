@@ -31,7 +31,7 @@
     <style name="ThemeOverlay.Payment.MaterialAlertDialog" parent="ThemeOverlay.MaterialComponents.MaterialAlertDialog">
         <item name="alertDialogStyle">@style/MaterialAlertDialog.Payment</item>
         <item name="materialAlertDialogTitleTextStyle">@style/MaterialAlertDialog.Payment.Title.Text</item>
-        <item name="materialAlertDialogBodyTextStyle">@style/MaterialAlertDialog.Payment.Body.Text</item>        
+        <item name="materialAlertDialogBodyTextStyle">@style/MaterialAlertDialog.Payment.Body.Text</item>
         <item name="buttonBarPositiveButtonStyle">@style/Widget.Payment.Button.TextButton.Dialog</item>
         <item name="buttonBarNegativeButtonStyle">@style/Widget.Payment.Button.TextButton.Dialog</item>
     </style>
