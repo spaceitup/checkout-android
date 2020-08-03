@@ -31,6 +31,8 @@ final class SdkThemeBuilder {
      */
     public static PaymentTheme createCustomTheme() {
         return PaymentTheme.createBuilder().
+            setPaymentListTheme(R.style.CustomTheme_Toolbar).
+            setChargePaymentTheme(R.style.CustomTheme).
             build();
     }
 }

@@ -29,7 +29,7 @@ final class PresetCardViewHolder extends PaymentCardViewHolder {
     private final TextView title;
     private final TextView subtitle;
     private final MaterialCardView card;
-    
+
     private PresetCardViewHolder(ListAdapter adapter, View parent, PresetCard presetCard) {
         super(adapter, parent);
         title = parent.findViewById(R.id.text_title);

@@ -5,164 +5,178 @@
     android:layout_height="match_parent">
 
     <LinearLayout
-        android:padding="@dimen/border_large"
+        android:padding="@dimen/pmborder_medium"
         android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
-        <RadioGroup
-            android:id="@+id/radio_themes"
+        <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="@dimen/border_medium"
-            android:orientation="vertical">
-
-            <RadioButton
-                android:id="@+id/radio_theme_default"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:checked="true"
-                android:layout_marginBottom="@dimen/border_small"
-                android:text="@string/theme_default" />
-
-            <RadioButton
-                android:id="@+id/radio_theme_custom"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="@dimen/border_small"
-                android:text="@string/theme_custom" />
-        </RadioGroup>
-
-        <EditText
-            android:id="@+id/input_listurl"
-            android:layout_width="match_parent"
-            android:hint="@string/list_hint"
-            android:inputType="textWebEmailAddress"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="@dimen/border_medium" />
-
-        <Button
-            android:id="@+id/button_action"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="@dimen/border_large"
-            android:text="@string/actionbutton" />
-
-        <LinearLayout
-            android:id="@+id/layout_sdkresponse"
-            android:background="@drawable/response_background"
-            android:orientation="vertical"
-            android:visibility="gone"
-            android:padding="@dimen/border_medium"
-            android:layout_marginBottom="@dimen/border_large"
+            android:text="@string/settings_header"
+            android:layout_marginBottom="@dimen/pmborder_xxsmall"            
+            android:textAppearance="?attr/textAppearanceSubtitle2"
+            android:textColor="?attr/colorOnBackground" />
+        
+        <com.google.android.material.card.MaterialCardView
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
-            <TextView
-                android:id="@+id/label_sdkheader"
+            <LinearLayout
+                android:padding="@dimen/pmborder_medium"
+                android:orientation="vertical"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="@string/sdkheader"
-                android:layout_marginBottom="@dimen/border_medium"
-                android:textAppearance="@style/AppHeaderText" />
+                android:layout_height="wrap_content">
 
-            <TextView
-                android:id="@+id/label_activityresultcode"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:textAppearance="@style/AppLabelText"
-                android:text="@string/activityresultcode" />
+                <com.google.android.material.textfield.TextInputLayout
+                    android:layout_weight="1"
+                    android:hint="@string/list_hint"
+                    android:layout_marginBottom="@dimen/pmborder_medium"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
 
-            <TextView
-                android:id="@+id/text_activityresultcode"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="@dimen/border_medium" />
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/input_listurl"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:inputType="textWebEmailAddress"
+                        android:singleLine="true" />
+                </com.google.android.material.textfield.TextInputLayout>
 
-            <TextView
-                android:id="@+id/label_sdkresultinfo"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="@string/sdkresultinfo"
-                android:textAppearance="@style/AppLabelText" />
+                <RadioGroup
+                    android:id="@+id/radio_themes"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="@dimen/pmborder_medium"
+                    android:orientation="vertical">
 
-            <TextView
-                android:id="@+id/text_sdkresultinfo"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="@dimen/border_medium" />
+                    <RadioButton
+                        android:id="@+id/radio_theme_default"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:checked="true"
+                        android:text="@string/theme_default" />
 
-            <TextView
-                android:id="@+id/label_sdkpaymenterror"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="@string/sdkpaymenterror"
-                android:textAppearance="@style/AppLabelText" />
+                    <RadioButton
+                        android:id="@+id/radio_theme_custom"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/theme_custom" />
+                </RadioGroup>
 
-            <TextView
-                android:id="@+id/text_sdkpaymenterror"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="@dimen/border_medium"
-                android:visibility="gone" />
-        </LinearLayout>
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/button_action"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/actionbutton" />
+            </LinearLayout>
 
-        <LinearLayout
-            android:id="@+id/layout_apiresponse"
-            android:background="@drawable/response_background"
-            android:padding="@dimen/border_medium"
-            android:orientation="vertical"
+        </com.google.android.material.card.MaterialCardView>
+
+        <TextView
+            android:id="@+id/label_resultheader"            
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:visibility="gone"
+            android:text="@string/result_header"
+            android:textAppearance="?attr/textAppearanceSubtitle2"
+            android:textColor="?attr/colorOnBackground"
+            android:layout_marginBottom="@dimen/pmborder_xxsmall" 
+            android:layout_marginTop="@dimen/pmborder_medium" />
+        
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/layout_result"
             android:visibility="gone"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
-            <TextView
-                android:id="@+id/label_apiheader"
+            <LinearLayout
+                android:orientation="vertical"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/apiheader"
-                android:layout_marginBottom="@dimen/border_medium"
-                android:textAppearance="@style/AppHeaderText" />
+                android:padding="@dimen/pmborder_medium">
 
-            <TextView
-                android:id="@+id/label_apiresultinfo"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="@string/apiresultinfo"
-                android:textAppearance="@style/AppLabelText" />
+                <TextView
+                    android:id="@+id/label_resultcode"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?attr/textAppearanceSubtitle2"
+                    android:textColor="?attr/colorOnBackground"
+                    android:text="@string/resultcode" />
 
-            <TextView
-                android:id="@+id/text_apiresultinfo"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="@dimen/border_medium" />
+                <TextView
+                    android:id="@+id/text_resultcode"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?attr/textAppearanceBody2"
+                    android:textColor="?attr/colorOnBackground"
+                    android:layout_marginBottom="@dimen/pmborder_medium" />
 
-            <TextView
-                android:id="@+id/label_apiinteractioncode"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="@string/apiinteractioncode"
-                android:textAppearance="@style/AppLabelText" />
+                <TextView
+                    android:id="@+id/label_resultinfo"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?attr/textAppearanceSubtitle2"
+                    android:textColor="?attr/colorOnBackground"
+                    android:text="@string/resultinfo" />
 
-            <TextView
-                android:id="@+id/text_apiinteractioncode"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="@dimen/border_medium" />
+                <TextView
+                    android:id="@+id/text_resultinfo"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?attr/textAppearanceBody2"
+                    android:textColor="?attr/colorOnBackground"
+                    android:layout_marginBottom="@dimen/pmborder_medium" />
 
-            <TextView
-                android:id="@+id/label_apiinteractionreason"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="@string/apiinteractionreason"
-                android:textAppearance="@style/AppLabelText" />
+                <TextView
+                    android:id="@+id/label_interactioncode"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?attr/textAppearanceSubtitle2"
+                    android:textColor="?attr/colorOnBackground"
+                    android:text="@string/interactioncode" />
 
-            <TextView
-                android:id="@+id/text_apiinteractionreason"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="@dimen/border_medium" />
+                <TextView
+                    android:id="@+id/text_interactioncode"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?attr/textAppearanceBody2"
+                    android:textColor="?attr/colorOnBackground"
+                    android:layout_marginBottom="@dimen/pmborder_medium" />
 
-        </LinearLayout>
+                <TextView
+                    android:id="@+id/label_interactionreason"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?attr/textAppearanceSubtitle2"
+                    android:textColor="?attr/colorOnBackground"
+                    android:text="@string/interactionreason" />
+
+                <TextView
+                    android:id="@+id/text_interactionreason"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?attr/textAppearanceBody2"
+                    android:textColor="?attr/colorOnBackground"
+                    android:layout_marginBottom="@dimen/pmborder_medium" />
+
+                <TextView
+                    android:id="@+id/label_paymenterror"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?attr/textAppearanceSubtitle2"
+                    android:textColor="?attr/colorOnBackground"
+                    android:text="@string/paymenterror" />
+
+                <TextView
+                    android:id="@+id/text_paymenterror"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="@dimen/pmborder_medium"
+                    android:textAppearance="?attr/textAppearanceBody2"
+                    android:textColor="?attr/colorOnBackground" />
+
+            </LinearLayout>
+        </com.google.android.material.card.MaterialCardView>
     </LinearLayout>
 </ScrollView>

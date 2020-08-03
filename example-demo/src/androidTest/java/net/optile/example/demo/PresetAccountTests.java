@@ -53,7 +53,7 @@ public final class PresetAccountTests extends AbstractTest {
         unregister(closeIdlingResource);
 
         onView(withId(R.id.label_title)).check(matches(withText("PAYPAL")));
-        onView(withId(R.id.text_edit)).perform(PaymentActions.scrollToView(), click());
+        onView(withId(R.id.button_edit)).perform(PaymentActions.scrollToView(), click());
         waitForPaymentListLoaded(2);
 
         Matcher<View> list = withId(R.id.recyclerview_paymentlist);

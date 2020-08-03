@@ -16,7 +16,7 @@
         <item name="textAppearanceSubtitle2">@style/TextAppearance.Payment.Subtitle2</item>
         <item name="textAppearanceBody1">@style/TextAppearance.Payment.Body1</item>
         <item name="textAppearanceBody2">@style/TextAppearance.Payment.Body2</item>
-        <item name="textAppearanceHeadline6">@style/TextAppearance.Payment.Body2</item>
+        <item name="textAppearanceHeadline6">@style/TextAppearance.Payment.Headline6</item>
         <item name="textAppearanceButton">@style/TextAppearance.Payment.Button</item>
         <item name="textAppearanceCaption">@style/TextAppearance.Payment.Caption</item>
 
@@ -25,6 +25,7 @@
         <item name="switchStyle">@style/Widget.Payment.Switch</item>
         <item name="snackbarStyle">@style/Widget.Payment.Snackbar</item>
         <item name="materialAlertDialogTheme">@style/ThemeOverlay.Payment.MaterialAlertDialog</item>
+        <item name="materialCardViewStyle">@style/Widget.Payment.CardView</item>
     </style>
 
     <style name="ThemeOverlay.Payment.MaterialAlertDialog" parent="ThemeOverlay.MaterialComponents.MaterialAlertDialog">
@@ -34,11 +35,10 @@
         <item name="buttonBarPositiveButtonStyle">@style/Widget.Payment.Button.TextButton.Dialog</item>
         <item name="buttonBarNegativeButtonStyle">@style/Widget.Payment.Button.TextButton.Dialog</item>
     </style>
-    
-    <style name="PaymentTheme.PaymentList">
-        <item name="materialCardViewStyle">@style/Widget.Payment.CardView</item>
+
+    <style name="PaymentTheme.Toolbar">
         <item name="toolbarStyle">@style/Widget.Payment.Toolbar</item>
     </style>
 
-    <style name="PaymentTheme.ChargePayment"></style>
+    <style name="PaymentTheme.NoToolbar"></style>
 </resources>

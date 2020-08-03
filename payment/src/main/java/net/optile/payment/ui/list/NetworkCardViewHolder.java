@@ -92,7 +92,7 @@ final class NetworkCardViewHolder extends PaymentCardViewHolder {
         }
         networkLogosView = new NetworkLogosView(parent, networkCard.getPaymentNetworks());
     }
-        
+
     private void setTestId(String testId) {
         PaymentUtils.setTestId(itemView, "card", testId);
     }

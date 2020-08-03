@@ -28,8 +28,8 @@ public final class PaymentTheme {
 
     public static PaymentTheme createDefault() {
         return createBuilder().
-            setPaymentListTheme(R.style.PaymentTheme_PaymentList).
-            setChargePaymentTheme(R.style.PaymentTheme_ChargePayment).
+            setPaymentListTheme(R.style.PaymentTheme_Toolbar).
+            setChargePaymentTheme(R.style.PaymentTheme_NoToolbar).
             build();
     }
 

@@ -27,8 +27,8 @@ import net.optile.payment.model.Redirect;
  */
 public final class RedirectService {
 
-    private final static String KEY_INTERACTION_CODE = "interactionCode";
-    private final static String KEY_INTERACTION_REASON = "interactionReason";
+    public final static String INTERACTION_CODE = "interactionCode";
+    public final static String INTERACTION_REASON = "interactionReason";
 
     /**
      * Check if payment redirects are supported for this device.
@@ -68,12 +68,12 @@ public final class RedirectService {
         }
         // Create the interaction object
         Interaction interaction = new Interaction();
-        String val = resultUri.getQueryParameter(KEY_INTERACTION_CODE);
+        String val = resultUri.getQueryParameter(INTERACTION_CODE);
         if (TextUtils.isEmpty(val)) {
             return null;
         }
         interaction.setCode(val);
-        val = resultUri.getQueryParameter(KEY_INTERACTION_REASON);
+        val = resultUri.getQueryParameter(INTERACTION_REASON);
         if (TextUtils.isEmpty(val)) {
             return null;
         }

@@ -1,8 +1,14 @@
 <resources>
 
-    <style name="AppTheme" parent="Theme.MaterialComponents.Light.DarkActionBar">
-        <item name="colorPrimary">@color/colorPrimary</item>
-        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
-        <item name="colorAccent">@color/colorAccent</item>
+    <style name="CustomTheme" parent="@style/PaymentTheme">
+        <item name="colorPrimary">@color/custom_blue</item>
+        <item name="colorPrimaryDark">@color/custom_blue</item>
+        <item name="colorControlNormal">@color/custom_blue</item>
+        <item name="colorSecondary">@color/custom_blue</item>
     </style>
+
+    <style name="CustomTheme.Toolbar">
+        <item name="toolbarStyle">@style/Widget.Payment.Toolbar</item>
+    </style>
+
 </resources>

@@ -82,13 +82,12 @@ public final class SummaryActivity extends BaseActivity implements SummaryView {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setTheme(R.style.DefaultCollapsingToolbarTheme);
         setContentView(R.layout.activity_summary);
         initToolbar();
         presetTitle = findViewById(R.id.label_title);
         presetSubtitle = findViewById(R.id.label_subtitle);
 
-        View edit = findViewById(R.id.text_edit);
+        Button edit = findViewById(R.id.button_edit);
         edit.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 onEditClicked();

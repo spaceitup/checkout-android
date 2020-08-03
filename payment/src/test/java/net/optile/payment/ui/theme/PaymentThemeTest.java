@@ -29,8 +29,8 @@ public class PaymentThemeTest {
         PaymentTheme theme = PaymentTheme.createDefault();
         assertNotNull(theme);
 
-        assertEquals(theme.getPaymentListTheme(), R.style.PaymentTheme_PaymentList);
-        assertEquals(theme.getChargePaymentTheme(), R.style.PaymentTheme_ChargePayment);
+        assertEquals(theme.getPaymentListTheme(), R.style.PaymentTheme_Toolbar);
+        assertEquals(theme.getChargePaymentTheme(), R.style.PaymentTheme_NoToolbar);
     }
 
     @Test

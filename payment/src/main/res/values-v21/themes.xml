@@ -1,12 +1,11 @@
 <resources>
 
-    <style name="PaymentTheme.PaymentList">
-        <item name="materialCardViewStyle">@style/Widget.Payment.CardView</item>
+    <style name="PaymentTheme.Toolbar">
         <item name="toolbarStyle">@style/Widget.Payment.Toolbar</item>
         <item name="android:statusBarColor">@color/pm_gray300</item>
     </style>
 
-    <style name="PaymentTheme.ChargePayment">
+    <style name="PaymentTheme.NoToolbar">
         <item name="android:statusBarColor">@color/pm_gray300</item>
     </style>
 </resources>
