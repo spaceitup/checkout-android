@@ -1,4 +1,4 @@
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
 
     <style name="TextAppearance.Payment.Subtitle1" parent="TextAppearance.MaterialComponents.Subtitle1">
         <item name="fontFamily">@font/roboto_medium</item>
@@ -33,7 +33,7 @@
         <item name="materialThemeOverlay">@style/ThemeOverlay.Payment.Toolbar</item>
         <item name="titleTextAppearance">@style/TextAppearance.Payment.Headline6</item>
         <item name="titleTextColor">?attr/colorOnBackground</item>
-        <item name="android:elevation">@dimen/pmtoolbar_elevation</item>
+        <item name="android:elevation" tools:targetApi="21">@dimen/pmtoolbar_elevation</item>
     </style>
 
     <style name="ThemeOverlay.Payment.Toolbar" parent="">
