@@ -381,9 +381,8 @@ The last change that should be made is to the following Activity definition in t
 Customize Payment Page
 ======================
 
-The look & feel of the Payment Page may be customized, i.e. colors, font
-style and icons can be changed so that it matches the look & feel of your
-mobile app.
+The look & feel of the Payment Page may be customized, i.e. colors, shapes and fonts
+can be changed so that it matches the look & feel of your mobile app.
 
 Page Orientation
 ----------------
@@ -411,8 +410,8 @@ Code sample how to set the fixed orientation mode:
 Page Theming
 ------------
 
-Theming of the Android SDK screens and views are done using the PaymentTheme class. In order for theming to take effect, the customized PaymentTheme instance
-must be set in the PaymentUI class prior to opening i.e. the Payment Page.
+Theming of the Android SDK screens, dialogs and views is done using the PaymentTheme class. 
+In order for theming to take effect, the customized PaymentTheme instance must be set in the PaymentUI class prior to opening i.e. the Payment Page.
 
 Code sample how to create and set a custom PaymentTheme:
 
@@ -426,12 +425,12 @@ Code sample how to create and set a custom PaymentTheme:
     paymentUI.showPaymentPage(this, PAYMENT_REQUEST_CODE);
 
 The PaymentTheme class contains a set of parameters defining the customized theming for the PaymentList and ChargePayment screens.
-The default theming for the android-sdk is defined in both the themes.xml and styles.xml files of the android-sdk.
+The default theming of the android-sdk can be found in the `themes.xml <./payment/src/main/res/values/themes.xml>`_ and `styles.xml <./payment/src/main/res/values/styles.xml>`_ files.
 
 Theming PaymentList screen
 ~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-The theming of the PaymentList is defined by creating a new theme in your themes.xml and defining the material settings like primaryColor in this theme. Once the theme has been created in your themes.xml file it can be set in the PaymentTheme class.
+Changing the theme of the PaymentList screen is done by first creating a new theme in your themes.xml file and define material settings like primaryColor. Once the theme has been created in your themes.xml file it can be set in the PaymentTheme. Since the PaymentList contains a toolbar with back button, a custom theme including theming of the toolbar must be used.
 
 Code sample how to create and set a custom PaymentList theme:
 
@@ -440,22 +439,22 @@ Code sample how to create and set a custom PaymentList theme:
     PaymentTheme.Builder builder = PaymentTheme.createBuilder();
     builder.setPaymentListTheme(R.style.CustomTheme_Toolbar);
 
-The basic example application contains an example themes.xml file that defines a custom theme for the android-sdk and it can be found by clicking here.
+The example-basic app contains a `themes.xml <./example-basic/src/main/res/values/themes.xml>`_ file that contains the custom theme for the PaymentList. 
 
 
 Theming ChargePayment screen
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Similar to the theming of the PaymentList, the ChargePayment screen can also be themed by creating a custom theme and setting it in the PaymentTheme class.
+Similar to the theming of the PaymentList, the ChargePayment screen can also be themed by creating a custom theme and setting it in the PaymentTheme. Unlike the PaymentList, the ChargePayment screen does not contain a toolbar and therefor the custom theme should not contain theming of a toolbar.
 
 Code sample how to create and set a custom ChargePayment theme:
 
 .. code-block:: java
 
     PaymentTheme.Builder builder = PaymentTheme.createBuilder();
-    builder.setChargePaymentTheme(R.style.CustomTheme);
+    builder.setChargePaymentTheme(R.style.CustomTheme_NoToolbar);
 
-An example themes.xml file can be found in the basic example application.
+The same `themes.xml <./example-basic/src/main/res/values/themes.xml>`_ file in the example-basic app contains also the custom theme without toolbar. 
 
 
 Grouping of Payment Methods
