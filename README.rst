@@ -1,4 +1,3 @@
-
 Introduction
 ============
 
@@ -149,7 +148,7 @@ Add the android-sdk dependency to the dependencies section of the app’s level 
 ::
 
     dependencies {
-        implementation "com.oscato.mobile:android-sdk:3.2.0"
+        implementation "com.oscato.mobile:android-sdk:4.0.0"
     }
 
 2 - Create payment session
@@ -240,7 +239,7 @@ To make processing of the payment result easier, the resultCode provided in the 
 Success
 ~~~~~~~
 
-RESULT_CODE_OK is used to indicate the payment was successful, the payment result will contain both the Interaction and OperationResult. This result code is also used to indicate that nothing has changed, e.g. the user closed the payment page or selected an already selected preset account, both Interaction and OperationResult will then be null.
+RESULT_CODE_OK is used to indicate the payment was successful, the payment result will contain both the Interaction and OperationResult. This result code is also used to indicate that nothing has changed, e.g. the user closed the payment page, both Interaction and OperationResult will then be null.
 
 Failure
 ~~~~~~~
@@ -382,9 +381,8 @@ The last change that should be made is to the following Activity definition in t
 Customize Payment Page
 ======================
 
-The look & feel of the Payment Page may be customized, i.e. colors, font
-style and icons can be changed so that it matches the look & feel of your
-mobile app.
+The look & feel of the Payment Page may be customized, i.e. colors, shapes and fonts
+can be changed so that it matches the look & feel of your mobile app.
 
 Page Orientation
 ----------------
@@ -412,8 +410,8 @@ Code sample how to set the fixed orientation mode:
 Page Theming
 ------------
 
-Theming of the Android SDK screens and views are done using the PaymentTheme class. In order for theming to take effect, the customized PaymentTheme instance
-must be set in the PaymentUI class prior to opening i.e. the Payment Page.
+Theming of the Android SDK screens, dialogs and views is done using the PaymentTheme class. 
+In order for theming to take effect, the customized PaymentTheme instance must be set in the PaymentUI class prior to showing the Payment Page.
 
 Code sample how to create and set a custom PaymentTheme:
 
@@ -426,178 +424,37 @@ Code sample how to create and set a custom PaymentTheme:
     paymentUI.setPaymentTheme(builder.build());
     paymentUI.showPaymentPage(this, PAYMENT_REQUEST_CODE);
 
-The PaymentTheme contains a set of parameters defining the customized
-theming.
-
-IconMapping
-~~~~~~~~~~~
-
-The PaymentTheme allow setting individual drawable resource ids for icons
-by using the putInputTypeIcon() method, use the setDefaultIconMapping()
-method to use the icons provided by the Android SDK.
-
-Validation colors
-~~~~~~~~~~~~~~~~~
-
-The three validation colors (unknown, error and ok) can be set in the PaymentTheme and these colors will
-be used for coloring the icons in front of the input fields.
+The PaymentTheme class contains a set of parameters defining the customized theming for the PaymentList and ChargePayment screens.
+The default theming of the android-sdk can be found in the `themes.xml <./payment/src/main/res/values/themes.xml>`_ and `styles.xml <./payment/src/main/res/values/styles.xml>`_ files.
 
 Theming PaymentList screen
 ~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-The theming of the PaymentList is defined by creating a new theme in your themes.xml and setting custom attributes in this theme. Once the theme has been created in your themes.xml file it can be set in the PaymentTheme class.
+Changing the theme of the PaymentList screen is done by first creating a new theme in your themes.xml file and adding material settings like primaryColor in this newly created theme. Once the theme has been created in your themes.xml file it can be set in the PaymentTheme. Since the PaymentList screen contains a toolbar with back button, a custom theme including theming of the toolbar must be used.
 
 Code sample how to create and set a custom PaymentList theme:
 
 .. code-block:: java
 
     PaymentTheme.Builder builder = PaymentTheme.createBuilder();
-    builder.setPaymentListTheme(R.style.CustomPaymentTheme_PaymentList);
+    builder.setPaymentListTheme(R.style.CustomTheme_Toolbar);
 
-The following list describes the attributes you can use to theme the PaymentList.
+The example-basic app contains a `themes.xml <./example-basic/src/main/res/values/themes.xml>`_ file that contains the custom theme for the PaymentList screen. 
 
-Table explaining each attribute:
-
-+-----------------------------------+--------------------------------------------+
-| Name                              | Purpose                                    |
-+===================================+============================================+
-| paymentListToolbarTheme           | Theme of the PaymentList Toolbar           |
-+-----------------------------------+--------------------------------------------+
-| paymentListToolbarTitleStyle      | TextAppearance of the toolbar title        |
-+-----------------------------------+--------------------------------------------+
-| paymentListEmptyLabelStyle        | TextAppearance of label shown when the     |
-|                                   | list of payment methods is empty           |
-+-----------------------------------+--------------------------------------------+
-| paymentListHeaderLabelStyle       | TextAppearance of section header label in  |
-|                                   | the list, i.e. “Saved accounts”            |
-+-----------------------------------+--------------------------------------------+
-| paymentCardStyle                  | The style for payment cards inside the     |
-|                                   | the list                                   |
-+-----------------------------------+--------------------------------------------+
-| paymentCardLogoBackground         | Background resource ID drawn behind        |
-|                                   | payment method images                      |
-+-----------------------------------+--------------------------------------------+
-| presetCardTitleStyle              | TextAppearance of preset card title,       |
-|                                   | i.e. “41 \**\* 1111”                       |
-+-----------------------------------+--------------------------------------------+
-| presetCardSubtitleStyle           | TextAppearance of preset card subtitle,    |
-|                                   | i.e. the expiry date “01 / 2032”           |
-+-----------------------------------+--------------------------------------------+
-| accountCardTitleStyle             | TextAppearance of account card title,      |
-|                                   | i.e. “41 \**\* 1111”                       |
-+-----------------------------------+--------------------------------------------+
-| accountCardSubtitleStyle          | TextAppearance of account card subtitle,   |
-|                                   | i.e. the expiry date “01 / 2032”           |
-+-----------------------------------+--------------------------------------------+
-| networkCardTitleStyle             | TextAppearance of network card title       |
-|                                   | i.e. Visa or GooglePay                     |
-+-----------------------------------+--------------------------------------------+
-| hintDrawable                      | Drawable resource ID of the hint icon for  |
-|                                   | verification codes                         |
-+-----------------------------------+--------------------------------------------+
-| widgetTextInputStyle              | Style for widget TextInputLayout views     |
-+-----------------------------------+--------------------------------------------+
-| widgetEditTextStyle               | style for widget TextInputEditText views   |
-+-----------------------------------+--------------------------------------------+
-| widgetButtonStyle                 | Style for widget action button in payment  |
-|                                   | cards                                      |
-+-----------------------------------+--------------------------------------------+
-| widgetCheckBoxStyle               | Style for widget checkboxes views          |
-+-----------------------------------+--------------------------------------------+
-| widgetCheckBoxLabelCheckedStyle   | TextAppearance of label when checkBox is   |
-|                                   | checked                                    |
-+-----------------------------------+--------------------------------------------+
-| widgetCheckBoxLabelUncheckedStyle | TextAppearance of label when checkBox is   |
-|                                   | unchecked                                  |
-+-----------------------------------+--------------------------------------------+
-| widgetSelectLabelStyle            | TextAppearance of label shown above        |
-|                                   | SelectBox                                  |
-+-----------------------------------+--------------------------------------------+
-| progressBackground                | Background resource ID of the loading page |
-+-----------------------------------+--------------------------------------------+
-| progressColor                     | Indeterminate ProgressBar color resource   |
-|                                   | ID                                         | 
-+-----------------------------------+--------------------------------------------+
 
 Theming ChargePayment screen
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Similar to the theming of the PaymentList, the ChargePayment screen will also be themed using custom attributes and set in the PaymentTheme class.
+Similar to the theming of the PaymentList screen, the ChargePayment screen can also be themed by creating a custom theme and setting it in the PaymentTheme. Unlike the PaymentList screen, the ChargePayment screen does not contain a toolbar and therefor the custom theme should not contain theming of a toolbar.
 
 Code sample how to create and set a custom ChargePayment theme:
 
 .. code-block:: java
 
     PaymentTheme.Builder builder = PaymentTheme.createBuilder();
-    builder.setChargePaymentTheme(R.style.CustomPaymentTheme_ChargePayment);
+    builder.setChargePaymentTheme(R.style.CustomTheme_NoToolbar);
 
-Table explaining each attribute:
-
-+-----------------------------------+--------------------------------------------+
-| Name                              | Purpose                                    |
-+===================================+============================================+
-| progressBackground                | Background resource ID of the loading page |
-+-----------------------------------+--------------------------------------------+
-| progressColor                     | Indeterminate ProgressBar color resource   |
-|                                   | ID                                         | 
-+-----------------------------------+--------------------------------------------+
-| progressHeaderStyle               | TextAppearance of the header progress      |
-|                                   | label                                      | 
-+-----------------------------------+--------------------------------------------+
-| progressInfoStyle                 | TextAppearance of the info progress label  |
-+-----------------------------------+--------------------------------------------+
-
-
-Theming dialogs
-~~~~~~~~~~~~~~~~
-
-The Android SDK uses two different dialogs.
-The date dialog is used to enter the expiration data of credit cards and a
-message dialog is used for showing messages and asking questions.
-The custom themes of both date and message dialogs can be set in the PaymentTheme class.
-
-Code sample how to create the date and message dialog themes:
-
-.. code-block:: java
-
-    PaymentTheme.Builder builder = PaymentTheme.createBuilder();
-    builder.setDateDialogTheme(R.style.CustomDialogTheme_Date);
-    builder.setMessageDialogTheme(R.style.CustomDialogTheme_Message);
-
-Table explaining the attributes in the shared PaymentDialogTheme:
-
-+-----------------------------------+--------------------------------------------+
-| Name                              | Purpose                                    |
-+===================================+============================================+
-| themedDialogButtonStyle           | Style for buttons used in both message and |
-|                                   | date dialogs                               |
-+-----------------------------------+--------------------------------------------+
-
-Table explaining the attributes for the date dialog:
-
-+-----------------------------------+--------------------------------------------+
-| Name                              | Purpose                                    |
-+===================================+============================================+
-| themedDateDialogTitleStyle        | TextAppearance of the title in a date      |
-|                                   | dialog                                     |
-+-----------------------------------+--------------------------------------------+
-
-Table explaining the attributes for the message dialog:
-
-+----------------------------------------+--------------------------------------------+
-| Name                                   | Purpose                                    |
-+========================================+============================================+
-| themedMessageDialogTitleStyle          | TextAppearance of title in message dialog  |
-+----------------------------------------+--------------------------------------------+
-| themedMessageDialogDetailsStyle        | TextAppearance of message in message       |
-|                                        | dialog                                     |
-+----------------------------------------+--------------------------------------------+
-| themedMessageDialogDetailsNoTitleStyle | TextAppearance of message in message       |
-|                                        | dialog without title                       |
-+----------------------------------------+--------------------------------------------+
-| themedMessageDialogImageLabelStyle     | TextAppearance of the image prefix &       |
-|                                        | suffix labels in messag dialog             |
-+----------------------------------------+--------------------------------------------+
+The same `themes.xml <./example-basic/src/main/res/values/themes.xml>`_ file in the example-basic app contains also the custom theme without toolbar. 
 
 
 Grouping of Payment Methods

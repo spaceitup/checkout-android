@@ -32,7 +32,7 @@ final class SdkThemeBuilder {
     public static PaymentTheme createCustomTheme() {
         return PaymentTheme.createBuilder().
             setPaymentListTheme(R.style.CustomTheme_Toolbar).
-            setChargePaymentTheme(R.style.CustomTheme).
+            setChargePaymentTheme(R.style.CustomTheme_NoToolbar).
             build();
     }
 }

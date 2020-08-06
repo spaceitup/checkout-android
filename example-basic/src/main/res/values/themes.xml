@@ -11,4 +11,7 @@
         <item name="toolbarStyle">@style/Widget.Payment.Toolbar</item>
     </style>
 
+    <style name="CustomTheme.NoToolbar">
+    </style>
+    
 </resources>
