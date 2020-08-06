@@ -430,7 +430,7 @@ The default theming of the android-sdk can be found in the `themes.xml <./paymen
 Theming PaymentList screen
 ~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Changing the theme of the PaymentList screen is done by first creating a new theme in your themes.xml file and add material settings like primaryColor in this newly created theme. Once the theme has been created in your themes.xml file it can be set in the PaymentTheme. Since the PaymentList contains a toolbar with back button, a custom theme including theming of the toolbar must be used.
+Changing the theme of the PaymentList screen is done by first creating a new theme in your themes.xml file and adding material settings like primaryColor in this newly created theme. Once the theme has been created in your themes.xml file it can be set in the PaymentTheme. Since the PaymentList screen contains a toolbar with back button, a custom theme including theming of the toolbar must be used.
 
 Code sample how to create and set a custom PaymentList theme:
 
@@ -439,13 +439,13 @@ Code sample how to create and set a custom PaymentList theme:
     PaymentTheme.Builder builder = PaymentTheme.createBuilder();
     builder.setPaymentListTheme(R.style.CustomTheme_Toolbar);
 
-The example-basic app contains a `themes.xml <./example-basic/src/main/res/values/themes.xml>`_ file that contains the custom theme for the PaymentList. 
+The example-basic app contains a `themes.xml <./example-basic/src/main/res/values/themes.xml>`_ file that contains the custom theme for the PaymentList screen. 
 
 
 Theming ChargePayment screen
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Similar to the theming of the PaymentList, the ChargePayment screen can also be themed by creating a custom theme and setting it in the PaymentTheme. Unlike the PaymentList, the ChargePayment screen does not contain a toolbar and therefor the custom theme should not contain theming of a toolbar.
+Similar to the theming of the PaymentList screen, the ChargePayment screen can also be themed by creating a custom theme and setting it in the PaymentTheme. Unlike the PaymentList screen, the ChargePayment screen does not contain a toolbar and therefor the custom theme should not contain theming of a toolbar.
 
 Code sample how to create and set a custom ChargePayment theme:
 
