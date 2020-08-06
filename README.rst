@@ -411,7 +411,7 @@ Page Theming
 ------------
 
 Theming of the Android SDK screens, dialogs and views is done using the PaymentTheme class. 
-In order for theming to take effect, the customized PaymentTheme instance must be set in the PaymentUI class prior to opening i.e. the Payment Page.
+In order for theming to take effect, the customized PaymentTheme instance must be set in the PaymentUI class prior to showing the Payment Page.
 
 Code sample how to create and set a custom PaymentTheme:
 
@@ -430,7 +430,7 @@ The default theming of the android-sdk can be found in the `themes.xml <./paymen
 Theming PaymentList screen
 ~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Changing the theme of the PaymentList screen is done by first creating a new theme in your themes.xml file and define material settings like primaryColor. Once the theme has been created in your themes.xml file it can be set in the PaymentTheme. Since the PaymentList contains a toolbar with back button, a custom theme including theming of the toolbar must be used.
+Changing the theme of the PaymentList screen is done by first creating a new theme in your themes.xml file and add material settings like primaryColor in this newly created theme. Once the theme has been created in your themes.xml file it can be set in the PaymentTheme. Since the PaymentList contains a toolbar with back button, a custom theme including theming of the toolbar must be used.
 
 Code sample how to create and set a custom PaymentList theme:
 
