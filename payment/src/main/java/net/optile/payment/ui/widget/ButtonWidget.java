@@ -11,7 +11,7 @@ package net.optile.payment.ui.widget;
 import android.view.View;
 import android.widget.Button;
 import net.optile.payment.R;
-import net.optile.payment.ui.PaymentTheme;
+import net.optile.payment.localization.Localization;
 
 /**
  * Widget for showing the Submit (pay) button
@@ -25,10 +25,9 @@ public final class ButtonWidget extends FormWidget {
      *
      * @param name the name of this widget
      * @param rootView the root view of this button
-     * @param theme PaymentTheme used for this widget
      */
-    public ButtonWidget(String name, View rootView, PaymentTheme theme) {
-        super(name, rootView, theme);
+    public ButtonWidget(String name, View rootView) {
+        super(name, rootView);
         button = rootView.findViewById(R.id.button);
         button.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -38,7 +37,8 @@ public final class ButtonWidget extends FormWidget {
         });
     }
 
-    public void setLabel(String label) {
+    public void onBind(String code, String buttonKey) {
+        String label = Localization.translate(code, buttonKey);
         button.setText(label);
     }
 

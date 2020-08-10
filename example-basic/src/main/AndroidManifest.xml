@@ -11,7 +11,7 @@
 
         <activity
             android:name="net.optile.example.basic.BasicActivity"
-            android:theme="@style/AppTheme">
+            android:theme="@style/PaymentTheme.Toolbar">
 
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

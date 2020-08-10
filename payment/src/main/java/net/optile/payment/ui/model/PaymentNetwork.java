@@ -8,11 +8,14 @@
 
 package net.optile.payment.ui.model;
 
+import static net.optile.payment.localization.LocalizationKey.NETWORK_LABEL;
+
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import net.optile.payment.localization.Localization;
 import net.optile.payment.model.ApplicableNetwork;
 import net.optile.payment.model.InputElement;
 import net.optile.payment.util.PaymentUtils;
@@ -50,7 +53,7 @@ public class PaymentNetwork {
     }
 
     public String getLabel() {
-        return network.getLabel();
+        return Localization.translate(network.getCode(), NETWORK_LABEL);
     }
 
     public String getRecurrence() {

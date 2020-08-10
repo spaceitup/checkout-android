@@ -74,7 +74,7 @@ class ProgressView {
     @SuppressWarnings("deprecation")
     private void styleProgressBar() {
         TypedValue typedValue = new TypedValue();
-        view.getContext().getTheme().resolveAttribute(R.attr.progressColor, typedValue, true);
+        view.getContext().getTheme().resolveAttribute(R.attr.colorPrimary, typedValue, true);
 
         Drawable drawable = progressBar.getIndeterminateDrawable();
         if (drawable == null || typedValue.resourceId == 0) {

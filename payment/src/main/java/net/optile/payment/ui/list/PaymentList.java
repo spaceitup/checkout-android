@@ -8,7 +8,6 @@
 
 package net.optile.payment.ui.list;
 
-import static net.optile.payment.localization.LocalizationKey.BUTTON_BACK;
 import static net.optile.payment.localization.LocalizationKey.LIST_HEADER_ACCOUNTS;
 import static net.optile.payment.localization.LocalizationKey.LIST_HEADER_NETWORKS;
 import static net.optile.payment.localization.LocalizationKey.LIST_HEADER_NETWORKS_OTHER;
@@ -29,7 +28,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import androidx.recyclerview.widget.SimpleItemAnimator;
 import net.optile.payment.R;
 import net.optile.payment.localization.Localization;
-import net.optile.payment.ui.dialog.DialogHelper;
+import net.optile.payment.ui.dialog.PaymentDialogHelper;
 import net.optile.payment.ui.model.AccountCard;
 import net.optile.payment.ui.model.NetworkCard;
 import net.optile.payment.ui.model.PaymentCard;
@@ -68,6 +67,10 @@ public final class PaymentList {
 
     public int getSelected() {
         return selIndex;
+    }
+
+    public void onStop() {
+        hideKeyboard();
     }
 
     public void clear() {
@@ -142,8 +145,7 @@ public final class PaymentList {
         PaymentCard card = item.getPaymentCard();
 
         if (card != null) {
-            String button = Localization.translate(card.getCode(), BUTTON_BACK);
-            DialogFragment dialog = DialogHelper.createHintDialog(card, type, button);
+            DialogFragment dialog = PaymentDialogHelper.createHintDialog(card, type);
             showDialogFragment(dialog, "hint_dialog");
         }
     }
@@ -214,21 +216,16 @@ public final class PaymentList {
     }
 
     private void collapseViewHolder(int position) {
-        PaymentCardViewHolder holder = (PaymentCardViewHolder) recyclerView.findViewHolderForAdapterPosition(position);
-
-        if (holder != null) {
-            holder.expand(false);
-            adapter.notifyItemChanged(position);
-        }
+        adapter.notifyItemChanged(position);
     }
 
     private void expandViewHolder(int position) {
-        PaymentCardViewHolder holder = (PaymentCardViewHolder) recyclerView.findViewHolderForAdapterPosition(position);
+        adapter.notifyItemChanged(position);
+        smoothScrollToPosition(position);
 
+        PaymentCardViewHolder holder = (PaymentCardViewHolder) recyclerView.findViewHolderForAdapterPosition(position);
         if (holder != null) {
-            holder.expand(true);
-            adapter.notifyItemChanged(position);
-            smoothScrollToPosition(position);
+            holder.focusFirstInputField();
         }
     }
 

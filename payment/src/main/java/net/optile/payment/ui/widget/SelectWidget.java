@@ -19,8 +19,9 @@ import androidx.annotation.NonNull;
 import net.optile.payment.R;
 import net.optile.payment.core.PaymentException;
 import net.optile.payment.form.Operation;
+import net.optile.payment.localization.Localization;
+import net.optile.payment.model.InputElement;
 import net.optile.payment.model.SelectOption;
-import net.optile.payment.ui.PaymentTheme;
 import net.optile.payment.util.PaymentUtils;
 
 /**
@@ -37,10 +38,9 @@ public final class SelectWidget extends FormWidget {
      *
      * @param name identifying this widget
      * @param rootView the root view of this input
-     * @param theme PaymentTheme to apply
      */
-    public SelectWidget(String name, View rootView, PaymentTheme theme) {
-        super(name, rootView, theme);
+    public SelectWidget(String name, View rootView) {
+        super(name, rootView);
         label = rootView.findViewById(R.id.input_label);
         adapter = new ArrayAdapter<>(rootView.getContext(), R.layout.spinner_item);
 
@@ -58,10 +58,6 @@ public final class SelectWidget extends FormWidget {
         });
     }
 
-    public void setLabel(String label) {
-        this.label.setText(label);
-    }
-
     /**
      * {@inheritDoc}
      */
@@ -74,8 +70,10 @@ public final class SelectWidget extends FormWidget {
         }
     }
 
-    public void setSelectOptions(List<SelectOption> options) {
+    public void onBind(String code, InputElement element) {
+        label.setText(Localization.translateAccountLabel(code, name));
         adapter.clear();
+        List<SelectOption> options = element.getOptions();
 
         if (options == null || options.size() == 0) {
             return;

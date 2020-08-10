@@ -60,7 +60,6 @@ public final class CheckoutActivity extends BaseActivity implements CheckoutView
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setTheme(R.style.DefaultCollapsingToolbarTheme);
         setContentView(R.layout.activity_checkout);
         initToolbar();
 

@@ -13,10 +13,6 @@ import java.util.Map;
 
 import com.google.android.material.appbar.CollapsingToolbarLayout;
 
-import androidx.annotation.VisibleForTesting;
-import androidx.test.espresso.IdlingResource;
-import net.optile.payment.ui.page.idlingresource.SimpleIdlingResource;
-
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Typeface;
@@ -27,9 +23,11 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import androidx.annotation.VisibleForTesting;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.content.res.ResourcesCompat;
+import androidx.test.espresso.IdlingResource;
 import net.optile.example.demo.R;
 import net.optile.example.demo.confirm.ConfirmActivity;
 import net.optile.example.demo.settings.SettingsActivity;
@@ -40,6 +38,7 @@ import net.optile.payment.model.PaymentMethod;
 import net.optile.payment.model.PresetAccount;
 import net.optile.payment.ui.PaymentResult;
 import net.optile.payment.ui.PaymentUI;
+import net.optile.payment.ui.page.idlingresource.SimpleIdlingResource;
 import net.optile.payment.util.ImageHelper;
 import net.optile.payment.util.PaymentUtils;
 
@@ -52,12 +51,12 @@ public final class SummaryActivity extends BaseActivity implements SummaryView {
     private SdkResult sdkResult;
     private PresetAccount presetAccount;
     private TextView presetTitle;
-    private TextView presetSubtitle;    
+    private TextView presetSubtitle;
 
     // For automated UI Testing
-    private boolean loadCompleted;    
+    private boolean loadCompleted;
     private SimpleIdlingResource loadIdlingResource;
-    
+
     /**
      * Create an Intent to launch this checkout activity
      *
@@ -83,13 +82,12 @@ public final class SummaryActivity extends BaseActivity implements SummaryView {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setTheme(R.style.DefaultCollapsingToolbarTheme);
         setContentView(R.layout.activity_summary);
         initToolbar();
         presetTitle = findViewById(R.id.label_title);
-        presetSubtitle = findViewById(R.id.label_subtitle);        
+        presetSubtitle = findViewById(R.id.label_subtitle);
 
-        View edit = findViewById(R.id.text_edit);
+        Button edit = findViewById(R.id.button_edit);
         edit.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 onEditClicked();
@@ -185,9 +183,9 @@ public final class SummaryActivity extends BaseActivity implements SummaryView {
                 presetTitle.setText(mask.getNumber());
                 String date = PaymentUtils.getExpiryDateString(mask);
                 if (date != null) {
-                    presetSubtitle.setVisibility(View.VISIBLE);                    
+                    presetSubtitle.setVisibility(View.VISIBLE);
                     presetSubtitle.setText(date);
-                } 
+                }
                 break;
             default:
                 presetTitle.setText(mask.getDisplayLabel());

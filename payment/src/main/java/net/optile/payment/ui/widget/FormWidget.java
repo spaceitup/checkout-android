@@ -9,13 +9,8 @@
 package net.optile.payment.ui.widget;
 
 import android.view.View;
-import android.widget.ImageView;
-import androidx.annotation.DrawableRes;
-import androidx.core.content.ContextCompat;
-import net.optile.payment.R;
 import net.optile.payment.core.PaymentException;
 import net.optile.payment.form.Operation;
-import net.optile.payment.ui.PaymentTheme;
 import net.optile.payment.util.PaymentUtils;
 
 /**
@@ -29,18 +24,14 @@ public abstract class FormWidget {
 
     final View rootView;
     final String name;
-    final ImageView icon;
-    final PaymentTheme theme;
 
     WidgetPresenter presenter;
     int state;
 
-    FormWidget(String name, View rootView, PaymentTheme theme) {
+    FormWidget(String name, View rootView) {
         PaymentUtils.setTestId(rootView, "widget", name);
         this.name = name;
         this.rootView = rootView;
-        this.theme = theme;
-        this.icon = rootView.findViewById(R.id.image_icon);
     }
 
     /**
@@ -71,19 +62,6 @@ public abstract class FormWidget {
     }
 
     /**
-     * Set the resource ID of the validation icon in front of this widget
-     *
-     * @param resId resource id of the icon
-     */
-    public final void setIconResource(@DrawableRes int resId) {
-
-        if (icon != null) {
-            icon.setImageResource(resId);
-            setIconColor(this.state);
-        }
-    }
-
-    /**
      * Set this widget to be the last ImeOptions if it supports ImeOptions.
      *
      * @return true when set, false otherwise
@@ -102,6 +80,15 @@ public abstract class FormWidget {
      * Clear the focus of this widget if it supports focus i.e. the TextLayoutWidget.
      */
     public void clearFocus() {
+    }
+
+    /**
+     * Set this widget to be focussed.
+     *
+     * @return true when focussed, false otherwise
+     */
+    public boolean requestFocus() {
+        return false;
     }
 
     /**
@@ -138,24 +125,5 @@ public abstract class FormWidget {
      */
     final void setValidationState(int state) {
         this.state = state;
-        setIconColor(state);
-    }
-
-    private void setIconColor(int state) {
-
-        if (icon == null) {
-            return;
-        }
-        int colorResId = theme.getValidationColorUnknown();
-        switch (state) {
-            case VALIDATION_OK:
-                colorResId = theme.getValidationColorOk();
-                break;
-            case VALIDATION_ERROR:
-                colorResId = theme.getValidationColorError();
-        }
-        if (colorResId != 0) {
-            icon.setColorFilter(ContextCompat.getColor(rootView.getContext(), colorResId));
-        }
     }
 }

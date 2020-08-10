@@ -4,7 +4,6 @@
     android:id="@+id/layout_checkout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/pmcolor_list"
     android:fitsSystemWindows="true">
 
     <include layout="@layout/layout_header" />
@@ -19,78 +18,22 @@
             android:id="@+id/layout_content"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:paddingTop="@dimen/pmborder_medium"
             android:orientation="vertical">
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:paddingTop="@dimen/pmborder_xlarge"
-                android:paddingBottom="@dimen/pmborder_xlarge"
-                android:paddingLeft="@dimen/pmborder_medium"
-                android:paddingRight="@dimen/pmborder_medium"
-                android:background="@color/pmcolor_background"
-                android:orientation="vertical">
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:gravity="center_vertical"
-                    android:layout_marginBottom="@dimen/pmborder_medium"
-                    android:orientation="horizontal">
-
-                    <ImageView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginRight="@dimen/pmborder_xsmall"
-                        android:src="@drawable/ic_date"
-                        android:contentDescription="TODO" />
-
-                    <TextView
-                        style="@style/PaymentText.Medium"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:text="@string/product_date" />
-
-                    <TextView
-                        style="@style/PaymentText.Medium.Bold"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/product_price" />
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:gravity="center_vertical"
-                    android:orientation="horizontal">
-
-                    <ImageView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginRight="@dimen/pmborder_xsmall"
-                        android:src="@drawable/ic_count" />
-
-                    <TextView
-                        style="@style/PaymentText.Medium"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/product_count" />
-                </LinearLayout>
-            </LinearLayout>
+            <include layout="@layout/layout_product" />
 
             <TextView
-                style="@style/PaymentText.Medium.Bold"
-                android:layout_marginTop="@dimen/pmborder_medium"
-                android:layout_marginLeft="@dimen/pmborder_medium"
-                android:layout_marginRight="@dimen/pmborder_medium"
-                android:layout_marginBottom="@dimen/pmborder_xxsmall"
+                android:textAppearance="?attr/textAppearanceSubtitle2"
+                android:textColor="?attr/colorOnBackground"
+                android:layout_marginStart="@dimen/pmborder_medium"
+                android:layout_marginEnd="@dimen/pmborder_medium"
+                android:layout_marginBottom="@dimen/pmborder_xsmall"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/checkout_personal_details" />
 
             <com.google.android.material.card.MaterialCardView
-                style="@style/PaymentCardStyle"
                 android:layout_marginLeft="@dimen/pmborder_medium"
                 android:layout_marginRight="@dimen/pmborder_medium"
                 android:layout_width="match_parent"
@@ -99,15 +42,14 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:padding="@dimen/pmborder_large"
+                    android:padding="@dimen/pmborder_medium"
                     android:orientation="vertical">
 
                     <include layout="@layout/layout_checkoutdetails" />
 
                     <com.google.android.material.button.MaterialButton
-                        style="@style/WidgetButtonStyle"
                         android:id="@+id/button_checkout"
-                        android:layout_marginTop="@dimen/pmborder_large"
+                        android:layout_marginTop="@dimen/pmborder_medium"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:text="@string/button_checkout" />
@@ -119,21 +61,20 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center_vertical"
-                android:layout_marginTop="@dimen/pmborder_large"
-                android:layout_marginLeft="@dimen/pmborder_medium"
-                android:layout_marginRight="@dimen/pmborder_medium"
-                android:layout_marginBottom="@dimen/pmborder_large"
+                android:padding="@dimen/pmborder_medium"
                 android:orientation="horizontal">
 
                 <TextView
-                    style="@style/PaymentText.Medium.Bold"
+                    android:textAppearance="?attr/textAppearanceSubtitle2"
+                    android:textColor="?attr/colorOnBackground"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:text="@string/product_total" />
 
                 <TextView
-                    style="@style/PaymentText.XLarge.Bold"
+                    android:textAppearance="?attr/textAppearanceHeadline6"
+                    android:textColor="?attr/colorOnBackground"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/product_price" />

@@ -5,16 +5,7 @@
     android:layout_height="wrap_content"
     android:gravity="center"
     android:orientation="horizontal"
-    android:paddingTop="@dimen/pmborder_small">
-
-    <ImageView
-        android:id="@+id/image_icon"
-        android:layout_width="@dimen/pmwidget_iconsize"
-        android:layout_height="@dimen/pmwidget_iconsize"
-        android:layout_marginStart="@dimen/pmborder_xsmall"
-        android:layout_marginEnd="@dimen/pmborder_xxsmall"
-        android:contentDescription="@string/pmpage_contentdescription"
-        android:src="@drawable/ic_default" />
+    android:layout_marginBottom="@dimen/pmborder_xlarge">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -23,7 +14,8 @@
 
         <TextView
             android:id="@+id/input_label"
-            android:textAppearance="?attr/widgetSelectLabelStyle"
+            android:textAppearance="?attr/textAppearanceBody2"
+            android:textColor="?attr/colorOnSurface"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
 

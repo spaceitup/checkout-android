@@ -8,6 +8,8 @@
 
 package net.optile.example.demo.checkout;
 
+import static net.optile.payment.model.RedirectType.SUMMARY;
+
 import java.util.Objects;
 
 import net.optile.example.demo.shared.SdkResult;
@@ -58,8 +60,7 @@ final class CheckoutPresenter {
         OperationResult op = result.getOperationResult();
         if (op != null) {
             Redirect redirect = op.getRedirect();
-
-            if (redirect != null && Objects.equals("SUMMARY", redirect.getType())) {
+            if (redirect != null && Objects.equals(SUMMARY, redirect.getType())) {
                 view.showPaymentSummary();
                 return;
             }

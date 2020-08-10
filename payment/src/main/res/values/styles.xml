@@ -1,126 +1,106 @@
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
 
-    <style name="PaymentText" parent="@android:style/TextAppearance">
-        <item name="android:textColor">@color/pmtext_dark</item>
-        <item name="android:fontFamily">@font/roboto_light</item>
+    <style name="TextAppearance.Payment.Subtitle1" parent="TextAppearance.MaterialComponents.Subtitle1">
+        <item name="fontFamily">@font/roboto_medium</item>
     </style>
 
-    <style name="PaymentText.Tiny">
-        <item name="android:textSize">12sp</item>
+    <style name="TextAppearance.Payment.Subtitle2" parent="TextAppearance.MaterialComponents.Subtitle2">
+        <item name="fontFamily">@font/roboto_medium</item>
     </style>
 
-    <style name="PaymentText.Small">
-        <item name="android:textSize">14sp</item>
+    <style name="TextAppearance.Payment.Body1" parent="TextAppearance.MaterialComponents.Body1">
+        <item name="fontFamily">@font/roboto_light</item>
     </style>
 
-    <style name="PaymentText.Small.Light">
-        <item name="android:textColor">@color/pmtext_light</item>
+    <style name="TextAppearance.Payment.Body2" parent="TextAppearance.MaterialComponents.Body2">
+        <item name="fontFamily">@font/roboto_light</item>
     </style>
 
-    <style name="PaymentText.Small.Bold">
-        <item name="android:fontFamily">@font/roboto_medium</item>
+    <style name="TextAppearance.Payment.Headline6" parent="TextAppearance.MaterialComponents.Headline6">
+        <item name="fontFamily">@font/roboto_medium</item>
     </style>
 
-    <style name="PaymentText.Small.Bold.Primary">
-        <item name="android:textColor">@color/pmtext_primary</item>
-        <item name="android:fontFamily">@font/roboto_medium</item>
+    <style name="TextAppearance.Payment.Button" parent="TextAppearance.MaterialComponents.Button">
+        <item name="fontFamily">@font/roboto_medium</item>
+        <item name="android:textAllCaps">false</item>
     </style>
 
-    <style name="PaymentText.Medium">
-        <item name="android:textSize">16sp</item>
+    <style name="TextAppearance.Payment.Caption" parent="TextAppearance.MaterialComponents.Caption">
+        <item name="fontFamily">@font/roboto_light</item>
     </style>
 
-    <style name="PaymentText.Medium.Bold">
-        <item name="android:fontFamily">@font/roboto_medium</item>
+    <style name="Widget.Payment.Toolbar" parent="Widget.MaterialComponents.Toolbar.Primary">
+        <item name="materialThemeOverlay">@style/ThemeOverlay.Payment.Toolbar</item>
+        <item name="titleTextAppearance">@style/TextAppearance.Payment.Headline6</item>
+        <item name="titleTextColor">?attr/colorOnBackground</item>
+        <item name="android:elevation" tools:targetApi="21">@dimen/pmtoolbar_elevation</item>
     </style>
 
-    <style name="PaymentText.Medium.Gray">
-        <item name="android:textColor">@color/pmtext_gray</item>
+    <style name="ThemeOverlay.Payment.Toolbar" parent="">
+        <item name="colorPrimary">?android:attr/colorBackground</item>
     </style>
 
-    <style name="PaymentText.Medium.Hint">
-        <item name="android:textColor">@color/pmtext_hint</item>
+    <style name="Widget.Payment.Button.UnelevatedButton" parent="Widget.MaterialComponents.Button.UnelevatedButton">
+        <item name="android:minHeight">@dimen/pmbutton_height</item>
+        <item name="shapeAppearance">@style/ShapeAppearance.Payment.SmallComponent</item>
     </style>
 
-    <style name="PaymentText.Medium.Bold.Gray">
-        <item name="android:textColor">@color/pmtext_gray</item>
-        <item name="android:fontFamily">@font/roboto_medium</item>
+    <style name="Widget.Payment.CardView" parent="Widget.MaterialComponents.CardView">
+        <item name="shapeAppearance">@style/ShapeAppearance.Payment.MediumComponent</item>
+        <item name="cardElevation">@dimen/pmcard_elevation</item>
+        <item name="strokeWidth">@dimen/pmcard_stroke</item>
+        <item name="cardForegroundColor">@color/pm_transparent</item>
+        <item name="strokeColor">@color/payment_card_stroke_color</item>
     </style>
 
-    <style name="PaymentText.Medium.Bold.Light">
-        <item name="android:textColor">@color/pmtext_light</item>
-        <item name="android:fontFamily">@font/roboto_medium</item>
-    </style>
-
-    <style name="PaymentText.Large">
-        <item name="android:textSize">20sp</item>
-    </style>
-
-    <style name="PaymentText.Large.Bold">
-        <item name="android:textSize">20sp</item>
-        <item name="android:fontFamily">@font/roboto_medium</item>
-    </style>
-
-    <style name="PaymentText.XLarge">
-        <item name="android:textSize">24sp</item>
-    </style>
-
-    <style name="PaymentText.XLarge.Bold">
-        <item name="android:fontFamily">@font/roboto_medium</item>
-    </style>
-
-    <style name="PaymentText.InputLayoutError">
-        <item name="android:textColor">@color/pmtext_error</item>
-        <item name="android:textSize">12sp</item>
-    </style>
-
-    <style name="PaymentText.InputLayoutHint">
-        <item name="android:textSize">12sp</item>
-    </style>
-
-    <style name="PaymentText.InputEditText">
-        <item name="android:textSize">16sp</item>
-    </style>
-
-    <style name="WidgetTextInputStyle" parent="@style/Widget.MaterialComponents.TextInputLayout.FilledBox">
-        <item name="hintTextAppearance">@style/PaymentText.InputLayoutHint</item>
-        <item name="errorTextAppearance">@style/PaymentText.InputLayoutError</item>
-        <item name="boxBackgroundColor">@color/pmcolor_background</item>
-        <item name="android:textColorHint">@color/pmcolor_controlnormal</item>
-        <item name="hintTextColor">@color/pmtext_dark</item>
-        <item name="errorTextColor">@color/pmtext_error</item>
+    <style name="Widget.Payment.TextInputLayout" parent="Widget.MaterialComponents.TextInputLayout.FilledBox">
+        <item name="materialThemeOverlay">@style/ThemeOverlay.Payment.TextInputLayout</item>
+        <item name="shapeAppearance">@style/ShapeAppearance.Payment.SmallComponent</item>
         <item name="errorIconDrawable">@null</item>
+        <item name="boxBackgroundColor">@color/pm_gray100</item>
+        <item name="android:textColorHint">@color/pm_gray_dark</item>
+        <item name="helperTextTextColor">?attr/colorPrimary</item>
+        <item name="endIconTint">@color/payment_filled_icon_tint</item>
+        <item name="boxStrokeColor">@color/payment_textinputlayout_stroke_color</item>
     </style>
 
-    <style name="WidgetEditTextStyle" parent="@style/ThemeOverlay.MaterialComponents.TextInputEditText.FilledBox">
-        <item name="android:textAppearance">@style/PaymentText.InputEditText</item>
+    <style name="ThemeOverlay.Payment.TextInputLayout" parent="">
+        <item name="textAppearanceSubtitle1">@style/TextAppearance.Payment.Body1</item>
+        <item name="android:textColorPrimary">?attr/colorOnBackground</item>
+        <item name="editTextStyle">@style/Widget.MaterialComponents.TextInputEditText.FilledBox</item>
     </style>
 
-    <style name="PaymentCardStyle" parent="@style/Widget.MaterialComponents.CardView">
-        <item name="cardBackgroundColor">@color/pmcolor_background</item>
-        <item name="cardCornerRadius">@dimen/pmcard_radius</item>
+    <style name="Widget.Payment.Switch" parent="Widget.MaterialComponents.CompoundButton.Switch">
+        <item name="trackTint">@color/payment_switch_track_tint</item>
     </style>
 
-    <style name="WidgetButtonStyle" parent="@style/Widget.MaterialComponents.Button.UnelevatedButton">
-        <item name="android:textAllCaps">false</item>
-        <item name="android:textAppearance">@style/PaymentText.Medium.Bold.Light</item>
-        <item name="android:paddingTop">@dimen/pmborder_small</item>
-        <item name="android:paddingBottom">@dimen/pmborder_small</item>
-        <item name="android:paddingLeft">@dimen/pmborder_medium</item>
-        <item name="android:paddingRight">@dimen/pmborder_medium</item>
-        <item name="cornerRadius">@dimen/pmbutton_radius</item>
+    <style name="Widget.Payment.Snackbar" parent="Widget.MaterialComponents.Snackbar">
+        <item name="backgroundTint">?attr/colorOnSurface</item>
     </style>
 
-    <style name="DialogButtonStyle" parent="@style/Widget.MaterialComponents.Button.TextButton.Dialog">
-        <item name="android:textAllCaps">false</item>
-        <item name="android:textAppearance">@style/PaymentText.Small.Bold.Primary</item>
-        <item name="android:textColor">@color/pmcolor_primary</item>
-
+    <style name="MaterialAlertDialog.Payment" parent="MaterialAlertDialog.MaterialComponents">
+        <item name="shapeAppearance">@style/ShapeAppearance.Payment.MediumComponent</item>
     </style>
 
-    <style name="WidgetCheckBoxStyle" parent="@style/Widget.MaterialComponents.CompoundButton.Switch">
-        <item name="colorControlNormal">@color/pmcolor_controlnormal</item>
-        <item name="colorControlActivated">@color/pmvalidation_ok</item>
-        <item name="useMaterialThemeColors">false</item>
+    <style name="MaterialAlertDialog.Payment.Title.Text" parent="MaterialAlertDialog.MaterialComponents.Title.Text">
+        <item name="android:textColor">?attr/colorOnSurface</item>
     </style>
+
+    <style name="MaterialAlertDialog.Payment.Body.Text" parent="MaterialAlertDialog.MaterialComponents.Body.Text">
+        <item name="android:textColor">?attr/colorOnSurface</item>
+    </style>
+
+    <style name="Widget.Payment.Button.TextButton.Dialog" parent="Widget.MaterialComponents.Button.TextButton.Dialog">
+        <item name="shapeAppearance">@style/ShapeAppearance.Payment.SmallComponent</item>
+    </style>
+
+    <style name="ShapeAppearance.Payment.SmallComponent" parent="ShapeAppearance.MaterialComponents.SmallComponent">
+        <item name="cornerSize">@dimen/pmradius</item>
+    </style>
+    ​
+
+    <style name="ShapeAppearance.Payment.MediumComponent" parent="ShapeAppearance.MaterialComponents.MediumComponent">
+        <item name="cornerSize">@dimen/pmradius</item>
+    </style>
+
 </resources>

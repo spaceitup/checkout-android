@@ -9,14 +9,14 @@
         android:orientation="vertical">
 
         <TextView
-            style="@style/PaymentText.Medium.Bold"
-            android:layout_marginBottom="@dimen/pmborder_xxsmall"
+            android:textAppearance="?attr/textAppearanceSubtitle2"
+            android:textColor="?attr/colorOnBackground"
+            android:layout_marginBottom="@dimen/pmborder_xsmall"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/summary_personal_details" />
 
         <com.google.android.material.card.MaterialCardView
-            style="@style/PaymentCardStyle"
             android:layout_marginBottom="@dimen/pmborder_medium"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
@@ -24,17 +24,19 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:padding="@dimen/pmborder_large"
+                android:padding="@dimen/pmborder_medium"
                 android:orientation="vertical">
 
                 <TextView
-                    style="@style/PaymentText.Medium.Bold"
+                    android:textAppearance="?attr/textAppearanceSubtitle2"
+                    android:textColor="?attr/colorOnBackground"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/personal_name_value" />
 
                 <TextView
-                    style="@style/PaymentText.Medium"
+                    android:textAppearance="?attr/textAppearanceBody2"
+                    android:textColor="?attr/colorOnBackground"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/personal_details" />
@@ -43,14 +45,14 @@
         </com.google.android.material.card.MaterialCardView>
 
         <TextView
-            style="@style/PaymentText.Medium.Bold"
-            android:layout_marginBottom="@dimen/pmborder_xxsmall"
+            android:textAppearance="?attr/textAppearanceSubtitle2"
+            android:textColor="?attr/colorOnBackground"
+            android:layout_marginBottom="@dimen/pmborder_xsmall"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/summary_payment_details" />
 
         <com.google.android.material.card.MaterialCardView
-            style="@style/PaymentCardStyle"
             android:layout_marginBottom="@dimen/pmborder_medium"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
@@ -58,64 +60,62 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:padding="@dimen/pmborder_large"
+                android:paddingTop="@dimen/pmborder_medium"
+                android:paddingBottom="@dimen/pmborder_medium"
+                android:paddingStart="@dimen/pmborder_medium"
                 android:gravity="center_vertical"
                 android:orientation="horizontal">
 
-                <include layout="@layout/list_item_logo" />
+                <include layout="@layout/view_logo" />
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="@dimen/pmlogo_width"
+                    android:layout_marginStart="@dimen/pmborder_medium"
                     android:layout_weight="1"
                     android:orientation="vertical">
 
                     <TextView
                         android:id="@+id/label_title"
-                        style="@style/PaymentText.Medium.Bold"
+                        android:textAppearance="?attr/textAppearanceSubtitle1"
+                        android:textColor="?attr/colorOnSurface"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content" />
 
                     <TextView
                         android:id="@+id/label_subtitle"
-                        style="@style/PaymentText.Small"
+                        android:textAppearance="?attr/textAppearanceBody2"
+                        android:textColor="?attr/colorOnSurface"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content" />
-
                 </LinearLayout>
 
-                <TextView
-                    android:id="@+id/text_edit"
-                    style="@style/DefaultTextButton"
+                <Button
+                    android:id="@+id/button_edit"
+                    style="@style/Widget.ExampleDemo.Button.TextButton"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:paddingLeft="@dimen/pmborder_small"
-                    android:paddingTop="@dimen/pmborder_small"
-                    android:paddingBottom="@dimen/pmborder_small"
-                    android:clickable="true"
-                    android:focusable="true"
                     android:text="@string/button_edit" />
 
             </LinearLayout>
         </com.google.android.material.card.MaterialCardView>
 
         <TextView
-            style="@style/PaymentText.Medium.Bold"
-            android:layout_marginBottom="@dimen/pmborder_xxsmall"
+            android:textAppearance="?attr/textAppearanceSubtitle2"
+            android:textColor="?attr/colorOnBackground"
+            android:layout_marginBottom="@dimen/pmborder_xsmall"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/summary_payment_amount" />
 
         <com.google.android.material.card.MaterialCardView
-            style="@style/PaymentCardStyle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:padding="@dimen/pmborder_large"
+                android:padding="@dimen/pmborder_medium"
                 android:orientation="vertical">
 
                 <LinearLayout
@@ -125,23 +125,24 @@
                     android:orientation="horizontal">
 
                     <TextView
-                        style="@style/PaymentText.Medium.Bold"
+                        android:textAppearance="?attr/textAppearanceSubtitle2"
+                        android:textColor="?attr/colorOnBackground"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:text="@string/product_total" />
 
                     <TextView
-                        style="@style/PaymentText.XLarge.Bold"
+                        android:textAppearance="?attr/textAppearanceHeadline6"
+                        android:textColor="?attr/colorOnBackground"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/product_price" />
                 </LinearLayout>
 
-                <Button
-                    style="@style/WidgetButtonStyle"
+                <com.google.android.material.button.MaterialButton
                     android:id="@+id/button_pay"
-                    android:layout_marginTop="@dimen/pmborder_large"
+                    android:layout_marginTop="@dimen/pmborder_medium"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="@string/button_pay" />

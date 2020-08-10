@@ -1,27 +1,11 @@
 <resources>
 
-    <style name="SettingsTheme" parent="Theme.MaterialComponents.Light.DarkActionBar">
-        <item name="colorPrimary">@color/pmcolor_primary</item>
-        <item name="colorPrimaryDark">@color/pmcolor_primarydark</item>
-        <item name="colorAccent">@color/pmcolor_accent</item>
-    </style>
-
-    <style name="DefaultCollapsingToolbarTheme" parent="Theme.MaterialComponents.Light.NoActionBar">
-        <item name="colorPrimary">@color/pmcolor_primary</item>
-        <item name="colorPrimaryDark">@color/pmcolor_primarydark</item>
-        <item name="colorAccent">@color/pmcolor_accent</item>
-
+    <style name="PaymentTheme.CollapsingToolbar">
         <item name="android:windowContentTransitions">true</item>
         <item name="android:windowTranslucentStatus">true</item>
         <item name="android:windowDrawsSystemBarBackgrounds">true</item>
         <item name="android:windowTranslucentNavigation">false</item>
-
-        <item name="paymentCardLogoBackground">@null</item>
+        <item name="colorControlNormal">@color/pm_white</item>
     </style>
 
-    <style name="DefaultConfirmTheme" parent="Theme.MaterialComponents.Light.NoActionBar">
-        <item name="colorPrimary">@color/pmcolor_primary</item>
-        <item name="colorPrimaryDark">@color/pmcolor_primarydark</item>
-        <item name="colorAccent">@color/pmcolor_accent</item>
-    </style>
 </resources>

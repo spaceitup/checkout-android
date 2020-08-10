@@ -21,6 +21,8 @@ public class PresetAccount {
     private String code;
     /** Masked account (Simple API, optional) */
     private AccountMask maskedAccount;
+    /** PCI API, optional */
+    private Redirect redirect;
 
     /**
      * Gets links.
@@ -56,6 +58,24 @@ public class PresetAccount {
      */
     public void setCode(final String code) {
         this.code = code;
+    }
+
+    /**
+     * Gets value of redirect.
+     *
+     * @return the redirect.
+     */
+    public Redirect getRedirect() {
+        return redirect;
+    }
+
+    /**
+     * Sets value of redirect.
+     *
+     * @param redirect the redirect to set.
+     */
+    public void setRedirect(final Redirect redirect) {
+        this.redirect = redirect;
     }
 
     /**

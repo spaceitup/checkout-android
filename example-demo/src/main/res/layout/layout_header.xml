@@ -5,18 +5,15 @@
     android:id="@+id/app_bar_layout"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:fitsSystemWindows="true"
-    app:elevation="0dp">
+    android:fitsSystemWindows="true">
 
     <com.google.android.material.appbar.CollapsingToolbarLayout
+        android:theme="@style/Widget.ExampleDemo.CollapsingToolbar"
         android:id="@+id/collapsing_toolbar"
         android:layout_width="match_parent"
         android:layout_height="@dimen/toolbar_height"
         android:fitsSystemWindows="true"
-        app:collapsedTitleTextAppearance="@style/PaymentText.Medium.Bold.Light"
-        app:layout_scrollFlags="scroll|exitUntilCollapsed"
-        app:expandedTitleTextAppearance="@style/TransparentText"
-        app:contentScrim="?attr/colorPrimary">
+        app:layout_scrollFlags="scroll|exitUntilCollapsed">
 
         <ImageView
             android:id="@+id/image_background"
@@ -41,31 +38,32 @@
                 android:layout_height="wrap_content">
 
                 <TextView
+                    android:textAppearance="?attr/textAppearanceBody2"
+                    android:textColor="?attr/colorOnPrimary"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    style="@style/DefaultHeaderSubtitle"
                     android:text="@string/product_subtitle" />
 
                 <TextView
+                    android:textAppearance="?attr/textAppearanceHeadline6"
+                    android:textColor="?attr/colorOnPrimary"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    style="@style/DefaultHeaderTitle"
                     android:text="@string/product_title1" />
 
                 <TextView
+                    android:textAppearance="?attr/textAppearanceHeadline6"
+                    android:textColor="?attr/colorOnPrimary"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    style="@style/DefaultHeaderTitle"
                     android:text="@string/product_title2" />
             </LinearLayout>
         </FrameLayout>
 
-        <androidx.appcompat.widget.Toolbar
+        <com.google.android.material.appbar.MaterialToolbar
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
-            android:theme="@style/PaymentToolbarTheme"
-            app:titleTextAppearance="@style/PaymentText.Medium.Bold.Light"
             app:layout_collapseMode="pin" />
 
     </com.google.android.material.appbar.CollapsingToolbarLayout>
