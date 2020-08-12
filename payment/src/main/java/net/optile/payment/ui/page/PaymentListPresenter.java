@@ -183,7 +183,7 @@ final class PaymentListPresenter implements PaymentSessionListener, Localization
         Localization.setInstance(localization);
 
         if (reloadInteraction != null) {
-            showInteractionDialog(reloadInteraction);
+            showInteractionMessage(reloadInteraction, null);
             reloadInteraction = null;
         }
         view.showPaymentSession(this.session);
@@ -309,18 +309,16 @@ final class PaymentListPresenter implements PaymentSessionListener, Localization
         }
         this.operation = null;
         Interaction interaction = result.getInteraction();
-        if (interaction == null) {
-            view.showPaymentSession(session);
-            return;
-        }
         switch (interaction.getCode()) {
             case InteractionCode.RELOAD:
+                reloadPaymentSession(null);
+                break;
             case InteractionCode.TRY_OTHER_ACCOUNT:
             case InteractionCode.TRY_OTHER_NETWORK:
-                reloadPaymentSession(result);
+                reloadPaymentSession(interaction);
                 break;
             case InteractionCode.RETRY:
-                showPaymentSessionWithMessage(result);
+                showPaymentSessionWithMessage(interaction);
                 break;
             default:
                 closeWithErrorMessage(result);
@@ -369,18 +367,16 @@ final class PaymentListPresenter implements PaymentSessionListener, Localization
         }
         this.operation = null;
         Interaction interaction = result.getInteraction();
-        if (interaction == null) {
-            view.showPaymentSession(this.session);
-            return;
-        }
         switch (interaction.getCode()) {
             case InteractionCode.RELOAD:
+                reloadPaymentSession(null);
+                break;
             case InteractionCode.TRY_OTHER_ACCOUNT:
             case InteractionCode.TRY_OTHER_NETWORK:
-                reloadPaymentSession(result);
+                reloadPaymentSession(interaction);
                 break;
             case InteractionCode.RETRY:
-                showPaymentSessionWithMessage(result);
+                showPaymentSessionWithMessage(interaction);
                 break;
             default:
                 closeWithErrorMessage(result);
@@ -449,7 +445,7 @@ final class PaymentListPresenter implements PaymentSessionListener, Localization
             case InteractionCode.RELOAD:
             case InteractionCode.TRY_OTHER_ACCOUNT:
             case InteractionCode.TRY_OTHER_NETWORK:
-                loadPaymentSession(this.listUrl);
+                reloadPaymentSession(null);
                 break;
             case InteractionCode.RETRY:
                 view.showPaymentSession(this.session);
@@ -505,8 +501,8 @@ final class PaymentListPresenter implements PaymentSessionListener, Localization
         sessionService.loadPaymentSession(listUrl, view.getActivity());
     }
 
-    private void reloadPaymentSession(PaymentResult result) {
-        this.reloadInteraction = result.getInteraction();
+    private void reloadPaymentSession(Interaction interaction) {
+        this.reloadInteraction = interaction;
         loadPaymentSession(this.listUrl);
     }
 
@@ -548,6 +544,10 @@ final class PaymentListPresenter implements PaymentSessionListener, Localization
                 view.close();
             }
         };
+        showInteractionMessage(interaction, listener);
+    }
+
+    private void showInteractionMessage(Interaction interaction, PaymentDialogListener listener) {
         if (Localization.hasInteraction(interaction)) {
             view.showInteractionDialog(interaction, listener);
         } else {
@@ -555,14 +555,8 @@ final class PaymentListPresenter implements PaymentSessionListener, Localization
         }
     }
 
-    private void showInteractionDialog(Interaction interaction) {
-        if (Localization.hasInteraction(interaction)) {
-            view.showInteractionDialog(interaction, null);
-        }
-    }
-
-    private void showPaymentSessionWithMessage(PaymentResult result) {
+    private void showPaymentSessionWithMessage(Interaction interaction) {
         view.showPaymentSession(this.session);
-        showInteractionDialog(result.getInteraction());
+        showInteractionMessage(interaction, null);
     }
 }
