@@ -90,7 +90,7 @@ public final class SummaryActivity extends BaseActivity implements SummaryView {
         Button edit = findViewById(R.id.button_edit);
         edit.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                onEditClicked();
+                showPaymentListScreen();
             }
         });
         Button button = findViewById(R.id.button_pay);
@@ -137,12 +137,8 @@ public final class SummaryActivity extends BaseActivity implements SummaryView {
      * {@inheritDoc}
      */
     @Override
-    public void showPaymentSuccess() {
-        if (!active) {
-            return;
-        }
-        Intent intent = ConfirmActivity.createStartIntent(this);
-        startActivity(intent);
+    public void showConfirmScreen() {
+        showScreen(ConfirmActivity.createStartIntent(this));
     }
 
     /**
@@ -218,7 +214,7 @@ public final class SummaryActivity extends BaseActivity implements SummaryView {
         if (message != null) {
             showErrorDialog(message);
         } else {
-            openSettingsScreen();
+            showSettingsScreen();
         }
     }
 
@@ -247,12 +243,34 @@ public final class SummaryActivity extends BaseActivity implements SummaryView {
      */
     @Override
     public void onErrorDialogClosed() {
-        openSettingsScreen();
+        showSettingsScreen();
     }
 
-    private void openSettingsScreen() {
-        Intent intent = SettingsActivity.createStartIntent(this);
-        startActivity(intent);
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void closeScreen() {
+        if (!active) {
+            return;
+        }
+        finish();
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void showPaymentListScreen() {
+        if (!active) {
+            return;
+        }
+        PaymentUI paymentUI = PaymentUI.getInstance();
+        paymentUI.showPaymentPage(this, EDIT_REQUEST_CODE);
+    }
+
+    private void showSettingsScreen() {
+        showScreen(SettingsActivity.createStartIntent(this));
     }
 
     private void initToolbar() {
@@ -270,16 +288,19 @@ public final class SummaryActivity extends BaseActivity implements SummaryView {
         layout.setExpandedTitleTypeface(typeface);
     }
 
+    private void showScreen(Intent intent) {
+        if (!active) {
+            return;
+        }
+        startActivity(intent);
+        supportFinishAfterTransition();
+    }
+
     private void onPayClicked() {
         if (presetAccount != null) {
             PaymentUI paymentUI = PaymentUI.getInstance();
             paymentUI.chargePresetAccount(this, PAYMENT_REQUEST_CODE, presetAccount);
         }
-    }
-
-    private void onEditClicked() {
-        PaymentUI paymentUI = PaymentUI.getInstance();
-        paymentUI.showPaymentPage(this, EDIT_REQUEST_CODE);
     }
 
     private URL getLink(PresetAccount account, String name) {

@@ -127,7 +127,7 @@ final class SummaryPresenter {
     private void handleResultOk(PaymentResult result) {
         Interaction interaction = result.getInteraction();
         if (interaction != null) {
-            view.showPaymentSuccess();
+            view.showConfirmScreen();
         }
     }
 
@@ -143,6 +143,13 @@ final class SummaryPresenter {
                 // VERIFY means that a charge request has been made but the status of the payment could
                 // not be verified by the Android-SDK, i.e. because of a network error
                 view.closePayment(null);
+                break;
+            case InteractionCode.TRY_OTHER_ACCOUNT:
+            case InteractionCode.TRY_OTHER_NETWORK:
+            case InteractionCode.RELOAD:
+            case InteractionCode.RETRY:
+                view.showPaymentListScreen();
+                break;
         }
     }
 
@@ -154,7 +161,17 @@ final class SummaryPresenter {
         this.subscription = null;
         this.result = result;
         PresetAccount account = result.getPresetAccount();
-        view.showPaymentDetails(account, getPaymentMethod(account.getCode(), result));
+
+        if (account == null) {
+            view.closeScreen();
+            return;
+        }
+        String paymentMethod = getPaymentMethod(account.getCode(), result);
+        if (paymentMethod == null) {
+            view.closeScreen();
+            return;
+        }
+        view.showPaymentDetails(account, paymentMethod);
     }
 
     private void callbackLoadPaymentSessionError(Throwable error) {
