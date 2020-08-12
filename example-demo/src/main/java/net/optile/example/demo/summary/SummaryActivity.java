@@ -138,7 +138,9 @@ public final class SummaryActivity extends BaseActivity implements SummaryView {
      */
     @Override
     public void showConfirmScreen() {
-        showScreen(ConfirmActivity.createStartIntent(this));
+        if (active) {
+            showScreen(ConfirmActivity.createStartIntent(this));
+        }
     }
 
     /**
@@ -251,10 +253,9 @@ public final class SummaryActivity extends BaseActivity implements SummaryView {
      */
     @Override
     public void closeScreen() {
-        if (!active) {
-            return;
+        if (active) {
+            finish();
         }
-        finish();
     }
 
     /**
@@ -262,15 +263,16 @@ public final class SummaryActivity extends BaseActivity implements SummaryView {
      */
     @Override
     public void showPaymentListScreen() {
-        if (!active) {
-            return;
+        if (active) {
+            PaymentUI paymentUI = PaymentUI.getInstance();
+            paymentUI.showPaymentPage(this, EDIT_REQUEST_CODE);
         }
-        PaymentUI paymentUI = PaymentUI.getInstance();
-        paymentUI.showPaymentPage(this, EDIT_REQUEST_CODE);
     }
 
     private void showSettingsScreen() {
-        showScreen(SettingsActivity.createStartIntent(this));
+        if (active) {
+            showScreen(SettingsActivity.createStartIntent(this));
+        }
     }
 
     private void initToolbar() {
@@ -289,9 +291,6 @@ public final class SummaryActivity extends BaseActivity implements SummaryView {
     }
 
     private void showScreen(Intent intent) {
-        if (!active) {
-            return;
-        }
         startActivity(intent);
         supportFinishAfterTransition();
     }
