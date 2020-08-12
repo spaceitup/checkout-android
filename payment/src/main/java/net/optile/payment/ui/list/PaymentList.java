@@ -82,14 +82,14 @@ public final class PaymentList {
         adapter.notifyDataSetChanged();
     }
 
-    public void showPaymentSession(PaymentSession session, int cachedListIndex) {
+    public void showPaymentSession(PaymentSession session) {
 
         if (this.session == session) {
             setVisible(true);
             return;
         }
         this.session = session;
-        setPaymentListItems(session, cachedListIndex);
+        setPaymentListItems(session);
         String msg = "";
 
         if (session.getApplicableNetworkSize() == 0) {
@@ -182,9 +182,9 @@ public final class PaymentList {
         return viewType++;
     }
 
-    private void setPaymentListItems(PaymentSession session, int cachedListIndex) {
+    private void setPaymentListItems(PaymentSession session) {
         items.clear();
-        this.selIndex = cachedListIndex;
+        this.selIndex = -1;
         int accountSize = session.getAccountCardSize();
         int networkSize = session.getNetworkCardSize();
 
