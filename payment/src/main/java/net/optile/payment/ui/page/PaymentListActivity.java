@@ -37,7 +37,6 @@ public final class PaymentListActivity extends BasePaymentActivity implements Pa
 
     private PaymentListPresenter presenter;
     private PaymentList paymentList;
-    private int cachedListIndex;
 
     // For automated testing
     private boolean loadCompleted;
@@ -72,7 +71,6 @@ public final class PaymentListActivity extends BasePaymentActivity implements Pa
         if (theme != 0) {
             setTheme(theme);
         }
-        this.cachedListIndex = -1;
         setContentView(R.layout.activity_paymentlist);
         progressView = new ProgressView(findViewById(R.id.layout_progress));
 
@@ -103,15 +101,6 @@ public final class PaymentListActivity extends BasePaymentActivity implements Pa
     private void setToolbar(String title) {
         Toolbar toolbar = findViewById(R.id.toolbar);
         toolbar.setTitle(title);
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public void onSaveInstanceState(Bundle savedInstanceState) {
-        super.onSaveInstanceState(savedInstanceState);
-        this.cachedListIndex = paymentList.getSelected();
     }
 
     /**
@@ -191,8 +180,7 @@ public final class PaymentListActivity extends BasePaymentActivity implements Pa
         }
         progressView.setVisible(false);
         setToolbar(Localization.translate(LIST_TITLE));
-        paymentList.showPaymentSession(session, cachedListIndex);
-        this.cachedListIndex = -1;
+        paymentList.showPaymentSession(session);
 
         // For automated UI testing
         this.loadCompleted = true;
