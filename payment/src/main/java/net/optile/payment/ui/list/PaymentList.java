@@ -89,20 +89,13 @@ public final class PaymentList {
             return;
         }
         this.session = session;
+        setEmptyMessage(session);
         setPaymentListItems(session);
-        String msg = "";
 
-        if (session.getApplicableNetworkSize() == 0) {
-            msg = activity.getString(R.string.pmpage_error_empty);
-        } else if (session.getNetworkCardSize() == 0) {
-            msg = activity.getString(R.string.pmpage_error_notsupported);
-        } else {
-            int startIndex = session.hasPresetCard() ? 0 : selIndex;
-            recyclerView.scrollToPosition(startIndex);
-        }
-        emptyMessage.setText(msg);
-        adapter.notifyDataSetChanged();
         setVisible(true);
+        adapter.notifyDataSetChanged();
+        int startIndex = session.hasPresetCard() ? 0 : selIndex;
+        recyclerView.scrollToPosition(startIndex);
     }
 
     public void setVisible(boolean visible) {
@@ -182,6 +175,16 @@ public final class PaymentList {
         return viewType++;
     }
 
+    private void setEmptyMessage(PaymentSession session) {
+        String msg = "";
+        if (session.getApplicableNetworkSize() == 0) {
+            msg = activity.getString(R.string.pmpage_error_empty);
+        } else if (session.getNetworkCardSize() == 0) {
+            msg = activity.getString(R.string.pmpage_error_notsupported);
+        }
+        emptyMessage.setText(msg);
+    }
+    
     private void setPaymentListItems(PaymentSession session) {
         items.clear();
         this.selIndex = -1;
@@ -222,11 +225,6 @@ public final class PaymentList {
     private void expandViewHolder(int position) {
         adapter.notifyItemChanged(position);
         smoothScrollToPosition(position);
-
-        PaymentCardViewHolder holder = (PaymentCardViewHolder) recyclerView.findViewHolderForAdapterPosition(position);
-        if (holder != null) {
-            holder.focusFirstInputField();
-        }
     }
 
     private void smoothScrollToPosition(int position) {

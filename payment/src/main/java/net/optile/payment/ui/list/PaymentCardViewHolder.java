@@ -120,14 +120,6 @@ public abstract class PaymentCardViewHolder extends RecyclerView.ViewHolder {
         }
     }
 
-    void focusFirstInputField() {
-        for (FormWidget widget : widgets.values()) {
-            if (widget.requestFocus()) {
-                return;
-            }
-        }
-    }
-
     void addWidget(FormWidget widget) {
         String name = widget.getName();
 
@@ -141,8 +133,13 @@ public abstract class PaymentCardViewHolder extends RecyclerView.ViewHolder {
 
     void expand(boolean expand) {
         formLayout.setVisibility(expand ? View.VISIBLE : View.GONE);
+        boolean focusRequested = false;
+        
         for (FormWidget widget : widgets.values()) {
             widget.setValidation();
+            if (expand && !focusRequested) {
+                focusRequested = widget.requestFocus();
+            }
         }
     }
 
