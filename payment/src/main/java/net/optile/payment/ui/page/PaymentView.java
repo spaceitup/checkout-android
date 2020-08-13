@@ -26,13 +26,6 @@ interface PaymentView {
     void showProgress(boolean visible);
 
     /**
-     * Show the default error dialog to the user, notify the listener of events in this dialog.
-     *
-     * @param listener to be notified of dialog events
-     */
-    void showDefaultErrorDialog(PaymentDialogListener listener);
-
-    /**
      * Show the connection error dialog to the user, notify the listener of events in this dialog.
      *
      * @param listener to be notified of dialog events
@@ -41,6 +34,7 @@ interface PaymentView {
 
     /**
      * Show the interaction text to the user, notify the listener of events in this dialog.
+     * When there is no localization for the interaction then the default error will be shown to the user.
      *
      * @param listener to be notified of dialog events
      */

@@ -94,19 +94,6 @@ abstract class BasePaymentActivity extends AppCompatActivity implements PaymentV
      * {@inheritDoc}
      */
     @Override
-    public void showDefaultErrorDialog(PaymentDialogListener listener) {
-        if (!active) {
-            return;
-        }
-        progressView.setVisible(false);
-        DialogFragment dialog = PaymentDialogHelper.createDefaultErrorDialog(listener);
-        showDialogFragment(dialog, "dialog_defaulterror");
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
     public void showConnectionErrorDialog(PaymentDialogListener listener) {
         if (!active) {
             return;
@@ -194,6 +181,12 @@ abstract class BasePaymentActivity extends AppCompatActivity implements PaymentV
         }
     }
 
+    void showDefaultErrorDialog(PaymentDialogListener listener) {
+        progressView.setVisible(false);
+        DialogFragment dialog = PaymentDialogHelper.createDefaultErrorDialog(listener);
+        showDialogFragment(dialog, "dialog_defaulterror");
+    }
+    
     /**
      * Get the current PaymentTheme from the PaymentUI.
      *
