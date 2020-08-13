@@ -356,7 +356,7 @@ final class ChargePaymentPresenter implements PaymentSessionListener, NetworkSer
     private void showErrorAndCloseWithErrorCode(PaymentError error) {
         showErrorAndCloseWithErrorCode(PaymentResult.fromPaymentError(error));
     }
-    
+
     private void showErrorAndCloseWithErrorCode(PaymentResult result) {
         view.setPaymentResult(PaymentUI.RESULT_CODE_ERROR, result);
         Interaction interaction = result.getInteraction();

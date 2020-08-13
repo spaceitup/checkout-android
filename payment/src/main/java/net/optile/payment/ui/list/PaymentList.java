@@ -184,7 +184,7 @@ public final class PaymentList {
         }
         emptyMessage.setText(msg);
     }
-    
+
     private void setPaymentListItems(PaymentSession session) {
         items.clear();
         this.selIndex = -1;
