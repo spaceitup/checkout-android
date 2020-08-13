@@ -46,7 +46,7 @@ final class CheckoutPresenter {
             case PaymentUI.RESULT_CODE_OK:
                 handleResultOk(result.paymentResult);
                 break;
-            case PaymentUI.RESULT_CODE_CANCELED:
+            case PaymentUI.RESULT_CODE_ERROR:
                 handleResultCanceled(result.paymentResult);
                 break;
         }
