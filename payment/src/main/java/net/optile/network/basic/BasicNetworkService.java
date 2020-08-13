@@ -79,7 +79,7 @@ public final class BasicNetworkService extends NetworkService implements Operati
         Interaction interaction = operationResult.getInteraction();
         String code = interaction.getCode();
         int resultCode = InteractionCode.PROCEED.equals(code) ? PaymentUI.RESULT_CODE_OK :
-            PaymentUI.RESULT_CODE_CANCELED;
+            PaymentUI.RESULT_CODE_ERROR;
 
         PaymentResult result = new PaymentResult(operationResult);
         presenter.onProcessPaymentResult(resultCode, result);
@@ -89,13 +89,13 @@ public final class BasicNetworkService extends NetworkService implements Operati
      * {@inheritDoc}
      */
     @Override
-    public void onRedirectCanceled() {
+    public void onRedirectError() {
         String code = getErrorInteractionCode(operation);
         Interaction interaction = new Interaction(code, COMMUNICATION_FAILURE);
         String resultInfo = "Missing OperationResult after client-side redirect";
 
         PaymentResult result = new PaymentResult(resultInfo, interaction);
-        presenter.onProcessPaymentResult(PaymentUI.RESULT_CODE_CANCELED, result);
+        presenter.onProcessPaymentResult(PaymentUI.RESULT_CODE_ERROR, result);
     }
 
     /**
@@ -107,7 +107,7 @@ public final class BasicNetworkService extends NetworkService implements Operati
         PaymentResult result = new PaymentResult(operationResult);
 
         if (!InteractionCode.PROCEED.equals(interaction.getCode())) {
-            presenter.onProcessPaymentResult(PaymentUI.RESULT_CODE_CANCELED, result);
+            presenter.onProcessPaymentResult(PaymentUI.RESULT_CODE_ERROR, result);
             return;
         }
         if (operationResult.getRedirect() != null) {
@@ -144,7 +144,7 @@ public final class BasicNetworkService extends NetworkService implements Operati
     }
 
     private void handleProcessPaymentError(PaymentError error) {
-        presenter.onProcessPaymentResult(PaymentUI.RESULT_CODE_CANCELED, toPaymentResult(error));
+        presenter.onProcessPaymentResult(PaymentUI.RESULT_CODE_ERROR, toPaymentResult(error));
     }
 
     private PaymentResult toPaymentResult(PaymentError error) {

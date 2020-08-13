@@ -19,6 +19,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.DialogFragment;
 import androidx.test.espresso.IdlingResource;
 import net.optile.payment.R;
+import net.optile.payment.localization.Localization;
 import net.optile.payment.model.Interaction;
 import net.optile.payment.ui.PaymentResult;
 import net.optile.payment.ui.PaymentTheme;
@@ -121,6 +122,10 @@ abstract class BasePaymentActivity extends AppCompatActivity implements PaymentV
     @Override
     public void showInteractionDialog(Interaction interaction, PaymentDialogListener listener) {
         if (!active) {
+            return;
+        }
+        if (!Localization.hasInteraction(interaction)) {
+            showDefaultErrorDialog(listener);
             return;
         }
         progressView.setVisible(false);

@@ -55,7 +55,7 @@ interface PaymentView {
 
     /**
      * Set the current activity payment result, this is either PaymentUI.RESULT_CODE_OK,
-     * PaymentUI.RESULT_CODE_CANCELED
+     * PaymentUI.RESULT_CODE_ERROR
      *
      * @param resultCode the current resultCode
      * @param result containing the Payment result state

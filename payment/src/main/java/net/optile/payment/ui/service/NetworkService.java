@@ -59,19 +59,18 @@ public abstract class NetworkService {
     }
 
     /**
-     * Notify the network service that the payment has been redirected and an operation result has been received.
+     * Notify the network service that the payment has been redirected and an OperationResult has been received.
      *
-     * @param result containing the result of the operation, may be null if the redirect has been terminated
-     * without receiving an OperationResult from the backend
+     * @param result containing the result of the operation
      */
     public void onRedirectSuccess(OperationResult result) {
     }
 
     /**
-     * Notify the network service that the redirect has failed to result in an OperationResult from the backend.
+     * Notify the network service that the redirect has failed to receive an OperationResult.
      * The network service should handle this situation and make sure the NetworkServicePresenter is notified with the
      * appropiate PaymentResult.
      */
-    public void onRedirectCanceled() {
+    public void onRedirectError() {
     }
 }
