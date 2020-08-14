@@ -16,6 +16,7 @@ import android.os.Parcelable;
 import android.text.TextUtils;
 import android.util.Log;
 import net.optile.payment.core.PaymentError;
+import net.optile.payment.model.ErrorInfo;
 import net.optile.payment.model.Interaction;
 import net.optile.payment.model.InteractionCode;
 import net.optile.payment.model.InteractionReason;
@@ -120,6 +121,10 @@ public final class PaymentResult implements Parcelable {
      * @return the newly created PaymentResult
      */
     public static PaymentResult fromPaymentError(PaymentError error) {
+        ErrorInfo errorInfo = error.getErrorInfo();
+        if (errorInfo != null) {
+            return new PaymentResult(errorInfo.getInteraction(), error);
+        }
         String reason = error.isNetworkFailure() ? InteractionReason.COMMUNICATION_FAILURE :
             InteractionReason.CLIENTSIDE_ERROR;
         Interaction interaction = new Interaction(InteractionCode.ABORT, reason);
