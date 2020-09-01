@@ -161,12 +161,7 @@ final class SummaryPresenter {
         this.subscription = null;
         this.result = result;
         PresetAccount account = result.getPresetAccount();
-
-        if (account == null) {
-            view.closeScreen();
-            return;
-        }
-        String paymentMethod = getPaymentMethod(account.getCode(), result);
+        String paymentMethod = getPaymentMethod(account, result);
         if (paymentMethod == null) {
             view.closeScreen();
             return;
@@ -189,15 +184,16 @@ final class SummaryPresenter {
         }
     }
 
-    private String getPaymentMethod(String code, ListResult listResult) {
+    private String getPaymentMethod(PresetAccount account, ListResult listResult) {
         Networks networks = listResult.getNetworks();
-        if (networks == null) {
+        if (account == null || networks == null) {
             return null;
         }
         List<ApplicableNetwork> an = networks.getApplicable();
         if (an == null || an.size() == 0) {
             return null;
         }
+        String code = account.getCode();
         for (ApplicableNetwork network : an) {
             if (network.getCode().equals(code)) {
                 return network.getMethod();
