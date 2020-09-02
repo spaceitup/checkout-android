@@ -135,7 +135,7 @@ Add the packagecloud.io repository to the top level build.gradle file.
     allprojects {
         repositories {
             maven {
-                url "https://packagecloud.io/optile/repo/maven2"
+                url "https://packagecloud.io/optile/android/maven2"
             }
         }
     }
