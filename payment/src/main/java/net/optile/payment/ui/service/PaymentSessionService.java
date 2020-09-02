@@ -16,6 +16,7 @@ import java.util.concurrent.Callable;
 
 import android.content.Context;
 import android.text.TextUtils;
+import net.optile.payment.R;
 import net.optile.payment.core.PaymentError;
 import net.optile.payment.core.PaymentException;
 import net.optile.payment.core.WorkerSubscriber;
@@ -258,7 +259,6 @@ public final class PaymentSessionService {
     }
 
     private Validator loadValidator(Context context) throws PaymentException {
-        int validationResId = PaymentUI.getInstance().getValidationResId();
-        return new Validator(ResourceLoader.loadValidations(context.getResources(), validationResId));
+        return new Validator(ResourceLoader.loadValidations(context.getResources(), R.raw.validations));
     }
 }
