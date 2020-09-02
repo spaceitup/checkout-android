@@ -39,9 +39,6 @@ public final class PaymentUI {
     /** The cached payment theme */
     private PaymentTheme theme;
 
-    /** The validation resource file id */
-    private int validationResId;
-
     /** The group resource file id */
     private int groupResId;
 
@@ -139,24 +136,6 @@ public final class PaymentUI {
     }
 
     /**
-     * Get the validation resource file id. The validation file contains the validation settings for credit and debit cards.
-     *
-     * @return the validation resource id
-     */
-    public int getValidationResId() {
-        return validationResId;
-    }
-
-    /**
-     * Set the validation resource file id. The validation file contains the validation settings for credit and debit cards.
-     *
-     * @param validationResId containing the resource id of the validation file.
-     */
-    public void setValidationResId(@RawRes int validationResId) {
-        this.validationResId = validationResId;
-    }
-
-    /**
      * Get the group resource file id. The group file defines how payment methods are grouped in the payment page.
      *
      * @return the group resource id
@@ -220,9 +199,6 @@ public final class PaymentUI {
 
         if (theme == null) {
             setPaymentTheme(PaymentTheme.createDefault());
-        }
-        if (validationResId == 0) {
-            setValidationResId(R.raw.validations);
         }
         if (groupResId == 0) {
             setGroupResId(R.raw.groups);

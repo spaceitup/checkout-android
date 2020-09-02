@@ -150,9 +150,6 @@ public final class BasicActivity extends AppCompatActivity {
         paymentUI.setListUrl(listUrl);
         paymentUI.setPaymentTheme(createPaymentTheme());
 
-        // The custom validation settings file, the default SDK validations are sufficient in most cases 
-        //paymentUI.setValidationResId(R.raw.customvalidations);
-
         // Set the orientation to be fixed to landscape mode
         //paymentUI.setOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
 
