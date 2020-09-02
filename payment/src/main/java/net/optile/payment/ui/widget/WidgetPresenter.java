@@ -8,7 +8,6 @@
 
 package net.optile.payment.ui.widget;
 
-import androidx.fragment.app.DialogFragment;
 import net.optile.payment.validation.ValidationResult;
 
 /**
@@ -46,14 +45,6 @@ public interface WidgetPresenter {
      * @return the max length or -1 if not available
      */
     int getMaxLength(String code, String type);
-
-    /**
-     * Ask the presenter to show the DialogFragment
-     *
-     * @param dialog to be shown to the user
-     * @param tag to identify the DialogFragment
-     */
-    void showDialogFragment(DialogFragment dialog, String tag);
 
     /**
      * Widgets call this method to validate their input values. The first value is mandatory, the second is optional.

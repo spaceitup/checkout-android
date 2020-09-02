@@ -13,7 +13,6 @@ import java.util.List;
 import android.content.Context;
 import android.view.ViewGroup;
 import androidx.annotation.NonNull;
-import androidx.fragment.app.DialogFragment;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.recyclerview.widget.RecyclerView.ViewHolder;
 import net.optile.payment.localization.Localization;
@@ -109,13 +108,6 @@ final class ListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
             return;
         }
         list.showKeyboard();
-    }
-
-    void showDialogFragment(int position, DialogFragment dialog, String tag) {
-        if (isInvalidPosition(position)) {
-            return;
-        }
-        list.showDialogFragment(dialog, tag);
     }
 
     void onActionClicked(int position) {

@@ -8,7 +8,6 @@
 
 package net.optile.payment.ui.list;
 
-import androidx.fragment.app.DialogFragment;
 import net.optile.payment.ui.widget.WidgetPresenter;
 import net.optile.payment.validation.ValidationResult;
 
@@ -48,11 +47,6 @@ class CardWidgetPresenter implements WidgetPresenter {
     @Override
     public int getMaxLength(String code, String type) {
         return adapter.getMaxLength(holder.getAdapterPosition(), code, type);
-    }
-
-    @Override
-    public void showDialogFragment(DialogFragment dialog, String tag) {
-        adapter.showDialogFragment(holder.getAdapterPosition(), dialog, tag);
     }
 
     @Override
