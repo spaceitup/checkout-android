@@ -26,13 +26,6 @@ interface PaymentView {
     void showProgress(boolean visible);
 
     /**
-     * Show the default error dialog to the user, notify the listener of events in this dialog.
-     *
-     * @param listener to be notified of dialog events
-     */
-    void showDefaultErrorDialog(PaymentDialogListener listener);
-
-    /**
      * Show the connection error dialog to the user, notify the listener of events in this dialog.
      *
      * @param listener to be notified of dialog events
@@ -40,7 +33,17 @@ interface PaymentView {
     void showConnectionErrorDialog(PaymentDialogListener listener);
 
     /**
+     * Show the hint dialog to the user, notify the listener of events in this dialog.
+     *
+     * @param networkCode code of the network e.g. VISA
+     * @param type of the input field e.g. verificationCode
+     * @param listener to be notified of dialog events
+     */
+    void showHintDialog(String networkCode, String type, PaymentDialogListener listener);
+
+    /**
      * Show the interaction text to the user, notify the listener of events in this dialog.
+     * When there is no localization for the interaction then the default error will be shown to the user.
      *
      * @param listener to be notified of dialog events
      */
@@ -55,7 +58,7 @@ interface PaymentView {
 
     /**
      * Set the current activity payment result, this is either PaymentUI.RESULT_CODE_OK,
-     * PaymentUI.RESULT_CODE_CANCELED
+     * PaymentUI.RESULT_CODE_ERROR
      *
      * @param resultCode the current resultCode
      * @param result containing the Payment result state

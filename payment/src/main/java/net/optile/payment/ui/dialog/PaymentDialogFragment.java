@@ -20,6 +20,7 @@ import android.view.View;
 import android.widget.ImageView;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.DialogFragment;
+import androidx.fragment.app.FragmentManager;
 import net.optile.payment.R;
 
 /**
@@ -31,6 +32,7 @@ public class PaymentDialogFragment extends DialogFragment {
     private String message;
     private String negativeButton;
     private String positiveButton;
+    private String tag;
     private int imageResId;
     private PaymentDialogListener listener;
 
@@ -80,12 +82,30 @@ public class PaymentDialogFragment extends DialogFragment {
     }
 
     /**
+     * Set the tag of this dialog fragment
+     *
+     * @param tag of the dialog fragment
+     */
+    public void setTag(String tag) {
+        this.tag = tag;
+    }
+
+    /**
      * Set the dialog listener
      *
      * @param listener to be notified of events in this dialog
      */
     public void setListener(PaymentDialogListener listener) {
         this.listener = listener;
+    }
+
+    /**
+     * Show this payment dialog fragment using the manager
+     *
+     * @param manager to be used to show this dialog
+     */
+    public void show(FragmentManager manager) {
+        show(manager, tag);
     }
 
     @Override

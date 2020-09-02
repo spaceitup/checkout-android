@@ -224,7 +224,7 @@ Code sample how to obtain the PaymentResult from inside the onActivityResult() m
             Interaction interaction = result.getInteraction();
             OperationResult operationResult = result.getOperationResult();
         }
-        if (resultCode == PaymentUI.RESULT_CODE_CANCELED) {
+        if (resultCode == PaymentUI.RESULT_CODE_ERROR) {
             Interaction interaction = result.getInteraction();
             OperationResult operationResult = result.getOperationResult();
             PaymentError error = result.getPaymentError();
@@ -234,17 +234,17 @@ Code sample how to obtain the PaymentResult from inside the onActivityResult() m
 Success or failure
 ------------------
 
-To make processing of the payment result easier, the resultCode provided in the onActivityResult() method defines two different flows. The first is the success flow (RESULT_CODE_OK) and is used when no changes were made or the payment was successful. The second is the failure flow (RESULT_CODE_CANCELED) and is used when the payment was canceled or an error occurred.
+To make processing of the payment result easier, the resultCode provided in the onActivityResult() method defines two different flows. The first is the success flow (RESULT_CODE_OK) and is used when no changes were made or the payment was successful. The second is the error flow (RESULT_CODE_ERROR) and is used when the payment failed because of an error.
 
 Success
 ~~~~~~~
 
-RESULT_CODE_OK is used to indicate the payment was successful, the payment result will contain both the Interaction and OperationResult. This result code is also used to indicate that nothing has changed, e.g. the user closed the payment page, both Interaction and OperationResult will then be null.
+RESULT_CODE_OK is used to indicate the payment was successful, the payment result will contain both the Interaction and OperationResult and the Interaction code will be PROCEED. This result code is also used to indicate that nothing has changed, e.g. the user closed the payment page, both Interaction and OperationResult will then be null. 
 
 Failure
 ~~~~~~~
 
-RESULT_CODE_CANCELED is used when the payment was canceled or an internal error occurred inside the Android SDK. For both cases the Interaction is set in the payment result. The OperationResult is optional and if set, it provides more information why the payment operation failed. The PaymentError is also optional and if set, it provides more information about an internal error that occurred inside the Android SDK. The OperationResult and PaymentError are never set together in the same payment result. 
+RESULT_CODE_ERROR is used when the payment failed or an internal error occurred inside the Android SDK. For both cases the Interaction is set in the payment result. The OperationResult is optional and if set, it provides more information why the payment operation failed. The PaymentError is also optional and if set, it provides more information about an internal error that occurred inside the Android SDK. The OperationResult and PaymentError are never set together in the same payment result. 
 
 Internal Errors
 ---------------

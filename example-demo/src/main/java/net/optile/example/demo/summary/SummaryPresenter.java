@@ -107,7 +107,7 @@ final class SummaryPresenter {
             case PaymentUI.RESULT_CODE_OK:
                 loadPaymentDetails(view.getListUrl());
                 break;
-            case PaymentUI.RESULT_CODE_CANCELED:
+            case PaymentUI.RESULT_CODE_ERROR:
                 handleResultCanceled(result.paymentResult);
                 break;
         }
@@ -118,7 +118,7 @@ final class SummaryPresenter {
             case PaymentUI.RESULT_CODE_OK:
                 handleResultOk(result.paymentResult);
                 break;
-            case PaymentUI.RESULT_CODE_CANCELED:
+            case PaymentUI.RESULT_CODE_ERROR:
                 handleResultCanceled(result.paymentResult);
                 break;
         }

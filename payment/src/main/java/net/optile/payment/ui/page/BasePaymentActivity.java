@@ -16,13 +16,14 @@ import android.view.View;
 import android.view.ViewGroup;
 import androidx.annotation.VisibleForTesting;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.DialogFragment;
 import androidx.test.espresso.IdlingResource;
 import net.optile.payment.R;
+import net.optile.payment.localization.Localization;
 import net.optile.payment.model.Interaction;
 import net.optile.payment.ui.PaymentResult;
 import net.optile.payment.ui.PaymentTheme;
 import net.optile.payment.ui.PaymentUI;
+import net.optile.payment.ui.dialog.PaymentDialogFragment;
 import net.optile.payment.ui.dialog.PaymentDialogFragment.PaymentDialogListener;
 import net.optile.payment.ui.dialog.PaymentDialogHelper;
 import net.optile.payment.ui.page.idlingresource.SimpleIdlingResource;
@@ -93,14 +94,14 @@ abstract class BasePaymentActivity extends AppCompatActivity implements PaymentV
      * {@inheritDoc}
      */
     @Override
-    public void showDefaultErrorDialog(PaymentDialogListener listener) {
+    public void showHintDialog(String networkCode, String type, PaymentDialogListener listener) {
         if (!active) {
             return;
         }
-        progressView.setVisible(false);
-        DialogFragment dialog = PaymentDialogHelper.createDefaultErrorDialog(listener);
-        showDialogFragment(dialog, "dialog_defaulterror");
+        PaymentDialogFragment dialog = PaymentDialogHelper.createHintDialog(networkCode, type, listener);
+        showPaymentDialog(dialog);
     }
+
 
     /**
      * {@inheritDoc}
@@ -111,8 +112,8 @@ abstract class BasePaymentActivity extends AppCompatActivity implements PaymentV
             return;
         }
         progressView.setVisible(false);
-        DialogFragment dialog = PaymentDialogHelper.createConnectionErrorDialog(listener);
-        showDialogFragment(dialog, "dialog_connectionerror");
+        PaymentDialogFragment dialog = PaymentDialogHelper.createConnectionErrorDialog(listener);
+        showPaymentDialog(dialog);
     }
 
     /**
@@ -124,8 +125,13 @@ abstract class BasePaymentActivity extends AppCompatActivity implements PaymentV
             return;
         }
         progressView.setVisible(false);
-        DialogFragment dialog = PaymentDialogHelper.createInteractionDialog(interaction, listener);
-        showDialogFragment(dialog, "dialog_interaction");
+        PaymentDialogFragment dialog;
+        if (Localization.hasInteraction(interaction)) {
+            dialog = PaymentDialogHelper.createInteractionDialog(interaction, listener);
+        } else {
+            dialog = PaymentDialogHelper.createDefaultErrorDialog(listener);
+        }
+        showPaymentDialog(dialog);
     }
 
     /**
@@ -178,10 +184,9 @@ abstract class BasePaymentActivity extends AppCompatActivity implements PaymentV
      * Show a dialog fragment to the user
      *
      * @param dialog to be shown
-     * @param tag identifies the dialog
      */
-    public void showDialogFragment(DialogFragment dialog, String tag) {
-        dialog.show(getSupportFragmentManager(), tag);
+    public void showPaymentDialog(PaymentDialogFragment dialog) {
+        dialog.show(getSupportFragmentManager());
 
         // For automated testing
         if (dialogIdlingResource != null) {

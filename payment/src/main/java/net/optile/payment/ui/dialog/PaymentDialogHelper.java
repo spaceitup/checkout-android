@@ -21,13 +21,11 @@ import static net.optile.payment.localization.LocalizationKey.LABEL_TITLE;
 import com.google.android.material.snackbar.Snackbar;
 
 import android.view.View;
-import androidx.fragment.app.DialogFragment;
 import net.optile.payment.R;
 import net.optile.payment.core.PaymentInputType;
 import net.optile.payment.core.PaymentNetworkCodes;
 import net.optile.payment.localization.Localization;
 import net.optile.payment.model.Interaction;
-import net.optile.payment.ui.model.PaymentCard;
 
 /**
  * Class with helper methods for creating themed dialogs and snackbars.
@@ -45,61 +43,58 @@ public class PaymentDialogHelper {
         return Snackbar.make(view, message, Snackbar.LENGTH_LONG);
     }
 
-    /**
-     * Helper method to create a hint dialog for the given paymentcard and input type.
-     *
-     * @param card PaymentCard from which this request originated
-     * @param type input type, i.e. number or verificationCode.
-     */
-    public static DialogFragment createHintDialog(PaymentCard card, String type) {
-        String code = card.getCode();
+    public static PaymentDialogFragment createHintDialog(String networkCode, String type,
+        PaymentDialogFragment.PaymentDialogListener listener) {
         PaymentDialogFragment dialog = new PaymentDialogFragment();
-        dialog.setTitle(Localization.translateAccountHint(code, type, LABEL_TITLE));
-        dialog.setMessage(Localization.translateAccountHint(code, type, LABEL_TEXT));
-        dialog.setImageResId(getHintImageResId(card, type));
+        dialog.setTitle(Localization.translateAccountHint(networkCode, type, LABEL_TITLE));
+        dialog.setMessage(Localization.translateAccountHint(networkCode, type, LABEL_TEXT));
+        dialog.setImageResId(getHintImageResId(networkCode, type));
+        dialog.setTag("dialog_hint");
         dialog.setPositiveButton(Localization.translate(BUTTON_OK));
         return dialog;
     }
 
-    public static DialogFragment createMessageDialog(String title, String message,
+    public static PaymentDialogFragment createMessageDialog(String title, String message, String tag,
         PaymentDialogFragment.PaymentDialogListener listener) {
         PaymentDialogFragment dialog = new PaymentDialogFragment();
         dialog.setListener(listener);
         dialog.setTitle(title);
         dialog.setMessage(message);
+        dialog.setTag(tag);
         dialog.setPositiveButton(Localization.translate(BUTTON_OK));
         return dialog;
     }
 
-    public static DialogFragment createDefaultErrorDialog(PaymentDialogFragment.PaymentDialogListener listener) {
+    public static PaymentDialogFragment createDefaultErrorDialog(PaymentDialogFragment.PaymentDialogListener listener) {
         String title = Localization.translate(ERROR_DEFAULT_TITLE);
         String message = Localization.translate(ERROR_DEFAULT_TEXT);
-        return createMessageDialog(title, message, listener);
+        return createMessageDialog(title, message, "dialog_defaulterror", listener);
     }
 
-    public static DialogFragment createInteractionDialog(Interaction interaction,
+    public static PaymentDialogFragment createInteractionDialog(Interaction interaction,
         PaymentDialogFragment.PaymentDialogListener listener) {
         String title = Localization.translateInteraction(interaction, LABEL_TITLE);
         String message = Localization.translateInteraction(interaction, LABEL_TEXT);
-        return createMessageDialog(title, message, listener);
+        return createMessageDialog(title, message, "dialog_interaction", listener);
     }
 
-    public static DialogFragment createConnectionErrorDialog(PaymentDialogFragment.PaymentDialogListener listener) {
+    public static PaymentDialogFragment createConnectionErrorDialog(PaymentDialogFragment.PaymentDialogListener listener) {
         PaymentDialogFragment dialog = new PaymentDialogFragment();
         dialog.setListener(listener);
         dialog.setTitle(Localization.translate(ERROR_CONNECTION_TITLE));
         dialog.setMessage(Localization.translate(ERROR_CONNECTION_TEXT));
         dialog.setNegativeButton(Localization.translate(BUTTON_CANCEL));
         dialog.setPositiveButton(Localization.translate(BUTTON_RETRY));
+        dialog.setTag("dialog_connectionerror");
         return dialog;
     }
 
-    private static int getHintImageResId(PaymentCard card, String type) {
+    private static int getHintImageResId(String networkCode, String type) {
 
         if (!PaymentInputType.VERIFICATION_CODE.equals(type)) {
             return 0;
         }
-        switch (card.getCode()) {
+        switch (networkCode) {
             case PaymentNetworkCodes.AMEX:
                 return R.drawable.img_amex;
             default:

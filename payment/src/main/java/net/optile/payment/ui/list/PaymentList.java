@@ -21,14 +21,12 @@ import android.os.IBinder;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.TextView;
-import androidx.fragment.app.DialogFragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.LinearSmoothScroller;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.recyclerview.widget.SimpleItemAnimator;
 import net.optile.payment.R;
 import net.optile.payment.localization.Localization;
-import net.optile.payment.ui.dialog.PaymentDialogHelper;
 import net.optile.payment.ui.model.AccountCard;
 import net.optile.payment.ui.model.NetworkCard;
 import net.optile.payment.ui.model.PaymentCard;
@@ -129,17 +127,12 @@ public final class PaymentList {
         return this.session;
     }
 
-    void showDialogFragment(DialogFragment dialog, String tag) {
-        activity.showDialogFragment(dialog, tag);
-    }
-
     void onHintClicked(int position, String type) {
         ListItem item = items.get(position);
         PaymentCard card = item.getPaymentCard();
 
         if (card != null) {
-            DialogFragment dialog = PaymentDialogHelper.createHintDialog(card, type);
-            showDialogFragment(dialog, "hint_dialog");
+            activity.showHintDialog(card.getCode(), type, null);
         }
     }
 
@@ -184,7 +177,7 @@ public final class PaymentList {
         }
         emptyMessage.setText(msg);
     }
-    
+
     private void setPaymentListItems(PaymentSession session) {
         items.clear();
         this.selIndex = -1;
