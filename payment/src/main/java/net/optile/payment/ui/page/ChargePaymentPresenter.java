@@ -269,8 +269,15 @@ final class ChargePaymentPresenter implements PaymentSessionListener, NetworkSer
     private void handleProcessPaymentCanceled(PaymentResult result) {
         if (result.hasNetworkFailureError()) {
             handleProcessNetworkFailure(result);
-        } else {
-            closeWithErrorMessage(result);
+            return;
+        }
+        Interaction interaction = result.getInteraction();
+        switch (interaction.getCode()) {
+            case InteractionCode.RELOAD:
+                closeWithCanceledCode(result);
+                break;
+            default:
+                closeWithErrorMessage(result);
         }
     }
 
