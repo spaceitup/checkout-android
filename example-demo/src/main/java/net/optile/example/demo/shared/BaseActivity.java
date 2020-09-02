@@ -8,13 +8,12 @@
 
 package net.optile.example.demo.shared;
 
-import com.google.android.material.dialog.MaterialAlertDialogBuilder;
-
-import android.content.DialogInterface;
 import android.os.Bundle;
 import android.view.MenuItem;
 import androidx.appcompat.app.AppCompatActivity;
 import net.optile.example.demo.R;
+import net.optile.payment.ui.dialog.PaymentDialogFragment;
+import net.optile.payment.ui.dialog.PaymentDialogHelper;
 
 /**
  * Base Activity for Activities used in this demo, it stores and retrieves the listUrl value.
@@ -82,28 +81,33 @@ public abstract class BaseActivity extends AppCompatActivity {
     }
 
     /**
-     * Show error dialog to the user
+     * Show error dialog to the user, the payment dialog from the android-sdk is used
+     * to display a material designed dialog.
      *
-     * @param error the error message to be shown in the dialog
+     * @param errorResId error resource string id
      */
-    public void showErrorDialog(String error) {
-        String message = String.format(getString(R.string.dialog_error_message), error);
-        MaterialAlertDialogBuilder builder = new MaterialAlertDialogBuilder(this);
-        builder.setTitle(R.string.dialog_error_title);
-        builder.setMessage(message);
-        builder.setPositiveButton(getString(R.string.dialog_error_button), new DialogInterface.OnClickListener() {
-            public void onClick(DialogInterface dialog, int which) {
-                onErrorDialogClosed();
-            }
-        });
-
-        builder.setOnDismissListener(new DialogInterface.OnDismissListener() {
+    public void showErrorDialog(int errorResId) {
+        PaymentDialogFragment.PaymentDialogListener listener = new PaymentDialogFragment.PaymentDialogListener() {
             @Override
-            public void onDismiss(DialogInterface dialog) {
+            public void onPositiveButtonClicked() {
                 onErrorDialogClosed();
             }
-        });
-        builder.create().show();
+
+            @Override
+            public void onNegativeButtonClicked() {
+                onErrorDialogClosed();
+            }
+
+            @Override
+            public void onDismissed() {
+                onErrorDialogClosed();
+            }
+        };
+        String title = getString(R.string.dialog_error_title);
+        String error = getString(errorResId);
+        String tag = "dialog_exampledemo";
+        PaymentDialogFragment dialog = PaymentDialogHelper.createMessageDialog(title, error, tag, listener);
+        dialog.show(getSupportFragmentManager());
     }
 
     /**
@@ -111,5 +115,6 @@ public abstract class BaseActivity extends AppCompatActivity {
      * Activities extending from this BaseActivity should implement this method in order to receive this event.
      */
     public void onErrorDialogClosed() {
+
     }
 }

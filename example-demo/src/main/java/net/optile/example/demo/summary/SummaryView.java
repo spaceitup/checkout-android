@@ -16,26 +16,26 @@ import net.optile.payment.model.PresetAccount;
 interface SummaryView {
 
     /**
-     * Close this summary screen
+     * Close this summary view
      */
-    void closeScreen();
+    void close();
 
     /**
-     * Show the confirm screen to the user
+     * Show the payment confirmation to the user
      */
-    void showConfirmScreen();
+    void showPaymentConfirmation();
 
     /**
-     * Show the payment list screen of the android-sdk
+     * Show the list of payments using the android-sdk
      */
-    void showPaymentListScreen();
+    void showPaymentList();
 
     /**
      * Abort the payment with message
      *
      * @param message the optional message to be shown to the user
      */
-    void closePayment(String message);
+    void showErrorAndStopPayment();
 
     /**
      * Show the loading animation

@@ -44,15 +44,15 @@ final class CheckoutPresenter {
     void handleSdkResult(SdkResult result) {
         switch (result.resultCode) {
             case PaymentUI.RESULT_CODE_OK:
-                handleResultOk(result.paymentResult);
+                handlePaymentResultOk(result.paymentResult);
                 break;
             case PaymentUI.RESULT_CODE_ERROR:
-                handleResultCanceled(result.paymentResult);
+                handlePaymentResultError(result.paymentResult);
                 break;
         }
     }
 
-    private void handleResultOk(PaymentResult result) {
+    private void handlePaymentResultOk(PaymentResult result) {
         Interaction interaction = result.getInteraction();
         if (interaction == null) {
             return;
@@ -65,22 +65,22 @@ final class CheckoutPresenter {
                 return;
             }
         }
-        view.showPaymentConfirmed();
+        view.showPaymentConfirmation();
     }
 
 
-    private void handleResultCanceled(PaymentResult result) {
+    private void handlePaymentResultError(PaymentResult result) {
         Interaction interaction = result.getInteraction();
         switch (interaction.getCode()) {
             case InteractionCode.ABORT:
                 if (!result.hasNetworkFailureError()) {
-                    view.closePayment();
+                    view.showErrorAndStopPayment();
                 }
                 break;
             case InteractionCode.VERIFY:
                 // VERIFY means that a charge request has been made but the status of the payment could
                 // not be verified by the Android-SDK, i.e. because of a network error
-                view.closePayment();
+                view.showErrorAndStopPayment();
         }
     }
 }
