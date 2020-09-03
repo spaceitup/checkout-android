@@ -115,6 +115,5 @@ public abstract class BaseActivity extends AppCompatActivity {
      * Activities extending from this BaseActivity should implement this method in order to receive this event.
      */
     public void onErrorDialogClosed() {
-
     }
 }
