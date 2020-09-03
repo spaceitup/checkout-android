@@ -129,7 +129,7 @@ task uploadExternal(type: Upload) {
     repositories.mavenDeployer {
         configuration = configurations.deployerJars
 
-        repository(url: "packagecloud+https://packagecloud.io/optile/repo") {
+        repository(url: "packagecloud+https://packagecloud.io/optile/android") {
             authentication(password: packageCloudMavenPassword)
             pom.version = versionName
             pom.artifactId = "android-sdk"
