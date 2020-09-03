@@ -210,7 +210,7 @@ public final class SummaryActivity extends BaseActivity implements SummaryView {
      * {@inheritDoc}
      */
     @Override
-    public void showErrorAndStopPayment() {
+    public void stopPaymentWithErrorMessage() {
         if (!active) {
             return;
         }

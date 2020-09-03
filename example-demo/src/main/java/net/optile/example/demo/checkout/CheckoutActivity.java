@@ -113,7 +113,7 @@ public final class CheckoutActivity extends BaseActivity implements CheckoutView
      * {@inheritDoc}
      */
     @Override
-    public void showErrorAndStopPayment() {
+    public void stopPaymentWithErrorMessage() {
         if (!active) {
             return;
         }

@@ -136,13 +136,13 @@ final class SummaryPresenter {
         switch (interaction.getCode()) {
             case InteractionCode.ABORT:
                 if (!result.hasNetworkFailureError()) {
-                    view.showErrorAndStopPayment();
+                    view.stopPaymentWithErrorMessage();
                 }
                 break;
             case InteractionCode.VERIFY:
                 // VERIFY means that a charge request has been made but the status of the payment could
                 // not be verified by the Android-SDK, i.e. because of a network error
-                view.showErrorAndStopPayment();
+                view.stopPaymentWithErrorMessage();
                 break;
             case InteractionCode.TRY_OTHER_ACCOUNT:
             case InteractionCode.TRY_OTHER_NETWORK:
@@ -172,7 +172,7 @@ final class SummaryPresenter {
     private void handleLoadPaymentSessionError(Throwable error) {
         this.subscription = null;
         this.result = null;
-        view.showErrorAndStopPayment();
+        view.stopPaymentWithErrorMessage();
     }
 
     private ListResult asyncLoadPaymentSession(String listUrl) throws DemoException {

@@ -31,11 +31,9 @@ interface SummaryView {
     void showPaymentList();
 
     /**
-     * Abort the payment with message
-     *
-     * @param message the optional message to be shown to the user
+     * Abort the payment and show a default error to the user
      */
-    void showErrorAndStopPayment();
+    void stopPaymentWithErrorMessage();
 
     /**
      * Show the loading animation

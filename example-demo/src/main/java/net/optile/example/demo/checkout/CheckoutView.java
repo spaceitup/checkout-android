@@ -24,9 +24,9 @@ interface CheckoutView {
     void showPaymentConfirmation();
 
     /**
-     * Show error to the user and stop the payment
+     * Stop the payment and show error message to the user
      */
-    void showErrorAndStopPayment();
+    void stopPaymentWithErrorMessage();
 }
  
 
