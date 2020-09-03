@@ -167,7 +167,7 @@ final class PaymentListPresenter implements PaymentSessionListener, Localization
 
         switch (interaction.getCode()) {
             case PROCEED:
-                handleLoadPaymentSessionOk(session);
+                handleLoadPaymentSessionProceed(session);
                 break;
             default:
                 PaymentResult result = new PaymentResult(listResult.getResultInfo(), interaction);
@@ -197,7 +197,7 @@ final class PaymentListPresenter implements PaymentSessionListener, Localization
         handleLoadingError(cause);
     }
 
-    private void handleLoadPaymentSessionOk(PaymentSession session) {
+    private void handleLoadPaymentSessionProceed(PaymentSession session) {
         this.operation = null;
         this.session = session;
         loadLocalizations(session);
@@ -276,8 +276,8 @@ final class PaymentListPresenter implements PaymentSessionListener, Localization
     @Override
     public void onPreparePaymentResult(int resultCode, PaymentResult result) {
         switch (resultCode) {
-            case PaymentUI.RESULT_CODE_OK:
-                handlePreparePaymentOk();
+            case PaymentUI.RESULT_CODE_PROCEED:
+                handlePreparePaymentProceed();
                 break;
             case PaymentUI.RESULT_CODE_ERROR:
                 handlePreparePaymentError(result);
@@ -293,7 +293,7 @@ final class PaymentListPresenter implements PaymentSessionListener, Localization
         throw new PaymentException("Redirects are not supported by this presenter");
     }
 
-    private void handlePreparePaymentOk() {
+    private void handlePreparePaymentProceed() {
         if (OperationType.CHARGE.equals(operation.getType())) {
             view.showChargePaymentScreen(CHARGEPAYMENT_REQUEST_CODE, operation);
         } else {
@@ -349,9 +349,9 @@ final class PaymentListPresenter implements PaymentSessionListener, Localization
     @Override
     public void onProcessPaymentResult(int resultCode, PaymentResult result) {
         switch (resultCode) {
-            case PaymentUI.RESULT_CODE_OK:
+            case PaymentUI.RESULT_CODE_PROCEED:
                 Interaction interaction = result.getInteraction();
-                closeWithOkCode(result);
+                closeWithProceedCode(result);
                 break;
             case PaymentUI.RESULT_CODE_ERROR:
                 handleProcessPaymentError(result);
@@ -489,7 +489,7 @@ final class PaymentListPresenter implements PaymentSessionListener, Localization
         result.setResultInfo("PresetAccount selected");
         result.setInteraction(new Interaction(code, reason));
         result.setRedirect(redirect);
-        closeWithOkCode(new PaymentResult(result));
+        closeWithProceedCode(new PaymentResult(result));
     }
 
     private void loadPaymentSession(String listUrl) {
@@ -504,8 +504,8 @@ final class PaymentListPresenter implements PaymentSessionListener, Localization
         loadPaymentSession(this.listUrl);
     }
 
-    private void closeWithOkCode(PaymentResult result) {
-        view.setPaymentResult(PaymentUI.RESULT_CODE_OK, result);
+    private void closeWithProceedCode(PaymentResult result) {
+        view.setPaymentResult(PaymentUI.RESULT_CODE_PROCEED, result);
         view.close();
     }
 

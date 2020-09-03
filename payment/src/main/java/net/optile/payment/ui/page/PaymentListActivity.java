@@ -130,7 +130,6 @@ public final class PaymentListActivity extends BasePaymentActivity implements Pa
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case android.R.id.home:
-                setUserClosedPageResult();
                 close();
                 return true;
         }
@@ -142,7 +141,6 @@ public final class PaymentListActivity extends BasePaymentActivity implements Pa
      */
     @Override
     public void onBackPressed() {
-        setUserClosedPageResult();
         super.onBackPressed();
         overridePendingTransition(R.anim.no_animation, R.anim.no_animation);
     }

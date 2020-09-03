@@ -43,7 +43,7 @@ final class CheckoutPresenter {
      */
     void handleSdkResult(SdkResult result) {
         switch (result.resultCode) {
-            case PaymentUI.RESULT_CODE_OK:
+            case PaymentUI.RESULT_CODE_PROCEED:
                 handlePaymentResultOk(result.paymentResult);
                 break;
             case PaymentUI.RESULT_CODE_ERROR:

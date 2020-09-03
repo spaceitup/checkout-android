@@ -164,7 +164,6 @@ public final class ChargePaymentActivity extends BasePaymentActivity implements 
         if (presenter.onBackPressed()) {
             return;
         }
-        setUserClosedPageResult();
         super.onBackPressed();
         setOverridePendingTransition();
     }

@@ -47,7 +47,6 @@ abstract class BasePaymentActivity extends AppCompatActivity implements PaymentV
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setResultIntent(PaymentUI.RESULT_CODE_OK, new PaymentResult("Initializing page."));
         setRequestedOrientation(PaymentUI.getInstance().getOrientation());
     }
 
@@ -210,13 +209,6 @@ abstract class BasePaymentActivity extends AppCompatActivity implements PaymentV
      */
     View getRootView() {
         return ((ViewGroup) this.findViewById(android.R.id.content)).getChildAt(0);
-    }
-
-    /**
-     * Set the PaymentResult indicating that the user has closed the page.
-     */
-    void setUserClosedPageResult() {
-        setResultIntent(PaymentUI.RESULT_CODE_OK, new PaymentResult("Page closed by user."));
     }
 
     /**

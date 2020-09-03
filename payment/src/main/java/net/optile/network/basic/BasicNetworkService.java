@@ -58,7 +58,7 @@ public final class BasicNetworkService extends NetworkService implements Operati
     @Override
     public void preparePayment(Activity activity, int requestCode, Operation operation) throws PaymentException {
         PaymentResult result = new PaymentResult("preparePayment not required");
-        presenter.onPreparePaymentResult(PaymentUI.RESULT_CODE_OK, result);
+        presenter.onPreparePaymentResult(PaymentUI.RESULT_CODE_PROCEED, result);
     }
 
     /**
@@ -78,7 +78,7 @@ public final class BasicNetworkService extends NetworkService implements Operati
     public void onRedirectSuccess(OperationResult operationResult) {
         Interaction interaction = operationResult.getInteraction();
         String code = interaction.getCode();
-        int resultCode = InteractionCode.PROCEED.equals(code) ? PaymentUI.RESULT_CODE_OK :
+        int resultCode = InteractionCode.PROCEED.equals(code) ? PaymentUI.RESULT_CODE_PROCEED :
             PaymentUI.RESULT_CODE_ERROR;
 
         PaymentResult result = new PaymentResult(operationResult);
@@ -114,7 +114,7 @@ public final class BasicNetworkService extends NetworkService implements Operati
             handleRedirect(operationResult);
             return;
         }
-        presenter.onProcessPaymentResult(PaymentUI.RESULT_CODE_OK, result);
+        presenter.onProcessPaymentResult(PaymentUI.RESULT_CODE_PROCEED, result);
     }
 
     /**
@@ -139,7 +139,7 @@ public final class BasicNetworkService extends NetworkService implements Operati
                 break;
             default:
                 PaymentResult result = new PaymentResult(operationResult);
-                presenter.onProcessPaymentResult(PaymentUI.RESULT_CODE_OK, result);
+                presenter.onProcessPaymentResult(PaymentUI.RESULT_CODE_PROCEED, result);
         }
     }
 
