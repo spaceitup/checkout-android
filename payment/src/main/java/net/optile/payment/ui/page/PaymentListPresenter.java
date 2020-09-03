@@ -145,7 +145,7 @@ final class PaymentListPresenter implements PaymentSessionListener, Localization
             networkService.setPresenter(this);
             preparePayment();
         } catch (PaymentException e) {
-            showErrorAndCloseWithErrorCode(e.error);
+            closeWithErrorCode(e.error);
         }
     }
 
@@ -171,7 +171,7 @@ final class PaymentListPresenter implements PaymentSessionListener, Localization
                 break;
             default:
                 PaymentResult result = new PaymentResult(listResult.getResultInfo(), interaction);
-                showErrorAndCloseWithErrorCode(result);
+                closeWithErrorCode(result);
         }
     }
 
@@ -213,7 +213,7 @@ final class PaymentListPresenter implements PaymentSessionListener, Localization
         if (error.isNetworkFailure()) {
             handleLoadingNetworkFailure(error);
         } else {
-            showErrorAndCloseWithErrorCode(error);
+            closeWithErrorCode(error);
         }
     }
 
@@ -250,8 +250,7 @@ final class PaymentListPresenter implements PaymentSessionListener, Localization
 
     private void handleActivityResult(ActivityResult activityResult) {
         if (this.session == null) {
-            PaymentError error = new PaymentError("Missing cached PaymentSession in PaymentListPresenter");
-            showErrorAndCloseWithErrorCode(error);
+            closeWithErrorCode("Missing cached PaymentSession in PaymentListPresenter");
             return;
         }
         PaymentResult result = activityResult.paymentResult;
@@ -321,7 +320,7 @@ final class PaymentListPresenter implements PaymentSessionListener, Localization
                 showErrorAndPaymentSession(interaction);
                 break;
             default:
-                showErrorAndCloseWithErrorCode(result);
+                closeWithErrorCode(result);
         }
     }
 
@@ -379,7 +378,7 @@ final class PaymentListPresenter implements PaymentSessionListener, Localization
                 showErrorAndPaymentSession(interaction);
                 break;
             default:
-                showErrorAndCloseWithErrorCode(result);
+                closeWithErrorCode(result);
         }
     }
 
@@ -406,7 +405,7 @@ final class PaymentListPresenter implements PaymentSessionListener, Localization
         try {
             networkService.preparePayment(view.getActivity(), PREPAREPAYMENT_REQUEST_CODE, operation);
         } catch (PaymentException e) {
-            showErrorAndCloseWithErrorCode(e.error);
+            closeWithErrorCode(e.error);
         }
     }
 
@@ -414,7 +413,7 @@ final class PaymentListPresenter implements PaymentSessionListener, Localization
         try {
             networkService.processPayment(view.getActivity(), PROCESSPAYMENT_REQUEST_CODE, operation);
         } catch (PaymentException e) {
-            showErrorAndCloseWithErrorCode(e.error);
+            closeWithErrorCode(e.error);
         }
     }
 
@@ -483,8 +482,7 @@ final class PaymentListPresenter implements PaymentSessionListener, Localization
         String code = PaymentUtils.getParameterValue(INTERACTION_CODE, parameters);
         String reason = PaymentUtils.getParameterValue(INTERACTION_REASON, parameters);
         if (TextUtils.isEmpty(code) || TextUtils.isEmpty(reason)) {
-            PaymentError error = new PaymentError("Missing Interaction code and reason inside PresetAccount.redirect");
-            showErrorAndCloseWithErrorCode(error);
+            closeWithErrorCode("Missing Interaction code and reason inside PresetAccount.redirect");
             return;
         }
         OperationResult result = new OperationResult();
@@ -511,6 +509,11 @@ final class PaymentListPresenter implements PaymentSessionListener, Localization
         view.close();
     }
 
+    private void closeWithErrorCode(String message) {
+        PaymentError error = new PaymentError(message);
+        closeWithErrorCode(error);
+    }
+
     private void closeWithErrorCode(PaymentError error) {
         PaymentResult result = PaymentResult.fromPaymentError(error);
         closeWithErrorCode(result);
@@ -519,32 +522,6 @@ final class PaymentListPresenter implements PaymentSessionListener, Localization
     private void closeWithErrorCode(PaymentResult result) {
         view.setPaymentResult(PaymentUI.RESULT_CODE_ERROR, result);
         view.close();
-    }
-
-    private void showErrorAndCloseWithErrorCode(PaymentError error) {
-        showErrorAndCloseWithErrorCode(PaymentResult.fromPaymentError(error));
-    }
-
-    private void showErrorAndCloseWithErrorCode(PaymentResult result) {
-        view.setPaymentResult(PaymentUI.RESULT_CODE_ERROR, result);
-        Interaction interaction = result.getInteraction();
-        PaymentDialogListener listener = new PaymentDialogListener() {
-            @Override
-            public void onPositiveButtonClicked() {
-                view.close();
-            }
-
-            @Override
-            public void onNegativeButtonClicked() {
-                view.close();
-            }
-
-            @Override
-            public void onDismissed() {
-                view.close();
-            }
-        };
-        view.showInteractionDialog(interaction, listener);
     }
 
     private void showErrorAndPaymentSession(Interaction interaction) {

@@ -115,7 +115,7 @@ final class ChargePaymentPresenter implements PaymentSessionListener, NetworkSer
                 break;
             default:
                 PaymentResult result = new PaymentResult(listResult.getResultInfo(), interaction);
-                showErrorAndCloseWithErrorCode(result);
+                closeWithErrorCode(result);
         }
     }
 
@@ -129,8 +129,7 @@ final class ChargePaymentPresenter implements PaymentSessionListener, NetworkSer
 
     private void handleLoadSessionOk(PaymentSession session) {
         if (!session.containsLink("operation", operation.getURL())) {
-            String resultInfo = "operation not found in ListResult";
-            showErrorAndCloseWithErrorCode(resultInfo);
+            closeWithErrorCode("operation not found in ListResult");
             return;
         }
         this.session = session;
@@ -146,12 +145,12 @@ final class ChargePaymentPresenter implements PaymentSessionListener, NetworkSer
         String code = operation.getCode();
         String method = session.lookupPaymentMethod(code);
         if (method == null) {
-            showErrorAndCloseWithErrorCode("Payment method lookup failed for code: " + code);
+            closeWithErrorCode("Payment method lookup failed for code: " + code);
             return;
         }
         networkService = NetworkServiceLookup.createService(code, method);
         if (networkService == null) {
-            showErrorAndCloseWithErrorCode("NetworkService lookup failed for: " + code + ", " + method);
+            closeWithErrorCode("NetworkService lookup failed for: " + code + ", " + method);
             return;
         }
         networkService.setPresenter(this);
@@ -177,7 +176,7 @@ final class ChargePaymentPresenter implements PaymentSessionListener, NetworkSer
         if (error.isNetworkFailure()) {
             handleLoadingNetworkFailure(error);
         } else {
-            showErrorAndCloseWithErrorCode(error);
+            closeWithErrorCode(error);
         }
     }
 
@@ -262,8 +261,7 @@ final class ChargePaymentPresenter implements PaymentSessionListener, NetworkSer
     }
 
     private void handleMissingCachedSession() {
-        String message = "Missing cached session in ChargePaymentPresenter";
-        showErrorAndCloseWithErrorCode(message);
+        closeWithErrorCode("Missing cached session in ChargePaymentPresenter");
     }
 
     private void handleProcessPaymentError(PaymentResult result) {
@@ -273,11 +271,13 @@ final class ChargePaymentPresenter implements PaymentSessionListener, NetworkSer
         }
         Interaction interaction = result.getInteraction();
         switch (interaction.getCode()) {
-            case InteractionCode.RELOAD:
-                closeWithErrorCode(result);
+            case InteractionCode.TRY_OTHER_ACCOUNT:
+            case InteractionCode.TRY_OTHER_NETWORK:
+            case InteractionCode.RETRY:
+                showErrorAndCloseWithErrorCode(result);
                 break;
             default:
-                showErrorAndCloseWithErrorCode(result);
+                closeWithErrorCode(result);
         }
     }
 
@@ -314,7 +314,7 @@ final class ChargePaymentPresenter implements PaymentSessionListener, NetworkSer
         try {
             networkService.processPayment(view.getActivity(), CHARGE_REQUEST_CODE, operation);
         } catch (PaymentException e) {
-            showErrorAndCloseWithErrorCode(e.error);
+            closeWithErrorCode(e.error);
         }
     }
 
@@ -339,6 +339,11 @@ final class ChargePaymentPresenter implements PaymentSessionListener, NetworkSer
         view.close();
     }
 
+    private void closeWithErrorCode(String message) {
+        PaymentError error = new PaymentError(message);
+        closeWithErrorCode(error);
+    }
+
     private void closeWithErrorCode(PaymentError error) {
         PaymentResult result = PaymentResult.fromPaymentError(error);
         closeWithErrorCode(result);
@@ -347,14 +352,6 @@ final class ChargePaymentPresenter implements PaymentSessionListener, NetworkSer
     private void closeWithErrorCode(PaymentResult result) {
         view.setPaymentResult(PaymentUI.RESULT_CODE_ERROR, result);
         view.close();
-    }
-
-    private void showErrorAndCloseWithErrorCode(String message) {
-        showErrorAndCloseWithErrorCode(new PaymentError(message));
-    }
-
-    private void showErrorAndCloseWithErrorCode(PaymentError error) {
-        showErrorAndCloseWithErrorCode(PaymentResult.fromPaymentError(error));
     }
 
     private void showErrorAndCloseWithErrorCode(PaymentResult result) {

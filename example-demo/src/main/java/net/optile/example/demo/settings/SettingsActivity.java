@@ -60,7 +60,7 @@ public final class SettingsActivity extends BaseActivity {
         String listUrl = listInput.getText().toString().trim();
 
         if (TextUtils.isEmpty(listUrl) || !Patterns.WEB_URL.matcher(listUrl).matches()) {
-            showErrorDialog(getString(R.string.dialog_error_listurl_invalid));
+            showErrorDialog(R.string.dialog_error_listurl_invalid);
             return;
         }
         Intent intent = CheckoutActivity.createStartIntent(this, listUrl);
