@@ -513,7 +513,7 @@ final class PaymentListPresenter implements PaymentSessionListener, Localization
         PaymentError error = new PaymentError(message);
         closeWithErrorCode(error);
     }
-    
+
     private void closeWithErrorCode(PaymentError error) {
         PaymentResult result = PaymentResult.fromPaymentError(error);
         closeWithErrorCode(result);
