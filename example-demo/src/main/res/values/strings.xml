@@ -40,7 +40,7 @@
     <string name="confirm_success">Your order is\nconfirmed!</string>
 
     <string name="dialog_error_title">Checkout Error</string>
-    <string name="dialog_error_message">A Checkout error occurred: %1$s</string>
+    <string name="dialog_error_message">An error occurred while processing your payment</string>
     <string name="dialog_error_button">Close</string>
     <string name="dialog_error_list">Error loading list data for creating the PaymentSession</string>
     <string name="dialog_previous_missing">Please first create a new Charge or Preset Session</string>

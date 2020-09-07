@@ -101,7 +101,7 @@ public final class CheckoutActivity extends BaseActivity implements CheckoutView
      * {@inheritDoc}
      */
     @Override
-    public void showPaymentConfirmed() {
+    public void showPaymentConfirmation() {
         if (!active) {
             return;
         }
@@ -113,11 +113,11 @@ public final class CheckoutActivity extends BaseActivity implements CheckoutView
      * {@inheritDoc}
      */
     @Override
-    public void closePayment() {
+    public void stopPaymentWithErrorMessage() {
         if (!active) {
             return;
         }
-        supportFinishAfterTransition();
+        showErrorDialog(R.string.dialog_error_message);
     }
 
     /**
@@ -133,6 +133,14 @@ public final class CheckoutActivity extends BaseActivity implements CheckoutView
         if (result != null) {
             this.sdkResult = new SdkResult(requestCode, resultCode, result);
         }
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void onErrorDialogClosed() {
+        supportFinishAfterTransition();
     }
 
     private void initToolbar() {

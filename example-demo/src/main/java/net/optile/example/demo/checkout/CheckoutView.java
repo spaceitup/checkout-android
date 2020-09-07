@@ -19,14 +19,14 @@ interface CheckoutView {
     void showPaymentSummary();
 
     /**
-     * Show the confirmed page to the user
+     * Show the payment confirmation to the user
      */
-    void showPaymentConfirmed();
+    void showPaymentConfirmation();
 
     /**
-     * Close the payment and return to the SettingsScreen
+     * Stop the payment and show error message to the user
      */
-    void closePayment();
+    void stopPaymentWithErrorMessage();
 }
  
 

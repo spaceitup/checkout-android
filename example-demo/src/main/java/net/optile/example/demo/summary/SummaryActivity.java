@@ -90,7 +90,7 @@ public final class SummaryActivity extends BaseActivity implements SummaryView {
         Button edit = findViewById(R.id.button_edit);
         edit.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                showPaymentListScreen();
+                showPaymentList();
             }
         });
         Button button = findViewById(R.id.button_pay);
@@ -137,9 +137,10 @@ public final class SummaryActivity extends BaseActivity implements SummaryView {
      * {@inheritDoc}
      */
     @Override
-    public void showConfirmScreen() {
+    public void showPaymentConfirmation() {
         if (active) {
-            showScreen(ConfirmActivity.createStartIntent(this));
+            startActivity(ConfirmActivity.createStartIntent(this));
+            supportFinishAfterTransition();
         }
     }
 
@@ -209,15 +210,11 @@ public final class SummaryActivity extends BaseActivity implements SummaryView {
      * {@inheritDoc}
      */
     @Override
-    public void closePayment(String message) {
+    public void stopPaymentWithErrorMessage() {
         if (!active) {
             return;
         }
-        if (message != null) {
-            showErrorDialog(message);
-        } else {
-            showSettingsScreen();
-        }
+        showErrorDialog(R.string.dialog_error_message);
     }
 
     /**
@@ -245,16 +242,17 @@ public final class SummaryActivity extends BaseActivity implements SummaryView {
      */
     @Override
     public void onErrorDialogClosed() {
-        showSettingsScreen();
+        startActivity(SettingsActivity.createStartIntent(this));
+        supportFinishAfterTransition();
     }
 
     /**
      * {@inheritDoc}
      */
     @Override
-    public void closeScreen() {
+    public void close() {
         if (active) {
-            finish();
+            supportFinishAfterTransition();
         }
     }
 
@@ -262,16 +260,10 @@ public final class SummaryActivity extends BaseActivity implements SummaryView {
      * {@inheritDoc}
      */
     @Override
-    public void showPaymentListScreen() {
+    public void showPaymentList() {
         if (active) {
             PaymentUI paymentUI = PaymentUI.getInstance();
             paymentUI.showPaymentPage(this, EDIT_REQUEST_CODE);
-        }
-    }
-
-    private void showSettingsScreen() {
-        if (active) {
-            showScreen(SettingsActivity.createStartIntent(this));
         }
     }
 
@@ -288,11 +280,6 @@ public final class SummaryActivity extends BaseActivity implements SummaryView {
         Typeface typeface = ResourcesCompat.getFont(this, R.font.roboto_medium);
         layout.setCollapsedTitleTypeface(typeface);
         layout.setExpandedTitleTypeface(typeface);
-    }
-
-    private void showScreen(Intent intent) {
-        startActivity(intent);
-        supportFinishAfterTransition();
     }
 
     private void onPayClicked() {

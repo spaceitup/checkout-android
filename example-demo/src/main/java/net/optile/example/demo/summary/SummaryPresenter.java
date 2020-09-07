@@ -92,12 +92,12 @@ final class SummaryPresenter {
             .subscribe(new SingleSubscriber<ListResult>() {
                 @Override
                 public void onSuccess(ListResult result) {
-                    callbackLoadPaymentSessionSuccess(result);
+                    handleLoadPaymentSessionSuccess(result);
                 }
 
                 @Override
                 public void onError(Throwable error) {
-                    callbackLoadPaymentSessionError(error);
+                    handleLoadPaymentSessionError(error);
                 }
             });
     }
@@ -108,7 +108,7 @@ final class SummaryPresenter {
                 loadPaymentDetails(view.getListUrl());
                 break;
             case PaymentUI.RESULT_CODE_ERROR:
-                handleResultCanceled(result.paymentResult);
+                handlePaymentResultError(result.paymentResult);
                 break;
         }
     }
@@ -116,39 +116,39 @@ final class SummaryPresenter {
     private void handlePaymentResult(SdkResult result) {
         switch (result.resultCode) {
             case PaymentUI.RESULT_CODE_OK:
-                handleResultOk(result.paymentResult);
+                handlePaymentResultOk(result.paymentResult);
                 break;
             case PaymentUI.RESULT_CODE_ERROR:
-                handleResultCanceled(result.paymentResult);
+                handlePaymentResultError(result.paymentResult);
                 break;
         }
     }
 
-    private void handleResultOk(PaymentResult result) {
+    private void handlePaymentResultOk(PaymentResult result) {
         Interaction interaction = result.getInteraction();
         if (interaction != null) {
-            view.showConfirmScreen();
+            view.showPaymentConfirmation();
         }
     }
 
-    private void handleResultCanceled(PaymentResult result) {
+    private void handlePaymentResultError(PaymentResult result) {
         Interaction interaction = result.getInteraction();
         switch (interaction.getCode()) {
             case InteractionCode.ABORT:
                 if (!result.hasNetworkFailureError()) {
-                    view.closePayment(null);
+                    view.stopPaymentWithErrorMessage();
                 }
                 break;
             case InteractionCode.VERIFY:
                 // VERIFY means that a charge request has been made but the status of the payment could
                 // not be verified by the Android-SDK, i.e. because of a network error
-                view.closePayment(null);
+                view.stopPaymentWithErrorMessage();
                 break;
             case InteractionCode.TRY_OTHER_ACCOUNT:
             case InteractionCode.TRY_OTHER_NETWORK:
             case InteractionCode.RELOAD:
             case InteractionCode.RETRY:
-                view.showPaymentListScreen();
+                view.showPaymentList();
                 break;
         }
     }
@@ -157,22 +157,22 @@ final class SummaryPresenter {
         return subscription != null && !subscription.isUnsubscribed();
     }
 
-    private void callbackLoadPaymentSessionSuccess(ListResult result) {
+    private void handleLoadPaymentSessionSuccess(ListResult result) {
         this.subscription = null;
         this.result = result;
         PresetAccount account = result.getPresetAccount();
         String paymentMethod = getPaymentMethod(account, result);
         if (paymentMethod == null) {
-            view.closeScreen();
+            view.close();
             return;
         }
         view.showPaymentDetails(account, paymentMethod);
     }
 
-    private void callbackLoadPaymentSessionError(Throwable error) {
+    private void handleLoadPaymentSessionError(Throwable error) {
         this.subscription = null;
         this.result = null;
-        view.closePayment(error.toString());
+        view.stopPaymentWithErrorMessage();
     }
 
     private ListResult asyncLoadPaymentSession(String listUrl) throws DemoException {
