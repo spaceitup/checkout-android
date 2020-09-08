@@ -350,7 +350,6 @@ final class PaymentListPresenter implements PaymentSessionListener, Localization
     public void onProcessPaymentResult(int resultCode, PaymentResult result) {
         switch (resultCode) {
             case PaymentUI.RESULT_CODE_PROCEED:
-                Interaction interaction = result.getInteraction();
                 closeWithProceedCode(result);
                 break;
             case PaymentUI.RESULT_CODE_ERROR:
