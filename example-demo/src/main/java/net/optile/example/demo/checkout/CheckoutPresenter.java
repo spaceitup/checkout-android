@@ -43,8 +43,8 @@ final class CheckoutPresenter {
      */
     void handleSdkResult(SdkResult result) {
         switch (result.resultCode) {
-            case PaymentUI.RESULT_CODE_OK:
-                handlePaymentResultOk(result.paymentResult);
+            case PaymentUI.RESULT_CODE_PROCEED:
+                handlePaymentResultProceed(result.paymentResult);
                 break;
             case PaymentUI.RESULT_CODE_ERROR:
                 handlePaymentResultError(result.paymentResult);
@@ -52,7 +52,7 @@ final class CheckoutPresenter {
         }
     }
 
-    private void handlePaymentResultOk(PaymentResult result) {
+    private void handlePaymentResultProceed(PaymentResult result) {
         Interaction interaction = result.getInteraction();
         if (interaction == null) {
             return;

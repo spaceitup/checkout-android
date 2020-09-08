@@ -104,7 +104,7 @@ final class SummaryPresenter {
 
     private void handleEditResult(SdkResult result) {
         switch (result.resultCode) {
-            case PaymentUI.RESULT_CODE_OK:
+            case PaymentUI.RESULT_CODE_PROCEED:
                 loadPaymentDetails(view.getListUrl());
                 break;
             case PaymentUI.RESULT_CODE_ERROR:
@@ -115,7 +115,7 @@ final class SummaryPresenter {
 
     private void handlePaymentResult(SdkResult result) {
         switch (result.resultCode) {
-            case PaymentUI.RESULT_CODE_OK:
+            case PaymentUI.RESULT_CODE_PROCEED:
                 handlePaymentResultOk(result.paymentResult);
                 break;
             case PaymentUI.RESULT_CODE_ERROR:

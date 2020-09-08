@@ -40,7 +40,7 @@ class SdkResult {
      */
     public String getResultCodeString() {
         switch (resultCode) {
-            case PaymentUI.RESULT_CODE_OK:
+            case PaymentUI.RESULT_CODE_PROCEED:
                 return "RESULT_CODE_OK";
             case PaymentUI.RESULT_CODE_ERROR:
                 return "RESULT_CODE_ERROR";

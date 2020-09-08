@@ -111,7 +111,7 @@ final class ChargePaymentPresenter implements PaymentSessionListener, NetworkSer
 
         switch (interaction.getCode()) {
             case InteractionCode.PROCEED:
-                handleLoadSessionOk(session);
+                handleLoadSessionProceed(session);
                 break;
             default:
                 PaymentResult result = new PaymentResult(listResult.getResultInfo(), interaction);
@@ -127,7 +127,7 @@ final class ChargePaymentPresenter implements PaymentSessionListener, NetworkSer
         handleLoadingError(cause);
     }
 
-    private void handleLoadSessionOk(PaymentSession session) {
+    private void handleLoadSessionProceed(PaymentSession session) {
         if (!session.containsLink("operation", operation.getURL())) {
             closeWithErrorCode("operation not found in ListResult");
             return;
@@ -224,8 +224,8 @@ final class ChargePaymentPresenter implements PaymentSessionListener, NetworkSer
     @Override
     public void onProcessPaymentResult(int resultCode, PaymentResult result) {
         switch (resultCode) {
-            case PaymentUI.RESULT_CODE_OK:
-                closeWithOkCode(result);
+            case PaymentUI.RESULT_CODE_PROCEED:
+                closeWithProceedCode(result);
                 break;
             case PaymentUI.RESULT_CODE_ERROR:
                 handleProcessPaymentError(result);
@@ -334,8 +334,8 @@ final class ChargePaymentPresenter implements PaymentSessionListener, NetworkSer
         sessionService.loadPaymentSession(listUrl, view.getActivity());
     }
 
-    private void closeWithOkCode(PaymentResult result) {
-        view.setPaymentResult(PaymentUI.RESULT_CODE_OK, result);
+    private void closeWithProceedCode(PaymentResult result) {
+        view.setPaymentResult(PaymentUI.RESULT_CODE_PROCEED, result);
         view.close();
     }
 
