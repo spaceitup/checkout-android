@@ -39,9 +39,6 @@ public final class PaymentUI {
     /** The cached payment theme */
     private PaymentTheme theme;
 
-    /** The group resource file id */
-    private int groupResId;
-
     private PaymentUI() {
         this.orientation = ActivityInfo.SCREEN_ORIENTATION_LOCKED;
     }
@@ -136,24 +133,6 @@ public final class PaymentUI {
     }
 
     /**
-     * Get the group resource file id. The group file defines how payment methods are grouped in the payment page.
-     *
-     * @return the group resource id
-     */
-    public int getGroupResId() {
-        return groupResId;
-    }
-
-    /**
-     * Set the group resource file id. The group file defines how payment methods are grouped in the payment page.
-     *
-     * @param groupResId contains the resource id of the group file.
-     */
-    public void setGroupResId(@RawRes int groupResId) {
-        this.groupResId = groupResId;
-    }
-
-    /**
      * Open the PaymentPage and instruct the page to immediately charge the PresetAccount.
      * If no PresetAccount is set in the ListResult then an error will be returned.
      *
@@ -199,9 +178,6 @@ public final class PaymentUI {
 
         if (theme == null) {
             setPaymentTheme(PaymentTheme.createDefault());
-        }
-        if (groupResId == 0) {
-            setGroupResId(R.raw.groups);
         }
         activity.finishActivity(requestCode);
         activity.startActivityForResult(intent, requestCode);

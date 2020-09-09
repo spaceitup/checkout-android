@@ -153,8 +153,6 @@ public final class BasicActivity extends AppCompatActivity {
         // Set the orientation to be fixed to landscape mode
         //paymentUI.setOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
 
-        // The custom payment method group settings file
-        // paymentUI.setGroupResId(R.raw.customgroups);
         paymentUI.showPaymentPage(this, PAYMENT_REQUEST_CODE);
     }
 
