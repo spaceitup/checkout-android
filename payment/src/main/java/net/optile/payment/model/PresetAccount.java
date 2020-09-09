@@ -23,6 +23,9 @@ public class PresetAccount {
     private AccountMask maskedAccount;
     /** PCI API, optional */
     private Redirect redirect;
+    /** Simple API, always present */
+    @PaymentMethod.Definition
+    private String method;
 
     /**
      * Gets links.
@@ -94,5 +97,24 @@ public class PresetAccount {
      */
     public void setMaskedAccount(final AccountMask maskedAccount) {
         this.maskedAccount = maskedAccount;
+    }
+
+    /**
+     * Gets value of method.
+     *
+     * @return the method.
+     */
+    @PaymentMethod.Definition
+    public String getMethod() {
+        return method;
+    }
+
+    /**
+     * Sets value of method.
+     *
+     * @param method the method to set.
+     */
+    public void setMethod(@PaymentMethod.Definition final String method) {
+        this.method = method;
     }
 }

@@ -466,7 +466,7 @@ final class PaymentListPresenter implements PaymentSessionListener, Localization
 
     private Operation createOperation(PaymentCard card, Map<String, FormWidget> widgets) throws PaymentException {
         URL url = card.getOperationLink();
-        Operation operation = new Operation(card.getCode(), url);
+        Operation operation = new Operation(card.getCode(), card.getPaymentMethod(), url);
 
         for (FormWidget widget : widgets.values()) {
             widget.putValue(operation);

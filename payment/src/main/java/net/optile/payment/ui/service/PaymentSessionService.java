@@ -228,15 +228,9 @@ public final class PaymentSessionService {
         if (accounts == null || accounts.size() == 0) {
             return cards;
         }
-        AccountCard card;
 
         for (AccountRegistration account : accounts) {
-            PaymentNetwork pn = networks.get(account.getCode());
-
-            if (pn != null) {
-                card = new AccountCard(account, pn);
-                cards.add(card);
-            }
+            cards.add(new AccountCard(account));
         }
         return cards;
     }
@@ -246,11 +240,7 @@ public final class PaymentSessionService {
         if (account == null) {
             return null;
         }
-        PaymentNetwork pn = networks.get(account.getCode());
-        if (pn == null) {
-            return null;
-        }
-        return new PresetCard(account, pn);
+        return new PresetCard(account);
     }
 
     private Map<String, PaymentGroup> loadPaymentGroups(Context context) throws PaymentException {

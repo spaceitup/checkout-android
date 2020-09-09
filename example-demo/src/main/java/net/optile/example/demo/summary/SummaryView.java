@@ -46,9 +46,8 @@ interface SummaryView {
      * Show preset account
      *
      * @param account to be shown in the summary page
-     * @param method the payment method of the PresetAccount
      */
-    void showPaymentDetails(PresetAccount account, String method);
+    void showPaymentDetails(PresetAccount account);
 
     /**
      * Get the list url from the summary view

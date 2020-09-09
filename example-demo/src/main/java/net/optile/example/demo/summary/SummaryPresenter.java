@@ -161,12 +161,11 @@ final class SummaryPresenter {
         this.subscription = null;
         this.result = result;
         PresetAccount account = result.getPresetAccount();
-        String paymentMethod = getPaymentMethod(account, result);
-        if (paymentMethod == null) {
+        if (account == null) {
             view.close();
             return;
         }
-        view.showPaymentDetails(account, paymentMethod);
+        view.showPaymentDetails(account);
     }
 
     private void handleLoadPaymentSessionError(Throwable error) {
@@ -182,23 +181,5 @@ final class SummaryPresenter {
         } catch (PaymentException e) {
             throw new DemoException("Error loading payment session", e);
         }
-    }
-
-    private String getPaymentMethod(PresetAccount account, ListResult listResult) {
-        Networks networks = listResult.getNetworks();
-        if (account == null || networks == null) {
-            return null;
-        }
-        List<ApplicableNetwork> an = networks.getApplicable();
-        if (an == null || an.size() == 0) {
-            return null;
-        }
-        String code = account.getCode();
-        for (ApplicableNetwork network : an) {
-            if (network.getCode().equals(code)) {
-                return network.getMethod();
-            }
-        }
-        return null;
     }
 }

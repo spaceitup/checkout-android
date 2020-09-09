@@ -28,11 +28,9 @@ import net.optile.payment.util.PaymentUtils;
  */
 public final class PresetCard implements PaymentCard {
     private final PresetAccount account;
-    private final PaymentNetwork network;
 
-    public PresetCard(PresetAccount account, PaymentNetwork network) {
+    public PresetCard(PresetAccount account) {
         this.account = account;
-        this.network = network;
     }
 
     /**
@@ -56,7 +54,7 @@ public final class PresetCard implements PaymentCard {
      */
     @Override
     public String getPaymentMethod() {
-        return network.getPaymentMethod();
+        return account.getMethod();
     }
 
     /**

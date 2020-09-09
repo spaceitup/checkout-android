@@ -148,8 +148,7 @@ public final class SummaryActivity extends BaseActivity implements SummaryView {
      * {@inheritDoc}
      */
     @Override
-    public void showPaymentDetails(PresetAccount presetAccount, String method) {
-
+    public void showPaymentDetails(PresetAccount presetAccount) {
         if (!active) {
             return;
         }
@@ -164,7 +163,7 @@ public final class SummaryActivity extends BaseActivity implements SummaryView {
         }
         presetSubtitle.setVisibility(View.GONE);
         if (mask != null) {
-            setAccountMask(mask, method);
+            setAccountMask(mask, presetAccount.getMethod());
         } else {
             presetTitle.setText(presetAccount.getCode());
         }
