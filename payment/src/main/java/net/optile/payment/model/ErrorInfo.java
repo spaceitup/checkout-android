@@ -17,6 +17,23 @@ public class ErrorInfo {
     /** Simple API, always present */
     private Interaction interaction;
 
+    /** 
+     * Construct an empty ErrorInfo
+     */
+    public ErrorInfo() {
+    }
+    
+    /** 
+     * Construct a new ErrorInfo with the provided resultInfo and interaction
+     * 
+     * @param resultInfo to be stored in this ErrorInfo
+     * @param interaction to be stored in this ErrorInfo
+     */
+    public ErrorInfo(String resultInfo, Interaction interaction) {
+        this.resultInfo = resultInfo;
+        this.interaction = interaction;
+    }
+    
     /**
      * Gets value of resultInfo.
      *
