@@ -254,8 +254,7 @@ public final class PaymentSessionService {
     }
 
     private Map<String, PaymentGroup> loadPaymentGroups(Context context) throws PaymentException {
-        int groupResId = PaymentUI.getInstance().getGroupResId();
-        return ResourceLoader.loadPaymentGroups(context.getResources(), groupResId);
+        return ResourceLoader.loadPaymentGroups(context.getResources(), R.raw.groups);
     }
 
     private Validator loadValidator(Context context) throws PaymentException {
