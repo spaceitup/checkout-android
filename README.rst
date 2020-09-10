@@ -460,7 +460,7 @@ The same `themes.xml <./example-basic/src/main/res/values/themes.xml>`_ file in 
 Grouping of Payment Methods
 ===========================
 
-The Android SDK automatically groups together seven different payment methods and presents them in one payment card. 
+The Android SDK automatically groups together seven different payment methods and presents them as one payment option. 
 The following payment methods are grouped together: Discover, Mastercard, Diners, UnionPay, Amex, JCB and Visa.
 
 
