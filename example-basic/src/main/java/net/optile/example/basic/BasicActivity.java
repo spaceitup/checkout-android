@@ -19,11 +19,12 @@ import android.widget.EditText;
 import android.widget.RadioGroup;
 import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
-import net.optile.payment.core.PaymentError;
 import net.optile.payment.model.Interaction;
+import net.optile.payment.ui.PaymentActivityResult;
 import net.optile.payment.ui.PaymentResult;
 import net.optile.payment.ui.PaymentTheme;
 import net.optile.payment.ui.PaymentUI;
+import net.optile.payment.util.PaymentResultHelper;
 
 /**
  * This is the main Activity of this basic example app
@@ -32,7 +33,7 @@ public final class BasicActivity extends AppCompatActivity {
 
     private final static int PAYMENT_REQUEST_CODE = 1;
 
-    private SdkResult sdkResult;
+    private PaymentActivityResult sdkResult;
     private RadioGroup themeGroup;
     private EditText listInput;
     private View resultLayout;
@@ -99,18 +100,19 @@ public final class BasicActivity extends AppCompatActivity {
         if (requestCode != PAYMENT_REQUEST_CODE) {
             return;
         }
-        PaymentResult paymentResult = PaymentResult.fromResultIntent(data);
+        PaymentResult paymentResult = PaymentResultHelper.fromResultIntent(data);
         if (paymentResult != null) {
-            this.sdkResult = new SdkResult(resultCode, paymentResult);
+            sdkResult = new PaymentActivityResult(requestCode, resultCode, paymentResult);
         }
     }
 
-    private void showSdkResult(SdkResult sdkResult) {
-        PaymentResult paymentResult = sdkResult.paymentResult;
+    private void showSdkResult(PaymentActivityResult sdkResult) {
+        PaymentResult paymentResult = sdkResult.getPaymentResult();
+        int resultCode = sdkResult.getResultCode();
 
         resultHeaderView.setVisibility(View.VISIBLE);
         resultLayout.setVisibility(View.VISIBLE);
-        setText(resultCodeView, sdkResult.getResultCodeString());
+        setText(resultCodeView, PaymentActivityResult.resultCodeToString(resultCode));
         setText(resultInfoView, paymentResult.getResultInfo());
 
         Interaction interaction = paymentResult.getInteraction();
@@ -119,8 +121,8 @@ public final class BasicActivity extends AppCompatActivity {
         setText(interactionCodeView, code);
         setText(interactionReasonView, reason);
 
-        PaymentError paymentError = paymentResult.getPaymentError();
-        String text = paymentError != null ? paymentError.toString() : null;
+        Throwable cause = paymentResult.getCause();
+        String text = cause != null ? cause.getMessage() : null;
         setText(paymentErrorView, text);
     }
 
