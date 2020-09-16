@@ -32,14 +32,15 @@ import net.optile.example.demo.R;
 import net.optile.example.demo.confirm.ConfirmActivity;
 import net.optile.example.demo.settings.SettingsActivity;
 import net.optile.example.demo.shared.BaseActivity;
-import net.optile.example.demo.shared.SdkResult;
 import net.optile.payment.model.AccountMask;
 import net.optile.payment.model.PaymentMethod;
 import net.optile.payment.model.PresetAccount;
+import net.optile.payment.ui.PaymentActivityResult;
 import net.optile.payment.ui.PaymentResult;
 import net.optile.payment.ui.PaymentUI;
 import net.optile.payment.ui.page.idlingresource.SimpleIdlingResource;
 import net.optile.payment.util.ImageHelper;
+import net.optile.payment.util.PaymentResultHelper;
 import net.optile.payment.util.PaymentUtils;
 
 /**
@@ -48,7 +49,7 @@ import net.optile.payment.util.PaymentUtils;
 public final class SummaryActivity extends BaseActivity implements SummaryView {
 
     private SummaryPresenter presenter;
-    private SdkResult sdkResult;
+    private PaymentActivityResult sdkResult;
     private PresetAccount presetAccount;
     private TextView presetTitle;
     private TextView presetSubtitle;
@@ -200,9 +201,9 @@ public final class SummaryActivity extends BaseActivity implements SummaryView {
         if (requestCode != PAYMENT_REQUEST_CODE && requestCode != EDIT_REQUEST_CODE) {
             return;
         }
-        PaymentResult result = PaymentResult.fromResultIntent(data);
+        PaymentResult result = PaymentResultHelper.fromResultIntent(data);
         if (result != null) {
-            this.sdkResult = new SdkResult(requestCode, resultCode, result);
+            this.sdkResult = new PaymentActivityResult(requestCode, resultCode, result);
         }
     }
 

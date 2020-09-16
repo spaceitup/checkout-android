@@ -12,7 +12,6 @@ import java.util.List;
 import java.util.concurrent.Callable;
 
 import net.optile.example.demo.shared.DemoException;
-import net.optile.example.demo.shared.SdkResult;
 import net.optile.payment.core.PaymentException;
 import net.optile.payment.model.ApplicableNetwork;
 import net.optile.payment.model.Interaction;
@@ -21,6 +20,7 @@ import net.optile.payment.model.ListResult;
 import net.optile.payment.model.Networks;
 import net.optile.payment.model.PresetAccount;
 import net.optile.payment.network.ListConnection;
+import net.optile.payment.ui.PaymentActivityResult;
 import net.optile.payment.ui.PaymentResult;
 import net.optile.payment.ui.PaymentUI;
 import rx.Single;
@@ -37,7 +37,6 @@ final class SummaryPresenter {
 
     private SummaryView view;
     private Subscription subscription;
-    private ListResult result;
 
     /**
      * Construct a new SummaryPresenter
@@ -62,15 +61,15 @@ final class SummaryPresenter {
     /**
      * Handle the received checkout result from the Android SDK.
      *
-     * @param result the result received from the SDK
+     * @param sdkResult the result received from the SDK
      */
-    void handleSdkResult(SdkResult result) {
-        switch (result.requestCode) {
+    void handleSdkResult(PaymentActivityResult sdkResult) {
+        switch (sdkResult.getRequestCode()) {
             case SummaryActivity.PAYMENT_REQUEST_CODE:
-                handlePaymentResult(result);
+                handlePaymentResult(sdkResult);
                 break;
             case SummaryActivity.EDIT_REQUEST_CODE:
-                handleEditResult(result);
+                handleEditResult(sdkResult);
                 break;
         }
     }
@@ -102,29 +101,30 @@ final class SummaryPresenter {
             });
     }
 
-    private void handleEditResult(SdkResult result) {
-        switch (result.resultCode) {
+    private void handleEditResult(PaymentActivityResult result) {
+        switch (result.getResultCode()) {
             case PaymentUI.RESULT_CODE_PROCEED:
                 loadPaymentDetails(view.getListUrl());
                 break;
             case PaymentUI.RESULT_CODE_ERROR:
-                handlePaymentResultError(result.paymentResult);
+                handlePaymentResultError(result.getPaymentResult());
                 break;
         }
     }
 
-    private void handlePaymentResult(SdkResult result) {
-        switch (result.resultCode) {
+    private void handlePaymentResult(PaymentActivityResult sdkResult) {
+        PaymentResult paymentResult = sdkResult.getPaymentResult();
+        switch (sdkResult.getResultCode()) {
             case PaymentUI.RESULT_CODE_PROCEED:
-                handlePaymentResultOk(result.paymentResult);
+                handlePaymentResultProceed(paymentResult);
                 break;
             case PaymentUI.RESULT_CODE_ERROR:
-                handlePaymentResultError(result.paymentResult);
+                handlePaymentResultError(paymentResult);
                 break;
         }
     }
 
-    private void handlePaymentResultOk(PaymentResult result) {
+    private void handlePaymentResultProceed(PaymentResult result) {
         Interaction interaction = result.getInteraction();
         if (interaction != null) {
             view.showPaymentConfirmation();
@@ -135,7 +135,7 @@ final class SummaryPresenter {
         Interaction interaction = result.getInteraction();
         switch (interaction.getCode()) {
             case InteractionCode.ABORT:
-                if (!result.hasNetworkFailureError()) {
+                if (!result.isNetworkFailure()) {
                     view.stopPaymentWithErrorMessage();
                 }
                 break;
@@ -159,7 +159,6 @@ final class SummaryPresenter {
 
     private void handleLoadPaymentSessionSuccess(ListResult result) {
         this.subscription = null;
-        this.result = result;
         PresetAccount account = result.getPresetAccount();
         String paymentMethod = getPaymentMethod(account, result);
         if (paymentMethod == null) {
@@ -171,7 +170,6 @@ final class SummaryPresenter {
 
     private void handleLoadPaymentSessionError(Throwable error) {
         this.subscription = null;
-        this.result = null;
         view.stopPaymentWithErrorMessage();
     }
 
