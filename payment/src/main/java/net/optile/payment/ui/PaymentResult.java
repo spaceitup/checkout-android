@@ -24,7 +24,7 @@ import net.optile.payment.model.OperationResult;
 import net.optile.payment.util.GsonHelper;
 
 /**
- * A container for a payment result as obtained from the Payment API
+ * A container for the payment result as obtained from the Payment API
  */
 public final class PaymentResult implements Parcelable {
 

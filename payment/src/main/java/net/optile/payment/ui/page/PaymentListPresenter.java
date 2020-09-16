@@ -145,7 +145,7 @@ final class PaymentListPresenter implements PaymentSessionListener, Localization
             String method = card.getPaymentMethod();
             networkService = NetworkServiceLookup.createService(code, method);
             networkService.setPresenter(this);
-            
+
             if (CHARGE.equals(operation.getType())) {
                 view.showChargePaymentScreen(CHARGEPAYMENT_REQUEST_CODE, operation);
             } else {

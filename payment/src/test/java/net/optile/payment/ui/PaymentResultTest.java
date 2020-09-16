@@ -18,7 +18,7 @@ public class PaymentResultTest {
 
     @Test
     public void construct_withOperationResult() {
-        Interaction interaction = new Interaction(InteractionCode.ABORT, InteractionReason.CLIENTSIDE_ERROR);        
+        Interaction interaction = new Interaction(InteractionCode.ABORT, InteractionReason.CLIENTSIDE_ERROR);
         OperationResult operationResult = new OperationResult();
         operationResult.setInteraction(interaction);
         operationResult.setResultInfo("resultInfo");
@@ -39,7 +39,7 @@ public class PaymentResultTest {
 
         assertEquals(errorInfo, paymentResult.getErrorInfo());
         assertEquals("resultInfo", paymentResult.getResultInfo());
-        assertEquals(interaction, paymentResult.getInteraction());        
+        assertEquals(interaction, paymentResult.getInteraction());
     }
 
     @Test
@@ -52,7 +52,7 @@ public class PaymentResultTest {
         assertEquals(errorInfo, paymentResult.getErrorInfo());
         assertEquals(cause, paymentResult.getCause());
         assertEquals("resultInfo", paymentResult.getResultInfo());
-        assertEquals(interaction, paymentResult.getInteraction());        
+        assertEquals(interaction, paymentResult.getInteraction());
     }
 
     @Test
