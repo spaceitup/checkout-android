@@ -17,7 +17,6 @@ import java.util.concurrent.Callable;
 import android.content.Context;
 import android.text.TextUtils;
 import net.optile.payment.R;
-import net.optile.payment.core.PaymentError;
 import net.optile.payment.core.PaymentException;
 import net.optile.payment.core.WorkerSubscriber;
 import net.optile.payment.core.WorkerTask;
@@ -199,8 +198,7 @@ public final class PaymentSessionService {
         String regex = group.getSmartSelectionRegex(code);
 
         if (TextUtils.isEmpty(regex)) {
-            PaymentError error = new PaymentError("Missing regex for network: " + code + " in group: " + groupId);
-            throw new PaymentException(error);
+            throw new PaymentException("Missing regex for network: " + code + " in group: " + groupId);
         }
         NetworkCard card = cards.get(groupId);
         if (card == null) {

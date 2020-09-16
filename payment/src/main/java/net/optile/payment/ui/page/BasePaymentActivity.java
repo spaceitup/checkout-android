@@ -20,6 +20,7 @@ import androidx.test.espresso.IdlingResource;
 import net.optile.payment.R;
 import net.optile.payment.localization.Localization;
 import net.optile.payment.model.Interaction;
+import net.optile.payment.ui.PaymentActivityResult;
 import net.optile.payment.ui.PaymentResult;
 import net.optile.payment.ui.PaymentTheme;
 import net.optile.payment.ui.PaymentUI;
@@ -156,11 +157,11 @@ abstract class BasePaymentActivity extends AppCompatActivity implements PaymentV
      * {@inheritDoc}
      */
     @Override
-    public void passOnActivityResult(ActivityResult activityResult) {
+    public void passOnActivityResult(PaymentActivityResult paymentActivityResult) {
         if (!active) {
             return;
         }
-        setResultIntent(activityResult.resultCode, activityResult.paymentResult);
+        setResultIntent(paymentActivityResult.getResultCode(), paymentActivityResult.getPaymentResult());
         supportFinishAfterTransition();
     }
 

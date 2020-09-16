@@ -21,7 +21,9 @@ import net.optile.payment.R;
 import net.optile.payment.form.Operation;
 import net.optile.payment.localization.Localization;
 import net.optile.payment.model.PresetAccount;
+import net.optile.payment.ui.PaymentActivityResult;
 import net.optile.payment.ui.PaymentResult;
+import net.optile.payment.util.PaymentResultHelper;
 
 /**
  * The ChargePaymentActivity is the view displaying the loading animation while posting the operation.
@@ -138,10 +140,10 @@ public final class ChargePaymentActivity extends BasePaymentActivity implements 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        PaymentResult result = PaymentResult.fromResultIntent(data);
+        PaymentResult result = PaymentResultHelper.fromResultIntent(data);
 
         if (result != null) {
-            presenter.setActivityResult(new ActivityResult(requestCode, resultCode, result));
+            presenter.setPaymentActivityResult(new PaymentActivityResult(requestCode, resultCode, result));
         }
     }
 
