@@ -201,9 +201,9 @@ public final class SummaryActivity extends BaseActivity implements SummaryView {
         if (requestCode != PAYMENT_REQUEST_CODE && requestCode != EDIT_REQUEST_CODE) {
             return;
         }
-        PaymentResult result = PaymentResultHelper.fromResultIntent(data);
-        if (result != null) {
-            this.sdkResult = new PaymentActivityResult(requestCode, resultCode, result);
+        PaymentResult paymentResult = PaymentResultHelper.fromResultIntent(data);
+        if (paymentResult != null) {
+            sdkResult = new PaymentActivityResult(requestCode, resultCode, paymentResult);
         }
     }
 

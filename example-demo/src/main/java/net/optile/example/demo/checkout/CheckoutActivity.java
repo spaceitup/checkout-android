@@ -70,7 +70,7 @@ public final class CheckoutActivity extends BaseActivity implements CheckoutView
                 onButtonClicked();
             }
         });
-        this.presenter = new CheckoutPresenter(this);
+        presenter = new CheckoutPresenter(this);
     }
 
     /**
@@ -82,7 +82,7 @@ public final class CheckoutActivity extends BaseActivity implements CheckoutView
 
         if (sdkResult != null) {
             presenter.handleSdkResult(sdkResult);
-            this.sdkResult = null;
+            sdkResult = null;
         }
     }
 
@@ -130,9 +130,9 @@ public final class CheckoutActivity extends BaseActivity implements CheckoutView
         if (requestCode != PAYMENT_REQUEST_CODE) {
             return;
         }
-        PaymentResult result = PaymentResultHelper.fromResultIntent(data);
-        if (result != null) {
-            this.sdkResult = new PaymentActivityResult(requestCode, resultCode, result);
+        PaymentResult paymentResult = PaymentResultHelper.fromResultIntent(data);
+        if (paymentResult != null) {
+            sdkResult = new PaymentActivityResult(requestCode, resultCode, paymentResult);
         }
     }
 

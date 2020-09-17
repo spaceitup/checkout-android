@@ -27,7 +27,7 @@ import net.optile.payment.ui.PaymentUI;
 import net.optile.payment.util.PaymentResultHelper;
 
 /**
- * This is the main Activity of this basic example app
+ * This is the main Activity of this basic example app demonstrating how to use the Android SDK
  */
 public final class BasicActivity extends AppCompatActivity {
 

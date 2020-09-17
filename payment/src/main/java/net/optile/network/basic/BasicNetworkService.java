@@ -36,7 +36,7 @@ public final class BasicNetworkService extends NetworkService implements Operati
 
     /**
      * Create a new BasicNetworkService, this service is a basic implementation
-     * that simply send an operation to the Payment API.
+     * that sends an operation to the Payment API.
      */
     public BasicNetworkService() {
         service = new OperationService();
@@ -67,9 +67,7 @@ public final class BasicNetworkService extends NetworkService implements Operati
     @Override
     public void onRedirectSuccess(OperationResult operationResult) {
         Interaction interaction = operationResult.getInteraction();
-        int resultCode = PROCEED.equals(interaction.getCode()) ? RESULT_CODE_PROCEED :
-            RESULT_CODE_ERROR;
-
+        int resultCode = PROCEED.equals(interaction.getCode()) ? RESULT_CODE_PROCEED : RESULT_CODE_ERROR;
         PaymentResult result = new PaymentResult(operationResult);
         presenter.onProcessPaymentResult(resultCode, result);
     }
