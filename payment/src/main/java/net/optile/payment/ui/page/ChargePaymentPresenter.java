@@ -75,7 +75,7 @@ final class ChargePaymentPresenter implements PaymentSessionListener, NetworkSer
             handleRedirectResult();
             redirected = false;
         } else if (paymentActivityResult != null) {
-            handleActivityResult(paymentActivityResult);
+            handlePaymentActivityResult(paymentActivityResult);
             paymentActivityResult = null;
         } else {
             loadPaymentSession(this.listUrl);
@@ -314,7 +314,7 @@ final class ChargePaymentPresenter implements PaymentSessionListener, NetworkSer
         }
     }
 
-    private void handleActivityResult(PaymentActivityResult result) {
+    private void handlePaymentActivityResult(PaymentActivityResult result) {
         if (session == null) {
             handleMissingCachedSession();
             return;

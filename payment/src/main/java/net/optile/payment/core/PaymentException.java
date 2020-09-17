@@ -18,7 +18,7 @@ public class PaymentException extends Exception {
     /** The error info obtained from the payment API */
     private ErrorInfo errorInfo;
 
-    /** Is the exception caused by a network failure, e.g. poor wifi connection */
+    /** Indicates that the exception is caused by a network failure, e.g. poor wifi connection */
     private boolean networkFailure;
 
     /**
@@ -53,7 +53,7 @@ public class PaymentException extends Exception {
      * Constructs a new PaymentException with the cause and networkFailure flag
      *
      * @param cause of the error
-     * @param networkFailure indicates if the exception was caused by a communication failure
+     * @param networkFailure indicates that the exception was caused by a network failure
      */
     public PaymentException(final Throwable cause, boolean networkFailure) {
         super(cause);

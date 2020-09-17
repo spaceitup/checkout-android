@@ -28,6 +28,7 @@ import net.optile.payment.ui.dialog.PaymentDialogFragment;
 import net.optile.payment.ui.dialog.PaymentDialogFragment.PaymentDialogListener;
 import net.optile.payment.ui.dialog.PaymentDialogHelper;
 import net.optile.payment.ui.page.idlingresource.SimpleIdlingResource;
+import net.optile.payment.util.PaymentResultHelper;
 
 /**
  * The base activity for payment activities.
@@ -220,7 +221,7 @@ abstract class BasePaymentActivity extends AppCompatActivity implements PaymentV
      */
     void setResultIntent(int resultCode, PaymentResult result) {
         Intent intent = new Intent();
-        result.putInto(intent);
+        PaymentResultHelper.putIntoResultIntent(result, intent);
         setResult(resultCode, intent);
     }
 

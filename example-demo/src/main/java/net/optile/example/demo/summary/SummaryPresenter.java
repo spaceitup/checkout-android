@@ -61,7 +61,7 @@ final class SummaryPresenter {
     /**
      * Handle the received checkout result from the Android SDK.
      *
-     * @param sdkResult the result received from the SDK
+     * @param sdkResult the result received from the Android SDK
      */
     void handleSdkResult(PaymentActivityResult sdkResult) {
         switch (sdkResult.getRequestCode()) {
@@ -178,7 +178,7 @@ final class SummaryPresenter {
         try {
             return conn.getListResult(listUrl);
         } catch (PaymentException e) {
-            throw new DemoException("Error loading payment session", e);
+            throw new DemoException("Error loading list result", e);
         }
     }
 

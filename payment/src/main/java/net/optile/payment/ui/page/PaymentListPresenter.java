@@ -89,7 +89,7 @@ final class PaymentListPresenter implements PaymentSessionListener, Localization
         this.listUrl = PaymentUI.getInstance().getListUrl();
 
         if (paymentActivityResult != null) {
-            handleActivityResult(paymentActivityResult);
+            handlePaymentActivityResult(paymentActivityResult);
             paymentActivityResult = null;
         } else if (this.session != null && this.session.isListUrl(this.listUrl)) {
             loadLocalizations(this.session);
@@ -255,16 +255,14 @@ final class PaymentListPresenter implements PaymentSessionListener, Localization
         view.showProgress(visible);
     }
 
-    private void handleActivityResult(PaymentActivityResult paymentActivityResult) {
+    private void handlePaymentActivityResult(PaymentActivityResult paymentActivityResult) {
         if (this.session == null) {
             closeWithErrorCode("Missing cached PaymentSession in PaymentListPresenter");
             return;
         }
-        PaymentResult result = paymentActivityResult.getPaymentResult();
-        int resultCode = paymentActivityResult.getResultCode();
         switch (paymentActivityResult.getRequestCode()) {
             case PROCESSPAYMENT_REQUEST_CODE:
-                onProcessPaymentResult(resultCode, result);
+                onProcessPaymentResult(paymentActivityResult.getResultCode(), paymentActivityResult.getPaymentResult());
                 break;
             case CHARGEPAYMENT_REQUEST_CODE:
                 onChargeActivityResult(paymentActivityResult);

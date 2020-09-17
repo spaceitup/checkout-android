@@ -24,10 +24,10 @@ public class ErrorInfo {
     }
 
     /**
-     * Construct a new ErrorInfo with the provided resultInfo and interaction
+     * Constructs a new ErrorInfo with the resultInfo and interaction
      *
-     * @param resultInfo to be stored in this ErrorInfo
-     * @param interaction to be stored in this ErrorInfo
+     * @param resultInfo providing a description of the error
+     * @param interaction contains recommendation which steps to take next
      */
     public ErrorInfo(String resultInfo, Interaction interaction) {
         this.resultInfo = resultInfo;

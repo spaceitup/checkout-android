@@ -39,7 +39,7 @@ final class CheckoutPresenter {
     /**
      * Handle the received checkout result from the Android SDK.
      *
-     * @param sdkResult the result received from the SDK
+     * @param sdkResult the result received from the Android SDK
      */
     void handleSdkResult(PaymentActivityResult sdkResult) {
         PaymentResult paymentResult = sdkResult.getPaymentResult();

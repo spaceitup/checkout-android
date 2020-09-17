@@ -10,6 +10,7 @@ package net.optile.payment.util;
 
 import static net.optile.payment.model.InteractionReason.CLIENTSIDE_ERROR;
 import static net.optile.payment.model.InteractionReason.COMMUNICATION_FAILURE;
+import static net.optile.payment.ui.PaymentResult.EXTRA_PAYMENT_RESULT;
 
 import android.content.Intent;
 import net.optile.payment.core.PaymentException;
@@ -83,6 +84,18 @@ public class PaymentResultHelper {
     }
 
     /**
+     * Put the PaymentResult into the provided result intent.
+     *
+     * @param paymentResult to be put inside the intent
+     * @param intent into which this PaymentResult should be stored
+     */
+    public static void putIntoResultIntent(PaymentResult paymentResult, Intent intent) {
+        if (intent != null) {
+            intent.putExtra(EXTRA_PAYMENT_RESULT, paymentResult);
+        }
+    }
+
+    /**
      * Get the PaymentResult from the result intent.
      *
      * @param intent containing the PaymentResult
@@ -90,7 +103,7 @@ public class PaymentResultHelper {
      */
     public static PaymentResult fromResultIntent(Intent intent) {
         if (intent != null) {
-            return intent.getParcelableExtra(PaymentResult.EXTRA_PAYMENT_RESULT);
+            return intent.getParcelableExtra(EXTRA_PAYMENT_RESULT);
         }
         return null;
     }

@@ -10,8 +10,6 @@ package net.optile.payment.ui;
 
 import static net.optile.payment.model.InteractionReason.COMMUNICATION_FAILURE;
 
-import java.util.Objects;
-
 import com.google.gson.JsonSyntaxException;
 
 import android.content.Intent;
@@ -101,15 +99,6 @@ public final class PaymentResult implements Parcelable {
         cause = (Throwable) in.readSerializable();
     }
 
-    /**
-     * Put this PaymentResult into the provided intent.
-     *
-     * @param intent into which this PaymentResult should be stored.
-     */
-    public void putInto(Intent intent) {
-        intent.putExtra(EXTRA_PAYMENT_RESULT, this);
-    }
-
     public OperationResult getOperationResult() {
         return operationResult;
     }
@@ -146,7 +135,7 @@ public final class PaymentResult implements Parcelable {
      * @return true when the error is caused by a network failure, false otherwise
      */
     public boolean isNetworkFailure() {
-        return Objects.equals(getInteraction().getReason(), COMMUNICATION_FAILURE);
+        return COMMUNICATION_FAILURE.equals(getInteraction().getReason());
     }
 
     /**

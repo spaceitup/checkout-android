@@ -28,7 +28,8 @@ import net.optile.payment.ui.service.OperationService;
 import net.optile.payment.util.PaymentResultHelper;
 
 /**
- * BasicNetworkService implementing the handling of basic payment methods like Visa, Mastercard and Sepa
+ * BasicNetworkService implementing the handling of basic payment methods like Visa, Mastercard and Sepa.
+ * This network service also supports redirect networks like Paypal.
  */
 public final class BasicNetworkService extends NetworkService implements OperationListener {
     private final OperationService service;
