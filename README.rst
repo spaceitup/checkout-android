@@ -103,7 +103,7 @@ The Android SDK repository contains two example apps demonstrating how to integr
 1. Basic Example
 -------------------
 
-This example demonstrates how to initialize and open the payment page provided by the Android SDK. It also shows how to change the theme, set custom payment groups and receive payment results returned by the Android SDK. The sources of the basic example can be found `here <./example-basic>`_. Paste a valid listUrl in the input field and click the button to start this example.
+This example demonstrates how to initialize and open the payment page provided by the Android SDK. It also shows how to change the theme and receive payment results returned by the Android SDK. The sources of the basic example can be found `here <./example-basic>`_. Paste a valid listUrl in the input field and click the button to start this example.
 
 2. Demo Example
 ---------------
@@ -460,81 +460,9 @@ The same `themes.xml <./example-basic/src/main/res/values/themes.xml>`_ file in 
 Grouping of Payment Methods
 ===========================
 
-Grouping of payment methods within a card in the payment page is supported. 
-By default the Android SDK supports one group which contains the payment methods Visa, 
-Mastercard and American Express.
-The default grouping of payment methods is defined in `groups.json <./payment/src/main/res/raw/groups.json>`_.
+The Android SDK automatically groups together seven different payment methods and presents them as one payment option. 
+The following payment methods are grouped together: Discover, Mastercard, Diners, UnionPay, Amex, JCB and Visa.
 
-Customize grouping
-------------------
-
-Customization which payment methods are grouped together in a card is allowed. 
-Customisation is done by setting the resource ID of a grouping Json settings 
-file prior to showing the payment page. 
-Payment methods can only be grouped together when they
-have the same set of InputElements. If InputElements of grouped
-Payment Methods differ then each Payment Method will be shown in its own
-card in the payment page. The following example shows how to create two
-groups, first group contains Mastercard and Amex and the second group
-contains Visa and Visa Electron.
-
-Example customgroups.json file:
-
-.. code-block:: json
-
-    [
-        {
-            "items": [
-                {
-                    "code": "MASTERCARD",
-                    "regex": "^5[0-9]*$"
-                },
-                {
-                    "code": "AMEX",
-                    "regex": "^3[47][0-9]*$"
-                }
-            ]
-        },
-        {
-            "items": [
-                {
-                    "code": "VISA",
-                    "regex": "^4[0-9]*$"
-                },
-                {
-                    "code": "VISAELECTRON",
-                    "regex": "^4[0-9]*$"
-                }
-            ]
-        }
-    ]
-
-Code sample how to set a customgroups.json file:
-
-.. code-block:: java
-
-    PaymentUI paymentUI = PaymentUI.getInstance();
-    paymentUI.setGroupResId(R.raw.customgroups);
-    paymentUI.showPaymentPage(this, PAYMENT_REQUEST_CODE);
-
-Remove default group
-----------------
-
-By default the Android SDK groups together payment methods Discover, Mastercard, Diners, Unionpay, AMEX, JCB and VISA into one card. Removing this default group is done by initializing the Android SDK with a group json file containing an empty array.
-
-Example removedefaultgroup.json file:
-
-.. code-block:: json
-
-    []
-
-Code sample how to set the removedefaultgroup.json file:
-
-.. code-block:: java
-
-    PaymentUI paymentUI = PaymentUI.getInstance();
-    paymentUI.setGroupResId(R.raw.removedefaultgroup);
-    paymentUI.showPaymentPage(this, PAYMENT_REQUEST_CODE);
 
 Smart Selection
 ---------------
