@@ -292,6 +292,8 @@ final class PaymentListPresenter implements PaymentSessionListener, Localization
             case PaymentUI.RESULT_CODE_ERROR:
                 handleProcessPaymentError(result);
                 break;
+            default:
+                view.showPaymentSession(session);
         }
     }
 
@@ -357,8 +359,11 @@ final class PaymentListPresenter implements PaymentSessionListener, Localization
             case PaymentUI.RESULT_CODE_ERROR:
                 handleChargeError(paymentActivityResult);
                 break;
-            default:
+            case PaymentUI.RESULT_CODE_PROCEED:
                 view.passOnActivityResult(paymentActivityResult);
+                break;
+            default:
+                view.showPaymentSession(this.session);
         }
     }
 

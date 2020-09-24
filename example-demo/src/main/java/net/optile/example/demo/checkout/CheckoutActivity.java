@@ -25,9 +25,7 @@ import net.optile.example.demo.confirm.ConfirmActivity;
 import net.optile.example.demo.shared.BaseActivity;
 import net.optile.example.demo.summary.SummaryActivity;
 import net.optile.payment.ui.PaymentActivityResult;
-import net.optile.payment.ui.PaymentResult;
 import net.optile.payment.ui.PaymentUI;
-import net.optile.payment.util.PaymentResultHelper;
 
 /**
  * Activity displaying the checkout page, this page will open the Android SDK payment page.
@@ -127,12 +125,8 @@ public final class CheckoutActivity extends BaseActivity implements CheckoutView
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode != PAYMENT_REQUEST_CODE) {
-            return;
-        }
-        PaymentResult paymentResult = PaymentResultHelper.fromResultIntent(data);
-        if (paymentResult != null) {
-            sdkResult = new PaymentActivityResult(requestCode, resultCode, paymentResult);
+        if (requestCode == PAYMENT_REQUEST_CODE) {
+            sdkResult = PaymentActivityResult.fromActivityResult(requestCode, resultCode, data);
         }
     }
 

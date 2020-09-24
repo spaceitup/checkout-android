@@ -8,6 +8,10 @@
 
 package net.optile.payment.ui;
 
+import android.app.Activity;
+import android.content.Intent;
+import net.optile.payment.util.PaymentResultHelper;
+
 /**
  * A container for a payment activity result as obtained from the Android SDK
  */
@@ -18,7 +22,7 @@ public final class PaymentActivityResult {
     private final PaymentResult paymentResult;
 
     /**
-     * Construct a new ActivityResult Object
+     * Construct a new PaymentActivityResult Object
      *
      * @param requestCode activity requestCode
      * @param resultCode activity resultCode
@@ -28,6 +32,18 @@ public final class PaymentActivityResult {
         this.requestCode = requestCode;
         this.resultCode = resultCode;
         this.paymentResult = paymentResult;
+    }
+
+    /**
+     * Construct a new PaymentActivityResult Object
+     *
+     * @param requestCode activity requestCode
+     * @param resultCode activity resultCode
+     * @param data containing the activity result data
+     */
+    public static PaymentActivityResult fromActivityResult(int requestCode, int resultCode, Intent data) {
+        PaymentResult result = PaymentResultHelper.fromResultIntent(data);
+        return new PaymentActivityResult(requestCode, resultCode, result);
     }
 
     /**
@@ -41,6 +57,8 @@ public final class PaymentActivityResult {
                 return "RESULT_CODE_PROCEED";
             case PaymentUI.RESULT_CODE_ERROR:
                 return "RESULT_CODE_ERROR";
+            case Activity.RESULT_CANCELED:
+                return "Activity.RESULT_CANCELED";
             default:
                 return "Unknown";
         }

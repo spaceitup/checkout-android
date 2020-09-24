@@ -24,7 +24,6 @@ import net.optile.payment.ui.PaymentActivityResult;
 import net.optile.payment.ui.PaymentResult;
 import net.optile.payment.ui.PaymentTheme;
 import net.optile.payment.ui.PaymentUI;
-import net.optile.payment.util.PaymentResultHelper;
 
 /**
  * This is the main Activity of this basic example app demonstrating how to use the Android SDK
@@ -84,10 +83,8 @@ public final class BasicActivity extends AppCompatActivity {
     @Override
     public void onResume() {
         super.onResume();
-
         if (sdkResult != null) {
             showSdkResult(sdkResult);
-            this.sdkResult = null;
         }
     }
 
@@ -97,33 +94,41 @@ public final class BasicActivity extends AppCompatActivity {
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode != PAYMENT_REQUEST_CODE) {
-            return;
-        }
-        PaymentResult paymentResult = PaymentResultHelper.fromResultIntent(data);
-        if (paymentResult != null) {
-            sdkResult = new PaymentActivityResult(requestCode, resultCode, paymentResult);
+        if (requestCode == PAYMENT_REQUEST_CODE) {
+            sdkResult = PaymentActivityResult.fromActivityResult(requestCode, resultCode, data);
         }
     }
 
-    private void showSdkResult(PaymentActivityResult sdkResult) {
-        PaymentResult paymentResult = sdkResult.getPaymentResult();
-        int resultCode = sdkResult.getResultCode();
+    private void clearSdkResult() {
+        resultHeaderView.setVisibility(View.GONE);
+        resultLayout.setVisibility(View.GONE);
+        this.sdkResult = null;
+    }
 
+    private void showSdkResult(PaymentActivityResult sdkResult) {
+        int resultCode = sdkResult.getResultCode();
         resultHeaderView.setVisibility(View.VISIBLE);
         resultLayout.setVisibility(View.VISIBLE);
         setText(resultCodeView, PaymentActivityResult.resultCodeToString(resultCode));
-        setText(resultInfoView, paymentResult.getResultInfo());
 
-        Interaction interaction = paymentResult.getInteraction();
-        String code = interaction != null ? interaction.getCode() : null;
-        String reason = interaction != null ? interaction.getReason() : null;
+        String info = null;
+        String code = null;
+        String reason = null;
+        String error = null;
+        PaymentResult paymentResult = sdkResult.getPaymentResult();
+
+        if (paymentResult != null) {
+            info = paymentResult.getResultInfo();
+            Interaction interaction = paymentResult.getInteraction();
+            code = interaction.getCode();
+            reason = interaction.getReason();
+            Throwable cause = paymentResult.getCause();
+            error = cause != null ? cause.getMessage() : null;
+        }
+        setText(resultInfoView, info);
         setText(interactionCodeView, code);
         setText(interactionReasonView, reason);
-
-        Throwable cause = paymentResult.getCause();
-        String text = cause != null ? cause.getMessage() : null;
-        setText(paymentErrorView, text);
+        setText(paymentErrorView, error);
     }
 
     private void setText(TextView textView, String text) {
@@ -142,6 +147,7 @@ public final class BasicActivity extends AppCompatActivity {
     }
 
     private void openPaymentPage() {
+        clearSdkResult();
         String listUrl = listInput.getText().toString().trim();
 
         if (TextUtils.isEmpty(listUrl) || !Patterns.WEB_URL.matcher(listUrl).matches()) {

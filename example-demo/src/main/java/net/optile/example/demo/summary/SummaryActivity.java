@@ -36,11 +36,9 @@ import net.optile.payment.model.AccountMask;
 import net.optile.payment.model.PaymentMethod;
 import net.optile.payment.model.PresetAccount;
 import net.optile.payment.ui.PaymentActivityResult;
-import net.optile.payment.ui.PaymentResult;
 import net.optile.payment.ui.PaymentUI;
 import net.optile.payment.ui.page.idlingresource.SimpleIdlingResource;
 import net.optile.payment.util.ImageHelper;
-import net.optile.payment.util.PaymentResultHelper;
 import net.optile.payment.util.PaymentUtils;
 
 /**
@@ -198,12 +196,8 @@ public final class SummaryActivity extends BaseActivity implements SummaryView {
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode != PAYMENT_REQUEST_CODE && requestCode != EDIT_REQUEST_CODE) {
-            return;
-        }
-        PaymentResult paymentResult = PaymentResultHelper.fromResultIntent(data);
-        if (paymentResult != null) {
-            sdkResult = new PaymentActivityResult(requestCode, resultCode, paymentResult);
+        if (requestCode == PAYMENT_REQUEST_CODE || requestCode == EDIT_REQUEST_CODE) {
+            sdkResult = PaymentActivityResult.fromActivityResult(requestCode, resultCode, data);
         }
     }
 

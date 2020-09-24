@@ -12,7 +12,6 @@ import static net.optile.payment.model.InteractionReason.COMMUNICATION_FAILURE;
 
 import com.google.gson.JsonSyntaxException;
 
-import android.content.Intent;
 import android.os.Parcel;
 import android.os.Parcelable;
 import android.util.Log;

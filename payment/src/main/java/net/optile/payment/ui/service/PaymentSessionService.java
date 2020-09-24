@@ -30,7 +30,6 @@ import net.optile.payment.model.PresetAccount;
 import net.optile.payment.network.ListConnection;
 import net.optile.payment.resource.PaymentGroup;
 import net.optile.payment.resource.ResourceLoader;
-import net.optile.payment.ui.PaymentUI;
 import net.optile.payment.ui.model.AccountCard;
 import net.optile.payment.ui.model.NetworkCard;
 import net.optile.payment.ui.model.PaymentNetwork;

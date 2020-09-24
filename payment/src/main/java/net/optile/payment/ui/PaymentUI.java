@@ -13,7 +13,6 @@ import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.text.TextUtils;
 import android.util.Patterns;
-import androidx.annotation.RawRes;
 import net.optile.payment.R;
 import net.optile.payment.localization.LocalLocalizationHolder;
 import net.optile.payment.localization.Localization;
