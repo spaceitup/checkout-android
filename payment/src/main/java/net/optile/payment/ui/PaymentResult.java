@@ -37,19 +37,8 @@ public final class PaymentResult implements Parcelable {
         }
     };
 
-    /**
-     * Provides detailed information about the performed operation
-     */
     private OperationResult operationResult;
-
-    /**
-     * Contains the Interaction and resultInfo providing information about the error
-     */
     private ErrorInfo errorInfo;
-
-    /**
-     * The cause of the payment error
-     */
     private Throwable cause;
 
     /**
