@@ -12,11 +12,11 @@ import static net.optile.payment.model.RedirectType.SUMMARY;
 
 import java.util.Objects;
 
-import net.optile.example.demo.shared.SdkResult;
 import net.optile.payment.model.Interaction;
 import net.optile.payment.model.InteractionCode;
 import net.optile.payment.model.OperationResult;
 import net.optile.payment.model.Redirect;
+import net.optile.payment.ui.PaymentActivityResult;
 import net.optile.payment.ui.PaymentResult;
 import net.optile.payment.ui.PaymentUI;
 
@@ -39,15 +39,16 @@ final class CheckoutPresenter {
     /**
      * Handle the received checkout result from the Android SDK.
      *
-     * @param result the result received from the SDK
+     * @param sdkResult the result received from the Android SDK
      */
-    void handleSdkResult(SdkResult result) {
-        switch (result.resultCode) {
+    void handleSdkResult(PaymentActivityResult sdkResult) {
+        PaymentResult paymentResult = sdkResult.getPaymentResult();
+        switch (sdkResult.getResultCode()) {
             case PaymentUI.RESULT_CODE_PROCEED:
-                handlePaymentResultProceed(result.paymentResult);
+                handlePaymentResultProceed(paymentResult);
                 break;
             case PaymentUI.RESULT_CODE_ERROR:
-                handlePaymentResultError(result.paymentResult);
+                handlePaymentResultError(paymentResult);
                 break;
         }
     }
@@ -68,12 +69,11 @@ final class CheckoutPresenter {
         view.showPaymentConfirmation();
     }
 
-
     private void handlePaymentResultError(PaymentResult result) {
         Interaction interaction = result.getInteraction();
         switch (interaction.getCode()) {
             case InteractionCode.ABORT:
-                if (!result.hasNetworkFailureError()) {
+                if (!result.isNetworkFailure()) {
                     view.stopPaymentWithErrorMessage();
                 }
                 break;

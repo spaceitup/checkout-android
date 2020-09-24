@@ -32,15 +32,6 @@ public interface NetworkServicePresenter {
     void redirectPayment(Redirect redirect) throws PaymentException;
 
     /**
-     * Called when the payment is prepared. The NetworkService can either pass the result through the Activity.onActivityResult or
-     * directly through this callback method.
-     *
-     * @param resultCode code describing the state of the paymentResult
-     * @param paymentResult containing the information describing the result
-     */
-    void onPreparePaymentResult(int resultCode, PaymentResult paymentResult);
-
-    /**
      * Called when the payment is processed. The NetworkService can either pass the result through the Activity.onActivityResult or
      * directly through this callback method.
      *

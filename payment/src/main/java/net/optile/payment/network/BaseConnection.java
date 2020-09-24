@@ -30,7 +30,6 @@ import com.google.gson.JsonParseException;
 import android.os.Build;
 import android.text.TextUtils;
 import android.util.Log;
-import net.optile.payment.core.PaymentError;
 import net.optile.payment.core.PaymentException;
 import net.optile.payment.model.ErrorInfo;
 
@@ -283,13 +282,10 @@ abstract class BaseConnection {
             // and it is more important to not lose the status error code
             Log.w("sdk_BaseConnection", e);
         }
-        PaymentError error;
         if (errorInfo != null) {
-            error = new PaymentError(statusCode, errorInfo);
-        } else {
-            error = new PaymentError(statusCode, data);
+            return new PaymentException(errorInfo);
         }
-        return new PaymentException(error);
+        return new PaymentException("Received HTTP statusCode: " + statusCode + "from the Payment API");
     }
 
     /**
@@ -300,8 +296,7 @@ abstract class BaseConnection {
      * @return NetworkResponse network exception
      */
     PaymentException createPaymentException(Throwable cause, boolean networkFailure) {
-        final PaymentError error = new PaymentError(cause, networkFailure);
-        return new PaymentException(error);
+        return new PaymentException(cause, networkFailure);
     }
 
     /**

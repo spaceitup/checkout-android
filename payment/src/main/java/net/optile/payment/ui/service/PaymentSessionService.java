@@ -17,7 +17,6 @@ import java.util.concurrent.Callable;
 import android.content.Context;
 import android.text.TextUtils;
 import net.optile.payment.R;
-import net.optile.payment.core.PaymentError;
 import net.optile.payment.core.PaymentException;
 import net.optile.payment.core.WorkerSubscriber;
 import net.optile.payment.core.WorkerTask;
@@ -31,7 +30,6 @@ import net.optile.payment.model.PresetAccount;
 import net.optile.payment.network.ListConnection;
 import net.optile.payment.resource.PaymentGroup;
 import net.optile.payment.resource.ResourceLoader;
-import net.optile.payment.ui.PaymentUI;
 import net.optile.payment.ui.model.AccountCard;
 import net.optile.payment.ui.model.NetworkCard;
 import net.optile.payment.ui.model.PaymentNetwork;
@@ -199,8 +197,7 @@ public final class PaymentSessionService {
         String regex = group.getSmartSelectionRegex(code);
 
         if (TextUtils.isEmpty(regex)) {
-            PaymentError error = new PaymentError("Missing regex for network: " + code + " in group: " + groupId);
-            throw new PaymentException(error);
+            throw new PaymentException("Missing regex for network: " + code + " in group: " + groupId);
         }
         NetworkCard card = cards.get(groupId);
         if (card == null) {
@@ -244,8 +241,7 @@ public final class PaymentSessionService {
     }
 
     private Map<String, PaymentGroup> loadPaymentGroups(Context context) throws PaymentException {
-        int groupResId = PaymentUI.getInstance().getGroupResId();
-        return ResourceLoader.loadPaymentGroups(context.getResources(), groupResId);
+        return ResourceLoader.loadPaymentGroups(context.getResources(), R.raw.groups);
     }
 
     private Validator loadValidator(Context context) throws PaymentException {

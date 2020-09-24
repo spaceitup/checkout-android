@@ -37,17 +37,6 @@ public abstract class NetworkService {
     }
 
     /**
-     * Prepare the payment for this NetworkService. Depending on the type of network (Visa, GooglePay) the result may either be returned through the
-     * onActivityResult or through the NetworkServicePresenter.
-     *
-     * @param activity handles the payment that should be prepared
-     * @param requestCode should be returned to the presenter when the payment is prepared
-     * @param operation that should be prepared
-     */
-    public void preparePayment(Activity activity, int requestCode, Operation operation) throws PaymentException {
-    }
-
-    /**
      * Process the payment through this NetworkService. The result is either returned through the onActivityResult call in the
      * provided Activity or through the NetworkServicePresenter.
      *
