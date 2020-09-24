@@ -194,17 +194,6 @@ public final class SummaryActivity extends BaseActivity implements SummaryView {
      * {@inheritDoc}
      */
     @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == PAYMENT_REQUEST_CODE || requestCode == EDIT_REQUEST_CODE) {
-            sdkResult = PaymentActivityResult.fromActivityResult(requestCode, resultCode, data);
-        }
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
     public void stopPaymentWithErrorMessage() {
         if (!active) {
             return;

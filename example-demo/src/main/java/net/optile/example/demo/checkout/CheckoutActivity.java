@@ -32,7 +32,6 @@ import net.optile.payment.ui.PaymentUI;
  */
 public final class CheckoutActivity extends BaseActivity implements CheckoutView {
     private CheckoutPresenter presenter;
-    private PaymentActivityResult sdkResult;
 
     /**
      * Create an Intent to launch this checkout activity
@@ -117,17 +116,6 @@ public final class CheckoutActivity extends BaseActivity implements CheckoutView
             return;
         }
         showErrorDialog(R.string.dialog_error_message);
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == PAYMENT_REQUEST_CODE) {
-            sdkResult = PaymentActivityResult.fromActivityResult(requestCode, resultCode, data);
-        }
     }
 
     /**
