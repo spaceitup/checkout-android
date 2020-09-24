@@ -150,15 +150,8 @@ public final class PaymentResult implements Parcelable {
      */
     @Override
     public String toString() {
-        StringBuilder sb = new StringBuilder("PaymentResult[");
         Interaction interaction = getInteraction();
-        sb.append("resultInfo: ");
-        sb.append(getResultInfo());
-        sb.append(", code: ");
-        sb.append(interaction.getCode());
-        sb.append(", reason: ");
-        sb.append(interaction.getReason());
-        sb.append("]");
-        return sb.toString();
+        return "PaymentResult[resultInfo: " + getResultInfo() + ", code: " + interaction.getCode() + ", reason: " + interaction.getReason()
+            + "]";
     }
 }
