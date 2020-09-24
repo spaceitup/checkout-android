@@ -47,7 +47,6 @@ import net.optile.payment.util.PaymentUtils;
 public final class SummaryActivity extends BaseActivity implements SummaryView {
 
     private SummaryPresenter presenter;
-    private PaymentActivityResult sdkResult;
     private PresetAccount presetAccount;
     private TextView presetTitle;
     private TextView presetSubtitle;
