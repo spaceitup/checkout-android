@@ -26,9 +26,6 @@ import net.optile.payment.ui.page.PaymentListActivity;
  */
 public final class PaymentUI {
 
-    public final static int RESULT_CODE_PROCEED = Activity.RESULT_FIRST_USER;
-    public final static int RESULT_CODE_ERROR = Activity.RESULT_FIRST_USER + 1;
-
     /** The orientation of the Payment page, by default it is in locked mode */
     private int orientation;
 

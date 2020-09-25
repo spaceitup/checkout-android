@@ -220,11 +220,11 @@ Code sample how to obtain the PaymentResult from inside the onActivityResult() m
     private void handlePaymentActivityResult(int resultCode, PaymentResult result) {
         String resultInfo = result.getResultInfo();
 
-        if (resultCode == PaymentUI.RESULT_CODE_PROCEED) {
+        if (resultCode == PaymentActivityResult.RESULT_CODE_PROCEED) {
             Interaction interaction = result.getInteraction();
             OperationResult operationResult = result.getOperationResult();
         }
-        if (resultCode == PaymentUI.RESULT_CODE_ERROR) {
+        if (resultCode == PaymentActivityResult.RESULT_CODE_ERROR) {
             Interaction interaction = result.getInteraction();
             OperationResult operationResult = result.getOperationResult();
             PaymentError error = result.getPaymentError();

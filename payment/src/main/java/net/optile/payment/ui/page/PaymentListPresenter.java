@@ -10,6 +10,8 @@ package net.optile.payment.ui.page;
 
 import static net.optile.payment.model.InteractionCode.PROCEED;
 import static net.optile.payment.model.OperationType.CHARGE;
+import static net.optile.payment.ui.PaymentActivityResult.RESULT_CODE_ERROR;
+import static net.optile.payment.ui.PaymentActivityResult.RESULT_CODE_PROCEED;
 import static net.optile.payment.ui.redirect.RedirectService.INTERACTION_CODE;
 import static net.optile.payment.ui.redirect.RedirectService.INTERACTION_REASON;
 
@@ -286,10 +288,10 @@ final class PaymentListPresenter implements PaymentSessionListener, Localization
     @Override
     public void onProcessPaymentResult(int resultCode, PaymentResult result) {
         switch (resultCode) {
-            case PaymentUI.RESULT_CODE_PROCEED:
+            case RESULT_CODE_PROCEED:
                 closeWithProceedCode(result);
                 break;
-            case PaymentUI.RESULT_CODE_ERROR:
+            case RESULT_CODE_ERROR:
                 handleProcessPaymentError(result);
                 break;
             default:
@@ -356,10 +358,10 @@ final class PaymentListPresenter implements PaymentSessionListener, Localization
     private void onChargeActivityResult(PaymentActivityResult paymentActivityResult) {
         this.operation = null;
         switch (paymentActivityResult.getResultCode()) {
-            case PaymentUI.RESULT_CODE_ERROR:
+            case RESULT_CODE_ERROR:
                 handleChargeError(paymentActivityResult);
                 break;
-            case PaymentUI.RESULT_CODE_PROCEED:
+            case RESULT_CODE_PROCEED:
                 view.passOnActivityResult(paymentActivityResult);
                 break;
             default:
@@ -434,7 +436,7 @@ final class PaymentListPresenter implements PaymentSessionListener, Localization
     }
 
     private void closeWithProceedCode(PaymentResult result) {
-        view.setPaymentResult(PaymentUI.RESULT_CODE_PROCEED, result);
+        view.setPaymentResult(RESULT_CODE_PROCEED, result);
         view.close();
     }
 
@@ -449,7 +451,7 @@ final class PaymentListPresenter implements PaymentSessionListener, Localization
     }
 
     private void closeWithErrorCode(PaymentResult result) {
-        view.setPaymentResult(PaymentUI.RESULT_CODE_ERROR, result);
+        view.setPaymentResult(RESULT_CODE_ERROR, result);
         view.close();
     }
 

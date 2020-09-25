@@ -9,6 +9,8 @@
 package net.optile.example.demo.checkout;
 
 import static net.optile.payment.model.RedirectType.SUMMARY;
+import static net.optile.payment.ui.PaymentActivityResult.RESULT_CODE_ERROR;
+import static net.optile.payment.ui.PaymentActivityResult.RESULT_CODE_PROCEED;
 
 import java.util.Objects;
 
@@ -44,10 +46,10 @@ final class CheckoutPresenter {
     void handleSdkResult(PaymentActivityResult sdkResult) {
         PaymentResult paymentResult = sdkResult.getPaymentResult();
         switch (sdkResult.getResultCode()) {
-            case PaymentUI.RESULT_CODE_PROCEED:
+            case RESULT_CODE_PROCEED:
                 handlePaymentResultProceed(paymentResult);
                 break;
-            case PaymentUI.RESULT_CODE_ERROR:
+            case RESULT_CODE_ERROR:
                 handlePaymentResultError(paymentResult);
                 break;
         }

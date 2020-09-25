@@ -9,8 +9,8 @@
 package net.optile.network.basic;
 
 import static net.optile.payment.model.InteractionCode.PROCEED;
-import static net.optile.payment.ui.PaymentUI.RESULT_CODE_ERROR;
-import static net.optile.payment.ui.PaymentUI.RESULT_CODE_PROCEED;
+import static net.optile.payment.ui.PaymentActivityResult.RESULT_CODE_ERROR;
+import static net.optile.payment.ui.PaymentActivityResult.RESULT_CODE_PROCEED;
 
 import android.app.Activity;
 import net.optile.payment.core.PaymentException;
