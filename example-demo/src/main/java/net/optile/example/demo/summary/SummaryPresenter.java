@@ -106,11 +106,11 @@ final class SummaryPresenter {
 
     private void handleEditResult(PaymentActivityResult result) {
         switch (result.getResultCode()) {
-            case RESULT_CODE_PROCEED:
-                loadPaymentDetails(view.getListUrl());
-                break;
             case RESULT_CODE_ERROR:
                 handlePaymentResultError(result.getPaymentResult());
+                break;
+            default:
+                loadPaymentDetails(view.getListUrl());
                 break;
         }
     }
