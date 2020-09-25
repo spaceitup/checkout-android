@@ -9,17 +9,20 @@
 package net.optile.payment.ui.page;
 
 import static net.optile.payment.localization.LocalizationKey.CHARGE_INTERRUPTED;
+import static net.optile.payment.ui.PaymentActivityResult.RESULT_CODE_ERROR;
+import static net.optile.payment.ui.PaymentActivityResult.RESULT_CODE_PROCEED;
 
 import android.content.Context;
-import net.optile.payment.core.PaymentError;
 import net.optile.payment.core.PaymentException;
 import net.optile.payment.form.Operation;
 import net.optile.payment.localization.Localization;
+import net.optile.payment.model.ErrorInfo;
 import net.optile.payment.model.Interaction;
 import net.optile.payment.model.InteractionCode;
 import net.optile.payment.model.ListResult;
 import net.optile.payment.model.OperationResult;
 import net.optile.payment.model.Redirect;
+import net.optile.payment.ui.PaymentActivityResult;
 import net.optile.payment.ui.PaymentResult;
 import net.optile.payment.ui.PaymentUI;
 import net.optile.payment.ui.dialog.PaymentDialogFragment.PaymentDialogListener;
@@ -32,6 +35,7 @@ import net.optile.payment.ui.service.NetworkServiceLookup;
 import net.optile.payment.ui.service.NetworkServicePresenter;
 import net.optile.payment.ui.service.PaymentSessionListener;
 import net.optile.payment.ui.service.PaymentSessionService;
+import net.optile.payment.util.PaymentResultHelper;
 
 /**
  * The ChargePaymentPresenter takes care of posting the operation to the Payment API.
@@ -47,7 +51,7 @@ final class ChargePaymentPresenter implements PaymentSessionListener, NetworkSer
     private PaymentSession session;
     private String listUrl;
     private Operation operation;
-    private ActivityResult activityResult;
+    private PaymentActivityResult paymentActivityResult;
     private NetworkService networkService;
     private boolean redirected;
 
@@ -72,9 +76,9 @@ final class ChargePaymentPresenter implements PaymentSessionListener, NetworkSer
         if (redirected) {
             handleRedirectResult();
             redirected = false;
-        } else if (activityResult != null) {
-            handleActivityResult(activityResult);
-            activityResult = null;
+        } else if (paymentActivityResult != null) {
+            handlePaymentActivityResult(paymentActivityResult);
+            paymentActivityResult = null;
         } else {
             loadPaymentSession(this.listUrl);
         }
@@ -95,10 +99,10 @@ final class ChargePaymentPresenter implements PaymentSessionListener, NetworkSer
     /**
      * Set the payment result received through the onActivityResult method
      *
-     * @param activityResult result to be set and handled when the presenter is started.
+     * @param paymentActivityResult result to be set and handled when the presenter is started.
      */
-    void setActivityResult(ActivityResult activityResult) {
-        this.activityResult = activityResult;
+    void setPaymentActivityResult(PaymentActivityResult paymentActivityResult) {
+        this.paymentActivityResult = paymentActivityResult;
     }
 
     /**
@@ -114,7 +118,8 @@ final class ChargePaymentPresenter implements PaymentSessionListener, NetworkSer
                 handleLoadSessionProceed(session);
                 break;
             default:
-                PaymentResult result = new PaymentResult(listResult.getResultInfo(), interaction);
+                ErrorInfo errorInfo = new ErrorInfo(listResult.getResultInfo(), interaction);
+                PaymentResult result = new PaymentResult(errorInfo, null);
                 closeWithErrorCode(result);
         }
     }
@@ -171,16 +176,16 @@ final class ChargePaymentPresenter implements PaymentSessionListener, NetworkSer
     }
 
     private void handleLoadingError(Throwable cause) {
-        PaymentError error = PaymentError.fromThrowable(cause);
+        PaymentResult result = PaymentResultHelper.fromThrowable(InteractionCode.ABORT, cause);
 
-        if (error.isNetworkFailure()) {
-            handleLoadingNetworkFailure(error);
+        if (result.isNetworkFailure()) {
+            handleLoadingNetworkFailure(result);
         } else {
-            closeWithErrorCode(error);
+            closeWithErrorCode(result);
         }
     }
 
-    private void handleLoadingNetworkFailure(final PaymentError error) {
+    private void handleLoadingNetworkFailure(final PaymentResult result) {
         view.showConnectionErrorDialog(new PaymentDialogListener() {
             @Override
             public void onPositiveButtonClicked() {
@@ -193,12 +198,12 @@ final class ChargePaymentPresenter implements PaymentSessionListener, NetworkSer
 
             @Override
             public void onNegativeButtonClicked() {
-                closeWithErrorCode(error);
+                closeWithErrorCode(result);
             }
 
             @Override
             public void onDismissed() {
-                closeWithErrorCode(error);
+                closeWithErrorCode(result);
             }
         });
     }
@@ -215,19 +220,12 @@ final class ChargePaymentPresenter implements PaymentSessionListener, NetworkSer
      * {@inheritDoc}
      */
     @Override
-    public void onPreparePaymentResult(int resultCode, PaymentResult result) {
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
     public void onProcessPaymentResult(int resultCode, PaymentResult result) {
         switch (resultCode) {
-            case PaymentUI.RESULT_CODE_PROCEED:
+            case RESULT_CODE_PROCEED:
                 closeWithProceedCode(result);
                 break;
-            case PaymentUI.RESULT_CODE_ERROR:
+            case RESULT_CODE_ERROR:
                 handleProcessPaymentError(result);
                 break;
         }
@@ -265,7 +263,7 @@ final class ChargePaymentPresenter implements PaymentSessionListener, NetworkSer
     }
 
     private void handleProcessPaymentError(PaymentResult result) {
-        if (result.hasNetworkFailureError()) {
+        if (result.isNetworkFailure()) {
             handleProcessNetworkFailure(result);
             return;
         }
@@ -314,17 +312,17 @@ final class ChargePaymentPresenter implements PaymentSessionListener, NetworkSer
         try {
             networkService.processPayment(view.getActivity(), CHARGE_REQUEST_CODE, operation);
         } catch (PaymentException e) {
-            closeWithErrorCode(e.error);
+            closeWithErrorCode(e);
         }
     }
 
-    private void handleActivityResult(ActivityResult result) {
+    private void handlePaymentActivityResult(PaymentActivityResult result) {
         if (session == null) {
             handleMissingCachedSession();
             return;
         }
-        if (result.requestCode == CHARGE_REQUEST_CODE) {
-            onProcessPaymentResult(result.resultCode, result.paymentResult);
+        if (result.getRequestCode() == CHARGE_REQUEST_CODE) {
+            onProcessPaymentResult(result.getResultCode(), result.getPaymentResult());
         }
     }
 
@@ -335,27 +333,27 @@ final class ChargePaymentPresenter implements PaymentSessionListener, NetworkSer
     }
 
     private void closeWithProceedCode(PaymentResult result) {
-        view.setPaymentResult(PaymentUI.RESULT_CODE_PROCEED, result);
+        view.setPaymentResult(RESULT_CODE_PROCEED, result);
         view.close();
     }
 
     private void closeWithErrorCode(String message) {
-        PaymentError error = new PaymentError(message);
-        closeWithErrorCode(error);
+        PaymentResult result = PaymentResultHelper.fromErrorMessage(message);
+        closeWithErrorCode(result);
     }
 
-    private void closeWithErrorCode(PaymentError error) {
-        PaymentResult result = PaymentResult.fromPaymentError(error);
+    private void closeWithErrorCode(Throwable cause) {
+        PaymentResult result = PaymentResultHelper.fromThrowable(cause);
         closeWithErrorCode(result);
     }
 
     private void closeWithErrorCode(PaymentResult result) {
-        view.setPaymentResult(PaymentUI.RESULT_CODE_ERROR, result);
+        view.setPaymentResult(RESULT_CODE_ERROR, result);
         view.close();
     }
 
     private void showErrorAndCloseWithErrorCode(PaymentResult result) {
-        view.setPaymentResult(PaymentUI.RESULT_CODE_ERROR, result);
+        view.setPaymentResult(RESULT_CODE_ERROR, result);
         Interaction interaction = result.getInteraction();
         PaymentDialogListener listener = new PaymentDialogListener() {
             @Override

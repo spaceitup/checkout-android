@@ -8,15 +8,18 @@
 
 package net.optile.payment.core;
 
+import net.optile.payment.model.ErrorInfo;
+
 /**
- * The PaymentException containing the payment error details
+ * The PaymentException containing the details of the payment error
  */
 public class PaymentException extends Exception {
 
-    /**
-     * The details of the error
-     */
-    public final PaymentError error;
+    /** The error info obtained from the payment API */
+    private ErrorInfo errorInfo;
+
+    /** Indicates that the exception is caused by a network failure, e.g. poor wifi connection */
+    private boolean networkFailure;
 
     /**
      * {@inheritDoc}
@@ -25,37 +28,53 @@ public class PaymentException extends Exception {
      */
     public PaymentException(final String message) {
         super(message);
-        this.error = new PaymentError(message);
     }
 
     /**
      * {@inheritDoc}
      *
-     * @param cause the cause
+     * @param cause the cause of this exception
      */
     public PaymentException(final Throwable cause) {
         super(cause.getMessage(), cause);
-        this.error = new PaymentError(cause);
     }
 
     /**
      * {@inheritDoc}
      *
-     * @param message the error message
-     * @param cause the cause
+     * @param message containing a description of the error
+     * @param cause of the error
      */
     public PaymentException(final String message, final Throwable cause) {
         super(message, cause);
-        this.error = new PaymentError(message, cause);
     }
 
     /**
-     * {@inheritDoc}
+     * Constructs a new PaymentException with the cause and networkFailure flag
      *
-     * @param error the internal error
+     * @param cause of the error
+     * @param networkFailure indicates that the exception was caused by a network failure
      */
-    public PaymentException(final PaymentError error) {
-        super(error.getMessage(), error.getCause());
-        this.error = error;
+    public PaymentException(final Throwable cause, boolean networkFailure) {
+        super(cause);
+        this.networkFailure = networkFailure;
+    }
+
+    /**
+     * Constructs a new PaymentException
+     *
+     * @param errorInfo information about the error
+     */
+    public PaymentException(final ErrorInfo errorInfo) {
+        super(errorInfo.getResultInfo());
+        this.errorInfo = errorInfo;
+    }
+
+    public ErrorInfo getErrorInfo() {
+        return errorInfo;
+    }
+
+    public boolean getNetworkFailure() {
+        return networkFailure;
     }
 }

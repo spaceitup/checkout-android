@@ -13,7 +13,6 @@ import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.text.TextUtils;
 import android.util.Patterns;
-import androidx.annotation.RawRes;
 import net.optile.payment.R;
 import net.optile.payment.localization.LocalLocalizationHolder;
 import net.optile.payment.localization.Localization;
@@ -26,9 +25,6 @@ import net.optile.payment.ui.page.PaymentListActivity;
  * The Payment Page shows payment methods which can be used to finalize payments through optile's Payment API.
  */
 public final class PaymentUI {
-
-    public final static int RESULT_CODE_PROCEED = Activity.RESULT_FIRST_USER;
-    public final static int RESULT_CODE_ERROR = Activity.RESULT_FIRST_USER + 1;
 
     /** The orientation of the Payment page, by default it is in locked mode */
     private int orientation;

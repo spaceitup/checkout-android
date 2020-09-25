@@ -10,6 +10,7 @@ package net.optile.payment.ui.page;
 
 import android.app.Activity;
 import net.optile.payment.model.Interaction;
+import net.optile.payment.ui.PaymentActivityResult;
 import net.optile.payment.ui.PaymentResult;
 import net.optile.payment.ui.dialog.PaymentDialogFragment.PaymentDialogListener;
 
@@ -68,9 +69,9 @@ interface PaymentView {
     /**
      * Pass on the ActivityResult to the activity that started this View.
      *
-     * @param activityResult to be pass on
+     * @param paymentActivityResult to be pass on
      */
-    void passOnActivityResult(ActivityResult activityResult);
+    void passOnActivityResult(PaymentActivityResult paymentActivityResult);
 
     /**
      * Get the Android Context of this view.

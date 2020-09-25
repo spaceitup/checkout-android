@@ -23,9 +23,8 @@ import androidx.core.content.res.ResourcesCompat;
 import net.optile.example.demo.R;
 import net.optile.example.demo.confirm.ConfirmActivity;
 import net.optile.example.demo.shared.BaseActivity;
-import net.optile.example.demo.shared.SdkResult;
 import net.optile.example.demo.summary.SummaryActivity;
-import net.optile.payment.ui.PaymentResult;
+import net.optile.payment.ui.PaymentActivityResult;
 import net.optile.payment.ui.PaymentUI;
 
 /**
@@ -33,7 +32,6 @@ import net.optile.payment.ui.PaymentUI;
  */
 public final class CheckoutActivity extends BaseActivity implements CheckoutView {
     private CheckoutPresenter presenter;
-    private SdkResult sdkResult;
 
     /**
      * Create an Intent to launch this checkout activity
@@ -69,7 +67,7 @@ public final class CheckoutActivity extends BaseActivity implements CheckoutView
                 onButtonClicked();
             }
         });
-        this.presenter = new CheckoutPresenter(this);
+        presenter = new CheckoutPresenter(this);
     }
 
     /**
@@ -81,7 +79,7 @@ public final class CheckoutActivity extends BaseActivity implements CheckoutView
 
         if (sdkResult != null) {
             presenter.handleSdkResult(sdkResult);
-            this.sdkResult = null;
+            sdkResult = null;
         }
     }
 
@@ -118,21 +116,6 @@ public final class CheckoutActivity extends BaseActivity implements CheckoutView
             return;
         }
         showErrorDialog(R.string.dialog_error_message);
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode != PAYMENT_REQUEST_CODE) {
-            return;
-        }
-        PaymentResult result = PaymentResult.fromResultIntent(data);
-        if (result != null) {
-            this.sdkResult = new SdkResult(requestCode, resultCode, result);
-        }
     }
 
     /**

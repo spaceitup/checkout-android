@@ -14,6 +14,8 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonSyntaxException;
 
+import android.text.TextUtils;
+
 /**
  * Class with helper methods for Gson
  */
@@ -40,15 +42,15 @@ public final class GsonHelper {
      * @return Json representation of src
      */
     public String toJson(Object src) {
-        return gson.toJson(src);
+        return src == null ? null : gson.toJson(src);
     }
 
     public <T> T fromJson(String json, Class<T> classOfT) throws JsonSyntaxException {
-        return gson.fromJson(json, classOfT);
+        return TextUtils.isEmpty(json) ? null : gson.fromJson(json, classOfT);
     }
 
     public <T> T fromJson(String json, Type type) throws JsonSyntaxException {
-        return gson.fromJson(json, type);
+        return TextUtils.isEmpty(json) ? null : gson.fromJson(json, type);
     }
 
     private static class InstanceHolder {

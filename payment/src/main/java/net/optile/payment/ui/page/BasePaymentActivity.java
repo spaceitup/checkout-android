@@ -20,6 +20,7 @@ import androidx.test.espresso.IdlingResource;
 import net.optile.payment.R;
 import net.optile.payment.localization.Localization;
 import net.optile.payment.model.Interaction;
+import net.optile.payment.ui.PaymentActivityResult;
 import net.optile.payment.ui.PaymentResult;
 import net.optile.payment.ui.PaymentTheme;
 import net.optile.payment.ui.PaymentUI;
@@ -27,6 +28,7 @@ import net.optile.payment.ui.dialog.PaymentDialogFragment;
 import net.optile.payment.ui.dialog.PaymentDialogFragment.PaymentDialogListener;
 import net.optile.payment.ui.dialog.PaymentDialogHelper;
 import net.optile.payment.ui.page.idlingresource.SimpleIdlingResource;
+import net.optile.payment.util.PaymentResultHelper;
 
 /**
  * The base activity for payment activities.
@@ -156,11 +158,11 @@ abstract class BasePaymentActivity extends AppCompatActivity implements PaymentV
      * {@inheritDoc}
      */
     @Override
-    public void passOnActivityResult(ActivityResult activityResult) {
+    public void passOnActivityResult(PaymentActivityResult paymentActivityResult) {
         if (!active) {
             return;
         }
-        setResultIntent(activityResult.resultCode, activityResult.paymentResult);
+        setResultIntent(paymentActivityResult.getResultCode(), paymentActivityResult.getPaymentResult());
         supportFinishAfterTransition();
     }
 
@@ -219,7 +221,7 @@ abstract class BasePaymentActivity extends AppCompatActivity implements PaymentV
      */
     void setResultIntent(int resultCode, PaymentResult result) {
         Intent intent = new Intent();
-        result.putInto(intent);
+        PaymentResultHelper.putIntoResultIntent(result, intent);
         setResult(resultCode, intent);
     }
 

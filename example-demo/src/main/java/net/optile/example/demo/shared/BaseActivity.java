@@ -8,10 +8,12 @@
 
 package net.optile.example.demo.shared;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
 import androidx.appcompat.app.AppCompatActivity;
 import net.optile.example.demo.R;
+import net.optile.payment.ui.PaymentActivityResult;
 import net.optile.payment.ui.dialog.PaymentDialogFragment;
 import net.optile.payment.ui.dialog.PaymentDialogHelper;
 
@@ -26,7 +28,8 @@ public abstract class BaseActivity extends AppCompatActivity {
 
     protected boolean active;
     protected String listUrl;
-
+    protected PaymentActivityResult sdkResult;
+    
     /**
      * {@inheritDoc}
      */
@@ -80,6 +83,17 @@ public abstract class BaseActivity extends AppCompatActivity {
         this.active = true;
     }
 
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == PAYMENT_REQUEST_CODE || requestCode == EDIT_REQUEST_CODE) {
+            sdkResult = PaymentActivityResult.fromActivityResult(requestCode, resultCode, data);
+        }
+    }
+    
     /**
      * Show error dialog to the user, the payment dialog from the android-sdk is used
      * to display a material designed dialog.

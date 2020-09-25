@@ -18,6 +18,23 @@ public class ErrorInfo {
     private Interaction interaction;
 
     /**
+     * Construct an empty ErrorInfo
+     */
+    public ErrorInfo() {
+    }
+
+    /**
+     * Constructs a new ErrorInfo with the resultInfo and interaction
+     *
+     * @param resultInfo providing a description of the error
+     * @param interaction contains recommendation which steps to take next
+     */
+    public ErrorInfo(String resultInfo, Interaction interaction) {
+        this.resultInfo = resultInfo;
+        this.interaction = interaction;
+    }
+
+    /**
      * Gets value of resultInfo.
      *
      * @return the resultInfo.

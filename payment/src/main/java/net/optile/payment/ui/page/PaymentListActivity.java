@@ -23,7 +23,7 @@ import androidx.test.espresso.IdlingResource;
 import net.optile.payment.R;
 import net.optile.payment.form.Operation;
 import net.optile.payment.localization.Localization;
-import net.optile.payment.ui.PaymentResult;
+import net.optile.payment.ui.PaymentActivityResult;
 import net.optile.payment.ui.list.PaymentList;
 import net.optile.payment.ui.model.PaymentCard;
 import net.optile.payment.ui.model.PaymentSession;
@@ -151,10 +151,8 @@ public final class PaymentListActivity extends BasePaymentActivity implements Pa
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        PaymentResult result = PaymentResult.fromResultIntent(data);
-        if (result != null) {
-            presenter.setActivityResult(new ActivityResult(requestCode, resultCode, result));
-        }
+        PaymentActivityResult result = PaymentActivityResult.fromActivityResult(requestCode, resultCode, data);
+        presenter.setPaymentActivityResult(result);
     }
 
     /**

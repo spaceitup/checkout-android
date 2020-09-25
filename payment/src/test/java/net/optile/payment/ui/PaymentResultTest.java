@@ -7,7 +7,7 @@ import org.junit.runner.RunWith;
 import org.robolectric.RobolectricTestRunner;
 
 import android.os.Parcel;
-import net.optile.payment.core.PaymentError;
+import net.optile.payment.model.ErrorInfo;
 import net.optile.payment.model.Interaction;
 import net.optile.payment.model.InteractionCode;
 import net.optile.payment.model.InteractionReason;
@@ -17,40 +17,49 @@ import net.optile.payment.model.OperationResult;
 public class PaymentResultTest {
 
     @Test
-    public void construct_withResultInfo() {
-        PaymentResult result = new PaymentResult("resultInfo");
-        assertEquals("resultInfo", result.getResultInfo());
-    }
-
-    @Test
-    public void construct_withPaymentError() {
-        Interaction interaction = new Interaction(InteractionCode.ABORT, InteractionReason.CLIENTSIDE_ERROR);
-        PaymentError error = new PaymentError("paymentError");
-        PaymentResult result = new PaymentResult(interaction, error);
-        assertEquals(interaction, result.getInteraction());
-        assertEquals(error, result.getPaymentError());
-    }
-
-    @Test
     public void construct_withOperationResult() {
+        Interaction interaction = new Interaction(InteractionCode.ABORT, InteractionReason.CLIENTSIDE_ERROR);
         OperationResult operationResult = new OperationResult();
-        PaymentResult result = new PaymentResult(operationResult);
-        assertEquals(operationResult, result.getOperationResult());
+        operationResult.setInteraction(interaction);
+        operationResult.setResultInfo("resultInfo");
+        PaymentResult paymentResult = new PaymentResult(operationResult);
+
+        assertEquals(operationResult, paymentResult.getOperationResult());
+        assertEquals(interaction, paymentResult.getInteraction());
+        assertEquals("resultInfo", paymentResult.getResultInfo());
     }
 
     @Test
-    public void construct_withInteraction() {
+    public void construct_withErrorInfo() {
         Interaction interaction = new Interaction(InteractionCode.ABORT, InteractionReason.CLIENTSIDE_ERROR);
-        PaymentResult result = new PaymentResult("resultInfo", interaction);
-        assertEquals("resultInfo", result.getResultInfo());
-        assertEquals(interaction, result.getInteraction());
+        ErrorInfo errorInfo = new ErrorInfo();
+        errorInfo.setInteraction(interaction);
+        errorInfo.setResultInfo("resultInfo");
+        PaymentResult paymentResult = new PaymentResult(errorInfo);
+
+        assertEquals(errorInfo, paymentResult.getErrorInfo());
+        assertEquals("resultInfo", paymentResult.getResultInfo());
+        assertEquals(interaction, paymentResult.getInteraction());
+    }
+
+    @Test
+    public void construct_withErrorInfoAndThrowable() {
+        Interaction interaction = new Interaction(InteractionCode.ABORT, InteractionReason.CLIENTSIDE_ERROR);
+        Throwable cause = new Throwable();
+        ErrorInfo errorInfo = new ErrorInfo("resultInfo", interaction);
+        PaymentResult paymentResult = new PaymentResult(errorInfo, cause);
+
+        assertEquals(errorInfo, paymentResult.getErrorInfo());
+        assertEquals(cause, paymentResult.getCause());
+        assertEquals("resultInfo", paymentResult.getResultInfo());
+        assertEquals(interaction, paymentResult.getInteraction());
     }
 
     @Test
     public void writeToParcel() {
         Interaction interaction = new Interaction(InteractionCode.ABORT, InteractionReason.CLIENTSIDE_ERROR);
-        PaymentError error = new PaymentError("error");
-        PaymentResult writeResult = new PaymentResult(interaction, error);
+        ErrorInfo errorInfo = new ErrorInfo("resultInfo", interaction);
+        PaymentResult writeResult = new PaymentResult(errorInfo);
 
         Parcel parcel = Parcel.obtain();
         writeResult.writeToParcel(parcel, 0);
