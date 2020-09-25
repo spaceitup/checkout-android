@@ -17,6 +17,9 @@ import net.optile.payment.util.PaymentResultHelper;
  */
 public final class PaymentActivityResult {
 
+    public final static int RESULT_CODE_PROCEED = Activity.RESULT_FIRST_USER;
+    public final static int RESULT_CODE_ERROR = Activity.RESULT_FIRST_USER + 1;
+    
     private final int requestCode;
     private final int resultCode;
     private final PaymentResult paymentResult;
@@ -53,9 +56,9 @@ public final class PaymentActivityResult {
      */
     public static String resultCodeToString(int resultCode) {
         switch (resultCode) {
-            case PaymentUI.RESULT_CODE_PROCEED:
+            case RESULT_CODE_PROCEED:
                 return "RESULT_CODE_PROCEED";
-            case PaymentUI.RESULT_CODE_ERROR:
+            case RESULT_CODE_ERROR:
                 return "RESULT_CODE_ERROR";
             case Activity.RESULT_CANCELED:
                 return "Activity.RESULT_CANCELED";

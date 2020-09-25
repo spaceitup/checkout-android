@@ -8,6 +8,9 @@
 
 package net.optile.example.demo.summary;
 
+import static net.optile.payment.ui.PaymentActivityResult.RESULT_CODE_ERROR;
+import static net.optile.payment.ui.PaymentActivityResult.RESULT_CODE_PROCEED;
+
 import java.util.List;
 import java.util.concurrent.Callable;
 
@@ -103,10 +106,10 @@ final class SummaryPresenter {
 
     private void handleEditResult(PaymentActivityResult result) {
         switch (result.getResultCode()) {
-            case PaymentUI.RESULT_CODE_PROCEED:
+            case RESULT_CODE_PROCEED:
                 loadPaymentDetails(view.getListUrl());
                 break;
-            case PaymentUI.RESULT_CODE_ERROR:
+            case RESULT_CODE_ERROR:
                 handlePaymentResultError(result.getPaymentResult());
                 break;
         }
@@ -115,10 +118,10 @@ final class SummaryPresenter {
     private void handlePaymentResult(PaymentActivityResult sdkResult) {
         PaymentResult paymentResult = sdkResult.getPaymentResult();
         switch (sdkResult.getResultCode()) {
-            case PaymentUI.RESULT_CODE_PROCEED:
+            case RESULT_CODE_PROCEED:
                 handlePaymentResultProceed(paymentResult);
                 break;
-            case PaymentUI.RESULT_CODE_ERROR:
+            case RESULT_CODE_ERROR:
                 handlePaymentResultError(paymentResult);
                 break;
         }

@@ -9,6 +9,8 @@
 package net.optile.payment.ui.page;
 
 import static net.optile.payment.localization.LocalizationKey.CHARGE_INTERRUPTED;
+import static net.optile.payment.ui.PaymentActivityResult.RESULT_CODE_ERROR;
+import static net.optile.payment.ui.PaymentActivityResult.RESULT_CODE_PROCEED;
 
 import android.content.Context;
 import net.optile.payment.core.PaymentException;
@@ -220,10 +222,10 @@ final class ChargePaymentPresenter implements PaymentSessionListener, NetworkSer
     @Override
     public void onProcessPaymentResult(int resultCode, PaymentResult result) {
         switch (resultCode) {
-            case PaymentUI.RESULT_CODE_PROCEED:
+            case RESULT_CODE_PROCEED:
                 closeWithProceedCode(result);
                 break;
-            case PaymentUI.RESULT_CODE_ERROR:
+            case RESULT_CODE_ERROR:
                 handleProcessPaymentError(result);
                 break;
         }
@@ -331,7 +333,7 @@ final class ChargePaymentPresenter implements PaymentSessionListener, NetworkSer
     }
 
     private void closeWithProceedCode(PaymentResult result) {
-        view.setPaymentResult(PaymentUI.RESULT_CODE_PROCEED, result);
+        view.setPaymentResult(RESULT_CODE_PROCEED, result);
         view.close();
     }
 
@@ -346,12 +348,12 @@ final class ChargePaymentPresenter implements PaymentSessionListener, NetworkSer
     }
 
     private void closeWithErrorCode(PaymentResult result) {
-        view.setPaymentResult(PaymentUI.RESULT_CODE_ERROR, result);
+        view.setPaymentResult(RESULT_CODE_ERROR, result);
         view.close();
     }
 
     private void showErrorAndCloseWithErrorCode(PaymentResult result) {
-        view.setPaymentResult(PaymentUI.RESULT_CODE_ERROR, result);
+        view.setPaymentResult(RESULT_CODE_ERROR, result);
         Interaction interaction = result.getInteraction();
         PaymentDialogListener listener = new PaymentDialogListener() {
             @Override
