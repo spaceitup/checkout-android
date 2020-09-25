@@ -26,6 +26,7 @@ import net.optile.payment.localization.LocalizationCache;
 import net.optile.payment.localization.LocalizationHolder;
 import net.optile.payment.localization.MultiLocalizationHolder;
 import net.optile.payment.network.LocalizationConnection;
+import net.optile.payment.ui.model.AccountCard;
 import net.optile.payment.ui.model.PaymentNetwork;
 import net.optile.payment.ui.model.PaymentSession;
 
@@ -120,62 +121,54 @@ public final class LocalizationLoaderService {
             cache.setCacheId(listUrl);
         }
         LocalizationHolder localHolder = new LocalLocalizationHolder(context);
+        LocalizationHolder sharedHolder = loadSharedLocalizationHolder(session, localHolder);
+
+        Map<String, LocalizationHolder> holders = new HashMap<>();
         List<PaymentNetwork> networks = session.getPaymentNetworks();
-        if (networks.size() == 0) {
-            return new Localization(localHolder, null);
-        }
-        LocalizationHolder sharedHolder = loadSharedLocalization(context, networks.get(0), localHolder);
-        Map<String, LocalizationHolder> networkHolders = loadNetworkLocalizations(networks, sharedHolder);
-        return new Localization(sharedHolder, networkHolders);
+        loadNetworkLocalizations(networks, holders, sharedHolder);
+
+        List<AccountCard> accounts = session.getAccountCards();
+        loadAccountLocalizations(accounts, holders, sharedHolder);
+
+        return new Localization(sharedHolder, holders);
     }
 
-    private Map<String, LocalizationHolder> loadNetworkLocalizations(List<PaymentNetwork> networks, LocalizationHolder fallback)
+    private void loadNetworkLocalizations(List<PaymentNetwork> networks, Map<String, LocalizationHolder> holders, LocalizationHolder fallback)
         throws PaymentException {
-        Map<String, LocalizationHolder> map = new HashMap<>();
 
         for (PaymentNetwork network : networks) {
-            URL url = getNetworkLanguageUrl(network);
-            String langUrl = url.toString();
-            String code = network.getCode();
-            LocalizationHolder holder = cache.get(langUrl);
-
-            if (holder == null) {
-                holder = new MultiLocalizationHolder(connection.loadLocalization(url), fallback);
-                cache.put(langUrl, holder);
-            }
-            map.put(code, holder);
+            loadLocalizationHolder(network.getCode(), network.getLink("lang"), holders, fallback);
         }
-        return map;
     }
 
-    private LocalizationHolder loadSharedLocalization(Context context, PaymentNetwork network, LocalizationHolder fallback)
+    private void loadAccountLocalizations(List<AccountCard> accountCards, Map<String, LocalizationHolder> holders, LocalizationHolder fallback)
         throws PaymentException {
-        try {
-            URL url = getNetworkLanguageUrl(network);
-            String sharedUrl = url.toString();
-            int index = sharedUrl.lastIndexOf('/');
 
-            if (index < 0 || !sharedUrl.endsWith(".properties")) {
-                throw new PaymentException("Invalid URL for creating shared language URL");
-            }
-            sharedUrl = sharedUrl.substring(0, index) + "/checkout.properties";
-
-            LocalizationHolder holder = cache.get(sharedUrl);
-            if (holder == null) {
-                holder = new MultiLocalizationHolder(connection.loadLocalization(new URL(sharedUrl)), fallback);
-                cache.put(sharedUrl, holder);
-            }
-            return holder;
-        } catch (MalformedURLException e) {
-            throw new PaymentException("Malformed paymentpage language URL", e);
+        for (AccountCard account : accountCards) {
+            loadLocalizationHolder(account.getCode(), account.getLink("lang"), holders, fallback);
         }
     }
 
-    private URL getNetworkLanguageUrl(PaymentNetwork network) throws PaymentException {
-        URL url = network.getLink("lang");
-        if (url == null) {
-            throw new PaymentException("Missing 'lang' url in PaymentNetwork: " + network.getCode());
+    private void loadLocalizationHolder(String code, URL url, Map<String, LocalizationHolder> holders, LocalizationHolder fallback) throws PaymentException {
+        String langUrl = url.toString();
+        LocalizationHolder holder = cache.get(langUrl);
+
+        if (holder == null) {
+            holder = new MultiLocalizationHolder(connection.loadLocalization(url), fallback);
+            cache.put(langUrl, holder);
         }
-        return url;
+        holders.put(code, holder);
+    }
+
+    private LocalizationHolder loadSharedLocalizationHolder(PaymentSession paymentSession, LocalizationHolder fallback) throws PaymentException {
+        URL url = paymentSession.getLink("lang");
+        String sharedUrl = url.toString();
+        LocalizationHolder holder = cache.get(sharedUrl);
+
+        if (holder == null) {
+            holder = new MultiLocalizationHolder(connection.loadLocalization(url), fallback);
+            cache.put(sharedUrl, holder);
+        }
+        return holder;
     }
 }
