@@ -89,6 +89,10 @@ public final class PaymentSession {
         return url != null && url.toString().equals(listUrl);
     }
 
+    public boolean isEmpty() {
+        return !hasPresetCard() && (getNetworkCardSize() == 0) && (getAccountCardSize() == 0);
+    }
+    
     public String getOperationType() {
         return listResult.getOperationType();
     }
