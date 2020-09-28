@@ -90,7 +90,7 @@ public final class PaymentSession {
     }
 
     public boolean isEmpty() {
-        return (getNetworkCardSize() == 0) && (getAccountCardSize() == 0);
+        return !hasPresetCard() && (getNetworkCardSize() == 0) && (getAccountCardSize() == 0);
     }
     
     public String getOperationType() {

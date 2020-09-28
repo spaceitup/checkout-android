@@ -122,13 +122,11 @@ public final class LocalizationLoaderService {
         }
         LocalizationHolder localHolder = new LocalLocalizationHolder(context);
         LocalizationHolder sharedHolder = loadLocalizationHolder(session.getLink("lang"), localHolder);
-        
         Map<String, LocalizationHolder> holders = new HashMap<>();
+
         for (PaymentNetwork network : session.getPaymentNetworks()) {
             holders.put(network.getCode(), loadLocalizationHolder(network.getLink("lang"), sharedHolder));
         }
-
-        List<AccountCard> accounts = session.getAccountCards();
         for (AccountCard account : session.getAccountCards()) {
             holders.put(account.getCode(), loadLocalizationHolder(account.getLink("lang"), sharedHolder));
         }
