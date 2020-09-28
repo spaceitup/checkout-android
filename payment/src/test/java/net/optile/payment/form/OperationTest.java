@@ -43,13 +43,13 @@ public class OperationTest {
 
     @Test(expected = IllegalArgumentException.class)
     public void putValue_invalidName_exception() throws PaymentException {
-        Operation operation = new Operation("VISA", createTestURL());
+        Operation operation = new Operation("VISA", "CREDIT_CARD", createTestURL());
         operation.putValue(null, "Foo");
     }
 
     @Test
     public void putValue_success() throws PaymentException, JSONException {
-        Operation operation = new Operation("VISA", createTestURL());
+        Operation operation = new Operation("VISA", "CREDIT_CARD", createTestURL());
         operation.putValue(PaymentInputType.ACCOUNT_NUMBER, "accountnumber123");
         operation.putValue(PaymentInputType.HOLDER_NAME, "John Doe");
         operation.putValue(PaymentInputType.EXPIRY_MONTH, 12);
@@ -72,7 +72,7 @@ public class OperationTest {
             e.printStackTrace();
         }
         assertNotNull(url);
-        Operation srcOperation = new Operation("VISA", url);
+        Operation srcOperation = new Operation("VISA", "CREDIT_CARD", url);
         Operation dstOperation = Operation.create(srcOperation, OperationType.PRESET.toLowerCase());
         String dstUrl = dstOperation.getURL().toString();
         assertEquals(dstUrl, "http://localhost/test/preset");
