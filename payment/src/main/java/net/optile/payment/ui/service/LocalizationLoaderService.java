@@ -121,53 +121,27 @@ public final class LocalizationLoaderService {
             cache.setCacheId(listUrl);
         }
         LocalizationHolder localHolder = new LocalLocalizationHolder(context);
-        LocalizationHolder sharedHolder = loadSharedLocalizationHolder(session, localHolder);
-
+        LocalizationHolder sharedHolder = loadLocalizationHolder(session.getLink("lang"), localHolder);
+        
         Map<String, LocalizationHolder> holders = new HashMap<>();
-        List<PaymentNetwork> networks = session.getPaymentNetworks();
-        loadNetworkLocalizations(networks, holders, sharedHolder);
+        for (PaymentNetwork network : session.getPaymentNetworks()) {
+            holders.put(network.getCode(), loadLocalizationHolder(network.getLink("lang"), sharedHolder));
+        }
 
         List<AccountCard> accounts = session.getAccountCards();
-        loadAccountLocalizations(accounts, holders, sharedHolder);
-
+        for (AccountCard account : session.getAccountCards()) {
+            holders.put(account.getCode(), loadLocalizationHolder(account.getLink("lang"), sharedHolder));
+        }
         return new Localization(sharedHolder, holders);
     }
 
-    private void loadNetworkLocalizations(List<PaymentNetwork> networks, Map<String, LocalizationHolder> holders, LocalizationHolder fallback)
-        throws PaymentException {
-
-        for (PaymentNetwork network : networks) {
-            loadLocalizationHolder(network.getCode(), network.getLink("lang"), holders, fallback);
-        }
-    }
-
-    private void loadAccountLocalizations(List<AccountCard> accountCards, Map<String, LocalizationHolder> holders, LocalizationHolder fallback)
-        throws PaymentException {
-
-        for (AccountCard account : accountCards) {
-            loadLocalizationHolder(account.getCode(), account.getLink("lang"), holders, fallback);
-        }
-    }
-
-    private void loadLocalizationHolder(String code, URL url, Map<String, LocalizationHolder> holders, LocalizationHolder fallback) throws PaymentException {
+    private LocalizationHolder loadLocalizationHolder(URL url, LocalizationHolder fallback) throws PaymentException {
         String langUrl = url.toString();
         LocalizationHolder holder = cache.get(langUrl);
 
         if (holder == null) {
             holder = new MultiLocalizationHolder(connection.loadLocalization(url), fallback);
             cache.put(langUrl, holder);
-        }
-        holders.put(code, holder);
-    }
-
-    private LocalizationHolder loadSharedLocalizationHolder(PaymentSession paymentSession, LocalizationHolder fallback) throws PaymentException {
-        URL url = paymentSession.getLink("lang");
-        String sharedUrl = url.toString();
-        LocalizationHolder holder = cache.get(sharedUrl);
-
-        if (holder == null) {
-            holder = new MultiLocalizationHolder(connection.loadLocalization(url), fallback);
-            cache.put(sharedUrl, holder);
         }
         return holder;
     }
