@@ -8,6 +8,7 @@
 
 package net.optile.example.demo.summary;
 
+import static android.app.Activity.RESULT_CANCELED;
 import static net.optile.payment.ui.PaymentActivityResult.RESULT_CODE_ERROR;
 import static net.optile.payment.ui.PaymentActivityResult.RESULT_CODE_PROCEED;
 
@@ -109,7 +110,9 @@ final class SummaryPresenter {
             case RESULT_CODE_ERROR:
                 handlePaymentResultError(result.getPaymentResult());
                 break;
-            default:
+            case RESULT_CANCELED:
+                // This resultCode is returned when the user closed the payment page and there is no payment result available
+            case RESULT_CODE_PROCEED:
                 loadPaymentDetails(view.getListUrl());
                 break;
         }

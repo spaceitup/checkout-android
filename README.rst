@@ -197,11 +197,9 @@ Code sample how to initialize and display the Payment Page:
 Payment Result
 ==============
 
-Payment results are returned through the onActivityResult() method in your Activity. The Intent from the activity result can be converted to a PaymentResult. Depending on what happened while processing the payment, the PaymentResult may contain an Interaction, OperationResult or PaymentError. 
+Payment results are returned through the onActivityResult() method in your Activity. The first step is to create a PaymentActivityResult from the parameters provided in the onActivityResult() method. This PaymentActivityResult acts as a container to store the requestCode, resultCode and optional PaymentResult returned by the Android SDK.
 
-- Interaction - provides recommendations for the merchant how to proceed after a payment
-- OperationResult - is designed to hold information about the payment operation request
-- PaymentError - contains information about an error that happened inside the Android SDK 
+The second step is to check the value of the resultCode as this indicates what kind of information is returned. If the resultCode is Activity.RESULT_CANCELED, it means the user canceled the payment and no further information is available. When the resultCode is either RESULT_CODE_PROCEED or RESULT_CODE_ERROR, the PaymentActivityResult has a PaymentResult containing detailed information about the payment.
 
 Code sample how to obtain the PaymentResult from inside the onActivityResult() method:
 
@@ -209,47 +207,42 @@ Code sample how to obtain the PaymentResult from inside the onActivityResult() m
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        PaymentActivityResult activityResult = PaymentActivityResult.fromActivityResult(requestCode, resultCode, data);
+	handlePaymentActivityResult(activityResult);
+    }
+
+    private void handlePaymentActivityResult(PaymentActivityResult activityResult) {
+
+        switch (activityResult.getResultCode()) {
+	    case PaymentActivityResult.RESULT_CODE_PROCEED:
+	    case PaymentActivityResult.RESULT_CODE_ERROR:
+	        PaymentResult paymentResult = activityResult.getPaymentResult();
+		break;
+
+	    case Activity.RESULT_CANCELED:
+                // This resultCode is returned when the user closed the payment page
+        }
+    }
+
+Inside the PaymentResult the payment information is either stored in an OperationResult or ErrorInfo object. The PaymentResult provide helper methods to obtain the Interaction and resultInfo from either the OperationResult or ErrorInfo objects. The resultInfo provides a short description of the payment result and the interaction provides a recommendation to the merchant what steps to take next.   
+
+Code sample how to obtain the resultInfo and Interaction from the PaymentResult
+
+.. code-block:: java
+
+    String resultInfo = paymentResult.getResultInfo();
+    Interaction interaction = paymentResult.getInteraction();
     
-        PaymentResult result = PaymentResult.fromResultIntent(data);        
-        if (result == null) {
-            return;
-        }
-	handlePaymentActivityResult(resultCode, result);
-    }
-
-    private void handlePaymentActivityResult(int resultCode, PaymentResult result) {
-        String resultInfo = result.getResultInfo();
-
-        if (resultCode == PaymentActivityResult.RESULT_CODE_PROCEED) {
-            Interaction interaction = result.getInteraction();
-            OperationResult operationResult = result.getOperationResult();
-        }
-        if (resultCode == PaymentActivityResult.RESULT_CODE_ERROR) {
-            Interaction interaction = result.getInteraction();
-            OperationResult operationResult = result.getOperationResult();
-            PaymentError error = result.getPaymentError();
-        }
-    }
-
+    
 Proceed or Error
-------------------
+----------------
 
-To make processing of the payment result easier, the resultCode provided in the onActivityResult() method defines two different flows. The first is the proceed flow (RESULT_CODE_PROCEED) and is used to indicate that the user may proceed with the payment. The second is the error flow (RESULT_CODE_ERROR) and is used when the payment failed because of an error.
-
-Proceed
-~~~~~~~
-
-RESULT_CODE_PROCEED is used to indicate that the payment was successful or that the user may proceed to the next step, e.g. in preset flow. The payment result will contain both the Interaction and OperationResult and the Interaction code will be PROCEED.
-
-Error
-~~~~~~~
-
-RESULT_CODE_ERROR is used when the payment failed or an internal error occurred inside the Android SDK. For both cases the Interaction is set in the payment result. The OperationResult is optional and if set, it provides more information why the payment operation failed. The PaymentError is also optional and if set, it provides more information about an internal error that occurred inside the Android SDK. The OperationResult and PaymentError are never set together in the same payment result.
+To make processing of the payment result easier, the resultCode provided in the onActivityResult() method defines two different flows. The first is the proceed flow (RESULT_CODE_PROCEED) and is used to indicate that the payment was successful or that the user may proceed to the next step, e.g. in preset flow. The second is the error flow (RESULT_CODE_ERROR) and is used when the payment failed or an internal error occurred inside the Android SDK. Depending on the type of error, the PaymentResult may either contain an OperationResult or ErrorInfo.
 
 Internal Errors
 ---------------
 
-It may happen, while handling a payment, that an error occurred inside the Android SDK. A connection failure due to bad internet reception or a security exception are some of these internal errors. To still provide a recommendation of how to proceed, the Android SDK creates an Interaction and sets it in the payment result together with the PaymentError. The following table gives an overview of Interaction code and reasons that are used to create these Interactions.    
+It may happen, while handling a payment, that an error occurred inside the Android SDK. A connection failure due to bad internet reception or a security exception are some of these internal errors. To still provide a recommendation of how to proceed, the Android SDK creates an ErrorInfo containing an Interaction and sets it in the payment result. The following table gives an overview of Interaction code and reasons that are used to create these client-side ErrorInfo's.
 
 The following table describes the combination of InteractionCode and InteractionReason created by the Android-SDK.
 
