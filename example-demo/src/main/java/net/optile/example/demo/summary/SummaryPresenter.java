@@ -8,6 +8,7 @@
 
 package net.optile.example.demo.summary;
 
+import static android.app.Activity.RESULT_CANCELED;
 import static net.optile.payment.ui.PaymentActivityResult.RESULT_CODE_ERROR;
 import static net.optile.payment.ui.PaymentActivityResult.RESULT_CODE_PROCEED;
 
@@ -106,11 +107,13 @@ final class SummaryPresenter {
 
     private void handleEditResult(PaymentActivityResult result) {
         switch (result.getResultCode()) {
-            case RESULT_CODE_PROCEED:
-                loadPaymentDetails(view.getListUrl());
-                break;
             case RESULT_CODE_ERROR:
                 handlePaymentResultError(result.getPaymentResult());
+                break;
+            case RESULT_CANCELED:
+                // This resultCode is returned when the user closed the payment page and there is no payment result available
+            case RESULT_CODE_PROCEED:
+                loadPaymentDetails(view.getListUrl());
                 break;
         }
     }
@@ -163,12 +166,11 @@ final class SummaryPresenter {
     private void handleLoadPaymentSessionSuccess(ListResult result) {
         this.subscription = null;
         PresetAccount account = result.getPresetAccount();
-        String paymentMethod = getPaymentMethod(account, result);
-        if (paymentMethod == null) {
+        if (account == null) {
             view.close();
             return;
         }
-        view.showPaymentDetails(account, paymentMethod);
+        view.showPaymentDetails(account);
     }
 
     private void handleLoadPaymentSessionError(Throwable error) {
@@ -183,23 +185,5 @@ final class SummaryPresenter {
         } catch (PaymentException e) {
             throw new DemoException("Error loading list result", e);
         }
-    }
-
-    private String getPaymentMethod(PresetAccount account, ListResult listResult) {
-        Networks networks = listResult.getNetworks();
-        if (account == null || networks == null) {
-            return null;
-        }
-        List<ApplicableNetwork> an = networks.getApplicable();
-        if (an == null || an.size() == 0) {
-            return null;
-        }
-        String code = account.getCode();
-        for (ApplicableNetwork network : an) {
-            if (network.getCode().equals(code)) {
-                return network.getMethod();
-            }
-        }
-        return null;
     }
 }

@@ -169,12 +169,7 @@ public final class PaymentList {
     }
 
     private void setEmptyMessage(PaymentSession session) {
-        String msg = "";
-        if (session.getApplicableNetworkSize() == 0) {
-            msg = activity.getString(R.string.pmpage_error_empty);
-        } else if (session.getNetworkCardSize() == 0) {
-            msg = activity.getString(R.string.pmpage_error_notsupported);
-        }
+        String msg = session.isEmpty() ? activity.getString(R.string.pmpage_error_empty) : "";
         emptyMessage.setText(msg);
     }
 

@@ -71,7 +71,7 @@ public final class ChargePaymentActivity extends BasePaymentActivity implements 
         if (url == null) {
             throw new IllegalArgumentException("PresetAccount does not contain an operation url");
         }
-        return createStartIntent(context, new Operation(account.getCode(), url));
+        return createStartIntent(context, new Operation(account.getCode(), account.getMethod(), url));
     }
 
     /**
