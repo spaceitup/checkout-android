@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="net.optile.example.basic">
+    package="net.optile.example.sdk">
 
     <application
         android:allowBackup="true"
@@ -10,7 +10,7 @@
         android:supportsRtl="true">
 
         <activity
-            android:name="net.optile.example.basic.BasicActivity"
+            android:name="net.optile.example.sdk.ExampleSdkActivity"
             android:theme="@style/PaymentTheme.Toolbar">
 
             <intent-filter>

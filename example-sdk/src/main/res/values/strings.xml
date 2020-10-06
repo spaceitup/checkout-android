@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Basic Example</string>
+    <string name="app_name">SDK Example</string>
 
     <string name="theme_default">Default Theme</string>
     <string name="theme_custom">Custom Theme</string>

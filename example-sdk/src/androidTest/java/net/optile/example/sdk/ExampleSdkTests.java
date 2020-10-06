@@ -6,7 +6,7 @@
  * See the LICENSE file for more information.
  */
 
-package net.optile.example.basic;
+package net.optile.example.sdk;
 
 import static androidx.test.espresso.Espresso.onView;
 import static androidx.test.espresso.action.ViewActions.click;
@@ -36,14 +36,14 @@ import net.optile.payment.ui.page.PaymentListActivity;
 
 @RunWith(AndroidJUnit4.class)
 @LargeTest
-public class BasicPageTests {
+public class ExampleSdkTests {
     @Rule
-    public ActivityTestRule<BasicActivity> activityRule = new ActivityTestRule<>(
-        BasicActivity.class);
+    public ActivityTestRule<ExampleSdkActivity> activityRule = new ActivityTestRule<>(
+        ExampleSdkActivity.class);
 
     @Test
-    public void basicPageVisibleTest() {
-        onView(withId(R.id.activity_basic)).check(matches(isDisplayed()));
+    public void sdkPageVisibleTest() {
+        onView(withId(R.id.activity_examplesdk)).check(matches(isDisplayed()));
     }
 
     @Test
@@ -54,8 +54,7 @@ public class BasicPageTests {
     }
 
     private void openPaymentList() throws JSONException, IOException {
-        //String listUrl = ListService.createListUrl(net.optile.example.basic.test.R.raw.listtemplate, false);
-        String listUrl = createListUrl(net.optile.example.basic.test.R.raw.listtemplate, false);
+        String listUrl = createListUrl(net.optile.example.sdk.test.R.raw.listtemplate, false);
         onView(withId(R.id.input_listurl)).perform(typeText(listUrl));
         onView(withId(R.id.button_action)).perform(click());
 

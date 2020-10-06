@@ -20,7 +20,7 @@ android {
     buildToolsVersion rootProject.buildToolsVersion
 
     defaultConfig {
-        applicationId "net.optile.example.basic"
+        applicationId 'net.optile.example.sdk'
         minSdkVersion rootProject.examplesMinSdkVersion
         targetSdkVersion rootProject.targetSdkVersion
         versionCode rootProject.versionCode
@@ -34,12 +34,12 @@ android {
         debug {
             testVariants.all { testVariant ->
                 testVariant.outputs.all { output ->
-                    outputFileName = "Example-Basic-${getCurrentBranch()}-debug-androidTest.apk"
+                    outputFileName = "Example-SDK-${getCurrentBranch()}-debug-androidTest.apk"
                 }
             }
             applicationVariants.all { variant ->
                 variant.outputs.all {
-                    outputFileName = "Example-Basic-${getCurrentBranch()}-debug.apk"
+                    outputFileName = "Example-SDK-${getCurrentBranch()}-debug.apk"
                 }
             }
         }
@@ -95,6 +95,6 @@ task runFunctionalTest {
 browserStackConfig {
     username = "$System.env.BROWSERSTACK_USER"
     accessKey = "$System.env.BROWSERSTACK_KEY"
-    customBuildName = "Example-Basic ${getCurrentBranch()}"
+    customBuildName = "Example-SDK ${getCurrentBranch()}"
     devices = ['Google Pixel 3a-9.0']
 }

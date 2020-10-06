@@ -6,7 +6,7 @@
  * See the LICENSE file for more information.
  */
 
-package net.optile.example.basic;
+package net.optile.example.sdk;
 
 import net.optile.payment.ui.PaymentTheme;
 

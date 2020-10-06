@@ -5,7 +5,7 @@
  * This file is open source and available under the MIT license.
  * See the LICENSE file for more information.
  */
-package net.optile.example.basic;
+package net.optile.example.sdk;
 
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 
@@ -28,7 +28,7 @@ import net.optile.payment.ui.PaymentUI;
 /**
  * This is the main Activity of this basic example app demonstrating how to use the Android SDK
  */
-public final class BasicActivity extends AppCompatActivity {
+public final class ExampleSdkActivity extends AppCompatActivity {
 
     private final static int PAYMENT_REQUEST_CODE = 1;
 
@@ -49,7 +49,7 @@ public final class BasicActivity extends AppCompatActivity {
     @Override
     public void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_basic);
+        setContentView(R.layout.activity_examplesdk);
 
         themeGroup = findViewById(R.id.radio_themes);
         listInput = findViewById(R.id.input_listurl);
