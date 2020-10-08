@@ -1,1 +1,1 @@
-include ':example-basic', ':example-demo', ':payment'
+include ':example-sdk', ':example-shop', ':payment'
