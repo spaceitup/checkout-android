@@ -1,16 +1,14 @@
 Changelog - Android SDK
 -----------------------
 
-** Version android-sdk 4.0.0**
+**Version android-sdk 4.0.0**
+
 Note: version 4.0.0 is a major release, changes to the payment result handling causes a breaking change.
 
-** Bug
     * [PCX-983] - Two cards open at the same time
     * [PCX-998] - TRY_OTHER_NETWORK causes the wrong card to be opened
     * [PCX-999] - Focus first input field of a preselected payment method
     * [PCX-1000] - Example Demo crashes when Summary page is shown but PresetAccount is missing
-
-** Story
     * [PCX-785] - Update form fields with new designs
     * [PCX-786] - Update payment screens/dialogs with new designs
     * [PCX-841] - Support single AccountRegistration in ListResult
@@ -30,18 +28,18 @@ Note: version 4.0.0 is a major release, changes to the payment result handling c
     * [PCX-1025] - Remove duplication of Interaction + resultInfo from PaymentResult
     * [PCX-1079] - Rename example apps for the android-sdk
 
-** Version android-sdk-3.2.0**
+**Version android-sdk-3.2.0**
 
     * [PCX-767] - Apply changes to registration checkboxes/labels
     * [PCX-768] - Show title and text for interactions
     * [PCX-868] - Refer to new names of renamed keys
     * [PCX-922] - Lint is disabled in build      
 
-** Version android-sdk-3.1.1**
+**Version android-sdk-3.1.1**
 
     * [PCX-873] - Demo app and Android SDK crash when PresetAccount has no AccountMask
 
-** Version android-sdk-3.1.0**
+**Version android-sdk-3.1.0**
 
     * [PCX-849] - Reset minor & patch version part when major is increased
     * [PCX-721] - Support PayPal redirect flow
