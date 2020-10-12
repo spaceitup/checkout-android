@@ -75,8 +75,8 @@ task buildci(type: GradleBuild) {
                 'clean',
                 ':payment:test',
                 ':payment:assemble',
-                ':example-basic:runFunctionalTest',
-                ':example-demo:runFunctionalTest',
+                ':example-sdk:runFunctionalTest',
+                ':example-shop:runFunctionalTest',
                 ':payment:uploadArchives'
         ]
     } else {
@@ -86,8 +86,8 @@ task buildci(type: GradleBuild) {
                 'clean',
                 ':payment:test',
                 ':payment:assemble',
-                ':example-basic:runFunctionalTest',
-                ':example-demo:runFunctionalTest',
+                ':example-sdk:runFunctionalTest',
+                ':example-shop:runFunctionalTest',
                 ':payment:uploadArchives',
                 ':payment:uploadExternal'
         ]

@@ -103,7 +103,7 @@ The Android SDK repository contains two example apps demonstrating how to integr
 1. Basic Example
 -------------------
 
-This example demonstrates how to initialize and open the payment page provided by the Android SDK. It also shows how to change the theme and receive payment results returned by the Android SDK. The sources of the basic example can be found `here <./example-basic>`_. Paste a valid listUrl in the input field and click the button to start this example.
+This example demonstrates how to initialize and open the payment page provided by the Android SDK. It also shows how to change the theme and receive payment results returned by the Android SDK. The sources of the basic example can be found `here <./example-sdk>`_. Paste a valid listUrl in the input field and click the button to start this example.
 
 2. Demo Example
 ---------------
@@ -432,7 +432,7 @@ Code sample how to create and set a custom PaymentList theme:
     PaymentTheme.Builder builder = PaymentTheme.createBuilder();
     builder.setPaymentListTheme(R.style.CustomTheme_Toolbar);
 
-The example-basic app contains a `themes.xml <./example-basic/src/main/res/values/themes.xml>`_ file that contains the custom theme for the PaymentList screen. 
+The example-sdk app contains a `themes.xml <./example-sdk/src/main/res/values/themes.xml>`_ file that contains the custom theme for the PaymentList screen. 
 
 
 Theming ChargePayment screen
@@ -447,7 +447,7 @@ Code sample how to create and set a custom ChargePayment theme:
     PaymentTheme.Builder builder = PaymentTheme.createBuilder();
     builder.setChargePaymentTheme(R.style.CustomTheme_NoToolbar);
 
-The same `themes.xml <./example-basic/src/main/res/values/themes.xml>`_ file in the example-basic app contains also the custom theme without toolbar. 
+The same `themes.xml <./example-sdk/src/main/res/values/themes.xml>`_ file in the example-sdk app contains also the custom theme without toolbar. 
 
 
 Grouping of Payment Methods
