@@ -432,7 +432,12 @@ Code sample how to create and set a custom PaymentList theme:
     PaymentTheme.Builder builder = PaymentTheme.createBuilder();
     builder.setPaymentListTheme(R.style.CustomTheme_Toolbar);
 
-The example-sdk app contains a `themes.xml <./example-sdk/src/main/res/values/themes.xml>`_ file that contains the custom theme for the PaymentList screen. 
+The example-sdk app contains a `themes.xml <./example-sdk/src/main/res/values/themes.xml>`_ file that contains the custom theme for the PaymentList screen.
+
+PaymentList fonts
+~~~~~~~~~~~~~~~~~
+
+The font style of labels in the PaymentList screen can be changed by modifying the settings of the corresponding material typography attributes. The following image shows which typography attribute is user for each label.
 
 .. image:: docs/custom-theming-fonts.png
 
