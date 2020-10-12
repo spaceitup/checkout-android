@@ -1,6 +1,35 @@
 Changelog - Android SDK
 -----------------------
 
+** Version android-sdk 4.0.0**
+Note: version 4.0.0 is a major release, changes to the payment result handling causes a breaking change.
+
+** Bug
+    * [PCX-983] - Two cards open at the same time
+    * [PCX-998] - TRY_OTHER_NETWORK causes the wrong card to be opened
+    * [PCX-999] - Focus first input field of a preselected payment method
+    * [PCX-1000] - Example Demo crashes when Summary page is shown but PresetAccount is missing
+
+** Story
+    * [PCX-785] - Update form fields with new designs
+    * [PCX-786] - Update payment screens/dialogs with new designs
+    * [PCX-841] - Support single AccountRegistration in ListResult
+    * [PCX-899] - Default message for unknown interaction code/reason
+    * [PCX-913] - Adjust reaction to backend responses
+    * [PCX-916] - Remove custom Android-SDK theming and deprecated features
+    * [PCX-929] - Apply material styling to existing payment page
+    * [PCX-934] - Update styling section of documentation
+    * [PCX-935] - Update example apps with new styling/theming
+    * [PCX-937] - Change RESULT_CANCELED to RESULT_ERROR
+    * [PCX-957] - Network logo images in network cards
+    * [PCX-986] - Replace Android-SDK theming with material theming
+    * [PCX-991] - Disable method grouping configuration
+    * [PCX-1002] - Disable custom validation configuration
+    * [PCX-1006] - Move android-sdk packages optile/repo to optile/android on packagecloud
+    * [PCX-1019] - Meaningful onActivityResult - resultCodes in android-sdk
+    * [PCX-1025] - Remove duplication of Interaction + resultInfo from PaymentResult
+    * [PCX-1079] - Rename example apps for the android-sdk
+
 ** Version android-sdk-3.2.0**
 
     * [PCX-767] - Apply changes to registration checkboxes/labels
