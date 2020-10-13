@@ -100,15 +100,15 @@ Examples
 
 The Android SDK repository contains two example apps demonstrating how to integrate the Android SDK into a mobile app. Both examples support lists created with either the presetFirst parameter set to true or false and it supports both registered users with saved accounts and unregistered users.
 
-1. Basic Example
+1. SDK Example
 -------------------
 
-This example demonstrates how to initialize and open the payment page provided by the Android SDK. It also shows how to change the theme and receive payment results returned by the Android SDK. The sources of the basic example can be found `here <./example-sdk>`_. Paste a valid listUrl in the input field and click the button to start this example.
+This example demonstrates how to initialize and open the payment page provided by the Android SDK. It also shows how to change the theme and receive payment results returned by the Android SDK. The sources can be found `here <./example-sdk>`_. Paste a valid listUrl in the input field and click the button to start this example.
 
-2. Demo Example
+2. Shop Example
 ---------------
 
-The demo example shows how to use the Android SDK when a summary page is required to finalize the payment. The sources of this app can be found `here <./example-demo>`_. To use this example app paste a valid listUrl in the input field and click the button.
+The shop example shows how you can integrate the android-sdk into a real shop app. The sources of this app can be found `here <./example-shop>`_. To use this example app paste a valid listUrl in the input field and click the button.
 
 Your first payment
 ==================
