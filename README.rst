@@ -374,8 +374,7 @@ The last change that should be made is to the following Activity definition in t
 Customize Payment Page
 ======================
 
-The look & feel of the Payment Page may be customized, i.e. colors, shapes and fonts
-can be changed so that it matches the look & feel of your mobile app.
+The look & feel of the Payment Page may be customized, i.e. colors, shapes and fonts can be changed so that it matches the look & feel of your mobile app. The android-sdk user interface is built using material.io and more information how material.io works can be found `here <https://material.io/develop/android>`_.
 
 Page Orientation
 ----------------
@@ -432,8 +431,14 @@ Code sample how to create and set a custom PaymentList theme:
     PaymentTheme.Builder builder = PaymentTheme.createBuilder();
     builder.setPaymentListTheme(R.style.CustomTheme_Toolbar);
 
-The example-sdk app contains a `themes.xml <./example-sdk/src/main/res/values/themes.xml>`_ file that contains the custom theme for the PaymentList screen. 
+The example-sdk app contains a `themes.xml <./example-sdk/src/main/res/values/themes.xml>`_ file that contains the custom theme for the PaymentList screen.
 
+PaymentList fonts
+~~~~~~~~~~~~~~~~~
+
+The font style of labels in the PaymentList screen can be changed by modifying the settings of the corresponding material typography attributes. The following image shows which typography attribute is user for each label.
+
+.. image:: docs/custom-theming-fonts.png
 
 Theming ChargePayment screen
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
