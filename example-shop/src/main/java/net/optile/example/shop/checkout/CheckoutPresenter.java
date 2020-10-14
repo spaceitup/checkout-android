@@ -20,7 +20,6 @@ import net.optile.payment.model.OperationResult;
 import net.optile.payment.model.Redirect;
 import net.optile.payment.ui.PaymentActivityResult;
 import net.optile.payment.ui.PaymentResult;
-import net.optile.payment.ui.PaymentUI;
 
 /**
  * CheckoutPresenter takes care of handling the response from the Android SDK payment page.

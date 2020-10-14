@@ -166,7 +166,7 @@ public class Operation implements Parcelable {
     public String getPaymentMethod() {
         return paymentMethod;
     }
-    
+
     public String toJson() throws JSONException {
         form.put("account", account);
         return form.toString();

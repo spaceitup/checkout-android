@@ -29,7 +29,7 @@ public abstract class BaseActivity extends AppCompatActivity {
     protected boolean active;
     protected String listUrl;
     protected PaymentActivityResult sdkResult;
-    
+
     /**
      * {@inheritDoc}
      */
@@ -93,7 +93,7 @@ public abstract class BaseActivity extends AppCompatActivity {
             sdkResult = PaymentActivityResult.fromActivityResult(requestCode, resultCode, data);
         }
     }
-    
+
     /**
      * Show error dialog to the user, the payment dialog from the android-sdk is used
      * to display a material designed dialog.

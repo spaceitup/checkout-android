@@ -12,21 +12,17 @@ import static android.app.Activity.RESULT_CANCELED;
 import static net.optile.payment.ui.PaymentActivityResult.RESULT_CODE_ERROR;
 import static net.optile.payment.ui.PaymentActivityResult.RESULT_CODE_PROCEED;
 
-import java.util.List;
 import java.util.concurrent.Callable;
 
 import net.optile.example.shop.shared.ShopException;
 import net.optile.payment.core.PaymentException;
-import net.optile.payment.model.ApplicableNetwork;
 import net.optile.payment.model.Interaction;
 import net.optile.payment.model.InteractionCode;
 import net.optile.payment.model.ListResult;
-import net.optile.payment.model.Networks;
 import net.optile.payment.model.PresetAccount;
 import net.optile.payment.network.ListConnection;
 import net.optile.payment.ui.PaymentActivityResult;
 import net.optile.payment.ui.PaymentResult;
-import net.optile.payment.ui.PaymentUI;
 import rx.Single;
 import rx.SingleSubscriber;
 import rx.Subscription;
