@@ -24,7 +24,6 @@ import net.optile.example.shop.R;
 import net.optile.example.shop.confirm.ConfirmActivity;
 import net.optile.example.shop.shared.BaseActivity;
 import net.optile.example.shop.summary.SummaryActivity;
-import net.optile.payment.ui.PaymentActivityResult;
 import net.optile.payment.ui.PaymentUI;
 
 /**

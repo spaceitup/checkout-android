@@ -35,7 +35,6 @@ import net.optile.example.shop.shared.BaseActivity;
 import net.optile.payment.model.AccountMask;
 import net.optile.payment.model.PaymentMethod;
 import net.optile.payment.model.PresetAccount;
-import net.optile.payment.ui.PaymentActivityResult;
 import net.optile.payment.ui.PaymentUI;
 import net.optile.payment.ui.page.idlingresource.SimpleIdlingResource;
 import net.optile.payment.util.ImageHelper;
