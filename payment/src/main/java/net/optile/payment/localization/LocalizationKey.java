@@ -31,10 +31,16 @@ public final class LocalizationKey {
     public final static String LIST_HEADER_ACCOUNTS = "accounts.title";
     public final static String LIST_HEADER_NETWORKS = "networks.title";
     public final static String LIST_HEADER_NETWORKS_OTHER = "networks.other.title";
+    public final static String LIST_GROUPEDCARDS_TITLE = "groups.cards.title";
 
     public final static String CHARGE_TITLE = "messages.processing.title";
     public final static String CHARGE_TEXT = "messages.processing.text";
     public final static String CHARGE_INTERRUPTED = "messages.processing.interrupted.text";
+
+    public final static String NETWORK_LABEL = "network.label";
+
+    public final static String VERIFICATIONCODE_GENERIC_PLACEHOLDER = "account.verificationCode.generic.placeholder";
+    public final static String VERIFICATIONCODE_SPECIFIC_PLACEHOLDER = "account.verificationCode.specific.placeholder";
 
     public final static String ERROR_CONNECTION_TITLE = "messages.error.internet.title";
     public final static String ERROR_CONNECTION_TEXT = "messages.error.internet.text";
@@ -50,6 +56,10 @@ public final class LocalizationKey {
 
     public static String accountLabelKey(String account) {
         return "account." + account + ".label";
+    }
+
+    public static String accountPlaceholderKey(String account) {
+        return "account." + account + ".placeholder";
     }
 
     public static String accountHintKey(String account, String labelType) {

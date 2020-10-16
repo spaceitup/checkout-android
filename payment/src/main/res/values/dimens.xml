@@ -3,22 +3,25 @@
     <dimen name="pmborder_xsmall">8dp</dimen>
     <dimen name="pmborder_small">12dp</dimen>
     <dimen name="pmborder_medium">16dp</dimen>
+    <dimen name="pmborder_xmedium">20dp</dimen>
     <dimen name="pmborder_large">24dp</dimen>
-    <dimen name="pmborder_xlarge">30dp</dimen>
+    <dimen name="pmborder_xlarge">32dp</dimen>
 
-    <dimen name="pmbutton_radius">5dp</dimen>
-    <dimen name="pmwidget_padding">4dp</dimen>
-    <dimen name="pmwidget_iconsize">24dp</dimen>
-
-    <dimen name="pmtoolbar_elevation">4dp</dimen>
-    <dimen name="pmcard_radius">4dp</dimen>
+    <dimen name="pmcard_elevation">0dp</dimen>
+    <dimen name="pmcard_stroke">1dp</dimen>
     <dimen name="pmcard_logos_portrait">108dp</dimen>
     <dimen name="pmcard_logos_landscape">166dp</dimen>
 
-    <dimen name="pmdialog_radius">5dp</dimen>
+    <dimen name="pmradius">4dp</dimen>
+    <dimen name="pmtoolbar_elevation">0dp</dimen>
+    <dimen name="pmbutton_height">52dp</dimen>
 
-    <dimen name="pmlogo_width">50dp</dimen>
-    <dimen name="pmlogo_height">40dp</dimen>
-    <dimen name="pmprogressbar_size">64dp</dimen>
+    <dimen name="pmlogo_width">52dp</dimen>
+    <dimen name="pmlogo_height">36dp</dimen>
+
+    <dimen name="pmlogosmall_width">36dp</dimen>
+    <dimen name="pmlogosmall_height">24dp</dimen>
+
+    <dimen name="pmprogressbar_size">44dp</dimen>
 
 </resources>

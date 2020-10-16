@@ -23,7 +23,7 @@ import androidx.test.espresso.IdlingResource;
 import net.optile.payment.R;
 import net.optile.payment.form.Operation;
 import net.optile.payment.localization.Localization;
-import net.optile.payment.ui.PaymentResult;
+import net.optile.payment.ui.PaymentActivityResult;
 import net.optile.payment.ui.list.PaymentList;
 import net.optile.payment.ui.model.PaymentCard;
 import net.optile.payment.ui.model.PaymentSession;
@@ -37,7 +37,6 @@ public final class PaymentListActivity extends BasePaymentActivity implements Pa
 
     private PaymentListPresenter presenter;
     private PaymentList paymentList;
-    private int cachedListIndex;
 
     // For automated testing
     private boolean loadCompleted;
@@ -72,7 +71,6 @@ public final class PaymentListActivity extends BasePaymentActivity implements Pa
         if (theme != 0) {
             setTheme(theme);
         }
-        this.cachedListIndex = -1;
         setContentView(R.layout.activity_paymentlist);
         progressView = new ProgressView(findViewById(R.id.layout_progress));
 
@@ -109,17 +107,9 @@ public final class PaymentListActivity extends BasePaymentActivity implements Pa
      * {@inheritDoc}
      */
     @Override
-    public void onSaveInstanceState(Bundle savedInstanceState) {
-        super.onSaveInstanceState(savedInstanceState);
-        this.cachedListIndex = paymentList.getSelected();
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
     public void onPause() {
         super.onPause();
+        paymentList.onStop();
         presenter.onStop();
     }
 
@@ -140,7 +130,6 @@ public final class PaymentListActivity extends BasePaymentActivity implements Pa
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case android.R.id.home:
-                setUserClosedPageResult();
                 close();
                 return true;
         }
@@ -152,7 +141,6 @@ public final class PaymentListActivity extends BasePaymentActivity implements Pa
      */
     @Override
     public void onBackPressed() {
-        setUserClosedPageResult();
         super.onBackPressed();
         overridePendingTransition(R.anim.no_animation, R.anim.no_animation);
     }
@@ -163,10 +151,8 @@ public final class PaymentListActivity extends BasePaymentActivity implements Pa
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        PaymentResult result = PaymentResult.fromResultIntent(data);
-        if (result != null) {
-            presenter.setActivityResult(new ActivityResult(requestCode, resultCode, result));
-        }
+        PaymentActivityResult result = PaymentActivityResult.fromActivityResult(requestCode, resultCode, data);
+        presenter.setPaymentActivityResult(result);
     }
 
     /**
@@ -190,8 +176,7 @@ public final class PaymentListActivity extends BasePaymentActivity implements Pa
         }
         progressView.setVisible(false);
         setToolbar(Localization.translate(LIST_TITLE));
-        paymentList.showPaymentSession(session, cachedListIndex);
-        this.cachedListIndex = -1;
+        paymentList.showPaymentSession(session);
 
         // For automated UI testing
         this.loadCompleted = true;

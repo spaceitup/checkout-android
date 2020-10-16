@@ -8,6 +8,8 @@
 
 package net.optile.payment.ui.widget;
 
+import static com.google.android.material.textfield.TextInputLayout.END_ICON_NONE;
+
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
 
@@ -15,48 +17,36 @@ import android.text.TextUtils;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
-import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 import net.optile.payment.R;
-import net.optile.payment.ui.PaymentTheme;
+import net.optile.payment.core.PaymentException;
+import net.optile.payment.form.Operation;
 import net.optile.payment.ui.widget.input.EditTextInputMode;
-import net.optile.payment.util.PaymentUtils;
 import net.optile.payment.validation.ValidationResult;
 
 /**
  * Base class for widgets using the TextInputLayout and TextInputEditText
  */
 public abstract class InputLayoutWidget extends FormWidget {
-
-    final static float REDUCED_PORTRAIT_TEXT = 0.65f;
-    final static float REDUCED_PORTRAIT_HINT = 0.35f;
-    final static float REDUCED_LANDSCAPE_TEXT = 0.5f;
-    final static float REDUCED_LANDSCAPE_HINT = 0.5f;
-
     final TextInputEditText textInput;
     final TextInputLayout textLayout;
 
-    final View hintLayout;
-    final ImageView hintImage;
-
     EditTextInputMode mode;
-    String label;
+    private String helperText;
 
     /**
      * Construct a new TextInputWidget
      *
      * @param name name identifying this widget
      * @param rootView the root view of this input
-     * @param theme PaymentTheme to apply
      */
-    InputLayoutWidget(String name, View rootView, PaymentTheme theme) {
-        super(name, rootView, theme);
-        this.textLayout = rootView.findViewById(R.id.textinputlayout);
-        this.textInput = rootView.findViewById(R.id.textinputedittext);
-        this.hintLayout = rootView.findViewById(R.id.layout_hint);
-        this.hintImage = rootView.findViewById(R.id.image_hint);
+    InputLayoutWidget(String name, View rootView) {
+        super(name, rootView);
+        textLayout = rootView.findViewById(R.id.textinputlayout);
+        textLayout.setErrorEnabled(true);
+        textLayout.setHelperTextEnabled(true);
 
+        textInput = rootView.findViewById(R.id.textinputedittext);
         textInput.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override
             public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
@@ -73,20 +63,16 @@ public abstract class InputLayoutWidget extends FormWidget {
                 handleOnFocusChange(hasFocus);
             }
         });
-
-        hintImage.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                presenter.onHintClicked(name);
-            }
-        });
     }
 
     public void setLabel(String label) {
-        this.label = label;
         textLayout.setHintAnimationEnabled(false);
         textLayout.setHint(label);
         textLayout.setHintAnimationEnabled(true);
+    }
+
+    public void setHelperText(String helperText) {
+        this.helperText = helperText;
     }
 
     /**
@@ -96,6 +82,18 @@ public abstract class InputLayoutWidget extends FormWidget {
     public boolean setLastImeOptionsWidget() {
         textInput.setImeOptions(EditorInfo.IME_ACTION_DONE);
         return true;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public boolean requestFocus() {
+        if (textInput.requestFocus()) {
+            presenter.showKeyboard();
+            return true;
+        }
+        return false;
     }
 
     /**
@@ -121,26 +119,55 @@ public abstract class InputLayoutWidget extends FormWidget {
         validate();
     }
 
-    public void setHint(boolean visible) {
-        if (visible) {
-            hintLayout.setVisibility(View.VISIBLE);
-        } else {
-            hintLayout.setVisibility(View.GONE);
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public boolean validate() {
+        ValidationResult result = presenter.validate(name, getValue(), null);
+        return setValidationResult(result);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void putValue(Operation operation) throws PaymentException {
+        String val = getValue();
+        if (!TextUtils.isEmpty(val)) {
+            operation.putValue(name, val);
         }
     }
 
-    public void setReducedView() {
-        boolean landscape = PaymentUtils.isLandscape(rootView.getContext());
-        setReducedWidth(textLayout, landscape ? REDUCED_LANDSCAPE_TEXT : REDUCED_PORTRAIT_TEXT);
-        setReducedWidth(hintLayout, landscape ? REDUCED_LANDSCAPE_HINT : REDUCED_PORTRAIT_HINT);
+    void setEndIcon(int mode, int resourceId) {
+        textLayout.setEndIconMode(mode);
+        textLayout.setEndIconDrawable(resourceId);
+        textLayout.setEndIconOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                handleOnEndIconClicked();
+            }
+        });
+    }
+
+    void removeEndIcon() {
+        textLayout.setEndIconMode(END_ICON_NONE);
+        textLayout.setEndIconOnClickListener(null);
     }
 
     void handleOnFocusChange(boolean hasFocus) {
         if (hasFocus) {
+            textLayout.setHelperText(helperText);
             setInputLayoutState(VALIDATION_UNKNOWN, false, null);
-        } else if (state == VALIDATION_UNKNOWN && !TextUtils.isEmpty(getValue())) {
-            validate();
+        } else {
+            textLayout.setHelperText(null);
+            if (state == VALIDATION_UNKNOWN && !TextUtils.isEmpty(getValue())) {
+                validate();
+            }
         }
+    }
+
+    void handleOnEndIconClicked() {
     }
 
     void handleOnKeyboardDone() {
@@ -158,7 +185,8 @@ public abstract class InputLayoutWidget extends FormWidget {
 
     String getValue() {
         CharSequence cs = textInput.getText();
-        return cs != null ? cs.toString().trim() : "";
+        String val = (cs != null) ? cs.toString().trim() : "";
+        return (mode != null) ? mode.normalize(val) : val;
     }
 
     boolean setValidationResult(ValidationResult result) {
@@ -175,14 +203,6 @@ public abstract class InputLayoutWidget extends FormWidget {
 
     void setInputLayoutState(int state, boolean errorEnabled, String message) {
         setValidationState(state);
-        textLayout.setErrorEnabled(errorEnabled);
-        textLayout.setError(message);
-    }
-
-    private void setReducedWidth(View view, float weight) {
-        LinearLayout.LayoutParams params = (LinearLayout.LayoutParams) view.getLayoutParams();
-        params.weight = weight;
-        params.width = 0;
-        view.setLayoutParams(params);
+        textLayout.setError(errorEnabled ? message : null);
     }
 }

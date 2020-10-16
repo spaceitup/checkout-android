@@ -1,4 +1,3 @@
-
 Introduction
 ============
 
@@ -21,7 +20,7 @@ Android SDK. TLS1.2 is enabled for Android version 19 (Kitkat).
 AndroidX
 --------
 
-The Android SDK V3 is build using the new AndroidX material libraries. If your app continues to use external libraries depending on the older AppCompat libraries then please keep the following two lines in the gradle.properties file:
+The Android SDK V4 is build using the new AndroidX material libraries. If your app continues to use external libraries depending on the older AppCompat libraries then please keep the following two lines in the gradle.properties file:
 
 ::
    
@@ -101,15 +100,15 @@ Examples
 
 The Android SDK repository contains two example apps demonstrating how to integrate the Android SDK into a mobile app. Both examples support lists created with either the presetFirst parameter set to true or false and it supports both registered users with saved accounts and unregistered users.
 
-1. Basic Example
+1. SDK Example
 -------------------
 
-This example demonstrates how to initialize and open the payment page provided by the Android SDK. It also shows how to change the theme, set custom payment groups and receive payment results returned by the Android SDK. The sources of the basic example can be found `here <./example-basic>`_. Paste a valid listUrl in the input field and click the button to start this example.
+This example demonstrates how to initialize and open the payment page provided by the Android SDK. It also shows how to change the theme and receive payment results returned by the Android SDK. The sources can be found `here <./example-sdk>`_. Paste a valid listUrl in the input field and click the button to start this example.
 
-2. Demo Example
+2. Shop Example
 ---------------
 
-The demo example shows how to use the Android SDK when a summary page is required to finalize the payment. The sources of this app can be found `here <./example-demo>`_. To use this example app paste a valid listUrl in the input field and click the button.
+The shop example shows how you can integrate the android-sdk into a real shop app. The sources of this app can be found `here <./example-shop>`_. To use this example app paste a valid listUrl in the input field and click the button.
 
 Your first payment
 ==================
@@ -136,7 +135,7 @@ Add the packagecloud.io repository to the top level build.gradle file.
     allprojects {
         repositories {
             maven {
-                url "https://packagecloud.io/optile/repo/maven2"
+                url "https://packagecloud.io/optile/android/maven2"
             }
         }
     }
@@ -149,7 +148,7 @@ Add the android-sdk dependency to the dependencies section of the app’s level 
 ::
 
     dependencies {
-        implementation "com.oscato.mobile:android-sdk:3.2.0"
+        implementation "com.oscato.mobile:android-sdk:4.0.0"
     }
 
 2 - Create payment session
@@ -198,59 +197,52 @@ Code sample how to initialize and display the Payment Page:
 Payment Result
 ==============
 
-Payment results are returned through the onActivityResult() method in your Activity. The Intent from the activity result can be converted to a PaymentResult. Depending on what happened while processing the payment, the PaymentResult may contain an Interaction, OperationResult or PaymentError. 
+Payment results are returned through the onActivityResult() method in your Activity. The first step to obtain the payment result is to create a PaymentActivityResult from the parameters provided in the onActivityResult() method. The PaymentActivityResult is used to store the requestCode, resultCode and optional PaymentResult returned by the Android-SDK.
 
-- Interaction - provides recommendations for the merchant how to proceed after a payment
-- OperationResult - is designed to hold information about the payment operation request
-- PaymentError - contains information about an error that happened inside the Android SDK 
+The second step is to check the value of the resultCode. If the resultCode is Activity.RESULT_CANCELED, it means the user closed the payment page and no further information is available. When the resultCode is RESULT_CODE_PROCEED or RESULT_CODE_ERROR, the PaymentActivityResult contains a PaymentResult providing information about the payment.
 
-Code sample how to obtain the PaymentResult from inside the onActivityResult() method:
+Code sample how to obtain the PaymentResult from the onActivityResult() method:
 
 .. code-block:: java
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        PaymentActivityResult activityResult = PaymentActivityResult.fromActivityResult(requestCode, resultCode, data);
+	handlePaymentActivityResult(activityResult);
+    }
+
+    private void handlePaymentActivityResult(PaymentActivityResult activityResult) {
+
+        switch (activityResult.getResultCode()) {
+	    case PaymentActivityResult.RESULT_CODE_PROCEED:
+	    case PaymentActivityResult.RESULT_CODE_ERROR:
+	        PaymentResult paymentResult = activityResult.getPaymentResult();
+		break;
+
+	    case Activity.RESULT_CANCELED:
+                // This resultCode is returned when the user closed the payment page
+        }
+    }
+
+A resultInfo and Interaction can be obtained from the PaymentResult, whereby the resultInfo contains a textual description of the result and the Interaction provides a recommendation for the merchant how to proceed.
+
+Code sample how to obtain the resultInfo and Interaction from the PaymentResult:
+
+.. code-block:: java
+
+    String resultInfo = paymentResult.getResultInfo();
+    Interaction interaction = paymentResult.getInteraction();
     
-        PaymentResult result = PaymentResult.fromResultIntent(data);        
-        if (result == null) {
-            return;
-        }
-	handlePaymentActivityResult(resultCode, result);
-    }
+    
+Proceed or Error
+----------------
 
-    private void handlePaymentActivityResult(int resultCode, PaymentResult result) {
-        String resultInfo = result.getResultInfo();
-
-        if (resultCode == PaymentUI.RESULT_CODE_OK) {
-            Interaction interaction = result.getInteraction();
-            OperationResult operationResult = result.getOperationResult();
-        }
-        if (resultCode == PaymentUI.RESULT_CODE_CANCELED) {
-            Interaction interaction = result.getInteraction();
-            OperationResult operationResult = result.getOperationResult();
-            PaymentError error = result.getPaymentError();
-        }
-    }
-
-Success or failure
-------------------
-
-To make processing of the payment result easier, the resultCode provided in the onActivityResult() method defines two different flows. The first is the success flow (RESULT_CODE_OK) and is used when no changes were made or the payment was successful. The second is the failure flow (RESULT_CODE_CANCELED) and is used when the payment was canceled or an error occurred.
-
-Success
-~~~~~~~
-
-RESULT_CODE_OK is used to indicate the payment was successful, the payment result will contain both the Interaction and OperationResult. This result code is also used to indicate that nothing has changed, e.g. the user closed the payment page or selected an already selected preset account, both Interaction and OperationResult will then be null.
-
-Failure
-~~~~~~~
-
-RESULT_CODE_CANCELED is used when the payment was canceled or an internal error occurred inside the Android SDK. For both cases the Interaction is set in the payment result. The OperationResult is optional and if set, it provides more information why the payment operation failed. The PaymentError is also optional and if set, it provides more information about an internal error that occurred inside the Android SDK. The OperationResult and PaymentError are never set together in the same payment result. 
+To make processing of the payment result easier, the resultCode provided in the onActivityResult() method defines two different flows. The first is the proceed flow (RESULT_CODE_PROCEED) and is used to indicate that the payment was successful or that the user may proceed to the next step, e.g. in preset flow. The second is the error flow (RESULT_CODE_ERROR) and is used when the payment failed or an internal error occurred inside the Android SDK.
 
 Internal Errors
 ---------------
 
-It may happen, while handling a payment, that an error occurred inside the Android SDK. A connection failure due to bad internet reception or a security exception are some of these internal errors. To still provide a recommendation of how to proceed, the Android SDK creates an Interaction and sets it in the payment result together with the PaymentError. The following table gives an overview of Interaction code and reasons that are used to create these Interactions.    
+It may happen, while handling a payment, that an error occurred inside the Android SDK. A connection failure due to bad internet reception or a security exception are some of these internal errors. To still provide a recommendation of how to proceed, the Android SDK creates an Interaction and sets it in the payment result. The following table gives an overview of Interaction code and reasons that are created by the Android-SDK.
 
 The following table describes the combination of InteractionCode and InteractionReason created by the Android-SDK.
 
@@ -382,9 +374,7 @@ The last change that should be made is to the following Activity definition in t
 Customize Payment Page
 ======================
 
-The look & feel of the Payment Page may be customized, i.e. colors, font
-style and icons can be changed so that it matches the look & feel of your
-mobile app.
+The look & feel of the Payment Page may be customized, i.e. colors, shapes and fonts can be changed so that it matches the look & feel of your mobile app. The android-sdk user interface is built using material.io and more information how material.io works can be found `here <https://material.io/develop/android>`_.
 
 Page Orientation
 ----------------
@@ -412,8 +402,8 @@ Code sample how to set the fixed orientation mode:
 Page Theming
 ------------
 
-Theming of the Android SDK screens and views are done using the PaymentTheme class. In order for theming to take effect, the customized PaymentTheme instance
-must be set in the PaymentUI class prior to opening i.e. the Payment Page.
+Theming of the Android SDK screens, dialogs and views is done using the PaymentTheme class. 
+In order for theming to take effect, the customized PaymentTheme instance must be set in the PaymentUI class prior to showing the Payment Page.
 
 Code sample how to create and set a custom PaymentTheme:
 
@@ -426,258 +416,51 @@ Code sample how to create and set a custom PaymentTheme:
     paymentUI.setPaymentTheme(builder.build());
     paymentUI.showPaymentPage(this, PAYMENT_REQUEST_CODE);
 
-The PaymentTheme contains a set of parameters defining the customized
-theming.
-
-IconMapping
-~~~~~~~~~~~
-
-The PaymentTheme allow setting individual drawable resource ids for icons
-by using the putInputTypeIcon() method, use the setDefaultIconMapping()
-method to use the icons provided by the Android SDK.
-
-Validation colors
-~~~~~~~~~~~~~~~~~
-
-The three validation colors (unknown, error and ok) can be set in the PaymentTheme and these colors will
-be used for coloring the icons in front of the input fields.
+The PaymentTheme class contains a set of parameters defining the customized theming for the PaymentList and ChargePayment screens.
+The default theming of the android-sdk can be found in the `themes.xml <./payment/src/main/res/values/themes.xml>`_ and `styles.xml <./payment/src/main/res/values/styles.xml>`_ files.
 
 Theming PaymentList screen
 ~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-The theming of the PaymentList is defined by creating a new theme in your themes.xml and setting custom attributes in this theme. Once the theme has been created in your themes.xml file it can be set in the PaymentTheme class.
+Changing the theme of the PaymentList screen is done by first creating a new theme in your themes.xml file and adding material settings like primaryColor in this newly created theme. Once the theme has been created in your themes.xml file it can be set in the PaymentTheme. Since the PaymentList screen contains a toolbar with back button, a custom theme including theming of the toolbar must be used.
 
 Code sample how to create and set a custom PaymentList theme:
 
 .. code-block:: java
 
     PaymentTheme.Builder builder = PaymentTheme.createBuilder();
-    builder.setPaymentListTheme(R.style.CustomPaymentTheme_PaymentList);
+    builder.setPaymentListTheme(R.style.CustomTheme_Toolbar);
 
-The following list describes the attributes you can use to theme the PaymentList.
+The example-sdk app contains a `themes.xml <./example-sdk/src/main/res/values/themes.xml>`_ file that contains the custom theme for the PaymentList screen.
 
-Table explaining each attribute:
+PaymentList fonts
+~~~~~~~~~~~~~~~~~
 
-+-----------------------------------+--------------------------------------------+
-| Name                              | Purpose                                    |
-+===================================+============================================+
-| paymentListToolbarTheme           | Theme of the PaymentList Toolbar           |
-+-----------------------------------+--------------------------------------------+
-| paymentListToolbarTitleStyle      | TextAppearance of the toolbar title        |
-+-----------------------------------+--------------------------------------------+
-| paymentListEmptyLabelStyle        | TextAppearance of label shown when the     |
-|                                   | list of payment methods is empty           |
-+-----------------------------------+--------------------------------------------+
-| paymentListHeaderLabelStyle       | TextAppearance of section header label in  |
-|                                   | the list, i.e. “Saved accounts”            |
-+-----------------------------------+--------------------------------------------+
-| paymentCardStyle                  | The style for payment cards inside the     |
-|                                   | the list                                   |
-+-----------------------------------+--------------------------------------------+
-| paymentCardLogoBackground         | Background resource ID drawn behind        |
-|                                   | payment method images                      |
-+-----------------------------------+--------------------------------------------+
-| presetCardTitleStyle              | TextAppearance of preset card title,       |
-|                                   | i.e. “41 \**\* 1111”                       |
-+-----------------------------------+--------------------------------------------+
-| presetCardSubtitleStyle           | TextAppearance of preset card subtitle,    |
-|                                   | i.e. the expiry date “01 / 2032”           |
-+-----------------------------------+--------------------------------------------+
-| accountCardTitleStyle             | TextAppearance of account card title,      |
-|                                   | i.e. “41 \**\* 1111”                       |
-+-----------------------------------+--------------------------------------------+
-| accountCardSubtitleStyle          | TextAppearance of account card subtitle,   |
-|                                   | i.e. the expiry date “01 / 2032”           |
-+-----------------------------------+--------------------------------------------+
-| networkCardTitleStyle             | TextAppearance of network card title       |
-|                                   | i.e. Visa or GooglePay                     |
-+-----------------------------------+--------------------------------------------+
-| hintDrawable                      | Drawable resource ID of the hint icon for  |
-|                                   | verification codes                         |
-+-----------------------------------+--------------------------------------------+
-| widgetTextInputStyle              | Style for widget TextInputLayout views     |
-+-----------------------------------+--------------------------------------------+
-| widgetEditTextStyle               | style for widget TextInputEditText views   |
-+-----------------------------------+--------------------------------------------+
-| widgetButtonStyle                 | Style for widget action button in payment  |
-|                                   | cards                                      |
-+-----------------------------------+--------------------------------------------+
-| widgetCheckBoxStyle               | Style for widget checkboxes views          |
-+-----------------------------------+--------------------------------------------+
-| widgetCheckBoxLabelCheckedStyle   | TextAppearance of label when checkBox is   |
-|                                   | checked                                    |
-+-----------------------------------+--------------------------------------------+
-| widgetCheckBoxLabelUncheckedStyle | TextAppearance of label when checkBox is   |
-|                                   | unchecked                                  |
-+-----------------------------------+--------------------------------------------+
-| widgetSelectLabelStyle            | TextAppearance of label shown above        |
-|                                   | SelectBox                                  |
-+-----------------------------------+--------------------------------------------+
-| progressBackground                | Background resource ID of the loading page |
-+-----------------------------------+--------------------------------------------+
-| progressColor                     | Indeterminate ProgressBar color resource   |
-|                                   | ID                                         | 
-+-----------------------------------+--------------------------------------------+
+The font style of labels in the PaymentList screen can be changed by modifying the settings of the corresponding material typography attributes. The following image shows which typography attribute is user for each label.
+
+.. image:: docs/custom-theming-fonts.png
 
 Theming ChargePayment screen
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Similar to the theming of the PaymentList, the ChargePayment screen will also be themed using custom attributes and set in the PaymentTheme class.
+Similar to the theming of the PaymentList screen, the ChargePayment screen can also be themed by creating a custom theme and setting it in the PaymentTheme. Unlike the PaymentList screen, the ChargePayment screen does not contain a toolbar and therefor the custom theme should not contain theming of a toolbar.
 
 Code sample how to create and set a custom ChargePayment theme:
 
 .. code-block:: java
 
     PaymentTheme.Builder builder = PaymentTheme.createBuilder();
-    builder.setChargePaymentTheme(R.style.CustomPaymentTheme_ChargePayment);
+    builder.setChargePaymentTheme(R.style.CustomTheme_NoToolbar);
 
-Table explaining each attribute:
-
-+-----------------------------------+--------------------------------------------+
-| Name                              | Purpose                                    |
-+===================================+============================================+
-| progressBackground                | Background resource ID of the loading page |
-+-----------------------------------+--------------------------------------------+
-| progressColor                     | Indeterminate ProgressBar color resource   |
-|                                   | ID                                         | 
-+-----------------------------------+--------------------------------------------+
-| progressHeaderStyle               | TextAppearance of the header progress      |
-|                                   | label                                      | 
-+-----------------------------------+--------------------------------------------+
-| progressInfoStyle                 | TextAppearance of the info progress label  |
-+-----------------------------------+--------------------------------------------+
-
-
-Theming dialogs
-~~~~~~~~~~~~~~~~
-
-The Android SDK uses two different dialogs.
-The date dialog is used to enter the expiration data of credit cards and a
-message dialog is used for showing messages and asking questions.
-The custom themes of both date and message dialogs can be set in the PaymentTheme class.
-
-Code sample how to create the date and message dialog themes:
-
-.. code-block:: java
-
-    PaymentTheme.Builder builder = PaymentTheme.createBuilder();
-    builder.setDateDialogTheme(R.style.CustomDialogTheme_Date);
-    builder.setMessageDialogTheme(R.style.CustomDialogTheme_Message);
-
-Table explaining the attributes in the shared PaymentDialogTheme:
-
-+-----------------------------------+--------------------------------------------+
-| Name                              | Purpose                                    |
-+===================================+============================================+
-| themedDialogButtonStyle           | Style for buttons used in both message and |
-|                                   | date dialogs                               |
-+-----------------------------------+--------------------------------------------+
-
-Table explaining the attributes for the date dialog:
-
-+-----------------------------------+--------------------------------------------+
-| Name                              | Purpose                                    |
-+===================================+============================================+
-| themedDateDialogTitleStyle        | TextAppearance of the title in a date      |
-|                                   | dialog                                     |
-+-----------------------------------+--------------------------------------------+
-
-Table explaining the attributes for the message dialog:
-
-+----------------------------------------+--------------------------------------------+
-| Name                                   | Purpose                                    |
-+========================================+============================================+
-| themedMessageDialogTitleStyle          | TextAppearance of title in message dialog  |
-+----------------------------------------+--------------------------------------------+
-| themedMessageDialogDetailsStyle        | TextAppearance of message in message       |
-|                                        | dialog                                     |
-+----------------------------------------+--------------------------------------------+
-| themedMessageDialogDetailsNoTitleStyle | TextAppearance of message in message       |
-|                                        | dialog without title                       |
-+----------------------------------------+--------------------------------------------+
-| themedMessageDialogImageLabelStyle     | TextAppearance of the image prefix &       |
-|                                        | suffix labels in messag dialog             |
-+----------------------------------------+--------------------------------------------+
+The same `themes.xml <./example-sdk/src/main/res/values/themes.xml>`_ file in the example-sdk app contains also the custom theme without toolbar. 
 
 
 Grouping of Payment Methods
 ===========================
 
-Grouping of payment methods within a card in the payment page is supported. 
-By default the Android SDK supports one group which contains the payment methods Visa, 
-Mastercard and American Express.
-The default grouping of payment methods is defined in `groups.json <./payment/src/main/res/raw/groups.json>`_.
+The Android SDK automatically groups together seven different payment methods and presents them as one payment option. 
+The following payment methods are grouped together: Discover, Mastercard, Diners, UnionPay, Amex, JCB and Visa.
 
-Customize grouping
-------------------
-
-Customization which payment methods are grouped together in a card is allowed. 
-Customisation is done by setting the resource ID of a grouping Json settings 
-file prior to showing the payment page. 
-Payment methods can only be grouped together when they
-have the same set of InputElements. If InputElements of grouped
-Payment Methods differ then each Payment Method will be shown in its own
-card in the payment page. The following example shows how to create two
-groups, first group contains Mastercard and Amex and the second group
-contains Visa and Visa Electron.
-
-Example customgroups.json file:
-
-.. code-block:: json
-
-    [
-        {
-            "items": [
-                {
-                    "code": "MASTERCARD",
-                    "regex": "^5[0-9]*$"
-                },
-                {
-                    "code": "AMEX",
-                    "regex": "^3[47][0-9]*$"
-                }
-            ]
-        },
-        {
-            "items": [
-                {
-                    "code": "VISA",
-                    "regex": "^4[0-9]*$"
-                },
-                {
-                    "code": "VISAELECTRON",
-                    "regex": "^4[0-9]*$"
-                }
-            ]
-        }
-    ]
-
-Code sample how to set a customgroups.json file:
-
-.. code-block:: java
-
-    PaymentUI paymentUI = PaymentUI.getInstance();
-    paymentUI.setGroupResId(R.raw.customgroups);
-    paymentUI.showPaymentPage(this, PAYMENT_REQUEST_CODE);
-
-Remove default group
-----------------
-
-By default the Android SDK groups together payment methods Discover, Mastercard, Diners, Unionpay, AMEX, JCB and VISA into one card. Removing this default group is done by initializing the Android SDK with a group json file containing an empty array.
-
-Example removedefaultgroup.json file:
-
-.. code-block:: json
-
-    []
-
-Code sample how to set the removedefaultgroup.json file:
-
-.. code-block:: java
-
-    PaymentUI paymentUI = PaymentUI.getInstance();
-    paymentUI.setGroupResId(R.raw.removedefaultgroup);
-    paymentUI.showPaymentPage(this, PAYMENT_REQUEST_CODE);
 
 Smart Selection
 ---------------
@@ -715,51 +498,3 @@ The Android SDK validates all input values provided by the user before all charg
 The file `validations.json <./payment/src/main/res/raw/validations.json>`_ contains the regular expression
 definitions that the Android SDK uses to validate numbers, verificationCodes, bankCodes and holderNames. 
 Validations for other input values i.e. expiryMonth and expiryYear are defined by the `Validator.java <./payment/src/main/java/net/optile/payment/validation/Validator.java>`_.
-
-Customize validations
----------------------
-
-Customization of validations applied to certain input types is allowed. 
-
-- Validation for number, bankCode, holderName and verificationCode can be customized with the "regex" parameter.
-- Input fields can be hidden by setting the "hide" parameter is true.
-- The maximum input length can be set with the "maxLength" parameter.
-
-Customized validations can be set by providing the resource ID of the validation Json file to the
-PaymentUI class prior to showing the payment page. The default validation provided by the Android SDK are sufficient in most cases.
-
-Example customvalidations.json file:
-
-.. code-block:: json
-
-    [{
-        "code": "VISA",
-        "items": [
-            {
-                "type": "number",
-                "regex": "^4(?:[0-9]{12}|[0-9]{15}|[0-9]{18})$"
-            },
-            {
-                "type": "verificationCode",
-                "regex": "^[0-9]{3}$",
-                "maxLength": 3
-            }
-        ]
-    },
-    {
-        "code": "SEPADD",
-        "items": [
-            {
-                "type": "bic",
-                "hide": true
-            }
-        ]
-    }]
-
-Code sample how to set the customvalidations.json file:
-
-.. code-block:: java
-
-    PaymentUI paymentUI = PaymentUI.getInstance();
-    paymentUI.setValidationResId(R.raw.customvalidations);
-    paymentUI.showPaymentPage(this, PAYMENT_REQUEST_CODE);

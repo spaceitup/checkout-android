@@ -12,8 +12,8 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
-import android.text.TextUtils;
 import net.optile.payment.core.PaymentInputType;
+import net.optile.payment.localization.Localization;
 import net.optile.payment.localization.LocalizationKey;
 import net.optile.payment.model.InputElement;
 import net.optile.payment.model.PaymentMethod;
@@ -71,20 +71,12 @@ public final class NetworkCard implements PaymentCard {
         return getVisibleNetwork().getCode();
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     public String getLabel() {
-        List<PaymentNetwork> networks = smartSwitch.getAllSelected();
-        if (networks.size() == 0) {
-            networks = getPaymentNetworks();
+        if (networks.size() == 1) {
+            return getVisibleNetwork().getLabel();
         }
-        List<String> labels = new ArrayList<>();
-        for (PaymentNetwork network : networks) {
-            labels.add(network.getLabel());
-        }
-        return TextUtils.join(" / ", labels);
+        return Localization.translate(LocalizationKey.LIST_GROUPEDCARDS_TITLE);
     }
 
     /**
@@ -149,6 +141,10 @@ public final class NetworkCard implements PaymentCard {
         return false;
     }
 
+    public URL getLink(String name) {
+        return getVisibleNetwork().getLink(name);
+    }
+
     public String lookupPaymentMethod(String code) {
         for (PaymentNetwork network : networks) {
             if (network.getCode().equals(code)) {
@@ -188,7 +184,7 @@ public final class NetworkCard implements PaymentCard {
      *
      * @return the number of networks stored in this card
      */
-    public int getPaymentNetworkSize() {
+    public int getPaymentNetworkCount() {
         return networks.size();
     }
 

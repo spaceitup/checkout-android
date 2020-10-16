@@ -16,7 +16,7 @@ import java.util.concurrent.Callable;
 
 import android.content.Context;
 import android.text.TextUtils;
-import net.optile.payment.core.PaymentError;
+import net.optile.payment.R;
 import net.optile.payment.core.PaymentException;
 import net.optile.payment.core.WorkerSubscriber;
 import net.optile.payment.core.WorkerTask;
@@ -30,7 +30,6 @@ import net.optile.payment.model.PresetAccount;
 import net.optile.payment.network.ListConnection;
 import net.optile.payment.resource.PaymentGroup;
 import net.optile.payment.resource.ResourceLoader;
-import net.optile.payment.ui.PaymentUI;
 import net.optile.payment.ui.model.AccountCard;
 import net.optile.payment.ui.model.NetworkCard;
 import net.optile.payment.ui.model.PaymentNetwork;
@@ -198,8 +197,7 @@ public final class PaymentSessionService {
         String regex = group.getSmartSelectionRegex(code);
 
         if (TextUtils.isEmpty(regex)) {
-            PaymentError error = new PaymentError("Missing regex for network: " + code + " in group: " + groupId);
-            throw new PaymentException(error);
+            throw new PaymentException("Missing regex for network: " + code + " in group: " + groupId);
         }
         NetworkCard card = cards.get(groupId);
         if (card == null) {
@@ -227,15 +225,9 @@ public final class PaymentSessionService {
         if (accounts == null || accounts.size() == 0) {
             return cards;
         }
-        AccountCard card;
 
         for (AccountRegistration account : accounts) {
-            PaymentNetwork pn = networks.get(account.getCode());
-
-            if (pn != null) {
-                card = new AccountCard(account, pn);
-                cards.add(card);
-            }
+            cards.add(new AccountCard(account));
         }
         return cards;
     }
@@ -245,20 +237,14 @@ public final class PaymentSessionService {
         if (account == null) {
             return null;
         }
-        PaymentNetwork pn = networks.get(account.getCode());
-        if (pn == null) {
-            return null;
-        }
-        return new PresetCard(account, pn);
+        return new PresetCard(account);
     }
 
     private Map<String, PaymentGroup> loadPaymentGroups(Context context) throws PaymentException {
-        int groupResId = PaymentUI.getInstance().getGroupResId();
-        return ResourceLoader.loadPaymentGroups(context.getResources(), groupResId);
+        return ResourceLoader.loadPaymentGroups(context.getResources(), R.raw.groups);
     }
 
     private Validator loadValidator(Context context) throws PaymentException {
-        int validationResId = PaymentUI.getInstance().getValidationResId();
-        return new Validator(ResourceLoader.loadValidations(context.getResources(), validationResId));
+        return new Validator(ResourceLoader.loadValidations(context.getResources(), R.raw.validations));
     }
 }

@@ -8,28 +8,28 @@
 
 package net.optile.network.basic;
 
-import static net.optile.payment.model.InteractionReason.COMMUNICATION_FAILURE;
+import static net.optile.payment.model.InteractionCode.PROCEED;
+import static net.optile.payment.ui.PaymentActivityResult.RESULT_CODE_ERROR;
+import static net.optile.payment.ui.PaymentActivityResult.RESULT_CODE_PROCEED;
 
 import android.app.Activity;
-import net.optile.payment.core.PaymentError;
 import net.optile.payment.core.PaymentException;
 import net.optile.payment.form.Operation;
-import net.optile.payment.model.ErrorInfo;
 import net.optile.payment.model.Interaction;
 import net.optile.payment.model.InteractionCode;
-import net.optile.payment.model.InteractionReason;
 import net.optile.payment.model.OperationResult;
 import net.optile.payment.model.OperationType;
 import net.optile.payment.model.Redirect;
 import net.optile.payment.model.RedirectType;
 import net.optile.payment.ui.PaymentResult;
-import net.optile.payment.ui.PaymentUI;
 import net.optile.payment.ui.service.NetworkService;
 import net.optile.payment.ui.service.OperationListener;
 import net.optile.payment.ui.service.OperationService;
+import net.optile.payment.util.PaymentResultHelper;
 
 /**
- * BasicNetworkService implementing the handling of basic payment methods like Visa, Mastercard and Sepa
+ * BasicNetworkService implementing the handling of basic payment methods like Visa, Mastercard and Sepa.
+ * This network service also supports redirect networks like Paypal.
  */
 public final class BasicNetworkService extends NetworkService implements OperationListener {
     private final OperationService service;
@@ -37,7 +37,7 @@ public final class BasicNetworkService extends NetworkService implements Operati
 
     /**
      * Create a new BasicNetworkService, this service is a basic implementation
-     * that simply send an operation to the Payment API.
+     * that sends an operation to the Payment API.
      */
     public BasicNetworkService() {
         service = new OperationService();
@@ -56,15 +56,6 @@ public final class BasicNetworkService extends NetworkService implements Operati
      * {@inheritDoc}
      */
     @Override
-    public void preparePayment(Activity activity, int requestCode, Operation operation) throws PaymentException {
-        PaymentResult result = new PaymentResult("preparePayment not required");
-        presenter.onPreparePaymentResult(PaymentUI.RESULT_CODE_OK, result);
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
     public void processPayment(Activity activity, int requestCode, Operation operation) throws PaymentException {
         this.operation = operation;
         presenter.showProgress(true);
@@ -77,10 +68,7 @@ public final class BasicNetworkService extends NetworkService implements Operati
     @Override
     public void onRedirectSuccess(OperationResult operationResult) {
         Interaction interaction = operationResult.getInteraction();
-        String code = interaction.getCode();
-        int resultCode = InteractionCode.PROCEED.equals(code) ? PaymentUI.RESULT_CODE_OK :
-            PaymentUI.RESULT_CODE_CANCELED;
-
+        int resultCode = PROCEED.equals(interaction.getCode()) ? RESULT_CODE_PROCEED : RESULT_CODE_ERROR;
         PaymentResult result = new PaymentResult(operationResult);
         presenter.onProcessPaymentResult(resultCode, result);
     }
@@ -89,13 +77,11 @@ public final class BasicNetworkService extends NetworkService implements Operati
      * {@inheritDoc}
      */
     @Override
-    public void onRedirectCanceled() {
+    public void onRedirectError() {
         String code = getErrorInteractionCode(operation);
-        Interaction interaction = new Interaction(code, COMMUNICATION_FAILURE);
-        String resultInfo = "Missing OperationResult after client-side redirect";
-
-        PaymentResult result = new PaymentResult(resultInfo, interaction);
-        presenter.onProcessPaymentResult(PaymentUI.RESULT_CODE_CANCELED, result);
+        String message = "Missing OperationResult after client-side redirect";
+        PaymentResult paymentResult = PaymentResultHelper.fromErrorMessage(code, message);
+        presenter.onProcessPaymentResult(RESULT_CODE_ERROR, paymentResult);
     }
 
     /**
@@ -106,15 +92,15 @@ public final class BasicNetworkService extends NetworkService implements Operati
         Interaction interaction = operationResult.getInteraction();
         PaymentResult result = new PaymentResult(operationResult);
 
-        if (!InteractionCode.PROCEED.equals(interaction.getCode())) {
-            presenter.onProcessPaymentResult(PaymentUI.RESULT_CODE_CANCELED, result);
+        if (!PROCEED.equals(interaction.getCode())) {
+            presenter.onProcessPaymentResult(RESULT_CODE_ERROR, result);
             return;
         }
         if (operationResult.getRedirect() != null) {
             handleRedirect(operationResult);
             return;
         }
-        presenter.onProcessPaymentResult(PaymentUI.RESULT_CODE_OK, result);
+        presenter.onProcessPaymentResult(RESULT_CODE_PROCEED, result);
     }
 
     /**
@@ -122,8 +108,7 @@ public final class BasicNetworkService extends NetworkService implements Operati
      */
     @Override
     public void onOperationError(Throwable cause) {
-        PaymentError error = PaymentError.fromThrowable(cause);
-        handleProcessPaymentError(error);
+        handleProcessPaymentError(cause);
     }
 
     private void handleRedirect(OperationResult operationResult) {
@@ -134,27 +119,19 @@ public final class BasicNetworkService extends NetworkService implements Operati
                 try {
                     presenter.redirectPayment(redirect);
                 } catch (PaymentException e) {
-                    handleProcessPaymentError(e.error);
+                    handleProcessPaymentError(e);
                 }
                 break;
             default:
                 PaymentResult result = new PaymentResult(operationResult);
-                presenter.onProcessPaymentResult(PaymentUI.RESULT_CODE_OK, result);
+                presenter.onProcessPaymentResult(RESULT_CODE_PROCEED, result);
         }
     }
 
-    private void handleProcessPaymentError(PaymentError error) {
-        presenter.onProcessPaymentResult(PaymentUI.RESULT_CODE_CANCELED, toPaymentResult(error));
-    }
-
-    private PaymentResult toPaymentResult(PaymentError error) {
-        ErrorInfo errorInfo = error.getErrorInfo();
-        if (errorInfo != null) {
-            return new PaymentResult(errorInfo.getInteraction(), error);
-        }
-        String reason = error.isNetworkFailure() ? InteractionReason.COMMUNICATION_FAILURE : InteractionReason.CLIENTSIDE_ERROR;
-        Interaction interaction = new Interaction(getErrorInteractionCode(operation), reason);
-        return new PaymentResult(interaction, error);
+    private void handleProcessPaymentError(Throwable cause) {
+        String code = getErrorInteractionCode(this.operation);
+        PaymentResult paymentResult = PaymentResultHelper.fromThrowable(code, cause);
+        presenter.onProcessPaymentResult(RESULT_CODE_ERROR, paymentResult);
     }
 
     private String getErrorInteractionCode(Operation operation) {

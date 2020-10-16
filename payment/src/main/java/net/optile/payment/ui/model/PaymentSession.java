@@ -70,22 +70,6 @@ public final class PaymentSession {
         return list;
     }
 
-    public String lookupPaymentMethod(String code) {
-        for (NetworkCard card : networks) {
-            String method = card.lookupPaymentMethod(code);
-            if (method != null) {
-                return method;
-            }
-        }
-        for (AccountCard card : accounts) {
-            String method = card.lookupPaymentMethod(code);
-            if (method != null) {
-                return method;
-            }
-        }
-        return null;
-    }
-
     public Validator getValidator() {
         return validator;
     }
@@ -103,6 +87,10 @@ public final class PaymentSession {
     public boolean isListUrl(String listUrl) {
         URL url = getLink("self");
         return url != null && url.toString().equals(listUrl);
+    }
+
+    public boolean isEmpty() {
+        return !hasPresetCard() && (getNetworkCardSize() == 0) && (getAccountCardSize() == 0);
     }
 
     public String getOperationType() {

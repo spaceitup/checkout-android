@@ -37,12 +37,14 @@ public class Operation implements Parcelable {
         }
     };
     private final String code;
+    private final String paymentMethod;
     private final URL url;
     private final JSONObject form;
     private final JSONObject account;
 
-    public Operation(String code, URL url) {
+    public Operation(String code, String paymentMethod, URL url) {
         this.code = code;
+        this.paymentMethod = paymentMethod;
         this.url = url;
         this.form = new JSONObject();
         this.account = new JSONObject();
@@ -50,6 +52,7 @@ public class Operation implements Parcelable {
 
     private Operation(Parcel in) {
         this.code = in.readString();
+        this.paymentMethod = in.readString();
         this.url = (URL) in.readSerializable();
         try {
             this.form = new JSONObject(in.readString());
@@ -76,7 +79,7 @@ public class Operation implements Parcelable {
         int lastIndex = url.lastIndexOf(curType);
         url = url.substring(0, lastIndex) + newType + url.substring(lastIndex + curType.length());
         try {
-            return new Operation(operation.getCode(), new URL(url));
+            return new Operation(operation.getCode(), operation.getPaymentMethod(), new URL(url));
         } catch (MalformedURLException e) {
             throw new PaymentException("Could not convert to: " + newType, e);
         }
@@ -96,6 +99,7 @@ public class Operation implements Parcelable {
     @Override
     public void writeToParcel(Parcel out, int flags) {
         out.writeString(code);
+        out.writeString(paymentMethod);
         out.writeSerializable(this.url);
         out.writeString(form.toString());
         out.writeString(account.toString());
@@ -157,6 +161,10 @@ public class Operation implements Parcelable {
 
     public String getCode() {
         return code;
+    }
+
+    public String getPaymentMethod() {
+        return paymentMethod;
     }
 
     public String toJson() throws JSONException {

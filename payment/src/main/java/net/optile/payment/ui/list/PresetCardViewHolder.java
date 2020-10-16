@@ -8,7 +8,7 @@
 
 package net.optile.payment.ui.list;
 
-import static net.optile.payment.localization.LocalizationKey.LIST_PRESET_TEXT;
+import com.google.android.material.card.MaterialCardView;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -16,9 +16,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 import androidx.recyclerview.widget.RecyclerView;
 import net.optile.payment.R;
-import net.optile.payment.localization.Localization;
 import net.optile.payment.model.AccountMask;
-import net.optile.payment.ui.PaymentTheme;
 import net.optile.payment.ui.model.PaymentCard;
 import net.optile.payment.ui.model.PresetCard;
 import net.optile.payment.util.PaymentUtils;
@@ -30,15 +28,15 @@ final class PresetCardViewHolder extends PaymentCardViewHolder {
 
     private final TextView title;
     private final TextView subtitle;
+    private final MaterialCardView card;
 
     private PresetCardViewHolder(ListAdapter adapter, View parent, PresetCard presetCard) {
         super(adapter, parent);
-        this.title = parent.findViewById(R.id.text_title);
-        this.subtitle = parent.findViewById(R.id.text_subtitle);
-        addLogoView(parent, presetCard.getCode());
-        PaymentTheme theme = adapter.getPaymentTheme();
-        addButtonWidget(theme);
-        addLabelWidget(theme);
+        title = parent.findViewById(R.id.text_title);
+        subtitle = parent.findViewById(R.id.text_subtitle);
+        card = parent.findViewById(R.id.card_preset);
+        card.setCheckable(true);
+        addButtonWidget();
     }
 
     static RecyclerView.ViewHolder createInstance(ListAdapter adapter, PresetCard presetCard, ViewGroup parent) {
@@ -62,7 +60,11 @@ final class PresetCardViewHolder extends PaymentCardViewHolder {
         } else {
             title.setText(card.getLabel());
         }
-        bindLogoView(paymentCard.getCode(), card.getLink("logo"), true);
-        bindLabelWidget(Localization.translate(LIST_PRESET_TEXT));
+        bindCardLogo(paymentCard.getCode(), card.getLink("logo"));
+    }
+
+    void expand(boolean expand) {
+        super.expand(expand);
+        card.setChecked(expand);
     }
 }

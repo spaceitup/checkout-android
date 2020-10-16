@@ -21,7 +21,7 @@ import net.optile.payment.R;
 import net.optile.payment.form.Operation;
 import net.optile.payment.localization.Localization;
 import net.optile.payment.model.PresetAccount;
-import net.optile.payment.ui.PaymentResult;
+import net.optile.payment.ui.PaymentActivityResult;
 
 /**
  * The ChargePaymentActivity is the view displaying the loading animation while posting the operation.
@@ -71,7 +71,7 @@ public final class ChargePaymentActivity extends BasePaymentActivity implements 
         if (url == null) {
             throw new IllegalArgumentException("PresetAccount does not contain an operation url");
         }
-        return createStartIntent(context, new Operation(account.getCode(), url));
+        return createStartIntent(context, new Operation(account.getCode(), account.getMethod(), url));
     }
 
     /**
@@ -100,8 +100,6 @@ public final class ChargePaymentActivity extends BasePaymentActivity implements 
         setContentView(R.layout.activity_chargepayment);
 
         progressView = new ProgressView(findViewById(R.id.layout_progress));
-        progressView.setLabels(Localization.translate(CHARGE_TITLE),
-            Localization.translate(CHARGE_TEXT));
         this.presenter = new ChargePaymentPresenter(this);
     }
 
@@ -140,10 +138,18 @@ public final class ChargePaymentActivity extends BasePaymentActivity implements 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        PaymentResult result = PaymentResult.fromResultIntent(data);
+        PaymentActivityResult result = PaymentActivityResult.fromActivityResult(requestCode, resultCode, data);
+        presenter.setPaymentActivityResult(result);
+    }
 
-        if (result != null) {
-            presenter.setActivityResult(new ActivityResult(requestCode, resultCode, result));
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void showProgress(boolean visible) {
+        super.showProgress(visible);
+        if (active) {
+            progressView.setLabels(Localization.translate(CHARGE_TITLE), Localization.translate(CHARGE_TEXT));
         }
     }
 
@@ -155,7 +161,6 @@ public final class ChargePaymentActivity extends BasePaymentActivity implements 
         if (presenter.onBackPressed()) {
             return;
         }
-        setUserClosedPageResult();
         super.onBackPressed();
         setOverridePendingTransition();
     }

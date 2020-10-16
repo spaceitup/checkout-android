@@ -8,10 +8,8 @@
 
 package net.optile.payment.ui.service;
 
-import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 import java.util.concurrent.Callable;
 
@@ -26,6 +24,7 @@ import net.optile.payment.localization.LocalizationCache;
 import net.optile.payment.localization.LocalizationHolder;
 import net.optile.payment.localization.MultiLocalizationHolder;
 import net.optile.payment.network.LocalizationConnection;
+import net.optile.payment.ui.model.AccountCard;
 import net.optile.payment.ui.model.PaymentNetwork;
 import net.optile.payment.ui.model.PaymentSession;
 
@@ -120,62 +119,26 @@ public final class LocalizationLoaderService {
             cache.setCacheId(listUrl);
         }
         LocalizationHolder localHolder = new LocalLocalizationHolder(context);
-        List<PaymentNetwork> networks = session.getPaymentNetworks();
-        if (networks.size() == 0) {
-            return new Localization(localHolder, null);
+        LocalizationHolder sharedHolder = loadLocalizationHolder(session.getLink("lang"), localHolder);
+        Map<String, LocalizationHolder> holders = new HashMap<>();
+
+        for (PaymentNetwork network : session.getPaymentNetworks()) {
+            holders.put(network.getCode(), loadLocalizationHolder(network.getLink("lang"), sharedHolder));
         }
-        LocalizationHolder sharedHolder = loadSharedLocalization(context, networks.get(0), localHolder);
-        Map<String, LocalizationHolder> networkHolders = loadNetworkLocalizations(networks, sharedHolder);
-        return new Localization(sharedHolder, networkHolders);
+        for (AccountCard account : session.getAccountCards()) {
+            holders.put(account.getCode(), loadLocalizationHolder(account.getLink("lang"), sharedHolder));
+        }
+        return new Localization(sharedHolder, holders);
     }
 
-    private Map<String, LocalizationHolder> loadNetworkLocalizations(List<PaymentNetwork> networks, LocalizationHolder fallback)
-        throws PaymentException {
-        Map<String, LocalizationHolder> map = new HashMap<>();
+    private LocalizationHolder loadLocalizationHolder(URL url, LocalizationHolder fallback) throws PaymentException {
+        String langUrl = url.toString();
+        LocalizationHolder holder = cache.get(langUrl);
 
-        for (PaymentNetwork network : networks) {
-            URL url = getNetworkLanguageUrl(network);
-            String langUrl = url.toString();
-            String code = network.getCode();
-            LocalizationHolder holder = cache.get(langUrl);
-
-            if (holder == null) {
-                holder = new MultiLocalizationHolder(connection.loadLocalization(url), fallback);
-                cache.put(langUrl, holder);
-            }
-            map.put(code, holder);
+        if (holder == null) {
+            holder = new MultiLocalizationHolder(connection.loadLocalization(url), fallback);
+            cache.put(langUrl, holder);
         }
-        return map;
-    }
-
-    private LocalizationHolder loadSharedLocalization(Context context, PaymentNetwork network, LocalizationHolder fallback)
-        throws PaymentException {
-        try {
-            URL url = getNetworkLanguageUrl(network);
-            String sharedUrl = url.toString();
-            int index = sharedUrl.lastIndexOf('/');
-
-            if (index < 0 || !sharedUrl.endsWith(".properties")) {
-                throw new PaymentException("Invalid URL for creating shared language URL");
-            }
-            sharedUrl = sharedUrl.substring(0, index) + "/checkout.properties";
-
-            LocalizationHolder holder = cache.get(sharedUrl);
-            if (holder == null) {
-                holder = new MultiLocalizationHolder(connection.loadLocalization(new URL(sharedUrl)), fallback);
-                cache.put(sharedUrl, holder);
-            }
-            return holder;
-        } catch (MalformedURLException e) {
-            throw new PaymentException("Malformed paymentpage language URL", e);
-        }
-    }
-
-    private URL getNetworkLanguageUrl(PaymentNetwork network) throws PaymentException {
-        URL url = network.getLink("lang");
-        if (url == null) {
-            throw new PaymentException("Missing 'lang' url in PaymentNetwork: " + network.getCode());
-        }
-        return url;
+        return holder;
     }
 }

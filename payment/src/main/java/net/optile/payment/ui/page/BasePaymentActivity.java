@@ -16,16 +16,19 @@ import android.view.View;
 import android.view.ViewGroup;
 import androidx.annotation.VisibleForTesting;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.DialogFragment;
 import androidx.test.espresso.IdlingResource;
 import net.optile.payment.R;
+import net.optile.payment.localization.Localization;
 import net.optile.payment.model.Interaction;
+import net.optile.payment.ui.PaymentActivityResult;
 import net.optile.payment.ui.PaymentResult;
 import net.optile.payment.ui.PaymentTheme;
 import net.optile.payment.ui.PaymentUI;
-import net.optile.payment.ui.dialog.DialogHelper;
-import net.optile.payment.ui.dialog.ThemedDialogFragment.ThemedDialogListener;
+import net.optile.payment.ui.dialog.PaymentDialogFragment;
+import net.optile.payment.ui.dialog.PaymentDialogFragment.PaymentDialogListener;
+import net.optile.payment.ui.dialog.PaymentDialogHelper;
 import net.optile.payment.ui.page.idlingresource.SimpleIdlingResource;
+import net.optile.payment.util.PaymentResultHelper;
 
 /**
  * The base activity for payment activities.
@@ -46,7 +49,6 @@ abstract class BasePaymentActivity extends AppCompatActivity implements PaymentV
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setResultIntent(PaymentUI.RESULT_CODE_OK, new PaymentResult("Initializing page."));
         setRequestedOrientation(PaymentUI.getInstance().getOrientation());
     }
 
@@ -85,7 +87,7 @@ abstract class BasePaymentActivity extends AppCompatActivity implements PaymentV
     @Override
     public void showWarningMessage(String message) {
         if (active && !TextUtils.isEmpty(message)) {
-            DialogHelper.createSnackbar(getRootView(), message).show();
+            PaymentDialogHelper.createSnackbar(getRootView(), message).show();
         }
     }
 
@@ -93,39 +95,44 @@ abstract class BasePaymentActivity extends AppCompatActivity implements PaymentV
      * {@inheritDoc}
      */
     @Override
-    public void showDefaultErrorDialog(ThemedDialogListener listener) {
+    public void showHintDialog(String networkCode, String type, PaymentDialogListener listener) {
+        if (!active) {
+            return;
+        }
+        PaymentDialogFragment dialog = PaymentDialogHelper.createHintDialog(networkCode, type, listener);
+        showPaymentDialog(dialog);
+    }
+
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void showConnectionErrorDialog(PaymentDialogListener listener) {
         if (!active) {
             return;
         }
         progressView.setVisible(false);
-        DialogFragment dialog = DialogHelper.createDefaultErrorDialog(listener);
-        showDialogFragment(dialog, "dialog_defaulterror");
+        PaymentDialogFragment dialog = PaymentDialogHelper.createConnectionErrorDialog(listener);
+        showPaymentDialog(dialog);
     }
 
     /**
      * {@inheritDoc}
      */
     @Override
-    public void showConnectionErrorDialog(ThemedDialogListener listener) {
+    public void showInteractionDialog(Interaction interaction, PaymentDialogListener listener) {
         if (!active) {
             return;
         }
         progressView.setVisible(false);
-        DialogFragment dialog = DialogHelper.createConnectionErrorDialog(listener);
-        showDialogFragment(dialog, "dialog_connectionerror");
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public void showInteractionDialog(Interaction interaction, ThemedDialogListener listener) {
-        if (!active) {
-            return;
+        PaymentDialogFragment dialog;
+        if (Localization.hasInteraction(interaction)) {
+            dialog = PaymentDialogHelper.createInteractionDialog(interaction, listener);
+        } else {
+            dialog = PaymentDialogHelper.createDefaultErrorDialog(listener);
         }
-        progressView.setVisible(false);
-        DialogFragment dialog = DialogHelper.createInteractionDialog(interaction, listener);
-        showDialogFragment(dialog, "dialog_interaction");
+        showPaymentDialog(dialog);
     }
 
     /**
@@ -151,11 +158,11 @@ abstract class BasePaymentActivity extends AppCompatActivity implements PaymentV
      * {@inheritDoc}
      */
     @Override
-    public void passOnActivityResult(ActivityResult activityResult) {
+    public void passOnActivityResult(PaymentActivityResult paymentActivityResult) {
         if (!active) {
             return;
         }
-        setResultIntent(activityResult.resultCode, activityResult.paymentResult);
+        setResultIntent(paymentActivityResult.getResultCode(), paymentActivityResult.getPaymentResult());
         supportFinishAfterTransition();
     }
 
@@ -178,10 +185,9 @@ abstract class BasePaymentActivity extends AppCompatActivity implements PaymentV
      * Show a dialog fragment to the user
      *
      * @param dialog to be shown
-     * @param tag identifies the dialog
      */
-    public void showDialogFragment(DialogFragment dialog, String tag) {
-        dialog.show(getSupportFragmentManager(), tag);
+    public void showPaymentDialog(PaymentDialogFragment dialog) {
+        dialog.show(getSupportFragmentManager());
 
         // For automated testing
         if (dialogIdlingResource != null) {
@@ -208,13 +214,6 @@ abstract class BasePaymentActivity extends AppCompatActivity implements PaymentV
     }
 
     /**
-     * Set the PaymentResult indicating that the user has closed the page.
-     */
-    void setUserClosedPageResult() {
-        setResultIntent(PaymentUI.RESULT_CODE_OK, new PaymentResult("Page closed by user."));
-    }
-
-    /**
      * Set the ActivityResult with the given resultCode and PaymentResult.
      *
      * @param resultCode of the ActivityResult
@@ -222,7 +221,7 @@ abstract class BasePaymentActivity extends AppCompatActivity implements PaymentV
      */
     void setResultIntent(int resultCode, PaymentResult result) {
         Intent intent = new Intent();
-        result.putInto(intent);
+        PaymentResultHelper.putIntoResultIntent(result, intent);
         setResult(resultCode, intent);
     }
 

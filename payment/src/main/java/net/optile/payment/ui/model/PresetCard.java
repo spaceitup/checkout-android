@@ -8,11 +8,14 @@
 
 package net.optile.payment.ui.model;
 
+import static net.optile.payment.localization.LocalizationKey.NETWORK_LABEL;
+
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import net.optile.payment.localization.Localization;
 import net.optile.payment.localization.LocalizationKey;
 import net.optile.payment.model.AccountMask;
 import net.optile.payment.model.InputElement;
@@ -25,11 +28,9 @@ import net.optile.payment.util.PaymentUtils;
  */
 public final class PresetCard implements PaymentCard {
     private final PresetAccount account;
-    private final PaymentNetwork network;
 
-    public PresetCard(PresetAccount account, PaymentNetwork network) {
+    public PresetCard(PresetAccount account) {
         this.account = account;
-        this.network = network;
     }
 
     /**
@@ -53,7 +54,7 @@ public final class PresetCard implements PaymentCard {
      */
     @Override
     public String getPaymentMethod() {
-        return network.getPaymentMethod();
+        return account.getMethod();
     }
 
     /**
@@ -69,7 +70,7 @@ public final class PresetCard implements PaymentCard {
      */
     @Override
     public String getLabel() {
-        return network.getLabel();
+        return Localization.translate(account.getCode(), NETWORK_LABEL);
     }
 
     /**
@@ -102,6 +103,10 @@ public final class PresetCard implements PaymentCard {
     @Override
     public boolean onTextInputChanged(String type, String text) {
         return false;
+    }
+
+    public PresetAccount getPresetAccount() {
+        return account;
     }
 
     public URL getLink(String name) {

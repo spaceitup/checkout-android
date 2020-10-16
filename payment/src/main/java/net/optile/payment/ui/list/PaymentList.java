@@ -8,7 +8,6 @@
 
 package net.optile.payment.ui.list;
 
-import static net.optile.payment.localization.LocalizationKey.BUTTON_BACK;
 import static net.optile.payment.localization.LocalizationKey.LIST_HEADER_ACCOUNTS;
 import static net.optile.payment.localization.LocalizationKey.LIST_HEADER_NETWORKS;
 import static net.optile.payment.localization.LocalizationKey.LIST_HEADER_NETWORKS_OTHER;
@@ -22,14 +21,12 @@ import android.os.IBinder;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.TextView;
-import androidx.fragment.app.DialogFragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.LinearSmoothScroller;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.recyclerview.widget.SimpleItemAnimator;
 import net.optile.payment.R;
 import net.optile.payment.localization.Localization;
-import net.optile.payment.ui.dialog.DialogHelper;
 import net.optile.payment.ui.model.AccountCard;
 import net.optile.payment.ui.model.NetworkCard;
 import net.optile.payment.ui.model.PaymentCard;
@@ -70,6 +67,10 @@ public final class PaymentList {
         return selIndex;
     }
 
+    public void onStop() {
+        hideKeyboard();
+    }
+
     public void clear() {
         this.session = null;
         this.selIndex = -1;
@@ -79,27 +80,20 @@ public final class PaymentList {
         adapter.notifyDataSetChanged();
     }
 
-    public void showPaymentSession(PaymentSession session, int cachedListIndex) {
+    public void showPaymentSession(PaymentSession session) {
 
         if (this.session == session) {
             setVisible(true);
             return;
         }
         this.session = session;
-        setPaymentListItems(session, cachedListIndex);
-        String msg = "";
+        setEmptyMessage(session);
+        setPaymentListItems(session);
 
-        if (session.getApplicableNetworkSize() == 0) {
-            msg = activity.getString(R.string.pmpage_error_empty);
-        } else if (session.getNetworkCardSize() == 0) {
-            msg = activity.getString(R.string.pmpage_error_notsupported);
-        } else {
-            int startIndex = session.hasPresetCard() ? 0 : selIndex;
-            recyclerView.scrollToPosition(startIndex);
-        }
-        emptyMessage.setText(msg);
-        adapter.notifyDataSetChanged();
         setVisible(true);
+        adapter.notifyDataSetChanged();
+        int startIndex = session.hasPresetCard() ? 0 : selIndex;
+        recyclerView.scrollToPosition(startIndex);
     }
 
     public void setVisible(boolean visible) {
@@ -133,18 +127,12 @@ public final class PaymentList {
         return this.session;
     }
 
-    void showDialogFragment(DialogFragment dialog, String tag) {
-        activity.showDialogFragment(dialog, tag);
-    }
-
     void onHintClicked(int position, String type) {
         ListItem item = items.get(position);
         PaymentCard card = item.getPaymentCard();
 
         if (card != null) {
-            String button = Localization.translate(card.getCode(), BUTTON_BACK);
-            DialogFragment dialog = DialogHelper.createHintDialog(card, type, button);
-            showDialogFragment(dialog, "hint_dialog");
+            activity.showHintDialog(card.getCode(), type, null);
         }
     }
 
@@ -180,9 +168,14 @@ public final class PaymentList {
         return viewType++;
     }
 
-    private void setPaymentListItems(PaymentSession session, int cachedListIndex) {
+    private void setEmptyMessage(PaymentSession session) {
+        String msg = session.isEmpty() ? activity.getString(R.string.pmpage_error_empty) : "";
+        emptyMessage.setText(msg);
+    }
+
+    private void setPaymentListItems(PaymentSession session) {
         items.clear();
-        this.selIndex = cachedListIndex;
+        this.selIndex = -1;
         int accountSize = session.getAccountCardSize();
         int networkSize = session.getNetworkCardSize();
 
@@ -214,22 +207,12 @@ public final class PaymentList {
     }
 
     private void collapseViewHolder(int position) {
-        PaymentCardViewHolder holder = (PaymentCardViewHolder) recyclerView.findViewHolderForAdapterPosition(position);
-
-        if (holder != null) {
-            holder.expand(false);
-            adapter.notifyItemChanged(position);
-        }
+        adapter.notifyItemChanged(position);
     }
 
     private void expandViewHolder(int position) {
-        PaymentCardViewHolder holder = (PaymentCardViewHolder) recyclerView.findViewHolderForAdapterPosition(position);
-
-        if (holder != null) {
-            holder.expand(true);
-            adapter.notifyItemChanged(position);
-            smoothScrollToPosition(position);
-        }
+        adapter.notifyItemChanged(position);
+        smoothScrollToPosition(position);
     }
 
     private void smoothScrollToPosition(int position) {

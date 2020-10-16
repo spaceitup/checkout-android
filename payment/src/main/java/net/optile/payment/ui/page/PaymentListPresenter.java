@@ -8,25 +8,36 @@
 
 package net.optile.payment.ui.page;
 
+import static net.optile.payment.model.InteractionCode.PROCEED;
+import static net.optile.payment.model.OperationType.CHARGE;
+import static net.optile.payment.ui.PaymentActivityResult.RESULT_CODE_ERROR;
+import static net.optile.payment.ui.PaymentActivityResult.RESULT_CODE_PROCEED;
+import static net.optile.payment.ui.redirect.RedirectService.INTERACTION_CODE;
+import static net.optile.payment.ui.redirect.RedirectService.INTERACTION_REASON;
+
 import java.net.URL;
+import java.util.List;
 import java.util.Map;
 
 import android.content.Context;
-import net.optile.payment.core.PaymentError;
+import android.text.TextUtils;
 import net.optile.payment.core.PaymentException;
 import net.optile.payment.form.Operation;
 import net.optile.payment.localization.Localization;
+import net.optile.payment.model.ErrorInfo;
 import net.optile.payment.model.Interaction;
 import net.optile.payment.model.InteractionCode;
 import net.optile.payment.model.ListResult;
-import net.optile.payment.model.OperationType;
+import net.optile.payment.model.OperationResult;
+import net.optile.payment.model.Parameter;
 import net.optile.payment.model.Redirect;
+import net.optile.payment.ui.PaymentActivityResult;
 import net.optile.payment.ui.PaymentResult;
 import net.optile.payment.ui.PaymentUI;
-import net.optile.payment.ui.dialog.ThemedDialogFragment;
-import net.optile.payment.ui.dialog.ThemedDialogFragment.ThemedDialogListener;
+import net.optile.payment.ui.dialog.PaymentDialogFragment.PaymentDialogListener;
 import net.optile.payment.ui.model.PaymentCard;
 import net.optile.payment.ui.model.PaymentSession;
+import net.optile.payment.ui.model.PresetCard;
 import net.optile.payment.ui.service.LocalizationLoaderListener;
 import net.optile.payment.ui.service.LocalizationLoaderService;
 import net.optile.payment.ui.service.NetworkService;
@@ -35,6 +46,8 @@ import net.optile.payment.ui.service.NetworkServicePresenter;
 import net.optile.payment.ui.service.PaymentSessionListener;
 import net.optile.payment.ui.service.PaymentSessionService;
 import net.optile.payment.ui.widget.FormWidget;
+import net.optile.payment.util.PaymentResultHelper;
+import net.optile.payment.util.PaymentUtils;
 
 /**
  * The PaymentListPresenter implementing the presenter part of the MVP
@@ -54,7 +67,7 @@ final class PaymentListPresenter implements PaymentSessionListener, Localization
     private Interaction reloadInteraction;
 
     private Operation operation;
-    private ActivityResult activityResult;
+    private PaymentActivityResult paymentActivityResult;
     private NetworkService networkService;
 
     /**
@@ -77,9 +90,9 @@ final class PaymentListPresenter implements PaymentSessionListener, Localization
     void onStart() {
         this.listUrl = PaymentUI.getInstance().getListUrl();
 
-        if (activityResult != null) {
-            handleActivityResult(activityResult);
-            activityResult = null;
+        if (paymentActivityResult != null) {
+            handlePaymentActivityResult(paymentActivityResult);
+            paymentActivityResult = null;
         } else if (this.session != null && this.session.isListUrl(this.listUrl)) {
             loadLocalizations(this.session);
         } else {
@@ -102,10 +115,10 @@ final class PaymentListPresenter implements PaymentSessionListener, Localization
     /**
      * Set the payment result received through the onActivityResult method
      *
-     * @param activityResult result to be set and handled when the presenter is started.
+     * @param paymentActivityResult result to be set and handled when the presenter is started.
      */
-    void setActivityResult(ActivityResult activityResult) {
-        this.activityResult = activityResult;
+    void setPaymentActivityResult(PaymentActivityResult paymentActivityResult) {
+        this.paymentActivityResult = paymentActivityResult;
     }
 
     /**
@@ -122,8 +135,7 @@ final class PaymentListPresenter implements PaymentSessionListener, Localization
             return;
         }
         if (session.getPresetCard() == card) {
-            PaymentResult result = new PaymentResult("Same presetAccount selected");
-            closeWithOkCode(result);
+            onPresetCardSelected((PresetCard) card);
             return;
         }
         if (!validateWidgets(card, widgets)) {
@@ -135,9 +147,14 @@ final class PaymentListPresenter implements PaymentSessionListener, Localization
             String method = card.getPaymentMethod();
             networkService = NetworkServiceLookup.createService(code, method);
             networkService.setPresenter(this);
-            preparePayment();
+
+            if (CHARGE.equals(operation.getType())) {
+                view.showChargePaymentScreen(CHARGEPAYMENT_REQUEST_CODE, operation);
+            } else {
+                processPayment();
+            }
         } catch (PaymentException e) {
-            closeWithErrorMessage(e.error);
+            closeWithErrorCode(PaymentResultHelper.fromThrowable(e));
         }
     }
 
@@ -158,12 +175,12 @@ final class PaymentListPresenter implements PaymentSessionListener, Localization
         Interaction interaction = listResult.getInteraction();
 
         switch (interaction.getCode()) {
-            case InteractionCode.PROCEED:
-                handleLoadPaymentSessionOk(session);
+            case PROCEED:
+                handleLoadPaymentSessionProceed(session);
                 break;
             default:
-                PaymentResult result = new PaymentResult(listResult.getResultInfo(), interaction);
-                closeWithErrorMessage(result);
+                ErrorInfo errorInfo = new ErrorInfo(listResult.getResultInfo(), interaction);
+                closeWithErrorCode(new PaymentResult(errorInfo));
         }
     }
 
@@ -175,7 +192,7 @@ final class PaymentListPresenter implements PaymentSessionListener, Localization
         Localization.setInstance(localization);
 
         if (reloadInteraction != null) {
-            showInteractionDialog(reloadInteraction);
+            view.showInteractionDialog(reloadInteraction, null);
             reloadInteraction = null;
         }
         view.showPaymentSession(this.session);
@@ -189,7 +206,7 @@ final class PaymentListPresenter implements PaymentSessionListener, Localization
         handleLoadingError(cause);
     }
 
-    private void handleLoadPaymentSessionOk(PaymentSession session) {
+    private void handleLoadPaymentSessionProceed(PaymentSession session) {
         this.operation = null;
         this.session = session;
         loadLocalizations(session);
@@ -201,34 +218,33 @@ final class PaymentListPresenter implements PaymentSessionListener, Localization
     }
 
     private void handleLoadingError(Throwable cause) {
-        PaymentError error = PaymentError.fromThrowable(cause);
-        if (error.isNetworkFailure()) {
-            handleLoadingNetworkFailure(error);
+        PaymentResult result = PaymentResultHelper.fromThrowable(cause);
+        if (result.isNetworkFailure()) {
+            handleLoadingNetworkFailure(result);
         } else {
-            closeWithErrorMessage(error);
+            closeWithErrorCode(result);
         }
     }
 
-    private void handleLoadingNetworkFailure(final PaymentError error) {
-        view.showConnectionErrorDialog(new ThemedDialogListener() {
+    private void handleLoadingNetworkFailure(final PaymentResult result) {
+        view.showConnectionErrorDialog(new PaymentDialogListener() {
             @Override
-            public void onButtonClicked(ThemedDialogFragment dialog, int which) {
-                switch (which) {
-                    case ThemedDialogFragment.BUTTON_POSITIVE:
-                        if (session == null) {
-                            loadPaymentSession(listUrl);
-                        } else {
-                            loadLocalizations(session);
-                        }
-                        break;
-                    default:
-                        closeWithCanceledCode(error);
+            public void onPositiveButtonClicked() {
+                if (session == null) {
+                    loadPaymentSession(listUrl);
+                } else {
+                    loadLocalizations(session);
                 }
             }
 
             @Override
-            public void onDismissed(ThemedDialogFragment dialog) {
-                closeWithCanceledCode(error);
+            public void onNegativeButtonClicked() {
+                closeWithErrorCode(result);
+            }
+
+            @Override
+            public void onDismissed() {
+                closeWithErrorCode(result);
             }
         });
     }
@@ -241,41 +257,20 @@ final class PaymentListPresenter implements PaymentSessionListener, Localization
         view.showProgress(visible);
     }
 
-    private void handleActivityResult(ActivityResult activityResult) {
+    private void handlePaymentActivityResult(PaymentActivityResult paymentActivityResult) {
         if (this.session == null) {
-            PaymentError error = new PaymentError("Missing cached PaymentSession in PaymentListPresenter");
-            closeWithErrorMessage(error);
+            closeWithErrorCode("Missing cached PaymentSession in PaymentListPresenter");
             return;
         }
-        PaymentResult result = activityResult.paymentResult;
-        int resultCode = activityResult.resultCode;
-        switch (activityResult.requestCode) {
-            case PREPAREPAYMENT_REQUEST_CODE:
-                onPreparePaymentResult(resultCode, result);
-                break;
+        switch (paymentActivityResult.getRequestCode()) {
             case PROCESSPAYMENT_REQUEST_CODE:
-                onProcessPaymentResult(resultCode, result);
+                onProcessPaymentResult(paymentActivityResult.getResultCode(), paymentActivityResult.getPaymentResult());
                 break;
             case CHARGEPAYMENT_REQUEST_CODE:
-                onChargeActivityResult(activityResult);
+                onChargeActivityResult(paymentActivityResult);
                 break;
             default:
                 view.showPaymentSession(this.session);
-        }
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public void onPreparePaymentResult(int resultCode, PaymentResult result) {
-        switch (resultCode) {
-            case PaymentUI.RESULT_CODE_OK:
-                handlePreparePaymentOk();
-                break;
-            case PaymentUI.RESULT_CODE_CANCELED:
-                handlePreparePaymentCanceled(result);
-                break;
         }
     }
 
@@ -287,132 +282,70 @@ final class PaymentListPresenter implements PaymentSessionListener, Localization
         throw new PaymentException("Redirects are not supported by this presenter");
     }
 
-    private void handlePreparePaymentOk() {
-        if (OperationType.CHARGE.equals(operation.getType())) {
-            view.showChargePaymentScreen(CHARGEPAYMENT_REQUEST_CODE, operation);
-        } else {
-            processPayment();
-        }
-    }
-
-    private void handlePreparePaymentCanceled(PaymentResult result) {
-        if (result.hasNetworkFailureError()) {
-            handlePrepareNetworkFailure(result);
-            return;
-        }
-        this.operation = null;
-        Interaction interaction = result.getInteraction();
-        if (interaction == null) {
-            view.showPaymentSession(session);
-            return;
-        }
-        switch (interaction.getCode()) {
-            case InteractionCode.RELOAD:
-            case InteractionCode.TRY_OTHER_ACCOUNT:
-            case InteractionCode.TRY_OTHER_NETWORK:
-                reloadPaymentSession(result);
-                break;
-            case InteractionCode.RETRY:
-                showPaymentSessionWithMessage(result);
-                break;
-            default:
-                closeWithErrorMessage(result);
-        }
-    }
-
-    private void handlePrepareNetworkFailure(PaymentResult result) {
-        view.showConnectionErrorDialog(new ThemedDialogListener() {
-            @Override
-            public void onButtonClicked(ThemedDialogFragment dialog, int which) {
-                switch (which) {
-                    case ThemedDialogFragment.BUTTON_POSITIVE:
-                        preparePayment();
-                        break;
-                    default:
-                        closeWithCanceledCode(result);
-                }
-            }
-
-            @Override
-            public void onDismissed(ThemedDialogFragment dialog) {
-                closeWithCanceledCode(result);
-            }
-        });
-    }
-
     /**
      * {@inheritDoc}
      */
     @Override
     public void onProcessPaymentResult(int resultCode, PaymentResult result) {
         switch (resultCode) {
-            case PaymentUI.RESULT_CODE_OK:
-                closeWithOkCode(result);
+            case RESULT_CODE_PROCEED:
+                closeWithProceedCode(result);
                 break;
-            case PaymentUI.RESULT_CODE_CANCELED:
-                handleProcessPaymentCanceled(result);
+            case RESULT_CODE_ERROR:
+                handleProcessPaymentError(result);
                 break;
+            default:
+                view.showPaymentSession(session);
         }
     }
 
-    private void handleProcessPaymentCanceled(PaymentResult result) {
-        if (result.hasNetworkFailureError()) {
+    private void handleProcessPaymentError(PaymentResult result) {
+        if (result.isNetworkFailure()) {
             handleProcessNetworkFailure(result);
             return;
         }
         this.operation = null;
         Interaction interaction = result.getInteraction();
-        if (interaction == null) {
-            view.showPaymentSession(this.session);
-            return;
-        }
         switch (interaction.getCode()) {
             case InteractionCode.RELOAD:
+                reloadPaymentSession(null);
+                break;
             case InteractionCode.TRY_OTHER_ACCOUNT:
             case InteractionCode.TRY_OTHER_NETWORK:
-                reloadPaymentSession(result);
+                reloadPaymentSession(interaction);
                 break;
             case InteractionCode.RETRY:
-                showPaymentSessionWithMessage(result);
+                showErrorAndPaymentSession(interaction);
                 break;
             default:
-                closeWithErrorMessage(result);
+                closeWithErrorCode(result);
         }
     }
 
     private void handleProcessNetworkFailure(final PaymentResult result) {
-        view.showConnectionErrorDialog(new ThemedDialogListener() {
+        view.showConnectionErrorDialog(new PaymentDialogListener() {
             @Override
-            public void onButtonClicked(ThemedDialogFragment dialog, int which) {
-                switch (which) {
-                    case ThemedDialogFragment.BUTTON_POSITIVE:
-                        processPayment();
-                        break;
-                    default:
-                        closeWithCanceledCode(result);
-                }
+            public void onPositiveButtonClicked() {
+                processPayment();
             }
 
             @Override
-            public void onDismissed(ThemedDialogFragment dialog) {
-                closeWithCanceledCode(result);
+            public void onNegativeButtonClicked() {
+                closeWithErrorCode(result);
+            }
+
+            @Override
+            public void onDismissed() {
+                closeWithErrorCode(result);
             }
         });
-    }
-
-    private void preparePayment() {
-        try {
-            networkService.preparePayment(view.getActivity(), PREPAREPAYMENT_REQUEST_CODE, operation);
-        } catch (PaymentException e) {
-            closeWithErrorMessage(e.error);
-        }
     }
 
     private void processPayment() {
         try {
             networkService.processPayment(view.getActivity(), PROCESSPAYMENT_REQUEST_CODE, operation);
         } catch (PaymentException e) {
-            closeWithErrorMessage(e.error);
+            closeWithErrorCode(e);
         }
     }
 
@@ -420,36 +353,35 @@ final class PaymentListPresenter implements PaymentSessionListener, Localization
      * The Charge result is received from the ChargePaymentActivity. Error messages are not displayed by this presenter since
      * the ChargePaymentActivity has taken care of displaying error and warning messages.
      *
-     * @param activityResult result received after a charge has been performed
+     * @param paymentActivityResult result received after a charge has been performed
      */
-    private void onChargeActivityResult(ActivityResult activityResult) {
+    private void onChargeActivityResult(PaymentActivityResult paymentActivityResult) {
         this.operation = null;
-        switch (activityResult.resultCode) {
-            case PaymentUI.RESULT_CODE_CANCELED:
-                handleChargeCanceled(activityResult);
+        switch (paymentActivityResult.getResultCode()) {
+            case RESULT_CODE_ERROR:
+                handleChargeError(paymentActivityResult);
+                break;
+            case RESULT_CODE_PROCEED:
+                view.passOnActivityResult(paymentActivityResult);
                 break;
             default:
-                view.passOnActivityResult(activityResult);
+                view.showPaymentSession(this.session);
         }
     }
 
-    private void handleChargeCanceled(ActivityResult activityResult) {
-        Interaction interaction = activityResult.paymentResult.getInteraction();
-        if (interaction == null) {
-            view.showPaymentSession(this.session);
-            return;
-        }
+    private void handleChargeError(PaymentActivityResult paymentActivityResult) {
+        Interaction interaction = paymentActivityResult.getPaymentResult().getInteraction();
         switch (interaction.getCode()) {
             case InteractionCode.RELOAD:
             case InteractionCode.TRY_OTHER_ACCOUNT:
             case InteractionCode.TRY_OTHER_NETWORK:
-                loadPaymentSession(this.listUrl);
+                reloadPaymentSession(null);
                 break;
             case InteractionCode.RETRY:
                 view.showPaymentSession(this.session);
                 break;
             default:
-                view.passOnActivityResult(activityResult);
+                view.passOnActivityResult(paymentActivityResult);
         }
     }
 
@@ -466,12 +398,29 @@ final class PaymentListPresenter implements PaymentSessionListener, Localization
 
     private Operation createOperation(PaymentCard card, Map<String, FormWidget> widgets) throws PaymentException {
         URL url = card.getOperationLink();
-        Operation operation = new Operation(card.getCode(), url);
+        Operation operation = new Operation(card.getCode(), card.getPaymentMethod(), url);
 
         for (FormWidget widget : widgets.values()) {
             widget.putValue(operation);
         }
         return operation;
+    }
+
+    private void onPresetCardSelected(PresetCard card) {
+        Redirect redirect = card.getPresetAccount().getRedirect();
+        List<Parameter> parameters = redirect.getParameters();
+
+        String code = PaymentUtils.getParameterValue(INTERACTION_CODE, parameters);
+        String reason = PaymentUtils.getParameterValue(INTERACTION_REASON, parameters);
+        if (TextUtils.isEmpty(code) || TextUtils.isEmpty(reason)) {
+            closeWithErrorCode("Missing Interaction code and reason inside PresetAccount.redirect");
+            return;
+        }
+        OperationResult result = new OperationResult();
+        result.setResultInfo("PresetAccount selected");
+        result.setInteraction(new Interaction(code, reason));
+        result.setRedirect(redirect);
+        closeWithProceedCode(new PaymentResult(result));
     }
 
     private void loadPaymentSession(String listUrl) {
@@ -481,59 +430,33 @@ final class PaymentListPresenter implements PaymentSessionListener, Localization
         sessionService.loadPaymentSession(listUrl, view.getActivity());
     }
 
-    private void reloadPaymentSession(PaymentResult result) {
-        this.reloadInteraction = result.getInteraction();
+    private void reloadPaymentSession(Interaction interaction) {
+        this.reloadInteraction = interaction;
         loadPaymentSession(this.listUrl);
     }
 
-    private void closeWithOkCode(PaymentResult result) {
-        view.setPaymentResult(PaymentUI.RESULT_CODE_OK, result);
+    private void closeWithProceedCode(PaymentResult result) {
+        view.setPaymentResult(RESULT_CODE_PROCEED, result);
         view.close();
     }
 
-    private void closeWithCanceledCode(PaymentError error) {
-        PaymentResult result = PaymentResult.fromPaymentError(error);
-        closeWithCanceledCode(result);
+    private void closeWithErrorCode(String errorMessage) {
+        PaymentResult result = PaymentResultHelper.fromErrorMessage(errorMessage);
+        closeWithErrorCode(result);
     }
 
-    private void closeWithCanceledCode(PaymentResult result) {
-        view.setPaymentResult(PaymentUI.RESULT_CODE_CANCELED, result);
+    private void closeWithErrorCode(Throwable cause) {
+        PaymentResult result = PaymentResultHelper.fromThrowable(cause);
+        closeWithErrorCode(result);
+    }
+
+    private void closeWithErrorCode(PaymentResult result) {
+        view.setPaymentResult(RESULT_CODE_ERROR, result);
         view.close();
     }
 
-    private void closeWithErrorMessage(PaymentError error) {
-        closeWithErrorMessage(PaymentResult.fromPaymentError(error));
-    }
-
-    private void closeWithErrorMessage(PaymentResult result) {
-        view.setPaymentResult(PaymentUI.RESULT_CODE_CANCELED, result);
-        Interaction interaction = result.getInteraction();
-        ThemedDialogListener listener = new ThemedDialogListener() {
-            @Override
-            public void onButtonClicked(ThemedDialogFragment dialog, int which) {
-                view.close();
-            }
-
-            @Override
-            public void onDismissed(ThemedDialogFragment dialog) {
-                view.close();
-            }
-        };
-        if (Localization.hasInteraction(interaction)) {
-            view.showInteractionDialog(interaction, listener);
-        } else {
-            view.showDefaultErrorDialog(listener);
-        }
-    }
-
-    private void showInteractionDialog(Interaction interaction) {
-        if (Localization.hasInteraction(interaction)) {
-            view.showInteractionDialog(interaction, null);
-        }
-    }
-
-    private void showPaymentSessionWithMessage(PaymentResult result) {
+    private void showErrorAndPaymentSession(Interaction interaction) {
+        view.showInteractionDialog(interaction, null);
         view.showPaymentSession(this.session);
-        showInteractionDialog(result.getInteraction());
     }
 }

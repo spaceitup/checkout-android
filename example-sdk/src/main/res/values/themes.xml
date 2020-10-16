@@ -1,0 +1,45 @@
+<resources>
+
+    <style name="CustomTheme" parent="@style/PaymentTheme">    
+        <item name="colorPrimary">@color/custom_blue</item>
+        <item name="colorPrimaryDark">@color/custom_blue</item>
+        <item name="colorControlNormal">@color/custom_blue</item>
+        <item name="colorSecondary">@color/custom_blue</item>
+
+        <item name="colorOnPrimary">@color/pm_white</item>
+        <item name="android:colorBackground">@color/pm_white</item>
+        <item name="colorOnBackground">@color/custom_darkgray</item>
+        <item name="colorSurface">@color/pm_white</item>
+        <item name="colorOnSurface">@color/custom_darkgray</item>
+        <item name="colorError">@color/custom_red</item>
+
+        <item name="textAppearanceSubtitle1">@style/TextAppearance.Custom.Subtitle1</item>
+        <item name="textAppearanceSubtitle2">@style/TextAppearance.Custom.Subtitle2</item>
+        <item name="textAppearanceBody1">@style/TextAppearance.Custom.Body1</item>
+        <item name="textAppearanceBody2">@style/TextAppearance.Custom.Body2</item>
+        <item name="textAppearanceHeadline6">@style/TextAppearance.Custom.Headline6</item>
+        <item name="textAppearanceButton">@style/TextAppearance.Custom.Button</item>
+        <item name="textAppearanceCaption">@style/TextAppearance.Custom.Caption</item>
+
+        <item name="materialButtonStyle">@style/Widget.Custom.Button.UnelevatedButton</item>
+        <item name="textInputStyle">@style/Widget.Custom.TextInputLayout</item>
+        <item name="switchStyle">@style/Widget.Custom.Switch</item>
+        <item name="snackbarStyle">@style/Widget.Custom.Snackbar</item>
+        <item name="materialAlertDialogTheme">@style/ThemeOverlay.Custom.MaterialAlertDialog</item>
+        <item name="materialCardViewStyle">@style/Widget.Custom.CardView</item>
+    </style>
+
+    <style name="ThemeOverlay.Custom.MaterialAlertDialog" parent="ThemeOverlay.Payment.MaterialAlertDialog">
+        <item name="alertDialogStyle">@style/MaterialAlertDialog.Custom</item>
+        <item name="materialAlertDialogTitleTextStyle">@style/MaterialAlertDialog.Custom.Title.Text</item>
+        <item name="materialAlertDialogBodyTextStyle">@style/MaterialAlertDialog.Custom.Body.Text</item>
+        <item name="buttonBarPositiveButtonStyle">@style/Widget.Custom.Button.TextButton.Dialog</item>
+        <item name="buttonBarNegativeButtonStyle">@style/Widget.Custom.Button.TextButton.Dialog</item>
+    </style>
+
+    <style name="CustomTheme.Toolbar">
+        <item name="toolbarStyle">@style/Widget.Custom.Toolbar</item>
+    </style>
+
+    <style name="CustomTheme.NoToolbar"></style>
+</resources>
