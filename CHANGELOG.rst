@@ -17,6 +17,7 @@ Note: version 4.0.0 is a major release, changes to the payment result handling c
 * [PCX-785] - Update form fields with new designs
 * [PCX-786] - Update payment screens/dialogs with new designs
 * [PCX-841] - Support single AccountRegistration in ListResult
+* [PCX-879] - Make adjustments to CVV tooltip
 * [PCX-899] - Default message for unknown interaction code/reason
 * [PCX-913] - Adjust reaction to backend responses
 * [PCX-916] - Remove custom Android-SDK theming and deprecated features
@@ -31,7 +32,10 @@ Note: version 4.0.0 is a major release, changes to the payment result handling c
 * [PCX-1006] - Move android-sdk packages optile/repo to optile/android on packagecloud
 * [PCX-1019] - Meaningful onActivityResult - resultCodes in android-sdk
 * [PCX-1025] - Remove duplication of Interaction + resultInfo from PaymentResult
+* [PCX-1028] - Update custom theme colors
 * [PCX-1079] - Rename example apps for the android-sdk
+* [PCX-1083] - Prepare android-sdk release 4.0.0
+* [PCX-1068] - Add theming illustration to documentation
 
 **Version android-sdk-3.2.0**
 
