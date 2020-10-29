@@ -38,7 +38,9 @@ public class ListResult {
     private String operationType;
     /** Indicates whether this LIST is explicitly initialized with permission or denial to delete accounts. */
     private Boolean allowDelete;
-
+    /** Integration type, could be one of PURE_NATIVE, MOBILE_NATIVE, DISPLAY_NATIVE, HOSTED */
+    private String integrationType;
+    
     /**
      * Gets value of links.
      *
@@ -186,6 +188,26 @@ public class ListResult {
         this.operationType = operationType;
     }
 
+    /**
+     * Gets the INTEGRATION type. Could be one of <code>MOBILE_NATIVE</code>, <code>PURE_NATIVE</code>, <code>DISPLAY_NATIVE</code>, <code>SELECTIVE_NATIVE</code>, <code>HOSTED</code>
+     * Using this information the client could determine the type of the integration.
+     *
+     * @return Integration type.
+     */
+    @OperationType.Definition
+    public String getIntegrationType() {
+        return integrationType;
+    }
+
+    /**
+     * Sets INTEGRATION type.
+     *
+     * @param integrationType Integration type value.
+     */
+    public void setIntegrationType(@IntegrationType.Definition final String integrationType) {
+        this.integrationType = integrationType;
+    }
+    
     /**
      * Indicates whether this LIST is explicitly initialized with permission or denial to delete accounts.
      * <p>
