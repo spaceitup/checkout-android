@@ -30,7 +30,7 @@ import net.optile.payment.model.ListResult;
 public final class ListConnection extends BaseConnection {
 
     /**
-     * Create a new payment session through the Payment API. Remind this is not
+     * Create a new payment session through the Server Payment API. Remind this is not
      * a request mobile apps should be making as this call is normally executed
      * Merchant Server-side. This request will be removed later.
      *
@@ -56,7 +56,6 @@ public final class ListConnection extends BaseConnection {
             final String requestUrl = Uri.parse(baseUrl).buildUpon()
                 .appendPath(URI_PATH_API)
                 .appendPath(URI_PATH_LISTS)
-                .appendQueryParameter(URI_PARAM_VIEW, VALUE_VIEW)
                 .build().toString();
 
             conn = createPostConnection(requestUrl);
@@ -98,7 +97,6 @@ public final class ListConnection extends BaseConnection {
 
         try {
             final String requestUrl = Uri.parse(url).buildUpon()
-                .appendQueryParameter(URI_PARAM_VIEW, VALUE_VIEW)
                 .build().toString();
 
             conn = createGetConnection(requestUrl);
