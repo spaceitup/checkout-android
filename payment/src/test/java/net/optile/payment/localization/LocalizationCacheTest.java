@@ -32,7 +32,7 @@ public class LocalizationCacheTest {
         String cacheId = "cacheId";
         cache.setCacheId(cacheId);
 
-        LocalizationHolder holder = LocalizationTest.createPropLocalizationHolder("key", "value", 5);
+        LocalizationHolder holder = LocalizationTest.createMapLocalizationHolder("key", "value", 5);
         String holderKey = "holder";
         cache.put(holderKey, holder);
 
