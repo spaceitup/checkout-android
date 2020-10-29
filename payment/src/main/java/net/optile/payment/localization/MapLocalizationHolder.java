@@ -21,22 +21,26 @@ import android.content.Context;
 import net.optile.payment.R;
 
 /**
- * Class storing local localizations
+ * Class storing localizations in a map
  */
-public final class LocalLocalizationHolder extends MapLocalizationHolder {
+public class MapLocalizationHolder implements LocalizationHolder {
+
+    final Map<String, String> map;
 
     /**
-     * Construct a new local localization holder
+     * Construct a  map localization holder
      *
-     * @param context containing the local localizations
+     * @param map the map containing the localizations
      */
-    public LocalLocalizationHolder(Context context) {
-        super(new HashMap<String, String>());
-        map.put(BUTTON_CANCEL, context.getString(R.string.button_cancel_label));
-        map.put(BUTTON_RETRY, context.getString(R.string.button_retry_label));
-        map.put(BUTTON_OK, context.getString(R.string.button_ok_label));
-
-        map.put(ERROR_CONNECTION_TEXT, context.getString(R.string.error_connection_text));
-        map.put(ERROR_DEFAULT_TEXT, context.getString(R.string.error_default_text));
+    public MapLocalizationHolder(Map<String, String> map) {
+        this.map = map;
+    }
+    
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public String translate(String key) {
+        return map.get(key);
     }
 }
