@@ -325,9 +325,9 @@ The Android SDK supports redirect payment networks, redirect networks are networ
 List request setup
 ------------------
 
-To enable redirect networks in the Android SDK it is important to define the application ID in the list request body. The "appId" must be set and should contain the unique identifier of the Android app. 
+To enable redirect networks in the Android SDK it is important to define the application ID in the list request body. The "appId" must be set and should contain the unique identifier of your Android app. The Android SDK uses this unique application ID to reopen the mobile app after the browser window is closed.
 
-Example of the callback mobile-redirect URLs:
+Example of the callback mobile-redirect settings:
 
 .. code-block:: json
 
@@ -336,18 +336,7 @@ Example of the callback mobile-redirect URLs:
         "notificationUrl": "https://example.com/shop/notify.html"
     }
 
-Please change the environment "integration" to "sandbox" or "live" depending on the environment that is used. Also change the "com.example.app" example appId to the real application ID of the Android app. 
-
-Unique appId
-~~~~~~~~~~~~~
-
-The Android SDK uses the unique Android applicationId as the identifier for making sure the mobile app is reopened after the browser window is closed.
-
-::
-
-   https://play.google.com/store/apps/details?id=net.optile.dashboard
-
-This URL points to the Android application with the unique ID "net.optile.dashboard". The Android SDK uses this unique application ID to reopen the mobile app after the browser window is closed.
+Please change the "com.example.app" example appId to the real application ID of the Android app. 
 
 AndroidManifest.xml
 -------------------
