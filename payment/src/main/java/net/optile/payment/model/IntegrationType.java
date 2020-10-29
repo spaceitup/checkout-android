@@ -20,7 +20,7 @@ public class IntegrationType {
 
     public final static String MOBILE_NATIVE = "MOBILE_NATIVE";
     public final static String DISPLAY_NATIVE = "DISPLAY_NATIVE";
-    public final static String SELECTIVE_NATIVE = "SELECTIVE_NATIVE";    
+    public final static String SELECTIVE_NATIVE = "SELECTIVE_NATIVE";
     public final static String PURE_NATIVE = "PURE_NATIVE";
     public final static String HOSTED = "HOSTED";
 
