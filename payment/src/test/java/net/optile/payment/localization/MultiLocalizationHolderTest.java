@@ -21,9 +21,9 @@ public class MultiLocalizationHolderTest {
 
     @Test
     public void translate() {
-        LocalizationHolder visa = LocalizationTest.createPropLocalizationHolder("visa", "visa", 5);
-        LocalizationHolder mastercard = LocalizationTest.createPropLocalizationHolder("mastercard", "mastercard", 5);
-        LocalizationHolder jcb = LocalizationTest.createPropLocalizationHolder("jcb", "jcb", 5);
+        LocalizationHolder visa = LocalizationTest.createMapLocalizationHolder("visa", "visa", 5);
+        LocalizationHolder mastercard = LocalizationTest.createMapLocalizationHolder("mastercard", "mastercard", 5);
+        LocalizationHolder jcb = LocalizationTest.createMapLocalizationHolder("jcb", "jcb", 5);
         LocalizationHolder multi = new MultiLocalizationHolder(visa, mastercard, jcb);
 
         assertEquals("visa2", multi.translate("visa2"));
