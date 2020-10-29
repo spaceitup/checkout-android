@@ -55,7 +55,7 @@ before finalizing the payment.
 Integration Scenario
 --------------------
 
-The Android SDK requires payment sessions created using the DISPLAY_NATIVE
+The Android SDK requires payment sessions created using the MOBILE_NATIVE
 integration scenario. Below is a sample list request object that can be
 used to create a payment session that is supported by the Android SDK.
 
@@ -65,7 +65,7 @@ Example list request Json body:
 
     {
         "transactionId": "tr1",
-        "integration": "DISPLAY_NATIVE",
+        "integration": "MOBILE_NATIVE",
         "presetFirst": "false",
         "country": "DE",
         "customer": {
@@ -81,9 +81,7 @@ Example list request Json body:
             "language": "en_US"
         },
         "callback": {
-            "returnUrl": "https://resources.integration.oscato.com/mobile-redirect/?appId=com.example.app",
-            "summaryUrl": "https://resources.integration.oscato.com/mobile-redirect/?appId=com.example.app",
-            "cancelUrl": "https://resources.integration.oscato.com/mobile-redirect/?appId=com.example.app",
+            "appId": "com.example.app",
             "notificationUrl": "https://example.com/shop/notify.html"
         }
     }
@@ -287,7 +285,7 @@ Example list request Json body with presetFirst set to true:
 
     {
         "transactionId": "tr1",
-        "integration": "DISPLAY_NATIVE",
+        "integration": "MOBILE_NATIVE",
         "presetFirst": "true",
         "country": "DE",
 
@@ -327,16 +325,14 @@ The Android SDK supports redirect payment networks, redirect networks are networ
 List request setup
 ------------------
 
-To enable redirect networks in the Android SDK it is important to define special callback URLs in the list request body. The "returnUrl", "cancelUrl" and "summaryUrl" must be set with special mobile-redirect URLs. These URLs must also contain the "appId" query parameter providing the unique identifier of the Android app. 
+To enable redirect networks in the Android SDK it is important to define the application ID in the list request body. The "appId" must be set and should contain the unique identifier of the Android app. 
 
 Example of the callback mobile-redirect URLs:
 
 .. code-block:: json
 
     "callback": {
-        "returnUrl": "https://resources.integration.oscato.com/mobile-redirect/?appId=com.example.app",
-        "summaryUrl": "https://resources.integration.oscato.com/mobile-redirect/?appId=com.example.app",
-        "cancelUrl": "https://resources.integration.oscato.com/mobile-redirect/?appId=com.example.app",
+        "appId": "com.example.app",
         "notificationUrl": "https://example.com/shop/notify.html"
     }
 
