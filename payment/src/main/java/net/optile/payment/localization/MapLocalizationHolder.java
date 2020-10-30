@@ -8,17 +8,7 @@
 
 package net.optile.payment.localization;
 
-import static net.optile.payment.localization.LocalizationKey.BUTTON_CANCEL;
-import static net.optile.payment.localization.LocalizationKey.BUTTON_OK;
-import static net.optile.payment.localization.LocalizationKey.BUTTON_RETRY;
-import static net.optile.payment.localization.LocalizationKey.ERROR_CONNECTION_TEXT;
-import static net.optile.payment.localization.LocalizationKey.ERROR_DEFAULT_TEXT;
-
-import java.util.HashMap;
 import java.util.Map;
-
-import android.content.Context;
-import net.optile.payment.R;
 
 /**
  * Class storing localizations in a map
