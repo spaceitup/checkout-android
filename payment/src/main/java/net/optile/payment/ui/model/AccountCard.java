@@ -79,7 +79,7 @@ public final class AccountCard implements PaymentCard {
      */
     @Override
     public List<InputElement> getInputElements() {
-        List<InputElement> elements = account.getLocalizedInputElements();
+        List<InputElement> elements = account.getInputElements();
         return elements == null ? new ArrayList<>() : elements;
     }
 

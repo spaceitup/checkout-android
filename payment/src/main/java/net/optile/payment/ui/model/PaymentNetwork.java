@@ -69,7 +69,7 @@ public class PaymentNetwork {
     }
 
     public List<InputElement> getInputElements() {
-        List<InputElement> elements = network.getLocalizedInputElements();
+        List<InputElement> elements = network.getInputElements();
         return elements == null ? new ArrayList<>() : elements;
     }
 

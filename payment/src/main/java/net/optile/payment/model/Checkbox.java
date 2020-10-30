@@ -25,10 +25,6 @@ public class Checkbox {
     /**
      * Advanced API, optional
      */
-    private String label;
-    /**
-     * Advanced API, optional
-     */
     private String requireMsg;
 
     /**
@@ -66,24 +62,6 @@ public class Checkbox {
      */
     public void setMode(@CheckboxMode.Definition String mode) {
         this.mode = mode;
-    }
-
-    /**
-     * Gets label of displayed checkbox.
-     *
-     * @return the label.
-     */
-    public String getLabel() {
-        return label;
-    }
-
-    /**
-     * Sets label of displayed checkbox.
-     *
-     * @param label the label to set.
-     */
-    public void setLabel(String label) {
-        this.label = label;
     }
 
     /**

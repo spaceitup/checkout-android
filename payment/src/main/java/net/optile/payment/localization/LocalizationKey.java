@@ -54,16 +54,20 @@ public final class LocalizationKey {
         return "error." + error;
     }
 
+    public static String accountValueKey(String account, String value) {
+        return "account." + account + "." + value;
+    }
+
     public static String accountLabelKey(String account) {
-        return "account." + account + ".label";
+        return accountValueKey(account, "label");
     }
 
     public static String accountPlaceholderKey(String account) {
-        return "account." + account + ".placeholder";
+        return accountValueKey(account, "placeholder");
     }
 
     public static String accountHintKey(String account, String labelType) {
-        return "account." + account + "." + "hint." + "where." + labelType;
+        return accountValueKey(account, "hint.where." + labelType);
     }
 
     public static String operationButtonKey(String operationType) {
