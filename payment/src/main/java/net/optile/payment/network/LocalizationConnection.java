@@ -13,11 +13,16 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Properties;
+
+import com.google.gson.JsonParseException;
+import com.google.gson.reflect.TypeToken;
 
 import net.optile.payment.core.PaymentException;
 import net.optile.payment.localization.LocalizationHolder;
-import net.optile.payment.localization.PropLocalizationHolder;
+import net.optile.payment.localization.MapLocalizationHolder;
 
 /**
  * Class implementing the communication with the payment API to load localization files
@@ -42,16 +47,33 @@ public final class LocalizationConnection extends BaseConnection {
         HttpURLConnection conn = null;
         try {
             conn = createGetConnection(url);
-            Properties prop = new Properties();
-            try (InputStream in = conn.getInputStream();
-                InputStreamReader ir = new InputStreamReader(in)) {
-                prop.load(ir);
+            conn.setRequestProperty(HEADER_CONTENT_TYPE, VALUE_APP_JSON);
+            conn.setRequestProperty(HEADER_ACCEPT, VALUE_APP_JSON);
+            conn.connect();
+            final int rc = conn.getResponseCode();
+            switch (rc) {
+                case HttpURLConnection.HTTP_OK:
+                    return handleLoadLocalizationOk(readFromInputStream(conn));
+                default:
+                    throw createPaymentException(rc, conn);
             }
-            return new PropLocalizationHolder(prop);
+        } catch (JsonParseException | SecurityException e) {
+            throw createPaymentException(e, false);
         } catch (IOException e) {
             throw createPaymentException(e, true);
         } finally {
             close(conn);
         }
+    }
+
+    /**
+     * Handle get localizations ok
+     *
+     * @param data the response data received from the Payment API
+     * @return the LocalizationHolder containing the localizations
+     */
+    private LocalizationHolder handleLoadLocalizationOk(final String data) throws JsonParseException {
+        Map<String, String> map = gson.fromJson(data, new TypeToken<HashMap<String, String>>() {}.getType());
+        return new MapLocalizationHolder(map);
     }
 }

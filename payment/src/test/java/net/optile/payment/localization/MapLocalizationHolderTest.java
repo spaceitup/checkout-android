@@ -17,12 +17,12 @@ import org.robolectric.RobolectricTestRunner;
  * has been received in full.
  */
 @RunWith(RobolectricTestRunner.class)
-public class PropLocalizationHolderTest {
+public class MapLocalizationHolderTest {
 
     @Test
     public void translate() {
         String defValue = "defValue";
-        LocalizationHolder holder = LocalizationTest.createPropLocalizationHolder("key", "value", 5);
+        LocalizationHolder holder = LocalizationTest.createMapLocalizationHolder("key", "value", 5);
         assertEquals("value3", holder.translate("key3"));
         assertEquals(null, holder.translate("foo"));
     }
