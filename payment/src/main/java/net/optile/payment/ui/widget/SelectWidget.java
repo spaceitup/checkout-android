@@ -83,7 +83,9 @@ public final class SelectWidget extends FormWidget {
 
         for (int i = 0, e = options.size(); i < e; i++) {
             option = options.get(i);
-            adapter.add(new SpinnerItem(option.getLabel(), option.getValue()));
+            String value = option.getValue();
+            String label = Localization.translateAccountValue(code, name, value);
+            adapter.add(new SpinnerItem(label, value));
 
             if (PaymentUtils.isTrue(option.getSelected())) {
                 selIndex = i;

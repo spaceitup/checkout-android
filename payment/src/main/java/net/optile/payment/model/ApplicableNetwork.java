@@ -42,12 +42,10 @@ public class ApplicableNetwork {
     private Boolean selected;
     /** form data to pre-fill a form */
     private FormData formData;
-    /** IFrame height for selective native, only supplied if "iFrame" link is present. */
-    private Integer iFrameHeight;
     /** An indicator that a form for this network is an empty one, without any text and input elements */
     private Boolean emptyForm;
     /** Form elements descriptions */
-    private List<InputElement> localizedInputElements;
+    private List<InputElement> inputElements;
     /** contract data of first possible route. */
     private Map<String, String> contractData;
 
@@ -255,24 +253,6 @@ public class ApplicableNetwork {
     }
 
     /**
-     * Gets IFrame height for selective native integration, only supplied if "iFrame" link is present.
-     *
-     * @return the IFrame height in pixels.
-     */
-    public Integer getiFrameHeight() {
-        return iFrameHeight;
-    }
-
-    /**
-     * Sets IFrame height for selective native integration, only supplied if "iFrame" link is present.
-     *
-     * @param iFrameHeight the IFrame height in pixels.
-     */
-    public void setiFrameHeight(final Integer iFrameHeight) {
-        this.iFrameHeight = iFrameHeight;
-    }
-
-    /**
      * Gets an indicator that this network operates with an empty form.
      *
      * @return <code>true</code> for empty form, otherwise network form contains some elements.
@@ -291,21 +271,21 @@ public class ApplicableNetwork {
     }
 
     /**
-     * Gets localized form elements.
+     * Gets input elements.
      *
-     * @return Form elements.
+     * @return input elements.
      */
-    public List<InputElement> getLocalizedInputElements() {
-        return localizedInputElements;
+    public List<InputElement> getInputElements() {
+        return inputElements;
     }
 
     /**
-     * Sets localized form elements.
+     * Sets input elements.
      *
-     * @param localizedInputElements Form elements.
+     * @param inputElements input elements.
      */
-    public void setLocalizedInputElements(final List<InputElement> localizedInputElements) {
-        this.localizedInputElements = localizedInputElements;
+    public void setInputElements(final List<InputElement> inputElements) {
+        this.inputElements = inputElements;
     }
 
     /**

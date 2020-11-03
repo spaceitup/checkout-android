@@ -11,7 +11,7 @@ package net.optile.payment.ui.model;
 import static net.optile.payment.localization.LocalizationKey.NETWORK_LABEL;
 
 import java.net.URL;
-import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
@@ -78,7 +78,7 @@ public final class PresetCard implements PaymentCard {
      */
     @Override
     public List<InputElement> getInputElements() {
-        return new ArrayList<>();
+        return Collections.emptyList();
     }
 
     /**

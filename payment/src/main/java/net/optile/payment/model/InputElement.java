@@ -18,8 +18,6 @@ public class InputElement {
     private String name;
     /** type */
     private String type;
-    /** localized label */
-    private String label;
     /** options */
     private List<SelectOption> options;
 
@@ -58,24 +56,6 @@ public class InputElement {
      */
     public void setType(@InputElementType.Definition String type) {
         this.type = type;
-    }
-
-    /**
-     * Gets localized label.
-     *
-     * @return A localized label.
-     */
-    public String getLabel() {
-        return label;
-    }
-
-    /**
-     * Sets localized label.
-     *
-     * @param label A localized label.
-     */
-    public void setLabel(final String label) {
-        this.label = label;
     }
 
     /**

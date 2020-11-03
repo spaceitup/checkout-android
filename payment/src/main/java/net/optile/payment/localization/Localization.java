@@ -133,6 +133,18 @@ public final class Localization {
     }
 
     /**
+     * Helper method to obtain the translation for the account value.
+     *
+     * @param networkCode name of the localization file
+     * @param account name of the account
+     * @param value name of the value
+     * @return translation or null if not found
+     */
+    public static String translateAccountValue(String networkCode, String account, String value) {
+        return translate(networkCode, LocalizationKey.accountValueKey(account, value));
+    }
+    
+    /**
      * Helper method to obtain the translation for the account placeholder.
      *
      * @param networkCode name of the localization file
