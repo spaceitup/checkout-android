@@ -136,35 +136,6 @@ public final class PaymentUtils {
     }
 
     /**
-     * Get the operationType from the operation url
-     *
-     * @param url to obtain the operationType from
-     * @return the operationType or null if not found from the url
-     */
-    public final static String getOperationType(URL url) {
-        if (url == null) {
-            return null;
-        }
-        String path = url.getPath();
-        if (path.endsWith("preset")) {
-            return OperationType.PRESET;
-        }
-        if (path.endsWith("charge")) {
-            return OperationType.CHARGE;
-        }
-        if (path.endsWith("update")) {
-            return OperationType.UPDATE;
-        }
-        if (path.endsWith("payout")) {
-            return OperationType.PAYOUT;
-        }
-        if (path.endsWith("activate")) {
-            return OperationType.ACTIVATION;
-        }
-        return null;
-    }
-
-    /**
      * Set the TextAppearance in the TextView
      *
      * @param textView for which the textAppearance should be changed

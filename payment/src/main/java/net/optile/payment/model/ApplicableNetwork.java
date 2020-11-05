@@ -27,6 +27,9 @@ public class ApplicableNetwork {
     /** Simple API, always present */
     private String grouping;
     /** Simple API, always present */
+    @OperationType.Definition
+    private String operationType;
+    /** Simple API, always present */
     @RegistrationType.Definition
     private String registration;
     /** Simple API, always present */
@@ -67,6 +70,25 @@ public class ApplicableNetwork {
         this.code = code;
     }
 
+    /**
+     * Gets value of operationType
+     *
+     * @return the operationType.
+     */
+    @PaymentMethod.Definition
+    public String getOperationType() {
+        return operationType;
+    }
+
+    /**
+     * Sets value of operationType
+     *
+     * @param operationType the operation type to set.
+     */
+    public void setOperationType(@OperationType.Definition final String operationType) {
+        this.operationType = operationType;
+    }
+    
     /**
      * Gets value of label.
      *

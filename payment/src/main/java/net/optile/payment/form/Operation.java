@@ -36,52 +36,32 @@ public class Operation implements Parcelable {
             return new Operation[size];
         }
     };
-    private final String code;
+    private final String networkCode;
     private final String paymentMethod;
+    private final String operationType;
     private final URL url;
     private final JSONObject form;
     private final JSONObject account;
-
-    public Operation(String code, String paymentMethod, URL url) {
-        this.code = code;
+    
+    public Operation(String networkCode, String paymentMethod, String operationType, URL url) {
+        this.networkCode = networkCode;
         this.paymentMethod = paymentMethod;
+        this.operationType = operationType;
         this.url = url;
         this.form = new JSONObject();
         this.account = new JSONObject();
     }
 
     private Operation(Parcel in) {
-        this.code = in.readString();
+        this.networkCode = in.readString();
         this.paymentMethod = in.readString();
+        this.operationType = in.readString();
         this.url = (URL) in.readSerializable();
         try {
             this.form = new JSONObject(in.readString());
             this.account = new JSONObject(in.readString());
         } catch (JSONException e) {
             throw new RuntimeException(e);
-        }
-    }
-
-    /**
-     * Create a new empty Operation using the URL from the provided operation and use the newType.
-     *
-     * @param operation the source operation to use
-     * @param newType the type of the new Operation
-     */
-    public static Operation create(Operation operation, String newType) throws PaymentException {
-        String curType = operation.getType();
-        if (curType == null) {
-            throw new PaymentException("Could not determine type from operation URL");
-        }
-        curType = curType.toLowerCase();
-        newType = newType.toLowerCase();
-        String url = operation.getURL().toString();
-        int lastIndex = url.lastIndexOf(curType);
-        url = url.substring(0, lastIndex) + newType + url.substring(lastIndex + curType.length());
-        try {
-            return new Operation(operation.getCode(), operation.getPaymentMethod(), new URL(url));
-        } catch (MalformedURLException e) {
-            throw new PaymentException("Could not convert to: " + newType, e);
         }
     }
 
@@ -98,9 +78,10 @@ public class Operation implements Parcelable {
      */
     @Override
     public void writeToParcel(Parcel out, int flags) {
-        out.writeString(code);
+        out.writeString(networkCode);
         out.writeString(paymentMethod);
-        out.writeSerializable(this.url);
+        out.writeString(operationType);
+        out.writeSerializable(url);
         out.writeString(form.toString());
         out.writeString(account.toString());
     }
@@ -145,22 +126,22 @@ public class Operation implements Parcelable {
      *
      * @return the type of the operation or null if it cannot be determined.
      */
-    public String getType() {
-        return PaymentUtils.getOperationType(url);
+    public String getOperationType() {
+        return operationType;
     }
 
     /**
      * Check if the type of this operation matches the given type.
      *
-     * @param type to match with the type of this operation.
+     * @param operationType to match with the type of this operation.
      * @return true when the types matches, false otherwise.
      */
-    public boolean isType(String type) {
-        return Objects.equals(type, getType());
+    public boolean isOperationType(String operationType) {
+        return Objects.equals(operationType, getOperationType());
     }
 
-    public String getCode() {
-        return code;
+    public String getNetworkCode() {
+        return networkCode;
     }
 
     public String getPaymentMethod() {

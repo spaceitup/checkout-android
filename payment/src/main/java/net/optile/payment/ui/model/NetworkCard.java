@@ -59,6 +59,14 @@ public final class NetworkCard implements PaymentCard {
      * {@inheritDoc}
      */
     @Override
+    public String getOperationType() {
+        return getVisibleNetwork().getOperationType();
+    }
+    
+    /**
+     * {@inheritDoc}
+     */
+    @Override
     public String getPaymentMethod() {
         return getVisibleNetwork().getPaymentMethod();
     }
@@ -119,8 +127,7 @@ public final class NetworkCard implements PaymentCard {
      */
     @Override
     public String getButton() {
-        String operationType = PaymentUtils.getOperationType(getOperationLink());
-        return LocalizationKey.operationButtonKey(operationType);
+        return LocalizationKey.operationButtonKey(getOperationType());
     }
 
     /**

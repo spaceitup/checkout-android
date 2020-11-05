@@ -26,6 +26,9 @@ public class AccountRegistration {
     /** Simple API, always present */
     private String label;
     /** Simple API, always present */
+    @OperationType.Definition
+    private String operationType;
+    /** Simple API, always present */
     private AccountMask maskedAccount;
     /** Indicates that this account registration is initially selected */
     private Boolean selected;
@@ -93,6 +96,25 @@ public class AccountRegistration {
         this.method = method;
     }
 
+    /**
+     * Gets value of operationType
+     *
+     * @return the operationType.
+     */
+    @PaymentMethod.Definition
+    public String getOperationType() {
+        return operationType;
+    }
+
+    /**
+     * Sets value of operationType
+     *
+     * @param operationType the operation type to set.
+     */
+    public void setOperationType(@OperationType.Definition final String operationType) {
+        this.operationType = operationType;
+    }
+    
     /**
      * Gets code of button label what should be used if this network is selected.
      *
