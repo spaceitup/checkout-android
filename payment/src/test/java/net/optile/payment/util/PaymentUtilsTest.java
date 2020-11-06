@@ -11,12 +11,9 @@ package net.optile.payment.util;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 
 import java.io.IOException;
-import java.net.MalformedURLException;
-import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -29,7 +26,6 @@ import androidx.test.core.app.ApplicationProvider;
 import net.optile.payment.R;
 import net.optile.payment.core.PaymentInputType;
 import net.optile.payment.model.InputElement;
-import net.optile.payment.model.OperationType;
 
 /**
  * Class for testing the PaymentUtils class

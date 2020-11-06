@@ -114,7 +114,7 @@ public class AccountRegistration {
     public void setOperationType(@OperationType.Definition final String operationType) {
         this.operationType = operationType;
     }
-    
+
     /**
      * Gets code of button label what should be used if this network is selected.
      *

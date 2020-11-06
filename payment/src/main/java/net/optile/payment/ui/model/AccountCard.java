@@ -55,7 +55,7 @@ public final class AccountCard implements PaymentCard {
     public String getOperationType() {
         return account.getOperationType();
     }
-    
+
     public URL getLink(String name) {
         Map<String, URL> links = account.getLinks();
         return links != null ? links.get(name) : null;

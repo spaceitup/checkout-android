@@ -88,7 +88,7 @@ public class ApplicableNetwork {
     public void setOperationType(@OperationType.Definition final String operationType) {
         this.operationType = operationType;
     }
-    
+
     /**
      * Gets value of label.
      *

@@ -84,7 +84,7 @@ public class PresetAccount {
     public void setOperationType(@OperationType.Definition final String operationType) {
         this.operationType = operationType;
     }
-    
+
     /**
      * Gets value of redirect.
      *

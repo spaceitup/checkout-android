@@ -43,7 +43,7 @@ public class PaymentNetwork {
     public String getOperationType() {
         return network.getOperationType();
     }
-    
+
     public ApplicableNetwork getApplicableNetwork() {
         return network;
     }

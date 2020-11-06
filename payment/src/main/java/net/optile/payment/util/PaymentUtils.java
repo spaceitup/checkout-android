@@ -12,7 +12,6 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.net.URL;
 import java.util.Calendar;
 import java.util.List;
 
@@ -26,7 +25,6 @@ import androidx.core.widget.TextViewCompat;
 import net.optile.payment.core.PaymentInputType;
 import net.optile.payment.model.AccountMask;
 import net.optile.payment.model.InputElement;
-import net.optile.payment.model.OperationType;
 import net.optile.payment.model.Parameter;
 
 /**
