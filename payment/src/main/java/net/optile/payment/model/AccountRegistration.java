@@ -101,7 +101,7 @@ public class AccountRegistration {
      *
      * @return the operationType.
      */
-    @PaymentMethod.Definition
+    @OperationType.Definition
     public String getOperationType() {
         return operationType;
     }

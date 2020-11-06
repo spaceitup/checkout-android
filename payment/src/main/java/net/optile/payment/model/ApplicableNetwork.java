@@ -75,7 +75,7 @@ public class ApplicableNetwork {
      *
      * @return the operationType.
      */
-    @PaymentMethod.Definition
+    @OperationType.Definition
     public String getOperationType() {
         return operationType;
     }

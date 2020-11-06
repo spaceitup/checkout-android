@@ -71,7 +71,7 @@ public class PresetAccount {
      *
      * @return the operationType.
      */
-    @PaymentMethod.Definition
+    @OperationType.Definition
     public String getOperationType() {
         return operationType;
     }
