@@ -18,7 +18,6 @@ import java.util.concurrent.Callable;
 
 import android.content.Context;
 import android.text.TextUtils;
-import android.util.Log;
 import net.optile.payment.R;
 import net.optile.payment.core.PaymentException;
 import net.optile.payment.core.WorkerSubscriber;

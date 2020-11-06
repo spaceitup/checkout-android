@@ -8,7 +8,6 @@
 
 package net.optile.payment.form;
 
-import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.Objects;
 
@@ -20,7 +19,6 @@ import android.os.Parcelable;
 import android.text.TextUtils;
 import net.optile.payment.core.PaymentException;
 import net.optile.payment.core.PaymentInputType;
-import net.optile.payment.util.PaymentUtils;
 
 /**
  * Class holding Operation form values
@@ -42,7 +40,7 @@ public class Operation implements Parcelable {
     private final URL url;
     private final JSONObject form;
     private final JSONObject account;
-    
+
     public Operation(String networkCode, String paymentMethod, String operationType, URL url) {
         this.networkCode = networkCode;
         this.paymentMethod = paymentMethod;
