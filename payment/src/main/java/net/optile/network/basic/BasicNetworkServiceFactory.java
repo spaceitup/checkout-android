@@ -36,6 +36,7 @@ public final class BasicNetworkServiceFactory implements NetworkServiceFactory {
         switch (code) {
             case PaymentNetworkCodes.SEPADD:
             case PaymentNetworkCodes.PAYPAL:
+            case PaymentNetworkCodes.WECHATPC_R:
                 return true;
         }
         return false;

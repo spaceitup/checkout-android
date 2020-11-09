@@ -38,6 +38,7 @@ import net.optile.payment.ui.dialog.PaymentDialogFragment.PaymentDialogListener;
 import net.optile.payment.ui.model.PaymentCard;
 import net.optile.payment.ui.model.PaymentSession;
 import net.optile.payment.ui.model.PresetCard;
+import net.optile.payment.ui.redirect.RedirectRequest;
 import net.optile.payment.ui.service.LocalizationLoaderListener;
 import net.optile.payment.ui.service.LocalizationLoaderService;
 import net.optile.payment.ui.service.NetworkService;
@@ -278,7 +279,7 @@ final class PaymentListPresenter implements PaymentSessionListener, Localization
      * {@inheritDoc}
      */
     @Override
-    public void redirectPayment(Redirect redirect) throws PaymentException {
+    public void redirect(RedirectRequest request) throws PaymentException {
         throw new PaymentException("Redirects are not supported by this presenter");
     }
 
