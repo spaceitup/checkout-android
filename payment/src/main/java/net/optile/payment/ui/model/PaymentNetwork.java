@@ -40,6 +40,10 @@ public class PaymentNetwork {
         return links != null ? links.get(name) : null;
     }
 
+    public String getOperationType() {
+        return network.getOperationType();
+    }
+
     public ApplicableNetwork getApplicableNetwork() {
         return network;
     }

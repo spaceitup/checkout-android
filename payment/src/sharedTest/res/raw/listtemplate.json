@@ -1,6 +1,6 @@
 {
     "transactionId": "tr200",
-    "integration": "DISPLAY_NATIVE",
+    "integration": "MOBILE_NATIVE",
     "presetFirst": "false",
     "country": "DE",
     "customer": {
@@ -16,9 +16,6 @@
         "language": "en_US"
     },
     "callback": {
-        "returnUrl": "https://resources.sandbox.oscato.com/mobile-redirect/?appId=",
-        "summaryUrl": "https://resources.sandbox.oscato.com/mobile-redirect/?appId=",
-        "cancelUrl": "https://resources.sandbox.oscato.com/mobile-redirect/?appId=",
         "notificationUrl": "https://dev.oscato.com/shop/notify.html"
     }
 }

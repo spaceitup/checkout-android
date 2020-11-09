@@ -53,6 +53,14 @@ public final class PresetCard implements PaymentCard {
      * {@inheritDoc}
      */
     @Override
+    public String getOperationType() {
+        return account.getOperationType();
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
     public String getPaymentMethod() {
         return account.getMethod();
     }

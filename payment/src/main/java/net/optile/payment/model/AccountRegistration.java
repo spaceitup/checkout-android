@@ -26,6 +26,9 @@ public class AccountRegistration {
     /** Simple API, always present */
     private String label;
     /** Simple API, always present */
+    @OperationType.Definition
+    private String operationType;
+    /** Simple API, always present */
     private AccountMask maskedAccount;
     /** Indicates that this account registration is initially selected */
     private Boolean selected;
@@ -91,6 +94,25 @@ public class AccountRegistration {
      */
     public void setMethod(@PaymentMethod.Definition final String method) {
         this.method = method;
+    }
+
+    /**
+     * Gets value of operationType
+     *
+     * @return the operationType.
+     */
+    @OperationType.Definition
+    public String getOperationType() {
+        return operationType;
+    }
+
+    /**
+     * Sets value of operationType
+     *
+     * @param operationType the operation type to set.
+     */
+    public void setOperationType(@OperationType.Definition final String operationType) {
+        this.operationType = operationType;
     }
 
     /**
