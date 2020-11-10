@@ -27,7 +27,7 @@ public class RedirectUriBuilderTest {
         Redirect redirect = new Redirect();
         redirect.setUrl(new URL("http://example.com"));
         redirect.setParameters(params);
-        Uri uri = RedirectUriBuilder.createUri(redirect);
+        Uri uri = RedirectUriBuilder.fromRedirect(redirect);
         assertEquals("http://example.com?param0=value0&param1=value1", uri.toString());
     }
 
@@ -40,10 +40,16 @@ public class RedirectUriBuilderTest {
         Redirect redirect = new Redirect();
         redirect.setUrl(new URL("http://example.com?foo=bar"));
         redirect.setParameters(params);
-        Uri uri = RedirectUriBuilder.createUri(redirect);
+        Uri uri = RedirectUriBuilder.fromRedirect(redirect);
         assertEquals("http://example.com?foo=bar&param0=value0&param1=value1", uri.toString());
     }
 
+    @Test
+    public void createUriFromURL() throws MalformedURLException {
+        String url = "http://example.com";
+        Uri uri = RedirectUriBuilder.fromURL(new URL(url));
+        assertEquals(url, uri.toString());
+    }
 
     private Parameter createParameter(String name, String value) {
         Parameter parameter = new Parameter();
