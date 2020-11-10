@@ -24,13 +24,10 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
-import android.content.Context;
 import androidx.test.espresso.intent.Intents;
 import androidx.test.ext.junit.runners.AndroidJUnit4;
 import androidx.test.filters.LargeTest;
-import androidx.test.platform.app.InstrumentationRegistry;
 import androidx.test.rule.ActivityTestRule;
-import net.optile.payment.test.service.ListConfig;
 import net.optile.payment.test.service.ListService;
 import net.optile.payment.ui.page.PaymentListActivity;
 
@@ -54,22 +51,11 @@ public class ExampleSdkTests {
     }
 
     private void openPaymentList() throws JSONException, IOException {
-        String listUrl = createListUrl(net.optile.example.sdk.test.R.raw.listtemplate, false);
+        String listUrl = ListService.createListUrl(net.optile.example.sdk.test.R.raw.listtemplate, false);
         onView(withId(R.id.input_listurl)).perform(typeText(listUrl));
         onView(withId(R.id.button_action)).perform(click());
 
         intended(hasComponent(PaymentListActivity.class.getName()));
         onView(withId(R.id.layout_paymentlist)).check(matches(isDisplayed()));
-    }
-
-    public String createListUrl(int jsonResId, boolean presetFirst) throws JSONException, IOException {
-        Context context = InstrumentationRegistry.getInstrumentation().getTargetContext();
-        String url = context.getString(R.string.paymentapi_url);
-        String auth = context.getString(R.string.paymentapi_auth);
-
-        ListService service = ListService.createInstance(url, auth);
-        ListConfig config = service.createListConfig(jsonResId);
-        config.setPresetFirst(presetFirst);
-        return service.createListUrl(config);
     }
 }

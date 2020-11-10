@@ -11,7 +11,7 @@ package net.optile.payment.ui.model;
 import static net.optile.payment.localization.LocalizationKey.NETWORK_LABEL;
 
 import java.net.URL;
-import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
@@ -38,6 +38,10 @@ public class PaymentNetwork {
     public URL getLink(String name) {
         Map<String, URL> links = network.getLinks();
         return links != null ? links.get(name) : null;
+    }
+
+    public String getOperationType() {
+        return network.getOperationType();
     }
 
     public ApplicableNetwork getApplicableNetwork() {
@@ -69,8 +73,8 @@ public class PaymentNetwork {
     }
 
     public List<InputElement> getInputElements() {
-        List<InputElement> elements = network.getLocalizedInputElements();
-        return elements == null ? new ArrayList<>() : elements;
+        List<InputElement> elements = network.getInputElements();
+        return elements == null ? Collections.emptyList() : elements;
     }
 
     public String getButton() {

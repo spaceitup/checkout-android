@@ -8,6 +8,8 @@
 
 package net.optile.payment.ui.service;
 
+import static net.optile.payment.model.IntegrationType.MOBILE_NATIVE;
+
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -132,9 +134,15 @@ public final class PaymentSessionService {
 
     private PaymentSession asyncLoadPaymentSession(String listUrl, Context context) throws PaymentException {
         ListResult listResult = listConnection.getListResult(listUrl);
+
+        String integrationType = listResult.getIntegrationType();
+        if (!MOBILE_NATIVE.equals(integrationType)) {
+            throw new PaymentException("Integration type is not supported: " + integrationType);
+        }
+
         String operationType = listResult.getOperationType();
         if (!isSupportedOperationType(operationType)) {
-            throw new PaymentException("List operationType: " + operationType + " is not supported");
+            throw new PaymentException("List operationType is not supported: " + operationType);
         }
         Map<String, PaymentNetwork> networks = loadPaymentNetworks(listResult);
         Map<String, PaymentGroup> groups = loadPaymentGroups(context);

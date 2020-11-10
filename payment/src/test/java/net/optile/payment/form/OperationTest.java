@@ -11,7 +11,6 @@ package net.optile.payment.form;
 import static io.github.jsonSnapshot.SnapshotMatcher.expect;
 import static io.github.jsonSnapshot.SnapshotMatcher.start;
 import static io.github.jsonSnapshot.SnapshotMatcher.validateSnapshots;
-import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 
 import java.net.MalformedURLException;
@@ -26,7 +25,6 @@ import org.robolectric.RobolectricTestRunner;
 
 import net.optile.payment.core.PaymentException;
 import net.optile.payment.core.PaymentInputType;
-import net.optile.payment.model.OperationType;
 
 @RunWith(RobolectricTestRunner.class)
 public class OperationTest {
@@ -43,13 +41,13 @@ public class OperationTest {
 
     @Test(expected = IllegalArgumentException.class)
     public void putValue_invalidName_exception() throws PaymentException {
-        Operation operation = new Operation("VISA", "CREDIT_CARD", createTestURL());
+        Operation operation = new Operation("VISA", "CREDIT_CARD", "CHARGE", createTestURL());
         operation.putValue(null, "Foo");
     }
 
     @Test
     public void putValue_success() throws PaymentException, JSONException {
-        Operation operation = new Operation("VISA", "CREDIT_CARD", createTestURL());
+        Operation operation = new Operation("VISA", "CREDIT_CARD", "CHARGE", createTestURL());
         operation.putValue(PaymentInputType.ACCOUNT_NUMBER, "accountnumber123");
         operation.putValue(PaymentInputType.HOLDER_NAME, "John Doe");
         operation.putValue(PaymentInputType.EXPIRY_MONTH, 12);
@@ -63,26 +61,11 @@ public class OperationTest {
         expect(operation.toJson()).toMatchSnapshot();
     }
 
-    @Test
-    public void create_success() throws PaymentException {
-        URL url = null;
-        try {
-            url = new URL("http://localhost/test/charge");
-        } catch (MalformedURLException e) {
-            e.printStackTrace();
-        }
-        assertNotNull(url);
-        Operation srcOperation = new Operation("VISA", "CREDIT_CARD", url);
-        Operation dstOperation = Operation.create(srcOperation, OperationType.PRESET.toLowerCase());
-        String dstUrl = dstOperation.getURL().toString();
-        assertEquals(dstUrl, "http://localhost/test/preset");
-    }
-
     private URL createTestURL() {
         URL url = null;
 
         try {
-            url = new URL("http://localhost");
+            url = new URL("http://localhost/charge");
         } catch (MalformedURLException e) {
             e.printStackTrace();
         }

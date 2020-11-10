@@ -17,7 +17,6 @@ import net.optile.payment.localization.Localization;
 import net.optile.payment.localization.LocalizationKey;
 import net.optile.payment.model.InputElement;
 import net.optile.payment.model.PaymentMethod;
-import net.optile.payment.util.PaymentUtils;
 
 /**
  * Class for holding the data of a NetworkCard in the list
@@ -53,6 +52,14 @@ public final class NetworkCard implements PaymentCard {
     @Override
     public URL getOperationLink() {
         return getVisibleNetwork().getLink("operation");
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public String getOperationType() {
+        return getVisibleNetwork().getOperationType();
     }
 
     /**
@@ -119,8 +126,7 @@ public final class NetworkCard implements PaymentCard {
      */
     @Override
     public String getButton() {
-        String operationType = PaymentUtils.getOperationType(getOperationLink());
-        return LocalizationKey.operationButtonKey(operationType);
+        return LocalizationKey.operationButtonKey(getOperationType());
     }
 
     /**
