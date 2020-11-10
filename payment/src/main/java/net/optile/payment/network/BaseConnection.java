@@ -52,10 +52,7 @@ abstract class BaseConnection {
     private final static String HTTP_GET = "GET";
     private final static String HTTP_POST = "POST";
     private final static String CONTENTTYPE_JSON = "application/json";
-
     private static volatile String userAgent;
-
-    private static volatile TLSSocketFactory socketFactory;
 
     /**
      * For now we will use Gson to parse json content
@@ -73,43 +70,6 @@ abstract class BaseConnection {
             CookieHandler.setDefault(new CookieManager());
         }
         this.gson = new GsonBuilder().create();
-    }
-
-    /**
-     * Get the cached TLSSocketFactory
-     *
-     * @return the factory or null if it could not be created
-     */
-    private static TLSSocketFactory getTLSSocketFactory() {
-        if (socketFactory != null) {
-            return socketFactory;
-        }
-        synchronized (BaseConnection.class) {
-            if (socketFactory == null) {
-
-                try {
-                    socketFactory = new TLSSocketFactory();
-                } catch (KeyManagementException e) {
-                    Log.w("sdk_BaseConnection", e);
-                } catch (NoSuchAlgorithmException e) {
-                    Log.w("sdk_BaseConnection", e);
-                }
-            }
-        }
-        return socketFactory;
-    }
-
-    private void setTLSSocketFactory(final HttpURLConnection conn) {
-
-        if (!(conn instanceof HttpsURLConnection)) {
-            return;
-        }
-        TLSSocketFactory socketFactory = getTLSSocketFactory();
-
-        if (socketFactory == null) {
-            return;
-        }
-        ((HttpsURLConnection) conn).setSSLSocketFactory(socketFactory);
     }
 
     /**
@@ -305,10 +265,6 @@ abstract class BaseConnection {
      * @param conn the url connection
      */
     private void setConnProperties(final HttpURLConnection conn) {
-
-        if (Build.VERSION.SDK_INT == Build.VERSION_CODES.KITKAT) {
-            setTLSSocketFactory(conn);
-        }
         conn.setConnectTimeout(TIMEOUT_CONNECT);
         conn.setReadTimeout(TIMEOUT_READ);
         conn.setRequestProperty(HEADER_USER_AGENT, getUserAgent());
