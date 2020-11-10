@@ -148,7 +148,7 @@ final class PaymentListPresenter implements PaymentSessionListener, Localization
             networkService = NetworkServiceLookup.createService(code, method);
             networkService.setPresenter(this);
 
-            if (CHARGE.equals(operation.getType())) {
+            if (CHARGE.equals(operation.getOperationType())) {
                 view.showChargePaymentScreen(CHARGEPAYMENT_REQUEST_CODE, operation);
             } else {
                 processPayment();
@@ -398,7 +398,7 @@ final class PaymentListPresenter implements PaymentSessionListener, Localization
 
     private Operation createOperation(PaymentCard card, Map<String, FormWidget> widgets) throws PaymentException {
         URL url = card.getOperationLink();
-        Operation operation = new Operation(card.getCode(), card.getPaymentMethod(), url);
+        Operation operation = new Operation(card.getCode(), card.getPaymentMethod(), card.getOperationType(), url);
 
         for (FormWidget widget : widgets.values()) {
             widget.putValue(operation);

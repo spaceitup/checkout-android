@@ -35,6 +35,13 @@ public interface PaymentCard {
     URL getOperationLink();
 
     /**
+     * Get the operation type, e.g. OperationType.CHARGE or OperationType.PRESET
+     *
+     * @return the operationType of this payment card
+     */
+    String getOperationType();
+
+    /**
      * Get the paymentMethod of this PaymentCard
      *
      * @return paymentMethod of this PaymentCard
