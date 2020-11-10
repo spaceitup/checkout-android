@@ -11,7 +11,6 @@ package net.optile.payment.ui.redirect;
 import static net.optile.payment.model.HttpMethod.GET;
 import static net.optile.payment.model.HttpMethod.POST;
 
-import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -19,7 +18,6 @@ import android.content.Context;
 import android.net.Uri;
 import android.text.TextUtils;
 import net.optile.payment.core.PaymentException;
-import net.optile.payment.model.HttpMethod;
 import net.optile.payment.model.Interaction;
 import net.optile.payment.model.OperationResult;
 import net.optile.payment.model.Parameter;
@@ -47,7 +45,7 @@ public final class RedirectService {
     }
 
     /**
-     * Redirect to the location that is provided in the request 
+     * Redirect to the location that is provided in the request
      *
      * @param context in which the redirect should be started
      * @param request containing the type and location of the redirect

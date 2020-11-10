@@ -39,11 +39,11 @@ public final class RedirectUriBuilder {
         return builder.build();
     }
 
-    /** 
+    /**
      * Create a Uri from the provided url
-     * 
+     *
      * @param url to be converted to a Uri
-     * @return the newly created uri 
+     * @return the newly created uri
      */
     public static Uri fromURL(URL url) {
         return Uri.parse(url.toString());

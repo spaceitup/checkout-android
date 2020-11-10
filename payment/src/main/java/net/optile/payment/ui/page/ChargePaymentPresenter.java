@@ -21,7 +21,6 @@ import net.optile.payment.model.Interaction;
 import net.optile.payment.model.InteractionCode;
 import net.optile.payment.model.ListResult;
 import net.optile.payment.model.OperationResult;
-import net.optile.payment.model.Redirect;
 import net.optile.payment.ui.PaymentActivityResult;
 import net.optile.payment.ui.PaymentResult;
 import net.optile.payment.ui.PaymentUI;

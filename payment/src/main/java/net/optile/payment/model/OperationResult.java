@@ -43,7 +43,7 @@ public class OperationResult {
     public void setLinks(Map<String, URL> links) {
         this.links = links;
     }
-    
+
     /**
      * Gets value of resultInfo.
      *

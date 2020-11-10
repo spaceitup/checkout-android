@@ -9,7 +9,6 @@
 package net.optile.payment.ui.service;
 
 import net.optile.payment.core.PaymentException;
-import net.optile.payment.model.OperationResult;
 import net.optile.payment.ui.PaymentResult;
 import net.optile.payment.ui.redirect.RedirectRequest;
 
