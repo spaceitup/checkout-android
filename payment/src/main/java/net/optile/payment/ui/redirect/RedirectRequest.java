@@ -16,7 +16,7 @@ import net.optile.payment.model.OperationResult;
 import net.optile.payment.model.Redirect;
 
 /**
- * Class holding the data for making a Request request
+ * Class holding the data for making a redirect
  */
 public final class RedirectRequest {
 
@@ -35,7 +35,7 @@ public final class RedirectRequest {
     }
 
     /**
-     * Get the Redirect method for this Redirect request
+     * Get the redirect method
      *
      * @return the redirect method
      */
@@ -44,7 +44,7 @@ public final class RedirectRequest {
     }
 
     /**
-     * Get the Redirect Object from this redirect request
+     * Get the Redirect Object
      *
      * @return the redirect object
      */

@@ -27,7 +27,7 @@ public final class RedirectUriBuilder {
      * @return the created Uri
      */
     public static Uri fromRedirect(Redirect redirect) {
-        Uri uri = Uri.parse(redirect.getUrl().toString());
+        Uri uri = fromURL(redirect.getUrl());
         List<Parameter> params = redirect.getParameters();
         if (params == null || params.size() == 0) {
             return uri;
