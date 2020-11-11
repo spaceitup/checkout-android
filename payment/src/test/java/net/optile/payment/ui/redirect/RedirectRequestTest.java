@@ -48,6 +48,8 @@ public class RedirectRequestTest {
         operationResult.setLinks(createLinks());
         RedirectRequest request = RedirectRequest.fromOperationResult(operationResult);
         assertNotNull(request);
+        assertNotNull(request.getRedirect());
+        assertNotNull(request.getLink());
     }
 
     private Map<String, URL> createLinks() throws MalformedURLException {
