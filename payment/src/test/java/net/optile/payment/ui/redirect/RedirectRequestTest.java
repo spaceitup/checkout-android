@@ -28,21 +28,21 @@ import net.optile.test.util.TestUtils;
 public class RedirectRequestTest {
 
     @Test(expected = PaymentException.class)
-    public void fromOperationResult_missingRedirect() throws PaymentException, MalformedURLException {
+    public void fromOperationResult_missingRedirect() throws PaymentException {
         OperationResult operationResult = new OperationResult();
         operationResult.setLinks(createLinks());
         RedirectRequest.fromOperationResult(operationResult);
     }
 
     @Test(expected = PaymentException.class)
-    public void fromOperationResult_missingLink() throws PaymentException, MalformedURLException {
+    public void fromOperationResult_missingLink() throws PaymentException {
         OperationResult operationResult = new OperationResult();
         operationResult.setRedirect(new Redirect());
         RedirectRequest.fromOperationResult(operationResult);
     }
 
     @Test
-    public void fromOperationResult_success() throws PaymentException, MalformedURLException {
+    public void fromOperationResult_success() throws PaymentException {
         OperationResult operationResult = new OperationResult();
         operationResult.setRedirect(new Redirect());
         operationResult.setLinks(createLinks());
@@ -52,7 +52,7 @@ public class RedirectRequestTest {
         assertNotNull(request.getLink());
     }
 
-    private Map<String, URL> createLinks() throws MalformedURLException {
+    private Map<String, URL> createLinks() {
         return Collections.singletonMap("redirect", TestUtils.createDefaultURL());
     }
 }
