@@ -37,7 +37,7 @@ public final class TestUtils {
         try {
             return new URL(url);
         } catch (MalformedURLException e) {
-            throw new IllegalStateException(e);
+            throw new IllegalArgumentException(e);
         }
     }
 }

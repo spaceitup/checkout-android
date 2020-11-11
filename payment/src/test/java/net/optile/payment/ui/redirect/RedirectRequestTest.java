@@ -9,6 +9,7 @@
 package net.optile.payment.ui.redirect;
 
 import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertEquals;
 
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -44,12 +45,15 @@ public class RedirectRequestTest {
     @Test
     public void fromOperationResult_success() throws PaymentException {
         OperationResult operationResult = new OperationResult();
-        operationResult.setRedirect(new Redirect());
-        operationResult.setLinks(createLinks());
+        Redirect redirect = new Redirect();
+        Map<String, URL> links = createLinks();
+        operationResult.setRedirect(redirect);
+        operationResult.setLinks(links);
+
         RedirectRequest request = RedirectRequest.fromOperationResult(operationResult);
         assertNotNull(request);
-        assertNotNull(request.getRedirect());
-        assertNotNull(request.getLink());
+        assertEquals(redirect, request.getRedirect());
+        assertEquals(links.get("redirect"), request.getLink());
     }
 
     private Map<String, URL> createLinks() {
