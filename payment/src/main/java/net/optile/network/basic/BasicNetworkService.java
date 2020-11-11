@@ -136,7 +136,7 @@ public final class BasicNetworkService extends NetworkService implements Operati
 
     private String getErrorInteractionCode(Operation operation) {
         if (operation != null) {
-            switch (operation.getType()) {
+            switch (operation.getOperationType()) {
                 case OperationType.PRESET:
                 case OperationType.UPDATE:
                 case OperationType.ACTIVATION:

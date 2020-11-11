@@ -23,9 +23,7 @@ import net.optile.payment.R;
 /**
  * Class storing local localizations
  */
-public final class LocalLocalizationHolder implements LocalizationHolder {
-
-    private final Map<String, String> map;
+public final class LocalLocalizationHolder extends MapLocalizationHolder {
 
     /**
      * Construct a new local localization holder
@@ -33,20 +31,12 @@ public final class LocalLocalizationHolder implements LocalizationHolder {
      * @param context containing the local localizations
      */
     public LocalLocalizationHolder(Context context) {
-        map = new HashMap<>();
+        super(new HashMap<String, String>());
         map.put(BUTTON_CANCEL, context.getString(R.string.button_cancel_label));
         map.put(BUTTON_RETRY, context.getString(R.string.button_retry_label));
         map.put(BUTTON_OK, context.getString(R.string.button_ok_label));
 
         map.put(ERROR_CONNECTION_TEXT, context.getString(R.string.error_connection_text));
         map.put(ERROR_DEFAULT_TEXT, context.getString(R.string.error_default_text));
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public String translate(String key) {
-        return map.get(key);
     }
 }

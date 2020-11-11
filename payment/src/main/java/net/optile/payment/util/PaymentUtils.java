@@ -12,7 +12,6 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.net.URL;
 import java.util.Calendar;
 import java.util.List;
 
@@ -26,7 +25,6 @@ import androidx.core.widget.TextViewCompat;
 import net.optile.payment.core.PaymentInputType;
 import net.optile.payment.model.AccountMask;
 import net.optile.payment.model.InputElement;
-import net.optile.payment.model.OperationType;
 import net.optile.payment.model.Parameter;
 
 /**
@@ -133,35 +131,6 @@ public final class PaymentUtils {
 
         int year = inputYear > (startYear % 100) ? startYear : endYear;
         return (year - (year % 100)) + inputYear;
-    }
-
-    /**
-     * Get the operationType from the operation url
-     *
-     * @param url to obtain the operationType from
-     * @return the operationType or null if not found from the url
-     */
-    public final static String getOperationType(URL url) {
-        if (url == null) {
-            return null;
-        }
-        String path = url.getPath();
-        if (path.endsWith("preset")) {
-            return OperationType.PRESET;
-        }
-        if (path.endsWith("charge")) {
-            return OperationType.CHARGE;
-        }
-        if (path.endsWith("update")) {
-            return OperationType.UPDATE;
-        }
-        if (path.endsWith("payout")) {
-            return OperationType.PAYOUT;
-        }
-        if (path.endsWith("activate")) {
-            return OperationType.ACTIVATION;
-        }
-        return null;
     }
 
     /**

@@ -54,7 +54,7 @@ before finalizing the payment.
 Integration Scenario
 --------------------
 
-The Android SDK requires payment sessions created using the DISPLAY_NATIVE
+The Android SDK requires payment sessions created using the MOBILE_NATIVE
 integration scenario. Below is a sample list request object that can be
 used to create a payment session that is supported by the Android SDK.
 
@@ -64,7 +64,7 @@ Example list request Json body:
 
     {
         "transactionId": "tr1",
-        "integration": "DISPLAY_NATIVE",
+        "integration": "MOBILE_NATIVE",
         "presetFirst": "false",
         "country": "DE",
         "customer": {
@@ -80,9 +80,7 @@ Example list request Json body:
             "language": "en_US"
         },
         "callback": {
-            "returnUrl": "https://resources.integration.oscato.com/mobile-redirect/?appId=com.example.app",
-            "summaryUrl": "https://resources.integration.oscato.com/mobile-redirect/?appId=com.example.app",
-            "cancelUrl": "https://resources.integration.oscato.com/mobile-redirect/?appId=com.example.app",
+            "appId": "com.example.app",
             "notificationUrl": "https://example.com/shop/notify.html"
         }
     }
@@ -286,7 +284,7 @@ Example list request Json body with presetFirst set to true:
 
     {
         "transactionId": "tr1",
-        "integration": "DISPLAY_NATIVE",
+        "integration": "MOBILE_NATIVE",
         "presetFirst": "true",
         "country": "DE",
 
@@ -326,31 +324,18 @@ The Android SDK supports redirect payment networks, redirect networks are networ
 List request setup
 ------------------
 
-To enable redirect networks in the Android SDK it is important to define special callback URLs in the list request body. The "returnUrl", "cancelUrl" and "summaryUrl" must be set with special mobile-redirect URLs. These URLs must also contain the "appId" query parameter providing the unique identifier of the Android app. 
+To enable redirect networks in the Android SDK it is important to define the application ID in the list request body. The "appId" must be set and should contain the unique identifier of your Android app. The Android SDK uses this unique application ID to reopen the mobile app after the browser window is closed.
 
-Example of the callback mobile-redirect URLs:
+Example of the callback mobile-redirect settings:
 
 .. code-block:: json
 
     "callback": {
-        "returnUrl": "https://resources.integration.oscato.com/mobile-redirect/?appId=com.example.app",
-        "summaryUrl": "https://resources.integration.oscato.com/mobile-redirect/?appId=com.example.app",
-        "cancelUrl": "https://resources.integration.oscato.com/mobile-redirect/?appId=com.example.app",
+        "appId": "com.example.app",
         "notificationUrl": "https://example.com/shop/notify.html"
     }
 
-Please change the environment "integration" to "sandbox" or "live" depending on the environment that is used. Also change the "com.example.app" example appId to the real application ID of the Android app. 
-
-Unique appId
-~~~~~~~~~~~~~
-
-The Android SDK uses the unique Android applicationId as the identifier for making sure the mobile app is reopened after the browser window is closed.
-
-::
-
-   https://play.google.com/store/apps/details?id=net.optile.dashboard
-
-This URL points to the Android application with the unique ID "net.optile.dashboard". The Android SDK uses this unique application ID to reopen the mobile app after the browser window is closed.
+Please change the "com.example.app" example appId to the real application ID of the Android app. 
 
 AndroidManifest.xml
 -------------------
