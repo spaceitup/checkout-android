@@ -8,9 +8,11 @@
 
 package net.optile.payment.ui.redirect;
 
+import static org.junit.Assert.assertNotNull;
+
 import java.net.MalformedURLException;
 import java.net.URL;
-import java.util.HashMap;
+import java.util.Collections;
 import java.util.Map;
 
 import org.junit.Test;
@@ -20,6 +22,7 @@ import org.robolectric.RobolectricTestRunner;
 import net.optile.payment.core.PaymentException;
 import net.optile.payment.model.OperationResult;
 import net.optile.payment.model.Redirect;
+import net.optile.test.util.TestUtils;
 
 @RunWith(RobolectricTestRunner.class)
 public class RedirectRequestTest {
@@ -43,13 +46,11 @@ public class RedirectRequestTest {
         OperationResult operationResult = new OperationResult();
         operationResult.setRedirect(new Redirect());
         operationResult.setLinks(createLinks());
-        RedirectRequest.fromOperationResult(operationResult);
+        RedirectRequest request = RedirectRequest.fromOperationResult(operationResult);
+        assertNotNull(request);
     }
 
     private Map<String, URL> createLinks() throws MalformedURLException {
-        Map<String, URL> links = new HashMap<>();
-        URL link = new URL("http://example.com");
-        links.put("redirect", link);
-        return links;
+        return Collections.singletonMap("redirect", TestUtils.createDefaultURL());
     }
 }

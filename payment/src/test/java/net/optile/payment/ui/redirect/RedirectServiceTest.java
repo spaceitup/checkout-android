@@ -2,7 +2,6 @@ package net.optile.payment.ui.redirect;
 
 import static org.junit.Assert.assertTrue;
 
-import java.net.MalformedURLException;
 import java.net.URL;
 
 import org.junit.Test;
@@ -13,17 +12,18 @@ import android.content.Context;
 import androidx.test.core.app.ApplicationProvider;
 import net.optile.payment.model.HttpMethod;
 import net.optile.payment.model.Redirect;
+import net.optile.test.util.TestUtils;
 
 @RunWith(RobolectricTestRunner.class)
 public class RedirectServiceTest {
 
     @Test
-    public void supports() throws MalformedURLException {
+    public void supports() {
         Context context = ApplicationProvider.getApplicationContext();
         Redirect redirect = new Redirect();
         redirect.setMethod(HttpMethod.GET);
 
-        URL link = new URL("http://example.com/");
+        URL link = TestUtils.createDefaultURL();
         RedirectRequest request = new RedirectRequest(redirect, link);
         assertTrue(RedirectService.supports(context, request));
 
