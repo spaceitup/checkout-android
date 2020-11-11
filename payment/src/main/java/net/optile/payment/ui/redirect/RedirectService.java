@@ -55,7 +55,7 @@ public final class RedirectService {
             throw new PaymentException("The redirect request can not be handled by this service");
         }
         PaymentRedirectActivity.clearResultUri();
-        Uri uri = null;
+        Uri uri;
         if (POST.equals(request.getRedirectMethod())) {
             uri = RedirectUriBuilder.fromURL(request.getLink());
         } else {
