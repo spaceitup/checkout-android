@@ -22,6 +22,7 @@ import net.optile.payment.model.OperationType;
 import net.optile.payment.model.Redirect;
 import net.optile.payment.model.RedirectType;
 import net.optile.payment.ui.PaymentResult;
+import net.optile.payment.ui.redirect.RedirectRequest;
 import net.optile.payment.ui.service.NetworkService;
 import net.optile.payment.ui.service.OperationListener;
 import net.optile.payment.ui.service.OperationService;
@@ -117,7 +118,8 @@ public final class BasicNetworkService extends NetworkService implements Operati
             case RedirectType.PROVIDER:
             case RedirectType.HANDLER3DS2:
                 try {
-                    presenter.redirectPayment(redirect);
+                    RedirectRequest request = RedirectRequest.fromOperationResult(operationResult);
+                    presenter.redirect(request);
                 } catch (PaymentException e) {
                     handleProcessPaymentError(e);
                 }

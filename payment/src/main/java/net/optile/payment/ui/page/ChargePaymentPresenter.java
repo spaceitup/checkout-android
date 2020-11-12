@@ -21,12 +21,12 @@ import net.optile.payment.model.Interaction;
 import net.optile.payment.model.InteractionCode;
 import net.optile.payment.model.ListResult;
 import net.optile.payment.model.OperationResult;
-import net.optile.payment.model.Redirect;
 import net.optile.payment.ui.PaymentActivityResult;
 import net.optile.payment.ui.PaymentResult;
 import net.optile.payment.ui.PaymentUI;
 import net.optile.payment.ui.dialog.PaymentDialogFragment.PaymentDialogListener;
 import net.optile.payment.ui.model.PaymentSession;
+import net.optile.payment.ui.redirect.RedirectRequest;
 import net.optile.payment.ui.redirect.RedirectService;
 import net.optile.payment.ui.service.LocalizationLoaderListener;
 import net.optile.payment.ui.service.LocalizationLoaderService;
@@ -231,13 +231,13 @@ final class ChargePaymentPresenter implements PaymentSessionListener, NetworkSer
      * {@inheritDoc}
      */
     @Override
-    public void redirectPayment(Redirect redirect) throws PaymentException {
+    public void redirect(RedirectRequest redirectRequest) throws PaymentException {
         Context context = view.getActivity();
-        if (!RedirectService.isSupported(context, redirect)) {
-            throw new PaymentException("This Redirect payment method is not supported by the Android-SDK");
+        if (!RedirectService.supports(context, redirectRequest)) {
+            throw new PaymentException("The Redirect payment method is not supported by the Android-SDK");
         }
         view.showProgress(false);
-        RedirectService.open(context, redirect);
+        RedirectService.redirect(context, redirectRequest);
         this.redirected = true;
     }
 
