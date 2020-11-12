@@ -14,7 +14,7 @@ Supported Features
 Android Version
 ---------------
 
-Android API versions 21 - 28 (Lollipop 5.0 - Pie 9.0) are supported by the
+Android API versions 21 - 30 (Lollipop 5.0 - Android 11) are supported by the Android SDK.
 
 AndroidX
 --------
