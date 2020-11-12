@@ -95,6 +95,5 @@ task runFunctionalTest {
 browserStackConfig {
     username = "$System.env.BROWSERSTACK_USER"
     accessKey = "$System.env.BROWSERSTACK_KEY"
-    customBuildName = "Example-SDK ${getCurrentBranch()}"
-    devices = ['Google Pixel 3a-9.0']
+    configFilePath = "example-sdk/browserstack.json"
 }
