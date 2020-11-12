@@ -156,7 +156,7 @@ public final class SummaryActivity extends BaseActivity implements SummaryView {
         URL url = getLink(presetAccount, "logo");
 
         if (url != null) {
-            ImageHelper.getInstance().loadImage(view, url);
+            ImageHelper.loadImage(view, url);
         }
         presetSubtitle.setVisibility(View.GONE);
         if (mask != null) {

@@ -14,8 +14,7 @@ Supported Features
 Android Version
 ---------------
 
-Android API versions 19 - 28 (Kitkat 4.4 - Pie 9.0) are supported by the
-Android SDK. TLS1.2 is enabled for Android version 19 (Kitkat).
+Android API versions 21 - 28 (Lollipop 5.0 - Pie 9.0) are supported by the
 
 AndroidX
 --------

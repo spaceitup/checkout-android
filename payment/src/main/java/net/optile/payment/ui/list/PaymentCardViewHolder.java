@@ -213,7 +213,7 @@ public abstract class PaymentCardViewHolder extends RecyclerView.ViewHolder {
         if (name == null || url == null) {
             return;
         }
-        ImageHelper.getInstance().loadImage(cardLogoView, url);
+        ImageHelper.loadImage(cardLogoView, url);
     }
 
     void setLastImeOptions() {
