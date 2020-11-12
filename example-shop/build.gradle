@@ -17,7 +17,6 @@ android {
     }
 
     compileSdkVersion rootProject.compileSdkVersion
-    buildToolsVersion rootProject.buildToolsVersion
 
     defaultConfig {
         applicationId 'net.optile.example.shop'
