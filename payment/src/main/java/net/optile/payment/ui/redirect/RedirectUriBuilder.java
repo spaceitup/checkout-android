@@ -8,6 +8,7 @@
 
 package net.optile.payment.ui.redirect;
 
+import java.net.URL;
 import java.util.List;
 
 import android.net.Uri;
@@ -20,13 +21,13 @@ import net.optile.payment.model.Redirect;
 public final class RedirectUriBuilder {
 
     /**
-     * Construct a Uri from the provided redirect
+     * Create a Uri from the provided redirect
      *
      * @param redirect to be converted into a Uri
      * @return the created Uri
      */
-    public static Uri createUri(Redirect redirect) {
-        Uri uri = Uri.parse(redirect.getUrl().toString());
+    public static Uri fromRedirect(Redirect redirect) {
+        Uri uri = fromURL(redirect.getUrl());
         List<Parameter> params = redirect.getParameters();
         if (params == null || params.size() == 0) {
             return uri;
@@ -36,5 +37,15 @@ public final class RedirectUriBuilder {
             builder.appendQueryParameter(param.getName(), param.getValue());
         }
         return builder.build();
+    }
+
+    /**
+     * Create a Uri from the provided url
+     *
+     * @param url to be converted to a Uri
+     * @return the newly created uri
+     */
+    public static Uri fromURL(URL url) {
+        return Uri.parse(url.toString());
     }
 }

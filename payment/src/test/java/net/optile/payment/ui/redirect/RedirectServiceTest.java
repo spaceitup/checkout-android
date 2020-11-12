@@ -1,7 +1,8 @@
 package net.optile.payment.ui.redirect;
 
-import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
+
+import java.net.URL;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -11,18 +12,22 @@ import android.content.Context;
 import androidx.test.core.app.ApplicationProvider;
 import net.optile.payment.model.HttpMethod;
 import net.optile.payment.model.Redirect;
+import net.optile.test.util.TestUtils;
 
 @RunWith(RobolectricTestRunner.class)
 public class RedirectServiceTest {
 
     @Test
-    public void isSupported() {
+    public void supports() {
         Context context = ApplicationProvider.getApplicationContext();
         Redirect redirect = new Redirect();
         redirect.setMethod(HttpMethod.GET);
-        assertTrue(RedirectService.isSupported(context, redirect));
+
+        URL link = TestUtils.createDefaultURL();
+        RedirectRequest request = new RedirectRequest(redirect, link);
+        assertTrue(RedirectService.supports(context, request));
 
         redirect.setMethod(HttpMethod.POST);
-        assertFalse(RedirectService.isSupported(context, redirect));
+        assertTrue(RedirectService.supports(context, request));
     }
 }

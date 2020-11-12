@@ -8,6 +8,9 @@
 
 package net.optile.payment.ui.redirect;
 
+import static net.optile.payment.model.HttpMethod.GET;
+import static net.optile.payment.model.HttpMethod.POST;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -15,7 +18,6 @@ import android.content.Context;
 import android.net.Uri;
 import android.text.TextUtils;
 import net.optile.payment.core.PaymentException;
-import net.optile.payment.model.HttpMethod;
 import net.optile.payment.model.Interaction;
 import net.optile.payment.model.OperationResult;
 import net.optile.payment.model.Parameter;
@@ -31,28 +33,35 @@ public final class RedirectService {
     public final static String INTERACTION_REASON = "interactionReason";
 
     /**
-     * Check if payment redirects are supported for this device.
+     * Check if the request is supported and can be handled by this redirect service
      *
      * @param context The context in which this tabs is used
-     * @param redirect containing the address to which to redirect to
-     * @return true if payment redirects are supported, false otherwise
+     * @param request containing the redirect data
+     * @return true if the request can be handled, false otherwise
      */
-    public static boolean isSupported(Context context, Redirect redirect) {
-        return HttpMethod.GET.equals(redirect.getMethod()) && ChromeCustomTabs.isSupported(context);
+    public static boolean supports(Context context, RedirectRequest request) {
+        String method = request.getRedirectMethod();
+        return (POST.equals(method) || GET.equals(method)) && ChromeCustomTabs.isSupported(context);
     }
 
     /**
-     * Open the Redirect for the given Context.
+     * Redirect to the location that is provided in the request
      *
      * @param context in which the redirect should be started
-     * @param redirect containing the address to which to redirect to
+     * @param request containing the type and location of the redirect
      */
-    public static void open(Context context, Redirect redirect) throws PaymentException {
-        if (!isSupported(context, redirect)) {
-            throw new PaymentException("Redirect payment is not supported by the Android-SDK");
+    public static void redirect(Context context, RedirectRequest request) throws PaymentException {
+        if (!supports(context, request)) {
+            throw new PaymentException("The redirect request can not be handled by this service");
         }
         PaymentRedirectActivity.clearResultUri();
-        ChromeCustomTabs.open(context, RedirectUriBuilder.createUri(redirect));
+        Uri uri;
+        if (POST.equals(request.getRedirectMethod())) {
+            uri = RedirectUriBuilder.fromURL(request.getLink());
+        } else {
+            uri = RedirectUriBuilder.fromRedirect(request.getRedirect());
+        }
+        ChromeCustomTabs.open(context, uri);
     }
 
     /**

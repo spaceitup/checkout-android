@@ -37,5 +37,7 @@ public class PaymentNetworkCodesTest {
         assertTrue(PaymentNetworkCodes.isValid(PaymentNetworkCodes.POSTEPAY));
         assertTrue(PaymentNetworkCodes.isValid(PaymentNetworkCodes.SEPADD));
         assertTrue(PaymentNetworkCodes.isValid(PaymentNetworkCodes.GOOGLEPAY));
+        assertTrue(PaymentNetworkCodes.isValid(PaymentNetworkCodes.PAYPAL));
+        assertTrue(PaymentNetworkCodes.isValid(PaymentNetworkCodes.WECHATPC_R));
     }
 }

@@ -9,8 +9,8 @@
 package net.optile.payment.ui.service;
 
 import net.optile.payment.core.PaymentException;
-import net.optile.payment.model.Redirect;
 import net.optile.payment.ui.PaymentResult;
+import net.optile.payment.ui.redirect.RedirectRequest;
 
 /**
  * Presenter to be called by the NetworkService to inform about payment updates and to show i.e. a progress view or progress dialog.
@@ -27,9 +27,9 @@ public interface NetworkServicePresenter {
     /**
      * Ask the network service to redirect the payment to an external address
      *
-     * @param redirect containing the redirect data
+     * @param request containing the redirect data
      */
-    void redirectPayment(Redirect redirect) throws PaymentException;
+    void redirect(RedirectRequest request) throws PaymentException;
 
     /**
      * Called when the payment is processed. The NetworkService can either pass the result through the Activity.onActivityResult or
