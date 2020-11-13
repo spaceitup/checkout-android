@@ -1,0 +1,8 @@
+{
+  "devices": [
+      "Google Pixel 3a-9.0"
+    ],
+    "deviceLogs": true,
+    "networkLogs": true,
+    "project": "Android SDK - example-shop"
+}
