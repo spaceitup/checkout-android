@@ -1,3 +1,11 @@
+/*
+ * Copyright (c) 2020 optile GmbH
+ * https://www.optile.net
+ *
+ * This file is open source and available under the MIT license.
+ * See the LICENSE file for more information.
+ */
+
 package net.optile.payment.localization;
 
 import static org.junit.Assert.assertEquals;
@@ -6,16 +14,6 @@ import static org.junit.Assert.assertNull;
 
 import org.junit.Test;
 
-/**
- * Copyright(c) 2012-2020 optile GmbH. All Rights Reserved.
- * https://www.optile.net
- *
- * This software is the property of optile GmbH. Distribution  of  this
- * software without agreement in writing is strictly prohibited.
- *
- * This software may not be copied, used or distributed unless agreement
- * has been received in full.
- */
 public class LocalizationCacheTest {
 
     @Test
