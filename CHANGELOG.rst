@@ -1,6 +1,21 @@
 Changelog - Android SDK
 -----------------------
 
+**Version android-sdk 5.0.0**
+
+Note: Version 5.0.0 is a major release, it is mandatory to use the MOBILE_NATIVE integration type.
+
+**Feature**
+* [PCX-760] - Android SDK to use MOBILE_NATIVE integration
+* [PCX-730] - Support POST redirects
+* [PCX-960] - Respect only MOBILE_NATIVE LIST objects
+* [PCX-961] - Use only localisation files provided in the list
+* [PCX-962] - Create button label logic
+* [PCX-1001] - Use JSON localisation files instead of properties 
+* [PCX-1146] - Remove support for secure SSL connections
+* [PCX-1147] - Verify MIT copyright statements
+* [PCX-1148] - Remove ProGuard and investigate obfuscation
+
 **Version android-sdk 4.0.0**
 
 Note: version 4.0.0 is a major release, changes to the payment result handling causes a breaking change.
