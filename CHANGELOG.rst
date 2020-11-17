@@ -15,6 +15,7 @@ Note: Version 5.0.0 is a major release, it is mandatory to use the MOBILE_NATIVE
 * [PCX-1146] - Remove support for secure SSL connections
 * [PCX-1147] - Verify MIT copyright statements
 * [PCX-1148] - Remove ProGuard and investigate obfuscation
+* [PCX-1183] - Prepare Android-SDK release 5.0 with mobile-native
 
 **Version android-sdk 4.0.0**
 
