@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2019 optile GmbH
+ * Copyright (c) 2020 optile GmbH
  * https://www.optile.net
  *
  * This file is open source and available under the MIT license.
@@ -13,9 +13,6 @@ import static org.junit.Assert.assertTrue;
 
 import org.junit.Test;
 
-/**
- * The IntegrationType test
- */
 public class IntegrationTypeTest {
 
     @Test
