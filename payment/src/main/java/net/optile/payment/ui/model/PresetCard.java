@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2019 optile GmbH
+ * Copyright (c) 2020 optile GmbH
  * https://www.optile.net
  *
  * This file is open source and available under the MIT license.
@@ -11,7 +11,7 @@ package net.optile.payment.ui.model;
 import static net.optile.payment.localization.LocalizationKey.NETWORK_LABEL;
 
 import java.net.URL;
-import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
@@ -53,6 +53,14 @@ public final class PresetCard implements PaymentCard {
      * {@inheritDoc}
      */
     @Override
+    public String getOperationType() {
+        return account.getOperationType();
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
     public String getPaymentMethod() {
         return account.getMethod();
     }
@@ -78,7 +86,7 @@ public final class PresetCard implements PaymentCard {
      */
     @Override
     public List<InputElement> getInputElements() {
-        return new ArrayList<>();
+        return Collections.emptyList();
     }
 
     /**

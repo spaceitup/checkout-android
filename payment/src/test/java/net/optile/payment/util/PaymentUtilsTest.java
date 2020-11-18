@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2019 optile GmbH
+ * Copyright (c) 2020 optile GmbH
  * https://www.optile.net
  *
  * This file is open source and available under the MIT license.
@@ -11,12 +11,9 @@ package net.optile.payment.util;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 
 import java.io.IOException;
-import java.net.MalformedURLException;
-import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -29,7 +26,6 @@ import androidx.test.core.app.ApplicationProvider;
 import net.optile.payment.R;
 import net.optile.payment.core.PaymentInputType;
 import net.optile.payment.model.InputElement;
-import net.optile.payment.model.OperationType;
 
 /**
  * Class for testing the PaymentUtils class
@@ -83,38 +79,5 @@ public class PaymentUtilsTest {
     public void readRawResource_contains_resource() throws IOException {
         Resources res = ApplicationProvider.getApplicationContext().getResources();
         assertNotNull(PaymentUtils.readRawResource(res, R.raw.groups));
-    }
-
-    @Test
-    public void getOperationType() throws IOException {
-        URL url = createOperationUrl("preset");
-        assertEquals(OperationType.PRESET, PaymentUtils.getOperationType(url));
-
-        url = createOperationUrl("charge");
-        assertEquals(OperationType.CHARGE, PaymentUtils.getOperationType(url));
-
-        url = createOperationUrl("payout");
-        assertEquals(OperationType.PAYOUT, PaymentUtils.getOperationType(url));
-
-        url = createOperationUrl("activate");
-        assertEquals(OperationType.ACTIVATION, PaymentUtils.getOperationType(url));
-
-        url = createOperationUrl("update");
-        assertEquals(OperationType.UPDATE, PaymentUtils.getOperationType(url));
-
-        url = createOperationUrl("foo");
-        assertNull(PaymentUtils.getOperationType(url));
-
-    }
-
-    private URL createOperationUrl(String operationType) {
-        URL url = null;
-        try {
-            url = new URL("http://localhost/v1/1234/" + operationType);
-        } catch (MalformedURLException e) {
-            e.printStackTrace();
-        }
-        assertNotNull(url);
-        return url;
     }
 }

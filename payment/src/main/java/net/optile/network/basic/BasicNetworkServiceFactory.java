@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2019 optile GmbH
+ * Copyright (c) 2020 optile GmbH
  * https://www.optile.net
  *
  * This file is open source and available under the MIT license.
@@ -36,6 +36,7 @@ public final class BasicNetworkServiceFactory implements NetworkServiceFactory {
         switch (code) {
             case PaymentNetworkCodes.SEPADD:
             case PaymentNetworkCodes.PAYPAL:
+            case PaymentNetworkCodes.WECHATPC_R:
                 return true;
         }
         return false;

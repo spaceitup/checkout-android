@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2019 optile GmbH
+ * Copyright (c) 2020 optile GmbH
  * https://www.optile.net
  *
  * This file is open source and available under the MIT license.
@@ -213,7 +213,7 @@ public abstract class PaymentCardViewHolder extends RecyclerView.ViewHolder {
         if (name == null || url == null) {
             return;
         }
-        ImageHelper.getInstance().loadImage(cardLogoView, url);
+        ImageHelper.loadImage(cardLogoView, url);
     }
 
     void setLastImeOptions() {

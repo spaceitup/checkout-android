@@ -17,11 +17,10 @@ android {
     }
 
     compileSdkVersion rootProject.compileSdkVersion
-    buildToolsVersion rootProject.buildToolsVersion
 
     defaultConfig {
         applicationId 'net.optile.example.sdk'
-        minSdkVersion rootProject.examplesMinSdkVersion
+        minSdkVersion rootProject.minSdkVersion
         targetSdkVersion rootProject.targetSdkVersion
         versionCode rootProject.versionCode
         versionName rootProject.versionName
@@ -95,6 +94,5 @@ task runFunctionalTest {
 browserStackConfig {
     username = "$System.env.BROWSERSTACK_USER"
     accessKey = "$System.env.BROWSERSTACK_KEY"
-    customBuildName = "Example-SDK ${getCurrentBranch()}"
-    devices = ['Google Pixel 3a-9.0']
+    configFilePath = "example-sdk/browserstack.json"
 }

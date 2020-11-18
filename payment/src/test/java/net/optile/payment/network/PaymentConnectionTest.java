@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2019 optile GmbH
+ * Copyright (c) 2020 optile GmbH
  * https://www.optile.net
  *
  * This file is open source and available under the MIT license.
@@ -7,11 +7,6 @@
  */
 
 package net.optile.payment.network;
-
-import static org.junit.Assert.assertNotNull;
-
-import java.net.MalformedURLException;
-import java.net.URL;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -34,17 +29,5 @@ public class PaymentConnectionTest {
     public void createOperation_invalidData_exception() throws PaymentException {
         PaymentConnection conn = new PaymentConnection();
         conn.postOperation(null);
-    }
-
-    private URL createTestURL() {
-        URL url = null;
-
-        try {
-            url = new URL("http://localhost");
-        } catch (MalformedURLException e) {
-            e.printStackTrace();
-        }
-        assertNotNull(url);
-        return url;
     }
 }

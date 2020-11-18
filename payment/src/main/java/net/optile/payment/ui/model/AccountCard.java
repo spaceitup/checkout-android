@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2019 optile GmbH
+ * Copyright (c) 2020 optile GmbH
  * https://www.optile.net
  *
  * This file is open source and available under the MIT license.
@@ -11,7 +11,7 @@ package net.optile.payment.ui.model;
 import static net.optile.payment.localization.LocalizationKey.NETWORK_LABEL;
 
 import java.net.URL;
-import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
@@ -48,6 +48,14 @@ public final class AccountCard implements PaymentCard {
         return getLink("operation");
     }
 
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public String getOperationType() {
+        return account.getOperationType();
+    }
+
     public URL getLink(String name) {
         Map<String, URL> links = account.getLinks();
         return links != null ? links.get(name) : null;
@@ -79,8 +87,8 @@ public final class AccountCard implements PaymentCard {
      */
     @Override
     public List<InputElement> getInputElements() {
-        List<InputElement> elements = account.getLocalizedInputElements();
-        return elements == null ? new ArrayList<>() : elements;
+        List<InputElement> elements = account.getInputElements();
+        return elements == null ? Collections.emptyList() : elements;
     }
 
     /**
@@ -108,8 +116,7 @@ public final class AccountCard implements PaymentCard {
      */
     @Override
     public String getButton() {
-        String operationType = PaymentUtils.getOperationType(getOperationLink());
-        return LocalizationKey.operationButtonKey(operationType);
+        return LocalizationKey.operationButtonKey(getOperationType());
     }
 
     /**

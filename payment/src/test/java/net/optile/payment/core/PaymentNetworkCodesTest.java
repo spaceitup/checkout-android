@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2019 optile GmbH
+ * Copyright (c) 2020 optile GmbH
  * https://www.optile.net
  *
  * This file is open source and available under the MIT license.
@@ -37,5 +37,7 @@ public class PaymentNetworkCodesTest {
         assertTrue(PaymentNetworkCodes.isValid(PaymentNetworkCodes.POSTEPAY));
         assertTrue(PaymentNetworkCodes.isValid(PaymentNetworkCodes.SEPADD));
         assertTrue(PaymentNetworkCodes.isValid(PaymentNetworkCodes.GOOGLEPAY));
+        assertTrue(PaymentNetworkCodes.isValid(PaymentNetworkCodes.PAYPAL));
+        assertTrue(PaymentNetworkCodes.isValid(PaymentNetworkCodes.WECHATPC_R));
     }
 }

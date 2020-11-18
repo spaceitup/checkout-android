@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2019 optile GmbH
+ * Copyright (c) 2020 optile GmbH
  * https://www.optile.net
  *
  * This file is open source and available under the MIT license.
@@ -38,6 +38,8 @@ public class ListResult {
     private String operationType;
     /** Indicates whether this LIST is explicitly initialized with permission or denial to delete accounts. */
     private Boolean allowDelete;
+    /** Integration type, could be one of MOBILE_NATIVE, PURE_NATIVE, DISPLAY_NATIVE, SELECTIVE_NATIVE, HOSTED */
+    private String integrationType;
 
     /**
      * Gets value of links.
@@ -184,6 +186,26 @@ public class ListResult {
      */
     public void setOperationType(@OperationType.Definition final String operationType) {
         this.operationType = operationType;
+    }
+
+    /**
+     * Gets the INTEGRATION type. Could be one of <code>MOBILE_NATIVE</code>, <code>PURE_NATIVE</code>, <code>DISPLAY_NATIVE</code>, <code>SELECTIVE_NATIVE</code>, <code>HOSTED</code>
+     * Using this information the client could determine the type of the integration.
+     *
+     * @return Integration type.
+     */
+    @OperationType.Definition
+    public String getIntegrationType() {
+        return integrationType;
+    }
+
+    /**
+     * Sets INTEGRATION type.
+     *
+     * @param integrationType Integration type value.
+     */
+    public void setIntegrationType(@IntegrationType.Definition final String integrationType) {
+        this.integrationType = integrationType;
     }
 
     /**

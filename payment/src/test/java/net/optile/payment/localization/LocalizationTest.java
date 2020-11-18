@@ -1,13 +1,11 @@
 /*
- * Copyright(c) 2012-2019 optile GmbH. All Rights Reserved.
+ * Copyright (c) 2020 optile GmbH
  * https://www.optile.net
  *
- * This software is the property of optile GmbH. Distribution  of  this
- * software without agreement in writing is strictly prohibited.
- *
- * This software may not be copied, used or distributed unless agreement
- * has been received in full.
+ * This file is open source and available under the MIT license.
+ * See the LICENSE file for more information.
  */
+
 package net.optile.payment.localization;
 
 import static org.junit.Assert.assertEquals;
@@ -16,7 +14,6 @@ import static org.junit.Assert.assertNull;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Properties;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -36,7 +33,7 @@ public class LocalizationTest {
 
     @Test
     public void setLocalizations() {
-        LocalizationHolder shared = createPropLocalizationHolder("sharedKey", "sharedValue", 5);
+        LocalizationHolder shared = createMapLocalizationHolder("sharedKey", "sharedValue", 5);
         Map<String, LocalizationHolder> networks = new HashMap<>();
 
         networks.put("NETWORK", createNetworkLocalizationHolder("networkKey", "networkValue", 5, shared));
@@ -74,33 +71,33 @@ public class LocalizationTest {
     }
 
     /**
-     * Create a properties based localization holder with one key value pair
+     * Create a map based localization holder with one key value pair
      *
-     * @param propKey template for the key, index will be appended
-     * @param propValue template for teh value, index will be appended
-     * @param nrProps the number of property key/value pairs that should be added to the holder
-     * @return the newly created PropLocalizationHolder
+     * @param mapKey template for the key, index will be appended
+     * @param mapValue template for the value, index will be appended
+     * @param nrTranslations the number of translation key/value pairs that should be added to the holder
+     * @return the newly created MapLocalizationHolder
      */
-    public final static PropLocalizationHolder createPropLocalizationHolder(String propKey, String propValue, int nrProps) {
-        Properties prop = new Properties();
-        for (int i = 0; i < nrProps; i++) {
-            prop.put(propKey + i, propValue + i);
+    public final static MapLocalizationHolder createMapLocalizationHolder(String mapKey, String mapValue, int nrTranslations) {
+        Map<String, String> map = new HashMap<String, String>();
+        for (int i = 0; i < nrTranslations; i++) {
+            map.put(mapKey + i, mapValue + i);
         }
-        return new PropLocalizationHolder(prop);
+        return new MapLocalizationHolder(map);
     }
 
     /**
      * Create a network localization holder for testing,
      *
-     * @param propKey template for the key, index will be appended
-     * @param propValue template for teh value, index will be appended
-     * @param nrProps the number of property key/value pairs that should be added to the holder
+     * @param mapKey template for the key, index will be appended
+     * @param mapValue template for teh value, index will be appended
+     * @param nrTranslations the number of translation key/value pairs that should be added to the holder
      * @param fallback the localization holder used as fallback
      * @return newly created MultiLocalizationHolder
      */
-    public final static MultiLocalizationHolder createNetworkLocalizationHolder(String propKey, String propValue, int nrProps,
+    public final static MultiLocalizationHolder createNetworkLocalizationHolder(String mapKey, String mapValue, int nrTranslations,
         LocalizationHolder fallback) {
-        LocalizationHolder network = createPropLocalizationHolder(propKey, propValue, nrProps);
+        LocalizationHolder network = createMapLocalizationHolder(mapKey, mapValue, nrTranslations);
         return new MultiLocalizationHolder(network, fallback);
     }
 }

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2019 optile GmbH
+ * Copyright (c) 2020 optile GmbH
  * https://www.optile.net
  *
  * This file is open source and available under the MIT license.
@@ -71,7 +71,7 @@ public final class ChargePaymentActivity extends BasePaymentActivity implements 
         if (url == null) {
             throw new IllegalArgumentException("PresetAccount does not contain an operation url");
         }
-        return createStartIntent(context, new Operation(account.getCode(), account.getMethod(), url));
+        return createStartIntent(context, new Operation(account.getCode(), account.getMethod(), account.getOperationType(), url));
     }
 
     /**

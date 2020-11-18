@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2019 optile GmbH
+ * Copyright (c) 2020 optile GmbH
  * https://www.optile.net
  *
  * This file is open source and available under the MIT license.
@@ -14,28 +14,8 @@ package net.optile.payment.model;
 public class SelectOption {
     /** value */
     private String value;
-    /** label */
-    private String label;
     /** a flag for the option to be preselected - shown first in the drop-down list */
     private Boolean selected;
-
-    /**
-     * Gets label.
-     *
-     * @return Label text if it is specified or {@code null}.
-     */
-    public String getLabel() {
-        return label;
-    }
-
-    /**
-     * Sets label.
-     *
-     * @param label Label text.
-     */
-    public void setLabel(final String label) {
-        this.label = label;
-    }
 
     /**
      * Gets value.

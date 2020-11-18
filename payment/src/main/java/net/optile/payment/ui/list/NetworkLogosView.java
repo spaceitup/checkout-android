@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2019 optile GmbH
+ * Copyright (c) 2020 optile GmbH
  * https://www.optile.net
  *
  * This file is open source and available under the MIT license.
@@ -82,15 +82,14 @@ class NetworkLogosView {
 
     private void showSelectedLogo(String selected) {
         NetworkLogo logo = logos.get(selected);
-        ImageHelper.getInstance().loadImage(selImage, logo.url);
+        ImageHelper.loadImage(selImage, logo.url);
         switcher.setDisplayedChild(1);
     }
 
     private void showAllLogos() {
-        ImageHelper helper = ImageHelper.getInstance();
         for (Map.Entry<String, NetworkLogo> entry : logos.entrySet()) {
             NetworkLogo logo = entry.getValue();
-            helper.loadImage(logo.image, logo.url);
+            ImageHelper.loadImage(logo.image, logo.url);
         }
         switcher.setDisplayedChild(0);
     }

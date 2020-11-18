@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2019 optile GmbH
+ * Copyright (c) 2020 optile GmbH
  * https://www.optile.net
  *
  * This file is open source and available under the MIT license.
@@ -38,6 +38,7 @@ import net.optile.payment.ui.dialog.PaymentDialogFragment.PaymentDialogListener;
 import net.optile.payment.ui.model.PaymentCard;
 import net.optile.payment.ui.model.PaymentSession;
 import net.optile.payment.ui.model.PresetCard;
+import net.optile.payment.ui.redirect.RedirectRequest;
 import net.optile.payment.ui.service.LocalizationLoaderListener;
 import net.optile.payment.ui.service.LocalizationLoaderService;
 import net.optile.payment.ui.service.NetworkService;
@@ -148,7 +149,7 @@ final class PaymentListPresenter implements PaymentSessionListener, Localization
             networkService = NetworkServiceLookup.createService(code, method);
             networkService.setPresenter(this);
 
-            if (CHARGE.equals(operation.getType())) {
+            if (CHARGE.equals(operation.getOperationType())) {
                 view.showChargePaymentScreen(CHARGEPAYMENT_REQUEST_CODE, operation);
             } else {
                 processPayment();
@@ -278,7 +279,7 @@ final class PaymentListPresenter implements PaymentSessionListener, Localization
      * {@inheritDoc}
      */
     @Override
-    public void redirectPayment(Redirect redirect) throws PaymentException {
+    public void redirect(RedirectRequest request) throws PaymentException {
         throw new PaymentException("Redirects are not supported by this presenter");
     }
 
@@ -398,7 +399,7 @@ final class PaymentListPresenter implements PaymentSessionListener, Localization
 
     private Operation createOperation(PaymentCard card, Map<String, FormWidget> widgets) throws PaymentException {
         URL url = card.getOperationLink();
-        Operation operation = new Operation(card.getCode(), card.getPaymentMethod(), url);
+        Operation operation = new Operation(card.getCode(), card.getPaymentMethod(), card.getOperationType(), url);
 
         for (FormWidget widget : widgets.values()) {
             widget.putValue(operation);

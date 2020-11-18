@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2019 optile GmbH
+ * Copyright (c) 2020 optile GmbH
  * https://www.optile.net
  *
  * This file is open source and available under the MIT license.
@@ -22,6 +22,7 @@ import net.optile.payment.model.OperationType;
 import net.optile.payment.model.Redirect;
 import net.optile.payment.model.RedirectType;
 import net.optile.payment.ui.PaymentResult;
+import net.optile.payment.ui.redirect.RedirectRequest;
 import net.optile.payment.ui.service.NetworkService;
 import net.optile.payment.ui.service.OperationListener;
 import net.optile.payment.ui.service.OperationService;
@@ -117,7 +118,8 @@ public final class BasicNetworkService extends NetworkService implements Operati
             case RedirectType.PROVIDER:
             case RedirectType.HANDLER3DS2:
                 try {
-                    presenter.redirectPayment(redirect);
+                    RedirectRequest request = RedirectRequest.fromOperationResult(operationResult);
+                    presenter.redirect(request);
                 } catch (PaymentException e) {
                     handleProcessPaymentError(e);
                 }
@@ -136,7 +138,7 @@ public final class BasicNetworkService extends NetworkService implements Operati
 
     private String getErrorInteractionCode(Operation operation) {
         if (operation != null) {
-            switch (operation.getType()) {
+            switch (operation.getOperationType()) {
                 case OperationType.PRESET:
                 case OperationType.UPDATE:
                 case OperationType.ACTIVATION:

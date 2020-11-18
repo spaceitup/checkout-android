@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2019 optile GmbH
+ * Copyright (c) 2020 optile GmbH
  * https://www.optile.net
  *
  * This file is open source and available under the MIT license.
@@ -132,6 +132,18 @@ public final class Localization {
         return translate(networkCode, LocalizationKey.accountLabelKey(account));
     }
 
+    /**
+     * Helper method to obtain the translation for the account value.
+     *
+     * @param networkCode name of the localization file
+     * @param account name of the account
+     * @param value name of the value
+     * @return translation or null if not found
+     */
+    public static String translateAccountValue(String networkCode, String account, String value) {
+        return translate(networkCode, LocalizationKey.accountValueKey(account, value));
+    }
+    
     /**
      * Helper method to obtain the translation for the account placeholder.
      *

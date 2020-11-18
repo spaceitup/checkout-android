@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2019 optile GmbH
+ * Copyright (c) 2020 optile GmbH
  * https://www.optile.net
  *
  * This file is open source and available under the MIT license.
@@ -22,10 +22,6 @@ public class Checkbox {
      */
     @CheckboxMode.Definition
     private String mode;
-    /**
-     * Advanced API, optional
-     */
-    private String label;
     /**
      * Advanced API, optional
      */
@@ -66,24 +62,6 @@ public class Checkbox {
      */
     public void setMode(@CheckboxMode.Definition String mode) {
         this.mode = mode;
-    }
-
-    /**
-     * Gets label of displayed checkbox.
-     *
-     * @return the label.
-     */
-    public String getLabel() {
-        return label;
-    }
-
-    /**
-     * Sets label of displayed checkbox.
-     *
-     * @param label the label to set.
-     */
-    public void setLabel(String label) {
-        this.label = label;
     }
 
     /**

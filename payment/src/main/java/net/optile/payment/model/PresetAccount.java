@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2019 optile GmbH
+ * Copyright (c) 2020 optile GmbH
  * https://www.optile.net
  *
  * This file is open source and available under the MIT license.
@@ -19,6 +19,9 @@ public class PresetAccount {
     private Map<String, URL> links;
     /** Network code (Simple API, always present) */
     private String code;
+    /** Simple API, always present */
+    @OperationType.Definition
+    private String operationType;
     /** Masked account (Simple API, optional) */
     private AccountMask maskedAccount;
     /** PCI API, optional */
@@ -61,6 +64,25 @@ public class PresetAccount {
      */
     public void setCode(final String code) {
         this.code = code;
+    }
+
+    /**
+     * Gets value of operationType
+     *
+     * @return the operationType.
+     */
+    @OperationType.Definition
+    public String getOperationType() {
+        return operationType;
+    }
+
+    /**
+     * Sets value of operationType
+     *
+     * @param operationType the operation type to set.
+     */
+    public void setOperationType(@OperationType.Definition final String operationType) {
+        this.operationType = operationType;
     }
 
     /**

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2019 optile GmbH
+ * Copyright (c) 2020 optile GmbH
  * https://www.optile.net
  *
  * This file is open source and available under the MIT license.
@@ -33,6 +33,13 @@ public interface PaymentCard {
      * @return the operation link or null if it does not exist
      */
     URL getOperationLink();
+
+    /**
+     * Get the operation type, e.g. OperationType.CHARGE or OperationType.PRESET
+     *
+     * @return the operationType of this payment card
+     */
+    String getOperationType();
 
     /**
      * Get the paymentMethod of this PaymentCard

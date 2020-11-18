@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2019 optile GmbH
+ * Copyright (c) 2020 optile GmbH
  * https://www.optile.net
  *
  * This file is open source and available under the MIT license.
@@ -8,10 +8,15 @@
 
 package net.optile.payment.model;
 
+import java.net.URL;
+import java.util.Map;
+
 /**
  * This class is designed to hold information about operation result.
  */
 public class OperationResult {
+    /** PCI API, optional */
+    private Map<String, URL> links;
     /** PCI API, always present */
     private String resultInfo;
     /** PCI API, optional, always present in response to action (POST, UPDATE) */
@@ -20,6 +25,24 @@ public class OperationResult {
     private Redirect redirect;
     /** Provider response parameters. */
     private ProviderParameters providerResponse;
+
+    /**
+     * Gets value of links.
+     *
+     * @return the links.
+     */
+    public Map<String, URL> getLinks() {
+        return links;
+    }
+
+    /**
+     * Sets value of links.
+     *
+     * @param links the links to set.
+     */
+    public void setLinks(Map<String, URL> links) {
+        this.links = links;
+    }
 
     /**
      * Gets value of resultInfo.

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2019 optile GmbH
+ * Copyright (c) 2020 optile GmbH
  * https://www.optile.net
  *
  * This file is open source and available under the MIT license.
@@ -156,7 +156,7 @@ public final class SummaryActivity extends BaseActivity implements SummaryView {
         URL url = getLink(presetAccount, "logo");
 
         if (url != null) {
-            ImageHelper.getInstance().loadImage(view, url);
+            ImageHelper.loadImage(view, url);
         }
         presetSubtitle.setVisibility(View.GONE);
         if (mask != null) {
