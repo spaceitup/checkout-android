@@ -8,9 +8,13 @@
 
 package net.optile.payment.ui.widget;
 
+import static com.google.android.material.textfield.TextInputLayout.END_ICON_CUSTOM;
+
 import android.text.Editable;
+import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.view.View;
+import net.optile.payment.R;
 import net.optile.payment.localization.Localization;
 import net.optile.payment.model.InputElement;
 import net.optile.payment.ui.widget.input.EditTextInputModeFactory;
@@ -30,7 +34,7 @@ public final class TextInputWidget extends InputLayoutWidget {
         super(name, rootView);
         textInput.addTextChangedListener(new TextWatcher() {
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-                presenter.onTextInputChanged(name, getValue());
+                onTextInputChanged();
             }
 
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -54,4 +58,35 @@ public final class TextInputWidget extends InputLayoutWidget {
         setLabel(Localization.translateAccountLabel(code, name));
         setHelperText(Localization.translateAccountPlaceholder(code, name));
     }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    void handleOnFocusChange(boolean hasFocus) {
+        super.handleOnFocusChange(hasFocus);
+        setClearIcon(getValue(), hasFocus);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    void handleOnEndIconClicked() {
+        textInput.getText().clear();
+    }
+    
+    private void onTextInputChanged() {
+        String value = getValue();
+        presenter.onTextInputChanged(name, value);
+        setClearIcon(value, textInput.hasFocus());
+    }
+
+    private void setClearIcon(String value, boolean hasFocus) {
+        if (!TextUtils.isEmpty(value) && hasFocus) {
+            setEndIcon(END_ICON_CUSTOM, R.drawable.ic_cancel);
+        } else {
+            removeEndIcon();
+        }
+    }    
 }

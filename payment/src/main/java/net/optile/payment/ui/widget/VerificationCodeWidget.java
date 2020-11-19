@@ -47,6 +47,10 @@ public final class VerificationCodeWidget extends InputLayoutWidget {
         setHelperText(Localization.translate(code, LocalizationKey.VERIFICATIONCODE_SPECIFIC_PLACEHOLDER));
     }
 
+    /**
+     * {@inheritDoc}
+     */
+    @Override
     void handleOnEndIconClicked() {
         presenter.onHintClicked(name);
     }
