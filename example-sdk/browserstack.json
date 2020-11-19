@@ -1,6 +1,7 @@
 {
   "devices": [
-      "Google Pixel 3a-9.0"
+      "Google Pixel 3-10.0",
+      "Google Nexus 6-5.0"
     ],
     "deviceLogs": true,
     "networkLogs": true,
