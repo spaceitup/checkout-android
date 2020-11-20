@@ -75,7 +75,7 @@ public final class TextInputWidget extends InputLayoutWidget {
     void handleOnEndIconClicked() {
         textInput.getText().clear();
     }
-    
+
     private void onTextInputChanged() {
         String value = getValue();
         presenter.onTextInputChanged(name, value);
@@ -88,5 +88,5 @@ public final class TextInputWidget extends InputLayoutWidget {
         } else {
             removeEndIcon();
         }
-    }    
+    }
 }

@@ -28,7 +28,6 @@ import org.hamcrest.Matcher;
 import org.json.JSONException;
 
 import android.view.View;
-import androidx.test.espresso.Espresso;
 import androidx.test.espresso.IdlingRegistry;
 import androidx.test.espresso.IdlingResource;
 import net.optile.example.shop.checkout.CheckoutActivity;
@@ -83,10 +82,13 @@ public class AbstractTest {
 
     void fillCreditCardData(int cardIndex) {
         Matcher<View> list = withId(R.id.recyclerview_paymentlist);
-        onView(list).perform(actionOnViewInWidget(cardIndex, typeText("4111111111111111"), "number", R.id.textinputedittext), closeSoftKeyboard());
+        onView(list)
+            .perform(actionOnViewInWidget(cardIndex, typeText("4111111111111111"), "number", R.id.textinputedittext), closeSoftKeyboard());
         onView(list).perform(actionOnViewInWidget(cardIndex, typeText("1245"), "expiryDate", R.id.textinputedittext), closeSoftKeyboard());
-        onView(list).perform(actionOnViewInWidget(cardIndex, typeText("123"), "verificationCode", R.id.textinputedittext), closeSoftKeyboard());
-        onView(list).perform(actionOnViewInWidget(cardIndex, typeText("John Doe"), "holderName", R.id.textinputedittext), closeSoftKeyboard());
+        onView(list)
+            .perform(actionOnViewInWidget(cardIndex, typeText("123"), "verificationCode", R.id.textinputedittext), closeSoftKeyboard());
+        onView(list)
+            .perform(actionOnViewInWidget(cardIndex, typeText("John Doe"), "holderName", R.id.textinputedittext), closeSoftKeyboard());
     }
 
     void waitForChargeCompleted() {
