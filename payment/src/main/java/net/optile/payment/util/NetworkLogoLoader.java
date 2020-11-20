@@ -11,34 +11,24 @@ package net.optile.payment.util;
 import java.net.URL;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.concurrent.Callable;
 
 import com.bumptech.glide.Glide;
 
 import android.content.Context;
 import android.content.res.Resources;
-import android.graphics.Bitmap;
-import android.graphics.drawable.BitmapDrawable;
-import android.graphics.drawable.Drawable;
-import android.os.Build;
-import android.util.Log;
 import android.widget.ImageView;
 import net.optile.payment.R;
-import net.optile.payment.core.PaymentException;
-import net.optile.payment.core.WorkerSubscriber;
-import net.optile.payment.core.WorkerTask;
-import net.optile.payment.core.Workers;
 
 /**
- * Class for loading network logo images into an ImageView. 
- * This loader will first check if a locally stored logo image is available, if not, the loader will 
+ * Class for loading network logo images into an ImageView.
+ * This loader will first check if a locally stored logo image is available, if not, the loader will
  * download the logo using the provided URL.
  */
 public final class NetworkLogoLoader {
 
     private final static String NETWORKLOGO_FOLDER = "file:///android_asset/networklogos/";
     private final Map<String, String> localNetworkLogos;
-    
+
     private NetworkLogoLoader() {
         localNetworkLogos = new HashMap<>();
     }
@@ -57,19 +47,25 @@ public final class NetworkLogoLoader {
      *
      * @param view ImageView in which to place the Bitmap
      * @param networkCode code of the payment network
-     * @param url pointing to the remote image
+     * @param networkLogoUrl pointing to the remote image
      */
-    public static void loadNetworkLogo(ImageView view, String networkCode, URL url) {
-        getInstance().loadIntoView(view, networkCode, url);
+    public static void loadNetworkLogo(ImageView view, String networkCode, URL networkLogoUrl) {
+        getInstance().loadIntoView(view, networkCode, networkLogoUrl);
     }
 
-    private void loadIntoView(ImageView view, String networkCode, URL url) {
+    private void loadIntoView(ImageView view, String networkCode, URL networkLogoUrl) {
         if (localNetworkLogos.size() == 0) {
             loadLocalNetworkLogos(view.getContext());
         }
-        Glide.with(view.getContext()).asBitmap().load(url.toString()).into(view);
+        String url;
+        if (localNetworkLogos.containsKey(networkCode)) {
+            url = localNetworkLogos.get(networkCode);
+        } else {
+            url = networkLogoUrl.toString();
+        }
+        Glide.with(view.getContext()).asBitmap().load(url).into(view);
     }
-    
+
     private void loadLocalNetworkLogos(Context context) {
         synchronized (localNetworkLogos) {
             if (localNetworkLogos.size() != 0) {
