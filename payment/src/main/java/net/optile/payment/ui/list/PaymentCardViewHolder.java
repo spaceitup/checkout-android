@@ -38,7 +38,6 @@ import net.optile.payment.ui.widget.TextInputWidget;
 import net.optile.payment.ui.widget.VerificationCodeWidget;
 import net.optile.payment.ui.widget.WidgetInflater;
 import net.optile.payment.ui.widget.WidgetPresenter;
-import net.optile.payment.util.ImageHelper;
 import net.optile.payment.util.NetworkLogoLoader;
 import net.optile.payment.util.PaymentUtils;
 
