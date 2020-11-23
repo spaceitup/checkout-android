@@ -22,7 +22,7 @@ import android.widget.LinearLayout.LayoutParams;
 import android.widget.ViewSwitcher;
 import net.optile.payment.R;
 import net.optile.payment.ui.model.PaymentNetwork;
-import net.optile.payment.util.ImageHelper;
+import net.optile.payment.util.NetworkLogoLoader;
 
 /**
  * Class displaying the network logo images
@@ -72,36 +72,36 @@ class NetworkLogosView {
         return view;
     }
 
-    void setSelected(String selected) {
-        if (selected != null) {
-            showSelectedLogo(selected);
+    void setSelected(String networkCode) {
+        if (networkCode != null) {
+            showSelectedLogo(networkCode);
         } else {
             showAllLogos();
         }
     }
 
-    private void showSelectedLogo(String selected) {
-        NetworkLogo logo = logos.get(selected);
-        ImageHelper.loadImage(selImage, logo.url);
+    private void showSelectedLogo(String networkCode) {
+        NetworkLogo logo = logos.get(networkCode);
+        NetworkLogoLoader.loadNetworkLogo(selImage, networkCode, logo.url);
         switcher.setDisplayedChild(1);
     }
 
     private void showAllLogos() {
         for (Map.Entry<String, NetworkLogo> entry : logos.entrySet()) {
             NetworkLogo logo = entry.getValue();
-            ImageHelper.loadImage(logo.image, logo.url);
+            NetworkLogoLoader.loadNetworkLogo(logo.image, logo.networkCode, logo.url);
         }
         switcher.setDisplayedChild(0);
     }
 
     class NetworkLogo {
 
-        String name;
+        String networkCode;
         URL url;
         ImageView image;
 
-        NetworkLogo(String name, URL url, ImageView image) {
-            this.name = name;
+        NetworkLogo(String networkCode, URL url, ImageView image) {
+            this.networkCode = networkCode;
             this.url = url;
             this.image = image;
         }
