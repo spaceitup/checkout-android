@@ -1,6 +1,6 @@
 <resources>
 
-    <style name="CustomTheme" parent="@style/PaymentTheme">    
+    <style name="CustomTheme" parent="@style/PaymentTheme">
         <item name="colorPrimary">@color/custom_blue</item>
         <item name="colorPrimaryDark">@color/custom_blue</item>
         <item name="colorControlNormal">@color/custom_blue</item>

@@ -38,7 +38,7 @@ import net.optile.payment.ui.widget.TextInputWidget;
 import net.optile.payment.ui.widget.VerificationCodeWidget;
 import net.optile.payment.ui.widget.WidgetInflater;
 import net.optile.payment.ui.widget.WidgetPresenter;
-import net.optile.payment.util.ImageHelper;
+import net.optile.payment.util.NetworkLogoLoader;
 import net.optile.payment.util.PaymentUtils;
 
 /**
@@ -209,11 +209,11 @@ public abstract class PaymentCardViewHolder extends RecyclerView.ViewHolder {
         cardLogoView.setImageResource(logoResId);
     }
 
-    void bindCardLogo(String name, URL url) {
-        if (name == null || url == null) {
+    void bindCardLogo(String networkCode, URL url) {
+        if (networkCode == null || url == null) {
             return;
         }
-        ImageHelper.loadImage(cardLogoView, url);
+        NetworkLogoLoader.loadNetworkLogo(cardLogoView, networkCode, url);
     }
 
     void setLastImeOptions() {

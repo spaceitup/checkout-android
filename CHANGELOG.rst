@@ -1,6 +1,15 @@
 Changelog - Android SDK
 -----------------------
 
+**Version android-sdk 5.1.0**
+
+**Bug**
+    * [PCX-1187] - Redirect is broken when compiling for Android 30
+
+**Feature**
+    * [PCX-900] - Store method logos locally in Android SDK
+    * [PCX-956] - [Android-sdk] Add X button to text input fields to clear fields
+
 **Version android-sdk 5.0.0**
 
 Note: Version 5.0.0 is a major release, it is mandatory to use the MOBILE_NATIVE integration type.

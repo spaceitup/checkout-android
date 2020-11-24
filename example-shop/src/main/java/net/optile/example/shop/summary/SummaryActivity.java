@@ -37,7 +37,7 @@ import net.optile.payment.model.PaymentMethod;
 import net.optile.payment.model.PresetAccount;
 import net.optile.payment.ui.PaymentUI;
 import net.optile.payment.ui.page.idlingresource.SimpleIdlingResource;
-import net.optile.payment.util.ImageHelper;
+import net.optile.payment.util.NetworkLogoLoader;
 import net.optile.payment.util.PaymentUtils;
 
 /**
@@ -153,11 +153,10 @@ public final class SummaryActivity extends BaseActivity implements SummaryView {
         this.presetAccount = presetAccount;
         AccountMask mask = presetAccount.getMaskedAccount();
         ImageView view = findViewById(R.id.image_logo);
-        URL url = getLink(presetAccount, "logo");
+        URL logoUrl = getLink(presetAccount, "logo");
+        String networkCode = presetAccount.getCode();
+        NetworkLogoLoader.loadNetworkLogo(view, networkCode, logoUrl);
 
-        if (url != null) {
-            ImageHelper.loadImage(view, url);
-        }
         presetSubtitle.setVisibility(View.GONE);
         if (mask != null) {
             setAccountMask(mask, presetAccount.getMethod());
