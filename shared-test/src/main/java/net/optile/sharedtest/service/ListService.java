@@ -16,9 +16,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import android.content.Context;
-import android.util.Log;
 import androidx.test.platform.app.InstrumentationRegistry;
-import net.optile.payment.R;
 import net.optile.payment.core.PaymentException;
 import net.optile.payment.model.ListResult;
 import net.optile.payment.network.ListConnection;
@@ -101,5 +99,5 @@ public class ListService {
         config.setPresetFirst(presetFirst);
         config.setCallbackAppId(context.getPackageName());
         return service.createListUrl(config);
-    }   
+    }
 }
