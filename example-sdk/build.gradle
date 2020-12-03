@@ -19,7 +19,7 @@ android {
     compileSdkVersion rootProject.compileSdkVersion
 
     defaultConfig {
-        applicationId 'net.optile.example.sdk'
+        applicationId "net.optile.example.sdk"
         minSdkVersion rootProject.minSdkVersion
         targetSdkVersion rootProject.targetSdkVersion
         versionCode rootProject.versionCode
@@ -43,12 +43,6 @@ android {
             }
         }
     }
-    sourceSets {
-        androidTest {
-            java.srcDirs += '../payment/src/sharedTest/java'
-            res.srcDirs += '../payment/src/sharedTest/res'
-        }
-    }
 }
 
 dependencies {
@@ -59,6 +53,7 @@ dependencies {
     testImplementation "androidx.test.ext:junit:${rootProject.androidxTestJunitVersion}"
     testImplementation "org.hamcrest:hamcrest-library:${rootProject.harmcrestVersion}"
 
+    androidTestImplementation project(":shared-test")    
     androidTestImplementation "androidx.test.ext:junit:${rootProject.androidxTestJunitVersion}"
     androidTestImplementation "androidx.test:runner:${rootProject.androidxTestRunnerVersion}"
     androidTestImplementation "androidx.test:rules:${rootProject.androidxTestRulesVersion}"
