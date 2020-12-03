@@ -1,1 +1,1 @@
-include ':example-sdk', ':example-shop', ':payment'
+include ':payment', ':example-sdk', ':example-shop', ':shared-test'
