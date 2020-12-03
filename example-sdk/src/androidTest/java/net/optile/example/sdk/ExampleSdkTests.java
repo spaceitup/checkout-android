@@ -26,10 +26,10 @@ import org.junit.runner.RunWith;
 
 import android.content.Context;
 import androidx.test.espresso.intent.Intents;
-import androidx.test.ext.junit.rules.ActivityScenarioRule;
 import androidx.test.ext.junit.runners.AndroidJUnit4;
 import androidx.test.filters.LargeTest;
 import androidx.test.platform.app.InstrumentationRegistry;
+import androidx.test.rule.ActivityTestRule;
 import net.optile.payment.ui.page.PaymentListActivity;
 import net.optile.sharedtest.service.ListService;
 
@@ -37,7 +37,7 @@ import net.optile.sharedtest.service.ListService;
 @LargeTest
 public class ExampleSdkTests {
     @Rule
-    public ActivityScenarioRule<ExampleSdkActivity> activityRule = new ActivityScenarioRule<>(
+    public ActivityTestRule<ExampleSdkActivity> activityRule = new ActivityTestRule<>(
         ExampleSdkActivity.class);
 
     @Test
