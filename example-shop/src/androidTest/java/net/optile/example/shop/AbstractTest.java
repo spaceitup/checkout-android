@@ -27,11 +27,9 @@ import java.io.IOException;
 import org.hamcrest.Matcher;
 import org.json.JSONException;
 
-import android.content.Context;
 import android.view.View;
 import androidx.test.espresso.IdlingRegistry;
 import androidx.test.espresso.IdlingResource;
-import androidx.test.platform.app.InstrumentationRegistry;
 import net.optile.example.shop.checkout.CheckoutActivity;
 import net.optile.example.shop.confirm.ConfirmActivity;
 import net.optile.example.shop.summary.SummaryActivity;
@@ -46,10 +44,9 @@ public class AbstractTest {
     public final static long CHROME_TIMEOUT = 20000;
 
     void openPaymentList(boolean presetFirst) throws IOException, JSONException {
-        Context context = InstrumentationRegistry.getInstrumentation().getTargetContext();
-        String url = context.getString(R.string.paymentapi_url);
-        String auth = context.getString(R.string.paymentapi_auth);
-        String listUrl = ListService.createListUrl(net.optile.sharedtest.R.raw.listtemplate, presetFirst, url, auth);
+        String url = BuildConfig.paymentapi_url;
+        String auth = BuildConfig.paymentapi_auth;
+        String listUrl = ListService.createListUrl(net.optile.example.shop.test.R.raw.listtemplate, presetFirst, url, auth);
 
         onView(withId(R.id.layout_settings)).check(matches(isDisplayed()));
         onView(withId(R.id.input_listurl)).perform(typeText(listUrl));

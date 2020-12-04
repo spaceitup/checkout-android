@@ -51,6 +51,7 @@ public final class RedirectPaypalTests extends AbstractTest {
         openPaymentCard(networkCardIndex, "card_network");
         IdlingResource closeIdlingResource = clickCardButton(networkCardIndex);
         checkPayPalChromeDisplayed();
+        closeChromeBrowser();
         unregister(closeIdlingResource);
         Intents.release();
     }
