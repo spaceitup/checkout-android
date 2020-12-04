@@ -51,9 +51,9 @@ public class ExampleSdkTests {
     }
 
     private void openPaymentList() throws JSONException, IOException {
-        String url = BuildConfig.paymentapi_url;
-        String auth = BuildConfig.paymentapi_auth;
-        String listUrl = ListService.createListUrl(net.optile.example.sdk.test.R.raw.listtemplate, false, url, auth);
+        String baseUrl = BuildConfig.paymentapi_baseurl;
+        String authHeader = BuildConfig.paymentapi_authheader;
+        String listUrl = ListService.createListUrl(net.optile.example.sdk.test.R.raw.listtemplate, false, baseUrl, authHeader);
 
         onView(withId(R.id.input_listurl)).perform(typeText(listUrl));
         onView(withId(R.id.button_action)).perform(click());

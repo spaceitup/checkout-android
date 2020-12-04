@@ -29,8 +29,8 @@ android {
 
     buildTypes {
         debug {
-            buildConfigField "String", "paymentapi_auth", "\"$System.env.ANDROIDSDK_PAYMENTAPI_AUTH\""
-            buildConfigField "String", "paymentapi_url", "\"$System.env.ANDROIDSDK_PAYMENTAPI_URL\""
+            buildConfigField "String", "paymentapi_authheader", "\"$System.env.ANDROIDSDK_PAYMENTAPI_AUTH\""
+            buildConfigField "String", "paymentapi_baseurl", "\"$System.env.ANDROIDSDK_PAYMENTAPI_URL\""
 
             testVariants.all { testVariant ->
                 testVariant.outputs.all { output ->

@@ -44,9 +44,9 @@ public class AbstractTest {
     public final static long CHROME_TIMEOUT = 20000;
 
     void openPaymentList(boolean presetFirst) throws IOException, JSONException {
-        String url = BuildConfig.paymentapi_url;
-        String auth = BuildConfig.paymentapi_auth;
-        String listUrl = ListService.createListUrl(net.optile.example.shop.test.R.raw.listtemplate, presetFirst, url, auth);
+        String baseUrl = BuildConfig.paymentapi_baseurl;
+        String authHeader = BuildConfig.paymentapi_authheader;
+        String listUrl = ListService.createListUrl(net.optile.example.shop.test.R.raw.listtemplate, presetFirst, baseUrl, authHeader);
 
         onView(withId(R.id.layout_settings)).check(matches(isDisplayed()));
         onView(withId(R.id.input_listurl)).perform(typeText(listUrl));

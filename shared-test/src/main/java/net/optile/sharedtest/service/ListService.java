@@ -40,12 +40,12 @@ public class ListService {
     /**
      * Create a new instance of the ListService
      *
-     * @param url to which this ListService should connect to
-     * @param auth authentication token
+     * @param baseUrl to which this ListService should connect to
+     * @param authHeader authentication token
      * @return the newly created ListService
      */
-    public final static ListService createInstance(String url, String auth) {
-        return new ListService(url, auth);
+    public final static ListService createInstance(String baseUrl, String authHeader) {
+        return new ListService(baseUrl, authHeader);
     }
 
     /**
@@ -88,13 +88,13 @@ public class ListService {
      *
      * @param jsonResId resource ID pointing to the json config file
      * @param presetFirst should the ListConfig be initialized with the presetFirst true or false
-     * @param url pointing to the API for creating new lists
-     * @param auth content of the authentication header
+     * @param baseUrl pointing to the API for creating new lists
+     * @param authHeader content of the authentication header
      * @return the newly created listUrl
      */
-    public static String createListUrl(int jsonResId, boolean presetFirst, String url, String auth) throws JSONException, IOException {
+    public static String createListUrl(int jsonResId, boolean presetFirst, String baseUrl, String authHeader) throws JSONException, IOException {
         Context context = InstrumentationRegistry.getInstrumentation().getTargetContext();
-        ListService service = ListService.createInstance(url, auth);
+        ListService service = ListService.createInstance(baseUrl, authHeader);
         ListConfig config = service.createListConfig(jsonResId);
         config.setPresetFirst(presetFirst);
         config.setCallbackAppId(context.getPackageName());
