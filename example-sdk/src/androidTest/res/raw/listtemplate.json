@@ -1,16 +1,16 @@
 {
-    "transactionId": "tr200",
+    "transactionId": "1",
     "integration": "MOBILE_NATIVE",
     "presetFirst": "false",
     "country": "DE",
     "customer": {
-        "number": "42",
+        "number": "1",
         "email": "john.doe@example.com"
     },
     "payment": {
         "amount": 1.99,
         "currency": "EUR",
-        "reference": "Shop optile/03-12-2018"
+        "reference": "example-sdk/03-12-2020"
     },
     "style": {
         "language": "en_US"
