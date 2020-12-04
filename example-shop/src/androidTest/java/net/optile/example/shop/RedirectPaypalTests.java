@@ -82,7 +82,7 @@ public final class RedirectPaypalTests extends AbstractTest {
     private void checkPayPalChromeDisplayed() throws UiObjectNotFoundException {
         UiDevice uiDevice = UiDevice.getInstance(InstrumentationRegistry.getInstrumentation());
         UiObject2 uiObject = uiDevice.wait(Until.findObject(By.res("com.android.chrome:id/url_bar")), CHROME_TIMEOUT);
-        uiObject.wait(Until.textContains("https://www.sandbox.paypal.com"), CHROME_TIMEOUT);
+        uiObject.wait(Until.textContains("sandbox.paypal.com"), CHROME_TIMEOUT);
     }
 
     void clickUiObjectByResource(UiDevice uiDevice, String resourceName) throws UiObjectNotFoundException {
