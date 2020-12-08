@@ -51,13 +51,13 @@ public class ListService {
     /**
      * Create a new listUrl given the ListConfig
      *
-     * @param config configuration describing which listUrl should be created
+     * @param request configuration describing which listUrl should be created
      * @return the newly created listUrl
      */
-    public String createListUrl(ListConfig config) throws IOException {
+    public String createListUrl(ListRequest request) throws IOException {
         Context context = InstrumentationRegistry.getInstrumentation().getTargetContext();
         try {
-            ListResult result = conn.createPaymentSession(url, auth, config.toJsonString());
+            ListResult result = conn.createPaymentSession(url, auth, request.getRequestBody());
             Map<String, URL> links = result.getLinks();
             URL selfUrl = links != null ? links.get("self") : null;
 
@@ -74,13 +74,12 @@ public class ListService {
      * Create a new ListConfig given the json configuration file.
      *
      * @param jsonResId resource ID pointing to the json config file
-     * @return the newly created ListConfig
+     * @return the JSONObject containing the template request body
      */
-    public ListConfig createListConfig(int jsonResId) throws JSONException, IOException {
+    public JSONObject loadJSONTemplate(int jsonResId) throws JSONException, IOException {
         Context context = InstrumentationRegistry.getInstrumentation().getContext();
         String fileContent = PaymentUtils.readRawResource(context.getResources(), jsonResId);
-        JSONObject obj = new JSONObject(fileContent);
-        return new ListConfig(obj);
+        return new JSONObject(fileContent);
     }
 
     /**
@@ -92,12 +91,13 @@ public class ListService {
      * @param authHeader content of the authentication header
      * @return the newly created listUrl
      */
-    public static String createListUrl(int jsonResId, boolean presetFirst, String baseUrl, String authHeader) throws JSONException, IOException {
+    public static String createListUrl(int jsonResId, boolean presetFirst, String baseUrl, String authHeader)
+        throws JSONException, IOException {
         Context context = InstrumentationRegistry.getInstrumentation().getTargetContext();
         ListService service = ListService.createInstance(baseUrl, authHeader);
-        ListConfig config = service.createListConfig(jsonResId);
-        config.setPresetFirst(presetFirst);
-        config.setCallbackAppId(context.getPackageName());
-        return service.createListUrl(config);
+        ListRequest request = ListRequest.of(service.loadJSONTemplate(jsonResId))
+            .presetFirst(presetFirst)
+            .appId(context.getPackageName()).build();
+        return service.createListUrl(request);
     }
 }
