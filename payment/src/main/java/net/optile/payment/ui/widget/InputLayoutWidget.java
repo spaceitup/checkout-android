@@ -94,7 +94,6 @@ public abstract class InputLayoutWidget extends FormWidget {
     @Override
     public boolean requestFocus() {
         if (textInput.requestFocus()) {
-            presenter.showKeyboard(textInput);
             return true;
         }
         return false;
