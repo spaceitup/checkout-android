@@ -9,6 +9,7 @@
 package net.optile.payment.ui.list;
 
 import android.view.View;
+import net.optile.payment.ui.widget.FormWidget;
 import net.optile.payment.ui.widget.WidgetPresenter;
 import net.optile.payment.validation.ValidationResult;
 
@@ -45,6 +46,11 @@ class CardWidgetPresenter implements WidgetPresenter {
         adapter.showKeyboard(holder.getAdapterPosition(), view);
     }
 
+    @Override
+    public boolean requestFocusNextWidget(FormWidget currentWidget) {
+        return holder.requestFocusNextWidget(currentWidget);
+    }
+    
     @Override
     public int getMaxLength(String code, String type) {
         return adapter.getMaxLength(holder.getAdapterPosition(), code, type);

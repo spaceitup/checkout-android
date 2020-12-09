@@ -40,6 +40,14 @@ public interface WidgetPresenter {
      */
     void showKeyboard(View view);
 
+    /** 
+     * Request focus for the next widget after the current widget.
+     * 
+     * @param currentWidget widget that is currently focussed
+     * @return true when next widget is focussed, false otherwise
+     */    
+    boolean requestFocusNextWidget(FormWidget currentWidget);
+    
     /**
      * Get the max length for the given input type
      *

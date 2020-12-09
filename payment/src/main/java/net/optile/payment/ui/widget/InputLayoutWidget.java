@@ -50,10 +50,14 @@ public abstract class InputLayoutWidget extends FormWidget {
         textInput.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override
             public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
-                if (actionId == EditorInfo.IME_ACTION_DONE) {
-                    handleOnKeyboardDone();
+                switch (actionId) {
+                    case EditorInfo.IME_ACTION_DONE:
+                        return handleOnKeyboardDone();
+                    case EditorInfo.IME_ACTION_NEXT:
+                        return handleOnKeyboardNext();
+                    default:
+                        return false;
                 }
-                return false;
             }
         });
 
@@ -90,6 +94,7 @@ public abstract class InputLayoutWidget extends FormWidget {
     @Override
     public boolean requestFocus() {
         if (textInput.requestFocus()) {
+            presenter.showKeyboard(textInput);
             return true;
         }
         return false;
@@ -170,9 +175,18 @@ public abstract class InputLayoutWidget extends FormWidget {
     void handleOnEndIconClicked() {
     }
 
-    void handleOnKeyboardDone() {
+    boolean handleOnKeyboardNext() {
+        textInput.clearFocus();
+        if (!presenter.requestFocusNextWidget(this)) {
+            presenter.hideKeyboard();
+        }
+        return true;
+    }
+        
+    boolean handleOnKeyboardDone() {
         textInput.clearFocus();
         presenter.hideKeyboard();
+        return true;
     }
 
     void setTextInputMode(EditTextInputMode mode) {
