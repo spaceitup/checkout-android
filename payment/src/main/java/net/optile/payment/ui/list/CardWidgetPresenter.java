@@ -50,7 +50,7 @@ class CardWidgetPresenter implements WidgetPresenter {
     public boolean requestFocusNextWidget(FormWidget currentWidget) {
         return holder.requestFocusNextWidget(currentWidget);
     }
-    
+
     @Override
     public int getMaxLength(String code, String type) {
         return adapter.getMaxLength(holder.getAdapterPosition(), code, type);

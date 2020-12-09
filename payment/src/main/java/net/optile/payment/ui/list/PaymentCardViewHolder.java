@@ -134,7 +134,7 @@ public abstract class PaymentCardViewHolder extends RecyclerView.ViewHolder {
         }
         return false;
     }
-        
+
     void addWidget(FormWidget widget) {
         String name = widget.getName();
 
