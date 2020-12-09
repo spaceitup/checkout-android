@@ -19,19 +19,19 @@ android {
     compileSdkVersion rootProject.compileSdkVersion
 
     defaultConfig {
-        applicationId 'net.optile.example.shop'
+        applicationId "net.optile.example.shop"
         minSdkVersion rootProject.minSdkVersion
         targetSdkVersion rootProject.targetSdkVersion
         versionCode rootProject.versionCode
         versionName rootProject.versionName
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
-
-        resValue "string", "paymentapi_auth", "$System.env.ANDROIDSDK_PAYMENTAPI_AUTH"
-        resValue "string", "paymentapi_url", "$System.env.ANDROIDSDK_PAYMENTAPI_URL"
     }
 
     buildTypes {
         debug {
+            buildConfigField "String", "paymentapi_authheader", "\"$System.env.ANDROIDSDK_PAYMENTAPI_AUTH\""
+            buildConfigField "String", "paymentapi_baseurl", "\"$System.env.ANDROIDSDK_PAYMENTAPI_URL\""
+
             testVariants.all { testVariant ->
                 testVariant.outputs.all { output ->
                     outputFileName = "Example-Shop-${getCurrentBranch()}-debug-androidTest.apk"
@@ -42,12 +42,6 @@ android {
                     outputFileName = "Example-Shop-${getCurrentBranch()}-debug.apk"
                 }
             }
-        }
-    }
-    sourceSets {
-        androidTest {
-            java.srcDirs += '../payment/src/sharedTest/java'
-            res.srcDirs += '../payment/src/sharedTest/res'
         }
     }
 }
@@ -63,6 +57,7 @@ dependencies {
     testImplementation "androidx.test.ext:junit:${rootProject.androidxTestJunitVersion}"
     testImplementation "org.hamcrest:hamcrest-library:${rootProject.harmcrestVersion}"
 
+    androidTestImplementation project(":shared-test")
     androidTestImplementation "androidx.test.uiautomator:uiautomator:${rootProject.androidxTestUIAutomatorVersion}"
     androidTestImplementation "androidx.test.ext:junit:${rootProject.androidxTestJunitVersion}"
     androidTestImplementation "androidx.test:runner:${rootProject.androidxTestRunnerVersion}"

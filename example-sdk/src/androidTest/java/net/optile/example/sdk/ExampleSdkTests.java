@@ -28,8 +28,8 @@ import androidx.test.espresso.intent.Intents;
 import androidx.test.ext.junit.runners.AndroidJUnit4;
 import androidx.test.filters.LargeTest;
 import androidx.test.rule.ActivityTestRule;
-import net.optile.payment.test.service.ListService;
 import net.optile.payment.ui.page.PaymentListActivity;
+import net.optile.sharedtest.service.ListService;
 
 @RunWith(AndroidJUnit4.class)
 @LargeTest
@@ -51,11 +51,16 @@ public class ExampleSdkTests {
     }
 
     private void openPaymentList() throws JSONException, IOException {
-        String listUrl = ListService.createListUrl(net.optile.example.sdk.test.R.raw.listtemplate, false);
+        String baseUrl = BuildConfig.paymentapi_baseurl;
+        String authHeader = BuildConfig.paymentapi_authheader;
+        String listUrl = ListService.createListUrl(net.optile.example.sdk.test.R.raw.listtemplate, false, baseUrl, authHeader);
+
         onView(withId(R.id.input_listurl)).perform(typeText(listUrl));
         onView(withId(R.id.button_action)).perform(click());
 
         intended(hasComponent(PaymentListActivity.class.getName()));
         onView(withId(R.id.layout_paymentlist)).check(matches(isDisplayed()));
     }
+
+
 }

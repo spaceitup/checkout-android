@@ -24,7 +24,7 @@ import androidx.test.ext.junit.runners.AndroidJUnit4;
 import androidx.test.filters.LargeTest;
 import androidx.test.rule.ActivityTestRule;
 import net.optile.example.shop.settings.SettingsActivity;
-import net.optile.payment.test.view.PaymentActions;
+import net.optile.sharedtest.view.PaymentActions;
 
 @RunWith(AndroidJUnit4.class)
 @LargeTest

@@ -19,8 +19,8 @@ import static androidx.test.espresso.intent.Intents.times;
 import static androidx.test.espresso.intent.matcher.IntentMatchers.hasComponent;
 import static androidx.test.espresso.matcher.ViewMatchers.isDisplayed;
 import static androidx.test.espresso.matcher.ViewMatchers.withId;
-import static net.optile.payment.test.view.PaymentActions.actionOnViewInWidget;
-import static net.optile.payment.test.view.PaymentMatchers.isCardWithTestId;
+import static net.optile.sharedtest.view.PaymentActions.actionOnViewInWidget;
+import static net.optile.sharedtest.view.PaymentMatchers.isCardWithTestId;
 
 import java.io.IOException;
 
@@ -33,18 +33,20 @@ import androidx.test.espresso.IdlingResource;
 import net.optile.example.shop.checkout.CheckoutActivity;
 import net.optile.example.shop.confirm.ConfirmActivity;
 import net.optile.example.shop.summary.SummaryActivity;
-import net.optile.payment.test.service.ListService;
-import net.optile.payment.test.view.ActivityHelper;
-import net.optile.payment.test.view.PaymentActions;
 import net.optile.payment.ui.page.ChargePaymentActivity;
 import net.optile.payment.ui.page.PaymentListActivity;
+import net.optile.sharedtest.service.ListService;
+import net.optile.sharedtest.view.ActivityHelper;
+import net.optile.sharedtest.view.PaymentActions;
 
 public class AbstractTest {
 
     public final static long CHROME_TIMEOUT = 20000;
 
     void openPaymentList(boolean presetFirst) throws IOException, JSONException {
-        String listUrl = ListService.createListUrl(net.optile.example.shop.test.R.raw.listtemplate, presetFirst);
+        String baseUrl = BuildConfig.paymentapi_baseurl;
+        String authHeader = BuildConfig.paymentapi_authheader;
+        String listUrl = ListService.createListUrl(net.optile.example.shop.test.R.raw.listtemplate, presetFirst, baseUrl, authHeader);
 
         onView(withId(R.id.layout_settings)).check(matches(isDisplayed()));
         onView(withId(R.id.input_listurl)).perform(typeText(listUrl));

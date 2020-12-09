@@ -12,7 +12,7 @@ import static androidx.test.espresso.action.ViewActions.click;
 import static androidx.test.espresso.assertion.ViewAssertions.matches;
 import static androidx.test.espresso.matcher.ViewMatchers.withId;
 import static androidx.test.espresso.matcher.ViewMatchers.withText;
-import static net.optile.payment.test.view.PaymentMatchers.isViewInCard;
+import static net.optile.sharedtest.view.PaymentMatchers.isViewInCard;
 
 import java.io.IOException;
 
@@ -30,7 +30,7 @@ import androidx.test.filters.LargeTest;
 import androidx.test.rule.ActivityTestRule;
 import androidx.test.uiautomator.UiObjectNotFoundException;
 import net.optile.example.shop.settings.SettingsActivity;
-import net.optile.payment.test.view.PaymentActions;
+import net.optile.sharedtest.view.PaymentActions;
 
 @RunWith(AndroidJUnit4.class)
 @LargeTest
