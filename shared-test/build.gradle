@@ -1,0 +1,43 @@
+/*
+ * Copyright (c) 2020 optile GmbH
+ * https://www.optile.net
+ *
+ * This file is open source and available under the MIT license.
+ * See the LICENSE file for more information.
+ */
+
+plugins {
+    id 'com.android.library'
+}
+
+android {
+    compileSdkVersion rootProject.compileSdkVersion
+
+    defaultConfig {
+        minSdkVersion rootProject.minSdkVersion
+        targetSdkVersion rootProject.targetSdkVersion
+        versionCode rootProject.versionCode
+        versionName rootProject.versionName
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+        }
+    }
+    compileOptions {
+        sourceCompatibility rootProject.javaCompatVersion
+        targetCompatibility rootProject.javaCompatVersion
+    }
+}
+
+dependencies {
+    implementation project(':payment')
+    implementation "androidx.test.ext:junit:${rootProject.androidxTestJunitVersion}"
+    implementation "androidx.test:runner:${rootProject.androidxTestRunnerVersion}"
+    implementation "androidx.test:rules:${rootProject.androidxTestRulesVersion}"
+    implementation "androidx.test.espresso:espresso-core:${rootProject.androidxTestEspressoVersion}"
+    implementation "androidx.test.espresso:espresso-intents:${rootProject.androidxTestEspressoVersion}"
+    implementation "androidx.test.espresso:espresso-contrib:${rootProject.androidxTestEspressoVersion}"
+}

@@ -6,7 +6,7 @@
  * See the LICENSE file for more information.
  */
 
-package net.optile.payment.test.service;
+package net.optile.sharedtest.service;
 
 import java.io.IOException;
 import java.net.URL;
@@ -17,7 +17,6 @@ import org.json.JSONObject;
 
 import android.content.Context;
 import androidx.test.platform.app.InstrumentationRegistry;
-import net.optile.payment.R;
 import net.optile.payment.core.PaymentException;
 import net.optile.payment.model.ListResult;
 import net.optile.payment.network.ListConnection;
@@ -41,24 +40,24 @@ public class ListService {
     /**
      * Create a new instance of the ListService
      *
-     * @param url to which this ListService should connect to
-     * @param auth authentication token
+     * @param baseUrl to which this ListService should connect to
+     * @param authHeader authentication token
      * @return the newly created ListService
      */
-    public final static ListService createInstance(String url, String auth) {
-        return new ListService(url, auth);
+    public final static ListService createInstance(String baseUrl, String authHeader) {
+        return new ListService(baseUrl, authHeader);
     }
 
     /**
      * Create a new listUrl given the ListConfig
      *
-     * @param config configuration describing which listUrl should be created
+     * @param request configuration describing which listUrl should be created
      * @return the newly created listUrl
      */
-    public String createListUrl(ListConfig config) throws IOException {
+    public String createListUrl(ListRequest request) throws IOException {
         Context context = InstrumentationRegistry.getInstrumentation().getTargetContext();
         try {
-            ListResult result = conn.createPaymentSession(url, auth, config.toJsonString());
+            ListResult result = conn.createPaymentSession(url, auth, request.getRequestBody());
             Map<String, URL> links = result.getLinks();
             URL selfUrl = links != null ? links.get("self") : null;
 
@@ -75,13 +74,12 @@ public class ListService {
      * Create a new ListConfig given the json configuration file.
      *
      * @param jsonResId resource ID pointing to the json config file
-     * @return the newly created ListConfig
+     * @return the JSONObject containing the template request body
      */
-    public ListConfig createListConfig(int jsonResId) throws JSONException, IOException {
+    public JSONObject loadJSONTemplate(int jsonResId) throws JSONException, IOException {
         Context context = InstrumentationRegistry.getInstrumentation().getContext();
         String fileContent = PaymentUtils.readRawResource(context.getResources(), jsonResId);
-        JSONObject obj = new JSONObject(fileContent);
-        return new ListConfig(obj);
+        return new JSONObject(fileContent);
     }
 
     /**
@@ -89,17 +87,17 @@ public class ListService {
      *
      * @param jsonResId resource ID pointing to the json config file
      * @param presetFirst should the ListConfig be initialized with the presetFirst true or false
+     * @param baseUrl pointing to the API for creating new lists
+     * @param authHeader content of the authentication header
      * @return the newly created listUrl
      */
-    public static String createListUrl(int jsonResId, boolean presetFirst) throws JSONException, IOException {
+    public static String createListUrl(int jsonResId, boolean presetFirst, String baseUrl, String authHeader)
+        throws JSONException, IOException {
         Context context = InstrumentationRegistry.getInstrumentation().getTargetContext();
-        String url = context.getString(R.string.paymentapi_url);
-        String auth = context.getString(R.string.paymentapi_auth);
-
-        ListService service = ListService.createInstance(url, auth);
-        ListConfig config = service.createListConfig(jsonResId);
-        config.setPresetFirst(presetFirst);
-        config.setCallbackAppId(context.getPackageName());
-        return service.createListUrl(config);
+        ListService service = ListService.createInstance(baseUrl, authHeader);
+        ListRequest request = ListRequest.of(service.loadJSONTemplate(jsonResId))
+            .presetFirst(presetFirst)
+            .appId(context.getPackageName()).build();
+        return service.createListUrl(request);
     }
 }

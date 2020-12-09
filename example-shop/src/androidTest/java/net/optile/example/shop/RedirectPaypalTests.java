@@ -11,8 +11,10 @@ import static androidx.test.espresso.Espresso.onView;
 import static androidx.test.espresso.assertion.ViewAssertions.matches;
 import static androidx.test.espresso.intent.Intents.intended;
 import static androidx.test.espresso.intent.matcher.IntentMatchers.hasComponent;
+import static androidx.test.espresso.matcher.ViewMatchers.assertThat;
 import static androidx.test.espresso.matcher.ViewMatchers.isDisplayed;
 import static androidx.test.espresso.matcher.ViewMatchers.withId;
+import static org.hamcrest.Matchers.containsString;
 
 import java.io.IOException;
 
@@ -51,6 +53,7 @@ public final class RedirectPaypalTests extends AbstractTest {
         openPaymentCard(networkCardIndex, "card_network");
         IdlingResource closeIdlingResource = clickCardButton(networkCardIndex);
         checkPayPalChromeDisplayed();
+        closeChromeBrowser();
         unregister(closeIdlingResource);
         Intents.release();
     }
@@ -81,7 +84,9 @@ public final class RedirectPaypalTests extends AbstractTest {
     private void checkPayPalChromeDisplayed() throws UiObjectNotFoundException {
         UiDevice uiDevice = UiDevice.getInstance(InstrumentationRegistry.getInstrumentation());
         UiObject2 uiObject = uiDevice.wait(Until.findObject(By.res("com.android.chrome:id/url_bar")), CHROME_TIMEOUT);
-        uiObject.wait(Until.textContains("https://www.sandbox.paypal.com"), CHROME_TIMEOUT);
+        String url = "sandbox.paypal.com";
+        uiObject.wait(Until.textContains(url), CHROME_TIMEOUT);
+        assertThat(uiObject.getText(), containsString(url));
     }
 
     void clickUiObjectByResource(UiDevice uiDevice, String resourceName) throws UiObjectNotFoundException {
