@@ -90,7 +90,6 @@ public abstract class InputLayoutWidget extends FormWidget {
     @Override
     public boolean requestFocus() {
         if (textInput.requestFocus()) {
-            presenter.showKeyboard();
             return true;
         }
         return false;
@@ -159,6 +158,7 @@ public abstract class InputLayoutWidget extends FormWidget {
         if (hasFocus) {
             textLayout.setHelperText(helperText);
             setInputLayoutState(VALIDATION_UNKNOWN, false, null);
+            presenter.showKeyboard(textInput);
         } else {
             textLayout.setHelperText(null);
             if (state == VALIDATION_UNKNOWN && !TextUtils.isEmpty(getValue())) {

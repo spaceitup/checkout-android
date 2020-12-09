@@ -18,6 +18,7 @@ import java.util.List;
 
 import android.content.Context;
 import android.os.IBinder;
+import android.util.Log;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.TextView;
@@ -111,11 +112,10 @@ public final class PaymentList {
         }
     }
 
-    public void showKeyboard() {
+    public void showKeyboard(View view) {
         InputMethodManager imm = (InputMethodManager) activity.getSystemService(Context.INPUT_METHOD_SERVICE);
-
         if (imm != null) {
-            imm.toggleSoftInput(InputMethodManager.SHOW_FORCED, 0);
+            imm.showSoftInput(view, 0);
         }
     }
 

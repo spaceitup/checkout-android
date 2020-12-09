@@ -8,6 +8,7 @@
 
 package net.optile.payment.ui.widget;
 
+import android.view.View;
 import net.optile.payment.validation.ValidationResult;
 
 /**
@@ -34,8 +35,10 @@ public interface WidgetPresenter {
 
     /**
      * Ask the presenter to show the keyboard
+     *
+     * @param view for which the keyboard should be shown
      */
-    void showKeyboard();
+    void showKeyboard(View view);
 
     /**
      * Get the max length for the given input type
