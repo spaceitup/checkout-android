@@ -12,7 +12,9 @@ import static net.optile.payment.localization.LocalizationKey.BUTTON_CANCEL;
 import static net.optile.payment.localization.LocalizationKey.BUTTON_OK;
 import static net.optile.payment.localization.LocalizationKey.BUTTON_RETRY;
 import static net.optile.payment.localization.LocalizationKey.ERROR_CONNECTION_TEXT;
+import static net.optile.payment.localization.LocalizationKey.ERROR_CONNECTION_TITLE;
 import static net.optile.payment.localization.LocalizationKey.ERROR_DEFAULT_TEXT;
+import static net.optile.payment.localization.LocalizationKey.ERROR_DEFAULT_TITLE;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -36,7 +38,9 @@ public final class LocalLocalizationHolder extends MapLocalizationHolder {
         map.put(BUTTON_RETRY, context.getString(R.string.button_retry_label));
         map.put(BUTTON_OK, context.getString(R.string.button_ok_label));
 
+        map.put(ERROR_CONNECTION_TITLE, context.getString(R.string.error_connection_title));        
         map.put(ERROR_CONNECTION_TEXT, context.getString(R.string.error_connection_text));
+        map.put(ERROR_DEFAULT_TITLE, context.getString(R.string.error_default_title));
         map.put(ERROR_DEFAULT_TEXT, context.getString(R.string.error_default_text));
     }
 }
