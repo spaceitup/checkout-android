@@ -41,18 +41,16 @@ public final class PaymentList {
     private final PaymentListActivity activity;
     private final ListAdapter adapter;
     private final RecyclerView recyclerView;
-    private final TextView emptyMessage;
     private final List<ListItem> items;
 
     private PaymentSession session;
     private int selIndex;
     private int viewType;
 
-    public PaymentList(PaymentListActivity activity, RecyclerView recyclerView, TextView emptyMessage) {
+    public PaymentList(PaymentListActivity activity, RecyclerView recyclerView) {
         this.activity = activity;
         this.items = new ArrayList<>();
         this.adapter = new ListAdapter(this, items);
-        this.emptyMessage = emptyMessage;
         this.recyclerView = recyclerView;
         this.recyclerView.setAdapter(adapter);
         this.recyclerView.setLayoutManager(new LinearLayoutManager(activity));
@@ -75,8 +73,6 @@ public final class PaymentList {
         this.session = null;
         this.selIndex = -1;
         this.items.clear();
-
-        emptyMessage.setText("");
         adapter.notifyDataSetChanged();
     }
 
@@ -87,7 +83,6 @@ public final class PaymentList {
             return;
         }
         this.session = session;
-        setEmptyMessage(session);
         setPaymentListItems(session);
 
         setVisible(true);
@@ -97,7 +92,6 @@ public final class PaymentList {
     }
 
     public void setVisible(boolean visible) {
-        emptyMessage.setVisibility(visible ? View.VISIBLE : View.INVISIBLE);
         recyclerView.setVisibility(visible ? View.VISIBLE : View.INVISIBLE);
     }
 
@@ -166,11 +160,6 @@ public final class PaymentList {
 
     private int nextViewType() {
         return viewType++;
-    }
-
-    private void setEmptyMessage(PaymentSession session) {
-        String msg = session.isEmpty() ? activity.getString(R.string.pmpage_error_empty) : "";
-        emptyMessage.setText(msg);
     }
 
     private void setPaymentListItems(PaymentSession session) {
