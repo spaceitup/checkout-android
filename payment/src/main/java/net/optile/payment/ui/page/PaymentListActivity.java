@@ -203,8 +203,7 @@ public final class PaymentListActivity extends BasePaymentActivity implements Pa
     }
 
     private void initPaymentList() {
-        this.paymentList = new PaymentList(this, findViewById(R.id.recyclerview_paymentlist),
-            findViewById(R.id.label_empty));
+        this.paymentList = new PaymentList(this, findViewById(R.id.recyclerview_paymentlist));
     }
 
     /**
