@@ -1,14 +1,22 @@
 Changelog - Android SDK
 -----------------------
 
+**Version android-sdk 5.2.0**
+
+**Bug**
+* [PCX-1208] - Fix "remove duplicated resource warning" in android studio
+* [PCX-1232] - Soft keyboard closes when entering credit card
+* [PCX-1235] - Local title "Oops" is not shown in connection error popup dialogs
+* [PCX-1236] - Return error to merchant when no payment methods are available
+
 **Version android-sdk 5.1.0**
 
 **Bug**
-    * [PCX-1187] - Redirect is broken when compiling for Android 30
+* [PCX-1187] - Redirect is broken when compiling for Android 30
 
 **Feature**
-    * [PCX-900] - Store method logos locally in Android SDK
-    * [PCX-956] - [Android-sdk] Add X button to text input fields to clear fields
+* [PCX-900] - Store method logos locally in Android SDK
+* [PCX-956] - [Android-sdk] Add X button to text input fields to clear fields
 
 **Version android-sdk 5.0.0**
 
