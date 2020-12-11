@@ -120,6 +120,21 @@ public abstract class PaymentCardViewHolder extends RecyclerView.ViewHolder {
         }
     }
 
+    boolean requestFocusNextWidget(FormWidget currentWidget) {
+        boolean requestFocus = false;
+        for (Map.Entry<String, FormWidget> entry : widgets.entrySet()) {
+            FormWidget widget = entry.getValue();
+            if (requestFocus) {
+                if (widget.requestFocus()) {
+                    return true;
+                }
+            } else {
+                requestFocus = (widget == currentWidget);
+            }
+        }
+        return false;
+    }
+
     void addWidget(FormWidget widget) {
         String name = widget.getName();
 

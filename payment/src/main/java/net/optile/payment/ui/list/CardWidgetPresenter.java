@@ -8,6 +8,8 @@
 
 package net.optile.payment.ui.list;
 
+import android.view.View;
+import net.optile.payment.ui.widget.FormWidget;
 import net.optile.payment.ui.widget.WidgetPresenter;
 import net.optile.payment.validation.ValidationResult;
 
@@ -40,8 +42,13 @@ class CardWidgetPresenter implements WidgetPresenter {
     }
 
     @Override
-    public void showKeyboard() {
-        adapter.showKeyboard(holder.getAdapterPosition());
+    public void showKeyboard(View view) {
+        adapter.showKeyboard(holder.getAdapterPosition(), view);
+    }
+
+    @Override
+    public boolean requestFocusNextWidget(FormWidget currentWidget) {
+        return holder.requestFocusNextWidget(currentWidget);
     }
 
     @Override

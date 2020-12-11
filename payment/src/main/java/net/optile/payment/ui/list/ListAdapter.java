@@ -11,6 +11,7 @@ package net.optile.payment.ui.list;
 import java.util.List;
 
 import android.content.Context;
+import android.view.View;
 import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -103,11 +104,11 @@ final class ListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         list.hideKeyboard();
     }
 
-    void showKeyboard(int position) {
+    void showKeyboard(int position, View view) {
         if (isInvalidPosition(position)) {
             return;
         }
-        list.showKeyboard();
+        list.showKeyboard(view);
     }
 
     void onActionClicked(int position) {
