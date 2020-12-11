@@ -93,10 +93,7 @@ public abstract class InputLayoutWidget extends FormWidget {
      */
     @Override
     public boolean requestFocus() {
-        if (textInput.requestFocus()) {
-            return true;
-        }
-        return false;
+        return textInput.requestFocus();
     }
 
     /**
