@@ -11,11 +11,14 @@ package net.optile.example.shop.shared;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
+import androidx.annotation.VisibleForTesting;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.test.espresso.IdlingResource;
 import net.optile.example.shop.R;
 import net.optile.payment.ui.PaymentActivityResult;
 import net.optile.payment.ui.dialog.PaymentDialogFragment;
 import net.optile.payment.ui.dialog.PaymentDialogHelper;
+import net.optile.payment.ui.page.idlingresource.SimpleIdlingResource;
 
 /**
  * Base Activity for Activities used in this shop, it stores and retrieves the listUrl value.
@@ -29,6 +32,8 @@ public abstract class BaseActivity extends AppCompatActivity {
     protected boolean active;
     protected String listUrl;
     protected PaymentActivityResult sdkResult;
+    protected SimpleIdlingResource resultHandledIdlingResource;
+    private boolean resultHandled;
 
     /**
      * {@inheritDoc}
@@ -71,7 +76,7 @@ public abstract class BaseActivity extends AppCompatActivity {
     @Override
     public void onPause() {
         super.onPause();
-        this.active = false;
+        active = false;
     }
 
     /**
@@ -80,7 +85,8 @@ public abstract class BaseActivity extends AppCompatActivity {
     @Override
     public void onResume() {
         super.onResume();
-        this.active = true;
+        resultHandled = false;
+        active = true;
     }
 
     /**
@@ -129,5 +135,31 @@ public abstract class BaseActivity extends AppCompatActivity {
      * Activities extending from this BaseActivity should implement this method in order to receive this event.
      */
     public void onErrorDialogClosed() {
+    }
+
+    /**
+     * Only called from test, creates and returns a new paymentResult handled IdlingResource
+     */
+    @VisibleForTesting
+    public IdlingResource getResultHandledIdlingResource() {
+        if (resultHandledIdlingResource == null) {
+            resultHandledIdlingResource = new SimpleIdlingResource(getClass().getSimpleName() + "-resultHandledIdlingResource");
+        }
+        if (resultHandled) {
+            resultHandledIdlingResource.setIdleState(true);
+        } else {
+            resultHandledIdlingResource.reset();
+        }
+        return resultHandledIdlingResource;
+    }
+
+    /**
+     * Set the result handled idle state for the IdlingResource
+     */
+    protected void setResultHandledIdleState() {
+        resultHandled = true;
+        if (resultHandledIdlingResource != null) {
+            resultHandledIdlingResource.setIdleState(true);
+        }
     }
 }

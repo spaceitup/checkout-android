@@ -23,7 +23,6 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
-import androidx.test.espresso.IdlingResource;
 import androidx.test.espresso.intent.Intents;
 import androidx.test.ext.junit.runners.AndroidJUnit4;
 import androidx.test.filters.LargeTest;
@@ -49,12 +48,15 @@ public final class RedirectPaypalTests extends AbstractTest {
         Intents.init();
         int networkCardIndex = 3;
 
-        openPaymentList(false);
-        openPaymentCard(networkCardIndex, "card_network");
-        IdlingResource closeIdlingResource = clickCardButton(networkCardIndex);
+        openCheckoutActivity(false);
+        clickCheckoutButton();
+
+        waitForPaymentListLoaded(1);
+        openPaymentListCard(networkCardIndex, "card_network");
+        clickPaymentListCardButton(networkCardIndex);
+
         checkPayPalChromeDisplayed();
         closeChromeBrowser();
-        unregister(closeIdlingResource);
         Intents.release();
     }
 
@@ -63,14 +65,16 @@ public final class RedirectPaypalTests extends AbstractTest {
         Intents.init();
         int networkCardIndex = 3;
 
-        openPaymentList(false);
-        openPaymentCard(networkCardIndex, "card_network");
-        IdlingResource closeIdlingResource = clickCardButton(networkCardIndex);
+        openCheckoutActivity(false);
+        clickCheckoutButton();
+
+        waitForPaymentListLoaded(1);
+        openPaymentListCard(networkCardIndex, "card_network");
+        clickPaymentListCardButton(networkCardIndex);
         closeChromeBrowser();
 
         intended(hasComponent(ChargePaymentActivity.class.getName()));
         onView(withId(R.id.alertTitle)).check(matches(isDisplayed()));
-        unregister(closeIdlingResource);
         Intents.release();
     }
 
