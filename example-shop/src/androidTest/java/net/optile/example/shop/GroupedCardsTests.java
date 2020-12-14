@@ -37,7 +37,7 @@ public final class GroupedCardsTests extends AbstractTest {
         Intents.init();
         int groupCardIndex = 1;
 
-        CheckoutActivity checkoutActivity = openCheckoutPage(false);
+        CheckoutActivity checkoutActivity = openCheckoutActivity(false);
         IdlingResource resultHandledIdlingResource = checkoutActivity.getResultHandledIdlingResource();
         clickCheckoutButton();
 
@@ -46,7 +46,7 @@ public final class GroupedCardsTests extends AbstractTest {
         fillPaymentListCardData(groupCardIndex);
 
         clickPaymentListCardButton(groupCardIndex);
-        waitForConfirmPageLoaded(resultHandledIdlingResource);
+        waitForConfirmActivityLoaded(resultHandledIdlingResource);
         unregister(resultHandledIdlingResource);
 
         Intents.release();
@@ -57,7 +57,7 @@ public final class GroupedCardsTests extends AbstractTest {
         Intents.init();
         int groupCardIndex = 1;
 
-        CheckoutActivity checkoutActivity = openCheckoutPage(true);
+        CheckoutActivity checkoutActivity = openCheckoutActivity(true);
         IdlingResource checkoutPaymentResultIdlingResource = checkoutActivity.getResultHandledIdlingResource();
         clickCheckoutButton();
 
@@ -67,14 +67,14 @@ public final class GroupedCardsTests extends AbstractTest {
 
         clickPaymentListCardButton(groupCardIndex);
         register(checkoutPaymentResultIdlingResource);
-        waitForSummaryPageLoaded();
+        waitForSummaryActivityLoaded();
         unregister(checkoutPaymentResultIdlingResource);
 
-        SummaryActivity summaryActivity = waitForSummaryPageLoaded();
+        SummaryActivity summaryActivity = waitForSummaryActivityLoaded();
         IdlingResource summaryPaymentResultIdlingResource = summaryActivity.getResultHandledIdlingResource();
         clickSummaryPayButton();
 
-        waitForConfirmPageLoaded(summaryPaymentResultIdlingResource);
+        waitForConfirmActivityLoaded(summaryPaymentResultIdlingResource);
         unregister(summaryPaymentResultIdlingResource);
         Intents.release();
     }

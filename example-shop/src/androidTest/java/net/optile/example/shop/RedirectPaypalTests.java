@@ -48,7 +48,7 @@ public final class RedirectPaypalTests extends AbstractTest {
         Intents.init();
         int networkCardIndex = 3;
 
-        openCheckoutPage(false);
+        openCheckoutActivity(false);
         clickCheckoutButton();
 
         waitForPaymentListLoaded(1);
@@ -65,7 +65,7 @@ public final class RedirectPaypalTests extends AbstractTest {
         Intents.init();
         int networkCardIndex = 3;
 
-        openCheckoutPage(false);
+        openCheckoutActivity(false);
         clickCheckoutButton();
 
         waitForPaymentListLoaded(1);

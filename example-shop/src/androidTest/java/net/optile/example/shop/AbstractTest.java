@@ -43,7 +43,7 @@ public class AbstractTest {
 
     public final static long CHROME_TIMEOUT = 20000;
 
-    CheckoutActivity openCheckoutPage(boolean presetFirst) throws IOException, JSONException {
+    CheckoutActivity openCheckoutActivity(boolean presetFirst) throws IOException, JSONException {
         String baseUrl = BuildConfig.paymentapi_baseurl;
         String authHeader = BuildConfig.paymentapi_authheader;
         String listUrl = ListService.createListUrl(net.optile.example.shop.test.R.raw.listtemplate, presetFirst, baseUrl, authHeader);
@@ -93,7 +93,7 @@ public class AbstractTest {
         onView(withId(R.id.recyclerview_paymentlist)).perform(actionOnViewInWidget(cardIndex, click(), "buttonWidget", R.id.button));
     }
 
-    SummaryActivity waitForSummaryPageLoaded() {
+    SummaryActivity waitForSummaryActivityLoaded() {
         intended(hasComponent(SummaryActivity.class.getName()));
         SummaryActivity summaryActivity = (SummaryActivity) ActivityHelper.getCurrentActivity();
         IdlingResource loadIdlingResource = summaryActivity.getLoadIdlingResource();
@@ -113,12 +113,13 @@ public class AbstractTest {
         onView(withId(R.id.button_edit)).perform(PaymentActions.scrollToView(), click());
     }
 
-    void waitForConfirmPageLoaded(IdlingResource resultHandledIdlingResource) {
+    ConfirmActivity waitForConfirmActivityLoaded(IdlingResource resultHandledIdlingResource) {
         intended(hasComponent(ChargePaymentActivity.class.getName()));
         onView(withId(R.id.layout_chargepayment)).check(matches(isDisplayed()));
         register(resultHandledIdlingResource);
         intended(hasComponent(ConfirmActivity.class.getName()));
         onView(withId(R.id.layout_confirm)).check(matches(isDisplayed()));
+        return (ConfirmActivity) ActivityHelper.getCurrentActivity();
     }
 
     IdlingResource register(IdlingResource resource) {

@@ -46,16 +46,16 @@ public final class PresetAccountTests extends AbstractTest {
         int presetCardIndex = 1;
         int networkCardIndex = 3;
 
-        CheckoutActivity checkoutActivity = openCheckoutPage(true);
+        CheckoutActivity checkoutActivity = openCheckoutActivity(true);
         IdlingResource checkoutResultHandledIdlingResource = checkoutActivity.getResultHandledIdlingResource();
         clickCheckoutButton();
 
-        PaymentListActivity paymentListActivity = waitForPaymentListLoaded(1);
+        waitForPaymentListLoaded(1);
         openPaymentListCard(networkCardIndex, "card_network");
         clickPaymentListCardButton(networkCardIndex);
         register(checkoutResultHandledIdlingResource);
 
-        waitForSummaryPageLoaded();
+        waitForSummaryActivityLoaded();
         unregister(checkoutResultHandledIdlingResource);
 
         onView(withId(R.id.label_title)).check(matches(withText("PAYPAL")));
