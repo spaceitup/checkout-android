@@ -8,7 +8,8 @@ Changelog - Android SDK
 * [PCX-1232] - Soft keyboard closes when entering credit card
 * [PCX-1235] - Local title "Oops" is not shown in connection error popup dialogs
 * [PCX-1236] - Return error to merchant when no payment methods are available
-
+* [PCX-1238] - UI Tests do not wait correctly for confirm screen
+  
 **Version android-sdk 5.1.0**
 
 **Bug**
