@@ -8,6 +8,7 @@
 
 package net.optile.payment.ui.widget;
 
+import android.view.View;
 import net.optile.payment.validation.ValidationResult;
 
 /**
@@ -34,8 +35,18 @@ public interface WidgetPresenter {
 
     /**
      * Ask the presenter to show the keyboard
+     *
+     * @param view for which the keyboard should be shown
      */
-    void showKeyboard();
+    void showKeyboard(View view);
+
+    /**
+     * Request focus for the next widget after the current widget.
+     *
+     * @param currentWidget widget that is currently focussed
+     * @return true when next widget is focussed, false otherwise
+     */
+    boolean requestFocusNextWidget(FormWidget currentWidget);
 
     /**
      * Get the max length for the given input type

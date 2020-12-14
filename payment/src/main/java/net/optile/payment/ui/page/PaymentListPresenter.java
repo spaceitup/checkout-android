@@ -208,6 +208,10 @@ final class PaymentListPresenter implements PaymentSessionListener, Localization
     }
 
     private void handleLoadPaymentSessionProceed(PaymentSession session) {
+        if (session.isEmpty()) {
+            closeWithErrorCode("There are no payment methods available");
+            return;
+        }
         this.operation = null;
         this.session = session;
         loadLocalizations(session);

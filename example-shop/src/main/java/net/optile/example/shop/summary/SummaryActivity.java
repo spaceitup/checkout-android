@@ -138,6 +138,7 @@ public final class SummaryActivity extends BaseActivity implements SummaryView {
         if (active) {
             startActivity(ConfirmActivity.createStartIntent(this));
             supportFinishAfterTransition();
+            setResultHandledIdleState();
         }
     }
 

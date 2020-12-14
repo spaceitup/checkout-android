@@ -11,8 +11,10 @@ import static androidx.test.espresso.Espresso.onView;
 import static androidx.test.espresso.assertion.ViewAssertions.matches;
 import static androidx.test.espresso.intent.Intents.intended;
 import static androidx.test.espresso.intent.matcher.IntentMatchers.hasComponent;
+import static androidx.test.espresso.matcher.ViewMatchers.assertThat;
 import static androidx.test.espresso.matcher.ViewMatchers.isDisplayed;
 import static androidx.test.espresso.matcher.ViewMatchers.withId;
+import static org.hamcrest.Matchers.containsString;
 
 import java.io.IOException;
 
@@ -21,7 +23,6 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
-import androidx.test.espresso.IdlingResource;
 import androidx.test.espresso.intent.Intents;
 import androidx.test.ext.junit.runners.AndroidJUnit4;
 import androidx.test.filters.LargeTest;
@@ -47,11 +48,15 @@ public final class RedirectPaypalTests extends AbstractTest {
         Intents.init();
         int networkCardIndex = 3;
 
-        openPaymentList(false);
-        openPaymentCard(networkCardIndex, "card_network");
-        IdlingResource closeIdlingResource = clickCardButton(networkCardIndex);
+        openCheckoutActivity(false);
+        clickCheckoutButton();
+
+        waitForPaymentListLoaded(1);
+        openPaymentListCard(networkCardIndex, "card_network");
+        clickPaymentListCardButton(networkCardIndex);
+
         checkPayPalChromeDisplayed();
-        unregister(closeIdlingResource);
+        closeChromeBrowser();
         Intents.release();
     }
 
@@ -60,14 +65,16 @@ public final class RedirectPaypalTests extends AbstractTest {
         Intents.init();
         int networkCardIndex = 3;
 
-        openPaymentList(false);
-        openPaymentCard(networkCardIndex, "card_network");
-        IdlingResource closeIdlingResource = clickCardButton(networkCardIndex);
+        openCheckoutActivity(false);
+        clickCheckoutButton();
+
+        waitForPaymentListLoaded(1);
+        openPaymentListCard(networkCardIndex, "card_network");
+        clickPaymentListCardButton(networkCardIndex);
         closeChromeBrowser();
 
         intended(hasComponent(ChargePaymentActivity.class.getName()));
         onView(withId(R.id.alertTitle)).check(matches(isDisplayed()));
-        unregister(closeIdlingResource);
         Intents.release();
     }
 
@@ -81,7 +88,9 @@ public final class RedirectPaypalTests extends AbstractTest {
     private void checkPayPalChromeDisplayed() throws UiObjectNotFoundException {
         UiDevice uiDevice = UiDevice.getInstance(InstrumentationRegistry.getInstrumentation());
         UiObject2 uiObject = uiDevice.wait(Until.findObject(By.res("com.android.chrome:id/url_bar")), CHROME_TIMEOUT);
-        uiObject.wait(Until.textContains("https://www.sandbox.paypal.com"), CHROME_TIMEOUT);
+        String url = "sandbox.paypal.com";
+        uiObject.wait(Until.textContains(url), CHROME_TIMEOUT);
+        assertThat(uiObject.getText(), containsString(url));
     }
 
     void clickUiObjectByResource(UiDevice uiDevice, String resourceName) throws UiObjectNotFoundException {

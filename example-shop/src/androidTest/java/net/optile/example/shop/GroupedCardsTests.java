@@ -7,10 +7,6 @@
  */
 package net.optile.example.shop;
 
-import static androidx.test.espresso.Espresso.onView;
-import static androidx.test.espresso.action.ViewActions.click;
-import static androidx.test.espresso.matcher.ViewMatchers.withId;
-
 import java.io.IOException;
 
 import org.json.JSONException;
@@ -23,8 +19,10 @@ import androidx.test.espresso.intent.Intents;
 import androidx.test.ext.junit.runners.AndroidJUnit4;
 import androidx.test.filters.LargeTest;
 import androidx.test.rule.ActivityTestRule;
+import net.optile.example.shop.checkout.CheckoutActivity;
 import net.optile.example.shop.settings.SettingsActivity;
-import net.optile.payment.test.view.PaymentActions;
+import net.optile.example.shop.summary.SummaryActivity;
+import net.optile.payment.ui.page.PaymentListActivity;
 
 @RunWith(AndroidJUnit4.class)
 @LargeTest
@@ -33,18 +31,24 @@ public final class GroupedCardsTests extends AbstractTest {
     @Rule
     public ActivityTestRule<SettingsActivity> settingsActivityRule = new ActivityTestRule<>(SettingsActivity.class);
 
+
     @Test
     public void successfulDirectChargeTest() throws JSONException, IOException {
         Intents.init();
         int groupCardIndex = 1;
 
-        openPaymentList(false);
-        openPaymentCard(groupCardIndex, "card_group");
-        fillCreditCardData(groupCardIndex);
+        CheckoutActivity checkoutActivity = openCheckoutActivity(false);
+        IdlingResource resultHandledIdlingResource = checkoutActivity.getResultHandledIdlingResource();
+        clickCheckoutButton();
 
-        IdlingResource closeIdlingResource = clickCardButton(groupCardIndex);
-        waitForChargeCompleted();
-        unregister(closeIdlingResource);
+        PaymentListActivity paymentListActivity = waitForPaymentListLoaded(1);
+        openPaymentListCard(groupCardIndex, "card_group");
+        fillPaymentListCardData(groupCardIndex);
+
+        clickPaymentListCardButton(groupCardIndex);
+        waitForConfirmActivityLoaded(resultHandledIdlingResource);
+        unregister(resultHandledIdlingResource);
+
         Intents.release();
     }
 
@@ -53,16 +57,25 @@ public final class GroupedCardsTests extends AbstractTest {
         Intents.init();
         int groupCardIndex = 1;
 
-        openPaymentList(true);
-        openPaymentCard(groupCardIndex, "card_group");
-        fillCreditCardData(groupCardIndex);
+        CheckoutActivity checkoutActivity = openCheckoutActivity(true);
+        IdlingResource checkoutPaymentResultIdlingResource = checkoutActivity.getResultHandledIdlingResource();
+        clickCheckoutButton();
 
-        IdlingResource closeIdlingResource = clickCardButton(groupCardIndex);
-        waitForSummaryPageLoaded();
-        unregister(closeIdlingResource);
+        PaymentListActivity paymentListActivity = waitForPaymentListLoaded(1);
+        openPaymentListCard(groupCardIndex, "card_group");
+        fillPaymentListCardData(groupCardIndex);
 
-        onView(withId(R.id.button_pay)).perform(PaymentActions.scrollToView(), click());
-        waitForChargeCompleted();
+        clickPaymentListCardButton(groupCardIndex);
+        register(checkoutPaymentResultIdlingResource);
+        waitForSummaryActivityLoaded();
+        unregister(checkoutPaymentResultIdlingResource);
+
+        SummaryActivity summaryActivity = waitForSummaryActivityLoaded();
+        IdlingResource summaryPaymentResultIdlingResource = summaryActivity.getResultHandledIdlingResource();
+        clickSummaryPayButton();
+
+        waitForConfirmActivityLoaded(summaryPaymentResultIdlingResource);
+        unregister(summaryPaymentResultIdlingResource);
         Intents.release();
     }
 }
