@@ -43,7 +43,7 @@ public class AbstractTest {
 
     public final static long CHROME_TIMEOUT = 20000;
 
-    void openPaymentList(boolean presetFirst) throws IOException, JSONException {
+    CheckoutActivity openCheckoutPage(boolean presetFirst) throws IOException, JSONException {
         String baseUrl = BuildConfig.paymentapi_baseurl;
         String authHeader = BuildConfig.paymentapi_authheader;
         String listUrl = ListService.createListUrl(net.optile.example.shop.test.R.raw.listtemplate, presetFirst, baseUrl, authHeader);
@@ -52,11 +52,15 @@ public class AbstractTest {
         onView(withId(R.id.input_listurl)).perform(typeText(listUrl));
         onView(withId(R.id.button_settings)).perform(click());
         intended(hasComponent(CheckoutActivity.class.getName()));
-        onView(withId(R.id.button_checkout)).perform(PaymentActions.scrollToView(), click());
-        waitForPaymentListLoaded(1);
+        return (CheckoutActivity) ActivityHelper.getCurrentActivity();
     }
 
-    void waitForPaymentListLoaded(int count) {
+    void clickCheckoutButton() {
+        intended(hasComponent(CheckoutActivity.class.getName()));
+        onView(withId(R.id.button_checkout)).perform(PaymentActions.scrollToView(), click());
+    }
+
+    PaymentListActivity waitForPaymentListLoaded(int count) {
         intended(hasComponent(PaymentListActivity.class.getName()), times(count));
         PaymentListActivity listActivity = (PaymentListActivity) ActivityHelper.getCurrentActivity();
         IdlingResource loadIdlingResource = listActivity.getLoadIdlingResource();
@@ -64,25 +68,16 @@ public class AbstractTest {
         register(loadIdlingResource);
         onView(withId(R.id.recyclerview_paymentlist)).check(matches(isDisplayed()));
         unregister(loadIdlingResource);
+        return listActivity;
     }
 
-    void waitForSummaryPageLoaded() {
-        intended(hasComponent(SummaryActivity.class.getName()));
-        SummaryActivity summaryActivity = (SummaryActivity) ActivityHelper.getCurrentActivity();
-        IdlingResource loadIdlingResource = summaryActivity.getLoadIdlingResource();
-        register(loadIdlingResource);
-        onView(withId(R.id.layout_coordinator)).check(matches(isDisplayed()));
-        unregister(loadIdlingResource);
-    }
-
-
-    void openPaymentCard(int cardIndex, String cardTestId) {
+    void openPaymentListCard(int cardIndex, String cardTestId) {
         Matcher<View> list = withId(R.id.recyclerview_paymentlist);
         onView(list).check(matches(isCardWithTestId(cardIndex, cardTestId)));
         onView(list).perform(actionOnItemAtPosition(cardIndex, click()));
     }
 
-    void fillCreditCardData(int cardIndex) {
+    void fillPaymentListCardData(int cardIndex) {
         Matcher<View> list = withId(R.id.recyclerview_paymentlist);
         onView(list)
             .perform(actionOnViewInWidget(cardIndex, typeText("4111111111111111"), "number", R.id.textinputedittext), closeSoftKeyboard());
@@ -90,26 +85,40 @@ public class AbstractTest {
         onView(list)
             .perform(actionOnViewInWidget(cardIndex, typeText("123"), "verificationCode", R.id.textinputedittext), closeSoftKeyboard());
         onView(list)
-            .perform(actionOnViewInWidget(cardIndex, typeText("John Doe"), "holderName", R.id.textinputedittext), closeSoftKeyboard());
+            .perform(actionOnViewInWidget(cardIndex, typeText("Thomas Smith"), "holderName", R.id.textinputedittext), closeSoftKeyboard());
     }
 
-    void waitForChargeCompleted() {
+    void clickPaymentListCardButton(int cardIndex) {
+        intended(hasComponent(PaymentListActivity.class.getName()));
+        onView(withId(R.id.recyclerview_paymentlist)).perform(actionOnViewInWidget(cardIndex, click(), "buttonWidget", R.id.button));
+    }
+
+    SummaryActivity waitForSummaryPageLoaded() {
+        intended(hasComponent(SummaryActivity.class.getName()));
+        SummaryActivity summaryActivity = (SummaryActivity) ActivityHelper.getCurrentActivity();
+        IdlingResource loadIdlingResource = summaryActivity.getLoadIdlingResource();
+        register(loadIdlingResource);
+        onView(withId(R.id.layout_coordinator)).check(matches(isDisplayed()));
+        unregister(loadIdlingResource);
+        return summaryActivity;
+    }
+
+    void clickSummaryPayButton() {
+        intended(hasComponent(SummaryActivity.class.getName()));
+        onView(withId(R.id.button_pay)).perform(PaymentActions.scrollToView(), click());
+    }
+
+    void clickSummaryEditButton() {
+        intended(hasComponent(SummaryActivity.class.getName()));
+        onView(withId(R.id.button_edit)).perform(PaymentActions.scrollToView(), click());
+    }
+
+    void waitForConfirmPageLoaded(IdlingResource redirectIdlingResource) {
         intended(hasComponent(ChargePaymentActivity.class.getName()));
         onView(withId(R.id.layout_chargepayment)).check(matches(isDisplayed()));
-        ChargePaymentActivity chargeActivity = (ChargePaymentActivity) ActivityHelper.getCurrentActivity();
-        IdlingResource closeIdlingResource = chargeActivity.getCloseIdlingResource();
-        register(closeIdlingResource);
-
+        register(redirectIdlingResource);
         intended(hasComponent(ConfirmActivity.class.getName()));
         onView(withId(R.id.layout_confirm)).check(matches(isDisplayed()));
-        unregister(closeIdlingResource);
-    }
-
-    IdlingResource clickCardButton(int cardIndex) {
-        PaymentListActivity listActivity = (PaymentListActivity) ActivityHelper.getCurrentActivity();
-        IdlingResource closeIdlingResource = listActivity.getCloseIdlingResource();
-        onView(withId(R.id.recyclerview_paymentlist)).perform(actionOnViewInWidget(cardIndex, click(), "buttonWidget", R.id.button));
-        return register(closeIdlingResource);
     }
 
     IdlingResource register(IdlingResource resource) {

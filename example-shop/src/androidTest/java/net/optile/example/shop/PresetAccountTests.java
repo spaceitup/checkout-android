@@ -8,7 +8,6 @@
 package net.optile.example.shop;
 
 import static androidx.test.espresso.Espresso.onView;
-import static androidx.test.espresso.action.ViewActions.click;
 import static androidx.test.espresso.assertion.ViewAssertions.matches;
 import static androidx.test.espresso.matcher.ViewMatchers.withId;
 import static androidx.test.espresso.matcher.ViewMatchers.withText;
@@ -29,8 +28,9 @@ import androidx.test.ext.junit.runners.AndroidJUnit4;
 import androidx.test.filters.LargeTest;
 import androidx.test.rule.ActivityTestRule;
 import androidx.test.uiautomator.UiObjectNotFoundException;
+import net.optile.example.shop.checkout.CheckoutActivity;
 import net.optile.example.shop.settings.SettingsActivity;
-import net.optile.sharedtest.view.PaymentActions;
+import net.optile.payment.ui.page.PaymentListActivity;
 
 @RunWith(AndroidJUnit4.class)
 @LargeTest
@@ -42,22 +42,29 @@ public final class PresetAccountTests extends AbstractTest {
     @Test
     public void testPresetAccountWithoutAccountMask() throws JSONException, IOException, UiObjectNotFoundException {
         Intents.init();
+
         int presetCardIndex = 1;
         int networkCardIndex = 3;
 
-        openPaymentList(true);
-        openPaymentCard(networkCardIndex, "card_network");
+        CheckoutActivity checkoutActivity = openCheckoutPage(true);
+        IdlingResource checkoutResultHandledIdlingResource = checkoutActivity.getPaymentResultIdlingResource();
+        clickCheckoutButton();
 
-        IdlingResource closeIdlingResource = clickCardButton(networkCardIndex);
+        PaymentListActivity paymentListActivity = waitForPaymentListLoaded(1);
+        openPaymentListCard(networkCardIndex, "card_network");
+        clickPaymentListCardButton(networkCardIndex);
+        register(checkoutResultHandledIdlingResource);
+
         waitForSummaryPageLoaded();
-        unregister(closeIdlingResource);
+        unregister(checkoutResultHandledIdlingResource);
 
         onView(withId(R.id.label_title)).check(matches(withText("PAYPAL")));
-        onView(withId(R.id.button_edit)).perform(PaymentActions.scrollToView(), click());
-        waitForPaymentListLoaded(2);
+        clickSummaryEditButton();
 
+        waitForPaymentListLoaded(2);
         Matcher<View> list = withId(R.id.recyclerview_paymentlist);
         onView(list).check(matches(isViewInCard(presetCardIndex, withText("PayPal"), R.id.text_title)));
+
         Intents.release();
     }
 }
