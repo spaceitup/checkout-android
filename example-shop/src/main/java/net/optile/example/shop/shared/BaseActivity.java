@@ -32,8 +32,8 @@ public abstract class BaseActivity extends AppCompatActivity {
     protected boolean active;
     protected String listUrl;
     protected PaymentActivityResult sdkResult;
-    protected SimpleIdlingResource paymentResultIdlingResource;
-    private boolean paymentResultHandled;
+    protected SimpleIdlingResource resultHandledIdlingResource;
+    private boolean resultHandled;
 
     /**
      * {@inheritDoc}
@@ -85,7 +85,7 @@ public abstract class BaseActivity extends AppCompatActivity {
     @Override
     public void onResume() {
         super.onResume();
-        paymentResultHandled = false;
+        resultHandled = false;
         active = true;
     }
 
@@ -138,28 +138,28 @@ public abstract class BaseActivity extends AppCompatActivity {
     }
 
     /**
-     * Only called from test, creates and returns a new redirect IdlingResource
+     * Only called from test, creates and returns a new paymentResult handled IdlingResource
      */
     @VisibleForTesting
-    public IdlingResource getPaymentResultIdlingResource() {
-        if (paymentResultIdlingResource == null) {
-            paymentResultIdlingResource = new SimpleIdlingResource(getClass().getSimpleName() + "-paymentResultIdlingResource");
+    public IdlingResource getResultHandledIdlingResource() {
+        if (resultHandledIdlingResource == null) {
+            resultHandledIdlingResource = new SimpleIdlingResource(getClass().getSimpleName() + "-resultHandledIdlingResource");
         }
-        if (paymentResultHandled) {
-            paymentResultIdlingResource.setIdleState(true);
+        if (resultHandled) {
+            resultHandledIdlingResource.setIdleState(true);
         } else {
-            paymentResultIdlingResource.reset();
+            resultHandledIdlingResource.reset();
         }
-        return paymentResultIdlingResource;
+        return resultHandledIdlingResource;
     }
 
     /**
-     * Set the redirect idle state for the redirectIdlingResource
+     * Set the result handled idle state for the IdlingResource
      */
-    protected void setPaymentResultHandledIdleState() {
-        paymentResultHandled = true;
-        if (paymentResultIdlingResource != null) {
-            paymentResultIdlingResource.setIdleState(true);
+    protected void setResultHandledIdleState() {
+        resultHandled = true;
+        if (resultHandledIdlingResource != null) {
+            resultHandledIdlingResource.setIdleState(true);
         }
     }
 }

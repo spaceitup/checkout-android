@@ -47,7 +47,7 @@ public final class PresetAccountTests extends AbstractTest {
         int networkCardIndex = 3;
 
         CheckoutActivity checkoutActivity = openCheckoutPage(true);
-        IdlingResource checkoutResultHandledIdlingResource = checkoutActivity.getPaymentResultIdlingResource();
+        IdlingResource checkoutResultHandledIdlingResource = checkoutActivity.getResultHandledIdlingResource();
         clickCheckoutButton();
 
         PaymentListActivity paymentListActivity = waitForPaymentListLoaded(1);

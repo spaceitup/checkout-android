@@ -113,10 +113,10 @@ public class AbstractTest {
         onView(withId(R.id.button_edit)).perform(PaymentActions.scrollToView(), click());
     }
 
-    void waitForConfirmPageLoaded(IdlingResource redirectIdlingResource) {
+    void waitForConfirmPageLoaded(IdlingResource resultHandledIdlingResource) {
         intended(hasComponent(ChargePaymentActivity.class.getName()));
         onView(withId(R.id.layout_chargepayment)).check(matches(isDisplayed()));
-        register(redirectIdlingResource);
+        register(resultHandledIdlingResource);
         intended(hasComponent(ConfirmActivity.class.getName()));
         onView(withId(R.id.layout_confirm)).check(matches(isDisplayed()));
     }

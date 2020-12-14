@@ -92,7 +92,7 @@ public final class CheckoutActivity extends BaseActivity implements CheckoutView
         }
         Intent intent = SummaryActivity.createStartIntent(this, listUrl);
         startActivity(intent);
-        setPaymentResultHandledIdleState();
+        setResultHandledIdleState();
     }
 
     /**
@@ -105,7 +105,7 @@ public final class CheckoutActivity extends BaseActivity implements CheckoutView
         }
         Intent intent = ConfirmActivity.createStartIntent(this);
         startActivity(intent);
-        setPaymentResultHandledIdleState();
+        setResultHandledIdleState();
     }
 
     /**
