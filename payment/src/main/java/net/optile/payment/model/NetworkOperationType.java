@@ -16,7 +16,7 @@ import androidx.annotation.StringDef;
 /**
  * This class describes the different operation types
  */
-public class OperationType {
+public class NetworkOperationType {
 
     public final static String CHARGE = "CHARGE";
     public final static String PRESET = "PRESET";

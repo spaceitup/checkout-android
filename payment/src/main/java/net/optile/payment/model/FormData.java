@@ -9,6 +9,7 @@
 package net.optile.payment.model;
 
 import java.net.URL;
+
 import lombok.Getter;
 import lombok.Setter;
 

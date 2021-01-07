@@ -25,7 +25,7 @@ public class MapLocalizationHolder implements LocalizationHolder {
     public MapLocalizationHolder(Map<String, String> map) {
         this.map = map;
     }
-    
+
     /**
      * {@inheritDoc}
      */

@@ -31,7 +31,7 @@ public class ApplicableNetwork {
     /** Simple API, always present */
     private String grouping;
     /** Simple API, always present */
-    @OperationType.Definition
+    @NetworkOperationType.Definition
     private String operationType;
     /** Simple API, always present */
     @RegistrationType.Definition

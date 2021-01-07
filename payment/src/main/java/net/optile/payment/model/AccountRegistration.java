@@ -31,7 +31,7 @@ public class AccountRegistration {
     /** Simple API, always present */
     private String label;
     /** Simple API, always present */
-    @OperationType.Definition
+    @NetworkOperationType.Definition
     private String operationType;
     /** Simple API, always present */
     private AccountMask maskedAccount;

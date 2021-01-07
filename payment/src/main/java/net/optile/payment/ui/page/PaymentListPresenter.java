@@ -9,7 +9,7 @@
 package net.optile.payment.ui.page;
 
 import static net.optile.payment.model.InteractionCode.PROCEED;
-import static net.optile.payment.model.OperationType.CHARGE;
+import static net.optile.payment.model.NetworkOperationType.CHARGE;
 import static net.optile.payment.ui.PaymentActivityResult.RESULT_CODE_ERROR;
 import static net.optile.payment.ui.PaymentActivityResult.RESULT_CODE_PROCEED;
 import static net.optile.payment.ui.redirect.RedirectService.INTERACTION_CODE;

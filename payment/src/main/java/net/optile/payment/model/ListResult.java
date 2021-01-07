@@ -45,7 +45,11 @@ public class ListResult {
     private Boolean allowDelete;
     /** Integration type, could be one of MOBILE_NATIVE, PURE_NATIVE, DISPLAY_NATIVE, SELECTIVE_NATIVE, HOSTED */
     /** The style object passed in the transaction. */
-	private Style style;
+    private Style style;
+    /** Payment information, optional */
+    private Payment payment;
+    /** Collections of the products, optional */
+    private List<Product> products;
     /** Integration type used when creating the LIST session, always present */
     private String integrationType;
 }

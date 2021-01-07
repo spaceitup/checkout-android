@@ -25,7 +25,7 @@ public class PresetAccount {
     /** Network code (Simple API, always present) */
     private String code;
     /** Simple API, always present */
-    @OperationType.Definition
+    @NetworkOperationType.Definition
     private String operationType;
     /** Masked account (Simple API, optional) */
     private AccountMask maskedAccount;
