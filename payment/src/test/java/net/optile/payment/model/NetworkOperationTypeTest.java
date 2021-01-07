@@ -16,12 +16,12 @@ import org.junit.Test;
 public class NetworkOperationTypeTest {
 
     @Test
-    public void isOperationType_invalidValue_false() {
+    public void isNetworkOperationType_invalidValue_false() {
         assertFalse(NetworkOperationType.isValid("foo"));
     }
 
     @Test
-    public void isOperationType_validValue_true() {
+    public void isNetworkOperationType_validValue_true() {
         assertTrue(NetworkOperationType.isValid(NetworkOperationType.CHARGE));
         assertTrue(NetworkOperationType.isValid(NetworkOperationType.PRESET));
         assertTrue(NetworkOperationType.isValid(NetworkOperationType.PAYOUT));
