@@ -12,6 +12,9 @@ import java.net.URL;
 import java.util.List;
 import java.util.Map;
 
+import lombok.Getter;
+import lombok.Setter;
+
 /**
  * This class is designed to hold list of payment networks available for particular transaction based on provided information and result of
  * initialized payment session.
@@ -19,6 +22,8 @@ import java.util.Map;
  * An instance of this object is returned as a result of new <code>Transaction</code> initialization, or during list status update via GET
  * method.
  */
+@Getter
+@Setter
 public class ListResult {
     /** Simple API, always present */
     private Map<String, URL> links;
@@ -39,195 +44,8 @@ public class ListResult {
     /** Indicates whether this LIST is explicitly initialized with permission or denial to delete accounts. */
     private Boolean allowDelete;
     /** Integration type, could be one of MOBILE_NATIVE, PURE_NATIVE, DISPLAY_NATIVE, SELECTIVE_NATIVE, HOSTED */
+    /** The style object passed in the transaction. */
+	private Style style;
+    /** Integration type used when creating the LIST session, always present */
     private String integrationType;
-
-    /**
-     * Gets value of links.
-     *
-     * @return the links.
-     */
-    public Map<String, URL> getLinks() {
-        return links;
-    }
-
-    /**
-     * Sets value of links.
-     *
-     * @param links the links to set.
-     */
-    public void setLinks(Map<String, URL> links) {
-        this.links = links;
-    }
-
-    /**
-     * Gets value of resultInfo.
-     *
-     * @return the resultInfo.
-     */
-    public String getResultInfo() {
-        return resultInfo;
-    }
-
-    /**
-     * Sets value of resultInfo.
-     *
-     * @param resultInfo the resultInfo to set.
-     */
-    public void setResultInfo(String resultInfo) {
-        this.resultInfo = resultInfo;
-    }
-
-    /**
-     * Gets value of interaction.
-     *
-     * @return the interaction.
-     */
-    public Interaction getInteraction() {
-        return interaction;
-    }
-
-    /**
-     * Sets value of interaction.
-     *
-     * @param interaction the interaction to set.
-     */
-    public void setInteraction(Interaction interaction) {
-        this.interaction = interaction;
-    }
-
-    /**
-     * Gets value of accounts.
-     *
-     * @return the accounts.
-     */
-    public List<AccountRegistration> getAccounts() {
-        return accounts;
-    }
-
-    /**
-     * Sets value of accounts.
-     *
-     * @param accounts the accounts to set.
-     */
-    public void setAccounts(List<AccountRegistration> accounts) {
-        this.accounts = accounts;
-    }
-
-    /**
-     * Gets value of networks.
-     *
-     * @return the networks.
-     */
-    public Networks getNetworks() {
-        return networks;
-    }
-
-    /**
-     * Sets value of networks.
-     *
-     * @param networks the networks to set.
-     */
-    public void setNetworks(Networks networks) {
-        this.networks = networks;
-    }
-
-    /**
-     * Gets value of extraElements.
-     *
-     * @return the extraElements.
-     */
-    public ExtraElements getExtraElements() {
-        return extraElements;
-    }
-
-    /**
-     * Sets value of extraElements.
-     *
-     * @param extraElements the extraElements to set.
-     */
-    public void setExtraElements(ExtraElements extraElements) {
-        this.extraElements = extraElements;
-    }
-
-    /**
-     * Gets preset account.
-     *
-     * @return Preset account object.
-     */
-    public PresetAccount getPresetAccount() {
-        return presetAccount;
-    }
-
-    /**
-     * Sets preset account.
-     *
-     * @param presetAccount Preset account object.
-     */
-    public void setPresetAccount(final PresetAccount presetAccount) {
-        this.presetAccount = presetAccount;
-    }
-
-    /**
-     * Gets the LIST type based on operation of next referred action. Could be one of <code>CHARGE</code>, <code>PRESET</code>,
-     * <code>PAYOUT</code>, <code>UPDATE</code>. Using this information the client could determine the type of the list like LIST-for-UPDATE
-     * or LIST-for-PAYOUT and so on.
-     *
-     * @return Operation of referred actions.
-     */
-    @OperationType.Definition
-    public String getOperationType() {
-        return operationType;
-    }
-
-    /**
-     * Sets LIST operation type.
-     *
-     * @param operationType Operation type value.
-     */
-    public void setOperationType(@OperationType.Definition final String operationType) {
-        this.operationType = operationType;
-    }
-
-    /**
-     * Gets the INTEGRATION type. Could be one of <code>MOBILE_NATIVE</code>, <code>PURE_NATIVE</code>, <code>DISPLAY_NATIVE</code>, <code>SELECTIVE_NATIVE</code>, <code>HOSTED</code>
-     * Using this information the client could determine the type of the integration.
-     *
-     * @return Integration type.
-     */
-    @OperationType.Definition
-    public String getIntegrationType() {
-        return integrationType;
-    }
-
-    /**
-     * Sets INTEGRATION type.
-     *
-     * @param integrationType Integration type value.
-     */
-    public void setIntegrationType(@IntegrationType.Definition final String integrationType) {
-        this.integrationType = integrationType;
-    }
-
-    /**
-     * Indicates whether this LIST is explicitly initialized with permission or denial to delete accounts.
-     * <p>
-     * If set to <code>true</code> the deletion of registered account is permitted by the merchant during this LIST session. If set to
-     * <code>false</code> the deletion is disallowed.
-     * <p>
-     * If nothing is set the default behavior applies: deletion is only allowed for LISTs in the <code>updateOnly</code> mode.
-     *
-     * @return the value of allowDelete flag.
-     */
-    public Boolean getAllowDelete() {
-        return allowDelete;
-    }
-
-    /**
-     * Sets value of allowDelete flag.
-     *
-     * @param allowDelete the <code>true</code> to allow deleting of accounts, <code>false</code> to disallow that.
-     */
-    public void setAllowDelete(final Boolean allowDelete) {
-        this.allowDelete = allowDelete;
-    }
 }

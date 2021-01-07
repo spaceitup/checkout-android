@@ -9,29 +9,15 @@
 package net.optile.payment.model;
 
 import java.util.Date;
+import lombok.Getter;
+import lombok.Setter;
 
 /**
  * Customer data what should be used to pre-fill payment form.
  */
+@Getter
+@Setter
 public class CustomerFormData {
     /** optional */
     private Date birthday;
-
-    /**
-     * Gets customer birthday.
-     *
-     * @return Customer birthday.
-     */
-    public Date getBirthday() {
-        return birthday;
-    }
-
-    /**
-     * Sets customer birthday.
-     *
-     * @param birthday Customer's birthday.
-     */
-    public void setBirthday(final Date birthday) {
-        this.birthday = birthday;
-    }
 }

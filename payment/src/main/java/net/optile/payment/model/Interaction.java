@@ -8,9 +8,14 @@
 
 package net.optile.payment.model;
 
+import lombok.Getter;
+import lombok.Setter;
+
 /**
  * This class is designed to hold interaction information that prescribes further reaction of merchant portal to this transaction or operation.
  */
+@Getter
+@Setter
 public class Interaction {
     /** Simple API, always present */
     @InteractionCode.Definition
@@ -18,16 +23,6 @@ public class Interaction {
     /** Simple API, always present */
     @InteractionReason.Definition
     private String reason;
-
-    /**
-     * Gets value of code.
-     *
-     * @return the code.
-     */
-    @InteractionCode.Definition
-    public String getCode() {
-        return code;
-    }
 
     /**
      * Construct an empty Interaction Object
@@ -43,34 +38,6 @@ public class Interaction {
      */
     public Interaction(@InteractionCode.Definition String code, @InteractionReason.Definition String reason) {
         this.code = code;
-        this.reason = reason;
-    }
-
-    /**
-     * Sets value of code.
-     *
-     * @param code the code to set.
-     */
-    public void setCode(@InteractionCode.Definition String code) {
-        this.code = code;
-    }
-
-    /**
-     * Gets value of reason.
-     *
-     * @return the reason.
-     */
-    @InteractionReason.Definition
-    public String getReason() {
-        return reason;
-    }
-
-    /**
-     * Sets value of reason.
-     *
-     * @param reason the reason to set.
-     */
-    public void setReason(@InteractionReason.Definition String reason) {
         this.reason = reason;
     }
 }

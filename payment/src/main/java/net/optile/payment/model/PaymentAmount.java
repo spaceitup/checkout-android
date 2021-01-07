@@ -10,48 +10,17 @@ package net.optile.payment.model;
 
 import java.math.BigDecimal;
 
+import lombok.Getter;
+import lombok.Setter;
+
 /**
  * Payment amount data.
  */
+@Getter
+@Setter
 public class PaymentAmount {
     /** amount */
     private BigDecimal amount;
     /** currency */
     private String currency;
-
-    /**
-     * Gets payment amount.
-     *
-     * @return Amount value in major units.
-     */
-    public BigDecimal getAmount() {
-        return amount;
-    }
-
-    /**
-     * Sets payment amount in major units.
-     *
-     * @param amount Amount value in major units.
-     */
-    public void setAmount(final BigDecimal amount) {
-        this.amount = amount;
-    }
-
-    /**
-     * Gets payment currency.
-     *
-     * @return Payment currency.
-     */
-    public String getCurrency() {
-        return currency;
-    }
-
-    /**
-     * Sets payment currency.
-     *
-     * @param currency Payment currency.
-     */
-    public void setCurrency(final String currency) {
-        this.currency = currency;
-    }
 }
