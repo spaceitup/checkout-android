@@ -143,7 +143,7 @@ public final class Localization {
     public static String translateAccountValue(String networkCode, String account, String value) {
         return translate(networkCode, LocalizationKey.accountValueKey(account, value));
     }
-    
+
     /**
      * Helper method to obtain the translation for the account placeholder.
      *

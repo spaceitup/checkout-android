@@ -8,29 +8,16 @@
 
 package net.optile.payment.model;
 
+import lombok.Getter;
+import lombok.Setter;
+
 /**
  * Account data what should be used to pre-fill payment form.
  */
+@Getter
+@Setter
 public class AccountFormData {
 
     /** holder name */
     private String holderName;
-
-    /**
-     * Gets value of holderName.
-     *
-     * @return the holderName.
-     */
-    public String getHolderName() {
-        return holderName;
-    }
-
-    /**
-     * Sets value of holderName.
-     *
-     * @param holderName the holderName to set.
-     */
-    public void setHolderName(String holderName) {
-        this.holderName = holderName;
-    }
 }

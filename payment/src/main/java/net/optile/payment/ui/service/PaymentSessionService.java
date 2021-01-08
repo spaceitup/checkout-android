@@ -26,8 +26,8 @@ import net.optile.payment.core.Workers;
 import net.optile.payment.model.AccountRegistration;
 import net.optile.payment.model.ApplicableNetwork;
 import net.optile.payment.model.ListResult;
+import net.optile.payment.model.NetworkOperationType;
 import net.optile.payment.model.Networks;
-import net.optile.payment.model.OperationType;
 import net.optile.payment.model.PresetAccount;
 import net.optile.payment.network.ListConnection;
 import net.optile.payment.resource.PaymentGroup;
@@ -128,8 +128,8 @@ public final class PaymentSessionService {
      * @param operationType the operation type to check
      * @return true when supported, false otherwise
      */
-    public boolean isSupportedOperationType(String operationType) {
-        return OperationType.CHARGE.equals(operationType) || OperationType.PRESET.equals(operationType);
+    public boolean isSupportedNetworkOperationType(String operationType) {
+        return NetworkOperationType.CHARGE.equals(operationType) || NetworkOperationType.PRESET.equals(operationType);
     }
 
     private PaymentSession asyncLoadPaymentSession(String listUrl, Context context) throws PaymentException {
@@ -141,7 +141,7 @@ public final class PaymentSessionService {
         }
 
         String operationType = listResult.getOperationType();
-        if (!isSupportedOperationType(operationType)) {
+        if (!isSupportedNetworkOperationType(operationType)) {
             throw new PaymentException("List operationType is not supported: " + operationType);
         }
         Map<String, PaymentNetwork> networks = loadPaymentNetworks(listResult);

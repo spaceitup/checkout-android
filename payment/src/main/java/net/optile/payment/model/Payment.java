@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2020 optile GmbH
+ * Copyright (c) 2019 optile GmbH
  * https://www.optile.net
  *
  * This file is open source and available under the MIT license.
@@ -14,13 +14,19 @@ import lombok.Getter;
 import lombok.Setter;
 
 /**
- * Payment amount data.
+ * This class is designed to hold payment information.
  */
 @Getter
 @Setter
-public class PaymentAmount {
-    /** amount */
+public class Payment {
+    /** mandatory */
+    private String reference;
+    /** mandatory */
     private BigDecimal amount;
-    /** currency */
+    /** mandatory */
     private String currency;
+    /** optional (max 128) */
+    private String invoiceId;
+    /** optional */
+    private LongReference longReference;
 }

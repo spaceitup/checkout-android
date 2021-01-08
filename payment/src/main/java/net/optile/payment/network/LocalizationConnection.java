@@ -9,13 +9,10 @@
 package net.optile.payment.network;
 
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Properties;
 
 import com.google.gson.JsonParseException;
 import com.google.gson.reflect.TypeToken;
@@ -73,7 +70,7 @@ public final class LocalizationConnection extends BaseConnection {
      * @return the LocalizationHolder containing the localizations
      */
     private LocalizationHolder handleLoadLocalizationOk(final String data) throws JsonParseException {
-        Map<String, String> map = gson.fromJson(data, new TypeToken<HashMap<String, String>>() {}.getType());
+        Map<String, String> map = gson.fromJson(data, new TypeToken<HashMap<String, String>>() { }.getType());
         return new MapLocalizationHolder(map);
     }
 }

@@ -8,9 +8,14 @@
 
 package net.optile.payment.model;
 
+import lombok.Getter;
+import lombok.Setter;
+
 /**
  * This class is designed to hold information about error that happened during processing of either list or operation request.
  */
+@Getter
+@Setter
 public class ErrorInfo {
     /** Simple API, always present */
     private String resultInfo;
@@ -31,42 +36,6 @@ public class ErrorInfo {
      */
     public ErrorInfo(String resultInfo, Interaction interaction) {
         this.resultInfo = resultInfo;
-        this.interaction = interaction;
-    }
-
-    /**
-     * Gets value of resultInfo.
-     *
-     * @return the resultInfo.
-     */
-    public String getResultInfo() {
-        return resultInfo;
-    }
-
-    /**
-     * Sets value of resultInfo.
-     *
-     * @param resultInfo the resultInfo to set.
-     */
-    public void setResultInfo(String resultInfo) {
-        this.resultInfo = resultInfo;
-    }
-
-    /**
-     * Gets value of interaction.
-     *
-     * @return the interaction.
-     */
-    public Interaction getInteraction() {
-        return interaction;
-    }
-
-    /**
-     * Sets value of interaction.
-     *
-     * @param interaction the interaction to set.
-     */
-    public void setInteraction(Interaction interaction) {
         this.interaction = interaction;
     }
 }
