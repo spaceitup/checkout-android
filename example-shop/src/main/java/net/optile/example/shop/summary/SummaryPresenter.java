@@ -175,7 +175,7 @@ final class SummaryPresenter {
     }
 
     private ListResult asyncLoadPaymentSession(String listUrl) throws ShopException {
-        ListConnection conn = new ListConnection();
+        ListConnection conn = new ListConnection(view.getActivity());
         try {
             return conn.getListResult(listUrl);
         } catch (PaymentException e) {

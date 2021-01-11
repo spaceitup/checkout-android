@@ -30,7 +30,6 @@ import androidx.test.rule.ActivityTestRule;
 import androidx.test.uiautomator.UiObjectNotFoundException;
 import net.optile.example.shop.checkout.CheckoutActivity;
 import net.optile.example.shop.settings.SettingsActivity;
-import net.optile.payment.ui.page.PaymentListActivity;
 
 @RunWith(AndroidJUnit4.class)
 @LargeTest
