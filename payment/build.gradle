@@ -1,6 +1,5 @@
 apply plugin: "com.android.library"
 apply plugin: "maven"
-apply plugin: "io.freefair.lombok"
 
 assemble.dependsOn('lint')
 
