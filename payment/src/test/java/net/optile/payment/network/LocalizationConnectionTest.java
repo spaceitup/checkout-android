@@ -12,6 +12,8 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.robolectric.RobolectricTestRunner;
 
+import android.content.Context;
+import androidx.test.core.app.ApplicationProvider;
 import net.optile.payment.core.PaymentException;
 import net.optile.payment.localization.LocalizationHolder;
 
@@ -26,7 +28,8 @@ public class LocalizationConnectionTest {
      */
     @Test(expected = IllegalArgumentException.class)
     public void loadLocalizationHolder_invalidURL_IllegalArgumentException() throws PaymentException {
-        LocalizationConnection conn = new LocalizationConnection();
+        Context context = ApplicationProvider.getApplicationContext();
+        LocalizationConnection conn = new LocalizationConnection(context);
         LocalizationHolder holder = conn.loadLocalization(null);
     }
 }

@@ -12,6 +12,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.robolectric.RobolectricTestRunner;
 
+import androidx.test.core.app.ApplicationProvider;
 import net.optile.payment.core.PaymentException;
 
 /**
@@ -27,7 +28,7 @@ public class PaymentConnectionTest {
      */
     @Test(expected = IllegalArgumentException.class)
     public void createOperation_invalidData_exception() throws PaymentException {
-        PaymentConnection conn = new PaymentConnection();
+        PaymentConnection conn = new PaymentConnection(ApplicationProvider.getApplicationContext());
         conn.postOperation(null);
     }
 }

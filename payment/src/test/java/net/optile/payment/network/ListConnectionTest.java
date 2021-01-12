@@ -12,6 +12,8 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.robolectric.RobolectricTestRunner;
 
+import android.content.Context;
+import androidx.test.core.app.ApplicationProvider;
 import net.optile.payment.core.PaymentException;
 import net.optile.payment.model.ListResult;
 
@@ -28,8 +30,8 @@ public class ListConnectionTest {
      */
     @Test(expected = IllegalArgumentException.class)
     public void createPaymentSession_invalidBaseUrl_IllegalArgumentException() throws PaymentException {
-        ListConnection conn = new ListConnection();
-        ListResult result = conn.createPaymentSession(null, "auth123", "{}");
+        ListConnection conn = createListConnection();
+        conn.createPaymentSession(null, "auth123", "{}");
     }
 
     /**
@@ -39,8 +41,8 @@ public class ListConnectionTest {
      */
     @Test(expected = IllegalArgumentException.class)
     public void createPaymentSession_invalidAuthorization_IllegalArgumentException() throws PaymentException {
-        ListConnection conn = new ListConnection();
-        ListResult result = conn.createPaymentSession("http://localhost", null, "{}");
+        ListConnection conn = createListConnection();
+        conn.createPaymentSession("http://localhost", null, "{}");
     }
 
     /**
@@ -50,8 +52,8 @@ public class ListConnectionTest {
      */
     @Test(expected = IllegalArgumentException.class)
     public void createPaymentSession_invalidListData_IllegalArgumentException() throws PaymentException {
-        ListConnection conn = new ListConnection();
-        ListResult result = conn.createPaymentSession("http://localhost", "auth123", "");
+        ListConnection conn = createListConnection();
+        conn.createPaymentSession("http://localhost", "auth123", "");
     }
 
     /**
@@ -61,7 +63,12 @@ public class ListConnectionTest {
      */
     @Test(expected = IllegalArgumentException.class)
     public void getListResult_invalidURL_IllegalArgumentException() throws PaymentException {
-        ListConnection conn = new ListConnection();
-        ListResult result = conn.getListResult(null);
+        ListConnection conn = createListConnection();
+        conn.getListResult(null);
+    }
+
+    private ListConnection createListConnection() {
+        Context context = ApplicationProvider.getApplicationContext();
+        return new ListConnection(context);
     }
 }

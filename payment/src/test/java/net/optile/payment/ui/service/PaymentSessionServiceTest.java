@@ -15,6 +15,8 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.robolectric.RobolectricTestRunner;
 
+import android.content.Context;
+import androidx.test.core.app.ApplicationProvider;
 import net.optile.payment.model.NetworkOperationType;
 
 @RunWith(RobolectricTestRunner.class)
@@ -22,7 +24,8 @@ public class PaymentSessionServiceTest {
 
     @Test
     public void isSupportedOperationType() {
-        PaymentSessionService service = new PaymentSessionService();
+        Context context = ApplicationProvider.getApplicationContext();
+        PaymentSessionService service = new PaymentSessionService(context);
         assertTrue(service.isSupportedNetworkOperationType(NetworkOperationType.CHARGE));
         assertTrue(service.isSupportedNetworkOperationType(NetworkOperationType.PRESET));
         assertFalse(service.isSupportedNetworkOperationType(NetworkOperationType.UPDATE));

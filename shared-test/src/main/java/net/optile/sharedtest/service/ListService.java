@@ -31,10 +31,10 @@ public class ListService {
     private final String auth;
     private final ListConnection conn;
 
-    private ListService(String url, String auth) {
+    private ListService(Context context, String url, String auth) {
         this.url = url;
         this.auth = auth;
-        this.conn = new ListConnection();
+        this.conn = new ListConnection(context);
     }
 
     /**
@@ -44,8 +44,8 @@ public class ListService {
      * @param authHeader authentication token
      * @return the newly created ListService
      */
-    public final static ListService createInstance(String baseUrl, String authHeader) {
-        return new ListService(baseUrl, authHeader);
+    public final static ListService createInstance(Context context, String baseUrl, String authHeader) {
+        return new ListService(context, baseUrl, authHeader);
     }
 
     /**
@@ -94,7 +94,7 @@ public class ListService {
     public static String createListUrl(int jsonResId, boolean presetFirst, String baseUrl, String authHeader)
         throws JSONException, IOException {
         Context context = InstrumentationRegistry.getInstrumentation().getTargetContext();
-        ListService service = ListService.createInstance(baseUrl, authHeader);
+        ListService service = ListService.createInstance(context, baseUrl, authHeader);
         ListRequest request = ListRequest.of(service.loadJSONTemplate(jsonResId))
             .presetFirst(presetFirst)
             .appId(context.getPackageName()).build();
