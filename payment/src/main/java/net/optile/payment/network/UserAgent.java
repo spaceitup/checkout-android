@@ -20,23 +20,22 @@ import net.optile.payment.core.PaymentException;
  */
 public final class UserAgent {
 
-    private final String userAgent;
+    private final String userAgentValue;
 
     private UserAgent(Builder builder) {
-        this.userAgent = new StringBuilder("android-sdk/").
-            append(builder.sdkVersionName).append(" (").
-            append(builder.sdkVersionCode).append(") ").
+        this.userAgentValue = "android-sdk/" + 
+            builder.sdkVersionName + " (" + 
+            builder.sdkVersionCode + ") " +
 
-            append("App/").append(builder.appVersionName).append(" (").
-            append(builder.appPackageName).append("; ").
-            append(builder.appName).append("; ").
-            append(builder.appVersionCode).append(") ").
+            "App/" + builder.appVersionName + " (" +
+            builder.appPackageName + "; " + 
+            builder.appName + "; " +
+            builder.appVersionCode + ") " +
 
-            append("Platform/").append(builder.buildVersionSdkInt).append(" (").
-            append(builder.buildManufacturer).append("; ").
-            append(builder.buildModel).append("; ").
-            append(builder.buildVersionRelease).append(")").
-            toString();
+            "Platform/" + builder.buildVersionSdkInt + " (" +
+            builder.buildManufacturer + "; " +
+            builder.buildModel + "; " +
+            builder.buildVersionRelease + ")";
     }
 
     public static Builder createBuilder() {
@@ -50,6 +49,9 @@ public final class UserAgent {
      * @return the newly created default UserAgent
      */
     public static UserAgent createFromContext(Context context) throws PaymentException {
+        if (context == null) {
+            throw new IllegalArgumentException("Context cannot be null");
+        }
         Builder builder = createBuilder();
         try {
             Context appContext = context.getApplicationContext();
@@ -75,8 +77,8 @@ public final class UserAgent {
         }
     }
 
-    public String toString() {
-        return userAgent;
+    public String getValue() {
+        return userAgentValue;
     }
 
     public static final class Builder {
