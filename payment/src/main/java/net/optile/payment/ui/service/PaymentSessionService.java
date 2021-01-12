@@ -50,9 +50,11 @@ public final class PaymentSessionService {
 
     /**
      * Create a new PaymentSessionService, this service is used to load the PaymentSession.
+     *
+     * @param context context in which this service will run
      */
-    public PaymentSessionService() {
-        this.listConnection = new ListConnection();
+    public PaymentSessionService(Context context) {
+        this.listConnection = new ListConnection(context);
     }
 
     /**

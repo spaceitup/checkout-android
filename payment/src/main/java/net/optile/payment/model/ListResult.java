@@ -43,7 +43,6 @@ public class ListResult {
     private String operationType;
     /** Indicates whether this LIST is explicitly initialized with permission or denial to delete accounts. */
     private Boolean allowDelete;
-    /** Integration type, could be one of MOBILE_NATIVE, PURE_NATIVE, DISPLAY_NATIVE, SELECTIVE_NATIVE, HOSTED */
     /** The style object passed in the transaction. */
     private Style style;
     /** Payment information, optional */

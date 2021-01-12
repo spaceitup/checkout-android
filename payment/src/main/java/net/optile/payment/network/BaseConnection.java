@@ -18,12 +18,13 @@ import java.net.CookieManager;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
+import java.util.Objects;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonParseException;
 
-import android.os.Build;
+import android.content.Context;
 import android.text.TextUtils;
 import android.util.Log;
 import net.optile.payment.core.PaymentException;
@@ -39,7 +40,6 @@ abstract class BaseConnection {
     final static String HEADER_CONTENT_TYPE = "Content-Type";
     final static String URI_PATH_API = "api";
     final static String URI_PATH_LISTS = "lists";
-    final static String URI_PARAM_VIEW = "view";
     final static String VALUE_APP_JSON = "application/json;charset=UTF-8";
     private final static int TIMEOUT_CONNECT = 5000;
     private final static int TIMEOUT_READ = 30000;
@@ -47,7 +47,7 @@ abstract class BaseConnection {
     private final static String HTTP_GET = "GET";
     private final static String HTTP_POST = "POST";
     private final static String CONTENTTYPE_JSON = "application/json";
-    private static volatile String userAgent;
+    private static volatile UserAgent userAgent;
 
     /**
      * For now we will use Gson to parse json content
@@ -58,50 +58,42 @@ abstract class BaseConnection {
 
     /**
      * Construct a new BaseConnection
+     *
+     * @param context used to initialize the custom UserAgent
      */
-    BaseConnection() {
-
+    BaseConnection(Context context) {
+        Objects.requireNonNull(context);
+        
         if (CookieHandler.getDefault() == null) {
             CookieHandler.setDefault(new CookieManager());
         }
         this.gson = new GsonBuilder().create();
+        initUserAgent(context);
+    }
+
+    String getUserAgentHeader() {
+        return userAgent.toString();
     }
 
     /**
      * Get the user agent to be send with each request
-     *
-     * @return the user agent value to be send
+     * param context used to construct the custom UserAgent value
      */
-    private static String getUserAgent() {
+    private void initUserAgent(Context context) {
         if (userAgent != null) {
-            return userAgent;
+            return;
         }
         synchronized (BaseConnection.class) {
-
-            if (userAgent == null) {
-                StringBuilder sb = new StringBuilder("Android");
-
-                sb.append("/");
-                sb.append(Build.VERSION.SDK_INT);
-
-                if (!TextUtils.isEmpty(Build.VERSION.RELEASE)) {
-                    sb.append("/");
-                    sb.append(Build.VERSION.RELEASE);
+            try {
+                if (userAgent == null) {
+                    userAgent = UserAgent.createFromContext(context);
                 }
-
-                if (!TextUtils.isEmpty(Build.MANUFACTURER)) {
-                    sb.append(" ");
-                    sb.append(Build.MANUFACTURER);
-                }
-
-                if (!TextUtils.isEmpty(Build.MODEL)) {
-                    sb.append("/");
-                    sb.append(Build.MODEL);
-                }
-                userAgent = sb.toString();
+            } catch (PaymentException e) {
+                // Ignore this exception, it is not mandatory to submit a custom UserAgent if
+                // the SDK was unable to create it
+                Log.w("android-sdk", e);
             }
         }
-        return userAgent;
     }
 
     /**
@@ -235,7 +227,7 @@ abstract class BaseConnection {
         } catch (IOException | JsonParseException e) {
             // Ignore the exceptions since the ErrorInfo is an optional field
             // and it is more important to not lose the status error code
-            Log.w("sdk_BaseConnection", e);
+            Log.w("android-sdk", e);
         }
         if (errorInfo != null) {
             return new PaymentException(errorInfo);
@@ -262,7 +254,11 @@ abstract class BaseConnection {
     private void setConnProperties(final HttpURLConnection conn) {
         conn.setConnectTimeout(TIMEOUT_CONNECT);
         conn.setReadTimeout(TIMEOUT_READ);
-        conn.setRequestProperty(HEADER_USER_AGENT, getUserAgent());
+
+        String userAgent = getUserAgentHeader();
+        if (!TextUtils.isEmpty(userAgent)) {
+            conn.setRequestProperty(HEADER_USER_AGENT, getUserAgentHeader());
+        }
     }
 
     /**

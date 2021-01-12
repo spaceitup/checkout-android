@@ -42,9 +42,11 @@ public final class LocalizationLoaderService {
 
     /**
      * Create a new LocalizationService, this service is used to load the localizations.
+     *
+     * @param context context in which this localization loader will operate
      */
-    public LocalizationLoaderService() {
-        this.connection = new LocalizationConnection();
+    public LocalizationLoaderService(Context context) {
+        this.connection = new LocalizationConnection(context);
     }
 
     /**

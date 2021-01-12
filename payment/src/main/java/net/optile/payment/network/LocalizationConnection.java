@@ -17,6 +17,7 @@ import java.util.Map;
 import com.google.gson.JsonParseException;
 import com.google.gson.reflect.TypeToken;
 
+import android.content.Context;
 import net.optile.payment.core.PaymentException;
 import net.optile.payment.localization.LocalizationHolder;
 import net.optile.payment.localization.MapLocalizationHolder;
@@ -30,6 +31,15 @@ import net.optile.payment.localization.MapLocalizationHolder;
  * at the same time.
  */
 public final class LocalizationConnection extends BaseConnection {
+
+    /** 
+     * Construct a new LocalizationConnection
+     * 
+     * @param context used to create the custom UserAgent value
+     */
+    public LocalizationConnection(Context context) {
+        super(context);
+    }
 
     /**
      * Load the localization file given the URL.

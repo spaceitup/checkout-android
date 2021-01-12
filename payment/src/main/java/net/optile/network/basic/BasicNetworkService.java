@@ -13,6 +13,7 @@ import static net.optile.payment.ui.PaymentActivityResult.RESULT_CODE_ERROR;
 import static net.optile.payment.ui.PaymentActivityResult.RESULT_CODE_PROCEED;
 
 import android.app.Activity;
+import android.content.Context;
 import net.optile.payment.core.PaymentException;
 import net.optile.payment.form.Operation;
 import net.optile.payment.model.Interaction;
@@ -39,9 +40,11 @@ public final class BasicNetworkService extends NetworkService implements Operati
     /**
      * Create a new BasicNetworkService, this service is a basic implementation
      * that sends an operation to the Payment API.
+     *
+     * @param context context in which this network service will operate
      */
-    public BasicNetworkService() {
-        service = new OperationService();
+    public BasicNetworkService(Context context) {
+        service = new OperationService(context);
         service.setListener(this);
     }
 

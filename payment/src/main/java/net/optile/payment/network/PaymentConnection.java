@@ -16,6 +16,7 @@ import org.json.JSONException;
 
 import com.google.gson.JsonParseException;
 
+import android.content.Context;
 import net.optile.payment.core.PaymentException;
 import net.optile.payment.form.Operation;
 import net.optile.payment.model.OperationResult;
@@ -29,6 +30,15 @@ import net.optile.payment.model.OperationResult;
  * at the same time.
  */
 public final class PaymentConnection extends BaseConnection {
+
+    /** 
+     * Construct a new PaymentConnection
+     * 
+     * @param context used to construct the custom UserAgent header
+     */
+    public PaymentConnection(Context context) {
+        super(context);
+    }
 
     /**
      * Post an operation to the Payment API, i.e. a Preset or Charge operation.

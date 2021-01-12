@@ -78,10 +78,10 @@ final class PaymentListPresenter implements PaymentSessionListener, Localization
      */
     PaymentListPresenter(PaymentListView view) {
         this.view = view;
-        sessionService = new PaymentSessionService();
+        sessionService = new PaymentSessionService(view.getActivity());
         sessionService.setListener(this);
 
-        localizationService = new LocalizationLoaderService();
+        localizationService = new LocalizationLoaderService(view.getActivity());
         localizationService.setListener(this);
     }
 
@@ -146,7 +146,7 @@ final class PaymentListPresenter implements PaymentSessionListener, Localization
             operation = createOperation(card, widgets);
             String code = card.getCode();
             String method = card.getPaymentMethod();
-            networkService = NetworkServiceLookup.createService(code, method);
+            networkService = NetworkServiceLookup.createService(view.getActivity(), code, method);
             networkService.setPresenter(this);
 
             if (CHARGE.equals(operation.getOperationType())) {

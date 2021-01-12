@@ -14,6 +14,7 @@ import java.net.MalformedURLException;
 
 import com.google.gson.JsonParseException;
 
+import android.content.Context;
 import android.net.Uri;
 import android.text.TextUtils;
 import net.optile.payment.core.PaymentException;
@@ -28,6 +29,15 @@ import net.optile.payment.model.ListResult;
  * at the same time.
  */
 public final class ListConnection extends BaseConnection {
+
+    /**
+     * Construct a new ListConnection
+     *
+     * @param context used to construct the UserAgent header
+     */
+    public ListConnection(Context context) {
+        super(context);
+    }
 
     /**
      * Create a new payment session through the Server Payment API. Remind this is not

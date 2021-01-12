@@ -62,10 +62,10 @@ final class ChargePaymentPresenter implements PaymentSessionListener, NetworkSer
      */
     ChargePaymentPresenter(PaymentView view) {
         this.view = view;
-        sessionService = new PaymentSessionService();
+        sessionService = new PaymentSessionService(view.getActivity());
         sessionService.setListener(this);
 
-        localizationService = new LocalizationLoaderService();
+        localizationService = new LocalizationLoaderService(view.getActivity());
         localizationService.setListener(this);
     }
 
@@ -149,7 +149,7 @@ final class ChargePaymentPresenter implements PaymentSessionListener, NetworkSer
         Localization.setInstance(localization);
         String networkCode = operation.getNetworkCode();
         String paymentMethod = operation.getPaymentMethod();
-        networkService = NetworkServiceLookup.createService(networkCode, paymentMethod);
+        networkService = NetworkServiceLookup.createService(view.getActivity(), networkCode, paymentMethod);
         if (networkService == null) {
             closeWithErrorCode("NetworkService lookup failed for: " + networkCode + ", " + paymentMethod);
             return;
