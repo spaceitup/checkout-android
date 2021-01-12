@@ -71,8 +71,8 @@ abstract class BaseConnection {
         initUserAgent(context);
     }
 
-    String getUserAgentHeader() {
-        return userAgent.toString();
+    String getUserAgentValue() {
+        return userAgent != null ? userAgent.getValue() : null;
     }
 
     /**
@@ -255,9 +255,9 @@ abstract class BaseConnection {
         conn.setConnectTimeout(TIMEOUT_CONNECT);
         conn.setReadTimeout(TIMEOUT_READ);
 
-        String userAgent = getUserAgentHeader();
-        if (!TextUtils.isEmpty(userAgent)) {
-            conn.setRequestProperty(HEADER_USER_AGENT, getUserAgentHeader());
+        String userAgentValue = getUserAgentValue();
+        if (!TextUtils.isEmpty(userAgentValue)) {
+            conn.setRequestProperty(HEADER_USER_AGENT, userAgentValue);
         }
     }
 
