@@ -21,23 +21,17 @@ import androidx.test.core.app.ApplicationProvider;
 import net.optile.payment.core.PaymentException;
 
 @RunWith(RobolectricTestRunner.class)
-public class UserAgentTest {
-
-    @Test
-    public void createBuilder_succes() {
-        assertNotNull(UserAgent.createBuilder());
-    }
+public class UserAgentBuilderTest {
 
     @Test(expected = IllegalArgumentException.class)
     public void createFromContext_IllegalArgumentException() throws PaymentException {
-        UserAgent.createFromContext(null);
+        UserAgentBuilder.createFromContext(null);
     }
 
     @Test
     public void getValue_succes() throws PaymentException {
         Context context = ApplicationProvider.getApplicationContext();
-        UserAgent userAgent = UserAgent.createFromContext(context);
-        String value = userAgent.getValue();
+        String value = UserAgentBuilder.createFromContext(context);
         assertTrue(value.startsWith("android-sdk/"));
     }
 }
