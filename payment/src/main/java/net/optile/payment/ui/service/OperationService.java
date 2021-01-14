@@ -15,7 +15,9 @@ import net.optile.payment.core.PaymentException;
 import net.optile.payment.core.WorkerSubscriber;
 import net.optile.payment.core.WorkerTask;
 import net.optile.payment.core.Workers;
+import net.optile.payment.form.BrowserDataBuilder;
 import net.optile.payment.form.Operation;
+import net.optile.payment.model.BrowserData;
 import net.optile.payment.model.OperationResult;
 import net.optile.payment.network.PaymentConnection;
 
@@ -27,6 +29,7 @@ public final class OperationService {
     private final PaymentConnection paymentConnection;
     private OperationListener listener;
     private WorkerTask<OperationResult> operationTask;
+    private BrowserData browserData;
 
     /**
      * Create a new OperationService, this service is used to load the Operation.
@@ -34,7 +37,8 @@ public final class OperationService {
      * @param context context in which this service will run
      */
     public OperationService(Context context) {
-        this.paymentConnection = new PaymentConnection(context);
+        paymentConnection = new PaymentConnection(context);
+        browserData = BrowserDataBuilder.createFromContext(context);
     }
 
     /**
@@ -104,6 +108,7 @@ public final class OperationService {
     }
 
     private OperationResult asyncPostOperation(Operation operation) throws PaymentException {
+        operation.setBrowserData(browserData);
         return paymentConnection.postOperation(operation);
     }
 }

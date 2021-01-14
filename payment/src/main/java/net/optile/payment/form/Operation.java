@@ -14,11 +14,18 @@ import java.util.Objects;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import com.google.gson.JsonSyntaxException;
+
 import android.os.Parcel;
 import android.os.Parcelable;
 import android.text.TextUtils;
+import android.util.Log;
 import net.optile.payment.core.PaymentException;
 import net.optile.payment.core.PaymentInputType;
+import net.optile.payment.model.AccountInputData;
+import net.optile.payment.model.BrowserData;
+import net.optile.payment.model.OperationData;
+import net.optile.payment.util.GsonHelper;
 
 /**
  * Class holding Operation form values
@@ -38,27 +45,35 @@ public class Operation implements Parcelable {
     private final String paymentMethod;
     private final String operationType;
     private final URL url;
-    private final JSONObject form;
-    private final JSONObject account;
-
+    private final OperationData operationData;
+    
     public Operation(String networkCode, String paymentMethod, String operationType, URL url) {
         this.networkCode = networkCode;
         this.paymentMethod = paymentMethod;
         this.operationType = operationType;
         this.url = url;
-        this.form = new JSONObject();
-        this.account = new JSONObject();
+        
+        operationData = new OperationData();
+        operationData.setAccount(new AccountInputData());
     }
 
+    public void setBrowserData(BrowserData browserData) {
+        operationData.setBrowserData(browserData);
+    }
+    
     private Operation(Parcel in) {
         this.networkCode = in.readString();
         this.paymentMethod = in.readString();
         this.operationType = in.readString();
         this.url = (URL) in.readSerializable();
+
         try {
-            this.form = new JSONObject(in.readString());
-            this.account = new JSONObject(in.readString());
-        } catch (JSONException e) {
+            GsonHelper gson = GsonHelper.getInstance();
+            operationData = gson.fromJson(in.readString(), OperationData.class);
+        } catch (JsonSyntaxException e) {
+            // this should never happen since we use the same GsonHelper
+            // to produce these Json strings
+            Log.w("android-sdk", e);
             throw new RuntimeException(e);
         }
     }
@@ -80,8 +95,9 @@ public class Operation implements Parcelable {
         out.writeString(paymentMethod);
         out.writeString(operationType);
         out.writeSerializable(url);
-        out.writeString(form.toString());
-        out.writeString(account.toString());
+
+        GsonHelper gson = GsonHelper.getInstance();
+        out.writeString(gson.toJson(operationData));
     }
 
     /**
@@ -96,25 +112,43 @@ public class Operation implements Parcelable {
         if (TextUtils.isEmpty(name)) {
             throw new IllegalArgumentException("Name cannot be null or empty");
         }
-        try {
-            switch (name) {
-                case PaymentInputType.ACCOUNT_NUMBER:
-                case PaymentInputType.HOLDER_NAME:
-                case PaymentInputType.EXPIRY_MONTH:
-                case PaymentInputType.EXPIRY_YEAR:
-                case PaymentInputType.VERIFICATION_CODE:
-                case PaymentInputType.BANK_CODE:
-                case PaymentInputType.IBAN:
-                case PaymentInputType.BIC:
-                    account.put(name, value);
-                    break;
-                case PaymentInputType.ALLOW_RECURRENCE:
-                case PaymentInputType.AUTO_REGISTRATION:
-                    form.put(name, value);
-            }
-        } catch (JSONException e) {
+        AccountInputData account = operationData.getAccount();
+        String strValue = value.toString();
+        
+        switch (name) {
+        case PaymentInputType.ACCOUNT_NUMBER:
+            account.setNumber(strValue);
+            break;
+        case PaymentInputType.HOLDER_NAME:
+            account.setHolderName(strValue);    
+            break;
+        case PaymentInputType.EXPIRY_MONTH:
+            account.setExpiryMonth(strValue);
+            break;
+        case PaymentInputType.EXPIRY_YEAR:
+            account.setExpiryYear(strValue);
+            break;
+        case PaymentInputType.VERIFICATION_CODE:
+            account.setVerificationCode(strValue);
+            break;
+        case PaymentInputType.BANK_CODE:
+            account.setBankCode(strValue);
+            break;
+        case PaymentInputType.IBAN:
+            account.setIban(strValue);
+            break;
+        case PaymentInputType.BIC:
+            account.setBic(strValue);
+            break;
+        case PaymentInputType.ALLOW_RECURRENCE:
+            operationData.setAllowRecurrence(Boolean.parseBoolean(strValue));
+            break;
+        case PaymentInputType.AUTO_REGISTRATION:
+            operationData.setAutoRegistration(Boolean.parseBoolean(strValue));
+            break;
+        default:
             String msg = "Operation.putValue failed for name: " + name;
-            throw new PaymentException(msg, e);
+            throw new PaymentException(msg);
         }
     }
 
@@ -147,8 +181,8 @@ public class Operation implements Parcelable {
     }
 
     public String toJson() throws JSONException {
-        form.put("account", account);
-        return form.toString();
+        GsonHelper gson = GsonHelper.getInstance();
+        return gson.toJson(operationData);
     }
 
     public URL getURL() {
