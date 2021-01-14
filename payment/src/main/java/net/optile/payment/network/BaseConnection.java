@@ -47,7 +47,7 @@ abstract class BaseConnection {
     private final static String HTTP_GET = "GET";
     private final static String HTTP_POST = "POST";
     private final static String CONTENTTYPE_JSON = "application/json";
-    private static volatile UserAgent userAgent;
+    private static volatile String userAgent;
 
     /**
      * For now we will use Gson to parse json content
@@ -71,10 +71,6 @@ abstract class BaseConnection {
         initUserAgent(context);
     }
 
-    String getUserAgentValue() {
-        return userAgent != null ? userAgent.getValue() : null;
-    }
-
     /**
      * Get the user agent to be send with each request
      * param context used to construct the custom UserAgent value
@@ -86,7 +82,7 @@ abstract class BaseConnection {
         synchronized (BaseConnection.class) {
             try {
                 if (userAgent == null) {
-                    userAgent = UserAgent.createFromContext(context);
+                    userAgent = UserAgentBuilder.createFromContext(context);
                 }
             } catch (PaymentException e) {
                 // Ignore this exception, it is not mandatory to submit a custom UserAgent if
@@ -255,9 +251,8 @@ abstract class BaseConnection {
         conn.setConnectTimeout(TIMEOUT_CONNECT);
         conn.setReadTimeout(TIMEOUT_READ);
 
-        String userAgentValue = getUserAgentValue();
-        if (!TextUtils.isEmpty(userAgentValue)) {
-            conn.setRequestProperty(HEADER_USER_AGENT, userAgentValue);
+        if (!TextUtils.isEmpty(userAgent)) {
+            conn.setRequestProperty(HEADER_USER_AGENT, userAgent);
         }
     }
 
