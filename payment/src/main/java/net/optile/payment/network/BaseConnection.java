@@ -62,8 +62,9 @@ abstract class BaseConnection {
      * @param context used to initialize the custom UserAgent
      */
     BaseConnection(Context context) {
-        Objects.requireNonNull(context);
-        
+        if (context == null) {
+            throw new IllegalArgumentException("Context cannot be null");
+        }
         if (CookieHandler.getDefault() == null) {
             CookieHandler.setDefault(new CookieManager());
         }
@@ -80,14 +81,8 @@ abstract class BaseConnection {
             return;
         }
         synchronized (BaseConnection.class) {
-            try {
-                if (userAgent == null) {
-                    userAgent = UserAgentBuilder.createFromContext(context);
-                }
-            } catch (PaymentException e) {
-                // Ignore this exception, it is not mandatory to submit a custom UserAgent if
-                // the SDK was unable to create it
-                Log.w("android-sdk", e);
+            if (userAgent == null) {
+                userAgent = UserAgentBuilder.createFromContext(context);
             }
         }
     }
