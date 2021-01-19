@@ -9,14 +9,14 @@
 package net.optile.payment.network;
 
 import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertEquals;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.robolectric.RobolectricTestRunner;
 
 import android.content.Context;
+import android.text.TextUtils;
 import androidx.test.core.app.ApplicationProvider;
 import net.optile.payment.core.PaymentException;
 
@@ -29,9 +29,38 @@ public class UserAgentBuilderTest {
     }
 
     @Test
-    public void getValue_succes() throws PaymentException {
+    public void createFromContext_succes() {
         Context context = ApplicationProvider.getApplicationContext();
         String value = UserAgentBuilder.createFromContext(context);
-        assertTrue(value.startsWith("android-sdk/"));
+        assertFalse(TextUtils.isEmpty(value));
+    }
+
+    @Test
+    public void build_succes() {
+        UserAgentBuilder builder = new UserAgentBuilder();
+        String sdkVersionName = "5.3.0";
+        int sdkVersionCode = 51;
+        String appVersionName = "6.1.0";
+        int appVersionCode = 73;
+        String appPackageName = "app.package.name";
+        String appName = "App Name";
+        String buildManufacturer = "Google";
+        String buildModel = "Android SDK built for x86_64";
+        int buildVersionSdkInt = 28;
+        String buildVersionRelease = "9";
+
+        String result = builder.setSdkVersionName(sdkVersionName).
+            setSdkVersionCode(sdkVersionCode).
+            setAppVersionName(appVersionName).
+            setAppVersionCode(appVersionCode).
+            setAppPackageName(appPackageName).
+            setAppName(appName).
+            setBuildManufacturer(buildManufacturer).
+            setBuildModel(buildModel).
+            setBuildVersionSdkInt(buildVersionSdkInt).
+            setBuildVersionRelease(buildVersionRelease).build();
+
+        String expected = "android-sdk/5.3.0 (51) App/6.1.0 (app.package.name; App Name; 73) Platform/28 (Google; Android SDK built for x86_64; 9)";
+        assertEquals(expected, result);
     }
 }
