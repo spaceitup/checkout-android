@@ -8,6 +8,8 @@
 
 package net.optile.payment.ui.service;
 
+import android.content.Context;
+
 /**
  * Interface for all payment network factories. A payment network factory is capable of creating a NetworkService instance for a specific PaymentNetwork type.
  */
@@ -25,7 +27,8 @@ public interface NetworkServiceFactory {
     /**
      * Create a service for this specific payment network
      *
+     * @param context context in which this service will run
      * @return the newly created service
      */
-    NetworkService createService();
+    NetworkService createService(Context context);
 }

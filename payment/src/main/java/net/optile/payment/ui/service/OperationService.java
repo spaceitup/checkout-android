@@ -10,6 +10,7 @@ package net.optile.payment.ui.service;
 
 import java.util.concurrent.Callable;
 
+import android.content.Context;
 import net.optile.payment.core.PaymentException;
 import net.optile.payment.core.WorkerSubscriber;
 import net.optile.payment.core.WorkerTask;
@@ -29,9 +30,11 @@ public final class OperationService {
 
     /**
      * Create a new OperationService, this service is used to load the Operation.
+     *
+     * @param context context in which this service will run
      */
-    public OperationService() {
-        this.paymentConnection = new PaymentConnection();
+    public OperationService(Context context) {
+        this.paymentConnection = new PaymentConnection(context);
     }
 
     /**

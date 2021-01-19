@@ -8,6 +8,7 @@
 
 package net.optile.network.basic;
 
+import android.content.Context;
 import net.optile.payment.core.PaymentNetworkCodes;
 import net.optile.payment.model.PaymentMethod;
 import net.optile.payment.ui.service.NetworkService;
@@ -46,7 +47,7 @@ public final class BasicNetworkServiceFactory implements NetworkServiceFactory {
      * {@inheritDoc}
      */
     @Override
-    public NetworkService createService() {
-        return new BasicNetworkService();
+    public NetworkService createService(Context context) {
+        return new BasicNetworkService(context);
     }
 }

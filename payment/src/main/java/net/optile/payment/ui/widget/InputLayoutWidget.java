@@ -178,7 +178,7 @@ public abstract class InputLayoutWidget extends FormWidget {
         }
         return true;
     }
-        
+
     boolean handleOnKeyboardDone() {
         textInput.clearFocus();
         presenter.hideKeyboard();

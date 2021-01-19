@@ -19,6 +19,7 @@ import java.net.URL;
 import java.util.List;
 import java.util.Map;
 
+import android.app.Activity;
 import android.content.Context;
 import android.text.TextUtils;
 import net.optile.payment.core.PaymentException;
@@ -78,10 +79,11 @@ final class PaymentListPresenter implements PaymentSessionListener, Localization
      */
     PaymentListPresenter(PaymentListView view) {
         this.view = view;
-        sessionService = new PaymentSessionService();
+        Activity activity = view.getActivity();
+        sessionService = new PaymentSessionService(activity);
         sessionService.setListener(this);
 
-        localizationService = new LocalizationLoaderService();
+        localizationService = new LocalizationLoaderService(activity);
         localizationService.setListener(this);
     }
 
@@ -146,7 +148,7 @@ final class PaymentListPresenter implements PaymentSessionListener, Localization
             operation = createOperation(card, widgets);
             String code = card.getCode();
             String method = card.getPaymentMethod();
-            networkService = NetworkServiceLookup.createService(code, method);
+            networkService = NetworkServiceLookup.createService(view.getActivity(), code, method);
             networkService.setPresenter(this);
 
             if (CHARGE.equals(operation.getOperationType())) {
@@ -218,8 +220,7 @@ final class PaymentListPresenter implements PaymentSessionListener, Localization
     }
 
     private void loadLocalizations(PaymentSession session) {
-        Context context = view.getActivity();
-        localizationService.loadLocalizations(context, session);
+        localizationService.loadLocalizations(view.getActivity(), session);
     }
 
     private void handleLoadingError(Throwable cause) {
