@@ -23,6 +23,7 @@ import org.robolectric.RobolectricTestRunner;
 
 import net.optile.payment.core.PaymentException;
 import net.optile.payment.core.PaymentInputType;
+import net.optile.payment.model.BrowserData;
 import net.optile.test.util.TestUtils;
 
 @RunWith(RobolectricTestRunner.class)
@@ -59,6 +60,16 @@ public class OperationTest {
         operation.putValue(PaymentInputType.BIC, "bic123");
         operation.putValue(PaymentInputType.ALLOW_RECURRENCE, "true");
         operation.putValue(PaymentInputType.AUTO_REGISTRATION, "true");
+
+        BrowserData browserData = new BrowserData();
+        browserData.setJavaEnabled(true);
+        browserData.setLanguage("en");
+        browserData.setTimezone("Berlin/Europe");
+        browserData.setColorDepth(24);
+        browserData.setBrowserScreenWidth(680);
+        browserData.setBrowserScreenHeight(760);
+        operation.setBrowserData(browserData);
+
         expect(operation.toJson()).toMatchSnapshot();
     }
 }

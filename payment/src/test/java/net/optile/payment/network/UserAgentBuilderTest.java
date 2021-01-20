@@ -24,19 +24,19 @@ import net.optile.payment.core.PaymentException;
 public class UserAgentBuilderTest {
 
     @Test(expected = IllegalArgumentException.class)
-    public void createFromContext_IllegalArgumentException() throws PaymentException {
+    public void createFromContext_IllegalArgumentException() {
         UserAgentBuilder.createFromContext(null);
     }
 
     @Test
-    public void createFromContext_succes() {
+    public void createFromContext_success() {
         Context context = ApplicationProvider.getApplicationContext();
         String value = UserAgentBuilder.createFromContext(context);
         assertFalse(TextUtils.isEmpty(value));
     }
 
     @Test
-    public void build_succes() {
+    public void build_success() {
         UserAgentBuilder builder = new UserAgentBuilder();
         String sdkVersionName = "5.3.0";
         int sdkVersionCode = 51;
