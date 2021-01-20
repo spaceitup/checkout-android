@@ -22,7 +22,6 @@ import java.util.Map;
 import android.app.Activity;
 import android.text.TextUtils;
 import net.optile.payment.core.PaymentException;
-import net.optile.payment.form.BrowserDataBuilder;
 import net.optile.payment.form.Operation;
 import net.optile.payment.localization.Localization;
 import net.optile.payment.model.ErrorInfo;
@@ -91,7 +90,6 @@ final class PaymentListPresenter implements PaymentSessionListener, Localization
      * Start the presenter
      */
     void onStart() {
-        BrowserDataBuilder.createFromContext(view.getActivity());
         this.listUrl = PaymentUI.getInstance().getListUrl();
 
         if (paymentActivityResult != null) {

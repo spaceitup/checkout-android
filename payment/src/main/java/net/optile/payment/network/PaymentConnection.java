@@ -17,7 +17,6 @@ import org.json.JSONException;
 import com.google.gson.JsonParseException;
 
 import android.content.Context;
-import android.util.Log;
 import net.optile.payment.core.PaymentException;
 import net.optile.payment.form.Operation;
 import net.optile.payment.model.OperationResult;
@@ -59,7 +58,6 @@ public final class PaymentConnection extends BaseConnection {
             conn.setRequestProperty(HEADER_ACCEPT, VALUE_APP_JSON);
 
             writeToOutputStream(conn, operation.toJson());
-            Log.i("AAAAA", "send:" + operation.toJson());
             conn.connect();
             final int rc = conn.getResponseCode();
 
