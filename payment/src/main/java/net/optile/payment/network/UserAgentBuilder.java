@@ -12,13 +12,14 @@ import android.content.Context;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
+import android.util.Log;
 import net.optile.payment.BuildConfig;
 import net.optile.payment.core.PaymentException;
 
 /**
  * Class for constructing the custom UserAgent header value
  */
-public final class UserAgentBuilder {
+final class UserAgentBuilder {
 
     private String sdkVersionName;
     private int sdkVersionCode;
@@ -31,29 +32,29 @@ public final class UserAgentBuilder {
     private int buildVersionSdkInt;
     private String buildVersionRelease;
     
-    public String build() {
+    String build() {
         return "android-sdk/" + 
-            sdkVersionName + " (" +
+            toEmptyString(sdkVersionName) + " (" +
             sdkVersionCode + ") " +
 
-            "App/" + appVersionName + " (" +
-            appPackageName + "; " +
-            appName + "; " +
+            "App/" + toEmptyString(appVersionName) + " (" +
+            toEmptyString(appPackageName) + "; " +
+            toEmptyString(appName) + "; " +
             appVersionCode + ") " +
 
             "Platform/" + buildVersionSdkInt + " (" +
-            buildManufacturer + "; " +
-            buildModel + "; " +
-            buildVersionRelease + ")";
+            toEmptyString(buildManufacturer) + "; " +
+            toEmptyString(buildModel) + "; " +
+            toEmptyString(buildVersionRelease) + ")";
     }
 
     /**
      * Construct a new UserAgent value from the provided Context
      *
      * @param context used to construct the default UserAgent
-     * @return the newly created UserAgent value
+     * @return the newly created UserAgent value or null when it could not be created
      */
-    public static String createFromContext(Context context) throws PaymentException {
+    static String createFromContext(Context context) {
         if (context == null) {
             throw new IllegalArgumentException("Context cannot be null");
         }
@@ -77,57 +78,62 @@ public final class UserAgentBuilder {
                 setBuildVersionRelease(android.os.Build.VERSION.RELEASE).
                 build();
         } catch (final PackageManager.NameNotFoundException e) {
-            throw new PaymentException(e);
+            Log.w("android-sdk", e);
         }
+        return null;
     }
 
-    public UserAgentBuilder setSdkVersionName(String sdkVersionName) {
+    UserAgentBuilder setSdkVersionName(String sdkVersionName) {
         this.sdkVersionName = sdkVersionName;
         return this;
     }
 
-    public UserAgentBuilder setSdkVersionCode(int sdkVersionCode) {
+    UserAgentBuilder setSdkVersionCode(int sdkVersionCode) {
         this.sdkVersionCode = sdkVersionCode;
         return this;
     }
 
-    public UserAgentBuilder setAppVersionName(String appVersionName) {
+    UserAgentBuilder setAppVersionName(String appVersionName) {
         this.appVersionName = appVersionName;
         return this;
     }
 
-    public UserAgentBuilder setAppVersionCode(int appVersionCode) {
+    UserAgentBuilder setAppVersionCode(int appVersionCode) {
         this.appVersionCode = appVersionCode;
         return this;
     }
 
-    public UserAgentBuilder setAppPackageName(String appPackageName) {
+    UserAgentBuilder setAppPackageName(String appPackageName) {
         this.appPackageName = appPackageName;
         return this;
     }
 
-    public UserAgentBuilder setAppName(String appName) {
+    UserAgentBuilder setAppName(String appName) {
         this.appName = appName;
         return this;
     }
 
-    public UserAgentBuilder setBuildManufacturer(String buildManufacturer) {
+    UserAgentBuilder setBuildManufacturer(String buildManufacturer) {
         this.buildManufacturer = buildManufacturer;
         return this;
     }
 
-    public UserAgentBuilder setBuildModel(String buildModel) {
+    UserAgentBuilder setBuildModel(String buildModel) {
         this.buildModel = buildModel;
         return this;
     }
 
-    public UserAgentBuilder setBuildVersionSdkInt(int buildVersionSdkInt) {
+    UserAgentBuilder setBuildVersionSdkInt(int buildVersionSdkInt) {
         this.buildVersionSdkInt = buildVersionSdkInt;
         return this;
     }
 
-    public UserAgentBuilder setBuildVersionRelease(String buildVersionRelease) {
+    UserAgentBuilder setBuildVersionRelease(String buildVersionRelease) {
         this.buildVersionRelease = buildVersionRelease;
         return this;
+    }
+
+    private String toEmptyString(String str) {
+        return str == null ? "" : str;
     }
 }
