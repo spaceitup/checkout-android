@@ -49,6 +49,9 @@ public final class BrowserDataBuilder {
     }
 
     public static BrowserData createFromContext(Context context) {
+        if (context == null) {
+            throw new IllegalArgumentException("Context cannot be null");
+        }
         Context appContext = context.getApplicationContext();        
         Configuration config = appContext.getResources().getConfiguration();
 
