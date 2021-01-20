@@ -180,6 +180,10 @@ public class Operation implements Parcelable {
         return paymentMethod;
     }
 
+    public OperationData getOperationData() {
+        return operationData;
+    }
+    
     public String toJson() throws JSONException {
         GsonHelper gson = GsonHelper.getInstance();
         return gson.toJson(operationData);

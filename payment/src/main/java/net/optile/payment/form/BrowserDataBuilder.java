@@ -12,22 +12,25 @@ import java.util.Locale;
 import java.util.TimeZone;
 
 import android.content.Context;
+import android.content.res.Configuration;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.Display;
+import android.view.WindowManager;
+import android.view.WindowMetrics;
 import net.optile.payment.model.BrowserData;
 
 /**
  * Class for building the BrowserData 
  */
 public final class BrowserDataBuilder {
-
-	private boolean javaEnabled;
+    private final static int COLOR_DEPTH = 24;
+	private Boolean javaEnabled;
 	private String language;
-	private int colorDepth;
-	private String timezone;
-	private int browserScreenHeight;
-	private int browserScreenWidth;
+	private Integer colorDepth;
+	private String timeZone;
+	private Integer browserScreenHeight;
+	private Integer browserScreenWidth;
     
     /** 
      * Build a new BrowserData
@@ -38,6 +41,7 @@ public final class BrowserDataBuilder {
         BrowserData data = new BrowserData();
         data.setJavaEnabled(javaEnabled);
         data.setLanguage(language);
+        data.setTimezone(timeZone);
         data.setColorDepth(colorDepth);
         data.setBrowserScreenWidth(browserScreenWidth);
         data.setBrowserScreenHeight(browserScreenHeight);
@@ -45,22 +49,19 @@ public final class BrowserDataBuilder {
     }
 
     public static BrowserData createFromContext(Context context) {
-        Context appContext = context.getApplicationContext();
-        BrowserDataBuilder builder = new BrowserDataBuilder();
+        Context appContext = context.getApplicationContext();        
+        Configuration config = appContext.getResources().getConfiguration();
 
-        builder.setJavaEnabled(false);
-        builder.setLanguage(Locale.getDefault().toLanguageTag());
-        builder.setTimezone(TimeZone.getDefault().getID());
-
-        Display display = appContext.getDisplay();
-        DisplayMetrics realMetrics = new DisplayMetrics();
-        display.getRealMetrics(realMetrics);
-        builder.setBrowserScreenHeight(realMetrics.heightPixels);
-        builder.setBrowserScreenWidth(realMetrics.widthPixels);
-        return builder.build();
+        return new BrowserDataBuilder().
+            setJavaEnabled(false).
+            setLanguage(Locale.getDefault().toLanguageTag()).
+            setTimeZone(TimeZone.getDefault().getID()).
+            setColorDepth(COLOR_DEPTH).
+            setBrowserScreenHeight((int)config.screenHeightDp).
+            setBrowserScreenWidth((int)config.screenWidthDp).build();
     }
 
-    public BrowserDataBuilder setJavaEnabled(boolean javaEnabled) {
+    public BrowserDataBuilder setJavaEnabled(Boolean javaEnabled) {
         this.javaEnabled = javaEnabled;
         return this;
     }
@@ -70,22 +71,22 @@ public final class BrowserDataBuilder {
         return this;
     }
 
-    public BrowserDataBuilder setColorDepth(int colorDepth) {
+    public BrowserDataBuilder setColorDepth(Integer colorDepth) {
         this.colorDepth = colorDepth;
         return this;
     }
 
-    public BrowserDataBuilder setTimezone(String timezone) {
-        this.timezone = timezone;
+    public BrowserDataBuilder setTimeZone(String timeZone) {
+        this.timeZone = timeZone;
         return this;
     }
 
-    public BrowserDataBuilder setBrowserScreenWidth(int browserScreenWidth) {
+    public BrowserDataBuilder setBrowserScreenWidth(Integer browserScreenWidth) {
         this.browserScreenWidth = browserScreenWidth;
         return this;
     }
     
-    public BrowserDataBuilder setBrowserScreenHeight(int browserScreenHeight) {
+    public BrowserDataBuilder setBrowserScreenHeight(Integer browserScreenHeight) {
         this.browserScreenHeight = browserScreenHeight;
         return this;
     }
