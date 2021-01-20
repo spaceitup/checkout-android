@@ -19,16 +19,16 @@ import lombok.Setter;
 @Getter
 @Setter
 public class OperationData {
-	/** Simple API, optional */
-	private AccountInputData account;
-	/** Simple API, optional */
-	private Boolean autoRegistration;
-	/** Simple API, optional */
-	private Boolean allowRecurrence;
-	/** Advanced API, optional */
-	private Map<String, Boolean> checkboxes;
-	/** Provider request parameters. */
-	private ProviderParameters providerRequest;
-	/** Customer web browser data */
-	private BrowserData browserData;
+    /** Simple API, optional */
+    private AccountInputData account;
+    /** Simple API, optional */
+    private Boolean autoRegistration;
+    /** Simple API, optional */
+    private Boolean allowRecurrence;
+    /** Advanced API, optional */
+    private Map<String, Boolean> checkboxes;
+    /** Provider request parameters. */
+    private ProviderParameters providerRequest;
+    /** Customer web browser data */
+    private BrowserData browserData;
 }

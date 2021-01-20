@@ -20,7 +20,6 @@ import java.util.List;
 import java.util.Map;
 
 import android.app.Activity;
-import android.content.Context;
 import android.text.TextUtils;
 import net.optile.payment.core.PaymentException;
 import net.optile.payment.form.BrowserDataBuilder;

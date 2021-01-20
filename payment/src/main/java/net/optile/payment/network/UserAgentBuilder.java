@@ -14,7 +14,6 @@ import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.util.Log;
 import net.optile.payment.BuildConfig;
-import net.optile.payment.core.PaymentException;
 
 /**
  * Class for constructing the custom UserAgent header value
@@ -31,9 +30,9 @@ final class UserAgentBuilder {
     private String buildModel;
     private int buildVersionSdkInt;
     private String buildVersionRelease;
-    
+
     String build() {
-        return "android-sdk/" + 
+        return "android-sdk/" +
             toEmptyString(sdkVersionName) + " (" +
             sdkVersionCode + ") " +
 

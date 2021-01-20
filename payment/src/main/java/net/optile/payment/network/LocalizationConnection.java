@@ -32,9 +32,9 @@ import net.optile.payment.localization.MapLocalizationHolder;
  */
 public final class LocalizationConnection extends BaseConnection {
 
-    /** 
+    /**
      * Construct a new LocalizationConnection
-     * 
+     *
      * @param context used to create the custom UserAgent value
      */
     public LocalizationConnection(Context context) {

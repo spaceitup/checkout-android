@@ -32,9 +32,9 @@ import net.optile.payment.model.OperationResult;
  */
 public final class PaymentConnection extends BaseConnection {
 
-    /** 
+    /**
      * Construct a new PaymentConnection
-     * 
+     *
      * @param context used to construct the custom UserAgent header
      */
     public PaymentConnection(Context context) {

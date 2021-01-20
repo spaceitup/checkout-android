@@ -12,7 +12,6 @@ import java.net.URL;
 import java.util.Objects;
 
 import org.json.JSONException;
-import org.json.JSONObject;
 
 import com.google.gson.JsonSyntaxException;
 
@@ -46,13 +45,13 @@ public class Operation implements Parcelable {
     private final String operationType;
     private final URL url;
     private final OperationData operationData;
-    
+
     public Operation(String networkCode, String paymentMethod, String operationType, URL url) {
         this.networkCode = networkCode;
         this.paymentMethod = paymentMethod;
         this.operationType = operationType;
         this.url = url;
-        
+
         operationData = new OperationData();
         operationData.setAccount(new AccountInputData());
     }
@@ -60,7 +59,7 @@ public class Operation implements Parcelable {
     public void setBrowserData(BrowserData browserData) {
         operationData.setBrowserData(browserData);
     }
-    
+
     private Operation(Parcel in) {
         this.networkCode = in.readString();
         this.paymentMethod = in.readString();
@@ -114,41 +113,41 @@ public class Operation implements Parcelable {
         }
         AccountInputData account = operationData.getAccount();
         String strValue = value.toString();
-        
+
         switch (name) {
-        case PaymentInputType.ACCOUNT_NUMBER:
-            account.setNumber(strValue);
-            break;
-        case PaymentInputType.HOLDER_NAME:
-            account.setHolderName(strValue);    
-            break;
-        case PaymentInputType.EXPIRY_MONTH:
-            account.setExpiryMonth(strValue);
-            break;
-        case PaymentInputType.EXPIRY_YEAR:
-            account.setExpiryYear(strValue);
-            break;
-        case PaymentInputType.VERIFICATION_CODE:
-            account.setVerificationCode(strValue);
-            break;
-        case PaymentInputType.BANK_CODE:
-            account.setBankCode(strValue);
-            break;
-        case PaymentInputType.IBAN:
-            account.setIban(strValue);
-            break;
-        case PaymentInputType.BIC:
-            account.setBic(strValue);
-            break;
-        case PaymentInputType.ALLOW_RECURRENCE:
-            operationData.setAllowRecurrence(Boolean.parseBoolean(strValue));
-            break;
-        case PaymentInputType.AUTO_REGISTRATION:
-            operationData.setAutoRegistration(Boolean.parseBoolean(strValue));
-            break;
-        default:
-            String msg = "Operation.putValue failed for name: " + name;
-            throw new PaymentException(msg);
+            case PaymentInputType.ACCOUNT_NUMBER:
+                account.setNumber(strValue);
+                break;
+            case PaymentInputType.HOLDER_NAME:
+                account.setHolderName(strValue);
+                break;
+            case PaymentInputType.EXPIRY_MONTH:
+                account.setExpiryMonth(strValue);
+                break;
+            case PaymentInputType.EXPIRY_YEAR:
+                account.setExpiryYear(strValue);
+                break;
+            case PaymentInputType.VERIFICATION_CODE:
+                account.setVerificationCode(strValue);
+                break;
+            case PaymentInputType.BANK_CODE:
+                account.setBankCode(strValue);
+                break;
+            case PaymentInputType.IBAN:
+                account.setIban(strValue);
+                break;
+            case PaymentInputType.BIC:
+                account.setBic(strValue);
+                break;
+            case PaymentInputType.ALLOW_RECURRENCE:
+                operationData.setAllowRecurrence(Boolean.parseBoolean(strValue));
+                break;
+            case PaymentInputType.AUTO_REGISTRATION:
+                operationData.setAutoRegistration(Boolean.parseBoolean(strValue));
+                break;
+            default:
+                String msg = "Operation.putValue failed for name: " + name;
+                throw new PaymentException(msg);
         }
     }
 
@@ -183,7 +182,7 @@ public class Operation implements Parcelable {
     public OperationData getOperationData() {
         return operationData;
     }
-    
+
     public String toJson() throws JSONException {
         GsonHelper gson = GsonHelper.getInstance();
         return gson.toJson(operationData);

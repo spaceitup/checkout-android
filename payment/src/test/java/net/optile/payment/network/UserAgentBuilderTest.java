@@ -8,8 +8,8 @@
 
 package net.optile.payment.network;
 
-import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -18,7 +18,6 @@ import org.robolectric.RobolectricTestRunner;
 import android.content.Context;
 import android.text.TextUtils;
 import androidx.test.core.app.ApplicationProvider;
-import net.optile.payment.core.PaymentException;
 
 @RunWith(RobolectricTestRunner.class)
 public class UserAgentBuilderTest {
@@ -60,7 +59,8 @@ public class UserAgentBuilderTest {
             setBuildVersionSdkInt(buildVersionSdkInt).
             setBuildVersionRelease(buildVersionRelease).build();
 
-        String expected = "android-sdk/5.3.0 (51) App/6.1.0 (app.package.name; App Name; 73) Platform/28 (Google; Android SDK built for x86_64; 9)";
+        String expected =
+            "android-sdk/5.3.0 (51) App/6.1.0 (app.package.name; App Name; 73) Platform/28 (Google; Android SDK built for x86_64; 9)";
         assertEquals(expected, result);
     }
 }

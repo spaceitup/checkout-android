@@ -13,29 +13,24 @@ import java.util.TimeZone;
 
 import android.content.Context;
 import android.content.res.Configuration;
-import android.util.DisplayMetrics;
-import android.util.Log;
-import android.view.Display;
-import android.view.WindowManager;
-import android.view.WindowMetrics;
 import net.optile.payment.model.BrowserData;
 
 /**
- * Class for building the BrowserData 
+ * Class for building the BrowserData
  */
 public final class BrowserDataBuilder {
     private final static int COLOR_DEPTH = 24;
-	private Boolean javaEnabled;
-	private String language;
-	private Integer colorDepth;
-	private String timeZone;
-	private Integer browserScreenHeight;
-	private Integer browserScreenWidth;
-    
-    /** 
+    private Boolean javaEnabled;
+    private String language;
+    private Integer colorDepth;
+    private String timeZone;
+    private Integer browserScreenHeight;
+    private Integer browserScreenWidth;
+
+    /**
      * Build a new BrowserData
-     * 
-     * @return the newly build BrowserData 
+     *
+     * @return the newly build BrowserData
      */
     public BrowserData build() {
         BrowserData data = new BrowserData();
@@ -52,7 +47,7 @@ public final class BrowserDataBuilder {
         if (context == null) {
             throw new IllegalArgumentException("Context cannot be null");
         }
-        Context appContext = context.getApplicationContext();        
+        Context appContext = context.getApplicationContext();
         Configuration config = appContext.getResources().getConfiguration();
 
         return new BrowserDataBuilder().
@@ -60,15 +55,15 @@ public final class BrowserDataBuilder {
             setLanguage(Locale.getDefault().toLanguageTag()).
             setTimeZone(TimeZone.getDefault().getID()).
             setColorDepth(COLOR_DEPTH).
-            setBrowserScreenHeight((int)config.screenHeightDp).
-            setBrowserScreenWidth((int)config.screenWidthDp).build();
+            setBrowserScreenHeight((int) config.screenHeightDp).
+            setBrowserScreenWidth((int) config.screenWidthDp).build();
     }
 
     public BrowserDataBuilder setJavaEnabled(Boolean javaEnabled) {
         this.javaEnabled = javaEnabled;
         return this;
     }
-    
+
     public BrowserDataBuilder setLanguage(String language) {
         this.language = language;
         return this;
@@ -88,7 +83,7 @@ public final class BrowserDataBuilder {
         this.browserScreenWidth = browserScreenWidth;
         return this;
     }
-    
+
     public BrowserDataBuilder setBrowserScreenHeight(Integer browserScreenHeight) {
         this.browserScreenHeight = browserScreenHeight;
         return this;

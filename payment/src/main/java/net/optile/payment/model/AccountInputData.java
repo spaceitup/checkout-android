@@ -17,42 +17,42 @@ import lombok.Setter;
 @Getter
 @Setter
 public class AccountInputData {
-	/** Simple API, optional */
-	private String holderName;
-	/** Simple API, optional */
-	private String number;
-	/** Simple API, optional */
-	private String bankCode;
-	/** Simple API, optional */
-	private String bankName;
-	/** Simple API, optional */
-	private String bic;
-	/** Simple API, optional */
-	private String branch;
-	/** Simple API, optional */
-	private String city;
-	/** Simple API, optional */
-	private String expiryMonth;
-	/** Simple API, optional */
-	private String expiryYear;
-	/** Simple API, optional */
-	private String iban;
-	/** Simple API, optional */
-	private String login;
-	/** Simple API, optional */
-	private Boolean optIn;
-	/** Simple API, optional */
-	private String password;
-	/** Simple API, optional */
-	private String verificationCode;
+    /** Simple API, optional */
+    private String holderName;
+    /** Simple API, optional */
+    private String number;
+    /** Simple API, optional */
+    private String bankCode;
+    /** Simple API, optional */
+    private String bankName;
+    /** Simple API, optional */
+    private String bic;
+    /** Simple API, optional */
+    private String branch;
+    /** Simple API, optional */
+    private String city;
+    /** Simple API, optional */
+    private String expiryMonth;
+    /** Simple API, optional */
+    private String expiryYear;
+    /** Simple API, optional */
+    private String iban;
+    /** Simple API, optional */
+    private String login;
+    /** Simple API, optional */
+    private Boolean optIn;
+    /** Simple API, optional */
+    private String password;
+    /** Simple API, optional */
+    private String verificationCode;
 
-	/** day of customer's birthday */
-	private String customerBirthDay;
-	/** month of customer's birthday */
-	private String customerBirthMonth;
-	/** year of customer's birthday */
-	private String customerBirthYear;
+    /** day of customer's birthday */
+    private String customerBirthDay;
+    /** month of customer's birthday */
+    private String customerBirthMonth;
+    /** year of customer's birthday */
+    private String customerBirthYear;
 
-	/** id of installment plan */
-	private String installmentPlanId;
+    /** id of installment plan */
+    private String installmentPlanId;
 }
