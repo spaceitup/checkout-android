@@ -66,7 +66,7 @@ public final class SelectWidget extends FormWidget {
         SpinnerItem selected = (SpinnerItem) spinner.getSelectedItem();
 
         if (selected != null) {
-            operation.putValue(name, selected.value);
+            operation.putStringValue(name, selected.value);
         }
     }
 

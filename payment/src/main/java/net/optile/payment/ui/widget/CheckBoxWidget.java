@@ -45,7 +45,7 @@ public class CheckBoxWidget extends FormWidget {
      */
     @Override
     public void putValue(Operation operation) throws PaymentException {
-        operation.putValue(name, value.isChecked());
+        operation.putBooleanValue(name, value.isChecked());
     }
 
     boolean isChecked() {
