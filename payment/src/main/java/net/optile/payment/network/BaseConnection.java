@@ -18,7 +18,6 @@ import java.net.CookieManager;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
-import java.util.Objects;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;

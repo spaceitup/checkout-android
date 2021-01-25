@@ -15,7 +15,6 @@ import org.robolectric.RobolectricTestRunner;
 import android.content.Context;
 import androidx.test.core.app.ApplicationProvider;
 import net.optile.payment.core.PaymentException;
-import net.optile.payment.model.ListResult;
 
 /**
  * The type List connection test.
