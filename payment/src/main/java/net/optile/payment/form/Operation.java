@@ -112,7 +112,7 @@ public class Operation implements Parcelable {
             throw new IllegalArgumentException("Name cannot be null or empty");
         }
         AccountInputData account = operationData.getAccount();
-        String strValue = value.toString();
+        String strValue = value != null ? value.toString() : null;
 
         switch (name) {
             case PaymentInputType.ACCOUNT_NUMBER:
