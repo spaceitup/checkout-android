@@ -100,53 +100,101 @@ public class Operation implements Parcelable {
     }
 
     /**
-     * Put a value into this Operation form.
+     * Put a boolean value into this Operation form.
      * Depending on the name of the value it will be added to the correct place in the Operation Json Object.
      *
      * @param name the name of the value
      * @param value containing the value
      */
-    public void putValue(String name, Object value) throws PaymentException {
+    public void putBooleanValue(String name, boolean value) throws PaymentException {
 
         if (TextUtils.isEmpty(name)) {
             throw new IllegalArgumentException("Name cannot be null or empty");
         }
         AccountInputData account = operationData.getAccount();
-        String strValue = value != null ? value.toString() : null;
-
         switch (name) {
-            case PaymentInputType.ACCOUNT_NUMBER:
-                account.setNumber(strValue);
-                break;
-            case PaymentInputType.HOLDER_NAME:
-                account.setHolderName(strValue);
-                break;
-            case PaymentInputType.EXPIRY_MONTH:
-                account.setExpiryMonth(strValue);
-                break;
-            case PaymentInputType.EXPIRY_YEAR:
-                account.setExpiryYear(strValue);
-                break;
-            case PaymentInputType.VERIFICATION_CODE:
-                account.setVerificationCode(strValue);
-                break;
-            case PaymentInputType.BANK_CODE:
-                account.setBankCode(strValue);
-                break;
-            case PaymentInputType.IBAN:
-                account.setIban(strValue);
-                break;
-            case PaymentInputType.BIC:
-                account.setBic(strValue);
+            case PaymentInputType.OPTIN:
+                account.setOptIn(value);
                 break;
             case PaymentInputType.ALLOW_RECURRENCE:
-                operationData.setAllowRecurrence(Boolean.parseBoolean(strValue));
+                operationData.setAllowRecurrence(value);
                 break;
             case PaymentInputType.AUTO_REGISTRATION:
-                operationData.setAutoRegistration(Boolean.parseBoolean(strValue));
+                operationData.setAutoRegistration(value);
                 break;
             default:
-                String msg = "Operation.putValue failed for name: " + name;
+                String msg = "Operation.putBooleanValue failed for name: " + name;
+                throw new PaymentException(msg);
+        }
+    }
+
+    /**
+     * Put a String value into this Operation form.
+     * Depending on the name of the value it will be added to the correct place in the Operation Json Object.
+     *
+     * @param name the name of the value
+     * @param value containing the value
+     */
+    public void putStringValue(String name, String value) throws PaymentException {
+
+        if (TextUtils.isEmpty(name)) {
+            throw new IllegalArgumentException("Name cannot be null or empty");
+        }
+        AccountInputData account = operationData.getAccount();
+        switch (name) {
+            case PaymentInputType.HOLDER_NAME:
+                account.setHolderName(value);
+                break;
+            case PaymentInputType.ACCOUNT_NUMBER:
+                account.setNumber(value);
+                break;
+            case PaymentInputType.BANK_CODE:
+                account.setBankCode(value);
+                break;
+            case PaymentInputType.BANK_NAME:
+                account.setBankName(value);
+                break;
+            case PaymentInputType.BIC:
+                account.setBic(value);
+                break;
+            case PaymentInputType.BRANCH:
+                account.setBranch(value);
+                break;
+            case PaymentInputType.CITY:
+                account.setCity(value);
+                break;
+            case PaymentInputType.EXPIRY_MONTH:
+                account.setExpiryMonth(value);
+                break;
+            case PaymentInputType.EXPIRY_YEAR:
+                account.setExpiryYear(value);
+                break;
+            case PaymentInputType.IBAN:
+                account.setIban(value);
+                break;
+            case PaymentInputType.LOGIN:
+                account.setLogin(value);
+                break;
+            case PaymentInputType.PASSWORD:
+                account.setPassword(value);
+                break;
+            case PaymentInputType.VERIFICATION_CODE:
+                account.setVerificationCode(value);
+                break;
+            case PaymentInputType.CUSTOMER_BIRTHDAY:
+                account.setCustomerBirthDay(value);
+                break;
+            case PaymentInputType.CUSTOMER_BIRTHMONTH:
+                account.setCustomerBirthMonth(value);
+                break;
+            case PaymentInputType.CUSTOMER_BIRTHYEAR:
+                account.setCustomerBirthYear(value);
+                break;
+            case PaymentInputType.INSTALLMENT_PLANID:
+                account.setInstallmentPlanId(value);
+                break;
+            default:
+                String msg = "Operation.putStringValue failed for name: " + name;
                 throw new PaymentException(msg);
         }
     }

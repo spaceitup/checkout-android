@@ -45,11 +45,11 @@ public final class RegisterWidget extends CheckBoxWidget {
         switch (type) {
             case RegistrationType.FORCED:
             case RegistrationType.FORCED_DISPLAYED:
-                operation.putValue(name, true);
+                operation.putBooleanValue(name, true);
                 break;
             case RegistrationType.OPTIONAL:
             case RegistrationType.OPTIONAL_PRESELECTED:
-                operation.putValue(name, isChecked());
+                operation.putBooleanValue(name, isChecked());
         }
     }
 

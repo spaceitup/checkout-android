@@ -52,8 +52,8 @@ public final class DateWidget extends InputLayoutWidget {
     @Override
     public void putValue(Operation operation) throws PaymentException {
         ExpiryDate date = getExpiryDate();
-        operation.putValue(monthElement.getName(), date.month);
-        operation.putValue(yearElement.getName(), date.year);
+        operation.putStringValue(monthElement.getName(), date.month);
+        operation.putStringValue(yearElement.getName(), date.year);
     }
 
     /**
