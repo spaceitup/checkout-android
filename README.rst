@@ -345,7 +345,7 @@ The last change that should be made is to the following Activity definition in t
 ::
 
      <activity
-         android:name="net.optile.payment.ui.redirect.PaymentRedirectActivity"
+         android:name="com.payoneer.mrs.payment.ui.redirect.PaymentRedirectActivity"
          android:launchMode="singleTask">
          <intent-filter>
              <action android:name="android.intent.action.VIEW"/>

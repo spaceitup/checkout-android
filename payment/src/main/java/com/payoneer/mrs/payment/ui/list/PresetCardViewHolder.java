@@ -1,0 +1,70 @@
+/*
+ * Copyright (c) 2020 optile GmbH
+ * https://www.optile.net
+ *
+ * This file is open source and available under the MIT license.
+ * See the LICENSE file for more information.
+ */
+
+package com.payoneer.mrs.payment.ui.list;
+
+import com.google.android.material.card.MaterialCardView;
+
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.TextView;
+import androidx.recyclerview.widget.RecyclerView;
+import com.payoneer.mrs.payment.R;
+import com.payoneer.mrs.payment.model.AccountMask;
+import com.payoneer.mrs.payment.ui.model.PaymentCard;
+import com.payoneer.mrs.payment.ui.model.PresetCard;
+import com.payoneer.mrs.payment.util.PaymentUtils;
+
+/**
+ * The PresetCardViewHolder class holding and binding views for an PresetCard
+ */
+final class PresetCardViewHolder extends PaymentCardViewHolder {
+
+    private final TextView title;
+    private final TextView subtitle;
+    private final MaterialCardView card;
+
+    private PresetCardViewHolder(ListAdapter adapter, View parent, PresetCard presetCard) {
+        super(adapter, parent);
+        title = parent.findViewById(R.id.text_title);
+        subtitle = parent.findViewById(R.id.text_subtitle);
+        card = parent.findViewById(R.id.card_preset);
+        card.setCheckable(true);
+        addButtonWidget();
+    }
+
+    static RecyclerView.ViewHolder createInstance(ListAdapter adapter, PresetCard presetCard, ViewGroup parent) {
+        LayoutInflater inflater = LayoutInflater.from(parent.getContext());
+        View view = inflater.inflate(R.layout.list_item_presetcard, parent, false);
+        return new PresetCardViewHolder(adapter, view, presetCard);
+    }
+
+    void onBind(PaymentCard paymentCard) {
+
+        if (!(paymentCard instanceof PresetCard)) {
+            throw new IllegalArgumentException("Expected PresetCard in onBind");
+        }
+        super.onBind(paymentCard);
+        PaymentUtils.setTestId(itemView, "card", "preset");
+        PresetCard card = (PresetCard) paymentCard;
+        AccountMask mask = card.getMaskedAccount();
+        subtitle.setVisibility(View.GONE);
+        if (mask != null) {
+            bindAccountMask(title, subtitle, mask, card.getPaymentMethod());
+        } else {
+            title.setText(card.getLabel());
+        }
+        bindCardLogo(paymentCard.getCode(), card.getLink("logo"));
+    }
+
+    void expand(boolean expand) {
+        super.expand(expand);
+        card.setChecked(expand);
+    }
+}

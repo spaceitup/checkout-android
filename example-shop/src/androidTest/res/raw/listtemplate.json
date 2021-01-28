@@ -5,10 +5,10 @@
     "country": "DE",
     "customer": {
         "number": "1",
-        "email": "john.doe@example.com"
+        "email": "thomas.smith@example.com"
     },
     "payment": {
-        "amount": 1.99,
+        "amount": 12,
         "currency": "EUR",
         "reference": "example-shop/03-12-2020"
     },
