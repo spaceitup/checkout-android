@@ -8,6 +8,7 @@
 package net.optile.example.sdk;
 
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
+import com.google.android.material.switchmaterial.SwitchMaterial;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -33,9 +34,9 @@ public final class ExampleSdkActivity extends AppCompatActivity {
     private final static int PAYMENT_REQUEST_CODE = 1;
 
     private PaymentActivityResult sdkResult;
-    private RadioGroup themeGroup;
     private EditText listInput;
     private View resultLayout;
+    private SwitchMaterial themeSwitch;
     private TextView resultHeaderView;
     private TextView resultInfoView;
     private TextView resultCodeView;
@@ -51,7 +52,7 @@ public final class ExampleSdkActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_examplesdk);
 
-        themeGroup = findViewById(R.id.radio_themes);
+        themeSwitch = findViewById(R.id.switch_theme);
         listInput = findViewById(R.id.input_listurl);
         resultLayout = findViewById(R.id.layout_result);
         resultHeaderView = findViewById(R.id.label_resultheader);
@@ -156,7 +157,7 @@ public final class ExampleSdkActivity extends AppCompatActivity {
         }
         PaymentUI paymentUI = PaymentUI.getInstance();
         paymentUI.setListUrl(listUrl);
-        paymentUI.setPaymentTheme(createPaymentTheme());
+        paymentUI.setPaymentTheme(getPaymentTheme());
 
         // Set the orientation to be fixed to landscape mode
         //paymentUI.setOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
@@ -164,14 +165,14 @@ public final class ExampleSdkActivity extends AppCompatActivity {
         paymentUI.showPaymentPage(this, PAYMENT_REQUEST_CODE);
     }
 
-    private PaymentTheme createPaymentTheme() {
-
-        switch (themeGroup.getCheckedRadioButtonId()) {
-            case R.id.radio_theme_custom:
-                return SdkThemeBuilder.createCustomTheme();
-            default:
-                return SdkThemeBuilder.createDefaultTheme();
+    private PaymentTheme getPaymentTheme() {
+        if (themeSwitch.isChecked()) {
+            return PaymentTheme.createBuilder().
+                setPaymentListTheme(R.style.CustomTheme_Toolbar).
+                setChargePaymentTheme(R.style.CustomTheme_NoToolbar).
+                build();
+        } else {
+            return PaymentTheme.createDefault();
         }
     }
-
 }

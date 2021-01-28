@@ -1,12 +1,11 @@
 <resources>
     <string name="app_name">SDK Example</string>
 
-    <string name="theme_default">Default Theme</string>
-    <string name="theme_custom">Custom Theme</string>
     <string name="actionbutton">Open PaymentPage</string>
     <string name="list_hint">List URL</string>
     <string name="empty_label">n/a</string>
 
+    <string name="settings_theme">Use with custom theming</string>    
     <string name="settings_header">Example Settings</string>
     <string name="result_header">SDK Result</string>
     <string name="resultcode">onActivityResult(resultCode)</string>
