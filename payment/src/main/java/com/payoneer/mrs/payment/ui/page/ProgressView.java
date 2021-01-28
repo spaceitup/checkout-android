@@ -8,6 +8,8 @@
 
 package com.payoneer.mrs.payment.ui.page;
 
+import com.payoneer.mrs.payment.R;
+
 import android.graphics.PorterDuff;
 import android.graphics.drawable.Drawable;
 import android.text.TextUtils;
@@ -16,7 +18,6 @@ import android.view.View;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import androidx.core.content.ContextCompat;
-import com.payoneer.mrs.payment.R;
 
 /**
  * Class managing showing a ProgressBar with optional labels.

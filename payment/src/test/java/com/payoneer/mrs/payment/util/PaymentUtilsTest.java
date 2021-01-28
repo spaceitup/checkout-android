@@ -21,11 +21,12 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.robolectric.RobolectricTestRunner;
 
-import android.content.res.Resources;
-import androidx.test.core.app.ApplicationProvider;
 import com.payoneer.mrs.payment.R;
 import com.payoneer.mrs.payment.core.PaymentInputType;
 import com.payoneer.mrs.payment.model.InputElement;
+
+import android.content.res.Resources;
+import androidx.test.core.app.ApplicationProvider;
 
 /**
  * Class for testing the PaymentUtils class

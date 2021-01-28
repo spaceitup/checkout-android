@@ -15,12 +15,12 @@ import org.hamcrest.Matcher;
 import org.hamcrest.TypeSafeMatcher;
 
 import com.google.android.material.textfield.TextInputLayout;
+import com.payoneer.mrs.payment.ui.list.PaymentCardViewHolder;
+import com.payoneer.mrs.payment.ui.widget.FormWidget;
 
 import android.view.View;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.test.espresso.matcher.BoundedMatcher;
-import com.payoneer.mrs.payment.ui.list.PaymentCardViewHolder;
-import com.payoneer.mrs.payment.ui.widget.FormWidget;
 
 /**
  * Class holding espresso matchers to test the Android SDK

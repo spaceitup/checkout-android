@@ -11,6 +11,8 @@ package com.payoneer.mrs.payment.ui.redirect;
 import static android.os.Build.VERSION.SDK_INT;
 import static android.os.Build.VERSION_CODES.JELLY_BEAN_MR2;
 
+import com.payoneer.mrs.payment.core.PaymentException;
+
 import android.content.ActivityNotFoundException;
 import android.content.ComponentName;
 import android.content.Context;
@@ -20,7 +22,6 @@ import android.net.Uri;
 import android.os.IBinder;
 import androidx.browser.customtabs.CustomTabsIntent;
 import androidx.browser.customtabs.CustomTabsService;
-import com.payoneer.mrs.payment.core.PaymentException;
 
 /**
  * Helper class for working with Chrome Custom Tabs

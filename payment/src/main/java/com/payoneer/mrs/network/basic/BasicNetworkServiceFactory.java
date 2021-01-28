@@ -8,11 +8,12 @@
 
 package com.payoneer.mrs.network.basic;
 
-import android.content.Context;
 import com.payoneer.mrs.payment.core.PaymentNetworkCodes;
 import com.payoneer.mrs.payment.model.PaymentMethod;
 import com.payoneer.mrs.payment.ui.service.NetworkService;
 import com.payoneer.mrs.payment.ui.service.NetworkServiceFactory;
+
+import android.content.Context;
 
 /**
  * Specific implementation for basic networks like i.e. Visa, mastercard and sepa.

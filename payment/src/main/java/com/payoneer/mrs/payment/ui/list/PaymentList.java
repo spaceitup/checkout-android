@@ -16,6 +16,13 @@ import static com.payoneer.mrs.payment.localization.LocalizationKey.LIST_HEADER_
 import java.util.ArrayList;
 import java.util.List;
 
+import com.payoneer.mrs.payment.localization.Localization;
+import com.payoneer.mrs.payment.ui.model.AccountCard;
+import com.payoneer.mrs.payment.ui.model.NetworkCard;
+import com.payoneer.mrs.payment.ui.model.PaymentCard;
+import com.payoneer.mrs.payment.ui.model.PaymentSession;
+import com.payoneer.mrs.payment.ui.page.PaymentListActivity;
+
 import android.content.Context;
 import android.os.IBinder;
 import android.view.View;
@@ -24,12 +31,6 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.LinearSmoothScroller;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.recyclerview.widget.SimpleItemAnimator;
-import com.payoneer.mrs.payment.localization.Localization;
-import com.payoneer.mrs.payment.ui.model.AccountCard;
-import com.payoneer.mrs.payment.ui.model.NetworkCard;
-import com.payoneer.mrs.payment.ui.model.PaymentCard;
-import com.payoneer.mrs.payment.ui.model.PaymentSession;
-import com.payoneer.mrs.payment.ui.page.PaymentListActivity;
 
 /**
  * The PaymentList showing available payment methods and accounts in a list

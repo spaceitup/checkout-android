@@ -20,10 +20,10 @@ import java.util.Map;
 
 import com.google.gson.JsonSyntaxException;
 import com.google.gson.reflect.TypeToken;
-
-import android.content.res.Resources;
 import com.payoneer.mrs.payment.core.PaymentException;
 import com.payoneer.mrs.payment.util.GsonHelper;
+
+import android.content.res.Resources;
 
 /**
  * The ResourceLoader class containing helper methods for loading group and validation raw json files.

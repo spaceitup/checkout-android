@@ -16,8 +16,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.concurrent.Callable;
 
-import android.content.Context;
-import android.text.TextUtils;
 import com.payoneer.mrs.payment.R;
 import com.payoneer.mrs.payment.core.PaymentException;
 import com.payoneer.mrs.payment.core.WorkerSubscriber;
@@ -38,6 +36,9 @@ import com.payoneer.mrs.payment.ui.model.PaymentNetwork;
 import com.payoneer.mrs.payment.ui.model.PaymentSession;
 import com.payoneer.mrs.payment.ui.model.PresetCard;
 import com.payoneer.mrs.payment.validation.Validator;
+
+import android.content.Context;
+import android.text.TextUtils;
 
 /**
  * The PaymentSessionService providing asynchronize loading of the PaymentSession.

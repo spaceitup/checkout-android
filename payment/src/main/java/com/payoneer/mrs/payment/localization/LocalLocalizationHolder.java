@@ -18,8 +18,9 @@ import static com.payoneer.mrs.payment.localization.LocalizationKey.ERROR_DEFAUL
 
 import java.util.HashMap;
 
-import android.content.Context;
 import com.payoneer.mrs.payment.R;
+
+import android.content.Context;
 
 /**
  * Class storing local localizations

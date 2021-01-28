@@ -10,14 +10,15 @@ package com.payoneer.mrs.payment.ui.widget;
 
 import static com.google.android.material.textfield.TextInputLayout.END_ICON_CUSTOM;
 
-import android.text.Editable;
-import android.text.TextUtils;
-import android.text.TextWatcher;
-import android.view.View;
 import com.payoneer.mrs.payment.R;
 import com.payoneer.mrs.payment.localization.Localization;
 import com.payoneer.mrs.payment.model.InputElement;
 import com.payoneer.mrs.payment.ui.widget.input.EditTextInputModeFactory;
+
+import android.text.Editable;
+import android.text.TextUtils;
+import android.text.TextWatcher;
+import android.view.View;
 
 /**
  * Widget for handling text input

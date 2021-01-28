@@ -21,6 +21,9 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
+import com.payoneer.mrs.example.shop.checkout.CheckoutActivity;
+import com.payoneer.mrs.example.shop.settings.SettingsActivity;
+
 import android.view.View;
 import androidx.test.espresso.IdlingResource;
 import androidx.test.espresso.intent.Intents;
@@ -29,10 +32,6 @@ import androidx.test.ext.junit.runners.AndroidJUnit4;
 import androidx.test.filters.LargeTest;
 import androidx.test.rule.ActivityTestRule;
 import androidx.test.uiautomator.UiObjectNotFoundException;
-import com.payoneer.mrs.example.shop.R;
-
-import com.payoneer.mrs.example.shop.checkout.CheckoutActivity;
-import com.payoneer.mrs.example.shop.settings.SettingsActivity;
 
 @RunWith(AndroidJUnit4.class)
 @LargeTest

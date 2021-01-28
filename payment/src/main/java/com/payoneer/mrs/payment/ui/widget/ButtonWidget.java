@@ -8,10 +8,11 @@
 
 package com.payoneer.mrs.payment.ui.widget;
 
-import android.view.View;
-import android.widget.Button;
 import com.payoneer.mrs.payment.R;
 import com.payoneer.mrs.payment.localization.Localization;
+
+import android.view.View;
+import android.widget.Button;
 
 /**
  * Widget for showing the Submit (pay) button

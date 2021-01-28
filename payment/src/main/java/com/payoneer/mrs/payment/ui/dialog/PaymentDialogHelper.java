@@ -19,13 +19,13 @@ import static com.payoneer.mrs.payment.localization.LocalizationKey.LABEL_TEXT;
 import static com.payoneer.mrs.payment.localization.LocalizationKey.LABEL_TITLE;
 
 import com.google.android.material.snackbar.Snackbar;
-
-import android.view.View;
 import com.payoneer.mrs.payment.R;
 import com.payoneer.mrs.payment.core.PaymentInputType;
 import com.payoneer.mrs.payment.core.PaymentNetworkCodes;
 import com.payoneer.mrs.payment.localization.Localization;
 import com.payoneer.mrs.payment.model.Interaction;
+
+import android.view.View;
 
 /**
  * Class with helper methods for creating themed dialogs and snackbars.

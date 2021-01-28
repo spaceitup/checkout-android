@@ -20,7 +20,6 @@ import org.junit.runner.RunWith;
 import org.robolectric.RobolectricTestRunner;
 
 import com.google.gson.reflect.TypeToken;
-
 import com.payoneer.mrs.payment.core.PaymentInputType;
 import com.payoneer.mrs.payment.model.InputElement;
 import com.payoneer.mrs.payment.model.InputElementType;

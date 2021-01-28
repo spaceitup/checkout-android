@@ -23,6 +23,7 @@ import com.payoneer.mrs.payment.model.PresetAccount;
 import com.payoneer.mrs.payment.network.ListConnection;
 import com.payoneer.mrs.payment.ui.PaymentActivityResult;
 import com.payoneer.mrs.payment.ui.PaymentResult;
+
 import rx.Single;
 import rx.SingleSubscriber;
 import rx.Subscription;

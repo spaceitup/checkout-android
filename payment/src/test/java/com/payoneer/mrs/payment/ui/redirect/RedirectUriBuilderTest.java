@@ -18,10 +18,11 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.robolectric.RobolectricTestRunner;
 
-import android.net.Uri;
 import com.payoneer.mrs.payment.model.Parameter;
 import com.payoneer.mrs.payment.model.Redirect;
 import com.payoneer.mrs.test.util.TestUtils;
+
+import android.net.Uri;
 
 @RunWith(RobolectricTestRunner.class)
 public class RedirectUriBuilderTest {

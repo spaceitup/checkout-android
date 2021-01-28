@@ -8,6 +8,7 @@
 
 package com.payoneer.mrs.example.shop.settings;
 
+import com.payoneer.mrs.example.shop.R;
 import com.payoneer.mrs.example.shop.checkout.CheckoutActivity;
 import com.payoneer.mrs.example.shop.shared.BaseActivity;
 
@@ -19,7 +20,6 @@ import android.util.Patterns;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import com.payoneer.mrs.example.shop.R;
 
 /**
  * This is the main Activity of this shop app in which users can paste a listUrl and start the shop.

@@ -11,9 +11,10 @@ package com.payoneer.mrs.payment.ui.redirect;
 import java.net.URL;
 import java.util.List;
 
-import android.net.Uri;
 import com.payoneer.mrs.payment.model.Parameter;
 import com.payoneer.mrs.payment.model.Redirect;
+
+import android.net.Uri;
 
 /**
  * Class for constructing a Uri from a Redirect model class

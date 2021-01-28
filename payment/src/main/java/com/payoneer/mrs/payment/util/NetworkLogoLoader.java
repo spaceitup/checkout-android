@@ -13,11 +13,11 @@ import java.util.HashMap;
 import java.util.Map;
 
 import com.bumptech.glide.Glide;
+import com.payoneer.mrs.payment.R;
 
 import android.content.Context;
 import android.content.res.Resources;
 import android.widget.ImageView;
-import com.payoneer.mrs.payment.R;
 
 /**
  * Class for loading network logo images into an ImageView.

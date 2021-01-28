@@ -13,12 +13,13 @@ import static com.payoneer.mrs.payment.localization.LocalizationKey.ALLOW_RECURR
 import static com.payoneer.mrs.payment.localization.LocalizationKey.AUTO_REGISTRATION_FORCED;
 import static com.payoneer.mrs.payment.localization.LocalizationKey.AUTO_REGISTRATION_OPTIONAL;
 
-import android.view.View;
 import com.payoneer.mrs.payment.core.PaymentException;
 import com.payoneer.mrs.payment.core.PaymentInputType;
 import com.payoneer.mrs.payment.form.Operation;
 import com.payoneer.mrs.payment.localization.Localization;
 import com.payoneer.mrs.payment.model.RegistrationType;
+
+import android.view.View;
 
 /**
  * Widget for handling the Register input

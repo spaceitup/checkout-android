@@ -13,7 +13,6 @@ import static androidx.test.espresso.intent.Intents.intended;
 import static androidx.test.espresso.intent.matcher.IntentMatchers.hasComponent;
 import static androidx.test.espresso.matcher.ViewMatchers.assertThat;
 import static androidx.test.espresso.matcher.ViewMatchers.isDisplayed;
-import static androidx.test.espresso.matcher.ViewMatchers.withId;
 import static org.hamcrest.Matchers.containsString;
 
 import java.io.IOException;
@@ -22,6 +21,9 @@ import org.json.JSONException;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+
+import com.payoneer.mrs.example.shop.settings.SettingsActivity;
+import com.payoneer.mrs.payment.ui.page.ChargePaymentActivity;
 
 import androidx.test.espresso.intent.Intents;
 import androidx.test.espresso.matcher.ViewMatchers;
@@ -34,10 +36,6 @@ import androidx.test.uiautomator.UiDevice;
 import androidx.test.uiautomator.UiObject2;
 import androidx.test.uiautomator.UiObjectNotFoundException;
 import androidx.test.uiautomator.Until;
-import com.payoneer.mrs.example.shop.R;
-
-import com.payoneer.mrs.example.shop.settings.SettingsActivity;
-import com.payoneer.mrs.payment.ui.page.ChargePaymentActivity;
 
 @RunWith(AndroidJUnit4.class)
 @LargeTest

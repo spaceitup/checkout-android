@@ -18,6 +18,9 @@ import static org.hamcrest.CoreMatchers.anyOf;
 
 import org.hamcrest.Matcher;
 
+import com.payoneer.mrs.payment.ui.list.PaymentCardViewHolder;
+import com.payoneer.mrs.payment.ui.widget.FormWidget;
+
 import android.view.View;
 import android.widget.HorizontalScrollView;
 import android.widget.NumberPicker;
@@ -29,8 +32,6 @@ import androidx.test.espresso.UiController;
 import androidx.test.espresso.ViewAction;
 import androidx.test.espresso.action.ScrollToAction;
 import androidx.test.espresso.matcher.ViewMatchers;
-import com.payoneer.mrs.payment.ui.list.PaymentCardViewHolder;
-import com.payoneer.mrs.payment.ui.widget.FormWidget;
 
 /**
  * Class providing helper methods for performing actions on the PaymentList.

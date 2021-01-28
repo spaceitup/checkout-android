@@ -12,17 +12,17 @@ import static com.google.android.material.textfield.TextInputLayout.END_ICON_NON
 
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
+import com.payoneer.mrs.payment.R;
+import com.payoneer.mrs.payment.core.PaymentException;
+import com.payoneer.mrs.payment.form.Operation;
+import com.payoneer.mrs.payment.ui.widget.input.EditTextInputMode;
+import com.payoneer.mrs.payment.validation.ValidationResult;
 
 import android.text.TextUtils;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
 import android.widget.TextView;
-import com.payoneer.mrs.payment.R;
-import com.payoneer.mrs.payment.core.PaymentException;
-import com.payoneer.mrs.payment.form.Operation;
-import com.payoneer.mrs.payment.ui.widget.input.EditTextInputMode;
-import com.payoneer.mrs.payment.validation.ValidationResult;
 
 /**
  * Base class for widgets using the TextInputLayout and TextInputEditText

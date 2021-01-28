@@ -8,16 +8,17 @@
 
 package com.payoneer.mrs.payment.ui.list;
 
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.TextView;
-import androidx.recyclerview.widget.RecyclerView.ViewHolder;
 import com.payoneer.mrs.payment.R;
 import com.payoneer.mrs.payment.model.AccountMask;
 import com.payoneer.mrs.payment.ui.model.AccountCard;
 import com.payoneer.mrs.payment.ui.model.PaymentCard;
 import com.payoneer.mrs.payment.util.PaymentUtils;
+
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.TextView;
+import androidx.recyclerview.widget.RecyclerView.ViewHolder;
 
 /**
  * The AccountCardViewHolder class holding and binding views for an AccountCard

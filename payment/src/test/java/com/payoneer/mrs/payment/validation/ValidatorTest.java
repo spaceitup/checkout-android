@@ -20,14 +20,15 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.robolectric.RobolectricTestRunner;
 
-import android.content.res.Resources;
-import androidx.test.core.app.ApplicationProvider;
 import com.payoneer.mrs.payment.R;
 import com.payoneer.mrs.payment.core.PaymentException;
 import com.payoneer.mrs.payment.core.PaymentInputType;
 import com.payoneer.mrs.payment.core.PaymentNetworkCodes;
 import com.payoneer.mrs.payment.model.PaymentMethod;
 import com.payoneer.mrs.payment.resource.ResourceLoader;
+
+import android.content.res.Resources;
+import androidx.test.core.app.ApplicationProvider;
 
 @RunWith(RobolectricTestRunner.class)
 public class ValidatorTest {

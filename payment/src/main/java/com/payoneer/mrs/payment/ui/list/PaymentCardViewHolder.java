@@ -20,11 +20,6 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.ImageView;
-import android.widget.TextView;
-import androidx.recyclerview.widget.RecyclerView;
 import com.payoneer.mrs.payment.R;
 import com.payoneer.mrs.payment.model.AccountMask;
 import com.payoneer.mrs.payment.model.InputElement;
@@ -40,6 +35,12 @@ import com.payoneer.mrs.payment.ui.widget.WidgetInflater;
 import com.payoneer.mrs.payment.ui.widget.WidgetPresenter;
 import com.payoneer.mrs.payment.util.NetworkLogoLoader;
 import com.payoneer.mrs.payment.util.PaymentUtils;
+
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.TextView;
+import androidx.recyclerview.widget.RecyclerView;
 
 /**
  * The PaymentCardViewHolder holding the header and input widgets

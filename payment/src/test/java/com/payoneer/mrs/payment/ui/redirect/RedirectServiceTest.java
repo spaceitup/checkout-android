@@ -16,11 +16,12 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.robolectric.RobolectricTestRunner;
 
-import android.content.Context;
-import androidx.test.core.app.ApplicationProvider;
 import com.payoneer.mrs.payment.model.HttpMethod;
 import com.payoneer.mrs.payment.model.Redirect;
 import com.payoneer.mrs.test.util.TestUtils;
+
+import android.content.Context;
+import androidx.test.core.app.ApplicationProvider;
 
 @RunWith(RobolectricTestRunner.class)
 public class RedirectServiceTest {

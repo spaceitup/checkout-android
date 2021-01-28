@@ -14,15 +14,16 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
+import com.payoneer.mrs.example.shop.checkout.CheckoutActivity;
+import com.payoneer.mrs.example.shop.settings.SettingsActivity;
+import com.payoneer.mrs.example.shop.summary.SummaryActivity;
+import com.payoneer.mrs.payment.ui.page.PaymentListActivity;
+
 import androidx.test.espresso.IdlingResource;
 import androidx.test.espresso.intent.Intents;
 import androidx.test.ext.junit.runners.AndroidJUnit4;
 import androidx.test.filters.LargeTest;
 import androidx.test.rule.ActivityTestRule;
-import com.payoneer.mrs.example.shop.checkout.CheckoutActivity;
-import com.payoneer.mrs.example.shop.settings.SettingsActivity;
-import com.payoneer.mrs.example.shop.summary.SummaryActivity;
-import com.payoneer.mrs.payment.ui.page.PaymentListActivity;
 
 @RunWith(AndroidJUnit4.class)
 @LargeTest

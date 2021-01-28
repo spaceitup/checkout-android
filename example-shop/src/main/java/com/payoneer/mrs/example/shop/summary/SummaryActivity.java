@@ -12,6 +12,17 @@ import java.net.URL;
 import java.util.Map;
 
 import com.google.android.material.appbar.CollapsingToolbarLayout;
+import com.payoneer.mrs.example.shop.R;
+import com.payoneer.mrs.example.shop.confirm.ConfirmActivity;
+import com.payoneer.mrs.example.shop.settings.SettingsActivity;
+import com.payoneer.mrs.example.shop.shared.BaseActivity;
+import com.payoneer.mrs.payment.model.AccountMask;
+import com.payoneer.mrs.payment.model.PaymentMethod;
+import com.payoneer.mrs.payment.model.PresetAccount;
+import com.payoneer.mrs.payment.ui.PaymentUI;
+import com.payoneer.mrs.payment.ui.page.idlingresource.SimpleIdlingResource;
+import com.payoneer.mrs.payment.util.NetworkLogoLoader;
+import com.payoneer.mrs.payment.util.PaymentUtils;
 
 import android.app.Activity;
 import android.content.Context;
@@ -29,17 +40,6 @@ import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.content.res.ResourcesCompat;
 import androidx.test.espresso.IdlingResource;
-import com.payoneer.mrs.example.shop.R;
-import com.payoneer.mrs.example.shop.confirm.ConfirmActivity;
-import com.payoneer.mrs.example.shop.settings.SettingsActivity;
-import com.payoneer.mrs.example.shop.shared.BaseActivity;
-import com.payoneer.mrs.payment.model.AccountMask;
-import com.payoneer.mrs.payment.model.PaymentMethod;
-import com.payoneer.mrs.payment.model.PresetAccount;
-import com.payoneer.mrs.payment.ui.PaymentUI;
-import com.payoneer.mrs.payment.ui.page.idlingresource.SimpleIdlingResource;
-import com.payoneer.mrs.payment.util.NetworkLogoLoader;
-import com.payoneer.mrs.payment.util.PaymentUtils;
 
 /**
  * Activity displaying the summary page with the Pay and Edit button.

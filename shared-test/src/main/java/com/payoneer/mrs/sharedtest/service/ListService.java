@@ -15,12 +15,13 @@ import java.util.Map;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import android.content.Context;
-import androidx.test.platform.app.InstrumentationRegistry;
 import com.payoneer.mrs.payment.core.PaymentException;
 import com.payoneer.mrs.payment.model.ListResult;
 import com.payoneer.mrs.payment.network.ListConnection;
 import com.payoneer.mrs.payment.util.PaymentUtils;
+
+import android.content.Context;
+import androidx.test.platform.app.InstrumentationRegistry;
 
 /**
  * Class for creating a new ListUrl

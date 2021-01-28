@@ -15,11 +15,11 @@ import java.net.MalformedURLException;
 import org.json.JSONException;
 
 import com.google.gson.JsonParseException;
-
-import android.content.Context;
 import com.payoneer.mrs.payment.core.PaymentException;
 import com.payoneer.mrs.payment.form.Operation;
 import com.payoneer.mrs.payment.model.OperationResult;
+
+import android.content.Context;
 
 /**
  * Class containing methods to send Payment Operation requests to the Payment API.

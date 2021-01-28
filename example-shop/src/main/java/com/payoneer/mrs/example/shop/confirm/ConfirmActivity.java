@@ -8,6 +8,7 @@
 
 package com.payoneer.mrs.example.shop.confirm;
 
+import com.payoneer.mrs.example.shop.R;
 import com.payoneer.mrs.example.shop.settings.SettingsActivity;
 import com.payoneer.mrs.example.shop.shared.BaseActivity;
 
@@ -16,7 +17,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
-import com.payoneer.mrs.example.shop.R;
 
 /**
  * This is the confirm screen shown after a charge operation has been completed.

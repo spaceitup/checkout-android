@@ -16,11 +16,11 @@ import java.util.Map;
 
 import com.google.gson.JsonParseException;
 import com.google.gson.reflect.TypeToken;
-
-import android.content.Context;
 import com.payoneer.mrs.payment.core.PaymentException;
 import com.payoneer.mrs.payment.localization.LocalizationHolder;
 import com.payoneer.mrs.payment.localization.MapLocalizationHolder;
+
+import android.content.Context;
 
 /**
  * Class implementing the communication with the payment API to load localization files

@@ -12,7 +12,6 @@ import static com.payoneer.mrs.payment.localization.LocalizationKey.CHARGE_INTER
 import static com.payoneer.mrs.payment.ui.PaymentActivityResult.RESULT_CODE_ERROR;
 import static com.payoneer.mrs.payment.ui.PaymentActivityResult.RESULT_CODE_PROCEED;
 
-import android.content.Context;
 import com.payoneer.mrs.payment.core.PaymentException;
 import com.payoneer.mrs.payment.form.Operation;
 import com.payoneer.mrs.payment.localization.Localization;
@@ -36,6 +35,8 @@ import com.payoneer.mrs.payment.ui.service.NetworkServicePresenter;
 import com.payoneer.mrs.payment.ui.service.PaymentSessionListener;
 import com.payoneer.mrs.payment.ui.service.PaymentSessionService;
 import com.payoneer.mrs.payment.util.PaymentResultHelper;
+
+import android.content.Context;
 
 /**
  * The ChargePaymentPresenter takes care of posting the operation to the Payment API.

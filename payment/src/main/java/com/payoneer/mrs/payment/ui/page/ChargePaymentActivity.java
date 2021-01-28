@@ -14,14 +14,15 @@ import static com.payoneer.mrs.payment.localization.LocalizationKey.CHARGE_TITLE
 import java.net.URL;
 import java.util.Map;
 
-import android.content.Context;
-import android.content.Intent;
-import android.os.Bundle;
 import com.payoneer.mrs.payment.R;
 import com.payoneer.mrs.payment.form.Operation;
 import com.payoneer.mrs.payment.localization.Localization;
 import com.payoneer.mrs.payment.model.PresetAccount;
 import com.payoneer.mrs.payment.ui.PaymentActivityResult;
+
+import android.content.Context;
+import android.content.Intent;
+import android.os.Bundle;
 
 /**
  * The ChargePaymentActivity is the view displaying the loading animation while posting the operation.

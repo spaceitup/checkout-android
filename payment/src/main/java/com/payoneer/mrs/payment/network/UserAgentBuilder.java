@@ -8,12 +8,13 @@
 
 package com.payoneer.mrs.payment.network;
 
+import com.payoneer.mrs.payment.BuildConfig;
+
 import android.content.Context;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.util.Log;
-import com.payoneer.mrs.payment.BuildConfig;
 
 /**
  * Class for constructing the custom UserAgent header value

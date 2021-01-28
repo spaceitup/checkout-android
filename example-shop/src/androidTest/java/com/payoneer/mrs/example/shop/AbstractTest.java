@@ -27,20 +27,19 @@ import java.io.IOException;
 import org.hamcrest.Matcher;
 import org.json.JSONException;
 
-import android.view.View;
-import androidx.test.espresso.IdlingRegistry;
-import androidx.test.espresso.IdlingResource;
 import com.payoneer.mrs.example.shop.checkout.CheckoutActivity;
 import com.payoneer.mrs.example.shop.confirm.ConfirmActivity;
 import com.payoneer.mrs.example.shop.summary.SummaryActivity;
 import com.payoneer.mrs.payment.ui.page.ChargePaymentActivity;
 import com.payoneer.mrs.payment.ui.page.PaymentListActivity;
-
-import androidx.test.espresso.matcher.ViewMatchers;
-
 import com.payoneer.mrs.sharedtest.service.ListService;
 import com.payoneer.mrs.sharedtest.view.ActivityHelper;
 import com.payoneer.mrs.sharedtest.view.PaymentActions;
+
+import android.view.View;
+import androidx.test.espresso.IdlingRegistry;
+import androidx.test.espresso.IdlingResource;
+import androidx.test.espresso.matcher.ViewMatchers;
 
 public class AbstractTest {
 

@@ -10,12 +10,13 @@ package com.payoneer.mrs.payment.ui.widget;
 
 import static com.google.android.material.textfield.TextInputLayout.END_ICON_CUSTOM;
 
-import android.view.View;
 import com.payoneer.mrs.payment.R;
 import com.payoneer.mrs.payment.localization.Localization;
 import com.payoneer.mrs.payment.localization.LocalizationKey;
 import com.payoneer.mrs.payment.model.InputElement;
 import com.payoneer.mrs.payment.ui.widget.input.EditTextInputModeFactory;
+
+import android.view.View;
 
 /**
  * Widget for showing the verification code input

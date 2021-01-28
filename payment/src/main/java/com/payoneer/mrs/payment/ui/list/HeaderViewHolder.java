@@ -8,12 +8,13 @@
 
 package com.payoneer.mrs.payment.ui.list;
 
+import com.payoneer.mrs.payment.R;
+import com.payoneer.mrs.payment.util.PaymentUtils;
+
 import android.view.View;
 import android.widget.TextView;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.recyclerview.widget.RecyclerView.ViewHolder;
-import com.payoneer.mrs.payment.R;
-import com.payoneer.mrs.payment.util.PaymentUtils;
 
 /**
  * The HeaderViewHolder holding and binding views for a header in the RecyclerView

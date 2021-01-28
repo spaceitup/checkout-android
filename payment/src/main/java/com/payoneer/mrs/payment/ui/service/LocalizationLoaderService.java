@@ -13,7 +13,6 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.Callable;
 
-import android.content.Context;
 import com.payoneer.mrs.payment.core.PaymentException;
 import com.payoneer.mrs.payment.core.WorkerSubscriber;
 import com.payoneer.mrs.payment.core.WorkerTask;
@@ -27,6 +26,8 @@ import com.payoneer.mrs.payment.network.LocalizationConnection;
 import com.payoneer.mrs.payment.ui.model.AccountCard;
 import com.payoneer.mrs.payment.ui.model.PaymentNetwork;
 import com.payoneer.mrs.payment.ui.model.PaymentSession;
+
+import android.content.Context;
 
 /**
  * The LocalizationService providing asynchronize loading of the localizations needed for presenting the list of payment networks and showing errors.

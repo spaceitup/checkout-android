@@ -14,14 +14,15 @@ import static com.payoneer.mrs.payment.model.HttpMethod.POST;
 import java.util.ArrayList;
 import java.util.List;
 
-import android.content.Context;
-import android.net.Uri;
-import android.text.TextUtils;
 import com.payoneer.mrs.payment.core.PaymentException;
 import com.payoneer.mrs.payment.model.Interaction;
 import com.payoneer.mrs.payment.model.OperationResult;
 import com.payoneer.mrs.payment.model.Parameter;
 import com.payoneer.mrs.payment.model.Redirect;
+
+import android.content.Context;
+import android.net.Uri;
+import android.text.TextUtils;
 
 /**
  * RedirectService class to handle redirect payments, currently redirect networks are only supported

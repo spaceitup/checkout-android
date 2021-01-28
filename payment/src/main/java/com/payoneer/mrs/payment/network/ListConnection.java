@@ -13,12 +13,12 @@ import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 
 import com.google.gson.JsonParseException;
+import com.payoneer.mrs.payment.core.PaymentException;
+import com.payoneer.mrs.payment.model.ListResult;
 
 import android.content.Context;
 import android.net.Uri;
 import android.text.TextUtils;
-import com.payoneer.mrs.payment.core.PaymentException;
-import com.payoneer.mrs.payment.model.ListResult;
 
 /**
  * Class implementing the communication with the List payment API

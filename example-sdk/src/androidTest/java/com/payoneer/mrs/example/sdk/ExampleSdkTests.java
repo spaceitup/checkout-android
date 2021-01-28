@@ -24,17 +24,14 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
+import com.payoneer.mrs.payment.ui.page.PaymentListActivity;
+import com.payoneer.mrs.sharedtest.service.ListService;
+
 import androidx.test.espresso.intent.Intents;
 import androidx.test.espresso.matcher.ViewMatchers;
 import androidx.test.ext.junit.runners.AndroidJUnit4;
 import androidx.test.filters.LargeTest;
 import androidx.test.rule.ActivityTestRule;
-
-import com.payoneer.mrs.payment.ui.page.PaymentListActivity;
-
-import com.payoneer.mrs.example.sdk.BuildConfig;
-import com.payoneer.mrs.example.sdk.R;
-import com.payoneer.mrs.sharedtest.service.ListService;
 
 @RunWith(AndroidJUnit4.class)
 @LargeTest

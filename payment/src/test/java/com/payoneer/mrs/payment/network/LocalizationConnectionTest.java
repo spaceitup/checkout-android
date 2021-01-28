@@ -12,10 +12,11 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.robolectric.RobolectricTestRunner;
 
-import android.content.Context;
-import androidx.test.core.app.ApplicationProvider;
 import com.payoneer.mrs.payment.core.PaymentException;
 import com.payoneer.mrs.payment.localization.LocalizationHolder;
+
+import android.content.Context;
+import androidx.test.core.app.ApplicationProvider;
 
 /**
  * The type Localization connection test.

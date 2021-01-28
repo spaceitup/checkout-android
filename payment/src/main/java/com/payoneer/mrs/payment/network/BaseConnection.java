@@ -22,12 +22,12 @@ import java.nio.charset.StandardCharsets;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonParseException;
+import com.payoneer.mrs.payment.core.PaymentException;
+import com.payoneer.mrs.payment.model.ErrorInfo;
 
 import android.content.Context;
 import android.text.TextUtils;
 import android.util.Log;
-import com.payoneer.mrs.payment.core.PaymentException;
-import com.payoneer.mrs.payment.model.ErrorInfo;
 
 /**
  * The base class for all Payment API implementations

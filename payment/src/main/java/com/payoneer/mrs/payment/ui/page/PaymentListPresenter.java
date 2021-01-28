@@ -19,8 +19,6 @@ import java.net.URL;
 import java.util.List;
 import java.util.Map;
 
-import android.app.Activity;
-import android.text.TextUtils;
 import com.payoneer.mrs.payment.core.PaymentException;
 import com.payoneer.mrs.payment.form.Operation;
 import com.payoneer.mrs.payment.localization.Localization;
@@ -49,6 +47,9 @@ import com.payoneer.mrs.payment.ui.service.PaymentSessionService;
 import com.payoneer.mrs.payment.ui.widget.FormWidget;
 import com.payoneer.mrs.payment.util.PaymentResultHelper;
 import com.payoneer.mrs.payment.util.PaymentUtils;
+
+import android.app.Activity;
+import android.text.TextUtils;
 
 /**
  * The PaymentListPresenter implementing the presenter part of the MVP
