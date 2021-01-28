@@ -23,7 +23,7 @@ import android.util.Patterns;
 
 /**
  * The PaymentUI is the controller to initialize and launch the Payment Page.
- * The Payment Page shows payment methods which can be used to finalize payments through optile's Payment API.
+ * The Payment Page shows payment methods which can be used to finalize payments through the Payment API.
  */
 public final class PaymentUI {
 

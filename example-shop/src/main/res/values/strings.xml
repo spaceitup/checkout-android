@@ -44,6 +44,6 @@
     <string name="dialog_error_button">Close</string>
     <string name="dialog_error_list">Error loading list data for creating the PaymentSession</string>
     <string name="dialog_previous_missing">Please first create a new Charge or Preset Session</string>
-    <string name="dialog_error_listurl_invalid">Please paste a valid optile List Url in the input field.</string>
+    <string name="dialog_error_listurl_invalid">Please paste a valid List Url in the input field.</string>
 
 </resources>

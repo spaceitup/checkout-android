@@ -16,7 +16,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 /**
- * Represents a customer's account (payment information for a payment method) that has been registered (i.e. stored) at Optile.
+ * Represents a customer's account (payment information for a payment method) that has been registered (i.e. stored).
  */
 @Getter
 @Setter
