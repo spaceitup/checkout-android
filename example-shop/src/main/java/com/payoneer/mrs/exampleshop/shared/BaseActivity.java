@@ -6,9 +6,9 @@
  * See the LICENSE file for more information.
  */
 
-package com.payoneer.mrs.example.shop.shared;
+package com.payoneer.mrs.exampleshop.shared;
 
-import com.payoneer.mrs.example.shop.R;
+import com.payoneer.mrs.exampleshop.R;
 import com.payoneer.mrs.payment.ui.PaymentActivityResult;
 import com.payoneer.mrs.payment.ui.dialog.PaymentDialogFragment;
 import com.payoneer.mrs.payment.ui.dialog.PaymentDialogHelper;

@@ -6,7 +6,7 @@
  * See the LICENSE file for more information.
  */
 
-package com.payoneer.mrs.example.sdk;
+package com.payoneer.mrs.examplesdk;
 
 import static androidx.test.espresso.Espresso.onView;
 import static androidx.test.espresso.action.ViewActions.click;
@@ -24,6 +24,9 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
+import com.payoneer.mrs.examplesdk.BuildConfig;
+import com.payoneer.mrs.examplesdk.R;
+import com.payoneer.mrs.examplesdk.ExampleSdkActivity;
 import com.payoneer.mrs.payment.ui.page.PaymentListActivity;
 import com.payoneer.mrs.sharedtest.service.ListService;
 
@@ -55,7 +58,7 @@ public class ExampleSdkTests {
     private void openPaymentList() throws JSONException, IOException {
         String baseUrl = BuildConfig.paymentapi_baseurl;
         String authHeader = BuildConfig.paymentapi_authheader;
-        String listUrl = ListService.createListUrl(com.payoneer.mrs.example.sdk.test.R.raw.listtemplate, false, baseUrl, authHeader);
+        String listUrl = ListService.createListUrl(com.payoneer.mrs.examplesdk.test.R.raw.listtemplate, false, baseUrl, authHeader);
 
         onView(withId(R.id.input_listurl)).perform(typeText(listUrl));
         onView(withId(R.id.button_action)).perform(click());

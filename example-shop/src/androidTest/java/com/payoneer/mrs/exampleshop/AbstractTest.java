@@ -6,7 +6,7 @@
  * See the LICENSE file for more information.
  */
 
-package com.payoneer.mrs.example.shop;
+package com.payoneer.mrs.exampleshop;
 
 import static androidx.test.espresso.Espresso.onView;
 import static androidx.test.espresso.action.ViewActions.click;
@@ -27,9 +27,11 @@ import java.io.IOException;
 import org.hamcrest.Matcher;
 import org.json.JSONException;
 
-import com.payoneer.mrs.example.shop.checkout.CheckoutActivity;
-import com.payoneer.mrs.example.shop.confirm.ConfirmActivity;
-import com.payoneer.mrs.example.shop.summary.SummaryActivity;
+import com.payoneer.mrs.exampleshop.BuildConfig;
+import com.payoneer.mrs.exampleshop.R;
+import com.payoneer.mrs.exampleshop.checkout.CheckoutActivity;
+import com.payoneer.mrs.exampleshop.confirm.ConfirmActivity;
+import com.payoneer.mrs.exampleshop.summary.SummaryActivity;
 import com.payoneer.mrs.payment.ui.page.ChargePaymentActivity;
 import com.payoneer.mrs.payment.ui.page.PaymentListActivity;
 import com.payoneer.mrs.sharedtest.service.ListService;
@@ -48,7 +50,7 @@ public class AbstractTest {
     CheckoutActivity openCheckoutActivity(boolean presetFirst) throws IOException, JSONException {
         String baseUrl = BuildConfig.paymentapi_baseurl;
         String authHeader = BuildConfig.paymentapi_authheader;
-        String listUrl = ListService.createListUrl(com.payoneer.mrs.example.shop.test.R.raw.listtemplate, presetFirst, baseUrl, authHeader);
+        String listUrl = ListService.createListUrl(com.payoneer.mrs.exampleshop.test.R.raw.listtemplate, presetFirst, baseUrl, authHeader);
 
         onView(ViewMatchers.withId(R.id.layout_settings)).check(matches(isDisplayed()));
         onView(withId(R.id.input_listurl)).perform(typeText(listUrl));

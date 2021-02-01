@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.payoneer.mrs.example.sdk">
+    package="com.payoneer.mrs.examplesdk">
 
     <application
         android:allowBackup="true"

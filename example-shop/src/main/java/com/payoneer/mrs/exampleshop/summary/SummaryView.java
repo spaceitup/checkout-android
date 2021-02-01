@@ -6,7 +6,7 @@
  * See the LICENSE file for more information.
  */
 
-package com.payoneer.mrs.example.shop.summary;
+package com.payoneer.mrs.exampleshop.summary;
 
 import com.payoneer.mrs.payment.model.PresetAccount;
 

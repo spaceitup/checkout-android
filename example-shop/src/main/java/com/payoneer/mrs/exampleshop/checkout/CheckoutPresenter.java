@@ -6,7 +6,7 @@
  * See the LICENSE file for more information.
  */
 
-package com.payoneer.mrs.example.shop.checkout;
+package com.payoneer.mrs.exampleshop.checkout;
 
 import static com.payoneer.mrs.payment.model.RedirectType.SUMMARY;
 import static com.payoneer.mrs.payment.ui.PaymentActivityResult.RESULT_CODE_ERROR;

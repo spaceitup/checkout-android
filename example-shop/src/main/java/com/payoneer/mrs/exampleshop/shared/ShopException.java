@@ -6,7 +6,7 @@
  * See the LICENSE file for more information.
  */
 
-package com.payoneer.mrs.example.shop.shared;
+package com.payoneer.mrs.exampleshop.shared;
 
 /**
  * Generic ShopException

@@ -6,7 +6,7 @@
  * See the LICENSE file for more information.
  */
 
-package com.payoneer.mrs.example.shop.summary;
+package com.payoneer.mrs.exampleshop.summary;
 
 import static android.app.Activity.RESULT_CANCELED;
 import static com.payoneer.mrs.payment.ui.PaymentActivityResult.RESULT_CODE_ERROR;
@@ -14,7 +14,7 @@ import static com.payoneer.mrs.payment.ui.PaymentActivityResult.RESULT_CODE_PROC
 
 import java.util.concurrent.Callable;
 
-import com.payoneer.mrs.example.shop.shared.ShopException;
+import com.payoneer.mrs.exampleshop.shared.ShopException;
 import com.payoneer.mrs.payment.core.PaymentException;
 import com.payoneer.mrs.payment.model.Interaction;
 import com.payoneer.mrs.payment.model.InteractionCode;

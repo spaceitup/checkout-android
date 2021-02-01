@@ -5,7 +5,7 @@
  * This file is open source and available under the MIT license.
  * See the LICENSE file for more information.
  */
-package com.payoneer.mrs.example.shop;
+package com.payoneer.mrs.exampleshop;
 
 import java.io.IOException;
 
@@ -14,9 +14,9 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
-import com.payoneer.mrs.example.shop.checkout.CheckoutActivity;
-import com.payoneer.mrs.example.shop.settings.SettingsActivity;
-import com.payoneer.mrs.example.shop.summary.SummaryActivity;
+import com.payoneer.mrs.exampleshop.checkout.CheckoutActivity;
+import com.payoneer.mrs.exampleshop.settings.SettingsActivity;
+import com.payoneer.mrs.exampleshop.summary.SummaryActivity;
 import com.payoneer.mrs.payment.ui.page.PaymentListActivity;
 
 import androidx.test.espresso.IdlingResource;

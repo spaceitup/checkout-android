@@ -6,11 +6,11 @@
  * See the LICENSE file for more information.
  */
 
-package com.payoneer.mrs.example.shop.settings;
+package com.payoneer.mrs.exampleshop.settings;
 
-import com.payoneer.mrs.example.shop.R;
-import com.payoneer.mrs.example.shop.checkout.CheckoutActivity;
-import com.payoneer.mrs.example.shop.shared.BaseActivity;
+import com.payoneer.mrs.exampleshop.R;
+import com.payoneer.mrs.exampleshop.checkout.CheckoutActivity;
+import com.payoneer.mrs.exampleshop.shared.BaseActivity;
 
 import android.content.Context;
 import android.content.Intent;

@@ -6,7 +6,7 @@
  * See the LICENSE file for more information.
  */
 
-package com.payoneer.mrs.example.shop.checkout;
+package com.payoneer.mrs.exampleshop.checkout;
 
 /**
  * The interface Checkout view.

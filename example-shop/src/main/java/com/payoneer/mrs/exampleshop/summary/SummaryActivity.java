@@ -6,16 +6,16 @@
  * See the LICENSE file for more information.
  */
 
-package com.payoneer.mrs.example.shop.summary;
+package com.payoneer.mrs.exampleshop.summary;
 
 import java.net.URL;
 import java.util.Map;
 
 import com.google.android.material.appbar.CollapsingToolbarLayout;
-import com.payoneer.mrs.example.shop.R;
-import com.payoneer.mrs.example.shop.confirm.ConfirmActivity;
-import com.payoneer.mrs.example.shop.settings.SettingsActivity;
-import com.payoneer.mrs.example.shop.shared.BaseActivity;
+import com.payoneer.mrs.exampleshop.R;
+import com.payoneer.mrs.exampleshop.confirm.ConfirmActivity;
+import com.payoneer.mrs.exampleshop.settings.SettingsActivity;
+import com.payoneer.mrs.exampleshop.shared.BaseActivity;
 import com.payoneer.mrs.payment.model.AccountMask;
 import com.payoneer.mrs.payment.model.PaymentMethod;
 import com.payoneer.mrs.payment.model.PresetAccount;
