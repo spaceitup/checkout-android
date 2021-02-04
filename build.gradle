@@ -22,7 +22,7 @@ buildscript {
 allprojects {
     gradle.projectsEvaluated {
         tasks.withType(JavaCompile) {
-            options.compilerArgs.add("-Xlint:deprecation")
+            //options.compilerArgs.add("-Xlint:deprecation")
         }
     }
     repositories {
@@ -98,7 +98,7 @@ task buildci(type: GradleBuild) {
     }
 }
 
-def getCurrentBranch() {
+static def getCurrentBranch() {
     def branch = ""
     def proc = "git rev-parse --abbrev-ref HEAD".execute()
     proc.in.eachLine { line -> branch = line }
