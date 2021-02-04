@@ -23,7 +23,7 @@ import com.payoneer.mrs.payment.network.PaymentConnection;
 import android.content.Context;
 
 /**
- * The OperationService providing asynchronize posting of the Operation and communication with the Payment API.
+ * The OperationService providing asynchronous posting of the Operation and communication with the Payment API.
  * This service makes callbacks in the operation listener to notify of request completions.
  */
 public final class OperationService {

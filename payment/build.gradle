@@ -79,7 +79,7 @@ dependencies {
 }
 
 //
-// This task contains the upload repositories for Nexus release & shapshot
+// This task contains the upload repositories for Nexus release & snapshot
 //
 uploadArchives {
     if (!(project.hasProperty('mavenUser') && project.hasProperty('mavenPassword'))) {

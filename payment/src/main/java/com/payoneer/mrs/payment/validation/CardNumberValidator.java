@@ -34,7 +34,7 @@ final class CardNumberValidator {
             if (Character.isDigit(posChar)) {
                 sum += sumTable[flip++ & 0x1][Character.digit(posChar, 10)];
             } else {
-                //character is not a digit - Luhn-ckeck failed
+                //character is not a digit - Luhn check failed
                 return false;
             }
         }

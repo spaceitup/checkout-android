@@ -35,7 +35,7 @@ public class CardNumberValidatorTest {
         assertTrue(CardNumberValidator.isValidLuhn("36394455633086"));
         // Maestro
         assertTrue(CardNumberValidator.isValidLuhn("6762174698488713"));
-        // Visa Elektron
+        // Visa Electron
         assertTrue(CardNumberValidator.isValidLuhn("4917582391037711"));
         // InstaPayment
         assertTrue(CardNumberValidator.isValidLuhn("6393363361928900"));

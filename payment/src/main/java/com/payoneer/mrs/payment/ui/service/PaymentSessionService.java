@@ -41,7 +41,7 @@ import android.content.Context;
 import android.text.TextUtils;
 
 /**
- * The PaymentSessionService providing asynchronize loading of the PaymentSession.
+ * The PaymentSessionService providing asynchronous loading of the PaymentSession.
  * This service makes callbacks in the listener to notify of request completions.
  */
 public final class PaymentSessionService {

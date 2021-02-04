@@ -30,7 +30,7 @@ import com.payoneer.mrs.payment.ui.model.PaymentSession;
 import android.content.Context;
 
 /**
- * The LocalizationService providing asynchronize loading of the localizations needed for presenting the list of payment networks and showing errors.
+ * The LocalizationService providing asynchronous loading of the localizations needed for presenting the list of payment networks and showing errors.
  * This service makes callbacks in the listener to notify of request completions.
  */
 public final class LocalizationLoaderService {

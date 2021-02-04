@@ -74,7 +74,7 @@ public class ChromeCustomTabs {
                 Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NO_HISTORY);
             customTabsIntent.launchUrl(context, uri);
         } catch (ActivityNotFoundException e) {
-            throw new PaymentException("Error ocurred while opening ChromeCustomTabs", e);
+            throw new PaymentException("Error occurred while opening ChromeCustomTabs", e);
         }
     }
 }

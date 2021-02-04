@@ -59,7 +59,7 @@ public abstract class NetworkService {
     /**
      * Notify the network service that the redirect has failed to receive an OperationResult.
      * The network service should handle this situation and make sure the NetworkServicePresenter is notified with the
-     * appropiate PaymentResult.
+     * appropriate PaymentResult.
      */
     public void onRedirectError() {
     }
