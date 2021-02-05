@@ -14,6 +14,7 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.Calendar;
 import java.util.List;
+import java.util.Locale;
 
 import com.payoneer.mrs.payment.core.PaymentInputType;
 import com.payoneer.mrs.payment.model.AccountMask;
@@ -54,6 +55,16 @@ public final class PaymentUtils {
     }
 
     /**
+     * Returns a formatted string using the default locale, format string, and arguments.
+     *
+     * @param format A format string
+     * @param args Arguments referenced by the format specifiers in the format string
+     */
+    public static String format(String format, Object ... args) {
+        return String.format(Locale.getDefault(), format, args);
+    }
+    
+    /**
      * Compare String values of two Objects by obtaining the String values using the toString method.
      *
      * @param obj1 the first object
@@ -90,7 +101,7 @@ public final class PaymentUtils {
         if (month == 0 || year == 0) {
             return null;
         }
-        return String.format("%1$02d / %2$d", month, (year % 100));
+        return PaymentUtils.format("%1$02d / %2$d", month, (year % 100));
     }
 
     /**

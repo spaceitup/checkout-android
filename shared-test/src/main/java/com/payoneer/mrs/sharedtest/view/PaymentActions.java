@@ -20,7 +20,9 @@ import org.hamcrest.Matcher;
 
 import com.payoneer.mrs.payment.ui.list.PaymentCardViewHolder;
 import com.payoneer.mrs.payment.ui.widget.FormWidget;
+import com.payoneer.mrs.payment.util.PaymentUtils;
 
+import android.annotation.SuppressLint;
 import android.view.View;
 import android.widget.HorizontalScrollView;
 import android.widget.NumberPicker;
@@ -32,6 +34,8 @@ import androidx.test.espresso.UiController;
 import androidx.test.espresso.ViewAction;
 import androidx.test.espresso.action.ScrollToAction;
 import androidx.test.espresso.matcher.ViewMatchers;
+
+import java.util.Locale;
 
 /**
  * Class providing helper methods for performing actions on the PaymentList.
@@ -56,7 +60,7 @@ public final class PaymentActions {
 
             @Override
             public String getDescription() {
-                return String.format("perform action on view in widget %s at position %d", widgetName, position);
+                return String.format(Locale.getDefault(), "perform action on view in widget %s at position %d", widgetName, position);
             }
 
             @Override
@@ -69,7 +73,7 @@ public final class PaymentActions {
                 }
                 FormWidget widget = ((PaymentCardViewHolder) viewHolder).getFormWidget(widgetName);
                 if (widget == null) {
-                    throw createPerformException(String.format("Widget %s could not be found inside card", widgetName));
+                    throw createPerformException(String.format(Locale.getDefault(), "Widget %s could not be found inside card", widgetName));
                 }
                 View formView = widget.getRootView().findViewById(viewResId);
                 if (formView == null) {
@@ -122,7 +126,7 @@ public final class PaymentActions {
 
             @Override
             public String getDescription() {
-                return String.format("Set the value %d of a NumberPicker", value);
+                return PaymentUtils.format("Set the value %d of a NumberPicker", value);
             }
 
             @Override
