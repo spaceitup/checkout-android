@@ -46,4 +46,10 @@
     <string name="dialog_previous_missing">Please first create a new Charge or Preset Session</string>
     <string name="dialog_error_listurl_invalid">Please paste a valid List Url in the input field.</string>
 
+    <string name="contentdescription_iconcheck">Icon check</string>
+    <string name="contentdescription_confetti">Confetti</string>
+    <string name="contentdescription_background">Header background</string>
+    <string name="contentdescription_date">Date</string>
+    <string name="contentdescription_count">Count</string>        
+
 </resources>
