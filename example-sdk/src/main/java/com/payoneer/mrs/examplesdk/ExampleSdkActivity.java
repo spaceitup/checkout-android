@@ -157,7 +157,7 @@ public final class ExampleSdkActivity extends AppCompatActivity {
         }
         PaymentUI paymentUI = PaymentUI.getInstance();
         paymentUI.setListUrl(listUrl);
-        paymentUI.setPaymentTheme(getPaymentTheme());
+        paymentUI.setPaymentTheme(createPaymentTheme());
 
         // Set the orientation to be fixed to landscape mode
         //paymentUI.setOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
@@ -165,7 +165,7 @@ public final class ExampleSdkActivity extends AppCompatActivity {
         paymentUI.showPaymentPage(this, PAYMENT_REQUEST_CODE);
     }
 
-    private PaymentTheme getPaymentTheme() {
+    private PaymentTheme createPaymentTheme() {
         if (themeSwitch.isChecked()) {
             return PaymentTheme.createBuilder().
                 setPaymentListTheme(R.style.CustomTheme_Toolbar).
