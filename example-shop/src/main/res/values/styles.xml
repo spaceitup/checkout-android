@@ -1,11 +1,5 @@
 <resources>
 
-    <style name="AppLineDivider">
-        <item name="android:layout_width">match_parent</item>
-        <item name="android:layout_gravity">center</item>
-        <item name="android:layout_height">1dp</item>
-    </style>
-
     <style name="Widget.ExampleDemo.CollapsingToolbar" parent="Widget.Design.CollapsingToolbar">
         <item name="collapsedTitleTextAppearance">@style/TextAppearance.ExampleDemo.CollapsingToolbar.Collapsed</item>
         <item name="expandedTitleTextAppearance">@style/TextAppearance.ExampleDemo.CollapsingToolbar.Expanded</item>
