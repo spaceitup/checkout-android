@@ -26,7 +26,6 @@ class ProgressView {
 
     private final TextView textHeader;
     private final TextView textInfo;
-    private final ProgressBar progressBar;
     private final View view;
 
     /**
@@ -36,7 +35,6 @@ class ProgressView {
      */
     ProgressView(View view) {
         this.view = view;
-        progressBar = view.findViewById(R.id.progressbar);
         textHeader = view.findViewById(R.id.text_header);
         textInfo = view.findViewById(R.id.text_info);
     }

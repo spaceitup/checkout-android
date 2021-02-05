@@ -22,7 +22,7 @@ public final class TestUtils {
      * @return the newly created default URL
      * @throws IllegalStateException when the url could not be created
      */
-    public final static URL createDefaultURL() {
+    public static URL createDefaultURL() {
         return createTestURL("http://localhost");
     }
 
@@ -33,7 +33,7 @@ public final class TestUtils {
      * @return the newly created URL
      * @throws IllegalStateException when the url could not be created
      */
-    public final static URL createTestURL(String url) {
+    public static URL createTestURL(String url) {
         try {
             return new URL(url);
         } catch (MalformedURLException e) {

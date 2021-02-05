@@ -24,7 +24,6 @@ public class GroupingTextWatcher extends EditTextWatcher {
 
     private final int groupSize;
     private final int dividerModulo;
-    private final String inputRegex;
     private final Pattern inputPattern;
 
     /**
@@ -41,7 +40,7 @@ public class GroupingTextWatcher extends EditTextWatcher {
         }
         this.groupSize = groupSize;
         this.dividerModulo = groupSize + 1;
-        this.inputRegex = "(\\w{" + groupSize + "}" + DIVIDER + ")*\\w{1," + groupSize + "}";
+        String inputRegex = "(\\w{" + groupSize + "}" + DIVIDER + ")*\\w{1," + groupSize + "}";
         this.inputPattern = Pattern.compile(inputRegex);
     }
 

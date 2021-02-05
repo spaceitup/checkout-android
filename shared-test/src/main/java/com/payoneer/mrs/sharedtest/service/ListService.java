@@ -26,7 +26,7 @@ import androidx.test.platform.app.InstrumentationRegistry;
 /**
  * Class for creating a new ListUrl
  */
-public class ListService {
+public final class ListService {
 
     private final String url;
     private final String auth;
@@ -45,7 +45,7 @@ public class ListService {
      * @param authHeader authentication token
      * @return the newly created ListService
      */
-    public final static ListService createInstance(Context context, String baseUrl, String authHeader) {
+    public static ListService createInstance(Context context, String baseUrl, String authHeader) {
         return new ListService(context, baseUrl, authHeader);
     }
 
