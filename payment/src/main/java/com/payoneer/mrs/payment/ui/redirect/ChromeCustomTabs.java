@@ -37,9 +37,6 @@ public class ChromeCustomTabs {
      * @return true if Chrome Custom Tabs are supported and available, false otherwise
      */
     public static boolean isSupported(Context context) {
-        if (SDK_INT < JELLY_BEAN_MR2) {
-            return false;
-        }
         Intent serviceIntent = new Intent(CustomTabsService.ACTION_CUSTOM_TABS_CONNECTION).setPackage(PACKAGE_NAME);
         ServiceConnection connection = new ServiceConnection() {
             @Override
