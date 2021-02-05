@@ -10,7 +10,7 @@
         android:layout_alignParentTop="true"
         android:scaleType="centerCrop"
         android:src="@drawable/img_confetti"
-        android:contentDescription="TODO" />
+        android:contentDescription="Confetti background" />
 
     <LinearLayout
         android:layout_width="wrap_content"
@@ -24,7 +24,7 @@
             android:layout_height="wrap_content"
             android:layout_marginBottom="@dimen/pmborder_medium"
             android:src="@drawable/icon_check"
-            android:contentDescription="TODO" />
+            android:contentDescription="Check icon" />
 
         <TextView
             android:textAppearance="?attr/textAppearanceHeadline6"
