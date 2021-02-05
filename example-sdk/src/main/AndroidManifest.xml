@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="net.optile.example.sdk">
+    package="com.payoneer.mrs.examplesdk">
 
     <application
         android:allowBackup="true"
@@ -10,7 +10,7 @@
         android:supportsRtl="true">
 
         <activity
-            android:name="net.optile.example.sdk.ExampleSdkActivity"
+            android:name=".ExampleSdkActivity"
             android:theme="@style/PaymentTheme.Toolbar">
 
             <intent-filter>
@@ -20,7 +20,7 @@
         </activity>
 
         <activity
-            android:name="net.optile.payment.ui.redirect.PaymentRedirectActivity"
+            android:name="com.payoneer.mrs.payment.ui.redirect.PaymentRedirectActivity"
             android:launchMode="singleTask">
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />

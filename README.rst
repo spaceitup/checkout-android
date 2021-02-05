@@ -1,7 +1,7 @@
 Introduction
 ============
 
-The Android SDK makes it easy to integrate with optile
+The Android SDK makes it easy to integrate with Payoneer
 and provides a great looking payment experience in your Android app. The
 Android SDK comes with a ready made, easy to use Payment Page which takes care
 of showing supported payment methods and handling payments. The Android SDK also
@@ -33,7 +33,7 @@ If you intend to obfuscate your mobile app then please make sure to exclude the 
 
 ::
 
-    -keep class net.optile.** { *; }
+    -keep class com.payoneer.mrs.** { *; }
     
 The Android SDK uses the following third-party libraries, please make sure to add the proper rules for these libraries in your proguard-rules.pro file if needed.
 
@@ -74,7 +74,7 @@ Example list request Json body:
         "payment": {
             "amount": 0.99,
             "currency": "EUR",
-            "reference": "Shop optile/04-03-2020"
+            "reference": "example-shop/04-03-2020"
         },
         "style": {
             "language": "en_US"
@@ -88,7 +88,7 @@ Example list request Json body:
 Account Registration
 ------------
 
-Optile offers two account registration types, both of which are supported by the Android SDK: Regular and Recurring.
+Payoneer offers two account registration types, both of which are supported by the Android SDK: Regular and Recurring.
 Depending on the registration settings returned in a LIST response, checkboxes may be displayed for either registration type.
 Please see documentation at `optile.io <https://www.optile.io/opg#291077>`_ for more information about account registration types.
 
@@ -151,7 +151,7 @@ Add the android-sdk dependency to the dependencies section of the app’s level 
 2 - Create payment session
 --------------------------
 
-The documentation at `optile.io <https://optile.io>`_ will guide you through optile’s Open
+The documentation at `optile.io <https://optile.io>`_ will guide you through Payoneer’s Open
 Payment Gateway (OPG) features for frontend checkout and backend use
 cases. It provides important information about integration scenarios,
 testing possibilities, and references. Click `here <https://www.optile.io/reference#tag/list>`_ for the API reference documentation describing how to construct a payment session request.
@@ -250,7 +250,7 @@ The following table describes the combination of InteractionCode and Interaction
 |                  |                       | SecurityException was thrown. The list may still be valid.      |      
 +------------------+-----------------------+-----------------------------------------------------------------+
 | ABORT            | COMMUNICATION_FAILURE | A network failure occurred while communicating with the         |            
-|                  |                       | Optile Payment API. The list may still be valid.                |
+|                  |                       | Payoneer Payment API. The list may still be valid.                |
 +------------------+-----------------------+-----------------------------------------------------------------+
 | VERIFY           | CLIENTSIDE_ERROR      | An error occurred during a Charge operation.                    |
 |                  |                       | The charge may have been successful, therefor the status of the | 
@@ -345,7 +345,7 @@ The last change that should be made is to the following Activity definition in t
 ::
 
      <activity
-         android:name="net.optile.payment.ui.redirect.PaymentRedirectActivity"
+         android:name="com.payoneer.mrs.payment.ui.redirect.PaymentRedirectActivity"
          android:launchMode="singleTask">
          <intent-filter>
              <action android:name="android.intent.action.VIEW"/>
@@ -481,4 +481,4 @@ Input Validation
 The Android SDK validates all input values provided by the user before all charge/preset requests. 
 The file `validations.json <./payment/src/main/res/raw/validations.json>`_ contains the regular expression
 definitions that the Android SDK uses to validate numbers, verificationCodes, bankCodes and holderNames. 
-Validations for other input values i.e. expiryMonth and expiryYear are defined by the `Validator.java <./payment/src/main/java/net/optile/payment/validation/Validator.java>`_.
+Validations for other input values i.e. expiryMonth and expiryYear are defined by the `Validator.java <./payment/src/main/java/com/payoneer/mrs/payment/validation/Validator.java>`_.
