@@ -41,10 +41,9 @@ public abstract class BaseActivity extends AppCompatActivity {
      */
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case android.R.id.home:
-                supportFinishAfterTransition();
-                return true;
+        if (item.getItemId() == android.R.id.home) {
+            supportFinishAfterTransition();
+            return true;
         }
         return false;
     }

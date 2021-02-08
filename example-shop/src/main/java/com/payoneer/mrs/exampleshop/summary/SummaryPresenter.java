@@ -36,7 +36,7 @@ import rx.schedulers.Schedulers;
  */
 final class SummaryPresenter {
 
-    private SummaryView view;
+    private final SummaryView view;
     private Subscription subscription;
 
     /**

@@ -18,8 +18,8 @@ import androidx.test.espresso.IdlingResource;
 public class SimpleIdlingResource implements IdlingResource {
 
     private volatile ResourceCallback callback;
-    private AtomicBoolean isIdleNow = new AtomicBoolean(false);
-    private String name;
+    private final AtomicBoolean isIdleNow = new AtomicBoolean(false);
+    private final String name;
 
     public SimpleIdlingResource(String name) {
         this.name = name;

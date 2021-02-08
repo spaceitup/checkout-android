@@ -8,18 +8,18 @@
 
 package com.payoneer.mrs.payment.network;
 
-import java.io.IOException;
-import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
-
-import org.json.JSONException;
+import android.content.Context;
 
 import com.google.gson.JsonParseException;
 import com.payoneer.mrs.payment.core.PaymentException;
 import com.payoneer.mrs.payment.form.Operation;
 import com.payoneer.mrs.payment.model.OperationResult;
 
-import android.content.Context;
+import org.json.JSONException;
+
+import java.io.IOException;
+import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
 
 /**
  * Class containing methods to send Payment Operation requests to the Payment API.
@@ -60,13 +60,10 @@ public final class PaymentConnection extends BaseConnection {
             writeToOutputStream(conn, operation.toJson());
             conn.connect();
             final int rc = conn.getResponseCode();
-
-            switch (rc) {
-                case HttpURLConnection.HTTP_OK:
-                    return handlePostOperationOk(readFromInputStream(conn));
-                default:
-                    throw createPaymentException(rc, conn);
+            if (rc == HttpURLConnection.HTTP_OK) {
+                return handlePostOperationOk(readFromInputStream(conn));
             }
+            throw createPaymentException(rc, conn);
         } catch (JSONException | MalformedURLException | SecurityException e) {
             throw createPaymentException(e, false);
         } catch (IOException e) {

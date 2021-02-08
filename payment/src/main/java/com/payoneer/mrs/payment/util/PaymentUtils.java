@@ -74,7 +74,7 @@ public final class PaymentUtils {
     public static boolean equalsAsString(Object obj1, Object obj2) {
         String str1 = obj1 != null ? obj1.toString() : null;
         String str2 = obj2 != null ? obj2.toString() : null;
-        return str1 != null && str2 != null && (str1.equals(str2));
+        return str1 != null && (str1.equals(str2));
     }
 
     /**

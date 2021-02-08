@@ -8,9 +8,15 @@
 
 package com.payoneer.mrs.payment.ui.page;
 
-import static com.payoneer.mrs.payment.localization.LocalizationKey.LIST_TITLE;
+import android.content.Context;
+import android.content.Intent;
+import android.os.Bundle;
+import android.view.MenuItem;
 
-import java.util.Map;
+import androidx.annotation.VisibleForTesting;
+import androidx.appcompat.app.ActionBar;
+import androidx.appcompat.widget.Toolbar;
+import androidx.test.espresso.IdlingResource;
 
 import com.payoneer.mrs.payment.R;
 import com.payoneer.mrs.payment.form.Operation;
@@ -22,14 +28,9 @@ import com.payoneer.mrs.payment.ui.model.PaymentSession;
 import com.payoneer.mrs.payment.ui.page.idlingresource.SimpleIdlingResource;
 import com.payoneer.mrs.payment.ui.widget.FormWidget;
 
-import android.content.Context;
-import android.content.Intent;
-import android.os.Bundle;
-import android.view.MenuItem;
-import androidx.annotation.VisibleForTesting;
-import androidx.appcompat.app.ActionBar;
-import androidx.appcompat.widget.Toolbar;
-import androidx.test.espresso.IdlingResource;
+import java.util.Map;
+
+import static com.payoneer.mrs.payment.localization.LocalizationKey.LIST_TITLE;
 
 /**
  * The PaymentListActivity showing available payment methods in a list.
@@ -129,10 +130,9 @@ public final class PaymentListActivity extends BasePaymentActivity implements Pa
      */
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case android.R.id.home:
-                close();
-                return true;
+        if (item.getItemId() == android.R.id.home) {
+            close();
+            return true;
         }
         return false;
     }

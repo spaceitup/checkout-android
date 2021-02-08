@@ -28,9 +28,9 @@ import android.content.Context;
  */
 public final class OperationService {
     private final PaymentConnection paymentConnection;
+    private final BrowserData browserData;
     private OperationListener listener;
     private WorkerTask<OperationResult> operationTask;
-    private BrowserData browserData;
 
     /**
      * Create a new OperationService, this service is used to load the Operation.

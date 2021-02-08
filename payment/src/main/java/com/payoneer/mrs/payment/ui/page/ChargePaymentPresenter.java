@@ -8,9 +8,7 @@
 
 package com.payoneer.mrs.payment.ui.page;
 
-import static com.payoneer.mrs.payment.localization.LocalizationKey.CHARGE_INTERRUPTED;
-import static com.payoneer.mrs.payment.ui.PaymentActivityResult.RESULT_CODE_ERROR;
-import static com.payoneer.mrs.payment.ui.PaymentActivityResult.RESULT_CODE_PROCEED;
+import android.content.Context;
 
 import com.payoneer.mrs.payment.core.PaymentException;
 import com.payoneer.mrs.payment.form.Operation;
@@ -36,7 +34,11 @@ import com.payoneer.mrs.payment.ui.service.PaymentSessionListener;
 import com.payoneer.mrs.payment.ui.service.PaymentSessionService;
 import com.payoneer.mrs.payment.util.PaymentResultHelper;
 
-import android.content.Context;
+import java.util.Objects;
+
+import static com.payoneer.mrs.payment.localization.LocalizationKey.CHARGE_INTERRUPTED;
+import static com.payoneer.mrs.payment.ui.PaymentActivityResult.RESULT_CODE_ERROR;
+import static com.payoneer.mrs.payment.ui.PaymentActivityResult.RESULT_CODE_PROCEED;
 
 /**
  * The ChargePaymentPresenter takes care of posting the operation to the Payment API.
@@ -114,14 +116,12 @@ final class ChargePaymentPresenter implements PaymentSessionListener, NetworkSer
         ListResult listResult = session.getListResult();
         Interaction interaction = listResult.getInteraction();
 
-        switch (interaction.getCode()) {
-            case InteractionCode.PROCEED:
-                handleLoadSessionProceed(session);
-                break;
-            default:
-                ErrorInfo errorInfo = new ErrorInfo(listResult.getResultInfo(), interaction);
-                PaymentResult result = new PaymentResult(errorInfo, null);
-                closeWithErrorCode(result);
+        if (Objects.equals(InteractionCode.PROCEED, interaction.getCode())) {
+            handleLoadSessionProceed(session);
+        } else {
+            ErrorInfo errorInfo = new ErrorInfo(listResult.getResultInfo(), interaction);
+            PaymentResult result = new PaymentResult(errorInfo, null);
+            closeWithErrorCode(result);
         }
     }
 

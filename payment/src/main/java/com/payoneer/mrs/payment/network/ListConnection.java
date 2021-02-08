@@ -8,17 +8,17 @@
 
 package com.payoneer.mrs.payment.network;
 
-import java.io.IOException;
-import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
+import android.content.Context;
+import android.net.Uri;
+import android.text.TextUtils;
 
 import com.google.gson.JsonParseException;
 import com.payoneer.mrs.payment.core.PaymentException;
 import com.payoneer.mrs.payment.model.ListResult;
 
-import android.content.Context;
-import android.net.Uri;
-import android.text.TextUtils;
+import java.io.IOException;
+import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
 
 /**
  * Class implementing the communication with the List payment API
@@ -44,13 +44,13 @@ public final class ListConnection extends BaseConnection {
      * a request mobile apps should be making as this call is normally executed
      * Merchant Server-side. This request will be removed later.
      *
-     * @param baseUrl the base url of the Payment API
+     * @param baseUrl       the base url of the Payment API
      * @param authorization the authorization header data
-     * @param listData the data containing the request body for the list request
+     * @param listData      the data containing the request body for the list request
      * @return the ListResult
      */
     public ListResult createPaymentSession(final String baseUrl, final String authorization, final String listData)
-        throws PaymentException {
+            throws PaymentException {
         if (TextUtils.isEmpty(baseUrl)) {
             throw new IllegalArgumentException("baseUrl cannot be null or empty");
         }
@@ -64,9 +64,9 @@ public final class ListConnection extends BaseConnection {
         HttpURLConnection conn = null;
         try {
             final String requestUrl = Uri.parse(baseUrl).buildUpon()
-                .appendPath(URI_PATH_API)
-                .appendPath(URI_PATH_LISTS)
-                .build().toString();
+                    .appendPath(URI_PATH_API)
+                    .appendPath(URI_PATH_LISTS)
+                    .build().toString();
 
             conn = createPostConnection(requestUrl);
             conn.setRequestProperty(HEADER_AUTHORIZATION, authorization);
@@ -77,12 +77,10 @@ public final class ListConnection extends BaseConnection {
             conn.connect();
             final int rc = conn.getResponseCode();
 
-            switch (rc) {
-                case HttpURLConnection.HTTP_OK:
-                    return handleCreatePaymentSessionOk(readFromInputStream(conn));
-                default:
-                    throw createPaymentException(rc, conn);
+            if (rc == HttpURLConnection.HTTP_OK) {
+                return handleCreatePaymentSessionOk(readFromInputStream(conn));
             }
+            throw createPaymentException(rc, conn);
         } catch (JsonParseException | MalformedURLException | SecurityException e) {
             throw createPaymentException(e, false);
         } catch (IOException e) {
@@ -107,7 +105,7 @@ public final class ListConnection extends BaseConnection {
 
         try {
             final String requestUrl = Uri.parse(url).buildUpon()
-                .build().toString();
+                    .build().toString();
 
             conn = createGetConnection(requestUrl);
             conn.setRequestProperty(HEADER_CONTENT_TYPE, VALUE_APP_JSON);
@@ -115,12 +113,10 @@ public final class ListConnection extends BaseConnection {
 
             conn.connect();
             final int rc = conn.getResponseCode();
-            switch (rc) {
-                case HttpURLConnection.HTTP_OK:
-                    return handleGetListResultOk(readFromInputStream(conn));
-                default:
-                    throw createPaymentException(rc, conn);
+            if (rc == HttpURLConnection.HTTP_OK) {
+                return handleGetListResultOk(readFromInputStream(conn));
             }
+            throw createPaymentException(rc, conn);
         } catch (JsonParseException | MalformedURLException | SecurityException e) {
             throw createPaymentException(e, false);
         } catch (IOException e) {

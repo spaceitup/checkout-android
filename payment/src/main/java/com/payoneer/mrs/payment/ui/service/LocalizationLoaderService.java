@@ -39,7 +39,7 @@ public final class LocalizationLoaderService {
     private WorkerTask<Localization> task;
 
     /** Memory cache of localizations */
-    private static LocalizationCache cache = new LocalizationCache();
+    private static final LocalizationCache cache = new LocalizationCache();
 
     /**
      * Create a new LocalizationService, this service is used to load the localizations.
