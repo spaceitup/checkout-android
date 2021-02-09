@@ -80,7 +80,7 @@ public final class LocalizationTest {
      * @return the newly created MapLocalizationHolder
      */
     public static MapLocalizationHolder createMapLocalizationHolder(String mapKey, String mapValue, int nrTranslations) {
-        Map<String, String> map = new HashMap<String, String>();
+        Map<String, String> map = new HashMap<>();
         for (int i = 0; i < nrTranslations; i++) {
             map.put(mapKey + i, mapValue + i);
         }

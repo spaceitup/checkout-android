@@ -13,6 +13,7 @@ import org.junit.runner.RunWith;
 import org.robolectric.RobolectricTestRunner;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNull;
 
 @RunWith(RobolectricTestRunner.class)
 public class MapLocalizationHolderTest {
@@ -21,6 +22,6 @@ public class MapLocalizationHolderTest {
     public void translate() {
         LocalizationHolder holder = LocalizationTest.createMapLocalizationHolder("key", "value", 5);
         assertEquals("value3", holder.translate("key3"));
-        assertEquals(null, holder.translate("foo"));
+        assertNull(holder.translate("foo"));
     }
 }
