@@ -95,7 +95,7 @@ class NetworkLogosView {
         switcher.setDisplayedChild(0);
     }
 
-    class NetworkLogo {
+    static class NetworkLogo {
 
         final String networkCode;
         final URL url;
