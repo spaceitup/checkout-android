@@ -114,7 +114,7 @@ public final class PaymentActions {
     /**
      * Scroll to the view action
      *
-     * @param value
+     * @param value to be set in the NumberPicker
      * @return the newly created ViewAction
      */
     public static ViewAction setValueInNumberPicker(final int value) {
