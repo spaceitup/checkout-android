@@ -8,13 +8,13 @@
 
 package com.payoneer.mrs.payment.util;
 
-import java.lang.reflect.Type;
+import android.text.TextUtils;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonSyntaxException;
 
-import android.text.TextUtils;
+import java.lang.reflect.Type;
 
 /**
  * Class with helper methods for Gson

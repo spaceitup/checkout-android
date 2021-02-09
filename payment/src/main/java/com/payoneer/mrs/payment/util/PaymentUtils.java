@@ -8,6 +8,14 @@
 
 package com.payoneer.mrs.payment.util;
 
+import android.content.res.Resources;
+import android.view.View;
+
+import com.payoneer.mrs.payment.core.PaymentInputType;
+import com.payoneer.mrs.payment.model.AccountMask;
+import com.payoneer.mrs.payment.model.InputElement;
+import com.payoneer.mrs.payment.model.Parameter;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
@@ -15,19 +23,6 @@ import java.io.InputStreamReader;
 import java.util.Calendar;
 import java.util.List;
 import java.util.Locale;
-
-import com.payoneer.mrs.payment.core.PaymentInputType;
-import com.payoneer.mrs.payment.model.AccountMask;
-import com.payoneer.mrs.payment.model.InputElement;
-import com.payoneer.mrs.payment.model.Parameter;
-
-import android.content.Context;
-import android.content.res.Configuration;
-import android.content.res.Resources;
-import android.view.View;
-import android.widget.ImageView;
-import android.widget.TextView;
-import androidx.core.widget.TextViewCompat;
 
 /**
  * The PaymentUtils class containing helper methods

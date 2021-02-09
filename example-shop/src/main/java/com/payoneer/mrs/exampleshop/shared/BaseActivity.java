@@ -8,18 +8,19 @@
 
 package com.payoneer.mrs.exampleshop.shared;
 
+import android.content.Intent;
+import android.os.Bundle;
+import android.view.MenuItem;
+
+import androidx.annotation.VisibleForTesting;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.test.espresso.IdlingResource;
+
 import com.payoneer.mrs.exampleshop.R;
 import com.payoneer.mrs.payment.ui.PaymentActivityResult;
 import com.payoneer.mrs.payment.ui.dialog.PaymentDialogFragment;
 import com.payoneer.mrs.payment.ui.dialog.PaymentDialogHelper;
 import com.payoneer.mrs.payment.ui.page.idlingresource.SimpleIdlingResource;
-
-import android.content.Intent;
-import android.os.Bundle;
-import android.view.MenuItem;
-import androidx.annotation.VisibleForTesting;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.test.espresso.IdlingResource;
 
 /**
  * Base Activity for Activities used in this shop, it stores and retrieves the listUrl value.

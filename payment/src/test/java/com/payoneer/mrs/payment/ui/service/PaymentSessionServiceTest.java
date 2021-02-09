@@ -8,17 +8,18 @@
 
 package com.payoneer.mrs.payment.ui.service;
 
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
+import android.content.Context;
+
+import androidx.test.core.app.ApplicationProvider;
+
+import com.payoneer.mrs.payment.model.NetworkOperationType;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.robolectric.RobolectricTestRunner;
 
-import com.payoneer.mrs.payment.model.NetworkOperationType;
-
-import android.content.Context;
-import androidx.test.core.app.ApplicationProvider;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 
 @RunWith(RobolectricTestRunner.class)
 public class PaymentSessionServiceTest {

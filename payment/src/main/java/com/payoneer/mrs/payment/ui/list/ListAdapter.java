@@ -8,7 +8,13 @@
 
 package com.payoneer.mrs.payment.ui.list;
 
-import java.util.List;
+import android.content.Context;
+import android.view.View;
+import android.view.ViewGroup;
+
+import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.RecyclerView;
+import androidx.recyclerview.widget.RecyclerView.ViewHolder;
 
 import com.payoneer.mrs.payment.localization.Localization;
 import com.payoneer.mrs.payment.ui.model.AccountCard;
@@ -18,12 +24,7 @@ import com.payoneer.mrs.payment.ui.model.PresetCard;
 import com.payoneer.mrs.payment.validation.ValidationResult;
 import com.payoneer.mrs.payment.validation.Validator;
 
-import android.content.Context;
-import android.view.View;
-import android.view.ViewGroup;
-import androidx.annotation.NonNull;
-import androidx.recyclerview.widget.RecyclerView;
-import androidx.recyclerview.widget.RecyclerView.ViewHolder;
+import java.util.List;
 
 /**
  * The ListAdapter handling the items in this RecyclerView list

@@ -8,20 +8,21 @@
 
 package com.payoneer.mrs.sharedtest.service;
 
-import java.io.IOException;
-import java.net.URL;
-import java.util.Map;
+import android.content.Context;
 
-import org.json.JSONException;
-import org.json.JSONObject;
+import androidx.test.platform.app.InstrumentationRegistry;
 
 import com.payoneer.mrs.payment.core.PaymentException;
 import com.payoneer.mrs.payment.model.ListResult;
 import com.payoneer.mrs.payment.network.ListConnection;
 import com.payoneer.mrs.payment.util.PaymentUtils;
 
-import android.content.Context;
-import androidx.test.platform.app.InstrumentationRegistry;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.IOException;
+import java.net.URL;
+import java.util.Map;
 
 /**
  * Class for creating a new ListUrl

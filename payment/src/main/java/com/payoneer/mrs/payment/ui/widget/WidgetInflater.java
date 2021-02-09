@@ -8,13 +8,13 @@
 
 package com.payoneer.mrs.payment.ui.widget;
 
-import com.payoneer.mrs.payment.R;
-import com.payoneer.mrs.payment.model.InputElement;
-import com.payoneer.mrs.payment.model.InputElementType;
-
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+
+import com.payoneer.mrs.payment.R;
+import com.payoneer.mrs.payment.model.InputElement;
+import com.payoneer.mrs.payment.model.InputElementType;
 
 /**
  * Class with helper methods to inflate widgets

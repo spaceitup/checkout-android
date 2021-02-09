@@ -8,9 +8,9 @@
 
 package com.payoneer.mrs.payment.ui.page.idlingresource;
 
-import java.util.concurrent.atomic.AtomicBoolean;
-
 import androidx.test.espresso.IdlingResource;
+
+import java.util.concurrent.atomic.AtomicBoolean;
 
 /**
  * A Simple idling resource using a Boolean to define if its idle.

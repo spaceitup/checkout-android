@@ -8,10 +8,10 @@
 
 package com.payoneer.mrs.payment.core;
 
+import androidx.annotation.StringDef;
+
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
-
-import androidx.annotation.StringDef;
 
 /**
  * Class containing PaymentNetworkCodes for which the accountNumber and verificationCodes are custom validated.

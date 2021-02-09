@@ -8,6 +8,17 @@
 
 package com.payoneer.mrs.payment.ui.page;
 
+import android.app.Activity;
+import android.content.Intent;
+import android.os.Bundle;
+import android.text.TextUtils;
+import android.view.View;
+import android.view.ViewGroup;
+
+import androidx.annotation.VisibleForTesting;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.test.espresso.IdlingResource;
+
 import com.payoneer.mrs.payment.R;
 import com.payoneer.mrs.payment.localization.Localization;
 import com.payoneer.mrs.payment.model.Interaction;
@@ -20,16 +31,6 @@ import com.payoneer.mrs.payment.ui.dialog.PaymentDialogFragment.PaymentDialogLis
 import com.payoneer.mrs.payment.ui.dialog.PaymentDialogHelper;
 import com.payoneer.mrs.payment.ui.page.idlingresource.SimpleIdlingResource;
 import com.payoneer.mrs.payment.util.PaymentResultHelper;
-
-import android.app.Activity;
-import android.content.Intent;
-import android.os.Bundle;
-import android.text.TextUtils;
-import android.view.View;
-import android.view.ViewGroup;
-import androidx.annotation.VisibleForTesting;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.test.espresso.IdlingResource;
 
 /**
  * The base activity for payment activities.

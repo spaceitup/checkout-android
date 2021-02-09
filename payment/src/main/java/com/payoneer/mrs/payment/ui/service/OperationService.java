@@ -8,7 +8,7 @@
 
 package com.payoneer.mrs.payment.ui.service;
 
-import java.util.concurrent.Callable;
+import android.content.Context;
 
 import com.payoneer.mrs.payment.core.PaymentException;
 import com.payoneer.mrs.payment.core.WorkerSubscriber;
@@ -20,7 +20,7 @@ import com.payoneer.mrs.payment.model.BrowserData;
 import com.payoneer.mrs.payment.model.OperationResult;
 import com.payoneer.mrs.payment.network.PaymentConnection;
 
-import android.content.Context;
+import java.util.concurrent.Callable;
 
 /**
  * The OperationService providing asynchronous posting of the Operation and communication with the Payment API.

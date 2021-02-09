@@ -8,12 +8,12 @@
 
 package com.payoneer.mrs.payment.ui.redirect;
 
-import java.net.URL;
-import java.util.Map;
-
 import com.payoneer.mrs.payment.core.PaymentException;
 import com.payoneer.mrs.payment.model.OperationResult;
 import com.payoneer.mrs.payment.model.Redirect;
+
+import java.net.URL;
+import java.util.Map;
 
 /**
  * Class holding the data for making a redirect

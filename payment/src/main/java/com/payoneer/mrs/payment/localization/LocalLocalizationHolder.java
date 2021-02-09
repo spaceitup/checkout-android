@@ -8,6 +8,12 @@
 
 package com.payoneer.mrs.payment.localization;
 
+import android.content.Context;
+
+import com.payoneer.mrs.payment.R;
+
+import java.util.HashMap;
+
 import static com.payoneer.mrs.payment.localization.LocalizationKey.BUTTON_CANCEL;
 import static com.payoneer.mrs.payment.localization.LocalizationKey.BUTTON_OK;
 import static com.payoneer.mrs.payment.localization.LocalizationKey.BUTTON_RETRY;
@@ -15,12 +21,6 @@ import static com.payoneer.mrs.payment.localization.LocalizationKey.ERROR_CONNEC
 import static com.payoneer.mrs.payment.localization.LocalizationKey.ERROR_CONNECTION_TITLE;
 import static com.payoneer.mrs.payment.localization.LocalizationKey.ERROR_DEFAULT_TEXT;
 import static com.payoneer.mrs.payment.localization.LocalizationKey.ERROR_DEFAULT_TITLE;
-
-import java.util.HashMap;
-
-import com.payoneer.mrs.payment.R;
-
-import android.content.Context;
 
 /**
  * Class storing local localizations

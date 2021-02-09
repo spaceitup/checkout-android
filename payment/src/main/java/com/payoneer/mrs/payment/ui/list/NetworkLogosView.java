@@ -8,15 +8,6 @@
 
 package com.payoneer.mrs.payment.ui.list;
 
-import java.net.URL;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
-import com.payoneer.mrs.payment.R;
-import com.payoneer.mrs.payment.ui.model.PaymentNetwork;
-import com.payoneer.mrs.payment.util.NetworkLogoLoader;
-
 import android.content.res.Resources;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -24,6 +15,15 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.LinearLayout.LayoutParams;
 import android.widget.ViewSwitcher;
+
+import com.payoneer.mrs.payment.R;
+import com.payoneer.mrs.payment.ui.model.PaymentNetwork;
+import com.payoneer.mrs.payment.util.NetworkLogoLoader;
+
+import java.net.URL;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 /**
  * Class displaying the network logo images

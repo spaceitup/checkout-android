@@ -8,9 +8,8 @@
 
 package com.payoneer.mrs.network.basic;
 
-import static com.payoneer.mrs.payment.model.InteractionCode.PROCEED;
-import static com.payoneer.mrs.payment.ui.PaymentActivityResult.RESULT_CODE_ERROR;
-import static com.payoneer.mrs.payment.ui.PaymentActivityResult.RESULT_CODE_PROCEED;
+import android.app.Activity;
+import android.content.Context;
 
 import com.payoneer.mrs.payment.core.PaymentException;
 import com.payoneer.mrs.payment.form.Operation;
@@ -27,8 +26,9 @@ import com.payoneer.mrs.payment.ui.service.OperationListener;
 import com.payoneer.mrs.payment.ui.service.OperationService;
 import com.payoneer.mrs.payment.util.PaymentResultHelper;
 
-import android.app.Activity;
-import android.content.Context;
+import static com.payoneer.mrs.payment.model.InteractionCode.PROCEED;
+import static com.payoneer.mrs.payment.ui.PaymentActivityResult.RESULT_CODE_ERROR;
+import static com.payoneer.mrs.payment.ui.PaymentActivityResult.RESULT_CODE_PROCEED;
 
 /**
  * BasicNetworkService implementing the handling of basic payment methods like Visa, Mastercard and Sepa.
