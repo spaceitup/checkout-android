@@ -126,13 +126,11 @@ public class AbstractTest {
         return (ConfirmActivity) ActivityHelper.getCurrentActivity();
     }
 
-    IdlingResource register(IdlingResource resource) {
+    void register(IdlingResource resource) {
         IdlingRegistry.getInstance().register(resource);
-        return resource;
     }
 
-    IdlingResource unregister(IdlingResource resource) {
+    void unregister(IdlingResource resource) {
         IdlingRegistry.getInstance().unregister(resource);
-        return resource;
     }
 }

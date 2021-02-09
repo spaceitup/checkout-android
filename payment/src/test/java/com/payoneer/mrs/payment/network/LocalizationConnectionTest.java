@@ -31,6 +31,6 @@ public class LocalizationConnectionTest {
     public void loadLocalizationHolder_invalidURL_IllegalArgumentException() throws PaymentException {
         Context context = ApplicationProvider.getApplicationContext();
         LocalizationConnection conn = new LocalizationConnection(context);
-        LocalizationHolder holder = conn.loadLocalization(null);
+        conn.loadLocalization(null);
     }
 }

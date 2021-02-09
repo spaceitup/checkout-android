@@ -46,7 +46,7 @@ public final class RedirectPaypalTests extends AbstractTest {
     public ActivityTestRule<SettingsActivity> settingsActivityRule = new ActivityTestRule<>(SettingsActivity.class);
 
     @Test
-    public void testPaypalSuccess() throws JSONException, IOException, UiObjectNotFoundException {
+    public void testPaypalSuccess() throws JSONException, IOException {
         Intents.init();
         int networkCardIndex = 3;
 
@@ -63,7 +63,7 @@ public final class RedirectPaypalTests extends AbstractTest {
     }
 
     @Test
-    public void testPaypalBrowserClosed() throws JSONException, IOException, UiObjectNotFoundException {
+    public void testPaypalBrowserClosed() throws JSONException, IOException {
         Intents.init();
         int networkCardIndex = 3;
 
@@ -80,14 +80,14 @@ public final class RedirectPaypalTests extends AbstractTest {
         Intents.release();
     }
 
-    private void closeChromeBrowser() throws UiObjectNotFoundException {
+    private void closeChromeBrowser() {
         UiDevice uiDevice = UiDevice.getInstance(InstrumentationRegistry.getInstrumentation());
         UiObject2 uiObject = uiDevice.wait(Until.findObject(By.res("com.android.chrome:id/close_button")), CHROME_TIMEOUT);
         uiObject.wait(Until.enabled(true), CHROME_TIMEOUT);
         uiObject.click();
     }
 
-    private void checkPayPalChromeDisplayed() throws UiObjectNotFoundException {
+    private void checkPayPalChromeDisplayed() {
         UiDevice uiDevice = UiDevice.getInstance(InstrumentationRegistry.getInstrumentation());
         UiObject2 uiObject = uiDevice.wait(Until.findObject(By.res("com.android.chrome:id/url_bar")), CHROME_TIMEOUT);
         String url = "sandbox.paypal.com";
@@ -95,7 +95,7 @@ public final class RedirectPaypalTests extends AbstractTest {
         assertThat(uiObject.getText(), containsString(url));
     }
 
-    void clickUiObjectByResource(UiDevice uiDevice, String resourceName) throws UiObjectNotFoundException {
+    void clickUiObjectByResource(UiDevice uiDevice, String resourceName) {
         UiObject2 uiObject = uiDevice.wait(Until.findObject(By.res(resourceName)), CHROME_TIMEOUT);
         uiObject.wait(Until.enabled(true), CHROME_TIMEOUT);
         uiObject.click();

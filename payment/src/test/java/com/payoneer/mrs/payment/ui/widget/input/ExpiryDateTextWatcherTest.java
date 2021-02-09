@@ -101,15 +101,13 @@ public class ExpiryDateTextWatcherTest {
         validateTextInput(watcher, "", "10", "10 / ");
     }
 
-    private static String validateTextInput(TextWatcher watcher, String current, String input, String result) {
+    private static void validateTextInput(TextWatcher watcher, String current, String input, String result) {
         String val = simulateTextInput(watcher, current, input);
         assertEquals(result, val);
-        return val;
     }
 
     private static String simulateTextInput(TextWatcher tw, String original, String input) {
         int originalLength = original.length();
-        int inputLength = input.length();
         tw.beforeTextChanged(original, originalLength, 0, input.length());
         String newText = original + input;
 

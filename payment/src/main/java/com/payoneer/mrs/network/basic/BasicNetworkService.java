@@ -61,7 +61,7 @@ public final class BasicNetworkService extends NetworkService implements Operati
      * {@inheritDoc}
      */
     @Override
-    public void processPayment(Activity activity, int requestCode, Operation operation) throws PaymentException {
+    public void processPayment(Activity activity, int requestCode, Operation operation) {
         this.operation = operation;
         presenter.showProgress(true);
         service.postOperation(operation);

@@ -70,15 +70,6 @@ public final class LocalizationLoaderService {
     }
 
     /**
-     * Check if this service is currently active, i.e. is loading the localization files.
-     *
-     * @return true when active, false otherwise
-     */
-    public boolean isActive() {
-        return task != null && task.isSubscribed();
-    }
-
-    /**
      * Load all localizations for the payment session in this service
      *
      * @param context needed to load the local localization store

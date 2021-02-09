@@ -42,7 +42,7 @@ public final class GroupedCardsTests extends AbstractTest {
         IdlingResource resultHandledIdlingResource = checkoutActivity.getResultHandledIdlingResource();
         clickCheckoutButton();
 
-        PaymentListActivity paymentListActivity = waitForPaymentListLoaded(1);
+        waitForPaymentListLoaded(1);
         openPaymentListCard(groupCardIndex, "card_group");
         fillPaymentListCardData(groupCardIndex);
 
@@ -62,7 +62,7 @@ public final class GroupedCardsTests extends AbstractTest {
         IdlingResource checkoutPaymentResultIdlingResource = checkoutActivity.getResultHandledIdlingResource();
         clickCheckoutButton();
 
-        PaymentListActivity paymentListActivity = waitForPaymentListLoaded(1);
+        waitForPaymentListLoaded(1);
         openPaymentListCard(groupCardIndex, "card_group");
         fillPaymentListCardData(groupCardIndex);
 

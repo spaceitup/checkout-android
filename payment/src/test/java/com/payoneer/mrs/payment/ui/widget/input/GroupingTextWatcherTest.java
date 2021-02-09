@@ -82,7 +82,6 @@ public class GroupingTextWatcherTest {
 
     private static String simulateTextInput(TextWatcher tw, String original, String input) {
         int originalLength = original.length();
-        int inputLength = input.length();
         tw.beforeTextChanged(original, originalLength, 0, input.length());
         String newText = original + input;
 

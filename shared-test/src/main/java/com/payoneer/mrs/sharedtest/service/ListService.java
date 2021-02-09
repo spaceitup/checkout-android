@@ -56,7 +56,6 @@ public final class ListService {
      * @return the newly created listUrl
      */
     public String createListUrl(ListRequest request) throws IOException {
-        Context context = InstrumentationRegistry.getInstrumentation().getTargetContext();
         try {
             ListResult result = conn.createPaymentSession(url, auth, request.getRequestBody());
             Map<String, URL> links = result.getLinks();

@@ -231,7 +231,7 @@ public class Operation implements Parcelable {
         return operationData;
     }
 
-    public String toJson() throws JSONException {
+    public String toJson() {
         GsonHelper gson = GsonHelper.getInstance();
         return gson.toJson(operationData);
     }

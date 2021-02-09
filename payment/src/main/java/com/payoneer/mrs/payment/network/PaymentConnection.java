@@ -64,7 +64,7 @@ public final class PaymentConnection extends BaseConnection {
                 return handlePostOperationOk(readFromInputStream(conn));
             }
             throw createPaymentException(rc, conn);
-        } catch (JSONException | MalformedURLException | SecurityException e) {
+        } catch (MalformedURLException | SecurityException e) {
             throw createPaymentException(e, false);
         } catch (IOException e) {
             throw createPaymentException(e, true);

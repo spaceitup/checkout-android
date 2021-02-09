@@ -53,6 +53,7 @@ public class PaymentDialogHelper {
         dialog.setImageResId(getHintImageResId(networkCode, type));
         dialog.setTag("dialog_hint");
         dialog.setPositiveButton(Localization.translate(BUTTON_OK));
+        dialog.setListener(listener);
         return dialog;
     }
 

@@ -42,7 +42,7 @@ public final class PresetAccountTests extends AbstractTest {
     public ActivityTestRule<SettingsActivity> settingsActivityRule = new ActivityTestRule<>(SettingsActivity.class);
 
     @Test
-    public void testPresetAccountWithoutAccountMask() throws JSONException, IOException, UiObjectNotFoundException {
+    public void testPresetAccountWithoutAccountMask() throws JSONException, IOException {
         Intents.init();
 
         int presetCardIndex = 1;

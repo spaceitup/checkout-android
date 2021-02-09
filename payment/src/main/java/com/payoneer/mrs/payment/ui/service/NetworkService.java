@@ -45,7 +45,7 @@ public abstract class NetworkService {
      * @param requestCode should be returned to the presenter when the payment is processed
      * @param operation that should be processed
      */
-    public void processPayment(Activity activity, int requestCode, Operation operation) throws PaymentException {
+    public void processPayment(Activity activity, int requestCode, Operation operation) {
     }
 
     /**

@@ -109,15 +109,6 @@ public final class PaymentSession {
         return accounts != null ? accounts.size() : 0;
     }
 
-    public int getApplicableNetworkSize() {
-        Networks nw = listResult.getNetworks();
-        if (nw == null) {
-            return 0;
-        }
-        List<ApplicableNetwork> an = nw.getApplicable();
-        return an != null ? an.size() : 0;
-    }
-
     public boolean containsLink(String name, URL url) {
         if (presetCard != null && presetCard.containsLink(name, url)) {
             return true;

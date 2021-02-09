@@ -47,7 +47,7 @@ public class OperationTest {
     }
 
     @Test
-    public void putValue_success() throws PaymentException, JSONException {
+    public void putValue_success() throws PaymentException {
         URL url = TestUtils.createTestURL("http://localhost/charge");
         Operation operation = new Operation("VISA", "CREDIT_CARD", "CHARGE", url);
         operation.putStringValue(PaymentInputType.HOLDER_NAME, "John Doe");

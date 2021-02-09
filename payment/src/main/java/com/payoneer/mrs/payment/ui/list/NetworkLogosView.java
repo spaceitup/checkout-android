@@ -97,9 +97,9 @@ class NetworkLogosView {
 
     class NetworkLogo {
 
-        String networkCode;
-        URL url;
-        ImageView image;
+        final String networkCode;
+        final URL url;
+        final ImageView image;
 
         NetworkLogo(String networkCode, URL url, ImageView image) {
             this.networkCode = networkCode;

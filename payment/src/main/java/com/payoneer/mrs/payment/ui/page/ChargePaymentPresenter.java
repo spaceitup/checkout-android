@@ -306,11 +306,7 @@ final class ChargePaymentPresenter implements PaymentSessionListener, NetworkSer
     }
 
     private void processPayment() {
-        try {
-            networkService.processPayment(view.getActivity(), CHARGE_REQUEST_CODE, operation);
-        } catch (PaymentException e) {
-            closeWithErrorCode(e);
-        }
+        networkService.processPayment(view.getActivity(), CHARGE_REQUEST_CODE, operation);
     }
 
     private void handlePaymentActivityResult(PaymentActivityResult result) {
@@ -336,11 +332,6 @@ final class ChargePaymentPresenter implements PaymentSessionListener, NetworkSer
 
     private void closeWithErrorCode(String message) {
         PaymentResult result = PaymentResultHelper.fromErrorMessage(message);
-        closeWithErrorCode(result);
-    }
-
-    private void closeWithErrorCode(Throwable cause) {
-        PaymentResult result = PaymentResultHelper.fromThrowable(cause);
         closeWithErrorCode(result);
     }
 

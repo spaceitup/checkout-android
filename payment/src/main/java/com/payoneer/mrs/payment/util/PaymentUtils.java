@@ -146,41 +146,6 @@ public final class PaymentUtils {
     }
 
     /**
-     * Set the TextAppearance in the TextView
-     *
-     * @param textView for which the textAppearance should be changed
-     * @param textAppearanceResId the resource id of the textAppearance to be set
-     */
-    public static void setTextAppearance(TextView textView, int textAppearanceResId) {
-        if (textAppearanceResId != 0) {
-            TextViewCompat.setTextAppearance(textView, textAppearanceResId);
-        }
-    }
-
-    /**
-     * Set the background resource for the ImageView
-     *
-     * @param imageView for which the background resource should be set
-     * @param backgroundResId the resource id of the background
-     */
-    public static void setImageBackground(ImageView imageView, int backgroundResId) {
-        if (backgroundResId != 0) {
-            imageView.setBackgroundResource(backgroundResId);
-        }
-    }
-
-    /**
-     * Check if the device is in landscape mode.
-     *
-     * @param context containing the configuration for determining the mode.
-     * @return true when in landscape mode, false otherwise
-     */
-    public static boolean isLandscape(Context context) {
-        int orientation = context.getResources().getConfiguration().orientation;
-        return orientation == Configuration.ORIENTATION_LANDSCAPE;
-    }
-
-    /**
      * Read the contents of the raw resource
      *
      * @param res The system Resources
