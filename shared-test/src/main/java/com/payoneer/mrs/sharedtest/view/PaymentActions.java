@@ -60,7 +60,7 @@ public final class PaymentActions {
 
             @Override
             public String getDescription() {
-                return String.format(Locale.getDefault(), "perform action on view in widget %s at position %d", widgetName, position);
+                return PaymentUtils.format("perform action on view in widget %s at position %d", widgetName, position);
             }
 
             @Override
@@ -73,7 +73,7 @@ public final class PaymentActions {
                 }
                 FormWidget widget = ((PaymentCardViewHolder) viewHolder).getFormWidget(widgetName);
                 if (widget == null) {
-                    throw createPerformException(String.format(Locale.getDefault(), "Widget %s could not be found inside card", widgetName));
+                    throw createPerformException(PaymentUtils.format("Widget %s could not be found inside card", widgetName));
                 }
                 View formView = widget.getRootView().findViewById(viewResId);
                 if (formView == null) {
