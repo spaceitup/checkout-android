@@ -7,22 +7,22 @@
  */
 package com.payoneer.mrs.exampleshop;
 
-import androidx.test.espresso.IdlingResource;
-import androidx.test.espresso.intent.Intents;
-import androidx.test.ext.junit.runners.AndroidJUnit4;
-import androidx.test.filters.LargeTest;
-import androidx.test.rule.ActivityTestRule;
-
-import com.payoneer.mrs.exampleshop.checkout.CheckoutActivity;
-import com.payoneer.mrs.exampleshop.settings.SettingsActivity;
-import com.payoneer.mrs.exampleshop.summary.SummaryActivity;
+import java.io.IOException;
 
 import org.json.JSONException;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
-import java.io.IOException;
+import com.payoneer.mrs.exampleshop.checkout.CheckoutActivity;
+import com.payoneer.mrs.exampleshop.settings.SettingsActivity;
+import com.payoneer.mrs.exampleshop.summary.SummaryActivity;
+
+import androidx.test.espresso.IdlingResource;
+import androidx.test.espresso.intent.Intents;
+import androidx.test.ext.junit.runners.AndroidJUnit4;
+import androidx.test.filters.LargeTest;
+import androidx.test.rule.ActivityTestRule;
 
 @RunWith(AndroidJUnit4.class)
 @LargeTest
