@@ -8,26 +8,6 @@
 
 package com.payoneer.mrs.exampleshop;
 
-import android.view.View;
-
-import androidx.test.espresso.IdlingRegistry;
-import androidx.test.espresso.IdlingResource;
-import androidx.test.espresso.matcher.ViewMatchers;
-
-import com.payoneer.mrs.exampleshop.checkout.CheckoutActivity;
-import com.payoneer.mrs.exampleshop.confirm.ConfirmActivity;
-import com.payoneer.mrs.exampleshop.summary.SummaryActivity;
-import com.payoneer.mrs.payment.ui.page.ChargePaymentActivity;
-import com.payoneer.mrs.payment.ui.page.PaymentListActivity;
-import com.payoneer.mrs.sharedtest.service.ListService;
-import com.payoneer.mrs.sharedtest.view.ActivityHelper;
-import com.payoneer.mrs.sharedtest.view.PaymentActions;
-
-import org.hamcrest.Matcher;
-import org.json.JSONException;
-
-import java.io.IOException;
-
 import static androidx.test.espresso.Espresso.onView;
 import static androidx.test.espresso.action.ViewActions.click;
 import static androidx.test.espresso.action.ViewActions.closeSoftKeyboard;
@@ -41,6 +21,25 @@ import static androidx.test.espresso.matcher.ViewMatchers.isDisplayed;
 import static androidx.test.espresso.matcher.ViewMatchers.withId;
 import static com.payoneer.mrs.sharedtest.view.PaymentActions.actionOnViewInWidget;
 import static com.payoneer.mrs.sharedtest.view.PaymentMatchers.isCardWithTestId;
+
+import java.io.IOException;
+
+import org.hamcrest.Matcher;
+import org.json.JSONException;
+
+import com.payoneer.mrs.exampleshop.checkout.CheckoutActivity;
+import com.payoneer.mrs.exampleshop.confirm.ConfirmActivity;
+import com.payoneer.mrs.exampleshop.summary.SummaryActivity;
+import com.payoneer.mrs.payment.ui.page.ChargePaymentActivity;
+import com.payoneer.mrs.payment.ui.page.PaymentListActivity;
+import com.payoneer.mrs.sharedtest.service.ListService;
+import com.payoneer.mrs.sharedtest.view.ActivityHelper;
+import com.payoneer.mrs.sharedtest.view.PaymentActions;
+
+import android.view.View;
+import androidx.test.espresso.IdlingRegistry;
+import androidx.test.espresso.IdlingResource;
+import androidx.test.espresso.matcher.ViewMatchers;
 
 public class AbstractTest {
 
