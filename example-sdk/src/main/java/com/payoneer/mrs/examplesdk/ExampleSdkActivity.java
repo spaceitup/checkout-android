@@ -7,14 +7,6 @@
  */
 package com.payoneer.mrs.examplesdk;
 
-import com.google.android.material.dialog.MaterialAlertDialogBuilder;
-import com.google.android.material.switchmaterial.SwitchMaterial;
-import com.payoneer.mrs.payment.model.Interaction;
-import com.payoneer.mrs.payment.ui.PaymentActivityResult;
-import com.payoneer.mrs.payment.ui.PaymentResult;
-import com.payoneer.mrs.payment.ui.PaymentTheme;
-import com.payoneer.mrs.payment.ui.PaymentUI;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -23,7 +15,16 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+
 import androidx.appcompat.app.AppCompatActivity;
+
+import com.google.android.material.dialog.MaterialAlertDialogBuilder;
+import com.google.android.material.switchmaterial.SwitchMaterial;
+import com.payoneer.mrs.payment.model.Interaction;
+import com.payoneer.mrs.payment.ui.PaymentActivityResult;
+import com.payoneer.mrs.payment.ui.PaymentResult;
+import com.payoneer.mrs.payment.ui.PaymentTheme;
+import com.payoneer.mrs.payment.ui.PaymentUI;
 
 /**
  * This is the main Activity of this basic example app demonstrating how to use the Android SDK

@@ -8,7 +8,13 @@
 
 package com.payoneer.mrs.payment.ui.widget;
 
-import java.util.List;
+import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.Spinner;
+import android.widget.TextView;
+
+import androidx.annotation.NonNull;
 
 import com.payoneer.mrs.payment.R;
 import com.payoneer.mrs.payment.core.PaymentException;
@@ -18,12 +24,7 @@ import com.payoneer.mrs.payment.model.InputElement;
 import com.payoneer.mrs.payment.model.SelectOption;
 import com.payoneer.mrs.payment.util.PaymentUtils;
 
-import android.view.View;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
-import android.widget.Spinner;
-import android.widget.TextView;
-import androidx.annotation.NonNull;
+import java.util.List;
 
 /**
  * Widget for handling the Select input type

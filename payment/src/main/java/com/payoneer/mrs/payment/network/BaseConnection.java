@@ -8,6 +8,16 @@
 
 package com.payoneer.mrs.payment.network;
 
+import android.content.Context;
+import android.text.TextUtils;
+import android.util.Log;
+
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.google.gson.JsonParseException;
+import com.payoneer.mrs.payment.core.PaymentException;
+import com.payoneer.mrs.payment.model.ErrorInfo;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
@@ -18,16 +28,6 @@ import java.net.CookieManager;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
-
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
-import com.google.gson.JsonParseException;
-import com.payoneer.mrs.payment.core.PaymentException;
-import com.payoneer.mrs.payment.model.ErrorInfo;
-
-import android.content.Context;
-import android.text.TextUtils;
-import android.util.Log;
 
 /**
  * The base class for all Payment API implementations

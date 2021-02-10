@@ -8,20 +8,21 @@
 
 package com.payoneer.mrs.sharedtest.view;
 
-import static androidx.test.espresso.intent.Checks.checkNotNull;
+import android.view.View;
 
-import org.hamcrest.Description;
-import org.hamcrest.Matcher;
-import org.hamcrest.TypeSafeMatcher;
+import androidx.recyclerview.widget.RecyclerView;
+import androidx.test.espresso.matcher.BoundedMatcher;
 
 import com.google.android.material.textfield.TextInputLayout;
 import com.payoneer.mrs.payment.ui.list.PaymentCardViewHolder;
 import com.payoneer.mrs.payment.ui.widget.FormWidget;
 import com.payoneer.mrs.payment.util.PaymentUtils;
 
-import android.view.View;
-import androidx.recyclerview.widget.RecyclerView;
-import androidx.test.espresso.matcher.BoundedMatcher;
+import org.hamcrest.Description;
+import org.hamcrest.Matcher;
+import org.hamcrest.TypeSafeMatcher;
+
+import static androidx.test.espresso.intent.Checks.checkNotNull;
 
 /**
  * Class holding espresso matchers to test the Android SDK

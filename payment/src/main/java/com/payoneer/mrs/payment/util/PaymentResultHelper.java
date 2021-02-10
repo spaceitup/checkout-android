@@ -8,9 +8,7 @@
 
 package com.payoneer.mrs.payment.util;
 
-import static com.payoneer.mrs.payment.model.InteractionReason.CLIENTSIDE_ERROR;
-import static com.payoneer.mrs.payment.model.InteractionReason.COMMUNICATION_FAILURE;
-import static com.payoneer.mrs.payment.ui.PaymentResult.EXTRA_PAYMENT_RESULT;
+import android.content.Intent;
 
 import com.payoneer.mrs.payment.core.PaymentException;
 import com.payoneer.mrs.payment.model.ErrorInfo;
@@ -18,7 +16,9 @@ import com.payoneer.mrs.payment.model.Interaction;
 import com.payoneer.mrs.payment.model.InteractionCode;
 import com.payoneer.mrs.payment.ui.PaymentResult;
 
-import android.content.Intent;
+import static com.payoneer.mrs.payment.model.InteractionReason.CLIENTSIDE_ERROR;
+import static com.payoneer.mrs.payment.model.InteractionReason.COMMUNICATION_FAILURE;
+import static com.payoneer.mrs.payment.ui.PaymentResult.EXTRA_PAYMENT_RESULT;
 
 /**
  * Class with helper methods to construct a PaymentResult

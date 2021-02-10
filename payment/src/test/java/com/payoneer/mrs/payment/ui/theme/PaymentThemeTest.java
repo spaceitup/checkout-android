@@ -8,13 +8,13 @@
 
 package com.payoneer.mrs.payment.ui.theme;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
+import com.payoneer.mrs.payment.R;
+import com.payoneer.mrs.payment.ui.PaymentTheme;
 
 import org.junit.Test;
 
-import com.payoneer.mrs.payment.R;
-import com.payoneer.mrs.payment.ui.PaymentTheme;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
 
 public class PaymentThemeTest {
 

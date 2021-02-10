@@ -8,12 +8,6 @@
 
 package com.payoneer.mrs.exampleshop.summary;
 
-import static android.app.Activity.RESULT_CANCELED;
-import static com.payoneer.mrs.payment.ui.PaymentActivityResult.RESULT_CODE_ERROR;
-import static com.payoneer.mrs.payment.ui.PaymentActivityResult.RESULT_CODE_PROCEED;
-
-import java.util.concurrent.Callable;
-
 import com.payoneer.mrs.exampleshop.shared.ShopException;
 import com.payoneer.mrs.payment.core.PaymentException;
 import com.payoneer.mrs.payment.model.Interaction;
@@ -24,11 +18,17 @@ import com.payoneer.mrs.payment.network.ListConnection;
 import com.payoneer.mrs.payment.ui.PaymentActivityResult;
 import com.payoneer.mrs.payment.ui.PaymentResult;
 
+import java.util.concurrent.Callable;
+
 import rx.Single;
 import rx.SingleSubscriber;
 import rx.Subscription;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
+
+import static android.app.Activity.RESULT_CANCELED;
+import static com.payoneer.mrs.payment.ui.PaymentActivityResult.RESULT_CODE_ERROR;
+import static com.payoneer.mrs.payment.ui.PaymentActivityResult.RESULT_CODE_PROCEED;
 
 /**
  * SummaryPresenter responsible for communicating with the

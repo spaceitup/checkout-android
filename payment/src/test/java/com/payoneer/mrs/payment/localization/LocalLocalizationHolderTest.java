@@ -8,14 +8,15 @@
 
 package com.payoneer.mrs.payment.localization;
 
-import static org.junit.Assert.assertNotNull;
+import android.content.Context;
+
+import androidx.test.core.app.ApplicationProvider;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.robolectric.RobolectricTestRunner;
 
-import android.content.Context;
-import androidx.test.core.app.ApplicationProvider;
+import static org.junit.Assert.assertNotNull;
 
 @RunWith(RobolectricTestRunner.class)
 public class LocalLocalizationHolderTest {

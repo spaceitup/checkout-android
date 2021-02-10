@@ -8,10 +8,10 @@
 
 package com.payoneer.mrs.payment.validation;
 
+import com.payoneer.mrs.payment.util.PaymentUtils;
+
 import java.util.HashMap;
 import java.util.Map;
-
-import com.payoneer.mrs.payment.util.PaymentUtils;
 
 /**
  * Class with helper methods to validate Iban numbers

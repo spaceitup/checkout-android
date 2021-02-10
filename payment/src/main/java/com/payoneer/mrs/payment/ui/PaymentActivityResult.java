@@ -8,10 +8,10 @@
 
 package com.payoneer.mrs.payment.ui;
 
-import com.payoneer.mrs.payment.util.PaymentResultHelper;
-
 import android.app.Activity;
 import android.content.Intent;
+
+import com.payoneer.mrs.payment.util.PaymentResultHelper;
 
 /**
  * A container for a payment activity result as obtained from the Android SDK

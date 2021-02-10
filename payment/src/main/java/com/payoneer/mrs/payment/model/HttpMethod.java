@@ -8,10 +8,10 @@
 
 package com.payoneer.mrs.payment.model;
 
+import androidx.annotation.StringDef;
+
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
-
-import androidx.annotation.StringDef;
 
 /**
  * This class describes HTTP methods that are valid for customer's browser redirect.

@@ -8,17 +8,8 @@
 
 package com.payoneer.mrs.payment.ui.page;
 
-import static com.payoneer.mrs.payment.model.InteractionCode.PROCEED;
-import static com.payoneer.mrs.payment.model.NetworkOperationType.CHARGE;
-import static com.payoneer.mrs.payment.ui.PaymentActivityResult.RESULT_CODE_ERROR;
-import static com.payoneer.mrs.payment.ui.PaymentActivityResult.RESULT_CODE_PROCEED;
-import static com.payoneer.mrs.payment.ui.redirect.RedirectService.INTERACTION_CODE;
-import static com.payoneer.mrs.payment.ui.redirect.RedirectService.INTERACTION_REASON;
-
-import java.net.URL;
-import java.util.List;
-import java.util.Map;
-import java.util.Objects;
+import android.app.Activity;
+import android.text.TextUtils;
 
 import com.payoneer.mrs.payment.core.PaymentException;
 import com.payoneer.mrs.payment.form.Operation;
@@ -49,8 +40,17 @@ import com.payoneer.mrs.payment.ui.widget.FormWidget;
 import com.payoneer.mrs.payment.util.PaymentResultHelper;
 import com.payoneer.mrs.payment.util.PaymentUtils;
 
-import android.app.Activity;
-import android.text.TextUtils;
+import java.net.URL;
+import java.util.List;
+import java.util.Map;
+import java.util.Objects;
+
+import static com.payoneer.mrs.payment.model.InteractionCode.PROCEED;
+import static com.payoneer.mrs.payment.model.NetworkOperationType.CHARGE;
+import static com.payoneer.mrs.payment.ui.PaymentActivityResult.RESULT_CODE_ERROR;
+import static com.payoneer.mrs.payment.ui.PaymentActivityResult.RESULT_CODE_PROCEED;
+import static com.payoneer.mrs.payment.ui.redirect.RedirectService.INTERACTION_CODE;
+import static com.payoneer.mrs.payment.ui.redirect.RedirectService.INTERACTION_REASON;
 
 /**
  * The PaymentListPresenter implementing the presenter part of the MVP
@@ -129,7 +129,7 @@ final class PaymentListPresenter implements PaymentSessionListener, Localization
      * The presenter will validate the widgets and if valid, post the operation to the Payment API
      * using one of the network services.
      *
-     * @param card the PaymentCard containing the operation URL
+     * @param card    the PaymentCard containing the operation URL
      * @param widgets containing the user input data
      */
     void onActionClicked(PaymentCard card, Map<String, FormWidget> widgets) {

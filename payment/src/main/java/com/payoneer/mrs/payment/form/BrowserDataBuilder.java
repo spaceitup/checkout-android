@@ -8,13 +8,13 @@
 
 package com.payoneer.mrs.payment.form;
 
-import java.util.Locale;
-import java.util.TimeZone;
+import android.content.Context;
+import android.content.res.Configuration;
 
 import com.payoneer.mrs.payment.model.BrowserData;
 
-import android.content.Context;
-import android.content.res.Configuration;
+import java.util.Locale;
+import java.util.TimeZone;
 
 /**
  * Class for building the BrowserData

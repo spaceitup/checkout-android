@@ -8,11 +8,7 @@
 
 package com.payoneer.mrs.payment.ui.page;
 
-import static com.payoneer.mrs.payment.localization.LocalizationKey.CHARGE_INTERRUPTED;
-import static com.payoneer.mrs.payment.ui.PaymentActivityResult.RESULT_CODE_ERROR;
-import static com.payoneer.mrs.payment.ui.PaymentActivityResult.RESULT_CODE_PROCEED;
-
-import java.util.Objects;
+import android.content.Context;
 
 import com.payoneer.mrs.payment.core.PaymentException;
 import com.payoneer.mrs.payment.form.Operation;
@@ -38,7 +34,11 @@ import com.payoneer.mrs.payment.ui.service.PaymentSessionListener;
 import com.payoneer.mrs.payment.ui.service.PaymentSessionService;
 import com.payoneer.mrs.payment.util.PaymentResultHelper;
 
-import android.content.Context;
+import java.util.Objects;
+
+import static com.payoneer.mrs.payment.localization.LocalizationKey.CHARGE_INTERRUPTED;
+import static com.payoneer.mrs.payment.ui.PaymentActivityResult.RESULT_CODE_ERROR;
+import static com.payoneer.mrs.payment.ui.PaymentActivityResult.RESULT_CODE_PROCEED;
 
 /**
  * The ChargePaymentPresenter takes care of posting the operation to the Payment API.

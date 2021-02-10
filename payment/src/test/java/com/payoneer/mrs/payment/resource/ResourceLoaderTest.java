@@ -8,20 +8,21 @@
 
 package com.payoneer.mrs.payment.resource;
 
-import static org.junit.Assert.assertNotNull;
+import android.content.res.Resources;
 
-import java.io.IOException;
-import java.util.Map;
+import androidx.test.core.app.ApplicationProvider;
+
+import com.payoneer.mrs.payment.R;
+import com.payoneer.mrs.payment.core.PaymentException;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.robolectric.RobolectricTestRunner;
 
-import com.payoneer.mrs.payment.R;
-import com.payoneer.mrs.payment.core.PaymentException;
+import java.io.IOException;
+import java.util.Map;
 
-import android.content.res.Resources;
-import androidx.test.core.app.ApplicationProvider;
+import static org.junit.Assert.assertNotNull;
 
 @RunWith(RobolectricTestRunner.class)
 public class ResourceLoaderTest {

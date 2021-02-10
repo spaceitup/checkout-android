@@ -8,6 +8,9 @@
 
 package com.payoneer.mrs.payment.ui.widget;
 
+import android.text.TextUtils;
+import android.view.View;
+
 import com.payoneer.mrs.payment.core.PaymentException;
 import com.payoneer.mrs.payment.form.Operation;
 import com.payoneer.mrs.payment.localization.Localization;
@@ -15,9 +18,6 @@ import com.payoneer.mrs.payment.model.InputElement;
 import com.payoneer.mrs.payment.ui.widget.input.ExpiryDateInputMode;
 import com.payoneer.mrs.payment.util.PaymentUtils;
 import com.payoneer.mrs.payment.validation.ValidationResult;
-
-import android.text.TextUtils;
-import android.view.View;
 
 /**
  * Widget for handling the date input

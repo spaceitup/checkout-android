@@ -8,7 +8,11 @@
 
 package com.payoneer.mrs.payment.ui.widget;
 
-import static com.google.android.material.textfield.TextInputLayout.END_ICON_NONE;
+import android.text.TextUtils;
+import android.view.KeyEvent;
+import android.view.View;
+import android.view.inputmethod.EditorInfo;
+import android.widget.TextView;
 
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
@@ -18,11 +22,7 @@ import com.payoneer.mrs.payment.form.Operation;
 import com.payoneer.mrs.payment.ui.widget.input.EditTextInputMode;
 import com.payoneer.mrs.payment.validation.ValidationResult;
 
-import android.text.TextUtils;
-import android.view.KeyEvent;
-import android.view.View;
-import android.view.inputmethod.EditorInfo;
-import android.widget.TextView;
+import static com.google.android.material.textfield.TextInputLayout.END_ICON_NONE;
 
 /**
  * Base class for widgets using the TextInputLayout and TextInputEditText

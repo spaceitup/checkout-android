@@ -8,13 +8,15 @@
 
 package com.payoneer.mrs.payment.ui.list;
 
-import static com.payoneer.mrs.payment.localization.LocalizationKey.LIST_HEADER_ACCOUNTS;
-import static com.payoneer.mrs.payment.localization.LocalizationKey.LIST_HEADER_NETWORKS;
-import static com.payoneer.mrs.payment.localization.LocalizationKey.LIST_HEADER_NETWORKS_OTHER;
-import static com.payoneer.mrs.payment.localization.LocalizationKey.LIST_HEADER_PRESET;
+import android.content.Context;
+import android.os.IBinder;
+import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 
-import java.util.ArrayList;
-import java.util.List;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.LinearSmoothScroller;
+import androidx.recyclerview.widget.RecyclerView;
+import androidx.recyclerview.widget.SimpleItemAnimator;
 
 import com.payoneer.mrs.payment.localization.Localization;
 import com.payoneer.mrs.payment.ui.model.AccountCard;
@@ -23,14 +25,13 @@ import com.payoneer.mrs.payment.ui.model.PaymentCard;
 import com.payoneer.mrs.payment.ui.model.PaymentSession;
 import com.payoneer.mrs.payment.ui.page.PaymentListActivity;
 
-import android.content.Context;
-import android.os.IBinder;
-import android.view.View;
-import android.view.inputmethod.InputMethodManager;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.LinearSmoothScroller;
-import androidx.recyclerview.widget.RecyclerView;
-import androidx.recyclerview.widget.SimpleItemAnimator;
+import java.util.ArrayList;
+import java.util.List;
+
+import static com.payoneer.mrs.payment.localization.LocalizationKey.LIST_HEADER_ACCOUNTS;
+import static com.payoneer.mrs.payment.localization.LocalizationKey.LIST_HEADER_NETWORKS;
+import static com.payoneer.mrs.payment.localization.LocalizationKey.LIST_HEADER_NETWORKS_OTHER;
+import static com.payoneer.mrs.payment.localization.LocalizationKey.LIST_HEADER_PRESET;
 
 /**
  * The PaymentList showing available payment methods and accounts in a list

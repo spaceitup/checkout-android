@@ -8,10 +8,10 @@
 
 package com.payoneer.mrs.payment.ui.service;
 
+import android.app.Activity;
+
 import com.payoneer.mrs.payment.form.Operation;
 import com.payoneer.mrs.payment.model.OperationResult;
-
-import android.app.Activity;
 
 /**
  * Interface for network services, a NetworkService is responsible for activating and

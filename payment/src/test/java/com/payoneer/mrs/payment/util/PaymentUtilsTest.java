@@ -8,25 +8,26 @@
 
 package com.payoneer.mrs.payment.util;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertTrue;
+import android.content.res.Resources;
 
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
-
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.robolectric.RobolectricTestRunner;
+import androidx.test.core.app.ApplicationProvider;
 
 import com.payoneer.mrs.payment.R;
 import com.payoneer.mrs.payment.core.PaymentInputType;
 import com.payoneer.mrs.payment.model.InputElement;
 
-import android.content.res.Resources;
-import androidx.test.core.app.ApplicationProvider;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.robolectric.RobolectricTestRunner;
+
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
+
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
 
 /**
  * Class for testing the PaymentUtils class

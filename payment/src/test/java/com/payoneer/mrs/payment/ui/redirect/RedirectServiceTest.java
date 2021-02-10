@@ -8,20 +8,21 @@
 
 package com.payoneer.mrs.payment.ui.redirect;
 
-import static org.junit.Assert.assertTrue;
+import android.content.Context;
 
-import java.net.URL;
-
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.robolectric.RobolectricTestRunner;
+import androidx.test.core.app.ApplicationProvider;
 
 import com.payoneer.mrs.payment.model.HttpMethod;
 import com.payoneer.mrs.payment.model.Redirect;
 import com.payoneer.mrs.test.util.TestUtils;
 
-import android.content.Context;
-import androidx.test.core.app.ApplicationProvider;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.robolectric.RobolectricTestRunner;
+
+import java.net.URL;
+
+import static org.junit.Assert.assertTrue;
 
 @RunWith(RobolectricTestRunner.class)
 public class RedirectServiceTest {

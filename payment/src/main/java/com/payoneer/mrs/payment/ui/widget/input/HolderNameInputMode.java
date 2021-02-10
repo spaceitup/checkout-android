@@ -8,12 +8,12 @@
 
 package com.payoneer.mrs.payment.ui.widget.input;
 
-import static android.text.InputType.TYPE_TEXT_FLAG_CAP_WORDS;
-import static android.text.InputType.TYPE_TEXT_VARIATION_PERSON_NAME;
+import android.text.InputFilter;
 
 import com.google.android.material.textfield.TextInputEditText;
 
-import android.text.InputFilter;
+import static android.text.InputType.TYPE_TEXT_FLAG_CAP_WORDS;
+import static android.text.InputType.TYPE_TEXT_VARIATION_PERSON_NAME;
 
 /**
  * InputMode for holder names
