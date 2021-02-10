@@ -8,18 +8,18 @@
 
 package com.payoneer.mrs.exampleshop.checkout;
 
+import static com.payoneer.mrs.payment.model.RedirectType.SUMMARY;
+import static com.payoneer.mrs.payment.ui.PaymentActivityResult.RESULT_CODE_ERROR;
+import static com.payoneer.mrs.payment.ui.PaymentActivityResult.RESULT_CODE_PROCEED;
+
+import java.util.Objects;
+
 import com.payoneer.mrs.payment.model.Interaction;
 import com.payoneer.mrs.payment.model.InteractionCode;
 import com.payoneer.mrs.payment.model.OperationResult;
 import com.payoneer.mrs.payment.model.Redirect;
 import com.payoneer.mrs.payment.ui.PaymentActivityResult;
 import com.payoneer.mrs.payment.ui.PaymentResult;
-
-import java.util.Objects;
-
-import static com.payoneer.mrs.payment.model.RedirectType.SUMMARY;
-import static com.payoneer.mrs.payment.ui.PaymentActivityResult.RESULT_CODE_ERROR;
-import static com.payoneer.mrs.payment.ui.PaymentActivityResult.RESULT_CODE_PROCEED;
 
 /**
  * CheckoutPresenter takes care of handling the response from the Android SDK payment page.

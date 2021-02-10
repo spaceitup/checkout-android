@@ -8,10 +8,11 @@
 
 package com.payoneer.mrs.payment.form;
 
-import com.payoneer.mrs.payment.core.PaymentException;
-import com.payoneer.mrs.payment.core.PaymentInputType;
-import com.payoneer.mrs.payment.model.BrowserData;
-import com.payoneer.mrs.test.util.TestUtils;
+import static io.github.jsonSnapshot.SnapshotMatcher.expect;
+import static io.github.jsonSnapshot.SnapshotMatcher.start;
+import static io.github.jsonSnapshot.SnapshotMatcher.validateSnapshots;
+
+import java.net.URL;
 
 import org.junit.AfterClass;
 import org.junit.BeforeClass;
@@ -19,11 +20,10 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.robolectric.RobolectricTestRunner;
 
-import java.net.URL;
-
-import static io.github.jsonSnapshot.SnapshotMatcher.expect;
-import static io.github.jsonSnapshot.SnapshotMatcher.start;
-import static io.github.jsonSnapshot.SnapshotMatcher.validateSnapshots;
+import com.payoneer.mrs.payment.core.PaymentException;
+import com.payoneer.mrs.payment.core.PaymentInputType;
+import com.payoneer.mrs.payment.model.BrowserData;
+import com.payoneer.mrs.test.util.TestUtils;
 
 @RunWith(RobolectricTestRunner.class)
 public class OperationTest {

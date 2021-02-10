@@ -8,6 +8,13 @@
 
 package com.payoneer.mrs.exampleshop.checkout;
 
+import com.google.android.material.appbar.CollapsingToolbarLayout;
+import com.payoneer.mrs.exampleshop.R;
+import com.payoneer.mrs.exampleshop.confirm.ConfirmActivity;
+import com.payoneer.mrs.exampleshop.shared.BaseActivity;
+import com.payoneer.mrs.exampleshop.summary.SummaryActivity;
+import com.payoneer.mrs.payment.ui.PaymentUI;
+
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Typeface;
@@ -15,17 +22,9 @@ import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
-
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.content.res.ResourcesCompat;
-
-import com.google.android.material.appbar.CollapsingToolbarLayout;
-import com.payoneer.mrs.exampleshop.R;
-import com.payoneer.mrs.exampleshop.confirm.ConfirmActivity;
-import com.payoneer.mrs.exampleshop.shared.BaseActivity;
-import com.payoneer.mrs.exampleshop.summary.SummaryActivity;
-import com.payoneer.mrs.payment.ui.PaymentUI;
 
 /**
  * Activity displaying the checkout page, this page will open the Android SDK payment page.

@@ -8,23 +8,8 @@
 
 package com.payoneer.mrs.exampleshop.summary;
 
-import android.app.Activity;
-import android.content.Context;
-import android.content.Intent;
-import android.graphics.Typeface;
-import android.os.Bundle;
-import android.text.TextUtils;
-import android.view.View;
-import android.widget.Button;
-import android.widget.ImageView;
-import android.widget.ProgressBar;
-import android.widget.TextView;
-
-import androidx.annotation.VisibleForTesting;
-import androidx.appcompat.app.ActionBar;
-import androidx.appcompat.widget.Toolbar;
-import androidx.core.content.res.ResourcesCompat;
-import androidx.test.espresso.IdlingResource;
+import java.net.URL;
+import java.util.Map;
 
 import com.google.android.material.appbar.CollapsingToolbarLayout;
 import com.payoneer.mrs.exampleshop.R;
@@ -39,8 +24,22 @@ import com.payoneer.mrs.payment.ui.page.idlingresource.SimpleIdlingResource;
 import com.payoneer.mrs.payment.util.NetworkLogoLoader;
 import com.payoneer.mrs.payment.util.PaymentUtils;
 
-import java.net.URL;
-import java.util.Map;
+import android.app.Activity;
+import android.content.Context;
+import android.content.Intent;
+import android.graphics.Typeface;
+import android.os.Bundle;
+import android.text.TextUtils;
+import android.view.View;
+import android.widget.Button;
+import android.widget.ImageView;
+import android.widget.ProgressBar;
+import android.widget.TextView;
+import androidx.annotation.VisibleForTesting;
+import androidx.appcompat.app.ActionBar;
+import androidx.appcompat.widget.Toolbar;
+import androidx.core.content.res.ResourcesCompat;
+import androidx.test.espresso.IdlingResource;
 
 /**
  * Activity displaying the summary page with the Pay and Edit button.

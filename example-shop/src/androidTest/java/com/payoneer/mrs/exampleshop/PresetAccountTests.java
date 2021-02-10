@@ -7,17 +7,13 @@
  */
 package com.payoneer.mrs.exampleshop;
 
-import android.view.View;
+import static androidx.test.espresso.Espresso.onView;
+import static androidx.test.espresso.assertion.ViewAssertions.matches;
+import static androidx.test.espresso.matcher.ViewMatchers.withId;
+import static androidx.test.espresso.matcher.ViewMatchers.withText;
+import static com.payoneer.mrs.sharedtest.view.PaymentMatchers.isViewInCard;
 
-import androidx.test.espresso.IdlingResource;
-import androidx.test.espresso.intent.Intents;
-import androidx.test.espresso.matcher.ViewMatchers;
-import androidx.test.ext.junit.runners.AndroidJUnit4;
-import androidx.test.filters.LargeTest;
-import androidx.test.rule.ActivityTestRule;
-
-import com.payoneer.mrs.exampleshop.checkout.CheckoutActivity;
-import com.payoneer.mrs.exampleshop.settings.SettingsActivity;
+import java.io.IOException;
 
 import org.hamcrest.Matcher;
 import org.json.JSONException;
@@ -25,13 +21,16 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
-import java.io.IOException;
+import com.payoneer.mrs.exampleshop.checkout.CheckoutActivity;
+import com.payoneer.mrs.exampleshop.settings.SettingsActivity;
 
-import static androidx.test.espresso.Espresso.onView;
-import static androidx.test.espresso.assertion.ViewAssertions.matches;
-import static androidx.test.espresso.matcher.ViewMatchers.withId;
-import static androidx.test.espresso.matcher.ViewMatchers.withText;
-import static com.payoneer.mrs.sharedtest.view.PaymentMatchers.isViewInCard;
+import android.view.View;
+import androidx.test.espresso.IdlingResource;
+import androidx.test.espresso.intent.Intents;
+import androidx.test.espresso.matcher.ViewMatchers;
+import androidx.test.ext.junit.runners.AndroidJUnit4;
+import androidx.test.filters.LargeTest;
+import androidx.test.rule.ActivityTestRule;
 
 @RunWith(AndroidJUnit4.class)
 @LargeTest

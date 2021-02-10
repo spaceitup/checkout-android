@@ -8,21 +8,21 @@
 
 package com.payoneer.mrs.payment.util;
 
-import com.google.gson.reflect.TypeToken;
-import com.payoneer.mrs.payment.core.PaymentInputType;
-import com.payoneer.mrs.payment.model.InputElement;
-import com.payoneer.mrs.payment.model.InputElementType;
-
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.robolectric.RobolectricTestRunner;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
 
 import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.robolectric.RobolectricTestRunner;
+
+import com.google.gson.reflect.TypeToken;
+import com.payoneer.mrs.payment.core.PaymentInputType;
+import com.payoneer.mrs.payment.model.InputElement;
+import com.payoneer.mrs.payment.model.InputElementType;
 
 /**
  * Class for testing the GsonHelper methods

@@ -8,18 +8,17 @@
 
 package com.payoneer.mrs.payment.form;
 
-import android.content.Context;
-
-import androidx.test.core.app.ApplicationProvider;
-
-import com.payoneer.mrs.payment.model.BrowserData;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.robolectric.RobolectricTestRunner;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
+import com.payoneer.mrs.payment.model.BrowserData;
+
+import android.content.Context;
+import androidx.test.core.app.ApplicationProvider;
 
 @RunWith(RobolectricTestRunner.class)
 public class BrowserDataBuilderTest {

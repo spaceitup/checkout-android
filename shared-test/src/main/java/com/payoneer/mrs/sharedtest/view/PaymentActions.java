@@ -8,27 +8,6 @@
 
 package com.payoneer.mrs.sharedtest.view;
 
-import android.view.View;
-import android.widget.HorizontalScrollView;
-import android.widget.NumberPicker;
-import android.widget.ScrollView;
-
-import androidx.core.widget.NestedScrollView;
-import androidx.recyclerview.widget.RecyclerView;
-import androidx.test.espresso.PerformException;
-import androidx.test.espresso.UiController;
-import androidx.test.espresso.ViewAction;
-import androidx.test.espresso.action.ScrollToAction;
-import androidx.test.espresso.matcher.ViewMatchers;
-
-import com.payoneer.mrs.payment.ui.list.PaymentCardViewHolder;
-import com.payoneer.mrs.payment.ui.widget.FormWidget;
-import com.payoneer.mrs.payment.util.PaymentUtils;
-
-import org.hamcrest.Matcher;
-
-import java.util.Locale;
-
 import static androidx.test.espresso.intent.Checks.checkNotNull;
 import static androidx.test.espresso.matcher.ViewMatchers.isAssignableFrom;
 import static androidx.test.espresso.matcher.ViewMatchers.isDescendantOfA;
@@ -36,6 +15,26 @@ import static androidx.test.espresso.matcher.ViewMatchers.isDisplayed;
 import static androidx.test.espresso.matcher.ViewMatchers.withEffectiveVisibility;
 import static org.hamcrest.CoreMatchers.allOf;
 import static org.hamcrest.CoreMatchers.anyOf;
+
+import java.util.Locale;
+
+import org.hamcrest.Matcher;
+
+import com.payoneer.mrs.payment.ui.list.PaymentCardViewHolder;
+import com.payoneer.mrs.payment.ui.widget.FormWidget;
+import com.payoneer.mrs.payment.util.PaymentUtils;
+
+import android.view.View;
+import android.widget.HorizontalScrollView;
+import android.widget.NumberPicker;
+import android.widget.ScrollView;
+import androidx.core.widget.NestedScrollView;
+import androidx.recyclerview.widget.RecyclerView;
+import androidx.test.espresso.PerformException;
+import androidx.test.espresso.UiController;
+import androidx.test.espresso.ViewAction;
+import androidx.test.espresso.action.ScrollToAction;
+import androidx.test.espresso.matcher.ViewMatchers;
 
 /**
  * Class providing helper methods for performing actions on the PaymentList.
@@ -73,7 +72,8 @@ public final class PaymentActions {
                 }
                 FormWidget widget = ((PaymentCardViewHolder) viewHolder).getFormWidget(widgetName);
                 if (widget == null) {
-                    throw createPerformException(String.format(Locale.getDefault(), "Widget %s could not be found inside card", widgetName));
+                    throw createPerformException(
+                        String.format(Locale.getDefault(), "Widget %s could not be found inside card", widgetName));
                 }
                 View formView = widget.getRootView().findViewById(viewResId);
                 if (formView == null) {
