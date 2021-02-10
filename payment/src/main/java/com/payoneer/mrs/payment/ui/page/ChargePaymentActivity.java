@@ -12,6 +12,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
+
 import com.payoneer.mrs.payment.R;
 import com.payoneer.mrs.payment.form.Operation;
 import com.payoneer.mrs.payment.localization.Localization;
@@ -109,7 +111,7 @@ public final class ChargePaymentActivity extends BasePaymentActivity implements 
      * {@inheritDoc}
      */
     @Override
-    public void onSaveInstanceState(Bundle savedInstanceState) {
+    public void onSaveInstanceState(@NonNull Bundle savedInstanceState) {
         super.onSaveInstanceState(savedInstanceState);
         if (this.operation != null) {
             savedInstanceState.putParcelable(EXTRA_OPERATION, this.operation);
