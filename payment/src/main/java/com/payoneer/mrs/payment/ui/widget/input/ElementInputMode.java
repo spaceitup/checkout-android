@@ -8,13 +8,13 @@
 
 package com.payoneer.mrs.payment.ui.widget.input;
 
-import android.text.InputFilter;
-import android.text.InputType;
-import android.text.method.DigitsKeyListener;
-
 import com.google.android.material.textfield.TextInputEditText;
 import com.payoneer.mrs.payment.model.InputElement;
 import com.payoneer.mrs.payment.model.InputElementType;
+
+import android.text.InputFilter;
+import android.text.InputType;
+import android.text.method.DigitsKeyListener;
 
 /**
  * InputMode for InputElements received in the ListResult

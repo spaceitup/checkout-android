@@ -8,12 +8,12 @@
 
 package com.payoneer.mrs.payment.core;
 
-import android.os.Handler;
-import android.os.Looper;
-
 import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.FutureTask;
+
+import android.os.Handler;
+import android.os.Looper;
 
 /**
  * A WorkerTask executing one Callable and notifying the WorkerSubscriber once it is completed.

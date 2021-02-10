@@ -8,13 +8,13 @@
 
 package com.payoneer.mrs.payment.ui.widget;
 
-import android.view.View;
-import android.widget.TextView;
-
 import com.google.android.material.switchmaterial.SwitchMaterial;
 import com.payoneer.mrs.payment.R;
 import com.payoneer.mrs.payment.core.PaymentException;
 import com.payoneer.mrs.payment.form.Operation;
+
+import android.view.View;
+import android.widget.TextView;
 
 /**
  * Widget for showing the CheckBox input element

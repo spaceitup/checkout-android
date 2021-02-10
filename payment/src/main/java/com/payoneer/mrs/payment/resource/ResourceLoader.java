@@ -8,13 +8,6 @@
 
 package com.payoneer.mrs.payment.resource;
 
-import android.content.res.Resources;
-
-import com.google.gson.JsonSyntaxException;
-import com.google.gson.reflect.TypeToken;
-import com.payoneer.mrs.payment.core.PaymentException;
-import com.payoneer.mrs.payment.util.GsonHelper;
-
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
@@ -24,6 +17,13 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+import com.google.gson.JsonSyntaxException;
+import com.google.gson.reflect.TypeToken;
+import com.payoneer.mrs.payment.core.PaymentException;
+import com.payoneer.mrs.payment.util.GsonHelper;
+
+import android.content.res.Resources;
 
 /**
  * The ResourceLoader class containing helper methods for loading group and validation raw json files.

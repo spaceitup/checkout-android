@@ -8,7 +8,10 @@
 
 package com.payoneer.mrs.payment.ui.widget;
 
-import android.view.View;
+import static com.payoneer.mrs.payment.localization.LocalizationKey.ALLOW_RECURRENCE_FORCED;
+import static com.payoneer.mrs.payment.localization.LocalizationKey.ALLOW_RECURRENCE_OPTIONAL;
+import static com.payoneer.mrs.payment.localization.LocalizationKey.AUTO_REGISTRATION_FORCED;
+import static com.payoneer.mrs.payment.localization.LocalizationKey.AUTO_REGISTRATION_OPTIONAL;
 
 import com.payoneer.mrs.payment.core.PaymentException;
 import com.payoneer.mrs.payment.core.PaymentInputType;
@@ -16,10 +19,7 @@ import com.payoneer.mrs.payment.form.Operation;
 import com.payoneer.mrs.payment.localization.Localization;
 import com.payoneer.mrs.payment.model.RegistrationType;
 
-import static com.payoneer.mrs.payment.localization.LocalizationKey.ALLOW_RECURRENCE_FORCED;
-import static com.payoneer.mrs.payment.localization.LocalizationKey.ALLOW_RECURRENCE_OPTIONAL;
-import static com.payoneer.mrs.payment.localization.LocalizationKey.AUTO_REGISTRATION_FORCED;
-import static com.payoneer.mrs.payment.localization.LocalizationKey.AUTO_REGISTRATION_OPTIONAL;
+import android.view.View;
 
 /**
  * Widget for handling the Register input

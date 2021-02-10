@@ -8,11 +8,11 @@
 
 package com.payoneer.mrs.payment.ui.widget.input;
 
-import android.text.Editable;
-import android.widget.EditText;
-
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+
+import android.text.Editable;
+import android.widget.EditText;
 
 /**
  * Class for separating 4 digits with a space

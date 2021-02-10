@@ -8,11 +8,11 @@
 
 package com.payoneer.mrs.payment.ui.page;
 
-import android.content.Context;
-import android.content.Intent;
-import android.os.Bundle;
+import static com.payoneer.mrs.payment.localization.LocalizationKey.CHARGE_TEXT;
+import static com.payoneer.mrs.payment.localization.LocalizationKey.CHARGE_TITLE;
 
-import androidx.annotation.NonNull;
+import java.net.URL;
+import java.util.Map;
 
 import com.payoneer.mrs.payment.R;
 import com.payoneer.mrs.payment.form.Operation;
@@ -20,11 +20,10 @@ import com.payoneer.mrs.payment.localization.Localization;
 import com.payoneer.mrs.payment.model.PresetAccount;
 import com.payoneer.mrs.payment.ui.PaymentActivityResult;
 
-import java.net.URL;
-import java.util.Map;
-
-import static com.payoneer.mrs.payment.localization.LocalizationKey.CHARGE_TEXT;
-import static com.payoneer.mrs.payment.localization.LocalizationKey.CHARGE_TITLE;
+import android.content.Context;
+import android.content.Intent;
+import android.os.Bundle;
+import androidx.annotation.NonNull;
 
 /**
  * The ChargePaymentActivity is the view displaying the loading animation while posting the operation.

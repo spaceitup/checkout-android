@@ -8,19 +8,18 @@
 
 package com.payoneer.mrs.payment.ui.widget.input;
 
-import android.content.Context;
-import android.text.Editable;
-import android.text.SpannableStringBuilder;
-import android.text.TextWatcher;
-import android.widget.EditText;
-
-import androidx.test.core.app.ApplicationProvider;
+import static org.junit.Assert.assertEquals;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.robolectric.RobolectricTestRunner;
 
-import static org.junit.Assert.assertEquals;
+import android.content.Context;
+import android.text.Editable;
+import android.text.SpannableStringBuilder;
+import android.text.TextWatcher;
+import android.widget.EditText;
+import androidx.test.core.app.ApplicationProvider;
 
 @RunWith(RobolectricTestRunner.class)
 public class ExpiryDateTextWatcherTest {

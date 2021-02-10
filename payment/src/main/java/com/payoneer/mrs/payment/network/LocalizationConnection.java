@@ -8,7 +8,11 @@
 
 package com.payoneer.mrs.payment.network;
 
-import android.content.Context;
+import java.io.IOException;
+import java.net.HttpURLConnection;
+import java.net.URL;
+import java.util.HashMap;
+import java.util.Map;
 
 import com.google.gson.JsonParseException;
 import com.google.gson.reflect.TypeToken;
@@ -16,11 +20,7 @@ import com.payoneer.mrs.payment.core.PaymentException;
 import com.payoneer.mrs.payment.localization.LocalizationHolder;
 import com.payoneer.mrs.payment.localization.MapLocalizationHolder;
 
-import java.io.IOException;
-import java.net.HttpURLConnection;
-import java.net.URL;
-import java.util.HashMap;
-import java.util.Map;
+import android.content.Context;
 
 /**
  * Class implementing the communication with the payment API to load localization files

@@ -8,15 +8,15 @@
 
 package com.payoneer.mrs.payment.validation;
 
-import android.text.TextUtils;
-import android.util.Log;
+import java.util.Calendar;
+import java.util.Map;
 
 import com.payoneer.mrs.payment.core.PaymentInputType;
 import com.payoneer.mrs.payment.model.PaymentMethod;
 import com.payoneer.mrs.payment.resource.ValidationGroup;
 
-import java.util.Calendar;
-import java.util.Map;
+import android.text.TextUtils;
+import android.util.Log;
 
 /**
  * Class for validating input type values

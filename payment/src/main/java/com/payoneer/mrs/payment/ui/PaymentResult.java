@@ -8,9 +8,7 @@
 
 package com.payoneer.mrs.payment.ui;
 
-import android.os.Parcel;
-import android.os.Parcelable;
-import android.util.Log;
+import static com.payoneer.mrs.payment.model.InteractionReason.COMMUNICATION_FAILURE;
 
 import com.google.gson.JsonSyntaxException;
 import com.payoneer.mrs.payment.model.ErrorInfo;
@@ -18,7 +16,9 @@ import com.payoneer.mrs.payment.model.Interaction;
 import com.payoneer.mrs.payment.model.OperationResult;
 import com.payoneer.mrs.payment.util.GsonHelper;
 
-import static com.payoneer.mrs.payment.model.InteractionReason.COMMUNICATION_FAILURE;
+import android.os.Parcel;
+import android.os.Parcelable;
+import android.util.Log;
 
 /**
  * A container for the payment result as obtained from the Payment API

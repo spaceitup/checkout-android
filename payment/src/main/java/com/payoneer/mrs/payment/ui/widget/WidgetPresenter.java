@@ -8,9 +8,9 @@
 
 package com.payoneer.mrs.payment.ui.widget;
 
-import android.view.View;
-
 import com.payoneer.mrs.payment.validation.ValidationResult;
+
+import android.view.View;
 
 /**
  * The presenter which is controlling each widget

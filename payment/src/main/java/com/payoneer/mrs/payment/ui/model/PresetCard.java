@@ -8,6 +8,13 @@
 
 package com.payoneer.mrs.payment.ui.model;
 
+import static com.payoneer.mrs.payment.localization.LocalizationKey.NETWORK_LABEL;
+
+import java.net.URL;
+import java.util.Collections;
+import java.util.List;
+import java.util.Map;
+
 import com.payoneer.mrs.payment.localization.Localization;
 import com.payoneer.mrs.payment.localization.LocalizationKey;
 import com.payoneer.mrs.payment.model.AccountMask;
@@ -15,13 +22,6 @@ import com.payoneer.mrs.payment.model.InputElement;
 import com.payoneer.mrs.payment.model.NetworkOperationType;
 import com.payoneer.mrs.payment.model.PresetAccount;
 import com.payoneer.mrs.payment.util.PaymentUtils;
-
-import java.net.URL;
-import java.util.Collections;
-import java.util.List;
-import java.util.Map;
-
-import static com.payoneer.mrs.payment.localization.LocalizationKey.NETWORK_LABEL;
 
 /**
  * Class for holding the data of a PresetCard in the list

@@ -8,12 +8,17 @@
 
 package com.payoneer.mrs.payment.ui.list;
 
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.ImageView;
-import android.widget.TextView;
+import static com.payoneer.mrs.payment.core.PaymentInputType.EXPIRY_DATE;
+import static com.payoneer.mrs.payment.core.PaymentInputType.EXPIRY_MONTH;
+import static com.payoneer.mrs.payment.core.PaymentInputType.EXPIRY_YEAR;
+import static com.payoneer.mrs.payment.core.PaymentInputType.VERIFICATION_CODE;
 
-import androidx.recyclerview.widget.RecyclerView;
+import java.net.URL;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.Map;
 
 import com.payoneer.mrs.payment.R;
 import com.payoneer.mrs.payment.model.AccountMask;
@@ -31,17 +36,11 @@ import com.payoneer.mrs.payment.ui.widget.WidgetPresenter;
 import com.payoneer.mrs.payment.util.NetworkLogoLoader;
 import com.payoneer.mrs.payment.util.PaymentUtils;
 
-import java.net.URL;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.Map;
-
-import static com.payoneer.mrs.payment.core.PaymentInputType.EXPIRY_DATE;
-import static com.payoneer.mrs.payment.core.PaymentInputType.EXPIRY_MONTH;
-import static com.payoneer.mrs.payment.core.PaymentInputType.EXPIRY_YEAR;
-import static com.payoneer.mrs.payment.core.PaymentInputType.VERIFICATION_CODE;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.TextView;
+import androidx.recyclerview.widget.RecyclerView;
 
 /**
  * The PaymentCardViewHolder holding the header and input widgets

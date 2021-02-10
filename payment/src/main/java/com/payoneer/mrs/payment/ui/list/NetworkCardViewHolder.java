@@ -9,12 +9,8 @@
 package com.payoneer.mrs.payment.ui.list;
 
 
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.TextView;
-
-import androidx.recyclerview.widget.RecyclerView.ViewHolder;
+import static com.payoneer.mrs.payment.core.PaymentInputType.ALLOW_RECURRENCE;
+import static com.payoneer.mrs.payment.core.PaymentInputType.AUTO_REGISTRATION;
 
 import com.payoneer.mrs.payment.R;
 import com.payoneer.mrs.payment.ui.model.NetworkCard;
@@ -26,8 +22,11 @@ import com.payoneer.mrs.payment.ui.widget.RegisterWidget;
 import com.payoneer.mrs.payment.ui.widget.WidgetInflater;
 import com.payoneer.mrs.payment.util.PaymentUtils;
 
-import static com.payoneer.mrs.payment.core.PaymentInputType.ALLOW_RECURRENCE;
-import static com.payoneer.mrs.payment.core.PaymentInputType.AUTO_REGISTRATION;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.TextView;
+import androidx.recyclerview.widget.RecyclerView.ViewHolder;
 
 /**
  * The NetworkCardViewHolder

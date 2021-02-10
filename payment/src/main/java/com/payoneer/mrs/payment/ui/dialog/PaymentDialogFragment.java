@@ -8,6 +8,9 @@
 
 package com.payoneer.mrs.payment.ui.dialog;
 
+import com.google.android.material.dialog.MaterialAlertDialogBuilder;
+import com.payoneer.mrs.payment.R;
+
 import android.app.Activity;
 import android.app.Dialog;
 import android.content.DialogInterface;
@@ -16,13 +19,9 @@ import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ImageView;
-
 import androidx.annotation.NonNull;
 import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.FragmentManager;
-
-import com.google.android.material.dialog.MaterialAlertDialogBuilder;
-import com.payoneer.mrs.payment.R;
 
 /**
  * Payment Dialog Fragment used to create Alert Dialog

@@ -8,9 +8,9 @@
 
 package com.payoneer.mrs.exampleshop.summary;
 
-import android.app.Activity;
-
 import com.payoneer.mrs.payment.model.PresetAccount;
+
+import android.app.Activity;
 
 /**
  * The interface for the SummaryView.

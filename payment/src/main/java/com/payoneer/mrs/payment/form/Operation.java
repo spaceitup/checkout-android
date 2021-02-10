@@ -8,10 +8,8 @@
 
 package com.payoneer.mrs.payment.form;
 
-import android.os.Parcel;
-import android.os.Parcelable;
-import android.text.TextUtils;
-import android.util.Log;
+import java.net.URL;
+import java.util.Objects;
 
 import com.google.gson.JsonSyntaxException;
 import com.payoneer.mrs.payment.core.PaymentException;
@@ -21,8 +19,10 @@ import com.payoneer.mrs.payment.model.BrowserData;
 import com.payoneer.mrs.payment.model.OperationData;
 import com.payoneer.mrs.payment.util.GsonHelper;
 
-import java.net.URL;
-import java.util.Objects;
+import android.os.Parcel;
+import android.os.Parcelable;
+import android.text.TextUtils;
+import android.util.Log;
 
 /**
  * Class holding Operation form values
