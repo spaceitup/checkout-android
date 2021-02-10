@@ -8,13 +8,13 @@
 
 package com.payoneer.mrs.payment.ui.model;
 
-import com.payoneer.mrs.payment.model.ListResult;
-import com.payoneer.mrs.payment.validation.Validator;
-
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+
+import com.payoneer.mrs.payment.model.ListResult;
+import com.payoneer.mrs.payment.validation.Validator;
 
 /**
  * Class for storing the ListResult and the list of supported PaymentMethods

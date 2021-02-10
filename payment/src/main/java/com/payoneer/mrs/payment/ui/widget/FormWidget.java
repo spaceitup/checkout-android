@@ -8,11 +8,11 @@
 
 package com.payoneer.mrs.payment.ui.widget;
 
-import android.view.View;
-
 import com.payoneer.mrs.payment.core.PaymentException;
 import com.payoneer.mrs.payment.form.Operation;
 import com.payoneer.mrs.payment.util.PaymentUtils;
+
+import android.view.View;
 
 /**
  * Base class for all widgets, i.e. ButtonWidget, CheckBoxWidget, TextInputWidget etc.

@@ -8,11 +8,11 @@
 
 package com.payoneer.mrs.payment.ui.widget.input;
 
+import com.google.android.material.textfield.TextInputEditText;
+
 import android.text.InputFilter;
 import android.text.InputType;
 import android.text.method.DigitsKeyListener;
-
-import com.google.android.material.textfield.TextInputEditText;
 
 /**
  * InputMode for account numbers

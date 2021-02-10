@@ -8,9 +8,11 @@
 
 package com.payoneer.mrs.payment.ui.redirect;
 
-import android.content.Context;
-import android.net.Uri;
-import android.text.TextUtils;
+import static com.payoneer.mrs.payment.model.HttpMethod.GET;
+import static com.payoneer.mrs.payment.model.HttpMethod.POST;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import com.payoneer.mrs.payment.core.PaymentException;
 import com.payoneer.mrs.payment.model.Interaction;
@@ -18,11 +20,9 @@ import com.payoneer.mrs.payment.model.OperationResult;
 import com.payoneer.mrs.payment.model.Parameter;
 import com.payoneer.mrs.payment.model.Redirect;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import static com.payoneer.mrs.payment.model.HttpMethod.GET;
-import static com.payoneer.mrs.payment.model.HttpMethod.POST;
+import android.content.Context;
+import android.net.Uri;
+import android.text.TextUtils;
 
 /**
  * RedirectService class to handle redirect payments, currently redirect networks are only supported

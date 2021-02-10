@@ -8,12 +8,12 @@
 
 package com.payoneer.mrs.payment.ui.redirect;
 
+import com.payoneer.mrs.payment.R;
+
 import android.app.Activity;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
-
-import com.payoneer.mrs.payment.R;
 
 /**
  * The Activity that is launched after the browser is redirecting to the deep link URL.

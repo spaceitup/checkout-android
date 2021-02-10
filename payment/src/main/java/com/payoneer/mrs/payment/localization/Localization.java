@@ -8,13 +8,13 @@
 
 package com.payoneer.mrs.payment.localization;
 
-import android.text.TextUtils;
-
-import com.payoneer.mrs.payment.model.Interaction;
+import static com.payoneer.mrs.payment.localization.LocalizationKey.LABEL_TEXT;
 
 import java.util.Map;
 
-import static com.payoneer.mrs.payment.localization.LocalizationKey.LABEL_TEXT;
+import com.payoneer.mrs.payment.model.Interaction;
+
+import android.text.TextUtils;
 
 /**
  * Class holding individual localizations to provide easy access to all translations.

@@ -8,14 +8,6 @@
 
 package com.payoneer.mrs.payment.util;
 
-import android.content.res.Resources;
-import android.view.View;
-
-import com.payoneer.mrs.payment.core.PaymentInputType;
-import com.payoneer.mrs.payment.model.AccountMask;
-import com.payoneer.mrs.payment.model.InputElement;
-import com.payoneer.mrs.payment.model.Parameter;
-
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
@@ -23,6 +15,14 @@ import java.io.InputStreamReader;
 import java.util.Calendar;
 import java.util.List;
 import java.util.Locale;
+
+import com.payoneer.mrs.payment.core.PaymentInputType;
+import com.payoneer.mrs.payment.model.AccountMask;
+import com.payoneer.mrs.payment.model.InputElement;
+import com.payoneer.mrs.payment.model.Parameter;
+
+import android.content.res.Resources;
+import android.view.View;
 
 /**
  * The PaymentUtils class containing helper methods
@@ -55,7 +55,7 @@ public final class PaymentUtils {
      * @param format A format string
      * @param args Arguments referenced by the format specifiers in the format string
      */
-    public static String format(String format, Object ... args) {
+    public static String format(String format, Object... args) {
         return String.format(Locale.getDefault(), format, args);
     }
 

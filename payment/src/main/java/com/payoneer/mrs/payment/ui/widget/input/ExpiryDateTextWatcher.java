@@ -8,11 +8,11 @@
 
 package com.payoneer.mrs.payment.ui.widget.input;
 
-import android.text.Editable;
-import android.widget.EditText;
-
 import static com.payoneer.mrs.payment.ui.widget.input.ExpiryDateInputMode.DIVIDER;
 import static com.payoneer.mrs.payment.ui.widget.input.ExpiryDateInputMode.MAXLENGTH;
+
+import android.text.Editable;
+import android.widget.EditText;
 
 public class ExpiryDateTextWatcher extends EditTextWatcher {
 

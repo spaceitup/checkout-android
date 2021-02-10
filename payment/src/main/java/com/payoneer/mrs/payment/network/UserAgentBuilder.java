@@ -8,14 +8,14 @@
 
 package com.payoneer.mrs.payment.network;
 
+import com.payoneer.mrs.payment.BuildConfig;
+
 import android.content.Context;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.os.Build;
 import android.util.Log;
-
-import com.payoneer.mrs.payment.BuildConfig;
 
 /**
  * Class for constructing the custom UserAgent header value
@@ -68,7 +68,7 @@ final class UserAgentBuilder {
 
             int versionCode;
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
-                versionCode = (int)packageInfo.getLongVersionCode();
+                versionCode = (int) packageInfo.getLongVersionCode();
             } else {
                 versionCode = packageInfo.versionCode;
             }

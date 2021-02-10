@@ -8,15 +8,9 @@
 
 package com.payoneer.mrs.payment.ui.page;
 
-import android.content.Context;
-import android.content.Intent;
-import android.os.Bundle;
-import android.view.MenuItem;
+import static com.payoneer.mrs.payment.localization.LocalizationKey.LIST_TITLE;
 
-import androidx.annotation.VisibleForTesting;
-import androidx.appcompat.app.ActionBar;
-import androidx.appcompat.widget.Toolbar;
-import androidx.test.espresso.IdlingResource;
+import java.util.Map;
 
 import com.payoneer.mrs.payment.R;
 import com.payoneer.mrs.payment.form.Operation;
@@ -28,9 +22,14 @@ import com.payoneer.mrs.payment.ui.model.PaymentSession;
 import com.payoneer.mrs.payment.ui.page.idlingresource.SimpleIdlingResource;
 import com.payoneer.mrs.payment.ui.widget.FormWidget;
 
-import java.util.Map;
-
-import static com.payoneer.mrs.payment.localization.LocalizationKey.LIST_TITLE;
+import android.content.Context;
+import android.content.Intent;
+import android.os.Bundle;
+import android.view.MenuItem;
+import androidx.annotation.VisibleForTesting;
+import androidx.appcompat.app.ActionBar;
+import androidx.appcompat.widget.Toolbar;
+import androidx.test.espresso.IdlingResource;
 
 /**
  * The PaymentListActivity showing available payment methods in a list.

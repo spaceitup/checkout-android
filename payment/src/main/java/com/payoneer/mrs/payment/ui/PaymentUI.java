@@ -8,18 +8,18 @@
 
 package com.payoneer.mrs.payment.ui;
 
-import android.app.Activity;
-import android.content.Intent;
-import android.content.pm.ActivityInfo;
-import android.text.TextUtils;
-import android.util.Patterns;
-
 import com.payoneer.mrs.payment.R;
 import com.payoneer.mrs.payment.localization.LocalLocalizationHolder;
 import com.payoneer.mrs.payment.localization.Localization;
 import com.payoneer.mrs.payment.model.PresetAccount;
 import com.payoneer.mrs.payment.ui.page.ChargePaymentActivity;
 import com.payoneer.mrs.payment.ui.page.PaymentListActivity;
+
+import android.app.Activity;
+import android.content.Intent;
+import android.content.pm.ActivityInfo;
+import android.text.TextUtils;
+import android.util.Patterns;
 
 /**
  * The PaymentUI is the controller to initialize and launch the Payment Page.

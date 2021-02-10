@@ -8,17 +8,17 @@
 
 package com.payoneer.mrs.payment.ui.model;
 
-import com.payoneer.mrs.payment.localization.Localization;
-import com.payoneer.mrs.payment.model.ApplicableNetwork;
-import com.payoneer.mrs.payment.model.InputElement;
-import com.payoneer.mrs.payment.util.PaymentUtils;
+import static com.payoneer.mrs.payment.localization.LocalizationKey.NETWORK_LABEL;
 
 import java.net.URL;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
-import static com.payoneer.mrs.payment.localization.LocalizationKey.NETWORK_LABEL;
+import com.payoneer.mrs.payment.localization.Localization;
+import com.payoneer.mrs.payment.model.ApplicableNetwork;
+import com.payoneer.mrs.payment.model.InputElement;
+import com.payoneer.mrs.payment.util.PaymentUtils;
 
 /**
  * Class for holding the ApplicableNetwork

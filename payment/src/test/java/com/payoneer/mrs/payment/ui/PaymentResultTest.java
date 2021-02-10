@@ -8,7 +8,11 @@
 
 package com.payoneer.mrs.payment.ui;
 
-import android.os.Parcel;
+import static org.junit.Assert.assertEquals;
+
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.robolectric.RobolectricTestRunner;
 
 import com.payoneer.mrs.payment.model.ErrorInfo;
 import com.payoneer.mrs.payment.model.Interaction;
@@ -16,11 +20,7 @@ import com.payoneer.mrs.payment.model.InteractionCode;
 import com.payoneer.mrs.payment.model.InteractionReason;
 import com.payoneer.mrs.payment.model.OperationResult;
 
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.robolectric.RobolectricTestRunner;
-
-import static org.junit.Assert.assertEquals;
+import android.os.Parcel;
 
 @RunWith(RobolectricTestRunner.class)
 public class PaymentResultTest {

@@ -8,10 +8,10 @@
 
 package com.payoneer.mrs.payment.ui.model;
 
-import com.payoneer.mrs.payment.model.InputElement;
-
 import java.net.URL;
 import java.util.List;
+
+import com.payoneer.mrs.payment.model.InputElement;
 
 /**
  * Interface for payment cards like AccountCard and NetworkCard

@@ -8,15 +8,15 @@
 
 package com.payoneer.mrs.payment.ui.model;
 
+import java.net.URL;
+import java.util.ArrayList;
+import java.util.List;
+
 import com.payoneer.mrs.payment.core.PaymentInputType;
 import com.payoneer.mrs.payment.localization.Localization;
 import com.payoneer.mrs.payment.localization.LocalizationKey;
 import com.payoneer.mrs.payment.model.InputElement;
 import com.payoneer.mrs.payment.model.PaymentMethod;
-
-import java.net.URL;
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Class for holding the data of a NetworkCard in the list

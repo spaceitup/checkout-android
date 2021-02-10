@@ -8,11 +8,11 @@
 
 package com.payoneer.mrs.payment.ui.list;
 
-import android.view.View;
-
 import com.payoneer.mrs.payment.ui.widget.FormWidget;
 import com.payoneer.mrs.payment.ui.widget.WidgetPresenter;
 import com.payoneer.mrs.payment.validation.ValidationResult;
+
+import android.view.View;
 
 /**
  * Class acting as a presenter for the widgets hosted in the List adapter

@@ -8,17 +8,16 @@
 
 package com.payoneer.mrs.payment.network;
 
-import android.content.Context;
-import android.text.TextUtils;
-
-import androidx.test.core.app.ApplicationProvider;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.robolectric.RobolectricTestRunner;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
+import android.content.Context;
+import android.text.TextUtils;
+import androidx.test.core.app.ApplicationProvider;
 
 @RunWith(RobolectricTestRunner.class)
 public class UserAgentBuilderTest {

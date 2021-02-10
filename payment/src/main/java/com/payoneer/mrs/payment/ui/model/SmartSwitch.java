@@ -8,13 +8,13 @@
 
 package com.payoneer.mrs.payment.ui.model;
 
-import android.text.TextUtils;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.regex.Pattern;
+
+import android.text.TextUtils;
 
 /**
  * Class for storing and selecting payment networks based on smart switch logic

@@ -8,10 +8,10 @@
 
 package com.payoneer.mrs.payment.ui.widget.input;
 
+import com.google.android.material.textfield.TextInputEditText;
+
 import android.text.InputFilter;
 import android.text.InputType;
-
-import com.google.android.material.textfield.TextInputEditText;
 
 /**
  * InputMode for BIC numbers

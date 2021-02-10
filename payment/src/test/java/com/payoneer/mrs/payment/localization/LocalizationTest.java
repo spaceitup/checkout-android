@@ -8,20 +8,19 @@
 
 package com.payoneer.mrs.payment.localization;
 
-import android.content.Context;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
 
-import androidx.test.core.app.ApplicationProvider;
+import java.util.HashMap;
+import java.util.Map;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.robolectric.RobolectricTestRunner;
 
-import java.util.HashMap;
-import java.util.Map;
-
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
+import android.content.Context;
+import androidx.test.core.app.ApplicationProvider;
 
 @RunWith(RobolectricTestRunner.class)
 public final class LocalizationTest {
@@ -97,7 +96,7 @@ public final class LocalizationTest {
      * @return newly created MultiLocalizationHolder
      */
     public static MultiLocalizationHolder createNetworkLocalizationHolder(String mapKey, String mapValue, int nrTranslations,
-                                                                          LocalizationHolder fallback) {
+        LocalizationHolder fallback) {
         LocalizationHolder network = createMapLocalizationHolder(mapKey, mapValue, nrTranslations);
         return new MultiLocalizationHolder(network, fallback);
     }

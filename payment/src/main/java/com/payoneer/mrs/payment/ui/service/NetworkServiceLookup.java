@@ -8,12 +8,12 @@
 
 package com.payoneer.mrs.payment.ui.service;
 
-import android.content.Context;
-import android.util.Log;
-
 import java.util.List;
 import java.util.Objects;
 import java.util.concurrent.CopyOnWriteArrayList;
+
+import android.content.Context;
+import android.util.Log;
 
 /**
  * Class for looking up a NetworkService given the code and payment method.

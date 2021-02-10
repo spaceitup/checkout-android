@@ -8,16 +8,16 @@
 
 package com.payoneer.mrs.payment.network;
 
-import android.content.Context;
+import java.io.IOException;
+import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
 
 import com.google.gson.JsonParseException;
 import com.payoneer.mrs.payment.core.PaymentException;
 import com.payoneer.mrs.payment.form.Operation;
 import com.payoneer.mrs.payment.model.OperationResult;
 
-import java.io.IOException;
-import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
+import android.content.Context;
 
 /**
  * Class containing methods to send Payment Operation requests to the Payment API.

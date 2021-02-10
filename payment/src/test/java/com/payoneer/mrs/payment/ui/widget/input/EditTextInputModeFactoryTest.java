@@ -8,13 +8,13 @@
 
 package com.payoneer.mrs.payment.ui.widget.input;
 
-import com.payoneer.mrs.payment.core.PaymentInputType;
-import com.payoneer.mrs.payment.model.InputElement;
-import com.payoneer.mrs.payment.model.InputElementType;
+import static org.junit.Assert.assertTrue;
 
 import org.junit.Test;
 
-import static org.junit.Assert.assertTrue;
+import com.payoneer.mrs.payment.core.PaymentInputType;
+import com.payoneer.mrs.payment.model.InputElement;
+import com.payoneer.mrs.payment.model.InputElementType;
 
 public class EditTextInputModeFactoryTest {
 

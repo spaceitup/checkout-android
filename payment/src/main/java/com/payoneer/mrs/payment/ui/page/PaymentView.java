@@ -8,12 +8,12 @@
 
 package com.payoneer.mrs.payment.ui.page;
 
-import android.app.Activity;
-
 import com.payoneer.mrs.payment.model.Interaction;
 import com.payoneer.mrs.payment.ui.PaymentActivityResult;
 import com.payoneer.mrs.payment.ui.PaymentResult;
 import com.payoneer.mrs.payment.ui.dialog.PaymentDialogFragment.PaymentDialogListener;
+
+import android.app.Activity;
 
 /**
  * The view (MVP) interface for screens that handle payments
