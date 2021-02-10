@@ -8,13 +8,13 @@
 
 package com.payoneer.mrs.payment.network;
 
-import androidx.test.core.app.ApplicationProvider;
-
-import com.payoneer.mrs.payment.core.PaymentException;
-
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.robolectric.RobolectricTestRunner;
+
+import com.payoneer.mrs.payment.core.PaymentException;
+
+import androidx.test.core.app.ApplicationProvider;
 
 /**
  * The type Operation connection test.

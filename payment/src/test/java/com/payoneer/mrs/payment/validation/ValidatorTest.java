@@ -8,9 +8,17 @@
 
 package com.payoneer.mrs.payment.validation;
 
-import android.content.res.Resources;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertTrue;
 
-import androidx.test.core.app.ApplicationProvider;
+import java.util.Calendar;
+
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.robolectric.RobolectricTestRunner;
 
 import com.payoneer.mrs.payment.R;
 import com.payoneer.mrs.payment.core.PaymentException;
@@ -19,17 +27,8 @@ import com.payoneer.mrs.payment.core.PaymentNetworkCodes;
 import com.payoneer.mrs.payment.model.PaymentMethod;
 import com.payoneer.mrs.payment.resource.ResourceLoader;
 
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.robolectric.RobolectricTestRunner;
-
-import java.util.Calendar;
-
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertTrue;
+import android.content.res.Resources;
+import androidx.test.core.app.ApplicationProvider;
 
 @RunWith(RobolectricTestRunner.class)
 public class ValidatorTest {
