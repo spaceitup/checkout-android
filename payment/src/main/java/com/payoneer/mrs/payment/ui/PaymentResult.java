@@ -70,9 +70,6 @@ public final class PaymentResult implements Parcelable {
         this.cause = cause;
     }
 
-    private PaymentResult() {
-    }
-
     private PaymentResult(Parcel in) {
         GsonHelper gson = GsonHelper.getInstance();
         try {

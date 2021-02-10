@@ -19,7 +19,12 @@ public class ValidationGroup {
     private String code;
     private List<ValidationGroupItem> items;
 
-    private ValidationGroup() {
+    public void setCode(String code) {
+        this.code = code;
+    }
+
+    public void setValidationGroupItems(List<ValidationGroupItem> items) {
+        this.items = items;
     }
 
     public String getCode() {
@@ -27,7 +32,7 @@ public class ValidationGroup {
     }
 
     public boolean matches(String code) {
-        return this.code.equals(code);
+        return this.code != null && this.code.equals(code);
     }
 
     public int getMaxLength(String type) {
@@ -46,7 +51,9 @@ public class ValidationGroup {
     }
 
     public ValidationGroupItem getGroupItem(String type) {
-
+        if (items == null) {
+            return null;
+        }
         for (ValidationGroupItem item : items) {
             if (item.getType().equals(type)) {
                 return item;

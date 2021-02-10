@@ -29,7 +29,7 @@ public class EditTextInputModeFactoryTest {
         validateTextInputMode("FOO", ElementInputMode.class);
     }
 
-    private static void validateTextInputMode(String name, Class clazz) {
+    private static void validateTextInputMode(String name, Class<?> clazz) {
         InputElement element = new InputElement();
         element.setName(name);
         element.setType(InputElementType.STRING);

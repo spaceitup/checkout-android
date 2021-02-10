@@ -225,10 +225,6 @@ public class Operation implements Parcelable {
         return paymentMethod;
     }
 
-    public OperationData getOperationData() {
-        return operationData;
-    }
-
     public String toJson() {
         GsonHelper gson = GsonHelper.getInstance();
         return gson.toJson(operationData);

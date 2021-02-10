@@ -91,10 +91,6 @@ public final class PaymentSession {
         return !hasPresetCard() && (getNetworkCardSize() == 0) && (getAccountCardSize() == 0);
     }
 
-    public String getOperationType() {
-        return listResult.getOperationType();
-    }
-
     public boolean hasPresetCard() {
         return presetCard != null;
     }

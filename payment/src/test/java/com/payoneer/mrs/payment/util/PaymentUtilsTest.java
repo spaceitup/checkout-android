@@ -52,7 +52,7 @@ public class PaymentUtilsTest {
     @Test
     public void toInt() {
         assertEquals(PaymentUtils.toInt(null), 0);
-        assertEquals(PaymentUtils.toInt(new Integer(100)), 100);
+        assertEquals(PaymentUtils.toInt(100), 100);
     }
 
     @Test
