@@ -8,10 +8,10 @@
 
 package com.payoneer.mrs.sharedtest.service;
 
+import java.util.Objects;
+
 import org.json.JSONException;
 import org.json.JSONObject;
-
-import java.util.Objects;
 
 /**
  * Class holding the request data to create a new list

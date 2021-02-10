@@ -9,16 +9,15 @@
 package com.payoneer.mrs.sharedtest.view;
 
 
-import android.app.Activity;
-import android.os.Looper;
-
-import androidx.test.runner.lifecycle.ActivityLifecycleMonitor;
-import androidx.test.runner.lifecycle.ActivityLifecycleMonitorRegistry;
-import androidx.test.runner.lifecycle.Stage;
+import static androidx.test.platform.app.InstrumentationRegistry.getInstrumentation;
 
 import java.util.Collection;
 
-import static androidx.test.platform.app.InstrumentationRegistry.getInstrumentation;
+import android.app.Activity;
+import android.os.Looper;
+import androidx.test.runner.lifecycle.ActivityLifecycleMonitor;
+import androidx.test.runner.lifecycle.ActivityLifecycleMonitorRegistry;
+import androidx.test.runner.lifecycle.Stage;
 
 /**
  * Activity helper methods for testing Activities
