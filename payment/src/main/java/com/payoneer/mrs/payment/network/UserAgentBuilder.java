@@ -14,6 +14,7 @@ import android.content.Context;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
+import android.os.Build;
 import android.util.Log;
 
 /**
@@ -65,11 +66,17 @@ final class UserAgentBuilder {
             ApplicationInfo appInfo = packageManager.getApplicationInfo(appPackageName, 0);
             PackageInfo packageInfo = packageManager.getPackageInfo(appPackageName, 0);
 
+            int versionCode;
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
+                versionCode = (int) packageInfo.getLongVersionCode();
+            } else {
+                versionCode = packageInfo.versionCode;
+            }
             return new UserAgentBuilder().
                 setSdkVersionName(BuildConfig.VERSION_NAME).
                 setSdkVersionCode(BuildConfig.VERSION_CODE).
                 setAppVersionName(packageInfo.versionName).
-                setAppVersionCode(packageInfo.versionCode).
+                setAppVersionCode(versionCode).
                 setAppPackageName(appPackageName).
                 setAppName(packageManager.getApplicationLabel(appInfo).toString()).
                 setBuildManufacturer(android.os.Build.MANUFACTURER).

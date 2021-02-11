@@ -47,7 +47,7 @@ public final class WorkerTask<V> extends FutureTask<V> {
     }
 
     /**
-     * Unsubscribe from this stask, this subscriber will not be notified anymore
+     * Unsubscribe from this task, this subscriber will not be notified anymore
      */
     public void unsubscribe() {
         this.subscriber = null;

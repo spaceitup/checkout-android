@@ -18,6 +18,7 @@ import static com.payoneer.mrs.payment.ui.redirect.RedirectService.INTERACTION_R
 import java.net.URL;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 
 import com.payoneer.mrs.payment.core.PaymentException;
 import com.payoneer.mrs.payment.form.Operation;
@@ -56,9 +57,8 @@ import android.text.TextUtils;
  */
 final class PaymentListPresenter implements PaymentSessionListener, LocalizationLoaderListener, NetworkServicePresenter {
 
-    private final static int PREPAREPAYMENT_REQUEST_CODE = 1;
-    private final static int PROCESSPAYMENT_REQUEST_CODE = 2;
-    private final static int CHARGEPAYMENT_REQUEST_CODE = 3;
+    private final static int PROCESSPAYMENT_REQUEST_CODE = 1;
+    private final static int CHARGEPAYMENT_REQUEST_CODE = 2;
 
     private final PaymentListView view;
     private final PaymentSessionService sessionService;
@@ -141,7 +141,7 @@ final class PaymentListPresenter implements PaymentSessionListener, Localization
             onPresetCardSelected((PresetCard) card);
             return;
         }
-        if (!validateWidgets(card, widgets)) {
+        if (!validateWidgets(widgets)) {
             return;
         }
         try {
@@ -177,13 +177,11 @@ final class PaymentListPresenter implements PaymentSessionListener, Localization
         ListResult listResult = session.getListResult();
         Interaction interaction = listResult.getInteraction();
 
-        switch (interaction.getCode()) {
-            case PROCEED:
-                handleLoadPaymentSessionProceed(session);
-                break;
-            default:
-                ErrorInfo errorInfo = new ErrorInfo(listResult.getResultInfo(), interaction);
-                closeWithErrorCode(new PaymentResult(errorInfo));
+        if (Objects.equals(interaction.getCode(), PROCEED)) {
+            handleLoadPaymentSessionProceed(session);
+        } else {
+            ErrorInfo errorInfo = new ErrorInfo(listResult.getResultInfo(), interaction);
+            closeWithErrorCode(new PaymentResult(errorInfo));
         }
     }
 
@@ -348,11 +346,7 @@ final class PaymentListPresenter implements PaymentSessionListener, Localization
     }
 
     private void processPayment() {
-        try {
-            networkService.processPayment(view.getActivity(), PROCESSPAYMENT_REQUEST_CODE, operation);
-        } catch (PaymentException e) {
-            closeWithErrorCode(e);
-        }
+        networkService.processPayment(view.getActivity(), PROCESSPAYMENT_REQUEST_CODE, operation);
     }
 
     /**
@@ -391,7 +385,7 @@ final class PaymentListPresenter implements PaymentSessionListener, Localization
         }
     }
 
-    private boolean validateWidgets(PaymentCard card, Map<String, FormWidget> widgets) {
+    private boolean validateWidgets(Map<String, FormWidget> widgets) {
         boolean error = false;
         for (FormWidget widget : widgets.values()) {
             if (!widget.validate()) {
@@ -448,11 +442,6 @@ final class PaymentListPresenter implements PaymentSessionListener, Localization
 
     private void closeWithErrorCode(String errorMessage) {
         PaymentResult result = PaymentResultHelper.fromErrorMessage(errorMessage);
-        closeWithErrorCode(result);
-    }
-
-    private void closeWithErrorCode(Throwable cause) {
-        PaymentResult result = PaymentResultHelper.fromThrowable(cause);
         closeWithErrorCode(result);
     }
 

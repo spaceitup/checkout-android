@@ -204,7 +204,7 @@ abstract class BaseConnection {
      * @return PaymentException network exception
      */
     PaymentException createPaymentException(final int statusCode, final HttpURLConnection conn) {
-        String data = null;
+        String data;
         ErrorInfo errorInfo = null;
 
         try {

@@ -96,19 +96,6 @@ abstract class BasePaymentActivity extends AppCompatActivity implements PaymentV
      * {@inheritDoc}
      */
     @Override
-    public void showHintDialog(String networkCode, String type, PaymentDialogListener listener) {
-        if (!active) {
-            return;
-        }
-        PaymentDialogFragment dialog = PaymentDialogHelper.createHintDialog(networkCode, type, listener);
-        showPaymentDialog(dialog);
-    }
-
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
     public void showConnectionErrorDialog(PaymentDialogListener listener) {
         if (!active) {
             return;
@@ -180,6 +167,21 @@ abstract class BasePaymentActivity extends AppCompatActivity implements PaymentV
 
         // for automated testing
         setCloseIdleState();
+    }
+
+    /**
+     * Show Hint dialog
+     *
+     * @param networkCode Code if the network
+     * @param type type if input field
+     * @param listener listening to events of this Hint Dialog.
+     */
+    public void showHintDialog(String networkCode, String type, PaymentDialogListener listener) {
+        if (!active) {
+            return;
+        }
+        PaymentDialogFragment dialog = PaymentDialogHelper.createHintDialog(networkCode, type, listener);
+        showPaymentDialog(dialog);
     }
 
     /**

@@ -17,15 +17,6 @@ public class ShopException extends Exception {
      * {@inheritDoc}
      *
      * @param detailMessage the detail message
-     */
-    public ShopException(final String detailMessage) {
-        super(detailMessage);
-    }
-
-    /**
-     * {@inheritDoc}
-     *
-     * @param detailMessage the detail message
      * @param cause the cause
      */
     public ShopException(final String detailMessage, final Throwable cause) {

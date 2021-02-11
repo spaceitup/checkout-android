@@ -17,6 +17,7 @@ import org.hamcrest.TypeSafeMatcher;
 import com.google.android.material.textfield.TextInputLayout;
 import com.payoneer.mrs.payment.ui.list.PaymentCardViewHolder;
 import com.payoneer.mrs.payment.ui.widget.FormWidget;
+import com.payoneer.mrs.payment.util.PaymentUtils;
 
 import android.view.View;
 import androidx.recyclerview.widget.RecyclerView;
@@ -39,7 +40,7 @@ public final class PaymentMatchers {
         return new BoundedMatcher<View, RecyclerView>(RecyclerView.class) {
             @Override
             public void describeTo(Description description) {
-                description.appendText(String.format("match holder testId %s at position %d", testId, position));
+                description.appendText(PaymentUtils.format("match holder testId %s at position %d", testId, position));
             }
 
             @Override
@@ -66,7 +67,7 @@ public final class PaymentMatchers {
         return new BoundedMatcher<View, RecyclerView>(RecyclerView.class) {
             @Override
             public void describeTo(Description description) {
-                description.appendText(String.format("match view in holder at position %d", position));
+                description.appendText(PaymentUtils.format("match view in holder at position %d", position));
             }
 
             @Override
@@ -99,7 +100,7 @@ public final class PaymentMatchers {
         return new BoundedMatcher<View, RecyclerView>(RecyclerView.class) {
             @Override
             public void describeTo(Description description) {
-                description.appendText(String.format("match view in widget %s at position %d", widgetName, position));
+                description.appendText(PaymentUtils.format("match view in widget %s at position %d", widgetName, position));
             }
 
             @Override

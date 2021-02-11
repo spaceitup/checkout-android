@@ -33,7 +33,7 @@ public final class LocalLocalizationHolder extends MapLocalizationHolder {
      * @param context containing the local localizations
      */
     public LocalLocalizationHolder(Context context) {
-        super(new HashMap<String, String>());
+        super(new HashMap<>());
         map.put(BUTTON_CANCEL, context.getString(R.string.button_cancel_label));
         map.put(BUTTON_RETRY, context.getString(R.string.button_retry_label));
         map.put(BUTTON_OK, context.getString(R.string.button_ok_label));

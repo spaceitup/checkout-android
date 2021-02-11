@@ -23,7 +23,7 @@ import android.content.Context;
 import androidx.test.core.app.ApplicationProvider;
 
 @RunWith(RobolectricTestRunner.class)
-public class LocalizationTest {
+public final class LocalizationTest {
 
     @Test
     public void setInstance() {
@@ -78,8 +78,8 @@ public class LocalizationTest {
      * @param nrTranslations the number of translation key/value pairs that should be added to the holder
      * @return the newly created MapLocalizationHolder
      */
-    public final static MapLocalizationHolder createMapLocalizationHolder(String mapKey, String mapValue, int nrTranslations) {
-        Map<String, String> map = new HashMap<String, String>();
+    public static MapLocalizationHolder createMapLocalizationHolder(String mapKey, String mapValue, int nrTranslations) {
+        Map<String, String> map = new HashMap<>();
         for (int i = 0; i < nrTranslations; i++) {
             map.put(mapKey + i, mapValue + i);
         }
@@ -95,7 +95,7 @@ public class LocalizationTest {
      * @param fallback the localization holder used as fallback
      * @return newly created MultiLocalizationHolder
      */
-    public final static MultiLocalizationHolder createNetworkLocalizationHolder(String mapKey, String mapValue, int nrTranslations,
+    public static MultiLocalizationHolder createNetworkLocalizationHolder(String mapKey, String mapValue, int nrTranslations,
         LocalizationHolder fallback) {
         LocalizationHolder network = createMapLocalizationHolder(mapKey, mapValue, nrTranslations);
         return new MultiLocalizationHolder(network, fallback);

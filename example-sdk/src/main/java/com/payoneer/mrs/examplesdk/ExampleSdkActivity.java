@@ -9,7 +9,6 @@ package com.payoneer.mrs.examplesdk;
 
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.android.material.switchmaterial.SwitchMaterial;
-import com.payoneer.mrs.examplesdk.R;
 import com.payoneer.mrs.payment.model.Interaction;
 import com.payoneer.mrs.payment.ui.PaymentActivityResult;
 import com.payoneer.mrs.payment.ui.PaymentResult;

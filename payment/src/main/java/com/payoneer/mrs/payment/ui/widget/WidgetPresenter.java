@@ -44,8 +44,8 @@ public interface WidgetPresenter {
     /**
      * Request focus for the next widget after the current widget.
      *
-     * @param currentWidget widget that is currently focussed
-     * @return true when next widget is focussed, false otherwise
+     * @param currentWidget widget that is currently focused
+     * @return true when next widget is focused, false otherwise
      */
     boolean requestFocusNextWidget(FormWidget currentWidget);
 

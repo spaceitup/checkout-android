@@ -17,6 +17,7 @@ import com.payoneer.mrs.payment.ui.page.idlingresource.SimpleIdlingResource;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
+import androidx.annotation.NonNull;
 import androidx.annotation.VisibleForTesting;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.test.espresso.IdlingResource;
@@ -41,10 +42,9 @@ public abstract class BaseActivity extends AppCompatActivity {
      */
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case android.R.id.home:
-                supportFinishAfterTransition();
-                return true;
+        if (item.getItemId() == android.R.id.home) {
+            supportFinishAfterTransition();
+            return true;
         }
         return false;
     }
@@ -66,7 +66,7 @@ public abstract class BaseActivity extends AppCompatActivity {
      * {@inheritDoc}
      */
     @Override
-    public void onSaveInstanceState(Bundle savedInstanceState) {
+    public void onSaveInstanceState(@NonNull Bundle savedInstanceState) {
         super.onSaveInstanceState(savedInstanceState);
         savedInstanceState.putString(EXTRA_LISTURL, listUrl);
     }

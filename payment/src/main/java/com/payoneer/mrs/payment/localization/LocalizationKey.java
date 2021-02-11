@@ -21,12 +21,10 @@ public final class LocalizationKey {
     public final static String ALLOW_RECURRENCE_FORCED = "networks.recurrence.forced.label";
 
     public final static String BUTTON_OK = "button.ok.label";
-    public final static String BUTTON_BACK = "button.back.label";
     public final static String BUTTON_CANCEL = "button.cancel.label";
     public final static String BUTTON_RETRY = "button.retry.label";
 
     public final static String LIST_TITLE = "paymentpage.title";
-    public final static String LIST_PRESET_TEXT = "networks.preset.text";
     public final static String LIST_HEADER_PRESET = "networks.preset.title";
     public final static String LIST_HEADER_ACCOUNTS = "accounts.title";
     public final static String LIST_HEADER_NETWORKS = "networks.title";
@@ -39,7 +37,6 @@ public final class LocalizationKey {
 
     public final static String NETWORK_LABEL = "network.label";
 
-    public final static String VERIFICATIONCODE_GENERIC_PLACEHOLDER = "account.verificationCode.generic.placeholder";
     public final static String VERIFICATIONCODE_SPECIFIC_PLACEHOLDER = "account.verificationCode.specific.placeholder";
 
     public final static String ERROR_CONNECTION_TITLE = "messages.error.internet.title";

@@ -12,8 +12,6 @@ import java.io.IOException;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 
-import org.json.JSONException;
-
 import com.google.gson.JsonParseException;
 import com.payoneer.mrs.payment.core.PaymentException;
 import com.payoneer.mrs.payment.form.Operation;
@@ -60,14 +58,11 @@ public final class PaymentConnection extends BaseConnection {
             writeToOutputStream(conn, operation.toJson());
             conn.connect();
             final int rc = conn.getResponseCode();
-
-            switch (rc) {
-                case HttpURLConnection.HTTP_OK:
-                    return handlePostOperationOk(readFromInputStream(conn));
-                default:
-                    throw createPaymentException(rc, conn);
+            if (rc == HttpURLConnection.HTTP_OK) {
+                return handlePostOperationOk(readFromInputStream(conn));
             }
-        } catch (JSONException | MalformedURLException | SecurityException e) {
+            throw createPaymentException(rc, conn);
+        } catch (MalformedURLException | SecurityException e) {
             throw createPaymentException(e, false);
         } catch (IOException e) {
             throw createPaymentException(e, true);

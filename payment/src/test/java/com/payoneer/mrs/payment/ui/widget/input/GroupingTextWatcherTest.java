@@ -71,7 +71,7 @@ public class GroupingTextWatcherTest {
         result = validateTextInput(watcher, result, "6", "1234 56");
         result = validateTextInput(watcher, result, "7", "1234 567");
         result = validateTextInput(watcher, result, "8", "1234 5678");
-        result = validateTextInput(watcher, result, "9", "1234 5678 9");
+        validateTextInput(watcher, result, "9", "1234 5678 9");
     }
 
     private static String validateTextInput(TextWatcher watcher, String current, String input, String result) {
@@ -82,7 +82,6 @@ public class GroupingTextWatcherTest {
 
     private static String simulateTextInput(TextWatcher tw, String original, String input) {
         int originalLength = original.length();
-        int inputLength = input.length();
         tw.beforeTextChanged(original, originalLength, 0, input.length());
         String newText = original + input;
 

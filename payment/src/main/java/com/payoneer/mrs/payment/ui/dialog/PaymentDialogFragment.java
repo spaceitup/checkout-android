@@ -109,7 +109,7 @@ public class PaymentDialogFragment extends DialogFragment {
     }
 
     @Override
-    public void onCancel(DialogInterface dialog) {
+    public void onCancel(@NonNull DialogInterface dialog) {
         if (listener != null) {
             listener.onDismissed();
         }

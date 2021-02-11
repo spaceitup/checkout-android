@@ -21,7 +21,6 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
-import com.payoneer.mrs.exampleshop.R;
 import com.payoneer.mrs.exampleshop.checkout.CheckoutActivity;
 import com.payoneer.mrs.exampleshop.settings.SettingsActivity;
 
@@ -32,7 +31,6 @@ import androidx.test.espresso.matcher.ViewMatchers;
 import androidx.test.ext.junit.runners.AndroidJUnit4;
 import androidx.test.filters.LargeTest;
 import androidx.test.rule.ActivityTestRule;
-import androidx.test.uiautomator.UiObjectNotFoundException;
 
 @RunWith(AndroidJUnit4.class)
 @LargeTest
@@ -42,7 +40,7 @@ public final class PresetAccountTests extends AbstractTest {
     public ActivityTestRule<SettingsActivity> settingsActivityRule = new ActivityTestRule<>(SettingsActivity.class);
 
     @Test
-    public void testPresetAccountWithoutAccountMask() throws JSONException, IOException, UiObjectNotFoundException {
+    public void testPresetAccountWithoutAccountMask() throws JSONException, IOException {
         Intents.init();
 
         int presetCardIndex = 1;

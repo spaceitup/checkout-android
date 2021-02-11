@@ -14,7 +14,6 @@ import static io.github.jsonSnapshot.SnapshotMatcher.validateSnapshots;
 
 import java.net.URL;
 
-import org.json.JSONException;
 import org.junit.AfterClass;
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -47,7 +46,7 @@ public class OperationTest {
     }
 
     @Test
-    public void putValue_success() throws PaymentException, JSONException {
+    public void putValue_success() throws PaymentException {
         URL url = TestUtils.createTestURL("http://localhost/charge");
         Operation operation = new Operation("VISA", "CREDIT_CARD", "CHARGE", url);
         operation.putStringValue(PaymentInputType.HOLDER_NAME, "John Doe");

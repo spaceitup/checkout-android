@@ -30,7 +30,7 @@ import com.payoneer.mrs.payment.ui.model.PaymentSession;
 import android.content.Context;
 
 /**
- * The LocalizationService providing asynchronize loading of the localizations needed for presenting the list of payment networks and showing errors.
+ * The LocalizationService providing asynchronous loading of the localizations needed for presenting the list of payment networks and showing errors.
  * This service makes callbacks in the listener to notify of request completions.
  */
 public final class LocalizationLoaderService {
@@ -39,7 +39,7 @@ public final class LocalizationLoaderService {
     private WorkerTask<Localization> task;
 
     /** Memory cache of localizations */
-    private static LocalizationCache cache = new LocalizationCache();
+    private static final LocalizationCache cache = new LocalizationCache();
 
     /**
      * Create a new LocalizationService, this service is used to load the localizations.
@@ -67,15 +67,6 @@ public final class LocalizationLoaderService {
             task.unsubscribe();
             task = null;
         }
-    }
-
-    /**
-     * Check if this service is currently active, i.e. is loading the localization files.
-     *
-     * @return true when active, false otherwise
-     */
-    public boolean isActive() {
-        return task != null && task.isSubscribed();
     }
 
     /**

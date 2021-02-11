@@ -65,12 +65,12 @@ public class NetworkServiceLookup {
     private static void initFactories() {
         synchronized (factories) {
             if (factories.size() == 0) {
-                loadFactory(factories, "com.payoneer.mrs.network.basic.BasicNetworkServiceFactory");
+                loadFactory("com.payoneer.mrs.network.basic.BasicNetworkServiceFactory");
             }
         }
     }
 
-    private static void loadFactory(List<NetworkServiceFactory> factories, String className) {
+    private static void loadFactory(String className) {
         try {
             NetworkServiceFactory factory = (NetworkServiceFactory) Class.forName(className).newInstance();
             factories.add(factory);

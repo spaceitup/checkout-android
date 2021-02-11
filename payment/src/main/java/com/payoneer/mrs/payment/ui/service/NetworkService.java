@@ -8,7 +8,6 @@
 
 package com.payoneer.mrs.payment.ui.service;
 
-import com.payoneer.mrs.payment.core.PaymentException;
 import com.payoneer.mrs.payment.form.Operation;
 import com.payoneer.mrs.payment.model.OperationResult;
 
@@ -45,7 +44,7 @@ public abstract class NetworkService {
      * @param requestCode should be returned to the presenter when the payment is processed
      * @param operation that should be processed
      */
-    public void processPayment(Activity activity, int requestCode, Operation operation) throws PaymentException {
+    public void processPayment(Activity activity, int requestCode, Operation operation) {
     }
 
     /**
@@ -59,7 +58,7 @@ public abstract class NetworkService {
     /**
      * Notify the network service that the redirect has failed to receive an OperationResult.
      * The network service should handle this situation and make sure the NetworkServicePresenter is notified with the
-     * appropiate PaymentResult.
+     * appropriate PaymentResult.
      */
     public void onRedirectError() {
     }

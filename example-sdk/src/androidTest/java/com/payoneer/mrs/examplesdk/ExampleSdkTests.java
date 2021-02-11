@@ -24,9 +24,6 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
-import com.payoneer.mrs.examplesdk.BuildConfig;
-import com.payoneer.mrs.examplesdk.R;
-import com.payoneer.mrs.examplesdk.ExampleSdkActivity;
 import com.payoneer.mrs.payment.ui.page.PaymentListActivity;
 import com.payoneer.mrs.sharedtest.service.ListService;
 

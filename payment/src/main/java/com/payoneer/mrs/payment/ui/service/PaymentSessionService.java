@@ -41,7 +41,7 @@ import android.content.Context;
 import android.text.TextUtils;
 
 /**
- * The PaymentSessionService providing asynchronize loading of the PaymentSession.
+ * The PaymentSessionService providing asynchronous loading of the PaymentSession.
  * This service makes callbacks in the listener to notify of request completions.
  */
 public final class PaymentSessionService {
@@ -152,14 +152,14 @@ public final class PaymentSessionService {
 
         Validator validator = loadValidator(context);
 
-        PresetCard presetCard = createPresetCard(listResult, networks);
+        PresetCard presetCard = createPresetCard(listResult);
         List<AccountCard> accountCards = createAccountCards(listResult, networks);
         List<NetworkCard> networkCards = createNetworkCards(networks, groups);
 
         return new PaymentSession(listResult, presetCard, accountCards, networkCards, validator);
     }
 
-    private Map<String, PaymentNetwork> loadPaymentNetworks(ListResult listResult) throws PaymentException {
+    private Map<String, PaymentNetwork> loadPaymentNetworks(ListResult listResult) {
         LinkedHashMap<String, PaymentNetwork> items = new LinkedHashMap<>();
         Networks nw = listResult.getNetworks();
 
@@ -196,7 +196,7 @@ public final class PaymentSessionService {
         return new ArrayList<>(cards.values());
     }
 
-    private void addNetwork2SingleCard(Map<String, NetworkCard> cards, PaymentNetwork network) throws PaymentException {
+    private void addNetwork2SingleCard(Map<String, NetworkCard> cards, PaymentNetwork network) {
         NetworkCard card = new NetworkCard();
         card.addPaymentNetwork(network);
         cards.put(network.getCode(), card);
@@ -223,12 +223,6 @@ public final class PaymentSessionService {
         card.getSmartSwitch().addSelectionRegex(code, regex);
     }
 
-    private void addNetworkCard(Map<String, NetworkCard> cards, String cardId, PaymentNetwork network) {
-        NetworkCard card = new NetworkCard();
-        card.addPaymentNetwork(network);
-        cards.put(cardId, card);
-    }
-
     private List<AccountCard> createAccountCards(ListResult listResult, Map<String, PaymentNetwork> networks) {
         List<AccountCard> cards = new ArrayList<>();
         List<AccountRegistration> accounts = listResult.getAccounts();
@@ -243,7 +237,7 @@ public final class PaymentSessionService {
         return cards;
     }
 
-    private PresetCard createPresetCard(ListResult listResult, Map<String, PaymentNetwork> networks) {
+    private PresetCard createPresetCard(ListResult listResult) {
         PresetAccount account = listResult.getPresetAccount();
         if (account == null) {
             return null;

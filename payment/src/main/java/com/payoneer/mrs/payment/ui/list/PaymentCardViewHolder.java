@@ -48,13 +48,6 @@ import androidx.recyclerview.widget.RecyclerView;
 public abstract class PaymentCardViewHolder extends RecyclerView.ViewHolder {
 
     final static String BUTTON_WIDGET = "buttonWidget";
-    final static float ALPHA_SELECTED = 1f;
-    final static float ALPHA_DESELECTED = 0.4f;
-    final static int ANIM_DURATION = 200;
-    final static int COLUMN_SIZE_LANDSCAPE = 3;
-    final static int COLUMN_SIZE_PORTRAIT = 2;
-    final static int GROUPSIZE = 4;
-
     final ViewGroup formLayout;
     final ListAdapter adapter;
     final WidgetPresenter presenter;

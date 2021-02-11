@@ -13,7 +13,6 @@ import org.junit.runner.RunWith;
 import org.robolectric.RobolectricTestRunner;
 
 import com.payoneer.mrs.payment.core.PaymentException;
-import com.payoneer.mrs.payment.localization.LocalizationHolder;
 
 import android.content.Context;
 import androidx.test.core.app.ApplicationProvider;
@@ -31,6 +30,6 @@ public class LocalizationConnectionTest {
     public void loadLocalizationHolder_invalidURL_IllegalArgumentException() throws PaymentException {
         Context context = ApplicationProvider.getApplicationContext();
         LocalizationConnection conn = new LocalizationConnection(context);
-        LocalizationHolder holder = conn.loadLocalization(null);
+        conn.loadLocalization(null);
     }
 }

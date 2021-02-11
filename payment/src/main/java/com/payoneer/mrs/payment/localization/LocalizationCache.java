@@ -17,7 +17,7 @@ import java.util.concurrent.ConcurrentHashMap;
 public class LocalizationCache {
 
     private String cacheId;
-    private Map<String, LocalizationHolder> cache;
+    private final Map<String, LocalizationHolder> cache;
 
     public LocalizationCache() {
         cache = new ConcurrentHashMap<>();

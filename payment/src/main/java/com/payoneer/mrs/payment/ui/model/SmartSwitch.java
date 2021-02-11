@@ -40,15 +40,6 @@ public final class SmartSwitch {
     }
 
     /**
-     * Get the list of smart selected PaymentNetworks.
-     *
-     * @return the list of smart selected PaymentNetworks.
-     */
-    public List<PaymentNetwork> getAllSelected() {
-        return smartSelected;
-    }
-
-    /**
      * Get the first smart selected PaymentNetwork, may return null if none are selected.
      *
      * @return the first smart selected PaymentNetwork.
@@ -58,36 +49,12 @@ public final class SmartSwitch {
     }
 
     /**
-     * Are any PaymentNetworks selected based on smart switch.
-     *
-     * @return true when there are selected payment networks, false otherwise
-     */
-    public boolean hasSelected() {
-        return smartSelected.size() > 0;
-    }
-
-    /**
      * Get the number of selected networks
      *
      * @return the number of selected networks
      */
     public int getSelectedCount() {
         return smartSelected.size();
-    }
-
-    /**
-     * Check if the PaymentNetwork is smart selected, it is smart selected when the provided number input matches
-     * the regex of this PaymentMethod in the groups settings file. A PaymentMethod is always smart selected when
-     * there is only one PaymentMethod in the NetworkCard.
-     *
-     * @param network to check if smart selection
-     * @return true when smart selected, false otherwise
-     */
-    public boolean isSelected(PaymentNetwork network) {
-        if (networks.size() == 1 && networks.get(0) == network) {
-            return true;
-        }
-        return smartSelected.contains(network);
     }
 
     /**

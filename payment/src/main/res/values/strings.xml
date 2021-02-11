@@ -1,5 +1,4 @@
 <resources>
-    <string name="pmpage_error_empty">There are no payment methods available.</string>
     <string name="pmpage_contentdescription">PaymentImage</string>
 
     <string name="error_connection_title">Oops!</string>

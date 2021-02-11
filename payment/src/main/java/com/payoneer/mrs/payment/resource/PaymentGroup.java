@@ -18,7 +18,8 @@ public class PaymentGroup {
 
     private List<PaymentGroupItem> items;
 
-    private PaymentGroup() {
+    public void setPaymentGroupItems(List<PaymentGroupItem> items) {
+        this.items = items;
     }
 
     /**
@@ -27,14 +28,16 @@ public class PaymentGroup {
      * @return the id of this PaymentGroup
      */
     public String getId() {
-        return items.get(0).getCode();
+        return items != null ? items.get(0).getCode() : null;
     }
 
     /**
      * populate the lookup table with each PaymentGroupItem code mapping to this group
      */
     public void populate(Map<String, PaymentGroup> map) {
-
+        if (items == null) {
+            return;
+        }
         for (PaymentGroupItem item : items) {
             map.put(item.getCode(), this);
         }
@@ -47,7 +50,9 @@ public class PaymentGroup {
      * @return the regex for smart selection or null if not found
      */
     public String getSmartSelectionRegex(String code) {
-
+        if (items == null) {
+            return null;
+        }
         for (PaymentGroupItem item : items) {
 
             if (item.getCode().equals(code)) {

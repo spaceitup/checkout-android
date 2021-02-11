@@ -72,7 +72,7 @@ public final class NetworkLogoLoader {
                 return;
             }
             Resources res = context.getResources();
-            String[] ts = null;
+            String[] ts;
             String[] ar = res.getStringArray(R.array.networklogos);
             for (String icon : ar) {
                 ts = icon.split(",");

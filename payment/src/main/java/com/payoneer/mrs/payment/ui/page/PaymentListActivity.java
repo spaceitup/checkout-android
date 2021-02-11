@@ -129,10 +129,9 @@ public final class PaymentListActivity extends BasePaymentActivity implements Pa
      */
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case android.R.id.home:
-                close();
-                return true;
+        if (item.getItemId() == android.R.id.home) {
+            close();
+            return true;
         }
         return false;
     }

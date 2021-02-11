@@ -41,5 +41,5 @@
         <item name="toolbarStyle">@style/Widget.Custom.Toolbar</item>
     </style>
 
-    <style name="CustomTheme.NoToolbar"></style>
+    <style name="CustomTheme.NoToolbar" />
 </resources>

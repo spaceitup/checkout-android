@@ -14,19 +14,15 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.Calendar;
 import java.util.List;
+import java.util.Locale;
 
 import com.payoneer.mrs.payment.core.PaymentInputType;
 import com.payoneer.mrs.payment.model.AccountMask;
 import com.payoneer.mrs.payment.model.InputElement;
 import com.payoneer.mrs.payment.model.Parameter;
 
-import android.content.Context;
-import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.view.View;
-import android.widget.ImageView;
-import android.widget.TextView;
-import androidx.core.widget.TextViewCompat;
 
 /**
  * The PaymentUtils class containing helper methods
@@ -54,6 +50,16 @@ public final class PaymentUtils {
     }
 
     /**
+     * Returns a formatted string using the default locale, format string, and arguments.
+     *
+     * @param format A format string
+     * @param args Arguments referenced by the format specifiers in the format string
+     */
+    public static String format(String format, Object... args) {
+        return String.format(Locale.getDefault(), format, args);
+    }
+
+    /**
      * Compare String values of two Objects by obtaining the String values using the toString method.
      *
      * @param obj1 the first object
@@ -63,7 +69,7 @@ public final class PaymentUtils {
     public static boolean equalsAsString(Object obj1, Object obj2) {
         String str1 = obj1 != null ? obj1.toString() : null;
         String str2 = obj2 != null ? obj2.toString() : null;
-        return str1 != null && str2 != null && (str1.equals(str2));
+        return str1 != null && (str1.equals(str2));
     }
 
     /**
@@ -90,7 +96,7 @@ public final class PaymentUtils {
         if (month == 0 || year == 0) {
             return null;
         }
-        return String.format("%1$02d / %2$d", month, (year % 100));
+        return PaymentUtils.format("%1$02d / %2$d", month, (year % 100));
     }
 
     /**
@@ -132,41 +138,6 @@ public final class PaymentUtils {
 
         int year = inputYear > (startYear % 100) ? startYear : endYear;
         return (year - (year % 100)) + inputYear;
-    }
-
-    /**
-     * Set the TextAppearance in the TextView
-     *
-     * @param textView for which the textAppearance should be changed
-     * @param textAppearanceResId the resource id of the textAppearance to be set
-     */
-    public static void setTextAppearance(TextView textView, int textAppearanceResId) {
-        if (textAppearanceResId != 0) {
-            TextViewCompat.setTextAppearance(textView, textAppearanceResId);
-        }
-    }
-
-    /**
-     * Set the background resource for the ImageView
-     *
-     * @param imageView for which the background resource should be set
-     * @param backgroundResId the resource id of the background
-     */
-    public static void setImageBackground(ImageView imageView, int backgroundResId) {
-        if (backgroundResId != 0) {
-            imageView.setBackgroundResource(backgroundResId);
-        }
-    }
-
-    /**
-     * Check if the device is in landscape mode.
-     *
-     * @param context containing the configuration for determining the mode.
-     * @return true when in landscape mode, false otherwise
-     */
-    public static boolean isLandscape(Context context) {
-        int orientation = context.getResources().getConfiguration().orientation;
-        return orientation == Configuration.ORIENTATION_LANDSCAPE;
     }
 
     /**

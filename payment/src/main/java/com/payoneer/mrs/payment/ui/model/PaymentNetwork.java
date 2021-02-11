@@ -44,10 +44,6 @@ public class PaymentNetwork {
         return network.getOperationType();
     }
 
-    public ApplicableNetwork getApplicableNetwork() {
-        return network;
-    }
-
     public String getPaymentMethod() {
         return network.getMethod();
     }
@@ -75,10 +71,6 @@ public class PaymentNetwork {
     public List<InputElement> getInputElements() {
         List<InputElement> elements = network.getInputElements();
         return elements == null ? Collections.emptyList() : elements;
-    }
-
-    public String getButton() {
-        return network.getButton();
     }
 
     public boolean compare(PaymentNetwork network) {

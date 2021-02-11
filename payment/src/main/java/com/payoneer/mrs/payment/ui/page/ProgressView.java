@@ -10,14 +10,9 @@ package com.payoneer.mrs.payment.ui.page;
 
 import com.payoneer.mrs.payment.R;
 
-import android.graphics.PorterDuff;
-import android.graphics.drawable.Drawable;
 import android.text.TextUtils;
-import android.util.TypedValue;
 import android.view.View;
-import android.widget.ProgressBar;
 import android.widget.TextView;
-import androidx.core.content.ContextCompat;
 
 /**
  * Class managing showing a ProgressBar with optional labels.
@@ -26,7 +21,6 @@ class ProgressView {
 
     private final TextView textHeader;
     private final TextView textInfo;
-    private final ProgressBar progressBar;
     private final View view;
 
     /**
@@ -36,10 +30,8 @@ class ProgressView {
      */
     ProgressView(View view) {
         this.view = view;
-        progressBar = view.findViewById(R.id.progressbar);
         textHeader = view.findViewById(R.id.text_header);
         textInfo = view.findViewById(R.id.text_info);
-        styleProgressBar();
     }
 
     /**
@@ -66,22 +58,5 @@ class ProgressView {
      */
     public void setVisible(boolean visible) {
         view.setVisibility(visible ? View.VISIBLE : View.GONE);
-    }
-
-    /**
-     * The ProgressBar is styled programmatically since the Android SDK must support
-     * the Android version 19 and indeterminateTint is not supported for older devices.
-     */
-    @SuppressWarnings("deprecation")
-    private void styleProgressBar() {
-        TypedValue typedValue = new TypedValue();
-        view.getContext().getTheme().resolveAttribute(R.attr.colorPrimary, typedValue, true);
-
-        Drawable drawable = progressBar.getIndeterminateDrawable();
-        if (drawable == null || typedValue.resourceId == 0) {
-            return;
-        }
-        drawable.setColorFilter(ContextCompat.getColor(view.getContext(), typedValue.resourceId),
-            PorterDuff.Mode.SRC_IN);
     }
 }

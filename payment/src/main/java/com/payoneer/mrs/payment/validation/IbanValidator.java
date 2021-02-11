@@ -106,7 +106,7 @@ final class IbanValidator {
     }
 
     /**
-     * This rountine is based on the ISO 7064 Mod 97,10 check digit caluclation
+     * This routine is based on the ISO 7064 Mod 97,10 check digit calculation
      * routine.
      * <p/>
      * For further information see

@@ -130,8 +130,4 @@ public final class AccountCard implements PaymentCard {
     public AccountMask getMaskedAccount() {
         return account.getMaskedAccount();
     }
-
-    public String lookupPaymentMethod(String code) {
-        return account.getCode().equals(code) ? account.getMethod() : null;
-    }
 }

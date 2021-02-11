@@ -22,7 +22,7 @@ import android.view.ViewGroup;
 public final class WidgetInflater {
 
     /**
-     * Inflate an InputElement widget, this will either be a select, checkbox or textinput widget.
+     * Inflate an InputElement widget, this will either be a Select, CheckBox or TextInput widget.
      *
      * @param element the InputElement from which the widget will be created
      * @param parent the parent ViewGroup in which this CheckBoxWidget will be placed

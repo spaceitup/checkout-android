@@ -23,6 +23,7 @@ import com.payoneer.mrs.payment.ui.PaymentActivityResult;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import androidx.annotation.NonNull;
 
 /**
  * The ChargePaymentActivity is the view displaying the loading animation while posting the operation.
@@ -109,7 +110,7 @@ public final class ChargePaymentActivity extends BasePaymentActivity implements 
      * {@inheritDoc}
      */
     @Override
-    public void onSaveInstanceState(Bundle savedInstanceState) {
+    public void onSaveInstanceState(@NonNull Bundle savedInstanceState) {
         super.onSaveInstanceState(savedInstanceState);
         if (this.operation != null) {
             savedInstanceState.putParcelable(EXTRA_OPERATION, this.operation);

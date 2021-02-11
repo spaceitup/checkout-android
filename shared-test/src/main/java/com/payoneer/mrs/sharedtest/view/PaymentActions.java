@@ -20,6 +20,7 @@ import org.hamcrest.Matcher;
 
 import com.payoneer.mrs.payment.ui.list.PaymentCardViewHolder;
 import com.payoneer.mrs.payment.ui.widget.FormWidget;
+import com.payoneer.mrs.payment.util.PaymentUtils;
 
 import android.view.View;
 import android.widget.HorizontalScrollView;
@@ -56,7 +57,7 @@ public final class PaymentActions {
 
             @Override
             public String getDescription() {
-                return String.format("perform action on view in widget %s at position %d", widgetName, position);
+                return PaymentUtils.format("perform action on view in widget %s at position %d", widgetName, position);
             }
 
             @Override
@@ -69,7 +70,7 @@ public final class PaymentActions {
                 }
                 FormWidget widget = ((PaymentCardViewHolder) viewHolder).getFormWidget(widgetName);
                 if (widget == null) {
-                    throw createPerformException(String.format("Widget %s could not be found inside card", widgetName));
+                    throw createPerformException(PaymentUtils.format("Widget %s could not be found inside card", widgetName));
                 }
                 View formView = widget.getRootView().findViewById(viewResId);
                 if (formView == null) {
@@ -110,7 +111,7 @@ public final class PaymentActions {
     /**
      * Scroll to the view action
      *
-     * @param value
+     * @param value to be set in the NumberPicker
      * @return the newly created ViewAction
      */
     public static ViewAction setValueInNumberPicker(final int value) {
@@ -122,7 +123,7 @@ public final class PaymentActions {
 
             @Override
             public String getDescription() {
-                return String.format("Set the value %d of a NumberPicker", value);
+                return PaymentUtils.format("Set the value %d of a NumberPicker", value);
             }
 
             @Override

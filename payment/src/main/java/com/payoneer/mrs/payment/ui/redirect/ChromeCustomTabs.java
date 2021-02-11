@@ -8,9 +8,6 @@
 
 package com.payoneer.mrs.payment.ui.redirect;
 
-import static android.os.Build.VERSION.SDK_INT;
-import static android.os.Build.VERSION_CODES.JELLY_BEAN_MR2;
-
 import com.payoneer.mrs.payment.core.PaymentException;
 
 import android.content.ActivityNotFoundException;
@@ -37,9 +34,6 @@ public class ChromeCustomTabs {
      * @return true if Chrome Custom Tabs are supported and available, false otherwise
      */
     public static boolean isSupported(Context context) {
-        if (SDK_INT < JELLY_BEAN_MR2) {
-            return false;
-        }
         Intent serviceIntent = new Intent(CustomTabsService.ACTION_CUSTOM_TABS_CONNECTION).setPackage(PACKAGE_NAME);
         ServiceConnection connection = new ServiceConnection() {
             @Override
@@ -74,7 +68,7 @@ public class ChromeCustomTabs {
                 Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NO_HISTORY);
             customTabsIntent.launchUrl(context, uri);
         } catch (ActivityNotFoundException e) {
-            throw new PaymentException("Error ocurred while opening ChromeCustomTabs", e);
+            throw new PaymentException("Error occurred while opening ChromeCustomTabs", e);
         }
     }
 }

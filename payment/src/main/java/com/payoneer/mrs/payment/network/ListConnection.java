@@ -77,12 +77,10 @@ public final class ListConnection extends BaseConnection {
             conn.connect();
             final int rc = conn.getResponseCode();
 
-            switch (rc) {
-                case HttpURLConnection.HTTP_OK:
-                    return handleCreatePaymentSessionOk(readFromInputStream(conn));
-                default:
-                    throw createPaymentException(rc, conn);
+            if (rc == HttpURLConnection.HTTP_OK) {
+                return handleCreatePaymentSessionOk(readFromInputStream(conn));
             }
+            throw createPaymentException(rc, conn);
         } catch (JsonParseException | MalformedURLException | SecurityException e) {
             throw createPaymentException(e, false);
         } catch (IOException e) {
@@ -115,12 +113,10 @@ public final class ListConnection extends BaseConnection {
 
             conn.connect();
             final int rc = conn.getResponseCode();
-            switch (rc) {
-                case HttpURLConnection.HTTP_OK:
-                    return handleGetListResultOk(readFromInputStream(conn));
-                default:
-                    throw createPaymentException(rc, conn);
+            if (rc == HttpURLConnection.HTTP_OK) {
+                return handleGetListResultOk(readFromInputStream(conn));
             }
+            throw createPaymentException(rc, conn);
         } catch (JsonParseException | MalformedURLException | SecurityException e) {
             throw createPaymentException(e, false);
         } catch (IOException e) {

@@ -84,9 +84,9 @@ public abstract class FormWidget {
     }
 
     /**
-     * Set this widget to be focussed.
+     * Set this widget to be focused.
      *
-     * @return true when focussed, false otherwise
+     * @return true when focused, false otherwise
      */
     public boolean requestFocus() {
         return false;

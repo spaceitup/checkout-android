@@ -85,7 +85,7 @@ public final class DateWidget extends InputLayoutWidget {
         return new ExpiryDate(month, year);
     }
 
-    private class ExpiryDate {
+    private static class ExpiryDate {
         final String month;
         final String year;
 

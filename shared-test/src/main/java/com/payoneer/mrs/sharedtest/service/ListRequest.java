@@ -49,12 +49,11 @@ public final class ListRequest {
     }
 
     public static final class Builder {
-        JSONObject source;
+        final JSONObject source;
         String language;
         String amount;
         String appId;
         boolean presetFirst;
-
 
         Builder(JSONObject source) {
             this.source = source;
@@ -65,7 +64,7 @@ public final class ListRequest {
             return this;
         }
 
-        public Builder language(String lang) {
+        public Builder language(String language) {
             this.language = language;
             return this;
         }

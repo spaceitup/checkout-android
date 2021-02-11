@@ -11,8 +11,6 @@ package com.payoneer.mrs.payment.form;
 import java.net.URL;
 import java.util.Objects;
 
-import org.json.JSONException;
-
 import com.google.gson.JsonSyntaxException;
 import com.payoneer.mrs.payment.core.PaymentException;
 import com.payoneer.mrs.payment.core.PaymentInputType;
@@ -227,11 +225,7 @@ public class Operation implements Parcelable {
         return paymentMethod;
     }
 
-    public OperationData getOperationData() {
-        return operationData;
-    }
-
-    public String toJson() throws JSONException {
+    public String toJson() {
         GsonHelper gson = GsonHelper.getInstance();
         return gson.toJson(operationData);
     }

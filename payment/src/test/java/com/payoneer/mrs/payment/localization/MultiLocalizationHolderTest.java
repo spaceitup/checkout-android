@@ -9,6 +9,7 @@
 package com.payoneer.mrs.payment.localization;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNull;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -27,6 +28,6 @@ public class MultiLocalizationHolderTest {
         assertEquals("visa2", multi.translate("visa2"));
         assertEquals("mastercard3", multi.translate("mastercard3"));
         assertEquals("jcb1", multi.translate("jcb1"));
-        assertEquals(null, multi.translate("foo"));
+        assertNull(multi.translate("foo"));
     }
 }

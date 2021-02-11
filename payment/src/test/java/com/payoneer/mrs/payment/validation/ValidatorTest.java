@@ -33,8 +33,6 @@ import androidx.test.core.app.ApplicationProvider;
 @RunWith(RobolectricTestRunner.class)
 public class ValidatorTest {
 
-    private Validator validator;
-
     @Test(expected = IllegalArgumentException.class)
     public void createInstance_invalidContext() {
         new Validator(null);

@@ -58,12 +58,10 @@ public final class LocalizationConnection extends BaseConnection {
             conn.setRequestProperty(HEADER_ACCEPT, VALUE_APP_JSON);
             conn.connect();
             final int rc = conn.getResponseCode();
-            switch (rc) {
-                case HttpURLConnection.HTTP_OK:
-                    return handleLoadLocalizationOk(readFromInputStream(conn));
-                default:
-                    throw createPaymentException(rc, conn);
+            if (rc == HttpURLConnection.HTTP_OK) {
+                return handleLoadLocalizationOk(readFromInputStream(conn));
             }
+            throw createPaymentException(rc, conn);
         } catch (JsonParseException | SecurityException e) {
             throw createPaymentException(e, false);
         } catch (IOException e) {
@@ -80,7 +78,8 @@ public final class LocalizationConnection extends BaseConnection {
      * @return the LocalizationHolder containing the localizations
      */
     private LocalizationHolder handleLoadLocalizationOk(final String data) throws JsonParseException {
-        Map<String, String> map = gson.fromJson(data, new TypeToken<HashMap<String, String>>() { }.getType());
+        Map<String, String> map = gson.fromJson(data, new TypeToken<HashMap<String, String>>() {
+        }.getType());
         return new MapLocalizationHolder(map);
     }
 }

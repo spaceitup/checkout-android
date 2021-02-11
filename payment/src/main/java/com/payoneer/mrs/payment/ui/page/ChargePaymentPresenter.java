@@ -12,6 +12,8 @@ import static com.payoneer.mrs.payment.localization.LocalizationKey.CHARGE_INTER
 import static com.payoneer.mrs.payment.ui.PaymentActivityResult.RESULT_CODE_ERROR;
 import static com.payoneer.mrs.payment.ui.PaymentActivityResult.RESULT_CODE_PROCEED;
 
+import java.util.Objects;
+
 import com.payoneer.mrs.payment.core.PaymentException;
 import com.payoneer.mrs.payment.form.Operation;
 import com.payoneer.mrs.payment.localization.Localization;
@@ -114,14 +116,12 @@ final class ChargePaymentPresenter implements PaymentSessionListener, NetworkSer
         ListResult listResult = session.getListResult();
         Interaction interaction = listResult.getInteraction();
 
-        switch (interaction.getCode()) {
-            case InteractionCode.PROCEED:
-                handleLoadSessionProceed(session);
-                break;
-            default:
-                ErrorInfo errorInfo = new ErrorInfo(listResult.getResultInfo(), interaction);
-                PaymentResult result = new PaymentResult(errorInfo, null);
-                closeWithErrorCode(result);
+        if (Objects.equals(InteractionCode.PROCEED, interaction.getCode())) {
+            handleLoadSessionProceed(session);
+        } else {
+            ErrorInfo errorInfo = new ErrorInfo(listResult.getResultInfo(), interaction);
+            PaymentResult result = new PaymentResult(errorInfo, null);
+            closeWithErrorCode(result);
         }
     }
 
@@ -306,11 +306,7 @@ final class ChargePaymentPresenter implements PaymentSessionListener, NetworkSer
     }
 
     private void processPayment() {
-        try {
-            networkService.processPayment(view.getActivity(), CHARGE_REQUEST_CODE, operation);
-        } catch (PaymentException e) {
-            closeWithErrorCode(e);
-        }
+        networkService.processPayment(view.getActivity(), CHARGE_REQUEST_CODE, operation);
     }
 
     private void handlePaymentActivityResult(PaymentActivityResult result) {
@@ -336,11 +332,6 @@ final class ChargePaymentPresenter implements PaymentSessionListener, NetworkSer
 
     private void closeWithErrorCode(String message) {
         PaymentResult result = PaymentResultHelper.fromErrorMessage(message);
-        closeWithErrorCode(result);
-    }
-
-    private void closeWithErrorCode(Throwable cause) {
-        PaymentResult result = PaymentResultHelper.fromThrowable(cause);
         closeWithErrorCode(result);
     }
 

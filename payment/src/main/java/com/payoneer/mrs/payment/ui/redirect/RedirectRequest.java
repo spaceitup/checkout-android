@@ -68,7 +68,7 @@ public final class RedirectRequest {
      * @return newly created RedirectRequest
      * @throws PaymentException when the OperationResult does not contain the required information
      */
-    public final static RedirectRequest fromOperationResult(OperationResult operationResult) throws PaymentException {
+    public static RedirectRequest fromOperationResult(OperationResult operationResult) throws PaymentException {
         Redirect redirect = operationResult.getRedirect();
         if (redirect == null) {
             throw new PaymentException("OperationResult must contain a Redirect object");

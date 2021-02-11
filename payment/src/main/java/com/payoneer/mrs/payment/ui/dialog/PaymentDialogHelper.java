@@ -18,6 +18,8 @@ import static com.payoneer.mrs.payment.localization.LocalizationKey.ERROR_DEFAUL
 import static com.payoneer.mrs.payment.localization.LocalizationKey.LABEL_TEXT;
 import static com.payoneer.mrs.payment.localization.LocalizationKey.LABEL_TITLE;
 
+import java.util.Objects;
+
 import com.google.android.material.snackbar.Snackbar;
 import com.payoneer.mrs.payment.R;
 import com.payoneer.mrs.payment.core.PaymentInputType;
@@ -51,6 +53,7 @@ public class PaymentDialogHelper {
         dialog.setImageResId(getHintImageResId(networkCode, type));
         dialog.setTag("dialog_hint");
         dialog.setPositiveButton(Localization.translate(BUTTON_OK));
+        dialog.setListener(listener);
         return dialog;
     }
 
@@ -94,11 +97,9 @@ public class PaymentDialogHelper {
         if (!PaymentInputType.VERIFICATION_CODE.equals(type)) {
             return 0;
         }
-        switch (networkCode) {
-            case PaymentNetworkCodes.AMEX:
-                return R.drawable.img_amex;
-            default:
-                return R.drawable.img_card;
+        if (Objects.equals(PaymentNetworkCodes.AMEX, networkCode)) {
+            return R.drawable.img_amex;
         }
+        return R.drawable.img_card;
     }
 }

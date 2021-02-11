@@ -27,8 +27,6 @@ import java.io.IOException;
 import org.hamcrest.Matcher;
 import org.json.JSONException;
 
-import com.payoneer.mrs.exampleshop.BuildConfig;
-import com.payoneer.mrs.exampleshop.R;
 import com.payoneer.mrs.exampleshop.checkout.CheckoutActivity;
 import com.payoneer.mrs.exampleshop.confirm.ConfirmActivity;
 import com.payoneer.mrs.exampleshop.summary.SummaryActivity;
@@ -126,13 +124,11 @@ public class AbstractTest {
         return (ConfirmActivity) ActivityHelper.getCurrentActivity();
     }
 
-    IdlingResource register(IdlingResource resource) {
+    void register(IdlingResource resource) {
         IdlingRegistry.getInstance().register(resource);
-        return resource;
     }
 
-    IdlingResource unregister(IdlingResource resource) {
+    void unregister(IdlingResource resource) {
         IdlingRegistry.getInstance().unregister(resource);
-        return resource;
     }
 }

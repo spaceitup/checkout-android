@@ -95,7 +95,7 @@ public final class SelectWidget extends FormWidget {
         spinner.setSelection(selIndex);
     }
 
-    class SpinnerItem {
+    static class SpinnerItem {
         final String label;
         final String value;
 

@@ -5,7 +5,7 @@ ext.VERSIONCODE = file('VERSIONCODE').text.trim().toInteger()
 ext.VERSIONNAME = file('VERSIONNAME').text.trim()
 
 ext.increaseVersionName = { index ->
-    def curName = VERSIONNAME.split("\\-")
+    def curName = VERSIONNAME.split("-")
     def newName = curName[0].split("\\.")
     def size = 3
 

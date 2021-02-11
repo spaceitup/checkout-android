@@ -13,9 +13,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-import com.payoneer.mrs.payment.model.ApplicableNetwork;
 import com.payoneer.mrs.payment.model.ListResult;
-import com.payoneer.mrs.payment.model.Networks;
 import com.payoneer.mrs.payment.validation.Validator;
 
 /**
@@ -93,10 +91,6 @@ public final class PaymentSession {
         return !hasPresetCard() && (getNetworkCardSize() == 0) && (getAccountCardSize() == 0);
     }
 
-    public String getOperationType() {
-        return listResult.getOperationType();
-    }
-
     public boolean hasPresetCard() {
         return presetCard != null;
     }
@@ -107,15 +101,6 @@ public final class PaymentSession {
 
     public int getAccountCardSize() {
         return accounts != null ? accounts.size() : 0;
-    }
-
-    public int getApplicableNetworkSize() {
-        Networks nw = listResult.getNetworks();
-        if (nw == null) {
-            return 0;
-        }
-        List<ApplicableNetwork> an = nw.getApplicable();
-        return an != null ? an.size() : 0;
     }
 
     public boolean containsLink(String name, URL url) {
