@@ -177,11 +177,10 @@ abstract class BasePaymentActivity extends AppCompatActivity implements PaymentV
      * @param listener listening to events of this Hint Dialog.
      */
     public void showHintDialog(String networkCode, String type, PaymentDialogListener listener) {
-        if (!active) {
-            return;
+        if (active) {
+            PaymentDialogFragment dialog = PaymentDialogHelper.createHintDialog(networkCode, type, listener);
+            showPaymentDialog(dialog);
         }
-        PaymentDialogFragment dialog = PaymentDialogHelper.createHintDialog(networkCode, type, listener);
-        showPaymentDialog(dialog);
     }
 
     /**
