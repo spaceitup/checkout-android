@@ -10,6 +10,7 @@ package com.payoneer.mrs.payment.resource;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 
 /**
  * Class containing filters for which PaymentMethods should be combined in the payment page.
@@ -28,7 +29,7 @@ public class PaymentGroup {
      * @return the id of this PaymentGroup
      */
     public String getId() {
-        return items != null ? items.get(0).getCode() : null;
+        return items != null && items.size() > 0 ? items.get(0).getCode() : null;
     }
 
     /**
@@ -55,7 +56,7 @@ public class PaymentGroup {
         }
         for (PaymentGroupItem item : items) {
 
-            if (item.getCode().equals(code)) {
+            if (Objects.equals(item.getCode(), code)) {
                 return item.getRegex();
             }
         }
