@@ -38,19 +38,19 @@ final class UserAgentBuilder {
         String value = "";
         if (!TextUtils.isEmpty(sdkVersionName)) {
             value += ("AndroidSDK/" + sdkVersionName + " (" +
-                    toDetailsString(sdkVersionCode) + ") ");
+                toDetailsString(sdkVersionCode) + ") ");
         }
         if (!TextUtils.isEmpty(appVersionName)) {
             value += ("AndroidApp/" + appVersionName + " (" +
-                    toDetailsString(appPackageName) + "; " +
-                    toDetailsString(appName) + "; " +
-                    toDetailsString(appVersionCode) + ") ");
+                toDetailsString(appPackageName) + "; " +
+                toDetailsString(appName) + "; " +
+                toDetailsString(appVersionCode) + ") ");
         }
         if (buildVersionSdkInt != null) {
             value += ("AndroidPlatform/" + buildVersionSdkInt + " (" +
-                    toDetailsString(buildManufacturer) + "; " +
-                    toDetailsString(buildModel) + "; " +
-                    toDetailsString(buildVersionRelease) + ")");
+                toDetailsString(buildManufacturer) + "; " +
+                toDetailsString(buildModel) + "; " +
+                toDetailsString(buildVersionRelease) + ")");
         }
         return value.isEmpty() ? null : value.trim();
     }
@@ -58,7 +58,7 @@ final class UserAgentBuilder {
     private String toDetailsString(Object value) {
         return value == null ? "" : value.toString();
     }
-    
+
     /**
      * Construct a new UserAgent value from the provided Context
      *
@@ -75,7 +75,7 @@ final class UserAgentBuilder {
             setBuildManufacturer(android.os.Build.MANUFACTURER).
             setBuildModel(android.os.Build.MODEL).
             setBuildVersionSdkInt(android.os.Build.VERSION.SDK_INT).
-            setBuildVersionRelease(android.os.Build.VERSION.RELEASE);            
+            setBuildVersionRelease(android.os.Build.VERSION.RELEASE);
 
         try {
             Context appContext = context.getApplicationContext();
@@ -83,7 +83,7 @@ final class UserAgentBuilder {
             PackageManager packageManager = appContext.getPackageManager();
             ApplicationInfo appInfo = packageManager.getApplicationInfo(appPackageName, 0);
             PackageInfo packageInfo = packageManager.getPackageInfo(appPackageName, 0);
-            
+
             int versionCode;
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
                 versionCode = (int) packageInfo.getLongVersionCode();

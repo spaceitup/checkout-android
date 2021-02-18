@@ -34,7 +34,7 @@ public class UserAgentBuilderTest {
     final String buildModel = "Android SDK built for x86_64";
     final String buildVersionRelease = "9";
 
-    
+
     @Test(expected = IllegalArgumentException.class)
     public void createFromContext_IllegalArgumentException() {
         UserAgentBuilder.createFromContext(null);
@@ -80,7 +80,7 @@ public class UserAgentBuilderTest {
             setBuildVersionRelease(buildVersionRelease).build();
 
         String expected =
-            "AndroidApp/6.1.0 (app.package.name; App Name; 73) AndroidPlatform/28 (Google; Android SDK built for x86_64; 9)";        
+            "AndroidApp/6.1.0 (app.package.name; App Name; 73) AndroidPlatform/28 (Google; Android SDK built for x86_64; 9)";
         assertEquals(expected, result);
     }
 
@@ -100,7 +100,7 @@ public class UserAgentBuilderTest {
         assertEquals(expected, result);
     }
 
-    
+
     @Test
     public void testBuild_withoutSectionVersions() {
         String result = new UserAgentBuilder().
