@@ -15,6 +15,7 @@ import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.os.Build;
+import android.text.TextUtils;
 import android.util.Log;
 
 /**
@@ -23,32 +24,41 @@ import android.util.Log;
 final class UserAgentBuilder {
 
     private String sdkVersionName;
-    private int sdkVersionCode;
+    private Integer sdkVersionCode;
     private String appVersionName;
-    private int appVersionCode;
+    private Integer appVersionCode;
     private String appPackageName;
     private String appName;
     private String buildManufacturer;
     private String buildModel;
-    private int buildVersionSdkInt;
+    private Integer buildVersionSdkInt;
     private String buildVersionRelease;
 
     String build() {
-        return "android-sdk/" +
-            toEmptyString(sdkVersionName) + " (" +
-            sdkVersionCode + ") " +
-
-            "App/" + toEmptyString(appVersionName) + " (" +
-            toEmptyString(appPackageName) + "; " +
-            toEmptyString(appName) + "; " +
-            appVersionCode + ") " +
-
-            "Platform/" + buildVersionSdkInt + " (" +
-            toEmptyString(buildManufacturer) + "; " +
-            toEmptyString(buildModel) + "; " +
-            toEmptyString(buildVersionRelease) + ")";
+        String value = "";
+        if (!TextUtils.isEmpty(sdkVersionName)) {
+            value += ("AndroidSDK/" + sdkVersionName + " (" +
+                    toDetailsString(sdkVersionCode) + ") ");
+        }
+        if (!TextUtils.isEmpty(appVersionName)) {
+            value += ("AndroidApp/" + appVersionName + " (" +
+                    toDetailsString(appPackageName) + "; " +
+                    toDetailsString(appName) + "; " +
+                    toDetailsString(appVersionCode) + ") ");
+        }
+        if (buildVersionSdkInt != null) {
+            value += ("AndroidPlatform/" + buildVersionSdkInt + " (" +
+                    toDetailsString(buildManufacturer) + "; " +
+                    toDetailsString(buildModel) + "; " +
+                    toDetailsString(buildVersionRelease) + ")");
+        }
+        return value.isEmpty() ? null : value.trim();
     }
 
+    private String toDetailsString(Object value) {
+        return value == null ? "" : value.toString();
+    }
+    
     /**
      * Construct a new UserAgent value from the provided Context
      *
@@ -59,35 +69,36 @@ final class UserAgentBuilder {
         if (context == null) {
             throw new IllegalArgumentException("Context cannot be null");
         }
+        UserAgentBuilder builder = new UserAgentBuilder().
+            setSdkVersionName(BuildConfig.VERSION_NAME).
+            setSdkVersionCode(BuildConfig.VERSION_CODE).
+            setBuildManufacturer(android.os.Build.MANUFACTURER).
+            setBuildModel(android.os.Build.MODEL).
+            setBuildVersionSdkInt(android.os.Build.VERSION.SDK_INT).
+            setBuildVersionRelease(android.os.Build.VERSION.RELEASE);            
+
         try {
             Context appContext = context.getApplicationContext();
             String appPackageName = appContext.getPackageName();
             PackageManager packageManager = appContext.getPackageManager();
             ApplicationInfo appInfo = packageManager.getApplicationInfo(appPackageName, 0);
             PackageInfo packageInfo = packageManager.getPackageInfo(appPackageName, 0);
-
+            
             int versionCode;
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
                 versionCode = (int) packageInfo.getLongVersionCode();
             } else {
                 versionCode = packageInfo.versionCode;
             }
-            return new UserAgentBuilder().
-                setSdkVersionName(BuildConfig.VERSION_NAME).
-                setSdkVersionCode(BuildConfig.VERSION_CODE).
-                setAppVersionName(packageInfo.versionName).
+            builder.setAppVersionName(packageInfo.versionName).
                 setAppVersionCode(versionCode).
                 setAppPackageName(appPackageName).
-                setAppName(packageManager.getApplicationLabel(appInfo).toString()).
-                setBuildManufacturer(android.os.Build.MANUFACTURER).
-                setBuildModel(android.os.Build.MODEL).
-                setBuildVersionSdkInt(android.os.Build.VERSION.SDK_INT).
-                setBuildVersionRelease(android.os.Build.VERSION.RELEASE).
-                build();
+                setAppName(packageManager.getApplicationLabel(appInfo).toString());
+
         } catch (final PackageManager.NameNotFoundException e) {
             Log.w("android-sdk", e);
         }
-        return null;
+        return builder.build();
     }
 
     UserAgentBuilder setSdkVersionName(String sdkVersionName) {
@@ -95,7 +106,7 @@ final class UserAgentBuilder {
         return this;
     }
 
-    UserAgentBuilder setSdkVersionCode(int sdkVersionCode) {
+    UserAgentBuilder setSdkVersionCode(Integer sdkVersionCode) {
         this.sdkVersionCode = sdkVersionCode;
         return this;
     }
@@ -105,7 +116,7 @@ final class UserAgentBuilder {
         return this;
     }
 
-    UserAgentBuilder setAppVersionCode(int appVersionCode) {
+    UserAgentBuilder setAppVersionCode(Integer appVersionCode) {
         this.appVersionCode = appVersionCode;
         return this;
     }
@@ -130,7 +141,7 @@ final class UserAgentBuilder {
         return this;
     }
 
-    UserAgentBuilder setBuildVersionSdkInt(int buildVersionSdkInt) {
+    UserAgentBuilder setBuildVersionSdkInt(Integer buildVersionSdkInt) {
         this.buildVersionSdkInt = buildVersionSdkInt;
         return this;
     }
@@ -138,9 +149,5 @@ final class UserAgentBuilder {
     UserAgentBuilder setBuildVersionRelease(String buildVersionRelease) {
         this.buildVersionRelease = buildVersionRelease;
         return this;
-    }
-
-    private String toEmptyString(String str) {
-        return str == null ? "" : str;
     }
 }
