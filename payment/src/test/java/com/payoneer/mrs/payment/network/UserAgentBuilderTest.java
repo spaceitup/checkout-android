@@ -34,7 +34,6 @@ public class UserAgentBuilderTest {
     private final String BUILD_MODEL = "Android SDK built for x86_64";
     private final String BUILD_VERSION_RELEASE = "9";
 
-
     @Test(expected = IllegalArgumentException.class)
     public void createFromContext_IllegalArgumentException() {
         UserAgentBuilder.createFromContext(null);
