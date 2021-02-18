@@ -23,16 +23,16 @@ import androidx.test.core.app.ApplicationProvider;
 @RunWith(RobolectricTestRunner.class)
 public class UserAgentBuilderTest {
 
-    final String sdkVersionName = "5.3.0";
-    final Integer sdkVersionCode = 51;
-    final String appVersionName = "6.1.0";
-    final Integer appVersionCode = 73;
-    final String appPackageName = "app.package.name";
-    final String appName = "App Name";
-    final Integer buildVersionSdkInt = 28;
-    final String buildManufacturer = "Google";
-    final String buildModel = "Android SDK built for x86_64";
-    final String buildVersionRelease = "9";
+    private final String SDK_VERSION_NAME = "5.3.0";
+    private final Integer SDK_VERSION_CODE = 51;
+    private final String APP_VERSION_NAME = "6.1.0";
+    private final Integer APP_VERSION_CODE = 73;
+    private final String APP_PACKAGE_NAME = "app.package.name";
+    private final String APP_NAME = "App Name";
+    private final Integer BUILD_VERSION_SDK_INT = 28;
+    private final String BUILD_MANUFACTURER = "Google";
+    private final String BUILD_MODEL = "Android SDK built for x86_64";
+    private final String BUILD_VERSION_RELEASE = "9";
 
 
     @Test(expected = IllegalArgumentException.class)
@@ -50,18 +50,18 @@ public class UserAgentBuilderTest {
     @Test
     public void testBuild_withAllSections() {
         final String result = new UserAgentBuilder().
-            setSdkVersionName(sdkVersionName).
-            setSdkVersionCode(sdkVersionCode).
-            setAppVersionName(appVersionName).
-            setAppVersionCode(appVersionCode).
-            setAppPackageName(appPackageName).
-            setAppName(appName).
-            setBuildManufacturer(buildManufacturer).
-            setBuildModel(buildModel).
-            setBuildVersionSdkInt(buildVersionSdkInt).
-            setBuildVersionRelease(buildVersionRelease).build();
+            setSdkVersionName(SDK_VERSION_NAME).
+            setSdkVersionCode(SDK_VERSION_CODE).
+            setAppVersionName(APP_VERSION_NAME).
+            setAppVersionCode(APP_VERSION_CODE).
+            setAppPackageName(APP_PACKAGE_NAME).
+            setAppName(APP_NAME).
+            setBuildManufacturer(BUILD_MANUFACTURER).
+            setBuildModel(BUILD_MODEL).
+            setBuildVersionSdkInt(BUILD_VERSION_SDK_INT).
+            setBuildVersionRelease(BUILD_VERSION_RELEASE).build();
 
-        String expected =
+        final String expected =
             "AndroidSDK/5.3.0 (51) AndroidApp/6.1.0 (app.package.name; App Name; 73) AndroidPlatform/28 (Google; Android SDK built for x86_64; 9)";
         assertEquals(expected, result);
     }
@@ -69,48 +69,46 @@ public class UserAgentBuilderTest {
     @Test
     public void testBuild_missingAppVersionName() {
         final String result = new UserAgentBuilder().
-            setSdkVersionCode(sdkVersionCode).
-            setAppVersionName(appVersionName).
-            setAppVersionCode(appVersionCode).
-            setAppPackageName(appPackageName).
-            setAppName(appName).
-            setBuildManufacturer(buildManufacturer).
-            setBuildModel(buildModel).
-            setBuildVersionSdkInt(buildVersionSdkInt).
-            setBuildVersionRelease(buildVersionRelease).build();
+            setSdkVersionCode(SDK_VERSION_CODE).
+            setAppVersionName(APP_VERSION_NAME).
+            setAppVersionCode(APP_VERSION_CODE).
+            setAppPackageName(APP_PACKAGE_NAME).
+            setAppName(APP_NAME).
+            setBuildManufacturer(BUILD_MANUFACTURER).
+            setBuildModel(BUILD_MODEL).
+            setBuildVersionSdkInt(BUILD_VERSION_SDK_INT).
+            setBuildVersionRelease(BUILD_VERSION_RELEASE).build();
 
-        String expected =
+        final String expected =
             "AndroidApp/6.1.0 (app.package.name; App Name; 73) AndroidPlatform/28 (Google; Android SDK built for x86_64; 9)";
         assertEquals(expected, result);
     }
 
-
     @Test
     public void testBuild_missingSectionValues() {
         final String result = new UserAgentBuilder().
-            setSdkVersionName(sdkVersionName).
-            setSdkVersionCode(sdkVersionCode).
-            setAppVersionName(appVersionName).
-            setAppVersionCode(appVersionCode).
-            setAppPackageName(appPackageName).
-            setBuildVersionSdkInt(buildVersionSdkInt).build();
+            setSdkVersionName(SDK_VERSION_NAME).
+            setSdkVersionCode(SDK_VERSION_CODE).
+            setAppVersionName(APP_VERSION_NAME).
+            setAppVersionCode(APP_VERSION_CODE).
+            setAppPackageName(APP_PACKAGE_NAME).
+            setBuildVersionSdkInt(BUILD_VERSION_SDK_INT).build();
 
-        String expected =
+        final String expected =
             "AndroidSDK/5.3.0 (51) AndroidApp/6.1.0 (app.package.name; ; 73) AndroidPlatform/28 (; ; )";
         assertEquals(expected, result);
     }
 
-
     @Test
     public void testBuild_withoutSectionVersions() {
-        String result = new UserAgentBuilder().
-            setSdkVersionCode(sdkVersionCode).
-            setAppVersionCode(appVersionCode).
-            setAppPackageName(appPackageName).
-            setAppName(appName).
-            setBuildManufacturer(buildManufacturer).
-            setBuildModel(buildModel).
-            setBuildVersionRelease(buildVersionRelease).build();
+        final String result = new UserAgentBuilder().
+            setSdkVersionCode(SDK_VERSION_CODE).
+            setAppVersionCode(APP_VERSION_CODE).
+            setAppPackageName(APP_PACKAGE_NAME).
+            setAppName(APP_NAME).
+            setBuildManufacturer(BUILD_MANUFACTURER).
+            setBuildModel(BUILD_MODEL).
+            setBuildVersionRelease(BUILD_VERSION_RELEASE).build();
 
         assertNull(result);
     }
