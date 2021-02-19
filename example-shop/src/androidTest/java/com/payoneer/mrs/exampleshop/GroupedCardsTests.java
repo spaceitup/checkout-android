@@ -20,17 +20,16 @@ import com.payoneer.mrs.exampleshop.summary.SummaryActivity;
 
 import androidx.test.espresso.IdlingResource;
 import androidx.test.espresso.intent.Intents;
+import androidx.test.ext.junit.rules.ActivityScenarioRule;
 import androidx.test.ext.junit.runners.AndroidJUnit4;
 import androidx.test.filters.LargeTest;
-import androidx.test.rule.ActivityTestRule;
 
 @RunWith(AndroidJUnit4.class)
 @LargeTest
 public final class GroupedCardsTests extends AbstractTest {
 
     @Rule
-    public ActivityTestRule<SettingsActivity> settingsActivityRule = new ActivityTestRule<>(SettingsActivity.class);
-
+    public ActivityScenarioRule<SettingsActivity> settingsActivityRule = new ActivityScenarioRule<>(SettingsActivity.class);
 
     @Test
     public void successfulDirectChargeTest() throws JSONException, IOException {
