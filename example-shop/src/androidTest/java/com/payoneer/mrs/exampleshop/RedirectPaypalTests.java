@@ -27,10 +27,10 @@ import com.payoneer.mrs.payment.ui.page.ChargePaymentActivity;
 
 import androidx.test.espresso.intent.Intents;
 import androidx.test.espresso.matcher.ViewMatchers;
+import androidx.test.ext.junit.rules.ActivityScenarioRule;
 import androidx.test.ext.junit.runners.AndroidJUnit4;
 import androidx.test.filters.LargeTest;
 import androidx.test.platform.app.InstrumentationRegistry;
-import androidx.test.rule.ActivityTestRule;
 import androidx.test.uiautomator.By;
 import androidx.test.uiautomator.UiDevice;
 import androidx.test.uiautomator.UiObject2;
@@ -41,7 +41,7 @@ import androidx.test.uiautomator.Until;
 public final class RedirectPaypalTests extends AbstractTest {
 
     @Rule
-    public ActivityTestRule<SettingsActivity> settingsActivityRule = new ActivityTestRule<>(SettingsActivity.class);
+    public ActivityScenarioRule<SettingsActivity> settingsActivityRule = new ActivityScenarioRule<>(SettingsActivity.class);
 
     @Test
     public void testPaypalSuccess() throws JSONException, IOException {
