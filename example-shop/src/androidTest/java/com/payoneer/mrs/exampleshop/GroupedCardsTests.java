@@ -17,6 +17,7 @@ import org.junit.runner.RunWith;
 import com.payoneer.mrs.exampleshop.checkout.CheckoutActivity;
 import com.payoneer.mrs.exampleshop.settings.SettingsActivity;
 import com.payoneer.mrs.exampleshop.summary.SummaryActivity;
+import com.payoneer.mrs.sharedtest.sdk.PaymentListHelper;
 
 import androidx.test.espresso.IdlingResource;
 import androidx.test.espresso.intent.Intents;
@@ -40,8 +41,8 @@ public final class GroupedCardsTests extends AbstractTest {
         IdlingResource resultHandledIdlingResource = checkoutActivity.getResultHandledIdlingResource();
         clickCheckoutButton();
 
-        waitForPaymentListLoaded(1);
-        openPaymentListCard(groupCardIndex, "card_group");
+        PaymentListHelper.waitForPaymentListLoaded(1);
+        PaymentListHelper.openPaymentListCard(groupCardIndex, "card_group");
         fillPaymentListCardData(groupCardIndex);
 
         clickPaymentListCardButton(groupCardIndex);
@@ -60,8 +61,8 @@ public final class GroupedCardsTests extends AbstractTest {
         IdlingResource checkoutPaymentResultIdlingResource = checkoutActivity.getResultHandledIdlingResource();
         clickCheckoutButton();
 
-        waitForPaymentListLoaded(1);
-        openPaymentListCard(groupCardIndex, "card_group");
+        PaymentListHelper.waitForPaymentListLoaded(1);
+        PaymentListHelper.openPaymentListCard(groupCardIndex, "card_group");
         fillPaymentListCardData(groupCardIndex);
 
         clickPaymentListCardButton(groupCardIndex);

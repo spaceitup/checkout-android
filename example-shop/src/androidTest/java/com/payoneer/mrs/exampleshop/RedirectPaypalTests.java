@@ -24,6 +24,7 @@ import org.junit.runner.RunWith;
 
 import com.payoneer.mrs.exampleshop.settings.SettingsActivity;
 import com.payoneer.mrs.payment.ui.page.ChargePaymentActivity;
+import com.payoneer.mrs.sharedtest.sdk.PaymentListHelper;
 
 import androidx.test.espresso.intent.Intents;
 import androidx.test.espresso.matcher.ViewMatchers;
@@ -51,8 +52,8 @@ public final class RedirectPaypalTests extends AbstractTest {
         openCheckoutActivity(false);
         clickCheckoutButton();
 
-        waitForPaymentListLoaded(1);
-        openPaymentListCard(networkCardIndex, "card_network");
+        PaymentListHelper.waitForPaymentListLoaded(1);
+        PaymentListHelper.openPaymentListCard(networkCardIndex, "card_network");
         clickPaymentListCardButton(networkCardIndex);
 
         checkCustomerDecisionPageDisplayed();
@@ -68,8 +69,8 @@ public final class RedirectPaypalTests extends AbstractTest {
         openCheckoutActivity(false);
         clickCheckoutButton();
 
-        waitForPaymentListLoaded(1);
-        openPaymentListCard(networkCardIndex, "card_network");
+        PaymentListHelper.waitForPaymentListLoaded(1);
+        PaymentListHelper.openPaymentListCard(networkCardIndex, "card_network");
         clickPaymentListCardButton(networkCardIndex);
         closeChromeBrowser();
 

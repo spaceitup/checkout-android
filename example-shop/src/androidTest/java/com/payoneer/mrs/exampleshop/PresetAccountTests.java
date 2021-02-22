@@ -23,6 +23,7 @@ import org.junit.runner.RunWith;
 
 import com.payoneer.mrs.exampleshop.checkout.CheckoutActivity;
 import com.payoneer.mrs.exampleshop.settings.SettingsActivity;
+import com.payoneer.mrs.sharedtest.sdk.PaymentListHelper;
 
 import android.view.View;
 import androidx.test.espresso.IdlingResource;
@@ -50,8 +51,8 @@ public final class PresetAccountTests extends AbstractTest {
         IdlingResource checkoutResultHandledIdlingResource = checkoutActivity.getResultHandledIdlingResource();
         clickCheckoutButton();
 
-        waitForPaymentListLoaded(1);
-        openPaymentListCard(networkCardIndex, "card_network");
+        PaymentListHelper.waitForPaymentListLoaded(1);
+        PaymentListHelper.openPaymentListCard(networkCardIndex, "card_network");
         clickPaymentListCardButton(networkCardIndex);
         register(checkoutResultHandledIdlingResource);
 
@@ -61,7 +62,7 @@ public final class PresetAccountTests extends AbstractTest {
         onView(ViewMatchers.withId(R.id.label_title)).check(matches(withText("PAYPAL")));
         clickSummaryEditButton();
 
-        waitForPaymentListLoaded(2);
+        PaymentListHelper.waitForPaymentListLoaded(2);
         Matcher<View> list = withId(R.id.recyclerview_paymentlist);
         onView(list).check(matches(isViewInCard(presetCardIndex, withText("PayPal"), R.id.text_title)));
 

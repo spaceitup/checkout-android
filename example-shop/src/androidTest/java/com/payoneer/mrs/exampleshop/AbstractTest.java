@@ -23,6 +23,8 @@ import static com.payoneer.mrs.sharedtest.view.PaymentActions.actionOnViewInWidg
 import static com.payoneer.mrs.sharedtest.view.PaymentMatchers.isCardWithTestId;
 
 import java.io.IOException;
+import java.util.LinkedHashMap;
+import java.util.Map;
 
 import org.hamcrest.Matcher;
 import org.json.JSONException;
@@ -32,6 +34,7 @@ import com.payoneer.mrs.exampleshop.confirm.ConfirmActivity;
 import com.payoneer.mrs.exampleshop.summary.SummaryActivity;
 import com.payoneer.mrs.payment.ui.page.ChargePaymentActivity;
 import com.payoneer.mrs.payment.ui.page.PaymentListActivity;
+import com.payoneer.mrs.sharedtest.sdk.PaymentListHelper;
 import com.payoneer.mrs.sharedtest.service.ListService;
 import com.payoneer.mrs.sharedtest.view.ActivityHelper;
 import com.payoneer.mrs.sharedtest.view.PaymentActions;
@@ -62,32 +65,13 @@ public class AbstractTest {
         onView(withId(R.id.button_checkout)).perform(PaymentActions.scrollToView(), click());
     }
 
-    PaymentListActivity waitForPaymentListLoaded(int count) {
-        intended(hasComponent(PaymentListActivity.class.getName()), times(count));
-        PaymentListActivity listActivity = (PaymentListActivity) ActivityHelper.getCurrentActivity();
-        IdlingResource loadIdlingResource = listActivity.getLoadIdlingResource();
-
-        register(loadIdlingResource);
-        onView(withId(R.id.recyclerview_paymentlist)).check(matches(isDisplayed()));
-        unregister(loadIdlingResource);
-        return listActivity;
-    }
-
-    void openPaymentListCard(int cardIndex, String cardTestId) {
-        Matcher<View> list = withId(R.id.recyclerview_paymentlist);
-        onView(list).check(matches(isCardWithTestId(cardIndex, cardTestId)));
-        onView(list).perform(actionOnItemAtPosition(cardIndex, click()));
-    }
-
     void fillPaymentListCardData(int cardIndex) {
-        Matcher<View> list = withId(R.id.recyclerview_paymentlist);
-        onView(list)
-            .perform(actionOnViewInWidget(cardIndex, typeText("4111111111111111"), "number", R.id.textinputedittext), closeSoftKeyboard());
-        onView(list).perform(actionOnViewInWidget(cardIndex, typeText("1245"), "expiryDate", R.id.textinputedittext), closeSoftKeyboard());
-        onView(list)
-            .perform(actionOnViewInWidget(cardIndex, typeText("123"), "verificationCode", R.id.textinputedittext), closeSoftKeyboard());
-        onView(list)
-            .perform(actionOnViewInWidget(cardIndex, typeText("Thomas Smith"), "holderName", R.id.textinputedittext), closeSoftKeyboard());
+        Map<String, String> values = new LinkedHashMap<>();
+        values.put("number", "4111111111111111");
+        values.put("expiryDate", "1245");
+        values.put("verificationCode", "123");
+        values.put("holderName", "Thomas Smith");
+        PaymentListHelper.fillPaymentListCard(cardIndex, values);
     }
 
     void clickPaymentListCardButton(int cardIndex) {
