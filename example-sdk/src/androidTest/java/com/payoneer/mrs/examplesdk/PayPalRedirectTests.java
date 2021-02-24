@@ -41,7 +41,7 @@ public final class PayPalRedirectTests extends AbstractTest {
     public ActivityTestRule<ExampleSdkActivity> rule = new ActivityTestRule<>(ExampleSdkActivity.class);
 
     @Test
-    public void testPayPalRedirect_browserClosed() {
+    public void testPayPalRedirect_directCharge_browserClosed() {
         IdlingResource resultIdlingResource = getResultIdlingResource();
         enterListUrl(createListUrl());
         clickActionButton();
@@ -62,7 +62,7 @@ public final class PayPalRedirectTests extends AbstractTest {
     }
 
     @Test
-    public void testPayPalRedirect_customerAccept() {
+    public void testPayPalRedirect_directCharge_customerAccept() {
         IdlingResource resultIdlingResource = getResultIdlingResource();
         enterListUrl(createListUrl());
         clickActionButton();
@@ -71,11 +71,7 @@ public final class PayPalRedirectTests extends AbstractTest {
         PaymentListHelper.waitForPaymentListLoaded(1);
         PaymentListHelper.openPaymentListCard(networkCardIndex, "card_network");
         PaymentListHelper.clickPaymentListCardButton(networkCardIndex);
-
-        UiDevice uiDevice = UiDevice.getInstance(InstrumentationRegistry.getInstrumentation());
-        UiDeviceHelper.checkUiObjectContainsText(uiDevice, "customer decision page");
-        UiDeviceHelper.clickUiObjectByResourceName(uiDevice, "customer-accept");
-        UiDeviceHelper.waitUiObjectHasPackage(uiDevice,"com.payoneer.mrs.examplesdk");
+        clickPayPalButton("customer-accept");
 
         register(resultIdlingResource);
         onView(ViewMatchers.withId(R.id.text_interactioncode)).check(matches(withText(InteractionCode.PROCEED)));
@@ -92,12 +88,16 @@ public final class PayPalRedirectTests extends AbstractTest {
         PaymentListHelper.waitForPaymentListLoaded(1);
         PaymentListHelper.openPaymentListCard(networkCardIndex, "card_network");
         PaymentListHelper.clickPaymentListCardButton(networkCardIndex);
-
-        UiDevice uiDevice = UiDevice.getInstance(InstrumentationRegistry.getInstrumentation());
-        UiDeviceHelper.checkUiObjectContainsText(uiDevice, "customer decision page");
-        UiDeviceHelper.clickUiObjectByResourceName(uiDevice, "customer-abort");
+        clickPayPalButton("customer-abort");
 
         intended(hasComponent(ChargePaymentActivity.class.getName()));
         onView(ViewMatchers.withId(R.id.alertTitle)).check(matches(isDisplayed()));
+    }
+
+    private void clickPayPalButton(String buttonId) {
+        UiDevice uiDevice = UiDevice.getInstance(InstrumentationRegistry.getInstrumentation());
+        UiDeviceHelper.checkUiObjectContainsText(uiDevice, "customer decision page");
+        UiDeviceHelper.clickUiObjectByResourceName(uiDevice, buttonId);
+        UiDeviceHelper.waitUiObjectHasPackage(uiDevice,"com.payoneer.mrs.examplesdk");
     }
 }

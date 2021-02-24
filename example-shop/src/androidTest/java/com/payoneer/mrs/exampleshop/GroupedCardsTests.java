@@ -39,7 +39,7 @@ public final class GroupedCardsTests extends AbstractTest {
     public ActivityTestRule<SettingsActivity> settingsActivityRule = new ActivityTestRule<>(SettingsActivity.class);
 
     @Test
-    public void testVisaDirectCharge_success() {
+    public void testVisa_directCharge_success() {
         int groupCardIndex = 1;
         CheckoutActivity checkoutActivity = openCheckoutActivity(false);
         IdlingResource resultHandledIdlingResource = checkoutActivity.getResultHandledIdlingResource();
@@ -50,13 +50,12 @@ public final class GroupedCardsTests extends AbstractTest {
         PaymentListHelper.fillPaymentListCard(groupCardIndex, CardDataProvider.visaCardData());
         PaymentListHelper.clickPaymentListCardButton(groupCardIndex);
 
-        waitForChargePaymentActivityDisplayed();
         waitForConfirmActivityLoaded(resultHandledIdlingResource);
         unregister(resultHandledIdlingResource);
     }
 
     @Test
-    public void testVisaPresetFlow_success() {
+    public void testVisa_presetFlow_success() {
         int groupCardIndex = 1;
         CheckoutActivity checkoutActivity = openCheckoutActivity(true);
         IdlingResource checkoutPaymentResultIdlingResource = checkoutActivity.getResultHandledIdlingResource();
@@ -75,7 +74,6 @@ public final class GroupedCardsTests extends AbstractTest {
         IdlingResource summaryPaymentResultIdlingResource = summaryActivity.getResultHandledIdlingResource();
         clickSummaryPayButton();
 
-        waitForChargePaymentActivityDisplayed();
         waitForConfirmActivityLoaded(summaryPaymentResultIdlingResource);
         unregister(summaryPaymentResultIdlingResource);
     }

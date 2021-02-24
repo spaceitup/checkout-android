@@ -37,7 +37,7 @@ public final class VisaDirectTests extends AbstractTest {
     public ActivityTestRule<ExampleSdkActivity> rule = new ActivityTestRule<>(ExampleSdkActivity.class);
 
     @Test
-    public void testVisaDirectCharge_success() {
+    public void testVisa_directCharge_success() {
         IdlingResource resultIdlingResource = getResultIdlingResource();
         enterListUrl(createListUrl());
         clickActionButton();

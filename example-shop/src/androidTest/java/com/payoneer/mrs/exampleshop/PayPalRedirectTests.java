@@ -19,7 +19,9 @@ import org.junit.runner.RunWith;
 
 import com.payoneer.mrs.exampleshop.checkout.CheckoutActivity;
 import com.payoneer.mrs.exampleshop.settings.SettingsActivity;
+import com.payoneer.mrs.exampleshop.summary.SummaryActivity;
 import com.payoneer.mrs.payment.ui.page.ChargePaymentActivity;
+import com.payoneer.mrs.sharedtest.sdk.CardDataProvider;
 import com.payoneer.mrs.sharedtest.sdk.PaymentListHelper;
 import com.payoneer.mrs.sharedtest.view.UiDeviceHelper;
 
@@ -39,7 +41,7 @@ public final class PayPalRedirectTests extends AbstractTest {
     public ActivityTestRule<SettingsActivity> settingsActivityRule = new ActivityTestRule<>(SettingsActivity.class);
 
     @Test
-    public void testPayPalRedirect_customerAccept() {
+    public void testPayPalRedirect_directCharge_customerAccept() {
         int networkCardIndex = 3;
         CheckoutActivity checkoutActivity = openCheckoutActivity(false);
         IdlingResource resultHandledIdlingResource = checkoutActivity.getResultHandledIdlingResource();
@@ -48,13 +50,40 @@ public final class PayPalRedirectTests extends AbstractTest {
         PaymentListHelper.waitForPaymentListLoaded(1);
         PaymentListHelper.openPaymentListCard(networkCardIndex, "card_network");
         PaymentListHelper.clickPaymentListCardButton(networkCardIndex);
-
-        UiDevice uiDevice = UiDevice.getInstance(InstrumentationRegistry.getInstrumentation());
-        UiDeviceHelper.checkUiObjectContainsText(uiDevice, "customer decision page");
-        UiDeviceHelper.clickUiObjectByResourceName(uiDevice, "customer-accept");
-        UiDeviceHelper.waitUiObjectHasPackage(uiDevice,"com.payoneer.mrs.exampleshop");
+        clickPayPalButton("customer-accept");
 
         waitForConfirmActivityLoaded(resultHandledIdlingResource);
         unregister(resultHandledIdlingResource);
+    }
+
+    @Test
+    public void testPayPalRedirect_presetFlow_customerAccept() {
+        int networkCardIndex = 3;
+        CheckoutActivity checkoutActivity = openCheckoutActivity(true);
+        IdlingResource checkoutPaymentResultIdlingResource = checkoutActivity.getResultHandledIdlingResource();
+        clickCheckoutButton();
+
+        PaymentListHelper.waitForPaymentListLoaded(1);
+        PaymentListHelper.openPaymentListCard(networkCardIndex, "card_network");
+        PaymentListHelper.clickPaymentListCardButton(networkCardIndex);
+
+        register(checkoutPaymentResultIdlingResource);
+        waitForSummaryActivityLoaded();
+        unregister(checkoutPaymentResultIdlingResource);
+
+        SummaryActivity summaryActivity = waitForSummaryActivityLoaded();
+        IdlingResource summaryPaymentResultIdlingResource = summaryActivity.getResultHandledIdlingResource();
+        clickSummaryPayButton();
+        clickPayPalButton("customer-accept");
+
+        waitForConfirmActivityLoaded(summaryPaymentResultIdlingResource);
+        unregister(summaryPaymentResultIdlingResource);
+    }
+
+    private void clickPayPalButton(String buttonId) {
+        UiDevice uiDevice = UiDevice.getInstance(InstrumentationRegistry.getInstrumentation());
+        UiDeviceHelper.checkUiObjectContainsText(uiDevice, "customer decision page");
+        UiDeviceHelper.clickUiObjectByResourceName(uiDevice, buttonId);
+        UiDeviceHelper.waitUiObjectHasPackage(uiDevice,"com.payoneer.mrs.exampleshop");
     }
 }
