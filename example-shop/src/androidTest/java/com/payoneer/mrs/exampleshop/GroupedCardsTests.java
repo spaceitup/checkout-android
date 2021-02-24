@@ -7,9 +7,13 @@
  */
 package com.payoneer.mrs.exampleshop;
 
-import java.io.IOException;
+import static androidx.test.espresso.Espresso.onView;
+import static androidx.test.espresso.assertion.ViewAssertions.matches;
+import static androidx.test.espresso.intent.Intents.intended;
+import static androidx.test.espresso.intent.matcher.IntentMatchers.hasComponent;
+import static androidx.test.espresso.matcher.ViewMatchers.isDisplayed;
+import static androidx.test.espresso.matcher.ViewMatchers.withId;
 
-import org.json.JSONException;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -17,55 +21,52 @@ import org.junit.runner.RunWith;
 import com.payoneer.mrs.exampleshop.checkout.CheckoutActivity;
 import com.payoneer.mrs.exampleshop.settings.SettingsActivity;
 import com.payoneer.mrs.exampleshop.summary.SummaryActivity;
+import com.payoneer.mrs.payment.ui.page.ChargePaymentActivity;
+import com.payoneer.mrs.sharedtest.sdk.CardDataProvider;
 import com.payoneer.mrs.sharedtest.sdk.PaymentListHelper;
 
 import androidx.test.espresso.IdlingResource;
-import androidx.test.espresso.intent.Intents;
-import androidx.test.ext.junit.rules.ActivityScenarioRule;
 import androidx.test.ext.junit.runners.AndroidJUnit4;
 import androidx.test.filters.LargeTest;
+import androidx.test.rule.ActivityTestRule;
+import junit.framework.TestCase;
 
 @RunWith(AndroidJUnit4.class)
 @LargeTest
 public final class GroupedCardsTests extends AbstractTest {
 
     @Rule
-    public ActivityScenarioRule<SettingsActivity> settingsActivityRule = new ActivityScenarioRule<>(SettingsActivity.class);
+    public ActivityTestRule<SettingsActivity> settingsActivityRule = new ActivityTestRule<>(SettingsActivity.class);
 
     @Test
-    public void successfulDirectChargeTest() throws JSONException, IOException {
-        Intents.init();
+    public void testVisaDirectCharge_success() {
         int groupCardIndex = 1;
-
         CheckoutActivity checkoutActivity = openCheckoutActivity(false);
         IdlingResource resultHandledIdlingResource = checkoutActivity.getResultHandledIdlingResource();
         clickCheckoutButton();
 
         PaymentListHelper.waitForPaymentListLoaded(1);
         PaymentListHelper.openPaymentListCard(groupCardIndex, "card_group");
-        fillPaymentListCardData(groupCardIndex);
+        PaymentListHelper.fillPaymentListCard(groupCardIndex, CardDataProvider.visaCardData());
+        PaymentListHelper.clickPaymentListCardButton(groupCardIndex);
 
-        clickPaymentListCardButton(groupCardIndex);
+        waitForChargePaymentActivityDisplayed();
         waitForConfirmActivityLoaded(resultHandledIdlingResource);
         unregister(resultHandledIdlingResource);
-
-        Intents.release();
     }
 
     @Test
-    public void successfulPresetChargeTest() throws IOException, JSONException {
-        Intents.init();
+    public void testVisaPresetFlow_success() {
         int groupCardIndex = 1;
-
         CheckoutActivity checkoutActivity = openCheckoutActivity(true);
         IdlingResource checkoutPaymentResultIdlingResource = checkoutActivity.getResultHandledIdlingResource();
         clickCheckoutButton();
 
         PaymentListHelper.waitForPaymentListLoaded(1);
         PaymentListHelper.openPaymentListCard(groupCardIndex, "card_group");
-        fillPaymentListCardData(groupCardIndex);
+        PaymentListHelper.fillPaymentListCard(groupCardIndex, CardDataProvider.visaCardData());
+        PaymentListHelper.clickPaymentListCardButton(groupCardIndex);
 
-        clickPaymentListCardButton(groupCardIndex);
         register(checkoutPaymentResultIdlingResource);
         waitForSummaryActivityLoaded();
         unregister(checkoutPaymentResultIdlingResource);
@@ -74,8 +75,8 @@ public final class GroupedCardsTests extends AbstractTest {
         IdlingResource summaryPaymentResultIdlingResource = summaryActivity.getResultHandledIdlingResource();
         clickSummaryPayButton();
 
+        waitForChargePaymentActivityDisplayed();
         waitForConfirmActivityLoaded(summaryPaymentResultIdlingResource);
         unregister(summaryPaymentResultIdlingResource);
-        Intents.release();
     }
 }

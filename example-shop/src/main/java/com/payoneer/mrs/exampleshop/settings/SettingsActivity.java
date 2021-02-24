@@ -26,16 +26,33 @@ import android.widget.EditText;
  */
 public final class SettingsActivity extends BaseActivity {
 
+    private Button button;
+    private EditText listInput;
+
     /**
      * Create an Intent to launch this settings activity
      *
+     * @param context base for creating the start intent
+     * @param listUrl to be set when started
      * @return the newly created intent
      */
     public static Intent createStartIntent(final Context context) {
+        return createStartIntent(context, null);
+    }
+
+    /**
+     * Create an Intent to launch this settings activity
+     *
+     * @param context base for creating the start intent
+     * @param listUrl to be set when started
+     * @return the newly created intent
+     */
+    public static Intent createStartIntent(final Context context, final String listUrl) {
         if (context == null) {
             throw new IllegalArgumentException("context may not be null");
         }
         Intent intent = new Intent(context, SettingsActivity.class);
+        intent.putExtra(EXTRA_LISTURL, listUrl);
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
         return intent;
     }
@@ -48,7 +65,12 @@ public final class SettingsActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_settings);
 
-        Button button = findViewById(R.id.button_settings);
+        this.button = findViewById(R.id.button_settings);
+        this.listInput = findViewById(R.id.input_listurl);
+
+        if (listUrl != null) {
+            listInput.setText(listUrl);
+        }
         button.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 onButtonClicked();
@@ -57,7 +79,6 @@ public final class SettingsActivity extends BaseActivity {
     }
 
     private void onButtonClicked() {
-        EditText listInput = findViewById(R.id.input_listurl);
         String listUrl = listInput.getText().toString().trim();
 
         if (TextUtils.isEmpty(listUrl) || !Patterns.WEB_URL.matcher(listUrl).matches()) {
