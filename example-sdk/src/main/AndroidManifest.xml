@@ -21,6 +21,7 @@
 
         <activity
             android:name="com.payoneer.mrs.payment.ui.redirect.PaymentRedirectActivity"
+            android:theme="@style/PaymentTheme.NoToolbar"
             android:launchMode="singleTask">
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />

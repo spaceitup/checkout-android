@@ -17,52 +17,58 @@ import static androidx.test.espresso.intent.matcher.IntentMatchers.hasComponent;
 import static androidx.test.espresso.matcher.ViewMatchers.isDisplayed;
 import static androidx.test.espresso.matcher.ViewMatchers.withId;
 
-import java.io.IOException;
-
-import org.json.JSONException;
-import org.junit.Rule;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.After;
+import org.junit.Before;
 
 import com.payoneer.mrs.payment.ui.page.PaymentListActivity;
 import com.payoneer.mrs.sharedtest.service.ListService;
+import com.payoneer.mrs.sharedtest.view.ActivityHelper;
 
+import android.content.Context;
+import android.content.Intent;
+import androidx.test.core.app.ApplicationProvider;
+import androidx.test.espresso.IdlingRegistry;
+import androidx.test.espresso.IdlingResource;
 import androidx.test.espresso.intent.Intents;
-import androidx.test.espresso.matcher.ViewMatchers;
-import androidx.test.ext.junit.rules.ActivityScenarioRule;
-import androidx.test.ext.junit.runners.AndroidJUnit4;
-import androidx.test.filters.LargeTest;
 
-@RunWith(AndroidJUnit4.class)
-@LargeTest
-public class ExampleSdkTests {
-    @Rule
-    public ActivityScenarioRule<ExampleSdkActivity> activityRule = new ActivityScenarioRule<>(
-        ExampleSdkActivity.class);
+class AbstractTest {
 
-    @Test
-    public void sdkPageVisibleTest() {
-        onView(ViewMatchers.withId(R.id.activity_examplesdk)).check(matches(isDisplayed()));
+    @Before
+    public void beforeTest() {
+        Intents.init();
     }
 
-    @Test
-    public void openPaymentListTest() throws JSONException, IOException {
-        Intents.init();
-        openPaymentList();
+    @After
+    public void afterTest() {
         Intents.release();
     }
 
-    private void openPaymentList() throws JSONException, IOException {
+    void enterListUrl(String listUrl) {
+        onView(withId(R.id.input_listurl)).perform(typeText(listUrl));
+    }
+
+    IdlingResource getResultIdlingResource() {
+        ExampleSdkActivity activity = (ExampleSdkActivity) ActivityHelper.getCurrentActivity();
+        return activity.getResultHandledIdlingResource();
+    }
+
+    String createListUrl() {
         String baseUrl = BuildConfig.paymentapi_baseurl;
         String authHeader = BuildConfig.paymentapi_authheader;
-        String listUrl = ListService.createListUrl(com.payoneer.mrs.examplesdk.test.R.raw.listtemplate, false, baseUrl, authHeader);
+        return ListService.createListUrl(com.payoneer.mrs.examplesdk.test.R.raw.listtemplate, false, baseUrl, authHeader);
+    }
 
-        onView(withId(R.id.input_listurl)).perform(typeText(listUrl));
+    void clickActionButton() {
         onView(withId(R.id.button_action)).perform(click());
-
         intended(hasComponent(PaymentListActivity.class.getName()));
         onView(withId(R.id.layout_paymentlist)).check(matches(isDisplayed()));
     }
 
+    void register(IdlingResource resource) {
+        IdlingRegistry.getInstance().register(resource);
+    }
 
+    void unregister(IdlingResource resource) {
+        IdlingRegistry.getInstance().unregister(resource);
+    }
 }
