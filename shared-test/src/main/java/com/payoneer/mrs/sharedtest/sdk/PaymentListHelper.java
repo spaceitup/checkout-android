@@ -22,23 +22,17 @@ import static androidx.test.espresso.matcher.ViewMatchers.withId;
 import static com.payoneer.mrs.sharedtest.view.PaymentActions.actionOnViewInWidget;
 import static com.payoneer.mrs.sharedtest.view.PaymentMatchers.isCardWithTestId;
 
-import java.io.IOException;
 import java.util.Map;
 
 import org.hamcrest.Matcher;
-import org.json.JSONException;
-import com.payoneer.mrs.payment.R;
 
-import com.payoneer.mrs.payment.ui.page.ChargePaymentActivity;
+import com.payoneer.mrs.payment.R;
 import com.payoneer.mrs.payment.ui.page.PaymentListActivity;
-import com.payoneer.mrs.sharedtest.service.ListService;
 import com.payoneer.mrs.sharedtest.view.ActivityHelper;
-import com.payoneer.mrs.sharedtest.view.PaymentActions;
 
 import android.view.View;
 import androidx.test.espresso.IdlingRegistry;
 import androidx.test.espresso.IdlingResource;
-import androidx.test.espresso.matcher.ViewMatchers;
 
 public final class PaymentListHelper {
 
@@ -65,7 +59,7 @@ public final class PaymentListHelper {
 
         for (Map.Entry<String, String> pair : values.entrySet()) {
             onView(list).perform(actionOnViewInWidget(cardIndex, typeText(pair.getValue()), pair.getKey(),
-                                                      R.id.textinputedittext), closeSoftKeyboard());
+                R.id.textinputedittext), closeSoftKeyboard());
         }
     }
 

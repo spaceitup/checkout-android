@@ -55,18 +55,18 @@ public final class ListService {
      * @param request configuration describing which listUrl should be created
      * @return the newly created listUrl
      */
-    public String createListUrl(ListRequest request) throws IOException {
+    public String createListUrl(ListRequest request) throws ListServiceException {
         try {
             ListResult result = conn.createPaymentSession(url, auth, request.getRequestBody());
             Map<String, URL> links = result.getLinks();
             URL selfUrl = links != null ? links.get("self") : null;
 
             if (selfUrl == null) {
-                throw new IOException("Error creating payment session, missing self url");
+                throw new ListServiceException("Error creating payment session, missing self url");
             }
             return selfUrl.toString();
         } catch (PaymentException e) {
-            throw new IOException("Error creating payment session", e);
+            throw new ListServiceException("Error creating payment session", e);
         }
     }
 
@@ -91,13 +91,16 @@ public final class ListService {
      * @param authHeader content of the authentication header
      * @return the newly created listUrl
      */
-    public static String createListUrl(int jsonResId, boolean presetFirst, String baseUrl, String authHeader)
-        throws JSONException, IOException {
-        Context context = InstrumentationRegistry.getInstrumentation().getTargetContext();
-        ListService service = ListService.createInstance(context, baseUrl, authHeader);
-        ListRequest request = ListRequest.of(service.loadJSONTemplate(jsonResId))
-            .presetFirst(presetFirst)
-            .appId(context.getPackageName()).build();
-        return service.createListUrl(request);
+    public static String createListUrl(int jsonResId, boolean presetFirst, String baseUrl, String authHeader) throws ListServiceException {
+        try {
+            Context context = InstrumentationRegistry.getInstrumentation().getTargetContext();
+            ListService service = ListService.createInstance(context, baseUrl, authHeader);
+            ListRequest request = ListRequest.of(service.loadJSONTemplate(jsonResId))
+                .presetFirst(presetFirst)
+                .appId(context.getPackageName()).build();
+            return service.createListUrl(request);
+        } catch (JSONException | IOException e) {
+            throw new ListServiceException(e);
+        }
     }
 }

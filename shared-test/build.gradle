@@ -26,6 +26,7 @@ android {
 
 dependencies {
     implementation project(':payment')
+    implementation "androidx.test.uiautomator:uiautomator:${rootProject.androidxTestUIAutomatorVersion}"
     implementation "androidx.test.ext:junit:${rootProject.androidxTestJunitVersion}"
     implementation "androidx.test:runner:${rootProject.androidxTestRunnerVersion}"
     implementation "androidx.test:rules:${rootProject.androidxTestRulesVersion}"
