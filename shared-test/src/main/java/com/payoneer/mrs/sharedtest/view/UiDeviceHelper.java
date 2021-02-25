@@ -11,6 +11,7 @@ package com.payoneer.mrs.sharedtest.view;
 import static androidx.test.espresso.matcher.ViewMatchers.assertThat;
 import static org.hamcrest.Matchers.containsString;
 
+import androidx.test.platform.app.InstrumentationRegistry;
 import androidx.test.uiautomator.By;
 import androidx.test.uiautomator.UiDevice;
 import androidx.test.uiautomator.UiObject2;
@@ -23,18 +24,22 @@ public final class UiDeviceHelper {
 
     public final static long TIMEOUT = 20000;
 
-    public static void checkUiObjectContainsText(UiDevice uiDevice, String text) {
+    public static void checkUiObjectContainsText(String text) {
+        UiDevice uiDevice = UiDevice.getInstance(InstrumentationRegistry.getInstrumentation());
         UiObject2 uiObject = uiDevice.wait(Until.findObject(By.text(text)), TIMEOUT);
         assertThat(uiObject.getText(), containsString(text));
     }
 
-    public static void clickUiObjectByResourceName(UiDevice uiDevice, String resourceName) {
+    public static void clickUiObjectByResourceName(String resourceName) {
+        UiDevice uiDevice = UiDevice.getInstance(InstrumentationRegistry.getInstrumentation());
+
         UiObject2 uiObject = uiDevice.wait(Until.findObject(By.res(resourceName)), TIMEOUT);
         uiObject.wait(Until.enabled(true), TIMEOUT);
         uiObject.click();
     }
 
-    public static void waitUiObjectHasPackage(UiDevice uiDevice, String packageName) {
+    public static void waitUiObjectHasPackage(String packageName) {
+        UiDevice uiDevice = UiDevice.getInstance(InstrumentationRegistry.getInstrumentation());
         uiDevice.wait(Until.hasObject(By.pkg(packageName)), TIMEOUT);
     }
 }

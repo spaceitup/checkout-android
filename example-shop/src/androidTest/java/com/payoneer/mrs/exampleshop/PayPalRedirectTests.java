@@ -50,7 +50,7 @@ public final class PayPalRedirectTests extends AbstractTest {
         PaymentListHelper.waitForPaymentListLoaded(1);
         PaymentListHelper.openPaymentListCard(networkCardIndex, "card_network");
         PaymentListHelper.clickPaymentListCardButton(networkCardIndex);
-        clickPayPalButton("customer-accept");
+        clickButtonDecisionPage("customer-accept");
 
         waitForConfirmActivityLoaded(resultHandledIdlingResource);
         unregister(resultHandledIdlingResource);
@@ -74,16 +74,15 @@ public final class PayPalRedirectTests extends AbstractTest {
         SummaryActivity summaryActivity = waitForSummaryActivityLoaded();
         IdlingResource summaryPaymentResultIdlingResource = summaryActivity.getResultHandledIdlingResource();
         clickSummaryPayButton();
-        clickPayPalButton("customer-accept");
+        clickButtonDecisionPage("customer-accept");
 
         waitForConfirmActivityLoaded(summaryPaymentResultIdlingResource);
         unregister(summaryPaymentResultIdlingResource);
     }
 
-    private void clickPayPalButton(String buttonId) {
-        UiDevice uiDevice = UiDevice.getInstance(InstrumentationRegistry.getInstrumentation());
-        UiDeviceHelper.checkUiObjectContainsText(uiDevice, "customer decision page");
-        UiDeviceHelper.clickUiObjectByResourceName(uiDevice, buttonId);
-        UiDeviceHelper.waitUiObjectHasPackage(uiDevice,"com.payoneer.mrs.exampleshop");
+    private void clickButtonDecisionPage(String buttonId) {
+        UiDeviceHelper.checkUiObjectContainsText("customer decision page");
+        UiDeviceHelper.clickUiObjectByResourceName(buttonId);
+        UiDeviceHelper.waitUiObjectHasPackage("com.payoneer.mrs.exampleshop");
     }
 }
