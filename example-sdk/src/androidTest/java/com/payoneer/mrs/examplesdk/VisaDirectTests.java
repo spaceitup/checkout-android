@@ -18,7 +18,7 @@ import org.junit.runner.RunWith;
 
 import com.payoneer.mrs.payment.model.InteractionCode;
 import com.payoneer.mrs.payment.model.InteractionReason;
-import com.payoneer.mrs.sharedtest.sdk.CardDataProvider;
+import com.payoneer.mrs.sharedtest.sdk.TestDataProvider;
 import com.payoneer.mrs.sharedtest.sdk.PaymentListHelper;
 
 import androidx.test.espresso.IdlingResource;
@@ -43,12 +43,11 @@ public final class VisaDirectTests extends AbstractTest {
         int groupCardIndex = 1;
         PaymentListHelper.waitForPaymentListLoaded(1);
         PaymentListHelper.openPaymentListCard(groupCardIndex, "card_group");
-        PaymentListHelper.fillPaymentListCard(groupCardIndex, CardDataProvider.visaCardData());
+        PaymentListHelper.fillPaymentListCard(groupCardIndex, TestDataProvider.visaCardTestData());
         PaymentListHelper.clickPaymentListCardButton(groupCardIndex);
 
         register(resultIdlingResource);
-        onView(ViewMatchers.withId(R.id.text_interactioncode)).check(matches(withText(InteractionCode.PROCEED)));
-        onView(ViewMatchers.withId(R.id.text_interactionreason)).check(matches(withText(InteractionReason.OK)));
+        matchResultInteraction(InteractionCode.PROCEED, InteractionReason.OK);
         unregister(resultIdlingResource);
     }
 }

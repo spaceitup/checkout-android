@@ -53,8 +53,7 @@ public final class PayPalRedirectTests extends AbstractTest {
 
         clickDecisionPageButton("com.android.chrome:id/close_button");
         register(resultIdlingResource);
-        onView(ViewMatchers.withId(R.id.text_interactioncode)).check(matches(withText(InteractionCode.VERIFY)));
-        onView(ViewMatchers.withId(R.id.text_interactionreason)).check(matches(withText(InteractionReason.CLIENTSIDE_ERROR)));
+        matchResultInteraction(InteractionCode.VERIFY, InteractionReason.CLIENTSIDE_ERROR);
         unregister(resultIdlingResource);
     }
 
@@ -71,8 +70,7 @@ public final class PayPalRedirectTests extends AbstractTest {
 
         clickDecisionPageButton("customer-accept");
         register(resultIdlingResource);
-        onView(ViewMatchers.withId(R.id.text_interactioncode)).check(matches(withText(InteractionCode.PROCEED)));
-        onView(ViewMatchers.withId(R.id.text_interactionreason)).check(matches(withText(InteractionReason.OK)));
+        matchResultInteraction(InteractionCode.PROCEED, InteractionReason.OK);
         unregister(resultIdlingResource);
     }
 

@@ -16,10 +16,13 @@ import static androidx.test.espresso.intent.Intents.intended;
 import static androidx.test.espresso.intent.matcher.IntentMatchers.hasComponent;
 import static androidx.test.espresso.matcher.ViewMatchers.isDisplayed;
 import static androidx.test.espresso.matcher.ViewMatchers.withId;
+import static androidx.test.espresso.matcher.ViewMatchers.withText;
 
 import org.junit.After;
 import org.junit.Before;
 
+import com.payoneer.mrs.payment.model.InteractionCode;
+import com.payoneer.mrs.payment.model.InteractionReason;
 import com.payoneer.mrs.payment.ui.page.PaymentListActivity;
 import com.payoneer.mrs.sharedtest.service.ListService;
 import com.payoneer.mrs.sharedtest.view.ActivityHelper;
@@ -27,6 +30,7 @@ import com.payoneer.mrs.sharedtest.view.ActivityHelper;
 import androidx.test.espresso.IdlingRegistry;
 import androidx.test.espresso.IdlingResource;
 import androidx.test.espresso.intent.Intents;
+import androidx.test.espresso.matcher.ViewMatchers;
 
 class AbstractTest {
 
@@ -48,6 +52,12 @@ class AbstractTest {
         ExampleSdkActivity activity = (ExampleSdkActivity) ActivityHelper.getCurrentActivity();
         return activity.getResultHandledIdlingResource();
     }
+
+    void matchResultInteraction(String interactionCode, String interactionReason) {
+        onView(ViewMatchers.withId(R.id.text_interactioncode)).check(matches(withText(interactionCode)));
+        onView(ViewMatchers.withId(R.id.text_interactionreason)).check(matches(withText(interactionReason)));
+    }
+
 
     String createListUrl() {
         String baseUrl = BuildConfig.paymentapi_baseurl;
