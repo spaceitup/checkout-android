@@ -7,12 +7,6 @@
  */
 package com.payoneer.mrs.exampleshop;
 
-import static androidx.test.espresso.Espresso.onView;
-import static androidx.test.espresso.assertion.ViewAssertions.matches;
-import static androidx.test.espresso.intent.Intents.intended;
-import static androidx.test.espresso.intent.matcher.IntentMatchers.hasComponent;
-import static androidx.test.espresso.matcher.ViewMatchers.isDisplayed;
-
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -20,18 +14,13 @@ import org.junit.runner.RunWith;
 import com.payoneer.mrs.exampleshop.checkout.CheckoutActivity;
 import com.payoneer.mrs.exampleshop.settings.SettingsActivity;
 import com.payoneer.mrs.exampleshop.summary.SummaryActivity;
-import com.payoneer.mrs.payment.ui.page.ChargePaymentActivity;
-import com.payoneer.mrs.sharedtest.sdk.CardDataProvider;
 import com.payoneer.mrs.sharedtest.sdk.PaymentListHelper;
 import com.payoneer.mrs.sharedtest.view.UiDeviceHelper;
 
 import androidx.test.espresso.IdlingResource;
-import androidx.test.espresso.matcher.ViewMatchers;
 import androidx.test.ext.junit.runners.AndroidJUnit4;
 import androidx.test.filters.LargeTest;
-import androidx.test.platform.app.InstrumentationRegistry;
 import androidx.test.rule.ActivityTestRule;
-import androidx.test.uiautomator.UiDevice;
 
 @RunWith(AndroidJUnit4.class)
 @LargeTest

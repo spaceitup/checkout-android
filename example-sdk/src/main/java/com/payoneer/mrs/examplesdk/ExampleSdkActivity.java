@@ -16,7 +16,6 @@ import com.payoneer.mrs.payment.ui.PaymentTheme;
 import com.payoneer.mrs.payment.ui.PaymentUI;
 import com.payoneer.mrs.payment.ui.page.idlingresource.SimpleIdlingResource;
 
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;

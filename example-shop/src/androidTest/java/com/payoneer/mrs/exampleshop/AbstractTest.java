@@ -26,8 +26,8 @@ import com.payoneer.mrs.exampleshop.checkout.CheckoutActivity;
 import com.payoneer.mrs.exampleshop.confirm.ConfirmActivity;
 import com.payoneer.mrs.exampleshop.summary.SummaryActivity;
 import com.payoneer.mrs.payment.ui.page.ChargePaymentActivity;
-import com.payoneer.mrs.sharedtest.sdk.CardDataProvider;
 import com.payoneer.mrs.sharedtest.sdk.PaymentListHelper;
+import com.payoneer.mrs.sharedtest.sdk.TestDataProvider;
 import com.payoneer.mrs.sharedtest.service.ListService;
 import com.payoneer.mrs.sharedtest.view.ActivityHelper;
 import com.payoneer.mrs.sharedtest.view.PaymentActions;
@@ -67,7 +67,7 @@ class AbstractTest {
     }
 
     void fillPaymentListCardData(int cardIndex) {
-        Map<String, String> cardData = CardDataProvider.visaCardData();
+        Map<String, String> cardData = TestDataProvider.visaCardTestData();
         PaymentListHelper.fillPaymentListCard(cardIndex, cardData);
     }
 

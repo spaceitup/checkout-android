@@ -12,11 +12,11 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 
 /**
- * Class for creating test data
+ * Class for providing test card data
  */
-public final class CardDataProvider {
+public final class TestDataProvider {
 
-    public static Map<String, String> visaCardData() {
+    public static Map<String, String> visaCardTestData() {
         Map<String, String> values = new LinkedHashMap<>();
         values.put("number", "4111111111111111");
         values.put("expiryDate", "1245");
