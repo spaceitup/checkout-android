@@ -55,7 +55,7 @@ public final class PayPalRedirectTests extends AbstractTest {
         PaymentListHelper.openPaymentListCard(networkCardIndex, "card_network");
         PaymentListHelper.clickPaymentListCardButton(networkCardIndex);
 
-        clickButtonDecisionPage("com.android.chrome:id/close_button");
+        clickDecisionPageButton("com.android.chrome:id/close_button");
         register(resultIdlingResource);
         onView(ViewMatchers.withId(R.id.text_interactioncode)).check(matches(withText(InteractionCode.VERIFY)));
         onView(ViewMatchers.withId(R.id.text_interactionreason)).check(matches(withText(InteractionReason.CLIENTSIDE_ERROR)));
@@ -73,7 +73,7 @@ public final class PayPalRedirectTests extends AbstractTest {
         PaymentListHelper.openPaymentListCard(networkCardIndex, "card_network");
         PaymentListHelper.clickPaymentListCardButton(networkCardIndex);
 
-        clickButtonDecisionPage("customer-accept");
+        clickDecisionPageButton("customer-accept");
         register(resultIdlingResource);
         onView(ViewMatchers.withId(R.id.text_interactioncode)).check(matches(withText(InteractionCode.PROCEED)));
         onView(ViewMatchers.withId(R.id.text_interactionreason)).check(matches(withText(InteractionReason.OK)));
@@ -90,14 +90,14 @@ public final class PayPalRedirectTests extends AbstractTest {
         PaymentListHelper.openPaymentListCard(networkCardIndex, "card_network");
         PaymentListHelper.clickPaymentListCardButton(networkCardIndex);
 
-        clickButtonDecisionPage("customer-abort");
+        clickDecisionPageButton("customer-abort");
         intended(hasComponent(ChargePaymentActivity.class.getName()));
         onView(ViewMatchers.withId(R.id.alertTitle)).check(matches(isDisplayed()));
         onView(withText("OK")).perform(click());
         intended(hasComponent(PaymentListActivity.class.getName()));
     }
 
-    private void clickButtonDecisionPage(String buttonId) {
+    private void clickDecisionPageButton(String buttonId) {
         UiDeviceHelper.checkUiObjectContainsText("customer decision page");
         UiDeviceHelper.clickUiObjectByResourceName(buttonId);
         UiDeviceHelper.waitUiObjectHasPackage("com.payoneer.mrs.examplesdk");

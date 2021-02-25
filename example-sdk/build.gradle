@@ -56,7 +56,7 @@ dependencies {
     testImplementation "org.hamcrest:hamcrest-library:${rootProject.harmcrestVersion}"
 
     androidTestImplementation project(":shared-test")
-    implementation "androidx.test.uiautomator:uiautomator:${rootProject.androidxTestUIAutomatorVersion}"
+    androidTestImplementation "androidx.test.uiautomator:uiautomator:${rootProject.androidxTestUIAutomatorVersion}"
     androidTestImplementation "androidx.test.ext:junit:${rootProject.androidxTestJunitVersion}"
     androidTestImplementation "androidx.test:runner:${rootProject.androidxTestRunnerVersion}"
     androidTestImplementation "androidx.test:rules:${rootProject.androidxTestRulesVersion}"
