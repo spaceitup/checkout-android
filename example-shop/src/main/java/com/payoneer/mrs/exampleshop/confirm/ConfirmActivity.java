@@ -60,7 +60,7 @@ public final class ConfirmActivity extends BaseActivity {
     }
 
     private void openSettingsScreen() {
-        Intent intent = SettingsActivity.createStartIntent(this, null);
+        Intent intent = SettingsActivity.createStartIntent(this);
         startActivity(intent);
     }
 }

@@ -33,26 +33,13 @@ public final class SettingsActivity extends BaseActivity {
      * Create an Intent to launch this settings activity
      *
      * @param context base for creating the start intent
-     * @param listUrl to be set when started
      * @return the newly created intent
      */
     public static Intent createStartIntent(final Context context) {
-        return createStartIntent(context, null);
-    }
-
-    /**
-     * Create an Intent to launch this settings activity
-     *
-     * @param context base for creating the start intent
-     * @param listUrl to be set when started
-     * @return the newly created intent
-     */
-    public static Intent createStartIntent(final Context context, final String listUrl) {
         if (context == null) {
             throw new IllegalArgumentException("context may not be null");
         }
         Intent intent = new Intent(context, SettingsActivity.class);
-        intent.putExtra(EXTRA_LISTURL, listUrl);
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
         return intent;
     }
