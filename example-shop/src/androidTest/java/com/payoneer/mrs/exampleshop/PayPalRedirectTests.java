@@ -15,7 +15,7 @@ import com.payoneer.mrs.exampleshop.checkout.CheckoutActivity;
 import com.payoneer.mrs.exampleshop.settings.SettingsActivity;
 import com.payoneer.mrs.exampleshop.summary.SummaryActivity;
 import com.payoneer.mrs.sharedtest.sdk.PaymentListHelper;
-import com.payoneer.mrs.sharedtest.sdk.TestDataProvider;
+import com.payoneer.mrs.sharedtest.view.UiDeviceHelper;
 
 import androidx.test.espresso.IdlingResource;
 import androidx.test.ext.junit.runners.AndroidJUnit4;
@@ -24,38 +24,37 @@ import androidx.test.rule.ActivityTestRule;
 
 @RunWith(AndroidJUnit4.class)
 @LargeTest
-public final class GroupedCardsTests extends AbstractTest {
+public final class PayPalRedirectTests extends AbstractTest {
 
     @Rule
     public ActivityTestRule<SettingsActivity> settingsActivityRule = new ActivityTestRule<>(SettingsActivity.class);
 
     @Test
-    public void testVisa_directCharge_success() {
-        int groupCardIndex = 1;
+    public void testPayPalRedirect_directCharge_customerAccept() {
+        int networkCardIndex = 3;
         CheckoutActivity checkoutActivity = openCheckoutActivity(false);
         IdlingResource resultHandledIdlingResource = checkoutActivity.getResultHandledIdlingResource();
         clickCheckoutButton();
 
         PaymentListHelper.waitForPaymentListLoaded(1);
-        PaymentListHelper.openPaymentListCard(groupCardIndex, "card_group");
-        PaymentListHelper.fillPaymentListCard(groupCardIndex, TestDataProvider.visaCardTestData());
-        PaymentListHelper.clickPaymentListCardButton(groupCardIndex);
+        PaymentListHelper.openPaymentListCard(networkCardIndex, "card_network");
+        PaymentListHelper.clickPaymentListCardButton(networkCardIndex);
+        clickDecisionPageButton("customer-accept");
 
         waitForConfirmActivityLoaded(resultHandledIdlingResource);
         unregister(resultHandledIdlingResource);
     }
 
     @Test
-    public void testVisa_presetFlow_success() {
-        int groupCardIndex = 1;
+    public void testPayPalRedirect_presetFlow_customerAccept() {
+        int networkCardIndex = 3;
         CheckoutActivity checkoutActivity = openCheckoutActivity(true);
         IdlingResource checkoutPaymentResultIdlingResource = checkoutActivity.getResultHandledIdlingResource();
         clickCheckoutButton();
 
         PaymentListHelper.waitForPaymentListLoaded(1);
-        PaymentListHelper.openPaymentListCard(groupCardIndex, "card_group");
-        PaymentListHelper.fillPaymentListCard(groupCardIndex, TestDataProvider.visaCardTestData());
-        PaymentListHelper.clickPaymentListCardButton(groupCardIndex);
+        PaymentListHelper.openPaymentListCard(networkCardIndex, "card_network");
+        PaymentListHelper.clickPaymentListCardButton(networkCardIndex);
 
         register(checkoutPaymentResultIdlingResource);
         waitForSummaryActivityLoaded();
@@ -64,8 +63,15 @@ public final class GroupedCardsTests extends AbstractTest {
         SummaryActivity summaryActivity = waitForSummaryActivityLoaded();
         IdlingResource summaryPaymentResultIdlingResource = summaryActivity.getResultHandledIdlingResource();
         clickSummaryPayButton();
+        clickDecisionPageButton("customer-accept");
 
         waitForConfirmActivityLoaded(summaryPaymentResultIdlingResource);
         unregister(summaryPaymentResultIdlingResource);
+    }
+
+    private void clickDecisionPageButton(String buttonId) {
+        UiDeviceHelper.checkUiObjectContainsText("customer decision page");
+        UiDeviceHelper.clickUiObjectByResourceName(buttonId);
+        UiDeviceHelper.waitUiObjectHasPackage("com.payoneer.mrs.exampleshop");
     }
 }

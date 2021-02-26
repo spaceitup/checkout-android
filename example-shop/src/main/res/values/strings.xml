@@ -47,6 +47,6 @@
     <string name="contentdescription_confetti">Confetti</string>
     <string name="contentdescription_background">Header background</string>
     <string name="contentdescription_date">Date</string>
-    <string name="contentdescription_count">Count</string>        
+    <string name="contentdescription_count">Count</string>
 
 </resources>

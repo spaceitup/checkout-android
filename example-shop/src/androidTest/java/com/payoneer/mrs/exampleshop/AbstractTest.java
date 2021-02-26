@@ -10,42 +10,46 @@ package com.payoneer.mrs.exampleshop;
 
 import static androidx.test.espresso.Espresso.onView;
 import static androidx.test.espresso.action.ViewActions.click;
-import static androidx.test.espresso.action.ViewActions.closeSoftKeyboard;
 import static androidx.test.espresso.action.ViewActions.typeText;
 import static androidx.test.espresso.assertion.ViewAssertions.matches;
-import static androidx.test.espresso.contrib.RecyclerViewActions.actionOnItemAtPosition;
 import static androidx.test.espresso.intent.Intents.intended;
-import static androidx.test.espresso.intent.Intents.times;
 import static androidx.test.espresso.intent.matcher.IntentMatchers.hasComponent;
 import static androidx.test.espresso.matcher.ViewMatchers.isDisplayed;
 import static androidx.test.espresso.matcher.ViewMatchers.withId;
-import static com.payoneer.mrs.sharedtest.view.PaymentActions.actionOnViewInWidget;
-import static com.payoneer.mrs.sharedtest.view.PaymentMatchers.isCardWithTestId;
 
-import java.io.IOException;
+import java.util.Map;
 
-import org.hamcrest.Matcher;
-import org.json.JSONException;
+import org.junit.After;
+import org.junit.Before;
 
 import com.payoneer.mrs.exampleshop.checkout.CheckoutActivity;
 import com.payoneer.mrs.exampleshop.confirm.ConfirmActivity;
 import com.payoneer.mrs.exampleshop.summary.SummaryActivity;
 import com.payoneer.mrs.payment.ui.page.ChargePaymentActivity;
-import com.payoneer.mrs.payment.ui.page.PaymentListActivity;
+import com.payoneer.mrs.sharedtest.sdk.PaymentListHelper;
+import com.payoneer.mrs.sharedtest.sdk.TestDataProvider;
 import com.payoneer.mrs.sharedtest.service.ListService;
 import com.payoneer.mrs.sharedtest.view.ActivityHelper;
 import com.payoneer.mrs.sharedtest.view.PaymentActions;
 
-import android.view.View;
 import androidx.test.espresso.IdlingRegistry;
 import androidx.test.espresso.IdlingResource;
+import androidx.test.espresso.intent.Intents;
 import androidx.test.espresso.matcher.ViewMatchers;
 
-public class AbstractTest {
+class AbstractTest {
 
-    public final static long CHROME_TIMEOUT = 20000;
+    @Before
+    public void beforeTest() {
+        Intents.init();
+    }
 
-    CheckoutActivity openCheckoutActivity(boolean presetFirst) throws IOException, JSONException {
+    @After
+    public void afterTest() {
+        Intents.release();
+    }
+
+    CheckoutActivity openCheckoutActivity(boolean presetFirst) {
         String baseUrl = BuildConfig.paymentapi_baseurl;
         String authHeader = BuildConfig.paymentapi_authheader;
         String listUrl = ListService.createListUrl(com.payoneer.mrs.exampleshop.test.R.raw.listtemplate, presetFirst, baseUrl, authHeader);
@@ -62,37 +66,9 @@ public class AbstractTest {
         onView(withId(R.id.button_checkout)).perform(PaymentActions.scrollToView(), click());
     }
 
-    PaymentListActivity waitForPaymentListLoaded(int count) {
-        intended(hasComponent(PaymentListActivity.class.getName()), times(count));
-        PaymentListActivity listActivity = (PaymentListActivity) ActivityHelper.getCurrentActivity();
-        IdlingResource loadIdlingResource = listActivity.getLoadIdlingResource();
-
-        register(loadIdlingResource);
-        onView(withId(R.id.recyclerview_paymentlist)).check(matches(isDisplayed()));
-        unregister(loadIdlingResource);
-        return listActivity;
-    }
-
-    void openPaymentListCard(int cardIndex, String cardTestId) {
-        Matcher<View> list = withId(R.id.recyclerview_paymentlist);
-        onView(list).check(matches(isCardWithTestId(cardIndex, cardTestId)));
-        onView(list).perform(actionOnItemAtPosition(cardIndex, click()));
-    }
-
     void fillPaymentListCardData(int cardIndex) {
-        Matcher<View> list = withId(R.id.recyclerview_paymentlist);
-        onView(list)
-            .perform(actionOnViewInWidget(cardIndex, typeText("4111111111111111"), "number", R.id.textinputedittext), closeSoftKeyboard());
-        onView(list).perform(actionOnViewInWidget(cardIndex, typeText("1245"), "expiryDate", R.id.textinputedittext), closeSoftKeyboard());
-        onView(list)
-            .perform(actionOnViewInWidget(cardIndex, typeText("123"), "verificationCode", R.id.textinputedittext), closeSoftKeyboard());
-        onView(list)
-            .perform(actionOnViewInWidget(cardIndex, typeText("Thomas Smith"), "holderName", R.id.textinputedittext), closeSoftKeyboard());
-    }
-
-    void clickPaymentListCardButton(int cardIndex) {
-        intended(hasComponent(PaymentListActivity.class.getName()));
-        onView(withId(R.id.recyclerview_paymentlist)).perform(actionOnViewInWidget(cardIndex, click(), "buttonWidget", R.id.button));
+        Map<String, String> cardData = TestDataProvider.visaCardTestData();
+        PaymentListHelper.fillPaymentListCard(cardIndex, cardData);
     }
 
     SummaryActivity waitForSummaryActivityLoaded() {
@@ -115,9 +91,12 @@ public class AbstractTest {
         onView(withId(R.id.button_edit)).perform(PaymentActions.scrollToView(), click());
     }
 
-    ConfirmActivity waitForConfirmActivityLoaded(IdlingResource resultHandledIdlingResource) {
+    void waitForChargePaymentActivityDisplayed() {
         intended(hasComponent(ChargePaymentActivity.class.getName()));
         onView(withId(R.id.layout_chargepayment)).check(matches(isDisplayed()));
+    }
+
+    ConfirmActivity waitForConfirmActivityLoaded(IdlingResource resultHandledIdlingResource) {
         register(resultHandledIdlingResource);
         intended(hasComponent(ConfirmActivity.class.getName()));
         onView(withId(R.id.layout_confirm)).check(matches(isDisplayed()));

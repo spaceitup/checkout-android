@@ -13,36 +13,31 @@ import static androidx.test.espresso.matcher.ViewMatchers.withId;
 import static androidx.test.espresso.matcher.ViewMatchers.withText;
 import static com.payoneer.mrs.sharedtest.view.PaymentMatchers.isViewInCard;
 
-import java.io.IOException;
-
 import org.hamcrest.Matcher;
-import org.json.JSONException;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
 import com.payoneer.mrs.exampleshop.checkout.CheckoutActivity;
 import com.payoneer.mrs.exampleshop.settings.SettingsActivity;
+import com.payoneer.mrs.sharedtest.sdk.PaymentListHelper;
 
 import android.view.View;
 import androidx.test.espresso.IdlingResource;
-import androidx.test.espresso.intent.Intents;
 import androidx.test.espresso.matcher.ViewMatchers;
-import androidx.test.ext.junit.rules.ActivityScenarioRule;
 import androidx.test.ext.junit.runners.AndroidJUnit4;
 import androidx.test.filters.LargeTest;
+import androidx.test.rule.ActivityTestRule;
 
 @RunWith(AndroidJUnit4.class)
 @LargeTest
 public final class PresetAccountTests extends AbstractTest {
 
     @Rule
-    public ActivityScenarioRule<SettingsActivity> settingsActivityRule = new ActivityScenarioRule<>(SettingsActivity.class);
+    public ActivityTestRule<SettingsActivity> settingsActivityRule = new ActivityTestRule<>(SettingsActivity.class);
 
     @Test
-    public void testPresetAccountWithoutAccountMask() throws JSONException, IOException {
-        Intents.init();
-
+    public void testPresetAccountWithoutAccountMask() {
         int presetCardIndex = 1;
         int networkCardIndex = 3;
 
@@ -50,21 +45,19 @@ public final class PresetAccountTests extends AbstractTest {
         IdlingResource checkoutResultHandledIdlingResource = checkoutActivity.getResultHandledIdlingResource();
         clickCheckoutButton();
 
-        waitForPaymentListLoaded(1);
-        openPaymentListCard(networkCardIndex, "card_network");
-        clickPaymentListCardButton(networkCardIndex);
-        register(checkoutResultHandledIdlingResource);
+        PaymentListHelper.waitForPaymentListLoaded(1);
+        PaymentListHelper.openPaymentListCard(networkCardIndex, "card_network");
+        PaymentListHelper.clickPaymentListCardButton(networkCardIndex);
 
+        register(checkoutResultHandledIdlingResource);
         waitForSummaryActivityLoaded();
         unregister(checkoutResultHandledIdlingResource);
 
         onView(ViewMatchers.withId(R.id.label_title)).check(matches(withText("PAYPAL")));
         clickSummaryEditButton();
 
-        waitForPaymentListLoaded(2);
+        PaymentListHelper.waitForPaymentListLoaded(2);
         Matcher<View> list = withId(R.id.recyclerview_paymentlist);
         onView(list).check(matches(isViewInCard(presetCardIndex, withText("PayPal"), R.id.text_title)));
-
-        Intents.release();
     }
 }

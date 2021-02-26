@@ -14,6 +14,7 @@ import com.payoneer.mrs.payment.ui.PaymentActivityResult;
 import com.payoneer.mrs.payment.ui.PaymentResult;
 import com.payoneer.mrs.payment.ui.PaymentTheme;
 import com.payoneer.mrs.payment.ui.PaymentUI;
+import com.payoneer.mrs.payment.ui.page.idlingresource.SimpleIdlingResource;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -23,7 +24,9 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import androidx.annotation.VisibleForTesting;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.test.espresso.IdlingResource;
 
 /**
  * This is the main Activity of this basic example app demonstrating how to use the Android SDK
@@ -31,7 +34,6 @@ import androidx.appcompat.app.AppCompatActivity;
 public final class ExampleSdkActivity extends AppCompatActivity {
 
     private final static int PAYMENT_REQUEST_CODE = 1;
-
     private PaymentActivityResult sdkResult;
     private EditText listInput;
     private View resultLayout;
@@ -42,6 +44,9 @@ public final class ExampleSdkActivity extends AppCompatActivity {
     private TextView interactionCodeView;
     private TextView interactionReasonView;
     private TextView paymentErrorView;
+    private String listUrl;
+    private SimpleIdlingResource resultHandledIdlingResource;
+    private boolean resultHandled;
 
     /**
      * {@inheritDoc}
@@ -83,8 +88,13 @@ public final class ExampleSdkActivity extends AppCompatActivity {
     @Override
     public void onResume() {
         super.onResume();
+        resultHandled = false;
         if (sdkResult != null) {
             showSdkResult(sdkResult);
+            setResultHandledIdleState();
+        }
+        if (listUrl != null) {
+            listInput.setText(listUrl);
         }
     }
 
@@ -172,6 +182,32 @@ public final class ExampleSdkActivity extends AppCompatActivity {
                 build();
         } else {
             return PaymentTheme.createDefault();
+        }
+    }
+
+    /**
+     * Only called from test, creates and returns a new paymentResult handled IdlingResource
+     */
+    @VisibleForTesting
+    public IdlingResource getResultHandledIdlingResource() {
+        if (resultHandledIdlingResource == null) {
+            resultHandledIdlingResource = new SimpleIdlingResource(getClass().getSimpleName() + "-resultHandledIdlingResource");
+        }
+        if (resultHandled) {
+            resultHandledIdlingResource.setIdleState(true);
+        } else {
+            resultHandledIdlingResource.reset();
+        }
+        return resultHandledIdlingResource;
+    }
+
+    /**
+     * Set the result handled idle state for the IdlingResource
+     */
+    private void setResultHandledIdleState() {
+        resultHandled = true;
+        if (resultHandledIdlingResource != null) {
+            resultHandledIdlingResource.setIdleState(true);
         }
     }
 }
