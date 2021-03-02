@@ -1,9 +1,34 @@
 Changelog - Android SDK
 -----------------------
 
+**Version android-sdk 0.60.0**
+
+Note: Version 0.60.0 is a major release, it changes the name optile to payoneer.
+For example the package net.optile.payment is now changed to com.payoneer.mrs.payment.
+
+**Bug**
+
+* [PCX-1322] - Fix PayPal automated test using TESTPSP
+
+**Feature**
+
+* [PCX-1165] - Convert theming configuration in ExampleApp to switch
+* [PCX-1189] - Generate and submit userAgent string
+* [PCX-1209] - Minimise warnings in code / code cleanup
+* [PCX-1214] - Remove deprecated classes in UI Tests
+* [PCX-1261] - Add missing model classes to the Android-SDK
+* [PCX-1263] - Provide browser parameters (browserData) within CHARGE/PRESET
+* [PCX-1271] - Replace optile with payoneer in code
+* [PCX-1275] - Implement changes in userAgent for unknown data
+* [PCX-1277] - Support all AccountInputData in Android-SDK
+* [PCX-1316] - PayPal redirect automated test
+* [PCX-1326] - Update GitHub documentation
+* [PCX-1331] - Rename Jira fixVersions of the android-sdk
+
 **Version android-sdk 0.52.0**
 
 **Bug**
+
 * [PCX-1208] - Fix "remove duplicated resource warning" in android studio
 * [PCX-1232] - Soft keyboard closes when entering credit card
 * [PCX-1235] - Local title "Oops" is not shown in connection error popup dialogs
@@ -13,9 +38,11 @@ Changelog - Android SDK
 **Version android-sdk 0.51.0**
 
 **Bug**
+
 * [PCX-1187] - Redirect is broken when compiling for Android 30
 
 **Feature**
+
 * [PCX-900] - Store method logos locally in Android SDK
 * [PCX-956] - [Android-sdk] Add X button to text input fields to clear fields
 
