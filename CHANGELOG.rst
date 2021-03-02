@@ -3,7 +3,7 @@ Changelog - Android SDK
 
 **Version android-sdk 0.60.0**
 
-Note: Version 0.60.0 is a major release, it changes the name optile to payoneer.
+Version **0.60.0** is a major release, it changes the name optile to payoneer.
 For example the package net.optile.payment is now changed to com.payoneer.mrs.payment.
 
 **Bug**
@@ -48,9 +48,10 @@ For example the package net.optile.payment is now changed to com.payoneer.mrs.pa
 
 **Version android-sdk 0.50.0**
 
-Note: Version 0.50.0 is a major release, it is mandatory to use the MOBILE_NATIVE integration type.
+Version **0.50.0** is a major release, it is mandatory to use the MOBILE_NATIVE integration type.
 
 **Feature**
+
 * [PCX-760] - Android SDK to use MOBILE_NATIVE integration
 * [PCX-730] - Support POST redirects
 * [PCX-960] - Respect only MOBILE_NATIVE LIST objects
@@ -64,7 +65,7 @@ Note: Version 0.50.0 is a major release, it is mandatory to use the MOBILE_NATIV
 
 **Version android-sdk 0.40.0**
 
-Note: version 0.40.0 is a major release, changes to the payment result handling causes a breaking change.
+Version **0.40.0** is a major release, changes to the payment result handling causes a breaking change.
 
 **Bug**
 
@@ -118,7 +119,7 @@ Note: version 0.40.0 is a major release, changes to the payment result handling 
 
 **Version android-sdk-0.30.0**
 
-Note: version 0.30.0 is a major release with a breaking change, the PaymentUI.RESULT_CODE_ERROR is removed.
+Version **0.30.0** is a major release with a breaking change, the PaymentUI.RESULT_CODE_ERROR is removed.
 When Interaction, PaymentError and OperationResult objects are set in the PaymentResult Object has changed as well,
 please check the README.rst for more information.
 
@@ -153,7 +154,7 @@ please check the README.rst for more information.
 
 **Version android-sdk-0.20.0**
 
-Note: version 0.20.0 is a major release with a breaking change switching from the discontinued AppCompat libraries to the new AndroidX material libraries.
+Version **0.20.0** is a major release with a breaking change switching from the discontinued AppCompat libraries to the new AndroidX material libraries.
 
 * [PCX-452] - Replace support library in the Android-sdk with the new AndroidX library
 
