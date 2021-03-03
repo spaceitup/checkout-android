@@ -1,9 +1,34 @@
 Changelog - Android SDK
 -----------------------
 
+**Version android-sdk 0.60.0**
+
+Version **0.60.0** is a major release, it changes the name optile to payoneer.
+For example the package net.optile.payment is now changed to com.payoneer.mrs.payment.
+
+**Bug**
+
+* [PCX-1322] - Fix PayPal automated test using TESTPSP
+
+**Feature**
+
+* [PCX-1165] - Convert theming configuration in ExampleApp to switch
+* [PCX-1189] - Generate and submit userAgent string
+* [PCX-1209] - Minimise warnings in code / code cleanup
+* [PCX-1214] - Remove deprecated classes in UI Tests
+* [PCX-1261] - Add missing model classes to the Android-SDK
+* [PCX-1263] - Provide browser parameters (browserData) within CHARGE/PRESET
+* [PCX-1271] - Replace optile with payoneer in code
+* [PCX-1275] - Implement changes in userAgent for unknown data
+* [PCX-1277] - Support all AccountInputData in Android-SDK
+* [PCX-1316] - PayPal redirect automated test
+* [PCX-1326] - Update GitHub documentation
+* [PCX-1331] - Rename Jira fixVersions of the android-sdk
+
 **Version android-sdk 0.52.0**
 
 **Bug**
+
 * [PCX-1208] - Fix "remove duplicated resource warning" in android studio
 * [PCX-1232] - Soft keyboard closes when entering credit card
 * [PCX-1235] - Local title "Oops" is not shown in connection error popup dialogs
@@ -13,17 +38,20 @@ Changelog - Android SDK
 **Version android-sdk 0.51.0**
 
 **Bug**
+
 * [PCX-1187] - Redirect is broken when compiling for Android 30
 
 **Feature**
+
 * [PCX-900] - Store method logos locally in Android SDK
 * [PCX-956] - [Android-sdk] Add X button to text input fields to clear fields
 
 **Version android-sdk 0.50.0**
 
-Note: Version 0.50.0 is a major release, it is mandatory to use the MOBILE_NATIVE integration type.
+Version **0.50.0** is a major release, it is mandatory to use the MOBILE_NATIVE integration type.
 
 **Feature**
+
 * [PCX-760] - Android SDK to use MOBILE_NATIVE integration
 * [PCX-730] - Support POST redirects
 * [PCX-960] - Respect only MOBILE_NATIVE LIST objects
@@ -37,7 +65,7 @@ Note: Version 0.50.0 is a major release, it is mandatory to use the MOBILE_NATIV
 
 **Version android-sdk 0.40.0**
 
-Note: version 0.40.0 is a major release, changes to the payment result handling causes a breaking change.
+Version **0.40.0** is a major release, changes to the payment result handling causes a breaking change.
 
 **Bug**
 
@@ -91,7 +119,7 @@ Note: version 0.40.0 is a major release, changes to the payment result handling 
 
 **Version android-sdk-0.30.0**
 
-Note: version 0.30.0 is a major release with a breaking change, the PaymentUI.RESULT_CODE_ERROR is removed.
+Version **0.30.0** is a major release with a breaking change, the PaymentUI.RESULT_CODE_ERROR is removed.
 When Interaction, PaymentError and OperationResult objects are set in the PaymentResult Object has changed as well,
 please check the README.rst for more information.
 
@@ -126,7 +154,7 @@ please check the README.rst for more information.
 
 **Version android-sdk-0.20.0**
 
-Note: version 0.20.0 is a major release with a breaking change switching from the discontinued AppCompat libraries to the new AndroidX material libraries.
+Version **0.20.0** is a major release with a breaking change switching from the discontinued AppCompat libraries to the new AndroidX material libraries.
 
 * [PCX-452] - Replace support library in the Android-sdk with the new AndroidX library
 
