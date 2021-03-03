@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="net.optile.example.shop">
+    package="com.payoneer.mrs.exampleshop">
 
     <application
         android:allowBackup="true"
@@ -10,7 +10,7 @@
         android:supportsRtl="true">
 
         <activity
-            android:name=".settings.SettingsActivity"
+            android:name="com.payoneer.mrs.exampleshop.settings.SettingsActivity"
             android:theme="@style/PaymentTheme.Toolbar">
 
             <intent-filter>
@@ -20,21 +20,21 @@
         </activity>
 
         <activity
-            android:name=".checkout.CheckoutActivity"
+            android:name="com.payoneer.mrs.exampleshop.checkout.CheckoutActivity"
             android:windowSoftInputMode="stateAlwaysHidden"
-            android:theme="@style/PaymentTheme.CollapsingToolbar"/>
+            android:theme="@style/PaymentTheme.CollapsingToolbar" />
 
         <activity
-            android:name=".summary.SummaryActivity"
-            android:theme="@style/PaymentTheme.CollapsingToolbar"/>
+            android:name="com.payoneer.mrs.exampleshop.summary.SummaryActivity"
+            android:theme="@style/PaymentTheme.CollapsingToolbar" />
 
         <activity
-            android:name=".confirm.ConfirmActivity"
+            android:name="com.payoneer.mrs.exampleshop.confirm.ConfirmActivity"
             android:noHistory="true"
-            android:theme="@style/PaymentTheme.NoToolbar"/>
+            android:theme="@style/PaymentTheme.NoToolbar" />
 
         <activity
-            android:name="net.optile.payment.ui.redirect.PaymentRedirectActivity"
+            android:name="com.payoneer.mrs.payment.ui.redirect.PaymentRedirectActivity"
             android:theme="@style/PaymentTheme.NoToolbar"
             android:launchMode="singleTask">
 

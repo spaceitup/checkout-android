@@ -17,9 +17,9 @@
             <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginRight="@dimen/pmborder_xsmall"
+                android:layout_marginEnd="@dimen/pmborder_xsmall"
                 android:src="@drawable/ic_date"
-                android:contentDescription="TODO" />
+                android:contentDescription="@string/contentdescription_date" />
 
             <TextView
                 android:textAppearance="?attr/textAppearanceBody2"
@@ -46,8 +46,9 @@
             <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginRight="@dimen/pmborder_xsmall"
-                android:src="@drawable/ic_count" />
+                android:layout_marginEnd="@dimen/pmborder_xsmall"
+                android:src="@drawable/ic_count"
+                android:contentDescription="@string/contentdescription_count" />
 
             <TextView
                 android:textAppearance="?attr/textAppearanceBody2"

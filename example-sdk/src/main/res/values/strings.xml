@@ -1,12 +1,11 @@
 <resources>
     <string name="app_name">SDK Example</string>
 
-    <string name="theme_default">Default Theme</string>
-    <string name="theme_custom">Custom Theme</string>
     <string name="actionbutton">Open PaymentPage</string>
     <string name="list_hint">List URL</string>
     <string name="empty_label">n/a</string>
 
+    <string name="settings_theme">Use a custom theme</string>
     <string name="settings_header">Example Settings</string>
     <string name="result_header">SDK Result</string>
     <string name="resultcode">onActivityResult(resultCode)</string>
@@ -17,5 +16,5 @@
 
     <string name="dialog_error_title">Example Error</string>
     <string name="dialog_error_button">Close</string>
-    <string name="dialog_error_listurl_invalid">Please paste a valid optile List URL in the input field.</string>
+    <string name="dialog_error_listurl_invalid">Please paste a valid List URL in the input field.</string>
 </resources>

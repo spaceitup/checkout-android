@@ -9,8 +9,6 @@
 
     <dimen name="pmcard_elevation">0dp</dimen>
     <dimen name="pmcard_stroke">1dp</dimen>
-    <dimen name="pmcard_logos_portrait">108dp</dimen>
-    <dimen name="pmcard_logos_landscape">166dp</dimen>
 
     <dimen name="pmradius">4dp</dimen>
     <dimen name="pmtoolbar_elevation">0dp</dimen>

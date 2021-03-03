@@ -1,5 +1,5 @@
-apply plugin: 'com.android.library'
-apply plugin: 'maven'
+apply plugin: "com.android.library"
+apply plugin: "maven"
 
 assemble.dependsOn('lint')
 
@@ -43,7 +43,7 @@ android {
 
         libraryVariants.all { variant ->
             variant.outputs.all {
-                outputFileName = "optile-payment-${variant.name}-${defaultConfig.versionName}.aar"
+                outputFileName = "payoneer-mrs-payment-${variant.name}-${defaultConfig.versionName}.aar"
             }
         }
     }
@@ -54,6 +54,10 @@ dependencies {
     implementation "androidx.browser:browser:${rootProject.androidxBrowserVersion}"
     implementation "com.google.code.gson:gson:${rootProject.gsonVersion}"
     implementation "androidx.test.espresso:espresso-idling-resource:${rootProject.androidxTestEspressoVersion}@aar"
+
+    compileOnly "org.projectlombok:lombok:${rootProject.lombokVersion}"
+    annotationProcessor "org.projectlombok:lombok:${rootProject.lombokVersion}"
+
     implementation("com.github.bumptech.glide:glide:${rootProject.bumptechGlideVersion}") {
         exclude group: "com.android.support"
     }
@@ -75,7 +79,7 @@ dependencies {
 }
 
 //
-// This task contains the upload repositories for Nexus release & shapshot
+// This task contains the upload repositories for Nexus release & snapshot
 //
 uploadArchives {
     if (!(project.hasProperty('mavenUser') && project.hasProperty('mavenPassword'))) {

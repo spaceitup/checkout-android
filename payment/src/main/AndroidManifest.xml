@@ -1,5 +1,5 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="net.optile.payment">
+    package="com.payoneer.mrs.payment">
 
     <queries>
         <intent>
@@ -10,10 +10,10 @@
     <uses-permission android:name="android.permission.INTERNET" />
     <application android:hardwareAccelerated="true">
         <activity
-            android:name="net.optile.payment.ui.page.PaymentListActivity"
+            android:name=".ui.page.PaymentListActivity"
             android:theme="@style/PaymentTheme" />
         <activity
-            android:name="net.optile.payment.ui.page.ChargePaymentActivity"
+            android:name=".ui.page.ChargePaymentActivity"
             android:theme="@style/PaymentTheme" />
     </application>
 </manifest>

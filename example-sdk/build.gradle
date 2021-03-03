@@ -19,7 +19,7 @@ android {
     compileSdkVersion rootProject.compileSdkVersion
 
     defaultConfig {
-        applicationId "net.optile.example.sdk"
+        applicationId "com.payoneer.mrs.examplesdk"
         minSdkVersion rootProject.minSdkVersion
         targetSdkVersion rootProject.targetSdkVersion
         versionCode rootProject.versionCode
@@ -49,12 +49,14 @@ android {
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation "com.google.android.material:material:${rootProject.androidMaterialVersion}"
+    implementation "androidx.test.espresso:espresso-idling-resource:${rootProject.androidxTestEspressoVersion}@aar"
     implementation project(":payment")
 
     testImplementation "androidx.test.ext:junit:${rootProject.androidxTestJunitVersion}"
     testImplementation "org.hamcrest:hamcrest-library:${rootProject.harmcrestVersion}"
 
     androidTestImplementation project(":shared-test")
+    androidTestImplementation "androidx.test.uiautomator:uiautomator:${rootProject.androidxTestUIAutomatorVersion}"
     androidTestImplementation "androidx.test.ext:junit:${rootProject.androidxTestJunitVersion}"
     androidTestImplementation "androidx.test:runner:${rootProject.androidxTestRunnerVersion}"
     androidTestImplementation "androidx.test:rules:${rootProject.androidxTestRulesVersion}"
