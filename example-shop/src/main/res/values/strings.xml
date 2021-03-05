@@ -1,12 +1,12 @@
 <resources>
-    <string name="app_name">Example Shop</string>
+    <string name="app_name">Shop Example</string>
     <string name="button_settings">Start demo</string>
     <string name="button_checkout">Continue to payment details</string>
     <string name="button_pay">Pay</string>
     <string name="button_neworder">Start new order</string>
     <string name="button_edit">Edit</string>
 
-    <string name="settings_header">Example Shop - Settings</string>
+    <string name="settings_header">Shop Example - Settings</string>
     <string name="settings_hint">List URL</string>
 
     <string name="checkout_collapsed_title">Checkout details</string>

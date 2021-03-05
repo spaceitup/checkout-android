@@ -15,9 +15,11 @@ import com.payoneer.mrs.exampleshop.shared.BaseActivity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.IBinder;
 import android.text.TextUtils;
 import android.util.Patterns;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 
@@ -66,6 +68,7 @@ public final class SettingsActivity extends BaseActivity {
     }
 
     private void onButtonClicked() {
+        closeKeyboard();
         String listUrl = listInput.getText().toString().trim();
 
         if (TextUtils.isEmpty(listUrl) || !Patterns.WEB_URL.matcher(listUrl).matches()) {
@@ -74,5 +77,13 @@ public final class SettingsActivity extends BaseActivity {
         }
         Intent intent = CheckoutActivity.createStartIntent(this, listUrl);
         startActivity(intent);
+    }
+
+    private void closeKeyboard() {
+        InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+        if (imm != null) {
+            IBinder binder = listInput.getWindowToken();
+            imm.hideSoftInputFromWindow(binder, 0);
+        }
     }
 }
