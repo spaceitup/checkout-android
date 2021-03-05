@@ -21,8 +21,8 @@ platform :android do
     # ENV["SLACK_URL"] = "https://hooks.slack.com/services/..."
   end
 
-  desc "Example SDK - Deploy internal version to PlayStore"
-  lane :uploadExampleSDK do
+  desc "SDK Example - Deploy internal version to PlayStore"
+  lane :uploadSDKExample do
     gradle(task: "clean")
     gradle(task: ":example-sdk:assembleRelease")
     supply(
@@ -33,8 +33,8 @@ platform :android do
     # You can also use other beta testing services here
   end
 
-  desc "Example Shop - Deploy internal version to PlayStore"
-  lane :uploadExampleShop do
+  desc "Shop Example - Deploy internal version to PlayStore"
+  lane :uploadShopExample do
     gradle(task: "clean")
     gradle(task: ":example-shop:assembleRelease")
     supply(
