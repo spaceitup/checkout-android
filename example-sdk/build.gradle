@@ -22,8 +22,8 @@ android {
         applicationId "com.payoneer.mrs.examplesdk"
         minSdkVersion rootProject.minSdkVersion
         targetSdkVersion rootProject.targetSdkVersion
-        versionCode 2
-        versionName "0.1.1"
+        versionCode rootProject.versionCode
+        versionName rootProject.versionName
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
 
