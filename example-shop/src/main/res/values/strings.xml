@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Shop Example</string>
+    <string name="app_name">Example Shop</string>
     <string name="button_settings">Start demo</string>
     <string name="button_checkout">Continue to payment details</string>
     <string name="button_pay">Pay</string>

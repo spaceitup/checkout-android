@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">SDK Example</string>
+    <string name="app_name">Example SDK</string>
 
     <string name="actionbutton">Open PaymentPage</string>
     <string name="list_hint">List URL</string>
