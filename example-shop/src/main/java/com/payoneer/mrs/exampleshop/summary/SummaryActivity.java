@@ -55,10 +55,6 @@ public final class SummaryActivity extends BaseActivity implements SummaryView {
     private boolean loadCompleted;
     private SimpleIdlingResource loadIdlingResource;
 
-    public Activity getActivity() {
-        return this;
-    }
-
     /**
      * Create an Intent to launch this checkout activity
      *
@@ -127,6 +123,14 @@ public final class SummaryActivity extends BaseActivity implements SummaryView {
         }
     }
 
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public Context getContext() {
+        return this;
+    }
+    
     /**
      * {@inheritDoc}
      */

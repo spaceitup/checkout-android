@@ -11,6 +11,7 @@ package com.payoneer.mrs.exampleshop.summary;
 import com.payoneer.mrs.payment.model.PresetAccount;
 
 import android.app.Activity;
+import android.content.Context;
 
 /**
  * The interface for the SummaryView.
@@ -51,7 +52,12 @@ interface SummaryView {
      */
     void showPaymentDetails(PresetAccount account);
 
-    Activity getActivity();
+    /** 
+     * Get the Context in which this presenter is operating
+     * 
+     * @return the context 
+     */
+    Context getContext();
 
     /**
      * Get the list url from the summary view

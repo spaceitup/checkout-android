@@ -64,8 +64,8 @@ dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation "com.google.android.material:material:${rootProject.androidMaterialVersion}"
     implementation project(":payment")
-    implementation "io.reactivex:rxjava:${rootProject.rxjavaVersion}"
-    implementation "io.reactivex:rxandroid:${rootProject.rxandroidVersion}"
+    implementation "io.reactivex.rxjava3:rxjava:${rootProject.rxjavaVersion}"
+    implementation "io.reactivex.rxjava3:rxandroid:${rootProject.rxandroidVersion}"
     implementation "androidx.test.espresso:espresso-idling-resource:${rootProject.androidxTestEspressoVersion}@aar"
 
     testImplementation "androidx.test.ext:junit:${rootProject.androidxTestJunitVersion}"
