@@ -22,9 +22,18 @@ android {
         applicationId "com.payoneer.mrs.examplesdk"
         minSdkVersion rootProject.minSdkVersion
         targetSdkVersion rootProject.targetSdkVersion
-        versionCode rootProject.versionCode
-        versionName rootProject.versionName
+        versionCode 1
+        versionName "0.1.0"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+    }
+
+    signingConfigs {
+        release {
+            storeFile file("$System.env.PLAYSTORE_UPLOAD_STOREFILE")
+            storePassword "$System.env.PLAYSTORE_UPLOAD_STOREPASSWORD"
+            keyAlias "$System.env.PLAYSTORE_UPLOAD_KEYALIAS"
+            keyPassword "$System.env.PLAYSTORE_UPLOAD_KEYPASSWORD"
+        }
     }
 
     buildTypes {
@@ -34,14 +43,18 @@ android {
 
             testVariants.all { testVariant ->
                 testVariant.outputs.all { output ->
-                    outputFileName = "Example-SDK-${getCurrentBranch()}-debug-androidTest.apk"
+                    outputFileName = "Example-SDK_${getCurrentBranch()}_debug-androidTest.apk"
                 }
             }
-            applicationVariants.all { variant ->
+	    }
+        release {
+            minifyEnabled true
+            signingConfig signingConfigs.release
+        }
+        applicationVariants.all { variant ->
                 variant.outputs.all {
-                    outputFileName = "Example-SDK-${getCurrentBranch()}-debug.apk"
+                    outputFileName = "Example-SDK_${getCurrentBranch()}_${variant.buildType.name}.apk"
                 }
-            }
         }
     }
 }

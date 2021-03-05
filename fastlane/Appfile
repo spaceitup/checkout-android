@@ -1,0 +1,2 @@
+# Path to the json secret file - Follow https://github.com/fastlane/supply#setup to get one
+json_key_file ENV['ANDROIDSDK_FASTLANE_SECRET']
