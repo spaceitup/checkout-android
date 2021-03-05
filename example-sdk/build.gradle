@@ -29,7 +29,7 @@ android {
 
     signingConfigs {
         release {
-            storeFile file("$System.env.PLAYSTORE_UPLOAD_KEYSTORE")
+            storeFile file("$System.env.PLAYSTORE_UPLOAD_STOREFILE")
             storePassword "$System.env.PLAYSTORE_UPLOAD_STOREPASSWORD"
             keyAlias "$System.env.PLAYSTORE_UPLOAD_KEYALIAS"
             keyPassword "$System.env.PLAYSTORE_UPLOAD_KEYPASSWORD"
