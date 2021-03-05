@@ -27,7 +27,6 @@ platform :android do
     gradle(task: ":example-sdk:assembleRelease")
     supply(
         track: 'internal',
-        release_status: 'draft',
 	package_name: 'com.payoneer.mrs.examplesdk'
     )
     # sh "your_script.sh"
