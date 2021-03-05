@@ -1,12 +1,12 @@
 <resources>
-    <string name="app_name">Example SDK</string>
+    <string name="app_name">SDK Example</string>
 
     <string name="actionbutton">Send request</string>
     <string name="list_hint">List URL</string>
     <string name="empty_label">n/a</string>
 
     <string name="settings_theme">Use a custom theme</string>
-    <string name="settings_header">Example SDK - Settings</string>
+    <string name="settings_header">SDK Example - Settings</string>
     <string name="result_header">SDK Result</string>
     <string name="resultcode">onActivityResult(resultCode)</string>
     <string name="resultinfo">resultInfo</string>
