@@ -46,10 +46,11 @@ android {
                     outputFileName = "Example-SDK_${getCurrentBranch()}_debug-androidTest.apk"
                 }
             }
-	    }
+        }
         release {
             minifyEnabled true
             signingConfig signingConfigs.release
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'	    
         }
         applicationVariants.all { variant ->
                 variant.outputs.all {
