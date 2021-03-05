@@ -35,7 +35,7 @@ android {
             keyPassword "$System.env.PLAYSTORE_UPLOAD_KEYPASSWORD"
         }
     }
-    
+
     buildTypes {
         debug {
             buildConfigField "String", "paymentapi_authheader", "\"$System.env.ANDROIDSDK_PAYMENTAPI_AUTH\""
@@ -47,15 +47,15 @@ android {
                 }
             }
         }
-	release {
+        release {
             minifyEnabled true
             signingConfig signingConfigs.release
-            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'	    
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
         applicationVariants.all { variant ->
-                variant.outputs.all {
-                    outputFileName = "Example-Shop_${getCurrentBranch()}_${variant.buildType.name}.apk"
-                }
+            variant.outputs.all {
+                outputFileName = "Example-Shop_${getCurrentBranch()}_${variant.buildType.name}.apk"
+            }
         }
     }
 }

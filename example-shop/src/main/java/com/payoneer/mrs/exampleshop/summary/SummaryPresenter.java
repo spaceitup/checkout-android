@@ -57,7 +57,7 @@ final class SummaryPresenter {
         if (disposable != null) {
             disposable.dispose();
             disposable = null;
-        }        
+        }
     }
 
     /**

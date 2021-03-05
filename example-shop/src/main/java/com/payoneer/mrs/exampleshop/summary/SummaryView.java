@@ -10,7 +10,6 @@ package com.payoneer.mrs.exampleshop.summary;
 
 import com.payoneer.mrs.payment.model.PresetAccount;
 
-import android.app.Activity;
 import android.content.Context;
 
 /**
@@ -52,10 +51,10 @@ interface SummaryView {
      */
     void showPaymentDetails(PresetAccount account);
 
-    /** 
+    /**
      * Get the Context in which this presenter is operating
-     * 
-     * @return the context 
+     *
+     * @return the context
      */
     Context getContext();
 
