@@ -24,8 +24,8 @@ platform :android do
   desc "Example SDK - Deploy Alpha to GooglePlay"
   lane :alpha do
     gradle(task: ":example-sdk:clean")
-    gradle(task: ":example-sdk:assembleDebug")
-    supply(track: 'alpha', package_name: 'com.payoneer.mrs.examplesdk')
+    gradle(task: ":example-sdk:assembleRelease")
+    supply(track: 'internal', package_name: 'com.payoneer.mrs.examplesdk')
     # sh "your_script.sh"
     # You can also use other beta testing services here
   end

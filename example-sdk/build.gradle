@@ -22,14 +22,14 @@ android {
         applicationId "com.payoneer.mrs.examplesdk"
         minSdkVersion rootProject.minSdkVersion
         targetSdkVersion rootProject.targetSdkVersion
-        versionCode 1
-        versionName "0.1.0"
+        versionCode 2
+        versionName "0.1.1"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
 
     signingConfigs {
         release {
-            storeFile file("$System.env.PLAYSTORE_UPLOAD_STOREFILE")
+            storeFile file("$System.env.PLAYSTORE_UPLOAD_KEYSTORE")
             storePassword "$System.env.PLAYSTORE_UPLOAD_STOREPASSWORD"
             keyAlias "$System.env.PLAYSTORE_UPLOAD_KEYALIAS"
             keyPassword "$System.env.PLAYSTORE_UPLOAD_KEYPASSWORD"
