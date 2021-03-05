@@ -16,11 +16,14 @@ import com.payoneer.mrs.payment.ui.PaymentTheme;
 import com.payoneer.mrs.payment.ui.PaymentUI;
 import com.payoneer.mrs.payment.ui.page.idlingresource.SimpleIdlingResource;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.IBinder;
 import android.text.TextUtils;
 import android.util.Patterns;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -157,9 +160,10 @@ public final class ExampleSdkActivity extends AppCompatActivity {
     }
 
     private void openPaymentPage() {
+        closeKeyboard();
         clearSdkResult();
-        String listUrl = listInput.getText().toString().trim();
 
+        String listUrl = listInput.getText().toString().trim();
         if (TextUtils.isEmpty(listUrl) || !Patterns.WEB_URL.matcher(listUrl).matches()) {
             showErrorDialog(getString(R.string.dialog_error_listurl_invalid));
             return;
@@ -208,6 +212,14 @@ public final class ExampleSdkActivity extends AppCompatActivity {
         resultHandled = true;
         if (resultHandledIdlingResource != null) {
             resultHandledIdlingResource.setIdleState(true);
+        }
+    }
+
+    private void closeKeyboard() {
+        InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+        if (imm != null) {
+            IBinder binder = listInput.getWindowToken();
+            imm.hideSoftInputFromWindow(binder, 0);
         }
     }
 }
