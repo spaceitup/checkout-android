@@ -24,11 +24,12 @@ import com.payoneer.mrs.payment.network.ListConnection;
 import com.payoneer.mrs.payment.ui.PaymentActivityResult;
 import com.payoneer.mrs.payment.ui.PaymentResult;
 
-import rx.Single;
-import rx.SingleSubscriber;
-import rx.Subscription;
-import rx.android.schedulers.AndroidSchedulers;
-import rx.schedulers.Schedulers;
+import android.content.Context;
+import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
+import io.reactivex.rxjava3.core.Single;
+import io.reactivex.rxjava3.disposables.Disposable;
+import io.reactivex.rxjava3.observers.DisposableSingleObserver;
+import io.reactivex.rxjava3.schedulers.Schedulers;
 
 /**
  * SummaryPresenter responsible for communicating with the
@@ -37,7 +38,7 @@ import rx.schedulers.Schedulers;
 final class SummaryPresenter {
 
     private final SummaryView view;
-    private Subscription subscription;
+    private Disposable disposable;
 
     /**
      * Construct a new SummaryPresenter
@@ -50,12 +51,12 @@ final class SummaryPresenter {
 
     /**
      * Notify the presenter that it should be stopped.
-     * Check if there are any pending subscriptions and unsubscribe if needed
+     * Dispose any disposable if available.
      */
     void onStop() {
-        if (subscription != null) {
-            subscription.unsubscribe();
-            subscription = null;
+        if (disposable != null) {
+            disposable.dispose();
+            disposable = null;
         }
     }
 
@@ -80,24 +81,29 @@ final class SummaryPresenter {
             return;
         }
         view.showLoading(true);
-
+        final Context context = view.getContext();
         final Single<ListResult> single = Single.fromCallable(new Callable<ListResult>() {
             @Override
             public ListResult call() throws ShopException {
-                return asyncLoadPaymentSession(listUrl);
+                return asyncLoadPaymentSession(context, listUrl);
             }
         });
-        this.subscription = single.subscribeOn(Schedulers.io())
+
+        this.disposable = single.subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
-            .subscribe(new SingleSubscriber<ListResult>() {
+            .subscribeWith(new DisposableSingleObserver<ListResult>() {
                 @Override
-                public void onSuccess(ListResult result) {
-                    handleLoadPaymentSessionSuccess(result);
+                public void onStart() {
                 }
 
                 @Override
-                public void onError(Throwable error) {
-                    handleLoadPaymentSessionError(error);
+                public void onSuccess(ListResult value) {
+                    handleLoadPaymentSessionSuccess(value);
+                }
+
+                @Override
+                public void onError(Throwable cause) {
+                    handleLoadPaymentSessionError(cause);
                 }
             });
     }
@@ -157,11 +163,11 @@ final class SummaryPresenter {
     }
 
     private boolean isLoadSessionActive() {
-        return subscription != null && !subscription.isUnsubscribed();
+        return disposable != null && !disposable.isDisposed();
     }
 
     private void handleLoadPaymentSessionSuccess(ListResult result) {
-        this.subscription = null;
+        this.disposable = null;
         PresetAccount account = result.getPresetAccount();
         if (account == null) {
             view.close();
@@ -171,12 +177,12 @@ final class SummaryPresenter {
     }
 
     private void handleLoadPaymentSessionError(Throwable error) {
-        this.subscription = null;
+        this.disposable = null;
         view.stopPaymentWithErrorMessage();
     }
 
-    private ListResult asyncLoadPaymentSession(String listUrl) throws ShopException {
-        ListConnection conn = new ListConnection(view.getActivity());
+    private ListResult asyncLoadPaymentSession(Context context, String listUrl) throws ShopException {
+        ListConnection conn = new ListConnection(context);
         try {
             return conn.getListResult(listUrl);
         } catch (PaymentException e) {

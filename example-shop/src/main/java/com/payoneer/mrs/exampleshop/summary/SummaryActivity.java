@@ -24,7 +24,6 @@ import com.payoneer.mrs.payment.ui.page.idlingresource.SimpleIdlingResource;
 import com.payoneer.mrs.payment.util.NetworkLogoLoader;
 import com.payoneer.mrs.payment.util.PaymentUtils;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Typeface;
@@ -54,10 +53,6 @@ public final class SummaryActivity extends BaseActivity implements SummaryView {
     // For automated UI Testing
     private boolean loadCompleted;
     private SimpleIdlingResource loadIdlingResource;
-
-    public Activity getActivity() {
-        return this;
-    }
 
     /**
      * Create an Intent to launch this checkout activity
@@ -125,6 +120,14 @@ public final class SummaryActivity extends BaseActivity implements SummaryView {
         } else {
             presenter.loadPaymentDetails(listUrl);
         }
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public Context getContext() {
+        return this;
     }
 
     /**
