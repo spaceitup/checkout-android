@@ -6,7 +6,7 @@
     <string name="button_neworder">Start new order</string>
     <string name="button_edit">Edit</string>
 
-    <string name="settings_header">Shop Settings</string>
+    <string name="settings_header">Shop Example - Settings</string>
     <string name="settings_hint">List URL</string>
 
     <string name="checkout_collapsed_title">Checkout details</string>
@@ -39,7 +39,7 @@
 
     <string name="confirm_success">Your order is\nconfirmed!</string>
 
-    <string name="dialog_error_title">Checkout Error</string>
+    <string name="dialog_error_title">Error</string>
     <string name="dialog_error_message">An error occurred while processing your payment</string>
     <string name="dialog_error_listurl_invalid">Please paste a valid List Url in the input field.</string>
 

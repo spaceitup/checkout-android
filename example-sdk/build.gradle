@@ -27,6 +27,15 @@ android {
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
 
+    signingConfigs {
+        release {
+            storeFile file("$System.env.PLAYSTORE_UPLOAD_STOREFILE")
+            storePassword "$System.env.PLAYSTORE_UPLOAD_STOREPASSWORD"
+            keyAlias "$System.env.PLAYSTORE_UPLOAD_KEYALIAS"
+            keyPassword "$System.env.PLAYSTORE_UPLOAD_KEYPASSWORD"
+        }
+    }
+
     buildTypes {
         debug {
             buildConfigField "String", "paymentapi_authheader", "\"$System.env.ANDROIDSDK_PAYMENTAPI_AUTH\""
@@ -34,14 +43,19 @@ android {
 
             testVariants.all { testVariant ->
                 testVariant.outputs.all { output ->
-                    outputFileName = "Example-SDK-${getCurrentBranch()}-debug-androidTest.apk"
+                    outputFileName = "Example-SDK_${getCurrentBranch()}_debug-androidTest.apk"
                 }
             }
-            applicationVariants.all { variant ->
+        }
+        release {
+            minifyEnabled true
+            signingConfig signingConfigs.release
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'	    
+        }
+        applicationVariants.all { variant ->
                 variant.outputs.all {
-                    outputFileName = "Example-SDK-${getCurrentBranch()}-debug.apk"
+                    outputFileName = "Example-SDK_${getCurrentBranch()}_${variant.buildType.name}.apk"
                 }
-            }
         }
     }
 }
