@@ -14,7 +14,7 @@
 -renamesourcefileattribute SourceFile
 
 #
-# ANDROID CHECKOUT
+# PAYONEER CHECKOUT
 #
 -keep class com.payoneer.checkout.** { *; }
 
