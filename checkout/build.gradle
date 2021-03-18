@@ -91,14 +91,14 @@ uploadArchives {
             repository(url: "https://nexus.mgmt.oscato.com/repository/releases/") {
                 authentication(userName: mavenUser, password: mavenPassword)
                 pom.version = versionName
-                pom.artifactId = "payoneer-checkout"
-                pom.groupId = "com.payoneer.mobile"
+                pom.artifactId = "checkout-android"
+                pom.groupId = "com.payoneer"
             }
             snapshotRepository(url: "https://nexus.mgmt.oscato.com/repository/snapshots/") {
                 authentication(userName: mavenUser, password: mavenPassword)
                 pom.version = versionName
-                pom.artifactId = "payoneer-checkout"
-                pom.groupId = "com.payoneer.mobile"
+                pom.artifactId = "checkout-android"
+                pom.groupId = "com.payoneer"
             }
         }
     }
@@ -125,8 +125,8 @@ task uploadExternal(type: Upload) {
         repository(url: "packagecloud+https://packagecloud.io/optile/android") {
             authentication(password: packageCloudMavenPassword)
             pom.version = versionName
-            pom.artifactId = "payoneer-checkout"
-            pom.groupId = "com.payoneer.mobile"
+            pom.artifactId = "checkout-android"
+            pom.groupId = "com.payoneer"
         }
     }
 }
