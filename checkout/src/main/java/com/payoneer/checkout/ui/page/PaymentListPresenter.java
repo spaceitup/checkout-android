@@ -13,6 +13,7 @@ import static com.payoneer.checkout.ui.PaymentActivityResult.RESULT_CODE_ERROR;
 import static com.payoneer.checkout.ui.PaymentActivityResult.RESULT_CODE_PROCEED;
 import static com.payoneer.checkout.redirect.RedirectService.INTERACTION_CODE;
 import static com.payoneer.checkout.redirect.RedirectService.INTERACTION_REASON;
+import static com.payoneer.checkout.model.NetworkOperationType.CHARGE;
 
 import java.net.URL;
 import java.util.List;
@@ -25,7 +26,6 @@ import com.payoneer.checkout.localization.Localization;
 import com.payoneer.checkout.model.ErrorInfo;
 import com.payoneer.checkout.model.Interaction;
 import com.payoneer.checkout.model.ListResult;
-import com.payoneer.checkout.model.NetworkOperationType;
 import com.payoneer.checkout.model.OperationResult;
 import com.payoneer.checkout.ui.model.PaymentCard;
 import com.payoneer.checkout.model.InteractionCode;
@@ -151,7 +151,7 @@ final class PaymentListPresenter implements PaymentSessionListener, Localization
             networkService = NetworkServiceLookup.createService(view.getActivity(), code, method);
             networkService.setPresenter(this);
 
-            if (NetworkOperationType.CHARGE.equals(operation.getOperationType())) {
+            if (CHARGE.equals(operation.getOperationType())) {
                 view.showChargePaymentScreen(CHARGEPAYMENT_REQUEST_CODE, operation);
             } else {
                 processPayment();

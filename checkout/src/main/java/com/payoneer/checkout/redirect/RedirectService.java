@@ -8,11 +8,13 @@
 
 package com.payoneer.checkout.redirect;
 
+import static com.payoneer.checkout.model.HttpMethod.GET;
+import static com.payoneer.checkout.model.HttpMethod.POST;
+
 import java.util.ArrayList;
 import java.util.List;
 
 import com.payoneer.checkout.core.PaymentException;
-import com.payoneer.checkout.model.HttpMethod;
 import com.payoneer.checkout.model.Interaction;
 import com.payoneer.checkout.model.OperationResult;
 import com.payoneer.checkout.model.Redirect;
@@ -40,7 +42,7 @@ public final class RedirectService {
      */
     public static boolean supports(Context context, RedirectRequest request) {
         String method = request.getRedirectMethod();
-        return (HttpMethod.POST.equals(method) || HttpMethod.GET.equals(method)) && ChromeCustomTabs.isSupported(context);
+        return (POST.equals(method) || GET.equals(method)) && ChromeCustomTabs.isSupported(context);
     }
 
     /**
@@ -55,7 +57,7 @@ public final class RedirectService {
         }
         PaymentRedirectActivity.clearResultUri();
         Uri uri;
-        if (HttpMethod.POST.equals(request.getRedirectMethod())) {
+        if (POST.equals(request.getRedirectMethod())) {
             uri = RedirectUriBuilder.fromURL(request.getLink());
         } else {
             uri = RedirectUriBuilder.fromRedirect(request.getRedirect());
