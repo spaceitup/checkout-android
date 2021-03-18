@@ -80,7 +80,7 @@ final class CheckoutPresenter {
                 break;
             case InteractionCode.VERIFY:
                 // VERIFY means that a charge request has been made but the status of the payment could
-                // not be verified by the Payoneer Checkout library, i.e. because of a network error
+                // not be verified by the Checkout SDK, i.e. because of a network error
                 view.stopPaymentWithErrorMessage();
         }
     }

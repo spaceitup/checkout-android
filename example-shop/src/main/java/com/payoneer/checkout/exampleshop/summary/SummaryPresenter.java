@@ -33,7 +33,7 @@ import io.reactivex.rxjava3.schedulers.Schedulers;
 
 /**
  * SummaryPresenter responsible for communicating with the
- * Android SDK and informing the SummaryView to show content to the user.
+ * Checkout SDK and informing the SummaryView to show content to the user.
  */
 final class SummaryPresenter {
 
@@ -61,17 +61,17 @@ final class SummaryPresenter {
     }
 
     /**
-     * Handle the received checkout result from the Android SDK.
+     * Handle the received payment activity result.
      *
-     * @param sdkResult the result received from the Android SDK
+     * @param activityResult the result received from the Checkout SDK
      */
-    void handlePaymentActivityResult(PaymentActivityResult sdkResult) {
-        switch (sdkResult.getRequestCode()) {
+    void handlePaymentActivityResult(PaymentActivityResult activityResult) {
+        switch (activityResult.getRequestCode()) {
             case SummaryActivity.PAYMENT_REQUEST_CODE:
-                handlePaymentResult(sdkResult);
+                handlePaymentResult(activityResult);
                 break;
             case SummaryActivity.EDIT_REQUEST_CODE:
-                handleEditResult(sdkResult);
+                handleEditResult(activityResult);
                 break;
         }
     }
@@ -121,9 +121,9 @@ final class SummaryPresenter {
         }
     }
 
-    private void handlePaymentResult(PaymentActivityResult sdkResult) {
-        PaymentResult paymentResult = sdkResult.getPaymentResult();
-        switch (sdkResult.getResultCode()) {
+    private void handlePaymentResult(PaymentActivityResult activityResult) {
+        PaymentResult paymentResult = activityResult.getPaymentResult();
+        switch (activityResult.getResultCode()) {
             case RESULT_CODE_PROCEED:
                 handlePaymentResultProceed(paymentResult);
                 break;
@@ -150,7 +150,7 @@ final class SummaryPresenter {
                 break;
             case InteractionCode.VERIFY:
                 // VERIFY means that a charge request has been made but the status of the payment could
-                // not be verified by the Android-SDK, i.e. because of a network error
+                // not be verified by the Checkout SDK, i.e. because of a network error
                 view.stopPaymentWithErrorMessage();
                 break;
             case InteractionCode.TRY_OTHER_ACCOUNT:

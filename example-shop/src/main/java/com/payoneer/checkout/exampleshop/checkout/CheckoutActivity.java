@@ -27,7 +27,7 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.core.content.res.ResourcesCompat;
 
 /**
- * Activity displaying the checkout page, this page will open payment page of the Checkout Android SDK.
+ * Activity displaying the checkout page, this page will open payment page of the Checkout SDK.
  */
 public final class CheckoutActivity extends BaseActivity implements CheckoutView {
     private CheckoutPresenter presenter;
