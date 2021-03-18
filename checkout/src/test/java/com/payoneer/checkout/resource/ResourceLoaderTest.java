@@ -20,7 +20,7 @@ import org.robolectric.RobolectricTestRunner;
 import com.payoneer.checkout.resource.PaymentGroup;
 import com.payoneer.checkout.resource.ResourceLoader;
 import com.payoneer.checkout.resource.ValidationGroup;
-import com.payoneer.mrs.payment.R;
+import com.payoneer.checkout.R;
 import com.payoneer.checkout.core.PaymentException;
 
 import android.content.res.Resources;

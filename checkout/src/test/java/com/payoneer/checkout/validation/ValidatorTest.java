@@ -22,7 +22,7 @@ import org.robolectric.RobolectricTestRunner;
 
 import com.payoneer.checkout.validation.ValidationResult;
 import com.payoneer.checkout.validation.Validator;
-import com.payoneer.mrs.payment.R;
+import com.payoneer.checkout.R;
 import com.payoneer.checkout.core.PaymentException;
 import com.payoneer.checkout.core.PaymentInputType;
 import com.payoneer.checkout.core.PaymentNetworkCodes;

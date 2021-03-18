@@ -22,7 +22,7 @@ import org.junit.runner.RunWith;
 import org.robolectric.RobolectricTestRunner;
 
 import com.payoneer.checkout.util.PaymentUtils;
-import com.payoneer.mrs.payment.R;
+import com.payoneer.checkout.R;
 import com.payoneer.checkout.core.PaymentInputType;
 import com.payoneer.checkout.model.InputElement;
 
