@@ -43,7 +43,7 @@ android {
 
         libraryVariants.all { variant ->
             variant.outputs.all {
-                outputFileName = "payoneer-mrs-payment-${variant.name}-${defaultConfig.versionName}.aar"
+                outputFileName = "payoneer-checkout-${variant.name}-${defaultConfig.versionName}.aar"
             }
         }
     }

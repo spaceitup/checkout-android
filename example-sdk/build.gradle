@@ -19,7 +19,7 @@ android {
     compileSdkVersion rootProject.compileSdkVersion
 
     defaultConfig {
-        applicationId "com.payoneer.mrs.examplesdk"
+        applicationId "com.payoneer.checkout.examplesdk"
         minSdkVersion rootProject.minSdkVersion
         targetSdkVersion rootProject.targetSdkVersion
         versionCode rootProject.versionCode

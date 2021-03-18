@@ -16,7 +16,7 @@
 #
 # PAYONEER - ANDROID-SDK
 #
--keep class com.payoneer.mrs.** { *; }
+-keep class com.payoneer.checkout.** { *; }
 
 #
 # GLIDE - IMAGE LIBRARY

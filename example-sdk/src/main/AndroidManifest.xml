@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.payoneer.mrs.examplesdk">
+    package="com.payoneer.checkout.examplesdk">
 
     <application
         android:allowBackup="true"
@@ -20,7 +20,7 @@
         </activity>
 
         <activity
-            android:name="com.payoneer.mrs.payment.ui.redirect.PaymentRedirectActivity"
+            android:name="com.payoneer.checkout.redirect.PaymentRedirectActivity"
             android:theme="@style/PaymentTheme.NoToolbar"
             android:launchMode="singleTask">
             <intent-filter>
