@@ -32,7 +32,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.test.espresso.IdlingResource;
 
 /**
- * This is the main Activity of this example app demonstrating how to use the Android Checkout SDK
+ * This is the main Activity of this example app demonstrating how to use the Checkout Android SDK
  */
 public final class ExampleCheckoutActivity extends AppCompatActivity {
 
