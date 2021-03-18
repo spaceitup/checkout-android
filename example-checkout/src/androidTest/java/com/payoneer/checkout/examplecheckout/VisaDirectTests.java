@@ -8,16 +8,14 @@
 
 package com.payoneer.checkout.examplecheckout;
 
-import static androidx.test.espresso.matcher.ViewMatchers.withText;
-
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
 import com.payoneer.checkout.model.InteractionCode;
 import com.payoneer.checkout.model.InteractionReason;
-import com.payoneer.checkout.sharedtest.checkout.TestDataProvider;
 import com.payoneer.checkout.sharedtest.checkout.PaymentListHelper;
+import com.payoneer.checkout.sharedtest.checkout.TestDataProvider;
 
 import androidx.test.espresso.IdlingResource;
 import androidx.test.ext.junit.runners.AndroidJUnit4;

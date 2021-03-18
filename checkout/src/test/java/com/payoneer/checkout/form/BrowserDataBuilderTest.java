@@ -15,7 +15,6 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.robolectric.RobolectricTestRunner;
 
-import com.payoneer.checkout.form.BrowserDataBuilder;
 import com.payoneer.checkout.model.BrowserData;
 
 import android.content.Context;

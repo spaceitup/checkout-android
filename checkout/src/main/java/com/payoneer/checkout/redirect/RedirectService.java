@@ -17,8 +17,8 @@ import java.util.List;
 import com.payoneer.checkout.core.PaymentException;
 import com.payoneer.checkout.model.Interaction;
 import com.payoneer.checkout.model.OperationResult;
-import com.payoneer.checkout.model.Redirect;
 import com.payoneer.checkout.model.Parameter;
+import com.payoneer.checkout.model.Redirect;
 
 import android.content.Context;
 import android.net.Uri;

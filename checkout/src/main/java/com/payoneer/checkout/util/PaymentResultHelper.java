@@ -14,8 +14,8 @@ import static com.payoneer.checkout.model.InteractionReason.COMMUNICATION_FAILUR
 import com.payoneer.checkout.core.PaymentException;
 import com.payoneer.checkout.model.ErrorInfo;
 import com.payoneer.checkout.model.Interaction;
-import com.payoneer.checkout.ui.PaymentResult;
 import com.payoneer.checkout.model.InteractionCode;
+import com.payoneer.checkout.ui.PaymentResult;
 
 import android.content.Intent;
 

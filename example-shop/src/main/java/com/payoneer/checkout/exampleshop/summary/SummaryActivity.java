@@ -12,9 +12,9 @@ import java.net.URL;
 import java.util.Map;
 
 import com.google.android.material.appbar.CollapsingToolbarLayout;
+import com.payoneer.checkout.exampleshop.R;
 import com.payoneer.checkout.exampleshop.confirm.ConfirmActivity;
 import com.payoneer.checkout.exampleshop.settings.SettingsActivity;
-import com.payoneer.checkout.exampleshop.R;
 import com.payoneer.checkout.exampleshop.shared.BaseActivity;
 import com.payoneer.checkout.model.AccountMask;
 import com.payoneer.checkout.model.PaymentMethod;

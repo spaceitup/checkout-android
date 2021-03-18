@@ -9,8 +9,8 @@
 package com.payoneer.checkout.ui.service;
 
 import com.payoneer.checkout.core.PaymentException;
-import com.payoneer.checkout.ui.PaymentResult;
 import com.payoneer.checkout.redirect.RedirectRequest;
+import com.payoneer.checkout.ui.PaymentResult;
 
 /**
  * Presenter to be called by the NetworkService to inform about payment updates and to show i.e. a progress view or progress dialog.

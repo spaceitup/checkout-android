@@ -21,11 +21,11 @@ import static com.payoneer.checkout.localization.LocalizationKey.LABEL_TITLE;
 import java.util.Objects;
 
 import com.google.android.material.snackbar.Snackbar;
-import com.payoneer.checkout.model.Interaction;
 import com.payoneer.checkout.R;
 import com.payoneer.checkout.core.PaymentInputType;
 import com.payoneer.checkout.core.PaymentNetworkCodes;
 import com.payoneer.checkout.localization.Localization;
+import com.payoneer.checkout.model.Interaction;
 
 import android.view.View;
 

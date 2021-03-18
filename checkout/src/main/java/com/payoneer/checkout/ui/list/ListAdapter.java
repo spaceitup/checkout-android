@@ -11,12 +11,12 @@ package com.payoneer.checkout.ui.list;
 import java.util.List;
 
 import com.payoneer.checkout.localization.Localization;
-import com.payoneer.checkout.validation.ValidationResult;
-import com.payoneer.checkout.validation.Validator;
 import com.payoneer.checkout.ui.model.AccountCard;
 import com.payoneer.checkout.ui.model.NetworkCard;
 import com.payoneer.checkout.ui.model.PaymentCard;
 import com.payoneer.checkout.ui.model.PresetCard;
+import com.payoneer.checkout.validation.ValidationResult;
+import com.payoneer.checkout.validation.Validator;
 
 import android.content.Context;
 import android.view.View;

@@ -16,8 +16,6 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.robolectric.RobolectricTestRunner;
 
-import com.payoneer.checkout.network.UserAgentBuilder;
-
 import android.content.Context;
 import android.text.TextUtils;
 import androidx.test.core.app.ApplicationProvider;

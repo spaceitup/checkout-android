@@ -14,9 +14,6 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.robolectric.RobolectricTestRunner;
 
-import com.payoneer.checkout.localization.LocalLocalizationHolder;
-import com.payoneer.checkout.localization.LocalizationKey;
-
 import android.content.Context;
 import androidx.test.core.app.ApplicationProvider;
 

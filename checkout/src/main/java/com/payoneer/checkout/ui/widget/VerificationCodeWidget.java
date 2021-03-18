@@ -10,10 +10,10 @@ package com.payoneer.checkout.ui.widget;
 
 import static com.google.android.material.textfield.TextInputLayout.END_ICON_CUSTOM;
 
-import com.payoneer.checkout.model.InputElement;
 import com.payoneer.checkout.R;
 import com.payoneer.checkout.localization.Localization;
 import com.payoneer.checkout.localization.LocalizationKey;
+import com.payoneer.checkout.model.InputElement;
 import com.payoneer.checkout.ui.widget.input.EditTextInputModeFactory;
 
 import android.view.View;

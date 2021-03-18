@@ -20,10 +20,10 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
+import com.payoneer.checkout.R;
 import com.payoneer.checkout.model.AccountMask;
 import com.payoneer.checkout.model.InputElement;
 import com.payoneer.checkout.model.PaymentMethod;
-import com.payoneer.checkout.R;
 import com.payoneer.checkout.ui.model.PaymentCard;
 import com.payoneer.checkout.ui.widget.ButtonWidget;
 import com.payoneer.checkout.ui.widget.DateWidget;

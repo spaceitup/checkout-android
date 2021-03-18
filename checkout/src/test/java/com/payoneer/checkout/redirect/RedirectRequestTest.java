@@ -22,7 +22,6 @@ import org.robolectric.RobolectricTestRunner;
 import com.payoneer.checkout.core.PaymentException;
 import com.payoneer.checkout.model.OperationResult;
 import com.payoneer.checkout.model.Redirect;
-import com.payoneer.checkout.redirect.RedirectRequest;
 import com.payoneer.checkout.test.util.TestUtils;
 
 @RunWith(RobolectricTestRunner.class)

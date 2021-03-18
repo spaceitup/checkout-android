@@ -12,11 +12,11 @@ import static com.payoneer.checkout.localization.LocalizationKey.LIST_TITLE;
 
 import java.util.Map;
 
-import com.payoneer.checkout.ui.list.PaymentList;
 import com.payoneer.checkout.R;
 import com.payoneer.checkout.form.Operation;
 import com.payoneer.checkout.localization.Localization;
 import com.payoneer.checkout.ui.PaymentActivityResult;
+import com.payoneer.checkout.ui.list.PaymentList;
 import com.payoneer.checkout.ui.model.PaymentCard;
 import com.payoneer.checkout.ui.model.PaymentSession;
 import com.payoneer.checkout.ui.page.idlingresource.SimpleIdlingResource;

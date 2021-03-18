@@ -14,8 +14,8 @@ import static com.payoneer.checkout.ui.PaymentActivityResult.RESULT_CODE_PROCEED
 
 import java.util.concurrent.Callable;
 
-import com.payoneer.checkout.exampleshop.shared.ShopException;
 import com.payoneer.checkout.core.PaymentException;
+import com.payoneer.checkout.exampleshop.shared.ShopException;
 import com.payoneer.checkout.model.Interaction;
 import com.payoneer.checkout.model.InteractionCode;
 import com.payoneer.checkout.model.ListResult;

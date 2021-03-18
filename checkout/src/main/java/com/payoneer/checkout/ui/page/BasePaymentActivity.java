@@ -8,9 +8,9 @@
 
 package com.payoneer.checkout.ui.page;
 
-import com.payoneer.checkout.model.Interaction;
 import com.payoneer.checkout.R;
 import com.payoneer.checkout.localization.Localization;
+import com.payoneer.checkout.model.Interaction;
 import com.payoneer.checkout.ui.PaymentActivityResult;
 import com.payoneer.checkout.ui.PaymentResult;
 import com.payoneer.checkout.ui.PaymentTheme;

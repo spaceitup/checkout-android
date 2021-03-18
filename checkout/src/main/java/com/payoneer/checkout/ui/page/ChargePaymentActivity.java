@@ -14,10 +14,10 @@ import static com.payoneer.checkout.localization.LocalizationKey.CHARGE_TITLE;
 import java.net.URL;
 import java.util.Map;
 
-import com.payoneer.checkout.model.PresetAccount;
 import com.payoneer.checkout.R;
 import com.payoneer.checkout.form.Operation;
 import com.payoneer.checkout.localization.Localization;
+import com.payoneer.checkout.model.PresetAccount;
 import com.payoneer.checkout.ui.PaymentActivityResult;
 
 import android.content.Context;

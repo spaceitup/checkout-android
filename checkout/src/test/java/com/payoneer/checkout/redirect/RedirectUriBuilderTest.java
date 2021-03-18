@@ -20,7 +20,6 @@ import org.robolectric.RobolectricTestRunner;
 
 import com.payoneer.checkout.model.Parameter;
 import com.payoneer.checkout.model.Redirect;
-import com.payoneer.checkout.redirect.RedirectUriBuilder;
 import com.payoneer.checkout.test.util.TestUtils;
 
 import android.net.Uri;

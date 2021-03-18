@@ -22,10 +22,10 @@ import org.junit.runner.RunWith;
 
 import com.payoneer.checkout.model.InteractionCode;
 import com.payoneer.checkout.model.InteractionReason;
-import com.payoneer.checkout.ui.page.ChargePaymentActivity;
-import com.payoneer.checkout.ui.page.PaymentListActivity;
 import com.payoneer.checkout.sharedtest.checkout.PaymentListHelper;
 import com.payoneer.checkout.sharedtest.view.UiDeviceHelper;
+import com.payoneer.checkout.ui.page.ChargePaymentActivity;
+import com.payoneer.checkout.ui.page.PaymentListActivity;
 
 import androidx.test.espresso.IdlingResource;
 import androidx.test.espresso.matcher.ViewMatchers;

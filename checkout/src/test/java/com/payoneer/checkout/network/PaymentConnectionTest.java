@@ -13,7 +13,6 @@ import org.junit.runner.RunWith;
 import org.robolectric.RobolectricTestRunner;
 
 import com.payoneer.checkout.core.PaymentException;
-import com.payoneer.checkout.network.PaymentConnection;
 
 import androidx.test.core.app.ApplicationProvider;
 

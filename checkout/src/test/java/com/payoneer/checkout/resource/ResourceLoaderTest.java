@@ -17,9 +17,6 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.robolectric.RobolectricTestRunner;
 
-import com.payoneer.checkout.resource.PaymentGroup;
-import com.payoneer.checkout.resource.ResourceLoader;
-import com.payoneer.checkout.resource.ValidationGroup;
 import com.payoneer.checkout.R;
 import com.payoneer.checkout.core.PaymentException;
 

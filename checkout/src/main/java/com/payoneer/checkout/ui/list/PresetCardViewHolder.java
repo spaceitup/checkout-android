@@ -9,8 +9,8 @@
 package com.payoneer.checkout.ui.list;
 
 import com.google.android.material.card.MaterialCardView;
-import com.payoneer.checkout.model.AccountMask;
 import com.payoneer.checkout.R;
+import com.payoneer.checkout.model.AccountMask;
 import com.payoneer.checkout.ui.model.PaymentCard;
 import com.payoneer.checkout.ui.model.PresetCard;
 import com.payoneer.checkout.util.PaymentUtils;

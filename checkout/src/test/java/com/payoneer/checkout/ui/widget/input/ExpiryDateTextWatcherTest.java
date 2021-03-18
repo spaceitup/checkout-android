@@ -14,8 +14,6 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.robolectric.RobolectricTestRunner;
 
-import com.payoneer.checkout.ui.widget.input.ExpiryDateTextWatcher;
-
 import android.content.Context;
 import android.text.Editable;
 import android.text.SpannableStringBuilder;

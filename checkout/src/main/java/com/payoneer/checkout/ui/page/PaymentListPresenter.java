@@ -9,11 +9,11 @@
 package com.payoneer.checkout.ui.page;
 
 import static com.payoneer.checkout.model.InteractionCode.PROCEED;
-import static com.payoneer.checkout.ui.PaymentActivityResult.RESULT_CODE_ERROR;
-import static com.payoneer.checkout.ui.PaymentActivityResult.RESULT_CODE_PROCEED;
+import static com.payoneer.checkout.model.NetworkOperationType.CHARGE;
 import static com.payoneer.checkout.redirect.RedirectService.INTERACTION_CODE;
 import static com.payoneer.checkout.redirect.RedirectService.INTERACTION_REASON;
-import static com.payoneer.checkout.model.NetworkOperationType.CHARGE;
+import static com.payoneer.checkout.ui.PaymentActivityResult.RESULT_CODE_ERROR;
+import static com.payoneer.checkout.ui.PaymentActivityResult.RESULT_CODE_PROCEED;
 
 import java.net.URL;
 import java.util.List;
@@ -25,19 +25,19 @@ import com.payoneer.checkout.form.Operation;
 import com.payoneer.checkout.localization.Localization;
 import com.payoneer.checkout.model.ErrorInfo;
 import com.payoneer.checkout.model.Interaction;
+import com.payoneer.checkout.model.InteractionCode;
 import com.payoneer.checkout.model.ListResult;
 import com.payoneer.checkout.model.OperationResult;
-import com.payoneer.checkout.ui.model.PaymentCard;
-import com.payoneer.checkout.model.InteractionCode;
 import com.payoneer.checkout.model.Parameter;
 import com.payoneer.checkout.model.Redirect;
+import com.payoneer.checkout.redirect.RedirectRequest;
 import com.payoneer.checkout.ui.PaymentActivityResult;
 import com.payoneer.checkout.ui.PaymentResult;
 import com.payoneer.checkout.ui.PaymentUI;
 import com.payoneer.checkout.ui.dialog.PaymentDialogFragment.PaymentDialogListener;
+import com.payoneer.checkout.ui.model.PaymentCard;
 import com.payoneer.checkout.ui.model.PaymentSession;
 import com.payoneer.checkout.ui.model.PresetCard;
-import com.payoneer.checkout.redirect.RedirectRequest;
 import com.payoneer.checkout.ui.service.LocalizationLoaderListener;
 import com.payoneer.checkout.ui.service.LocalizationLoaderService;
 import com.payoneer.checkout.ui.service.NetworkService;

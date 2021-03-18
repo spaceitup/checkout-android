@@ -8,8 +8,8 @@
 
 package com.payoneer.checkout.exampleshop.settings;
 
-import com.payoneer.checkout.exampleshop.checkout.CheckoutActivity;
 import com.payoneer.checkout.exampleshop.R;
+import com.payoneer.checkout.exampleshop.checkout.CheckoutActivity;
 import com.payoneer.checkout.exampleshop.shared.BaseActivity;
 
 import android.content.Context;

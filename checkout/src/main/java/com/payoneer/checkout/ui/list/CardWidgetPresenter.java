@@ -8,9 +8,9 @@
 
 package com.payoneer.checkout.ui.list;
 
-import com.payoneer.checkout.validation.ValidationResult;
 import com.payoneer.checkout.ui.widget.FormWidget;
 import com.payoneer.checkout.ui.widget.WidgetPresenter;
+import com.payoneer.checkout.validation.ValidationResult;
 
 import android.view.View;
 

@@ -25,12 +25,12 @@ import org.junit.Before;
 import com.payoneer.checkout.exampleshop.checkout.CheckoutActivity;
 import com.payoneer.checkout.exampleshop.confirm.ConfirmActivity;
 import com.payoneer.checkout.exampleshop.summary.SummaryActivity;
-import com.payoneer.checkout.ui.page.ChargePaymentActivity;
 import com.payoneer.checkout.sharedtest.checkout.PaymentListHelper;
 import com.payoneer.checkout.sharedtest.checkout.TestDataProvider;
 import com.payoneer.checkout.sharedtest.service.ListService;
 import com.payoneer.checkout.sharedtest.view.ActivityHelper;
 import com.payoneer.checkout.sharedtest.view.PaymentActions;
+import com.payoneer.checkout.ui.page.ChargePaymentActivity;
 
 import androidx.test.espresso.IdlingRegistry;
 import androidx.test.espresso.IdlingResource;
@@ -52,7 +52,8 @@ class AbstractTest {
     CheckoutActivity openCheckoutActivity(boolean presetFirst) {
         String baseUrl = BuildConfig.paymentapi_baseurl;
         String authHeader = BuildConfig.paymentapi_authheader;
-        String listUrl = ListService.createListUrl(com.payoneer.checkout.exampleshop.test.R.raw.listtemplate, presetFirst, baseUrl, authHeader);
+        String listUrl =
+            ListService.createListUrl(com.payoneer.checkout.exampleshop.test.R.raw.listtemplate, presetFirst, baseUrl, authHeader);
 
         onView(ViewMatchers.withId(R.id.layout_settings)).check(matches(isDisplayed()));
         onView(withId(R.id.input_listurl)).perform(typeText(listUrl));

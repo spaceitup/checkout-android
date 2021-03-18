@@ -15,14 +15,6 @@ import org.junit.Test;
 import com.payoneer.checkout.core.PaymentInputType;
 import com.payoneer.checkout.model.InputElement;
 import com.payoneer.checkout.model.InputElementType;
-import com.payoneer.checkout.ui.widget.input.AccountNumberInputMode;
-import com.payoneer.checkout.ui.widget.input.BICInputMode;
-import com.payoneer.checkout.ui.widget.input.EditTextInputMode;
-import com.payoneer.checkout.ui.widget.input.EditTextInputModeFactory;
-import com.payoneer.checkout.ui.widget.input.ElementInputMode;
-import com.payoneer.checkout.ui.widget.input.HolderNameInputMode;
-import com.payoneer.checkout.ui.widget.input.IBANInputMode;
-import com.payoneer.checkout.ui.widget.input.VerificationCodeInputMode;
 
 public class EditTextInputModeFactoryTest {
 

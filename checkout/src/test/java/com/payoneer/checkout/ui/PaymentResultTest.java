@@ -19,7 +19,6 @@ import com.payoneer.checkout.model.Interaction;
 import com.payoneer.checkout.model.InteractionCode;
 import com.payoneer.checkout.model.InteractionReason;
 import com.payoneer.checkout.model.OperationResult;
-import com.payoneer.checkout.ui.PaymentResult;
 
 import android.os.Parcel;
 

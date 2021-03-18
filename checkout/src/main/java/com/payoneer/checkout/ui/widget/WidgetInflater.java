@@ -8,9 +8,9 @@
 
 package com.payoneer.checkout.ui.widget;
 
+import com.payoneer.checkout.R;
 import com.payoneer.checkout.model.InputElement;
 import com.payoneer.checkout.model.InputElementType;
-import com.payoneer.checkout.R;
 
 import android.view.LayoutInflater;
 import android.view.View;

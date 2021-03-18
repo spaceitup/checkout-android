@@ -18,8 +18,8 @@ import java.util.Map;
 import com.payoneer.checkout.localization.Localization;
 import com.payoneer.checkout.localization.LocalizationKey;
 import com.payoneer.checkout.model.AccountMask;
-import com.payoneer.checkout.model.InputElement;
 import com.payoneer.checkout.model.AccountRegistration;
+import com.payoneer.checkout.model.InputElement;
 import com.payoneer.checkout.util.PaymentUtils;
 
 /**

@@ -13,8 +13,6 @@ import static org.junit.Assert.assertTrue;
 
 import org.junit.Test;
 
-import com.payoneer.checkout.model.PaymentMethod;
-
 public class PaymentMethodTest {
 
     @Test

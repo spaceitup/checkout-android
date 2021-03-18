@@ -21,10 +21,9 @@ import static androidx.test.espresso.matcher.ViewMatchers.withText;
 import org.junit.After;
 import org.junit.Before;
 
-import com.payoneer.checkout.ui.page.PaymentListActivity;
-import com.payoneer.checkout.examplecheckout.R;
 import com.payoneer.checkout.sharedtest.service.ListService;
 import com.payoneer.checkout.sharedtest.view.ActivityHelper;
+import com.payoneer.checkout.ui.page.PaymentListActivity;
 
 import androidx.test.espresso.IdlingRegistry;
 import androidx.test.espresso.IdlingResource;

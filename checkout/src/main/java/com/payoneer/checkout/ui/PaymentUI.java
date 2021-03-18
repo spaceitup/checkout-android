@@ -8,12 +8,12 @@
 
 package com.payoneer.checkout.ui;
 
-import com.payoneer.checkout.model.PresetAccount;
-import com.payoneer.checkout.ui.page.ChargePaymentActivity;
-import com.payoneer.checkout.ui.page.PaymentListActivity;
 import com.payoneer.checkout.R;
 import com.payoneer.checkout.localization.LocalLocalizationHolder;
 import com.payoneer.checkout.localization.Localization;
+import com.payoneer.checkout.model.PresetAccount;
+import com.payoneer.checkout.ui.page.ChargePaymentActivity;
+import com.payoneer.checkout.ui.page.PaymentListActivity;
 
 import android.app.Activity;
 import android.content.Intent;

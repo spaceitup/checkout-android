@@ -13,9 +13,6 @@ import static org.junit.Assert.assertTrue;
 
 import org.junit.Test;
 
-import com.payoneer.checkout.model.ProductType;
-import com.payoneer.checkout.model.RedirectType;
-
 public class ProductTypeTest {
 
     @Test

@@ -12,9 +12,9 @@ import com.payoneer.checkout.core.PaymentException;
 import com.payoneer.checkout.form.Operation;
 import com.payoneer.checkout.localization.Localization;
 import com.payoneer.checkout.model.InputElement;
-import com.payoneer.checkout.validation.ValidationResult;
 import com.payoneer.checkout.ui.widget.input.ExpiryDateInputMode;
 import com.payoneer.checkout.util.PaymentUtils;
+import com.payoneer.checkout.validation.ValidationResult;
 
 import android.text.TextUtils;
 import android.view.View;

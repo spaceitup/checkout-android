@@ -23,7 +23,6 @@ import com.google.gson.reflect.TypeToken;
 import com.payoneer.checkout.core.PaymentInputType;
 import com.payoneer.checkout.model.InputElement;
 import com.payoneer.checkout.model.InputElementType;
-import com.payoneer.checkout.util.GsonHelper;
 
 /**
  * Class for testing the GsonHelper methods

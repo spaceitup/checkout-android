@@ -16,6 +16,12 @@ import java.util.List;
 import java.util.Map;
 import java.util.concurrent.Callable;
 
+import com.payoneer.checkout.R;
+import com.payoneer.checkout.core.PaymentException;
+import com.payoneer.checkout.core.WorkerSubscriber;
+import com.payoneer.checkout.core.WorkerTask;
+import com.payoneer.checkout.core.Workers;
+import com.payoneer.checkout.model.AccountRegistration;
 import com.payoneer.checkout.model.ApplicableNetwork;
 import com.payoneer.checkout.model.ListResult;
 import com.payoneer.checkout.model.NetworkOperationType;
@@ -30,12 +36,6 @@ import com.payoneer.checkout.ui.model.PaymentNetwork;
 import com.payoneer.checkout.ui.model.PaymentSession;
 import com.payoneer.checkout.ui.model.PresetCard;
 import com.payoneer.checkout.validation.Validator;
-import com.payoneer.checkout.R;
-import com.payoneer.checkout.core.PaymentException;
-import com.payoneer.checkout.core.WorkerSubscriber;
-import com.payoneer.checkout.core.WorkerTask;
-import com.payoneer.checkout.core.Workers;
-import com.payoneer.checkout.model.AccountRegistration;
 
 import android.content.Context;
 import android.text.TextUtils;
