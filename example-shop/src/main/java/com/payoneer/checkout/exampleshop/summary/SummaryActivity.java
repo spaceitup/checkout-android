@@ -114,9 +114,9 @@ public final class SummaryActivity extends BaseActivity implements SummaryView {
     @Override
     public void onResume() {
         super.onResume();
-        if (sdkResult != null) {
-            presenter.handleSdkResult(sdkResult);
-            this.sdkResult = null;
+        if (activityResult != null) {
+            presenter.handleSdkResult(activityResult);
+            this.activityResult = null;
         } else {
             presenter.loadPaymentDetails(listUrl);
         }

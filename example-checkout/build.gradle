@@ -19,7 +19,7 @@ android {
     compileSdkVersion rootProject.compileSdkVersion
 
     defaultConfig {
-        applicationId "com.payoneer.checkout.exampleshop"
+        applicationId "com.payoneer.checkout.examplecheckout"
         minSdkVersion rootProject.minSdkVersion
         targetSdkVersion rootProject.targetSdkVersion
         versionCode rootProject.versionCode
@@ -43,19 +43,19 @@ android {
 
             testVariants.all { testVariant ->
                 testVariant.outputs.all { output ->
-                    outputFileName = "Example-Shop_${getCurrentBranch()}_debug-androidTest.apk"
+                    outputFileName = "Example-Checkout_${getCurrentBranch()}_debug-androidTest.apk"
                 }
             }
         }
         release {
             minifyEnabled true
             signingConfig signingConfigs.release
-            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'	    
         }
         applicationVariants.all { variant ->
-            variant.outputs.all {
-                outputFileName = "Example-Shop_${getCurrentBranch()}_${variant.buildType.name}.apk"
-            }
+                variant.outputs.all {
+                    outputFileName = "Example-Checkout_${getCurrentBranch()}_${variant.buildType.name}.apk"
+                }
         }
     }
 }
@@ -63,10 +63,8 @@ android {
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation "com.google.android.material:material:${rootProject.androidMaterialVersion}"
-    implementation project(":checkout")
-    implementation "io.reactivex.rxjava3:rxjava:${rootProject.rxjavaVersion}"
-    implementation "io.reactivex.rxjava3:rxandroid:${rootProject.rxandroidVersion}"
     implementation "androidx.test.espresso:espresso-idling-resource:${rootProject.androidxTestEspressoVersion}@aar"
+    implementation project(":checkout")
 
     testImplementation "androidx.test.ext:junit:${rootProject.androidxTestJunitVersion}"
     testImplementation "org.hamcrest:hamcrest-library:${rootProject.harmcrestVersion}"
@@ -91,7 +89,6 @@ task uploadToAppLive {
     clean.mustRunAfter('uploadDebugToBrowserstackAppLive')
 }
 
-
 task runFunctionalTest {
     if (System.getenv('ANDROIDSDK_PAYMENTAPI_AUTH') == null || System.getenv('ANDROIDSDK_PAYMENTAPI_AUTH') == null) {
         logger.warn('Missing functional test environment variables')
@@ -109,5 +106,5 @@ task runFunctionalTest {
 browserStackConfig {
     username = "$System.env.BROWSERSTACK_USER"
     accessKey = "$System.env.BROWSERSTACK_KEY"
-    configFilePath = "example-shop/browserstack.json"
+    configFilePath = "example-checkout/browserstack.json"
 }

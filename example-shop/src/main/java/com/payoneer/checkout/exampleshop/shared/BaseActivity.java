@@ -33,7 +33,7 @@ public abstract class BaseActivity extends AppCompatActivity {
 
     protected boolean active;
     protected String listUrl;
-    protected PaymentActivityResult sdkResult;
+    protected PaymentActivityResult activityResult;
     protected SimpleIdlingResource resultHandledIdlingResource;
     private boolean resultHandled;
 
@@ -97,12 +97,12 @@ public abstract class BaseActivity extends AppCompatActivity {
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == PAYMENT_REQUEST_CODE || requestCode == EDIT_REQUEST_CODE) {
-            sdkResult = PaymentActivityResult.fromActivityResult(requestCode, resultCode, data);
+            activityResult = PaymentActivityResult.fromActivityResult(requestCode, resultCode, data);
         }
     }
 
     /**
-     * Show error dialog to the user, the payment dialog from the android-sdk is used
+     * Show error dialog to the user, the payment dialog from the Payoneer Checkout library is used
      * to display a material designed dialog.
      *
      * @param errorResId error resource string id

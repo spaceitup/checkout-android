@@ -22,7 +22,7 @@ import com.payoneer.checkout.ui.PaymentActivityResult;
 import com.payoneer.checkout.ui.PaymentResult;
 
 /**
- * CheckoutPresenter takes care of handling the response from the Android SDK payment page.
+ * CheckoutPresenter takes care of handling the response from the Android Checkout SDK.
  */
 final class CheckoutPresenter {
 
@@ -38,13 +38,13 @@ final class CheckoutPresenter {
     }
 
     /**
-     * Handle the received checkout result from the Android SDK.
+     * Handle the PaymentActivityResult received from Payoneer Checkout
      *
-     * @param sdkResult the result received from the Android SDK
+     * @param activityResult the result received
      */
-    void handleSdkResult(PaymentActivityResult sdkResult) {
-        PaymentResult paymentResult = sdkResult.getPaymentResult();
-        switch (sdkResult.getResultCode()) {
+    void handlePaymentActivityResult(PaymentActivityResult activityResult) {
+        PaymentResult paymentResult = activityResult.getPaymentResult();
+        switch (activityResult.getResultCode()) {
             case RESULT_CODE_PROCEED:
                 handlePaymentResultProceed(paymentResult);
                 break;
@@ -80,7 +80,7 @@ final class CheckoutPresenter {
                 break;
             case InteractionCode.VERIFY:
                 // VERIFY means that a charge request has been made but the status of the payment could
-                // not be verified by the Android-SDK, i.e. because of a network error
+                // not be verified by the Payoneer Checkout library, i.e. because of a network error
                 view.stopPaymentWithErrorMessage();
         }
     }

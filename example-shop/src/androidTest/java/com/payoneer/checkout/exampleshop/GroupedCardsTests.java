@@ -14,8 +14,8 @@ import org.junit.runner.RunWith;
 import com.payoneer.checkout.exampleshop.checkout.CheckoutActivity;
 import com.payoneer.checkout.exampleshop.settings.SettingsActivity;
 import com.payoneer.checkout.exampleshop.summary.SummaryActivity;
-import com.payoneer.checkout.sharedtest.sdk.PaymentListHelper;
-import com.payoneer.checkout.sharedtest.sdk.TestDataProvider;
+import com.payoneer.checkout.sharedtest.checkout.PaymentListHelper;
+import com.payoneer.checkout.sharedtest.checkout.TestDataProvider;
 
 import androidx.test.espresso.IdlingResource;
 import androidx.test.ext.junit.runners.AndroidJUnit4;

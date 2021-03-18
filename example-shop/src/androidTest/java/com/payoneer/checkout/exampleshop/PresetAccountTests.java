@@ -20,8 +20,7 @@ import org.junit.runner.RunWith;
 
 import com.payoneer.checkout.exampleshop.checkout.CheckoutActivity;
 import com.payoneer.checkout.exampleshop.settings.SettingsActivity;
-import com.payoneer.checkout.exampleshop.R;
-import com.payoneer.checkout.sharedtest.sdk.PaymentListHelper;
+import com.payoneer.checkout.sharedtest.checkout.PaymentListHelper;
 
 import android.view.View;
 import androidx.test.espresso.IdlingResource;
