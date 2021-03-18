@@ -102,7 +102,7 @@ public abstract class BaseActivity extends AppCompatActivity {
     }
 
     /**
-     * Show error dialog to the user, the payment dialog from the Payoneer Checkout library is used
+     * Show error dialog to the user, the payment dialog from the Checkout SDK is used
      * to display a material designed dialog.
      *
      * @param errorResId error resource string id

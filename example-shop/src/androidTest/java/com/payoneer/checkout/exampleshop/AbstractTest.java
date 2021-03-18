@@ -55,7 +55,7 @@ class AbstractTest {
         String listUrl =
             ListService.createListUrl(com.payoneer.checkout.exampleshop.test.R.raw.listtemplate, presetFirst, baseUrl, authHeader);
 
-        onView(ViewMatchers.withId(R.id.layout_settings)).check(matches(isDisplayed()));
+        onView(withId(R.id.layout_settings)).check(matches(isDisplayed()));
         onView(withId(R.id.input_listurl)).perform(typeText(listUrl));
         onView(withId(R.id.button_settings)).perform(click());
         intended(hasComponent(CheckoutActivity.class.getName()));

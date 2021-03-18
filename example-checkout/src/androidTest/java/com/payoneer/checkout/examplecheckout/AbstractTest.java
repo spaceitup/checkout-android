@@ -43,7 +43,7 @@ class AbstractTest {
     }
 
     void enterListUrl(String listUrl) {
-        onView(ViewMatchers.withId(R.id.input_listurl)).perform(typeText(listUrl));
+        onView(withId(R.id.input_listurl)).perform(typeText(listUrl));
     }
 
     IdlingResource getResultIdlingResource() {
@@ -52,8 +52,8 @@ class AbstractTest {
     }
 
     void matchResultInteraction(String interactionCode, String interactionReason) {
-        onView(ViewMatchers.withId(R.id.text_interactioncode)).check(matches(withText(interactionCode)));
-        onView(ViewMatchers.withId(R.id.text_interactionreason)).check(matches(withText(interactionReason)));
+        onView(withId(R.id.text_interactioncode)).check(matches(withText(interactionCode)));
+        onView(withId(R.id.text_interactionreason)).check(matches(withText(interactionReason)));
     }
 
 

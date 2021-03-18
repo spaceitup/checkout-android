@@ -10,6 +10,7 @@ package com.payoneer.checkout.util;
 
 import static com.payoneer.checkout.model.InteractionReason.CLIENTSIDE_ERROR;
 import static com.payoneer.checkout.model.InteractionReason.COMMUNICATION_FAILURE;
+import static com.payoneer.checkout.ui.PaymentResult.EXTRA_PAYMENT_RESULT;
 
 import com.payoneer.checkout.core.PaymentException;
 import com.payoneer.checkout.model.ErrorInfo;
@@ -91,7 +92,7 @@ public class PaymentResultHelper {
      */
     public static void putIntoResultIntent(PaymentResult paymentResult, Intent intent) {
         if (intent != null) {
-            intent.putExtra(PaymentResult.EXTRA_PAYMENT_RESULT, paymentResult);
+            intent.putExtra(EXTRA_PAYMENT_RESULT, paymentResult);
         }
     }
 
@@ -103,7 +104,7 @@ public class PaymentResultHelper {
      */
     public static PaymentResult fromResultIntent(Intent intent) {
         if (intent != null) {
-            return intent.getParcelableExtra(PaymentResult.EXTRA_PAYMENT_RESULT);
+            return intent.getParcelableExtra(EXTRA_PAYMENT_RESULT);
         }
         return null;
     }

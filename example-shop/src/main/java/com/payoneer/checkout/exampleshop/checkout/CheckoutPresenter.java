@@ -22,7 +22,7 @@ import com.payoneer.checkout.ui.PaymentActivityResult;
 import com.payoneer.checkout.ui.PaymentResult;
 
 /**
- * CheckoutPresenter takes care of handling the response from the Android Checkout SDK.
+ * CheckoutPresenter takes care of handling the response from the Checkout SDK.
  */
 final class CheckoutPresenter {
 
