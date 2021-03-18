@@ -24,7 +24,6 @@ import com.payoneer.checkout.model.PresetAccount;
 import com.payoneer.checkout.network.ListConnection;
 import com.payoneer.checkout.resource.PaymentGroup;
 import com.payoneer.checkout.resource.ResourceLoader;
-import com.payoneer.checkout.service.NetworkServiceLookup;
 import com.payoneer.checkout.ui.model.AccountCard;
 import com.payoneer.checkout.ui.model.NetworkCard;
 import com.payoneer.checkout.ui.model.PaymentNetwork;

@@ -6,12 +6,12 @@
  * See the LICENSE file for more information.
  */
 
-package com.payoneer.checkout.service.basic;
+package com.payoneer.checkout.ui.service.basic;
 
 import com.payoneer.checkout.core.PaymentNetworkCodes;
 import com.payoneer.checkout.model.PaymentMethod;
-import com.payoneer.checkout.service.NetworkService;
-import com.payoneer.checkout.service.NetworkServiceFactory;
+import com.payoneer.checkout.ui.service.NetworkService;
+import com.payoneer.checkout.ui.service.NetworkServiceFactory;
 
 import android.content.Context;
 

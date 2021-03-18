@@ -6,7 +6,7 @@
  * See the LICENSE file for more information.
  */
 
-package com.payoneer.checkout.service;
+package com.payoneer.checkout.ui.service;
 
 import android.content.Context;
 

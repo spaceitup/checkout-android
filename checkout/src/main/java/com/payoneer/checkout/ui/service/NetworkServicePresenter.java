@@ -6,7 +6,7 @@
  * See the LICENSE file for more information.
  */
 
-package com.payoneer.checkout.service;
+package com.payoneer.checkout.ui.service;
 
 import com.payoneer.checkout.core.PaymentException;
 import com.payoneer.checkout.ui.PaymentResult;

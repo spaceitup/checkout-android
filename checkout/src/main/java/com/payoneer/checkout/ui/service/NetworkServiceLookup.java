@@ -6,7 +6,7 @@
  * See the LICENSE file for more information.
  */
 
-package com.payoneer.checkout.service;
+package com.payoneer.checkout.ui.service;
 
 import java.util.List;
 import java.util.Objects;
@@ -65,7 +65,7 @@ public class NetworkServiceLookup {
     private static void initFactories() {
         synchronized (factories) {
             if (factories.size() == 0) {
-                loadFactory("com.payoneer.checkout.service.basic.BasicNetworkServiceFactory");
+                loadFactory("com.payoneer.checkout.ui.service.basic.BasicNetworkServiceFactory");
             }
         }
     }

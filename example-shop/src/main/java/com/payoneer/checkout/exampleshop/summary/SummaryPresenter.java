@@ -65,7 +65,7 @@ final class SummaryPresenter {
      *
      * @param sdkResult the result received from the Android SDK
      */
-    void handleSdkResult(PaymentActivityResult sdkResult) {
+    void handlePaymentActivityResult(PaymentActivityResult sdkResult) {
         switch (sdkResult.getRequestCode()) {
             case SummaryActivity.PAYMENT_REQUEST_CODE:
                 handlePaymentResult(sdkResult);

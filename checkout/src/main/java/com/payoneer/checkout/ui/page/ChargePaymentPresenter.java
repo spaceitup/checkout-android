@@ -29,11 +29,11 @@ import com.payoneer.checkout.ui.dialog.PaymentDialogFragment.PaymentDialogListen
 import com.payoneer.checkout.ui.model.PaymentSession;
 import com.payoneer.checkout.redirect.RedirectRequest;
 import com.payoneer.checkout.redirect.RedirectService;
-import com.payoneer.checkout.service.LocalizationLoaderListener;
-import com.payoneer.checkout.service.LocalizationLoaderService;
-import com.payoneer.checkout.service.NetworkService;
-import com.payoneer.checkout.service.NetworkServiceLookup;
-import com.payoneer.checkout.service.NetworkServicePresenter;
+import com.payoneer.checkout.ui.service.LocalizationLoaderListener;
+import com.payoneer.checkout.ui.service.LocalizationLoaderService;
+import com.payoneer.checkout.ui.service.NetworkService;
+import com.payoneer.checkout.ui.service.NetworkServiceLookup;
+import com.payoneer.checkout.ui.service.NetworkServicePresenter;
 import com.payoneer.checkout.ui.service.PaymentSessionListener;
 import com.payoneer.checkout.ui.service.PaymentSessionService;
 import com.payoneer.checkout.util.PaymentResultHelper;
