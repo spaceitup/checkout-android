@@ -38,9 +38,9 @@ final class CheckoutPresenter {
     }
 
     /**
-     * Handle the PaymentActivityResult received from Payoneer Checkout
+     * Handle the PaymentActivityResult received from the Checkout SDK.
      *
-     * @param activityResult the result received
+     * @param activityResult containing the payment result
      */
     void handlePaymentActivityResult(PaymentActivityResult activityResult) {
         PaymentResult paymentResult = activityResult.getPaymentResult();
