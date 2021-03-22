@@ -21,13 +21,13 @@ platform :android do
     # ENV["SLACK_URL"] = "https://hooks.slack.com/services/..."
   end
 
-  desc "SDK Example - Deploy internal version to PlayStore"
-  lane :uploadSDKExample do
+  desc "Checkout Example - Deploy internal version to PlayStore"
+  lane :uploadCheckoutExample do
     gradle(task: "clean")
-    gradle(task: ":example-sdk:assembleRelease")
+    gradle(task: ":example-checkout:assembleRelease")
     supply(
         track: 'internal',
-	package_name: 'com.payoneer.mrs.examplesdk'
+	package_name: 'com.payoneer.checkout.examplecheckout'
     )
     # sh "your_script.sh"
     # You can also use other beta testing services here
@@ -39,7 +39,7 @@ platform :android do
     gradle(task: ":example-shop:assembleRelease")
     supply(
         track: 'internal',
-	package_name: 'com.payoneer.mrs.exampleshop'
+	package_name: 'com.payoneer.checkout.exampleshop'
     )
     # sh "your_script.sh"
     # You can also use other beta testing services here
