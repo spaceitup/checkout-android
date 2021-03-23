@@ -38,8 +38,8 @@ android {
 
     buildTypes {
         debug {
-            buildConfigField "String", "paymentapi_authheader", "\"$System.env.ANDROIDSDK_PAYMENTAPI_AUTH\""
-            buildConfigField "String", "paymentapi_baseurl", "\"$System.env.ANDROIDSDK_PAYMENTAPI_URL\""
+            buildConfigField "String", "authheader", "\"$System.env.CHECKOUTANDROID_AUTHHEADER\""
+            buildConfigField "String", "baseurl", "\"$System.env.CHECKOUTANDROID_BASEURL\""
 
             testVariants.all { testVariant ->
                 testVariant.outputs.all { output ->
@@ -93,7 +93,7 @@ task uploadToAppLive {
 
 
 task runFunctionalTest {
-    if (System.getenv('ANDROIDSDK_PAYMENTAPI_AUTH') == null || System.getenv('ANDROIDSDK_PAYMENTAPI_AUTH') == null) {
+    if (System.getenv('CHECKOUTANDROID_BASEURL') == null || System.getenv('CHECKOUTANDROID_AUTHHEADER') == null) {
         logger.warn('Missing functional test environment variables')
         return
     }

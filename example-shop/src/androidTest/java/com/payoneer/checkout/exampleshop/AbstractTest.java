@@ -50,8 +50,8 @@ class AbstractTest {
     }
 
     CheckoutActivity openCheckoutActivity(boolean presetFirst) {
-        String baseUrl = BuildConfig.paymentapi_baseurl;
-        String authHeader = BuildConfig.paymentapi_authheader;
+        String baseUrl = BuildConfig.baseurl;
+        String authHeader = BuildConfig.authheader;
         String listUrl =
             ListService.createListUrl(com.payoneer.checkout.exampleshop.test.R.raw.listtemplate, presetFirst, baseUrl, authHeader);
 

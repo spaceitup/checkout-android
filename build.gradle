@@ -77,23 +77,23 @@ task buildci(type: GradleBuild) {
         printf "Task for SNAPSHOT builds, uploading only to Nexus."
         tasks = [
                 'clean',
-                ':payment:test',
-                ':payment:assemble',
-                ':example-sdk:runFunctionalTest',
+                ':checkout:test',
+                ':checkout:assemble',
+                ':example-checkout:runFunctionalTest',
                 ':example-shop:runFunctionalTest',
-                ':payment:uploadArchives'
+                ':checkout:uploadArchives'
         ]
     } else {
         // tasks for RELEASE builds, this will also upload to the external packagecloud.io
         printf "Task for RELEASE builds, uploading to Nexus and packagecloud.io."
         tasks = [
                 'clean',
-                ':payment:test',
-                ':payment:assemble',
-                ':example-sdk:runFunctionalTest',
+                ':checkout:test',
+                ':checkout:assemble',
+                ':example-checkout:runFunctionalTest',
                 ':example-shop:runFunctionalTest',
-                ':payment:uploadArchives',
-                ':payment:uploadExternal'
+                ':checkout:uploadArchives',
+                ':checkout:uploadExternal'
         ]
     }
 }

@@ -58,8 +58,8 @@ class AbstractTest {
 
 
     String createListUrl() {
-        String baseUrl = BuildConfig.paymentapi_baseurl;
-        String authHeader = BuildConfig.paymentapi_authheader;
+        String baseUrl = BuildConfig.baseurl;
+        String authHeader = BuildConfig.authheader;
         return ListService.createListUrl(com.payoneer.checkout.examplecheckout.test.R.raw.listtemplate, false, baseUrl, authHeader);
     }
 
