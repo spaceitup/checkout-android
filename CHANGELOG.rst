@@ -1,5 +1,21 @@
-Changelog - Android SDK
+Changelog - Payneer Checkout SDK
 -----------------------
+
+**Version checkout-android 0.70.0**
+
+Version **0.70.0** is a major release.
+The package has changed from com.payoneer.mrs.payment to com.payoneer.checkout.
+The repository and project name has changed from android-sdk to checkout-android.
+
+**Features**
+
+* [PCX-1421] - Change android-sdk package structure and example apps
+* [PCX-1422] - Install new example apps for testing on Google PlayStore
+* [PCX-1227] - Update RXJava/Android versions in the example apps
+* [PCX-1399] - Update Android-SDK list request body for automated testing
+* [PCX-1416] - Change package names
+* [PCX-1430] - Rename repository to checkout-android
+* [PCX-1432] - Change android-sdk pipeline to checkout-android pipeline
 
 **Version android-sdk 0.60.0**
 
