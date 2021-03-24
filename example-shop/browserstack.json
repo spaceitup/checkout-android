@@ -1,9 +1,9 @@
 {
     "devices": [
         "Google Pixel 3a XL-9.0",
-	"Samsung Galaxy S6-5.0"
+        "Samsung Galaxy S6-5.0"
     ],
     "deviceLogs": true,
     "networkLogs": true,
-    "project": "Android SDK - example-shop"
+    "project": "Checkout Android - example-shop"
 }

@@ -1,0 +1,20 @@
+{
+    "transactionId": "1",
+    "integration": "MOBILE_NATIVE",
+    "presetFirst": "false",
+    "country": "DE",
+    "customer": {
+        "number": "1",
+        "email": "john.doe@example.com"
+    },
+    "payment": {
+        "amount": 13,
+        "currency": "EUR",
+        "reference": "Android Checkout Example"
+    },
+    "style": {
+        "language": "en_US"
+    },
+    "callback": {
+    }
+}

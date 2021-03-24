@@ -19,7 +19,7 @@ android {
     compileSdkVersion rootProject.compileSdkVersion
 
     defaultConfig {
-        applicationId "com.payoneer.mrs.exampleshop"
+        applicationId "com.payoneer.checkout.exampleshop"
         minSdkVersion rootProject.minSdkVersion
         targetSdkVersion rootProject.targetSdkVersion
         versionCode rootProject.versionCode
@@ -27,20 +27,34 @@ android {
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
 
+    signingConfigs {
+        release {
+            storeFile file("$System.env.PLAYSTORE_UPLOAD_STOREFILE")
+            storePassword "$System.env.PLAYSTORE_UPLOAD_STOREPASSWORD"
+            keyAlias "$System.env.PLAYSTORE_UPLOAD_KEYALIAS"
+            keyPassword "$System.env.PLAYSTORE_UPLOAD_KEYPASSWORD"
+        }
+    }
+
     buildTypes {
         debug {
-            buildConfigField "String", "paymentapi_authheader", "\"$System.env.ANDROIDSDK_PAYMENTAPI_AUTH\""
-            buildConfigField "String", "paymentapi_baseurl", "\"$System.env.ANDROIDSDK_PAYMENTAPI_URL\""
+            buildConfigField "String", "authheader", "\"$System.env.CHECKOUTANDROID_AUTHHEADER\""
+            buildConfigField "String", "baseurl", "\"$System.env.CHECKOUTANDROID_BASEURL\""
 
             testVariants.all { testVariant ->
                 testVariant.outputs.all { output ->
-                    outputFileName = "Example-Shop-${getCurrentBranch()}-debug-androidTest.apk"
+                    outputFileName = "ExampleShop_${getCurrentBranch()}_debug-androidTest.apk"
                 }
             }
-            applicationVariants.all { variant ->
-                variant.outputs.all {
-                    outputFileName = "Example-Shop-${getCurrentBranch()}-debug.apk"
-                }
+        }
+        release {
+            minifyEnabled true
+            signingConfig signingConfigs.release
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+        applicationVariants.all { variant ->
+            variant.outputs.all {
+                outputFileName = "ExampleShop_${getCurrentBranch()}_${variant.buildType.name}.apk"
             }
         }
     }
@@ -49,9 +63,9 @@ android {
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation "com.google.android.material:material:${rootProject.androidMaterialVersion}"
-    implementation project(":payment")
-    implementation "io.reactivex:rxjava:${rootProject.rxjavaVersion}"
-    implementation "io.reactivex:rxandroid:${rootProject.rxandroidVersion}"
+    implementation project(":checkout")
+    implementation "io.reactivex.rxjava3:rxjava:${rootProject.rxjavaVersion}"
+    implementation "io.reactivex.rxjava3:rxandroid:${rootProject.rxandroidVersion}"
     implementation "androidx.test.espresso:espresso-idling-resource:${rootProject.androidxTestEspressoVersion}@aar"
 
     testImplementation "androidx.test.ext:junit:${rootProject.androidxTestJunitVersion}"
@@ -79,8 +93,8 @@ task uploadToAppLive {
 
 
 task runFunctionalTest {
-    if (System.getenv('ANDROIDSDK_PAYMENTAPI_AUTH') == null || System.getenv('ANDROIDSDK_PAYMENTAPI_AUTH') == null) {
-        logger.warn('Missing Android-SDK functional test environment variables')
+    if (System.getenv('CHECKOUTANDROID_BASEURL') == null || System.getenv('CHECKOUTANDROID_AUTHHEADER') == null) {
+        logger.warn('Missing functional test environment variables')
         return
     }
     if (System.getenv('BROWSERSTACK_USER') == null || System.getenv('BROWSERSTACK_KEY') == null) {
