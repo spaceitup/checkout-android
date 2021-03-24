@@ -6,6 +6,7 @@ Changelog - Payoneer Checkout SDK for Android-based devices
 Version **0.70.0** is a major release.
 The package has changed from com.payoneer.mrs.payment to com.payoneer.checkout.
 The repository and project name has changed from android-sdk to checkout-android.
+PackageCloud access  has changed, please check optile.io/sdks documentation.
 
 **Features**
 
