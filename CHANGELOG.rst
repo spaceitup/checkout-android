@@ -1,4 +1,4 @@
-Changelog - Payneer Checkout SDK
+Changelog - Payoneer Checkout SDK for Android based devices
 -----------------------
 
 **Version checkout-android 0.70.0**
