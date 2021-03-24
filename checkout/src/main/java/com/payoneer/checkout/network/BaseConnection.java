@@ -217,7 +217,7 @@ abstract class BaseConnection {
         } catch (IOException | JsonParseException e) {
             // Ignore the exceptions since the ErrorInfo is an optional field
             // and it is more important to not lose the status error code
-            Log.w("android-sdk", e);
+            Log.w("Checkout", e);
         }
         if (errorInfo != null) {
             return new PaymentException(errorInfo);

@@ -28,7 +28,7 @@ interface SummaryView {
     void showPaymentConfirmation();
 
     /**
-     * Show the list of payments using the android-sdk
+     * Show the list of payment methods
      */
     void showPaymentList();
 
