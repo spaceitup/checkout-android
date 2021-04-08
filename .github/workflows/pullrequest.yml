@@ -7,7 +7,7 @@ on:
 jobs:
   build:
 
-    runs-on: java11
+    runs-on: jdk11
 
     steps:
       - uses: actions/checkout@v2
