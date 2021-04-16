@@ -12,7 +12,9 @@ import com.payoneer.checkout.core.PaymentException;
 import com.payoneer.checkout.form.Operation;
 import com.payoneer.checkout.util.PaymentUtils;
 
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 
 /**
  * Base class for all widgets, i.e. ButtonWidget, CheckBoxWidget, TextInputWidget etc.
@@ -23,17 +25,22 @@ public abstract class FormWidget {
     final static int VALIDATION_ERROR = 0x01;
     final static int VALIDATION_OK = 0x02;
 
-    final View rootView;
     final String name;
+    View widgetView;
 
     WidgetPresenter presenter;
     int state;
 
-    FormWidget(String name, View rootView) {
-        PaymentUtils.setTestId(rootView, "widget", name);
+    FormWidget(String name) {
         this.name = name;
-        this.rootView = rootView;
     }
+
+    /**
+     * Inflate this widget inside the parent view
+     *
+     * @param parent the parent ViewGroup in which to inflate this widget
+     */
+    public abstract View inflate(ViewGroup parent);
 
     /**
      * Set the presenter in this widget, the presenter may be used by this widget i.e. to inform of events or validate input.
@@ -45,12 +52,12 @@ public abstract class FormWidget {
     }
 
     /**
-     * Get the rootView of this Widget
+     * Get the widgetView of this Widget
      *
      * @return the root view of this widget
      */
     public final View getRootView() {
-        return rootView;
+        return widgetView;
     }
 
     /**
@@ -111,12 +118,24 @@ public abstract class FormWidget {
     }
 
     /**
+     * Inflate and set the widgetView of this widget
+     *
+     * @param parent in which to inflate this widget widgetView
+     * @param layoutResId the resource id of the layout that should be inflated
+     */
+    final void inflateWidgetView(ViewGroup parent, int layoutResId) {
+        LayoutInflater inflater = LayoutInflater.from(parent.getContext());
+        widgetView = inflater.inflate(layoutResId, parent, false);
+        PaymentUtils.setTestId(widgetView, "widget", name);
+    }
+
+    /**
      * Set this widget visible or hide it.
      *
      * @param visible true when visible, false for hiding this widget
      */
     final void setVisible(boolean visible) {
-        rootView.setVisibility(visible ? View.VISIBLE : View.GONE);
+        widgetView.setVisibility(visible ? View.VISIBLE : View.GONE);
     }
 
     /**

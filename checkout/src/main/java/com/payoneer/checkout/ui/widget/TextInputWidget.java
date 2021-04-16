@@ -19,6 +19,7 @@ import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.view.View;
+import android.view.ViewGroup;
 
 /**
  * Widget for handling text input
@@ -29,10 +30,17 @@ public final class TextInputWidget extends InputLayoutWidget {
      * Construct a new TextInputWidget
      *
      * @param name name identifying this widget
-     * @param rootView the root view of this input
      */
-    public TextInputWidget(String name, View rootView) {
-        super(name, rootView);
+    public TextInputWidget(String name) {
+        super(name);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public View inflate(ViewGroup parent) {
+        super.inflate(parent);
         textInput.addTextChangedListener(new TextWatcher() {
             public void onTextChanged(CharSequence s, int start, int before, int count) {
                 onTextInputChanged();
@@ -44,6 +52,7 @@ public final class TextInputWidget extends InputLayoutWidget {
             public void afterTextChanged(Editable s) {
             }
         });
+        return widgetView;
     }
 
     /**

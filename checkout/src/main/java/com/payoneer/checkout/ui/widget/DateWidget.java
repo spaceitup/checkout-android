@@ -17,7 +17,6 @@ import com.payoneer.checkout.util.PaymentUtils;
 import com.payoneer.checkout.validation.ValidationResult;
 
 import android.text.TextUtils;
-import android.view.View;
 
 /**
  * Widget for handling the date input
@@ -31,10 +30,9 @@ public final class DateWidget extends InputLayoutWidget {
      * Construct a new DateWidget
      *
      * @param name name identifying this widget
-     * @param rootView the root view of this input
      */
-    public DateWidget(String name, View rootView) {
-        super(name, rootView);
+    public DateWidget(String name) {
+        super(name);
     }
 
     /**

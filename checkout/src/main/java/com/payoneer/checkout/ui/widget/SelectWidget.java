@@ -19,6 +19,7 @@ import com.payoneer.checkout.model.SelectOption;
 import com.payoneer.checkout.util.PaymentUtils;
 
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Spinner;
@@ -30,22 +31,29 @@ import androidx.annotation.NonNull;
  */
 public final class SelectWidget extends FormWidget {
 
-    private final Spinner spinner;
-    private final TextView label;
-    private final ArrayAdapter<SpinnerItem> adapter;
+    private Spinner spinner;
+    private TextView label;
+    private ArrayAdapter<SpinnerItem> adapter;
 
     /**
      * Construct a new SelectWidget
      *
      * @param name identifying this widget
-     * @param rootView the root view of this input
      */
-    public SelectWidget(String name, View rootView) {
-        super(name, rootView);
-        label = rootView.findViewById(R.id.input_label);
-        adapter = new ArrayAdapter<>(rootView.getContext(), R.layout.spinner_item);
+    public SelectWidget(String name) {
+        super(name);
+    }
 
-        spinner = rootView.findViewById(R.id.input_spinner);
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public View inflate(ViewGroup parent) {
+        inflateWidgetView(parent, R.layout.widget_select);
+        label = widgetView.findViewById(R.id.input_label);
+        adapter = new ArrayAdapter<>(widgetView.getContext(), R.layout.spinner_item);
+
+        spinner = widgetView.findViewById(R.id.input_spinner);
         spinner.setAdapter(adapter);
         spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
@@ -57,6 +65,7 @@ public final class SelectWidget extends FormWidget {
             public void onNothingSelected(AdapterView<?> parentView) {
             }
         });
+        return widgetView;
     }
 
     /**
