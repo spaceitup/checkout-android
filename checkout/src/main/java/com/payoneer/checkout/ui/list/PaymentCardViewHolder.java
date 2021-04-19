@@ -150,14 +150,46 @@ public abstract class PaymentCardViewHolder extends RecyclerView.ViewHolder {
         addWidget(widget);
     }
 
+
+    void layoutWidgets() {
+        ViewGroup rowLayout = null;
+        boolean rowAdded = false;
+
+        if (checkLayoutWidgetsInRow(VERIFICATION_CODE, EXPIRY_DATE)) {
+            LayoutInflater inflater = LayoutInflater.from(formLayout.getContext());
+            rowLayout = (ViewGroup) inflater.inflate(R.layout.layout_widget_row, formLayout, false);
+        }
+        for (FormWidget widget : widgets.values()) {
+            String name = widget.getName();
+
+            if (rowLayout != null && (VERIFICATION_CODE.equals(name) || EXPIRY_DATE.equals(name))) {
+                layoutWidgetInRow(widget, rowLayout);
+                if (!rowAdded) {
+                    formLayout.addView(rowLayout);
+                    rowAdded = true;
+                }
+                continue;
+            }
+            formLayout.addView(widget.inflate(formLayout));
+        }
+    }
+
+    private void layoutWidgetInRow(FormWidget widget, ViewGroup rowLayout) {
+        View view = widget.inflate(rowLayout);
+        LinearLayout.LayoutParams params = (LinearLayout.LayoutParams) view.getLayoutParams();
+        params.weight = 1;
+        view.setLayoutParams(params);
+        rowLayout.addView(view);
+    }
+    
     /**
-     * Check if two widgets are placed after eachother so they can be shown in a row
+     * Check if two widgets can be placed next to eachother in a row
      *
      * @param name1 contains name of the first widget
      * @param name2 contains name of the second widget
      * @return true when they can be combined into one row, false otherwise
      */
-    private boolean combineWidgets(String name1, String name2) {
+    private boolean checkLayoutWidgetsInRow(String name1, String name2) {
         String nextName = null;
         for (String name : widgets.keySet()) {
             if (nextName != null) {
@@ -172,38 +204,7 @@ public abstract class PaymentCardViewHolder extends RecyclerView.ViewHolder {
         }
         return false;
     }
-
-    void layoutWidgets() {
-        ViewGroup rowLayout = null;
-        boolean rowAdded = false;
-
-        if (combineWidgets(VERIFICATION_CODE, EXPIRY_DATE)) {
-            LayoutInflater inflater = LayoutInflater.from(formLayout.getContext());
-            rowLayout = (ViewGroup) inflater.inflate(R.layout.layout_widget_row, formLayout, false);
-        }
-        for (FormWidget widget : widgets.values()) {
-            String name = widget.getName();
-
-            if (rowLayout != null && (VERIFICATION_CODE.equals(name) || EXPIRY_DATE.equals(name))) {
-                addWidgetToRow(widget, rowLayout);
-                if (!rowAdded) {
-                    formLayout.addView(rowLayout);
-                    rowAdded = true;
-                }
-                continue;
-            }
-            formLayout.addView(widget.inflate(formLayout));
-        }
-    }
-
-    private void addWidgetToRow(FormWidget widget, ViewGroup rowLayout) {
-        View view = widget.inflate(rowLayout);
-        LinearLayout.LayoutParams params = (LinearLayout.LayoutParams) view.getLayoutParams();
-        params.weight = 1;
-        view.setLayoutParams(params);
-        rowLayout.addView(view);
-    }
-
+    
     boolean requestFocusNextWidget(FormWidget currentWidget) {
         boolean requestFocus = false;
         for (Map.Entry<String, FormWidget> entry : widgets.entrySet()) {
