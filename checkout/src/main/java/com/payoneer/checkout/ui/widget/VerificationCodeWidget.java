@@ -17,6 +17,7 @@ import com.payoneer.checkout.model.InputElement;
 import com.payoneer.checkout.ui.widget.input.EditTextInputModeFactory;
 
 import android.view.View;
+import android.view.ViewGroup;
 
 /**
  * Widget for showing the verification code input
@@ -27,11 +28,19 @@ public final class VerificationCodeWidget extends InputLayoutWidget {
      * Construct a new VerificationCodeWidget
      *
      * @param name name identifying this widget
-     * @param rootView the root view of this input
      */
-    public VerificationCodeWidget(String name, View rootView) {
-        super(name, rootView);
+    public VerificationCodeWidget(String name) {
+        super(name);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public View inflate(ViewGroup parent) {
+        super.inflate(parent);
         setEndIcon(END_ICON_CUSTOM, R.drawable.ic_tooltip);
+        return widgetView;
     }
 
     /**
@@ -44,7 +53,7 @@ public final class VerificationCodeWidget extends InputLayoutWidget {
         int maxLength = presenter.getMaxLength(code, name);
         setTextInputMode(EditTextInputModeFactory.createMode(maxLength, element));
         setValidation();
-        setLabel(Localization.translateAccountLabel(code, name));
+        setLabel(Localization.translate(code, LocalizationKey.VERIFICATIONCODE_GENERIC_PLACEHOLDER));
         setHelperText(Localization.translate(code, LocalizationKey.VERIFICATIONCODE_SPECIFIC_PLACEHOLDER));
     }
 

@@ -32,11 +32,14 @@ final class PresetCardViewHolder extends PaymentCardViewHolder {
 
     private PresetCardViewHolder(ListAdapter adapter, View parent, PresetCard presetCard) {
         super(adapter, parent);
+
         title = parent.findViewById(R.id.text_title);
         subtitle = parent.findViewById(R.id.text_subtitle);
         card = parent.findViewById(R.id.card_preset);
         card.setCheckable(true);
+
         addButtonWidget();
+        layoutWidgets();
     }
 
     static RecyclerView.ViewHolder createInstance(ListAdapter adapter, PresetCard presetCard, ViewGroup parent) {

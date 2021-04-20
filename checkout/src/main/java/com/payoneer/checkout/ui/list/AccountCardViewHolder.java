@@ -32,8 +32,11 @@ public final class AccountCardViewHolder extends PaymentCardViewHolder {
         super(adapter, parent);
         this.title = parent.findViewById(R.id.text_title);
         this.subtitle = parent.findViewById(R.id.text_subtitle);
+
         addElementWidgets(accountCard);
         addButtonWidget();
+        layoutWidgets();
+
         setLastImeOptions();
     }
 
