@@ -19,8 +19,6 @@ import com.payoneer.checkout.form.Operation;
 import com.payoneer.checkout.localization.Localization;
 import com.payoneer.checkout.model.RegistrationType;
 
-import android.view.View;
-
 /**
  * Widget for handling the Register input
  */
@@ -32,10 +30,9 @@ public final class RegisterWidget extends CheckBoxWidget {
      * Construct a new RegisterWidget
      *
      * @param name name identifying this widget
-     * @param rootView the root view of this input
      */
-    public RegisterWidget(String name, View rootView) {
-        super(name, rootView);
+    public RegisterWidget(String name) {
+        super(name);
     }
 
     /**

@@ -21,6 +21,7 @@ import com.payoneer.checkout.validation.ValidationResult;
 import android.text.TextUtils;
 import android.view.KeyEvent;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.inputmethod.EditorInfo;
 import android.widget.TextView;
 
@@ -28,25 +29,32 @@ import android.widget.TextView;
  * Base class for widgets using the TextInputLayout and TextInputEditText
  */
 public abstract class InputLayoutWidget extends FormWidget {
-    final TextInputEditText textInput;
-    final TextInputLayout textLayout;
+    TextInputEditText textInput;
+    TextInputLayout textLayout;
 
     EditTextInputMode mode;
     private String helperText;
 
     /**
-     * Construct a new TextInputWidget
+     * Construct a new InputLayoutWidget
      *
      * @param name name identifying this widget
-     * @param rootView the root view of this input
      */
-    InputLayoutWidget(String name, View rootView) {
-        super(name, rootView);
-        textLayout = rootView.findViewById(R.id.textinputlayout);
+    InputLayoutWidget(String name) {
+        super(name);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public View inflate(ViewGroup parent) {
+        inflateWidgetView(parent, R.layout.widget_textinput);
+        textLayout = widgetView.findViewById(R.id.textinputlayout);
         textLayout.setErrorEnabled(true);
         textLayout.setHelperTextEnabled(true);
 
-        textInput = rootView.findViewById(R.id.textinputedittext);
+        textInput = widgetView.findViewById(R.id.textinputedittext);
         textInput.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override
             public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
@@ -67,6 +75,7 @@ public abstract class InputLayoutWidget extends FormWidget {
                 handleOnFocusChange(hasFocus);
             }
         });
+        return widgetView;
     }
 
     public void setLabel(String label) {

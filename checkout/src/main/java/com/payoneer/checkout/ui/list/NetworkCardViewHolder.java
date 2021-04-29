@@ -17,9 +17,7 @@ import com.payoneer.checkout.ui.model.NetworkCard;
 import com.payoneer.checkout.ui.model.PaymentCard;
 import com.payoneer.checkout.ui.model.PaymentNetwork;
 import com.payoneer.checkout.ui.model.SmartSwitch;
-import com.payoneer.checkout.ui.widget.FormWidget;
 import com.payoneer.checkout.ui.widget.RegisterWidget;
-import com.payoneer.checkout.ui.widget.WidgetInflater;
 import com.payoneer.checkout.util.PaymentUtils;
 
 import android.view.LayoutInflater;
@@ -38,11 +36,13 @@ final class NetworkCardViewHolder extends PaymentCardViewHolder {
 
     public NetworkCardViewHolder(ListAdapter adapter, View parent, NetworkCard networkCard) {
         super(adapter, parent);
-
         this.title = parent.findViewById(R.id.text_title);
+
         addElementWidgets(networkCard);
         addRegisterWidgets();
         addButtonWidget();
+        layoutWidgets();
+
         addNetworkLogos(parent, networkCard);
         setLastImeOptions();
     }
@@ -99,10 +99,8 @@ final class NetworkCardViewHolder extends PaymentCardViewHolder {
     }
 
     private void addRegisterWidgets() {
-        FormWidget widget = WidgetInflater.inflateRegisterWidget(AUTO_REGISTRATION, formLayout);
-        addWidget(widget);
-        widget = WidgetInflater.inflateRegisterWidget(ALLOW_RECURRENCE, formLayout);
-        addWidget(widget);
+        addWidget(new RegisterWidget(AUTO_REGISTRATION));
+        addWidget(new RegisterWidget(ALLOW_RECURRENCE));
     }
 
     private void bindRegistrationWidget(PaymentNetwork network) {

@@ -14,6 +14,7 @@ import com.payoneer.checkout.core.PaymentException;
 import com.payoneer.checkout.form.Operation;
 
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.TextView;
 
 /**
@@ -21,23 +22,27 @@ import android.widget.TextView;
  */
 public class CheckBoxWidget extends FormWidget {
 
-    private final SwitchMaterial value;
-    private final TextView label;
+    private SwitchMaterial value;
+    private TextView label;
 
     /**
      * Construct a new CheckBoxWidget
      *
      * @param name name identifying this widget
-     * @param rootView the root view of this input
      */
-    public CheckBoxWidget(String name, View rootView) {
-        super(name, rootView);
-        label = rootView.findViewById(R.id.label_value);
-        value = rootView.findViewById(R.id.checkbox_value);
+    public CheckBoxWidget(String name) {
+        super(name);
     }
 
-    public void setLabel(String label) {
-        this.label.setText(label);
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public View inflate(ViewGroup parent) {
+        inflateWidgetView(parent, R.layout.widget_checkbox);
+        label = widgetView.findViewById(R.id.label_value);
+        value = widgetView.findViewById(R.id.checkbox_value);
+        return widgetView;
     }
 
     /**
@@ -46,6 +51,10 @@ public class CheckBoxWidget extends FormWidget {
     @Override
     public void putValue(Operation operation) throws PaymentException {
         operation.putBooleanValue(name, value.isChecked());
+    }
+
+    public void setLabel(String label) {
+        this.label.setText(label);
     }
 
     boolean isChecked() {

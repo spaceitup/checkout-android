@@ -1,6 +1,10 @@
 Changelog - Payoneer Checkout SDK for Android-based devices
 -----------------------
 
+**Version checkout-android 0.71.0**
+
+* [PCX-1190] - Expiry and CVV field on same line for credit/debit card forms
+
 **Version checkout-android 0.70.0**
 
 Version **0.70.0** is a major release.

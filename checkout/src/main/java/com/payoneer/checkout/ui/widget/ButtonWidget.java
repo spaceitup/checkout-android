@@ -12,6 +12,7 @@ import com.payoneer.checkout.R;
 import com.payoneer.checkout.localization.Localization;
 
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
 
 /**
@@ -19,23 +20,32 @@ import android.widget.Button;
  */
 public final class ButtonWidget extends FormWidget {
 
-    private final Button button;
+    private Button button;
 
     /**
      * Construct a new ButtonWidget
      *
      * @param name the name of this widget
-     * @param rootView the root view of this button
      */
-    public ButtonWidget(String name, View rootView) {
-        super(name, rootView);
-        button = rootView.findViewById(R.id.button);
+    public ButtonWidget(String name) {
+        super(name);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public View inflate(ViewGroup parent) {
+        inflateWidgetView(parent, R.layout.widget_button);
+
+        button = widgetView.findViewById(R.id.button);
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 handleOnClick();
             }
         });
+        return widgetView;
     }
 
     public void onBind(String code, String buttonKey) {

@@ -23,22 +23,25 @@ import java.util.Map;
 import com.payoneer.checkout.R;
 import com.payoneer.checkout.model.AccountMask;
 import com.payoneer.checkout.model.InputElement;
+import com.payoneer.checkout.model.InputElementType;
 import com.payoneer.checkout.model.PaymentMethod;
 import com.payoneer.checkout.ui.model.PaymentCard;
 import com.payoneer.checkout.ui.widget.ButtonWidget;
+import com.payoneer.checkout.ui.widget.CheckBoxWidget;
 import com.payoneer.checkout.ui.widget.DateWidget;
 import com.payoneer.checkout.ui.widget.FormWidget;
 import com.payoneer.checkout.ui.widget.SelectWidget;
 import com.payoneer.checkout.ui.widget.TextInputWidget;
 import com.payoneer.checkout.ui.widget.VerificationCodeWidget;
-import com.payoneer.checkout.ui.widget.WidgetInflater;
 import com.payoneer.checkout.ui.widget.WidgetPresenter;
 import com.payoneer.checkout.util.NetworkLogoLoader;
 import com.payoneer.checkout.util.PaymentUtils;
 
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -82,8 +85,29 @@ public abstract class PaymentCardViewHolder extends RecyclerView.ViewHolder {
     }
 
     void addButtonWidget() {
-        FormWidget widget = WidgetInflater.inflateButtonWidget(BUTTON_WIDGET, formLayout);
-        addWidget(widget);
+        if (!widgets.containsKey(BUTTON_WIDGET)) {
+            addWidget(new ButtonWidget(BUTTON_WIDGET));
+        }
+    }
+
+    void addVerificationCodeWidget() {
+        if (!widgets.containsKey(VERIFICATION_CODE)) {
+            addWidget(new VerificationCodeWidget(VERIFICATION_CODE));
+        }
+    }
+
+    void addExpiryDateWidget() {
+        if (!widgets.containsKey(EXPIRY_DATE)) {
+            addWidget(new DateWidget(EXPIRY_DATE));
+        }
+    }
+
+    void addWidget(FormWidget widget) {
+        String name = widget.getName();
+        if (!widgets.containsKey(name)) {
+            widget.setPresenter(presenter);
+            widgets.put(name, widget);
+        }
     }
 
     void addElementWidgets(PaymentCard card) {
@@ -98,22 +122,89 @@ public abstract class PaymentCardViewHolder extends RecyclerView.ViewHolder {
             }
             switch (element.getName()) {
                 case VERIFICATION_CODE:
-                    addWidget(WidgetInflater.inflateVerificationCodeWidget(VERIFICATION_CODE, formLayout));
+                    addVerificationCodeWidget();
                     break;
                 case EXPIRY_MONTH:
                 case EXPIRY_YEAR:
-                    if (!elementsContainExpiryDate) {
-                        addWidget(WidgetInflater.inflateElementWidget(element, formLayout));
-                    } else if (!widgets.containsKey(EXPIRY_DATE)) {
-                        addWidget(WidgetInflater.inflateDateWidget(EXPIRY_DATE, formLayout));
+                    if (elementsContainExpiryDate) {
+                        addExpiryDateWidget();
+                        break;
                     }
-                    break;
                 default:
-                    addWidget(WidgetInflater.inflateElementWidget(element, formLayout));
+                    addElementWidget(element);
             }
         }
     }
 
+    private void addElementWidget(InputElement element) {
+        String name = element.getName();
+        FormWidget widget;
+        switch (element.getType()) {
+            case InputElementType.SELECT:
+                widget = new SelectWidget(name);
+            case InputElementType.CHECKBOX:
+                widget = new CheckBoxWidget(name);
+            default:
+                widget = new TextInputWidget(name);
+        }
+        addWidget(widget);
+    }
+
+
+    void layoutWidgets() {
+        ViewGroup rowLayout = null;
+        boolean rowAdded = false;
+
+        if (checkLayoutWidgetsInRow(VERIFICATION_CODE, EXPIRY_DATE)) {
+            LayoutInflater inflater = LayoutInflater.from(formLayout.getContext());
+            rowLayout = (ViewGroup) inflater.inflate(R.layout.layout_widget_row, formLayout, false);
+        }
+        for (FormWidget widget : widgets.values()) {
+            String name = widget.getName();
+
+            if (rowLayout != null && (VERIFICATION_CODE.equals(name) || EXPIRY_DATE.equals(name))) {
+                layoutWidgetInRow(widget, rowLayout);
+                if (!rowAdded) {
+                    formLayout.addView(rowLayout);
+                    rowAdded = true;
+                }
+                continue;
+            }
+            formLayout.addView(widget.inflate(formLayout));
+        }
+    }
+
+    private void layoutWidgetInRow(FormWidget widget, ViewGroup rowLayout) {
+        View view = widget.inflate(rowLayout);
+        LinearLayout.LayoutParams params = (LinearLayout.LayoutParams) view.getLayoutParams();
+        params.weight = 1;
+        view.setLayoutParams(params);
+        rowLayout.addView(view);
+    }
+    
+    /**
+     * Check if two widgets can be placed next to eachother in a row
+     *
+     * @param name1 contains name of the first widget
+     * @param name2 contains name of the second widget
+     * @return true when they can be combined into one row, false otherwise
+     */
+    private boolean checkLayoutWidgetsInRow(String name1, String name2) {
+        String nextName = null;
+        for (String name : widgets.keySet()) {
+            if (nextName != null) {
+                return name.equals(nextName);
+            }
+            if (name.equals(name1)) {
+                nextName = name2;
+            }
+            else if (name.equals(name2)) {
+                nextName = name1;
+            }
+        }
+        return false;
+    }
+    
     boolean requestFocusNextWidget(FormWidget currentWidget) {
         boolean requestFocus = false;
         for (Map.Entry<String, FormWidget> entry : widgets.entrySet()) {
@@ -127,17 +218,6 @@ public abstract class PaymentCardViewHolder extends RecyclerView.ViewHolder {
             }
         }
         return false;
-    }
-
-    void addWidget(FormWidget widget) {
-        String name = widget.getName();
-
-        if (widgets.containsKey(name)) {
-            return;
-        }
-        widget.setPresenter(presenter);
-        widgets.put(name, widget);
-        formLayout.addView(widget.getRootView());
     }
 
     void expand(boolean expand) {

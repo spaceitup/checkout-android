@@ -37,6 +37,7 @@ public final class LocalizationKey {
 
     public final static String NETWORK_LABEL = "network.label";
 
+    public final static String VERIFICATIONCODE_GENERIC_PLACEHOLDER = "account.verificationCode.generic.placeholder";
     public final static String VERIFICATIONCODE_SPECIFIC_PLACEHOLDER = "account.verificationCode.specific.placeholder";
 
     public final static String ERROR_CONNECTION_TITLE = "messages.error.internet.title";
