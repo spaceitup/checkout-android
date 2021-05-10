@@ -29,6 +29,7 @@ import com.payoneer.checkout.util.PaymentResultHelper;
 
 import android.app.Activity;
 import android.content.Context;
+import android.util.Log;
 
 /**
  * BasicNetworkService implementing the handling of basic payment methods like Visa, Mastercard and Sepa.
@@ -96,7 +97,7 @@ public final class BasicNetworkService extends NetworkService implements Operati
     public void onOperationSuccess(OperationResult operationResult) {
         Interaction interaction = operationResult.getInteraction();
         PaymentResult result = new PaymentResult(operationResult);
-
+        
         if (!PROCEED.equals(interaction.getCode())) {
             presenter.onProcessPaymentResult(RESULT_CODE_ERROR, result);
             return;

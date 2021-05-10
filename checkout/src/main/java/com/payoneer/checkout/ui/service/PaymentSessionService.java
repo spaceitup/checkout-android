@@ -8,7 +8,14 @@
 
 package com.payoneer.checkout.ui.service;
 
+import static com.payoneer.checkout.localization.LocalizationKey.LIST_HEADER_ACCOUNTS;
+import static com.payoneer.checkout.localization.LocalizationKey.LIST_HEADER_ACCOUNTS_UPDATE;
+import static com.payoneer.checkout.localization.LocalizationKey.LIST_HEADER_NETWORKS;
+import static com.payoneer.checkout.localization.LocalizationKey.LIST_HEADER_NETWORKS_OTHER;
+import static com.payoneer.checkout.localization.LocalizationKey.LIST_HEADER_NETWORKS_UPDATE;
+import static com.payoneer.checkout.localization.LocalizationKey.LIST_HEADER_PRESET;
 import static com.payoneer.checkout.model.IntegrationType.MOBILE_NATIVE;
+import static com.payoneer.checkout.model.NetworkOperationType.UPDATE;
 
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
@@ -31,10 +38,13 @@ import com.payoneer.checkout.network.ListConnection;
 import com.payoneer.checkout.resource.PaymentGroup;
 import com.payoneer.checkout.resource.ResourceLoader;
 import com.payoneer.checkout.ui.model.AccountCard;
+import com.payoneer.checkout.ui.model.AccountSection;
 import com.payoneer.checkout.ui.model.NetworkCard;
+import com.payoneer.checkout.ui.model.NetworkSection;
 import com.payoneer.checkout.ui.model.PaymentNetwork;
 import com.payoneer.checkout.ui.model.PaymentSession;
 import com.payoneer.checkout.ui.model.PresetCard;
+import com.payoneer.checkout.ui.model.PresetSection;
 import com.payoneer.checkout.validation.Validator;
 
 import android.content.Context;
@@ -132,7 +142,14 @@ public final class PaymentSessionService {
      * @return true when supported, false otherwise
      */
     public boolean isSupportedNetworkOperationType(String operationType) {
-        return NetworkOperationType.CHARGE.equals(operationType) || NetworkOperationType.PRESET.equals(operationType);
+        switch (operationType) {
+            case NetworkOperationType.CHARGE:
+            case NetworkOperationType.PRESET:
+            case UPDATE:
+                return true;
+            default:
+                return false;
+        }
     }
 
     private PaymentSession asyncLoadPaymentSession(String listUrl, Context context) throws PaymentException {
@@ -142,21 +159,73 @@ public final class PaymentSessionService {
         if (!MOBILE_NATIVE.equals(integrationType)) {
             throw new PaymentException("Integration type is not supported: " + integrationType);
         }
-
         String operationType = listResult.getOperationType();
         if (!isSupportedNetworkOperationType(operationType)) {
             throw new PaymentException("List operationType is not supported: " + operationType);
         }
-        Map<String, PaymentNetwork> networks = loadPaymentNetworks(listResult);
-        Map<String, PaymentGroup> groups = loadPaymentGroups(context);
-
+        PresetSection presetSection = createPresetSection(listResult);
+        AccountSection accountSection = createAccountSection(listResult);
+        NetworkSection networkSection = createNetworkSection(listResult, accountSection, context);
         Validator validator = loadValidator(context);
 
-        PresetCard presetCard = createPresetCard(listResult);
-        List<AccountCard> accountCards = createAccountCards(listResult, networks);
-        List<NetworkCard> networkCards = createNetworkCards(networks, groups);
+        return new PaymentSession(listResult, presetSection, accountSection, networkSection, validator);
+    }
 
-        return new PaymentSession(listResult, presetCard, accountCards, networkCards, validator);
+    private PresetSection createPresetSection(ListResult listResult) {
+        PresetAccount account = listResult.getPresetAccount();
+        if (account == null) {
+            return null;
+        }
+        return new PresetSection(LIST_HEADER_PRESET, new PresetCard(account));
+    }
+    
+    private AccountSection createAccountSection(ListResult listResult) {
+        List<AccountCard> cards = new ArrayList<>();
+        List<AccountRegistration> accounts = listResult.getAccounts();
+
+        if (accounts == null || accounts.size() == 0) {
+            return null;
+        }
+        for (AccountRegistration account : accounts) {
+            if (NetworkServiceLookup.supports(account.getCode(), account.getMethod())) {
+                cards.add(new AccountCard(account));
+            }
+        }
+        if (cards.size() == 0) {
+            return null;
+        }
+        String labelKey = UPDATE.equals(listResult.getOperationType()) ? 
+            LIST_HEADER_ACCOUNTS_UPDATE : LIST_HEADER_ACCOUNTS;
+        return new AccountSection(labelKey, cards);
+    }
+
+    private NetworkSection createNetworkSection(ListResult listResult, AccountSection accountSection, Context context) throws PaymentException {
+        Map<String, PaymentGroup> groups = loadPaymentGroups(context);
+        Map<String, PaymentNetwork> networks = loadPaymentNetworks(listResult);
+        Map<String, NetworkCard> cards = new LinkedHashMap<>();
+        PaymentGroup group;
+
+        for (PaymentNetwork network : networks.values()) {
+            group = groups.get(network.getCode());
+
+            if (group == null) {
+                addNetwork2SingleCard(cards, network);
+            } else {
+                addNetwork2GroupCard(cards, network, group);
+            }
+        }
+        if (cards.size() == 0) {
+            return null;
+        }
+        String labelKey;
+        if (UPDATE.equals(listResult.getOperationType())) {
+            labelKey = LIST_HEADER_NETWORKS_UPDATE;
+        } else if (accountSection == null) {
+            labelKey = LIST_HEADER_NETWORKS;
+        } else {
+            labelKey = LIST_HEADER_NETWORKS_OTHER;
+        }
+        return new NetworkSection(labelKey, new ArrayList<>(cards.values()));
     }
 
     private Map<String, PaymentNetwork> loadPaymentNetworks(ListResult listResult) {
@@ -177,23 +246,6 @@ public final class PaymentSessionService {
             }
         }
         return items;
-    }
-
-    private List<NetworkCard> createNetworkCards(Map<String, PaymentNetwork> networks, Map<String, PaymentGroup> groups)
-        throws PaymentException {
-        Map<String, NetworkCard> cards = new LinkedHashMap<>();
-        PaymentGroup group;
-
-        for (PaymentNetwork network : networks.values()) {
-            group = groups.get(network.getCode());
-
-            if (group == null) {
-                addNetwork2SingleCard(cards, network);
-            } else {
-                addNetwork2GroupCard(cards, network, group);
-            }
-        }
-        return new ArrayList<>(cards.values());
     }
 
     private void addNetwork2SingleCard(Map<String, NetworkCard> cards, PaymentNetwork network) {
@@ -221,28 +273,6 @@ public final class PaymentSessionService {
             return;
         }
         card.getSmartSwitch().addSelectionRegex(code, regex);
-    }
-
-    private List<AccountCard> createAccountCards(ListResult listResult, Map<String, PaymentNetwork> networks) {
-        List<AccountCard> cards = new ArrayList<>();
-        List<AccountRegistration> accounts = listResult.getAccounts();
-
-        if (accounts == null || accounts.size() == 0) {
-            return cards;
-        }
-
-        for (AccountRegistration account : accounts) {
-            cards.add(new AccountCard(account));
-        }
-        return cards;
-    }
-
-    private PresetCard createPresetCard(ListResult listResult) {
-        PresetAccount account = listResult.getPresetAccount();
-        if (account == null) {
-            return null;
-        }
-        return new PresetCard(account);
     }
 
     private Map<String, PaymentGroup> loadPaymentGroups(Context context) throws PaymentException {

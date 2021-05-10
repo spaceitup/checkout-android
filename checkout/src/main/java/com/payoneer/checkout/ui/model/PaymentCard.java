@@ -55,6 +55,13 @@ public interface PaymentCard {
      */
     String getCode();
 
+    /** 
+     * Is this card preselected
+     * 
+     * @return true when preselected, false otherwise 
+     */
+    boolean isPreselected();
+    
     /**
      * Get the label of this PaymentCard
      *

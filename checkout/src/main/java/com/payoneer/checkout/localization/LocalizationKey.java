@@ -29,12 +29,14 @@ public final class LocalizationKey {
     public final static String LIST_HEADER_ACCOUNTS = "accounts.title";
     public final static String LIST_HEADER_NETWORKS = "networks.title";
     public final static String LIST_HEADER_NETWORKS_OTHER = "networks.other.title";
-    public final static String LIST_GROUPEDCARDS_TITLE = "groups.cards.title";
 
+    public final static String LIST_HEADER_ACCOUNTS_UPDATE = "accounts.operation.UPDATE.title";
+    public final static String LIST_HEADER_NETWORKS_UPDATE = "networks.operation.UPDATE.title";
+    
+    public final static String LIST_GROUPEDCARDS_TITLE = "groups.cards.title";
     public final static String CHARGE_TITLE = "messages.processing.title";
     public final static String CHARGE_TEXT = "messages.processing.text";
     public final static String CHARGE_INTERRUPTED = "messages.processing.interrupted.text";
-
     public final static String NETWORK_LABEL = "network.label";
 
     public final static String VERIFICATIONCODE_GENERIC_PLACEHOLDER = "account.verificationCode.generic.placeholder";

@@ -15,6 +15,8 @@ import static com.payoneer.checkout.localization.LocalizationKey.ERROR_CONNECTIO
 import static com.payoneer.checkout.localization.LocalizationKey.ERROR_CONNECTION_TITLE;
 import static com.payoneer.checkout.localization.LocalizationKey.ERROR_DEFAULT_TEXT;
 import static com.payoneer.checkout.localization.LocalizationKey.ERROR_DEFAULT_TITLE;
+import static com.payoneer.checkout.localization.LocalizationKey.LIST_HEADER_ACCOUNTS_UPDATE;
+import static com.payoneer.checkout.localization.LocalizationKey.LIST_HEADER_NETWORKS_UPDATE;
 
 import java.util.HashMap;
 
@@ -42,5 +44,8 @@ public final class LocalLocalizationHolder extends MapLocalizationHolder {
         map.put(ERROR_CONNECTION_TEXT, context.getString(R.string.error_connection_text));
         map.put(ERROR_DEFAULT_TITLE, context.getString(R.string.error_default_title));
         map.put(ERROR_DEFAULT_TEXT, context.getString(R.string.error_default_text));
+
+        map.put(LIST_HEADER_ACCOUNTS_UPDATE, context.getString(R.string.list_header_accounts_update));
+        map.put(LIST_HEADER_NETWORKS_UPDATE, context.getString(R.string.list_header_networks_update));
     }
 }

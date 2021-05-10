@@ -107,6 +107,7 @@ public final class AccountCard implements PaymentCard {
     /**
      * {@inheritDoc}
      */
+    @Override
     public boolean isPreselected() {
         return PaymentUtils.isTrue(account.getSelected());
     }

@@ -24,6 +24,8 @@ import com.payoneer.checkout.localization.LocalizationHolder;
 import com.payoneer.checkout.localization.MultiLocalizationHolder;
 import com.payoneer.checkout.network.LocalizationConnection;
 import com.payoneer.checkout.ui.model.AccountCard;
+import com.payoneer.checkout.ui.model.AccountSection;
+import com.payoneer.checkout.ui.model.NetworkSection;
 import com.payoneer.checkout.ui.model.PaymentNetwork;
 import com.payoneer.checkout.ui.model.PaymentSession;
 
@@ -116,11 +118,17 @@ public final class LocalizationLoaderService {
         LocalizationHolder sharedHolder = loadLocalizationHolder(session.getLink("lang"), localHolder);
         Map<String, LocalizationHolder> holders = new HashMap<>();
 
-        for (PaymentNetwork network : session.getPaymentNetworks()) {
-            holders.put(network.getCode(), loadLocalizationHolder(network.getLink("lang"), sharedHolder));
+        if (session.containsNetworkSection()) {
+            NetworkSection networkSection = session.getNetworkSection();
+            for (PaymentNetwork network : networkSection.getPaymentNetworks()) {
+                holders.put(network.getCode(), loadLocalizationHolder(network.getLink("lang"), sharedHolder));
+            }
         }
-        for (AccountCard account : session.getAccountCards()) {
-            holders.put(account.getCode(), loadLocalizationHolder(account.getLink("lang"), sharedHolder));
+        if (session.containsAccountSection()) {
+            AccountSection accountSection = session.getAccountSection();
+            for (AccountCard account : accountSection.getAccountCards()) {
+                holders.put(account.getCode(), loadLocalizationHolder(account.getLink("lang"), sharedHolder));
+            }
         }
         return new Localization(sharedHolder, holders);
     }

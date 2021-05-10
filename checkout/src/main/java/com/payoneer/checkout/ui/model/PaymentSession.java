@@ -17,30 +17,29 @@ import com.payoneer.checkout.model.ListResult;
 import com.payoneer.checkout.validation.Validator;
 
 /**
- * Class for storing the ListResult and the list of supported PaymentMethods
+ * Class for storing the ListResult and the list sections
  */
 public final class PaymentSession {
     private final ListResult listResult;
-    private final PresetCard presetCard;
-    private final List<AccountCard> accounts;
-    private final List<NetworkCard> networks;
+    private final PresetSection presetSection;
+    private final AccountSection accountSection;
+    private final NetworkSection networkSection;
     private final Validator validator;
 
     /**
      * Construct a new PaymentSession object
      *
      * @param listResult Object holding the current list session data
-     * @param presetCard the optional PresetCard with the PresetAccount
-     * @param accounts list of AccountCards supported by this PaymentSession
-     * @param networks list of NetworkCards supported by this PaymentSession
+     * @param presetSection the optional section with the PresetAccount
+     * @param accountSection the optional section with the saved accounts
+     * @param networkSection the optional section with payment networks
      * @param validator used to validate input values for this payment session
      */
-    public PaymentSession(ListResult listResult, PresetCard presetCard, List<AccountCard> accounts, List<NetworkCard> networks,
-        Validator validator) {
+    public PaymentSession(ListResult listResult, PresetSection presetSection, AccountSection accountSection, NetworkSection networkSection, Validator validator) {
         this.listResult = listResult;
-        this.presetCard = presetCard;
-        this.accounts = accounts;
-        this.networks = networks;
+        this.presetSection = presetSection;
+        this.accountSection = accountSection;
+        this.networkSection = networkSection;
         this.validator = validator;
     }
 
@@ -48,24 +47,28 @@ public final class PaymentSession {
         return listResult;
     }
 
-    public PresetCard getPresetCard() {
-        return presetCard;
+    public boolean containsPresetSection() {
+        return presetSection != null;
     }
 
-    public List<AccountCard> getAccountCards() {
-        return accounts;
+    public boolean containsAccountSection() {
+        return accountSection != null;
+    }
+    
+    public boolean containsNetworkSection() {
+        return networkSection != null;
+    }
+    
+    public PresetSection getPresetSection() {
+        return presetSection;
     }
 
-    public List<NetworkCard> getNetworkCards() {
-        return networks;
+    public AccountSection getAccountSection() {
+        return accountSection;
     }
 
-    public List<PaymentNetwork> getPaymentNetworks() {
-        List<PaymentNetwork> list = new ArrayList<>();
-        for (NetworkCard card : networks) {
-            list.addAll(card.getPaymentNetworks());
-        }
-        return list;
+    public NetworkSection getNetworkSection() {
+        return networkSection;
     }
 
     public Validator getValidator() {
@@ -88,34 +91,18 @@ public final class PaymentSession {
     }
 
     public boolean isEmpty() {
-        return !hasPresetCard() && (getNetworkCardSize() == 0) && (getAccountCardSize() == 0);
-    }
-
-    public boolean hasPresetCard() {
-        return presetCard != null;
-    }
-
-    public int getNetworkCardSize() {
-        return networks != null ? networks.size() : 0;
-    }
-
-    public int getAccountCardSize() {
-        return accounts != null ? accounts.size() : 0;
+        return !(containsPresetSection() || containsAccountSection() || containsNetworkSection());
     }
 
     public boolean containsLink(String name, URL url) {
-        if (presetCard != null && presetCard.containsLink(name, url)) {
+        if (presetSection != null && presetSection.containsLink(name, url)) {
             return true;
         }
-        for (AccountCard card : accounts) {
-            if (card.containsLink(name, url)) {
-                return true;
-            }
+        if (accountSection != null && accountSection.containsLink(name, url)) {
+            return true;
         }
-        for (NetworkCard card : networks) {
-            if (card.containsLink(name, url)) {
-                return true;
-            }
+        if (networkSection != null && networkSection.containsLink(name, url)) {
+            return true;
         }
         return false;
     }

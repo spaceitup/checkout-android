@@ -137,7 +137,7 @@ final class PaymentListPresenter implements PaymentSessionListener, Localization
         if (operation != null) {
             return;
         }
-        if (session.getPresetCard() == card) {
+        if (card instanceof PresetCard) {
             onPresetCardSelected((PresetCard) card);
             return;
         }

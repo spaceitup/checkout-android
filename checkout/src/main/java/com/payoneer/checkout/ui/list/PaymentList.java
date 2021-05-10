@@ -18,9 +18,13 @@ import java.util.List;
 
 import com.payoneer.checkout.localization.Localization;
 import com.payoneer.checkout.ui.model.AccountCard;
+import com.payoneer.checkout.ui.model.AccountSection;
 import com.payoneer.checkout.ui.model.NetworkCard;
+import com.payoneer.checkout.ui.model.NetworkSection;
 import com.payoneer.checkout.ui.model.PaymentCard;
 import com.payoneer.checkout.ui.model.PaymentSession;
+import com.payoneer.checkout.ui.model.PresetCard;
+import com.payoneer.checkout.ui.model.PresetSection;
 import com.payoneer.checkout.ui.page.PaymentListActivity;
 
 import android.content.Context;
@@ -82,11 +86,11 @@ public final class PaymentList {
             return;
         }
         this.session = session;
-        setPaymentListItems(session);
+        setPaymentSessionItems(session);
 
         setVisible(true);
         adapter.notifyDataSetChanged();
-        int startIndex = session.hasPresetCard() ? 0 : selIndex;
+        int startIndex = session.containsPresetSection() ? 0 : selIndex;
         recyclerView.scrollToPosition(startIndex);
     }
 
@@ -160,39 +164,47 @@ public final class PaymentList {
         return viewType++;
     }
 
-    private void setPaymentListItems(PaymentSession session) {
+    private void setPaymentSessionItems(PaymentSession session) {
         items.clear();
         this.selIndex = -1;
-        int accountSize = session.getAccountCardSize();
-        int networkSize = session.getNetworkCardSize();
 
-        if (session.hasPresetCard()) {
-            items.add(new HeaderItem(nextViewType(), Localization.translate(LIST_HEADER_PRESET)));
-            items.add(new PaymentCardItem(nextViewType(), session.getPresetCard()));
-            this.selIndex = 1;
+        if (session.containsPresetSection()) {
+            addPresetSectionItems(session.getPresetSection());
         }
-
-        if (accountSize > 0) {
-            items.add(new HeaderItem(nextViewType(), Localization.translate(LIST_HEADER_ACCOUNTS)));
+        if (session.containsAccountSection()) {
+            addAccountSectionItems(session.getAccountSection());
         }
-        for (AccountCard card : session.getAccountCards()) {
-            items.add(new PaymentCardItem(nextViewType(), card));
-            if (this.selIndex == -1 && card.isPreselected()) {
-                this.selIndex = items.size() - 1;
-            }
-        }
-        if (networkSize > 0) {
-            String key = accountSize == 0 ? LIST_HEADER_NETWORKS : LIST_HEADER_NETWORKS_OTHER;
-            items.add(new HeaderItem(nextViewType(), Localization.translate(key)));
-        }
-        for (NetworkCard card : session.getNetworkCards()) {
-            items.add(new PaymentCardItem(nextViewType(), card));
-            if (this.selIndex == -1 && card.isPreselected()) {
-                this.selIndex = items.size() - 1;
-            }
+        if (session.containsNetworkSection()) {
+            addNetworkSectionItems(session.getNetworkSection());
         }
     }
 
+    private void addPresetSectionItems(PresetSection section) {
+        items.add(new HeaderItem(nextViewType(), section.getLabel()));
+        addPaymentCardItem(section.getPresetCard());
+    }
+
+    private void addAccountSectionItems(AccountSection section) {
+        items.add(new HeaderItem(nextViewType(), section.getLabel()));
+        for (AccountCard card : section.getAccountCards()) {
+            addPaymentCardItem(card);
+        }
+    }
+
+    private void addNetworkSectionItems(NetworkSection section) {
+        items.add(new HeaderItem(nextViewType(), section.getLabel()));
+        for (NetworkCard card : section.getNetworkCards()) {
+            addPaymentCardItem(card);
+        }
+    }
+
+    private void addPaymentCardItem(PaymentCard card) {
+        items.add(new PaymentCardItem(nextViewType(), card));
+        if (this.selIndex == -1 && card.isPreselected()) {
+            this.selIndex = items.size() - 1;
+        }
+    }
+    
     private void collapseViewHolder(int position) {
         adapter.notifyItemChanged(position);
     }
