@@ -19,30 +19,30 @@ public abstract class ListSection {
 
     private final String labelKey;
 
-    /** 
+    /**
      * Construct a new ListSection with the label localization key
-     * 
-     * @param labelKey localization key for the list section header label  
+     *
+     * @param labelKey localization key for the list section header label
      */
     public ListSection(String labelKey) {
         this.labelKey = labelKey;
     }
 
-    /** 
+    /**
      * Get the localized header label for this list section
-     * 
-     * @return localized header label for this list section 
+     *
+     * @return localized header label for this list section
      */
     public String getLabel() {
         return Localization.translate(labelKey);
     }
 
-    /** 
+    /**
      * Check if this section contains a link with the provided name
-     * 
+     *
      * @param name of the link
      * @param url that should match
-     * @return true when it contains the link, false otherwise 
+     * @return true when it contains the link, false otherwise
      */
     public abstract boolean containsLink(String name, URL url);
 }

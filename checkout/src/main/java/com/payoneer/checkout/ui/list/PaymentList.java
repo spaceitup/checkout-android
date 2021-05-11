@@ -8,22 +8,15 @@
 
 package com.payoneer.checkout.ui.list;
 
-import static com.payoneer.checkout.localization.LocalizationKey.LIST_HEADER_ACCOUNTS;
-import static com.payoneer.checkout.localization.LocalizationKey.LIST_HEADER_NETWORKS;
-import static com.payoneer.checkout.localization.LocalizationKey.LIST_HEADER_NETWORKS_OTHER;
-import static com.payoneer.checkout.localization.LocalizationKey.LIST_HEADER_PRESET;
-
 import java.util.ArrayList;
 import java.util.List;
 
-import com.payoneer.checkout.localization.Localization;
 import com.payoneer.checkout.ui.model.AccountCard;
 import com.payoneer.checkout.ui.model.AccountSection;
 import com.payoneer.checkout.ui.model.NetworkCard;
 import com.payoneer.checkout.ui.model.NetworkSection;
 import com.payoneer.checkout.ui.model.PaymentCard;
 import com.payoneer.checkout.ui.model.PaymentSession;
-import com.payoneer.checkout.ui.model.PresetCard;
 import com.payoneer.checkout.ui.model.PresetSection;
 import com.payoneer.checkout.ui.page.PaymentListActivity;
 
@@ -204,7 +197,7 @@ public final class PaymentList {
             this.selIndex = items.size() - 1;
         }
     }
-    
+
     private void collapseViewHolder(int position) {
         adapter.notifyItemChanged(position);
     }

@@ -9,8 +9,6 @@
 package com.payoneer.checkout.ui.model;
 
 import java.net.URL;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Map;
 
 import com.payoneer.checkout.model.ListResult;
@@ -35,7 +33,8 @@ public final class PaymentSession {
      * @param networkSection the optional section with payment networks
      * @param validator used to validate input values for this payment session
      */
-    public PaymentSession(ListResult listResult, PresetSection presetSection, AccountSection accountSection, NetworkSection networkSection, Validator validator) {
+    public PaymentSession(ListResult listResult, PresetSection presetSection, AccountSection accountSection, NetworkSection networkSection,
+        Validator validator) {
         this.listResult = listResult;
         this.presetSection = presetSection;
         this.accountSection = accountSection;
@@ -54,11 +53,11 @@ public final class PaymentSession {
     public boolean containsAccountSection() {
         return accountSection != null;
     }
-    
+
     public boolean containsNetworkSection() {
         return networkSection != null;
     }
-    
+
     public PresetSection getPresetSection() {
         return presetSection;
     }

@@ -16,10 +16,10 @@ import java.net.URL;
 public final class PresetSection extends ListSection {
 
     private final PresetCard presetCard;
-    
-    /** 
+
+    /**
      * Construct a new PresetSection
-     * 
+     *
      * @param labelKey localization key of this section
      * @param presetCard
      */
@@ -28,9 +28,9 @@ public final class PresetSection extends ListSection {
         this.presetCard = presetCard;
     }
 
-    /** 
+    /**
      * Get the presetCard from this section
-     * 
+     *
      * @return the presetCard
      */
     public PresetCard getPresetCard() {
@@ -40,7 +40,7 @@ public final class PresetSection extends ListSection {
     /**
      * {@inheritDoc}
      */
-    @Override    
+    @Override
     public boolean containsLink(String name, URL url) {
         return presetCard.containsLink(name, url);
     }

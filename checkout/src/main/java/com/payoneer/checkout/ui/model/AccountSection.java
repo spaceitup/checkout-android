@@ -12,17 +12,15 @@ import java.net.URL;
 import java.util.List;
 
 /**
- * Section containing the 
- * 
- *
+ * Section containing the
  */
 public final class AccountSection extends ListSection {
 
     private final List<AccountCard> cards;
-    
-    /** 
+
+    /**
      * Construct a new AccountSection
-     * 
+     *
      * @param labelKey localization key for this section
      * @param cards the list of AccountCards
      */
@@ -31,9 +29,9 @@ public final class AccountSection extends ListSection {
         this.cards = cards;
     }
 
-    /** 
+    /**
      * Get the account cards in this section
-     * 
+     *
      * @return the account cards stored in this section
      */
     public List<AccountCard> getAccountCards() {

@@ -64,7 +64,7 @@ public final class PresetCard implements PaymentCard {
     public boolean isPreselected() {
         return true;
     }
-    
+
     /**
      * {@inheritDoc}
      */

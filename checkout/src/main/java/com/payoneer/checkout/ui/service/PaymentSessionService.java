@@ -178,7 +178,7 @@ public final class PaymentSessionService {
         }
         return new PresetSection(LIST_HEADER_PRESET, new PresetCard(account));
     }
-    
+
     private AccountSection createAccountSection(ListResult listResult) {
         List<AccountCard> cards = new ArrayList<>();
         List<AccountRegistration> accounts = listResult.getAccounts();
@@ -194,12 +194,13 @@ public final class PaymentSessionService {
         if (cards.size() == 0) {
             return null;
         }
-        String labelKey = UPDATE.equals(listResult.getOperationType()) ? 
+        String labelKey = UPDATE.equals(listResult.getOperationType()) ?
             LIST_HEADER_ACCOUNTS_UPDATE : LIST_HEADER_ACCOUNTS;
         return new AccountSection(labelKey, cards);
     }
 
-    private NetworkSection createNetworkSection(ListResult listResult, AccountSection accountSection, Context context) throws PaymentException {
+    private NetworkSection createNetworkSection(ListResult listResult, AccountSection accountSection, Context context)
+        throws PaymentException {
         Map<String, PaymentGroup> groups = loadPaymentGroups(context);
         Map<String, PaymentNetwork> networks = loadPaymentNetworks(listResult);
         Map<String, NetworkCard> cards = new LinkedHashMap<>();

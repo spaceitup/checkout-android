@@ -34,7 +34,7 @@ public final class AccountCardViewHolder extends PaymentCardViewHolder {
     private final ImageView icon;
     private final MaterialCardView card;
     private boolean update;
-    
+
     private AccountCardViewHolder(ListAdapter adapter, View parent, AccountCard accountCard) {
         super(adapter, parent);
         this.title = parent.findViewById(R.id.text_title);
