@@ -8,6 +8,7 @@
 
 package com.payoneer.checkout.localization;
 
+import static com.payoneer.checkout.localization.LocalizationKey.BUTTON_UPDATE_ACCOUNT;
 import static com.payoneer.checkout.localization.LocalizationKey.BUTTON_CANCEL;
 import static com.payoneer.checkout.localization.LocalizationKey.BUTTON_OK;
 import static com.payoneer.checkout.localization.LocalizationKey.BUTTON_RETRY;
@@ -39,6 +40,7 @@ public final class LocalLocalizationHolder extends MapLocalizationHolder {
         map.put(BUTTON_CANCEL, context.getString(R.string.button_cancel_label));
         map.put(BUTTON_RETRY, context.getString(R.string.button_retry_label));
         map.put(BUTTON_OK, context.getString(R.string.button_ok_label));
+        map.put(BUTTON_UPDATE_ACCOUNT, context.getString(R.string.button_update_account_label));
 
         map.put(ERROR_CONNECTION_TITLE, context.getString(R.string.error_connection_title));
         map.put(ERROR_CONNECTION_TEXT, context.getString(R.string.error_connection_text));
