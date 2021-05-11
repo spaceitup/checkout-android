@@ -16,6 +16,8 @@ import static com.payoneer.checkout.localization.LocalizationKey.LIST_HEADER_NET
 import static com.payoneer.checkout.localization.LocalizationKey.LIST_HEADER_PRESET;
 import static com.payoneer.checkout.model.IntegrationType.MOBILE_NATIVE;
 import static com.payoneer.checkout.model.NetworkOperationType.UPDATE;
+import static com.payoneer.checkout.model.NetworkOperationType.CHARGE;
+import static com.payoneer.checkout.model.NetworkOperationType.PRESET;
 
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
@@ -142,9 +144,12 @@ public final class PaymentSessionService {
      * @return true when supported, false otherwise
      */
     public boolean isSupportedNetworkOperationType(String operationType) {
+        if (operationType == null) {
+            return false;
+        }
         switch (operationType) {
-            case NetworkOperationType.CHARGE:
-            case NetworkOperationType.PRESET:
+            case CHARGE:
+            case PRESET:
             case UPDATE:
                 return true;
             default:
