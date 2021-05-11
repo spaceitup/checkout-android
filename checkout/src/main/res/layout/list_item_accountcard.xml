@@ -4,6 +4,7 @@
     android:layout_height="wrap_content">
 
     <com.google.android.material.card.MaterialCardView
+        android:id="@+id/card_account"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="@dimen/pmborder_medium"
@@ -31,8 +32,9 @@
                 <include layout="@layout/view_logo" />
 
                 <LinearLayout
-                    android:layout_width="match_parent"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
+                    android:layout_weight="1"
                     android:layout_marginStart="@dimen/pmborder_medium"
                     android:orientation="vertical">
 
@@ -50,6 +52,17 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content" />
                 </LinearLayout>
+
+                <ImageView 
+                    android:id="@+id/image_icon"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:tint="@color/pm_gray_light"
+                    android:layout_marginEnd="@dimen/pmborder_small"
+                    android:src="@drawable/ic_edit"
+                    android:visibility="gone"
+                    android:contentDescription="@string/pmpage_contentdescription" />
+
             </LinearLayout>
 
             <LinearLayout
