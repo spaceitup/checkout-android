@@ -8,10 +8,10 @@
 
 package com.payoneer.checkout.localization;
 
-import static com.payoneer.checkout.localization.LocalizationKey.BUTTON_UPDATE_ACCOUNT;
 import static com.payoneer.checkout.localization.LocalizationKey.BUTTON_CANCEL;
 import static com.payoneer.checkout.localization.LocalizationKey.BUTTON_OK;
 import static com.payoneer.checkout.localization.LocalizationKey.BUTTON_RETRY;
+import static com.payoneer.checkout.localization.LocalizationKey.BUTTON_UPDATE_ACCOUNT;
 import static com.payoneer.checkout.localization.LocalizationKey.ERROR_CONNECTION_TEXT;
 import static com.payoneer.checkout.localization.LocalizationKey.ERROR_CONNECTION_TITLE;
 import static com.payoneer.checkout.localization.LocalizationKey.ERROR_DEFAULT_TEXT;

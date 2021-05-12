@@ -134,7 +134,7 @@ final class ChargePaymentPresenter implements PaymentSessionListener, NetworkSer
     }
 
     private void handleLoadSessionProceed(PaymentSession session) {
-        if (!session.containsLink("operation", operation.getURL())) {
+        if (!session.containsOperationLink(operation.getURL())) {
             closeWithErrorCode("operation not found in ListResult");
             return;
         }

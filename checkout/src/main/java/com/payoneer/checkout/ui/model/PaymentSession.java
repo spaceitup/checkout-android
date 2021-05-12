@@ -9,6 +9,8 @@
 package com.payoneer.checkout.ui.model;
 
 import java.net.URL;
+import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import com.payoneer.checkout.model.ListResult;
@@ -19,26 +21,19 @@ import com.payoneer.checkout.validation.Validator;
  */
 public final class PaymentSession {
     private final ListResult listResult;
-    private final PresetSection presetSection;
-    private final AccountSection accountSection;
-    private final NetworkSection networkSection;
+    private final List<PaymentSection> paymentSections;
     private final Validator validator;
 
     /**
      * Construct a new PaymentSession object
      *
      * @param listResult Object holding the current list session data
-     * @param presetSection the optional section with the PresetAccount
-     * @param accountSection the optional section with the saved accounts
-     * @param networkSection the optional section with payment networks
+     * @param paymentSections the list of sections containing PaymentCards
      * @param validator used to validate input values for this payment session
      */
-    public PaymentSession(ListResult listResult, PresetSection presetSection, AccountSection accountSection, NetworkSection networkSection,
-        Validator validator) {
+    public PaymentSession(ListResult listResult, List<PaymentSection> paymentSections, Validator validator) {
         this.listResult = listResult;
-        this.presetSection = presetSection;
-        this.accountSection = accountSection;
-        this.networkSection = networkSection;
+        this.paymentSections = paymentSections;
         this.validator = validator;
     }
 
@@ -46,28 +41,8 @@ public final class PaymentSession {
         return listResult;
     }
 
-    public boolean containsPresetSection() {
-        return presetSection != null;
-    }
-
-    public boolean containsAccountSection() {
-        return accountSection != null;
-    }
-
-    public boolean containsNetworkSection() {
-        return networkSection != null;
-    }
-
-    public PresetSection getPresetSection() {
-        return presetSection;
-    }
-
-    public AccountSection getAccountSection() {
-        return accountSection;
-    }
-
-    public NetworkSection getNetworkSection() {
-        return networkSection;
+    public List<PaymentSection> getPaymentSections() {
+        return paymentSections;
     }
 
     public Validator getValidator() {
@@ -90,19 +65,23 @@ public final class PaymentSession {
     }
 
     public boolean isEmpty() {
-        return !(containsPresetSection() || containsAccountSection() || containsNetworkSection());
+        return paymentSections.size() == 0;
     }
 
-    public boolean containsLink(String name, URL url) {
-        if (presetSection != null && presetSection.containsLink(name, url)) {
-            return true;
-        }
-        if (accountSection != null && accountSection.containsLink(name, url)) {
-            return true;
-        }
-        if (networkSection != null && networkSection.containsLink(name, url)) {
-            return true;
+    public boolean containsOperationLink(URL url) {
+        for (PaymentSection section : paymentSections) {
+            if (section.containsLink("operation", url)) {
+                return true;
+            }
         }
         return false;
+    }
+
+    public Map<String, URL> getLanguageLinks() {
+        Map<String, URL> links = new HashMap<>();
+        for (PaymentSection section : paymentSections) {
+            section.putLanguageLinks(links);
+        }
+        return links;
     }
 }

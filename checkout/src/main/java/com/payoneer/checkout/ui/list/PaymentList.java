@@ -11,13 +11,9 @@ package com.payoneer.checkout.ui.list;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.payoneer.checkout.ui.model.AccountCard;
-import com.payoneer.checkout.ui.model.AccountSection;
-import com.payoneer.checkout.ui.model.NetworkCard;
-import com.payoneer.checkout.ui.model.NetworkSection;
 import com.payoneer.checkout.ui.model.PaymentCard;
+import com.payoneer.checkout.ui.model.PaymentSection;
 import com.payoneer.checkout.ui.model.PaymentSession;
-import com.payoneer.checkout.ui.model.PresetSection;
 import com.payoneer.checkout.ui.page.PaymentListActivity;
 
 import android.content.Context;
@@ -83,8 +79,7 @@ public final class PaymentList {
 
         setVisible(true);
         adapter.notifyDataSetChanged();
-        int startIndex = session.containsPresetSection() ? 0 : selIndex;
-        recyclerView.scrollToPosition(startIndex);
+        recyclerView.scrollToPosition(selIndex == 1 ? 0 : selIndex);
     }
 
     public void setVisible(boolean visible) {
@@ -161,32 +156,14 @@ public final class PaymentList {
         items.clear();
         this.selIndex = -1;
 
-        if (session.containsPresetSection()) {
-            addPresetSectionItems(session.getPresetSection());
-        }
-        if (session.containsAccountSection()) {
-            addAccountSectionItems(session.getAccountSection());
-        }
-        if (session.containsNetworkSection()) {
-            addNetworkSectionItems(session.getNetworkSection());
+        for (PaymentSection section : session.getPaymentSections()) {
+            addPaymentSectionItems(section);
         }
     }
 
-    private void addPresetSectionItems(PresetSection section) {
+    private void addPaymentSectionItems(PaymentSection section) {
         items.add(new HeaderItem(nextViewType(), section.getLabel()));
-        addPaymentCardItem(section.getPresetCard());
-    }
-
-    private void addAccountSectionItems(AccountSection section) {
-        items.add(new HeaderItem(nextViewType(), section.getLabel()));
-        for (AccountCard card : section.getAccountCards()) {
-            addPaymentCardItem(card);
-        }
-    }
-
-    private void addNetworkSectionItems(NetworkSection section) {
-        items.add(new HeaderItem(nextViewType(), section.getLabel()));
-        for (NetworkCard card : section.getNetworkCards()) {
+        for (PaymentCard card : section.getPaymentCards()) {
             addPaymentCardItem(card);
         }
     }

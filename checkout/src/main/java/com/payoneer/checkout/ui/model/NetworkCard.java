@@ -11,6 +11,7 @@ package com.payoneer.checkout.ui.model;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import com.payoneer.checkout.core.PaymentInputType;
 import com.payoneer.checkout.localization.Localization;
@@ -44,6 +45,16 @@ public final class NetworkCard implements PaymentCard {
             }
         }
         return false;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void putLanguageLinks(Map<String, URL> links) {
+        for (PaymentNetwork network : networks) {
+            network.putLanguageLink(links);
+        }
     }
 
     /**

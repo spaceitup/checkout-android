@@ -23,7 +23,7 @@ public final class LocalizationKey {
     public final static String BUTTON_OK = "button.ok.label";
     public final static String BUTTON_CANCEL = "button.cancel.label";
     public final static String BUTTON_RETRY = "button.retry.label";
-    public final static String BUTTON_UPDATE_ACCOUNT = "button.operation.UPDATE.account.label";    
+    public final static String BUTTON_UPDATE_ACCOUNT = "button.operation.UPDATE.account.label";
 
     public final static String LIST_TITLE = "paymentpage.title";
     public final static String LIST_HEADER_PRESET = "networks.preset.title";

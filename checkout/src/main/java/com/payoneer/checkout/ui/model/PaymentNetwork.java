@@ -40,6 +40,13 @@ public class PaymentNetwork {
         return links != null ? links.get(name) : null;
     }
 
+    public void putLanguageLink(Map<String, URL> links) {
+        URL url = getLink("lang");
+        if (url != null) {
+            links.put(getCode(), url);
+        }
+    }
+    
     public String getOperationType() {
         return network.getOperationType();
     }
