@@ -25,9 +25,9 @@ public final class PaymentSection {
     private final List<PaymentCard> cards;
 
     /**
-     * Construct a new ListSection with the label localization key
+     * Construct a new PaymentSection with the header label localization key
      *
-     * @param labelKey localization key for the list section header label
+     * @param labelKey localization key for the payment section header label
      * @param cards the list of payment cards in this section
      */
     public PaymentSection(String labelKey, List<PaymentCard> cards) {
@@ -36,7 +36,7 @@ public final class PaymentSection {
     }
 
     /**
-     * Get the list of payment cards stored in this section
+     * Get the list of payment cards
      *
      * @return list of payment cards
      */
@@ -45,9 +45,9 @@ public final class PaymentSection {
     }
 
     /**
-     * Get the localized header label for this list section
+     * Get the localized header label
      *
-     * @return localized header label for this list section
+     * @return localized header label
      */
     public String getLabel() {
         return Localization.translate(labelKey);

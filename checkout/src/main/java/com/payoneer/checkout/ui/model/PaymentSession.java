@@ -17,7 +17,8 @@ import com.payoneer.checkout.model.ListResult;
 import com.payoneer.checkout.validation.Validator;
 
 /**
- * Class for storing the ListResult and the list sections
+ * Class for storing the ListResult and the payment sections. The following sections
+ * are supported: preset accounts, saved accounts and payment networks.
  */
 public final class PaymentSession {
     private final ListResult listResult;
