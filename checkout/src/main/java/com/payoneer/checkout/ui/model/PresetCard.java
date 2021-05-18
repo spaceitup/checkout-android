@@ -45,6 +45,17 @@ public final class PresetCard implements PaymentCard {
      * {@inheritDoc}
      */
     @Override
+    public void putLanguageLinks(Map<String, URL> links) {
+        URL url = getLink("lang");
+        if (url != null) {
+            links.put(getCode(), url);
+        }
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
     public URL getOperationLink() {
         return getLink("operation");
     }
@@ -55,6 +66,14 @@ public final class PresetCard implements PaymentCard {
     @Override
     public String getOperationType() {
         return account.getOperationType();
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public boolean isPreselected() {
+        return true;
     }
 
     /**

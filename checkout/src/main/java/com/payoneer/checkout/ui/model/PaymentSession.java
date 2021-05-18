@@ -9,7 +9,7 @@
 package com.payoneer.checkout.ui.model;
 
 import java.net.URL;
-import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -17,30 +17,24 @@ import com.payoneer.checkout.model.ListResult;
 import com.payoneer.checkout.validation.Validator;
 
 /**
- * Class for storing the ListResult and the list of supported PaymentMethods
+ * Class for storing the ListResult and the payment sections. The following sections
+ * are supported: preset accounts, saved accounts and payment networks.
  */
 public final class PaymentSession {
     private final ListResult listResult;
-    private final PresetCard presetCard;
-    private final List<AccountCard> accounts;
-    private final List<NetworkCard> networks;
+    private final List<PaymentSection> paymentSections;
     private final Validator validator;
 
     /**
      * Construct a new PaymentSession object
      *
      * @param listResult Object holding the current list session data
-     * @param presetCard the optional PresetCard with the PresetAccount
-     * @param accounts list of AccountCards supported by this PaymentSession
-     * @param networks list of NetworkCards supported by this PaymentSession
+     * @param paymentSections the list of sections containing PaymentCards
      * @param validator used to validate input values for this payment session
      */
-    public PaymentSession(ListResult listResult, PresetCard presetCard, List<AccountCard> accounts, List<NetworkCard> networks,
-        Validator validator) {
+    public PaymentSession(ListResult listResult, List<PaymentSection> paymentSections, Validator validator) {
         this.listResult = listResult;
-        this.presetCard = presetCard;
-        this.accounts = accounts;
-        this.networks = networks;
+        this.paymentSections = paymentSections;
         this.validator = validator;
     }
 
@@ -48,24 +42,8 @@ public final class PaymentSession {
         return listResult;
     }
 
-    public PresetCard getPresetCard() {
-        return presetCard;
-    }
-
-    public List<AccountCard> getAccountCards() {
-        return accounts;
-    }
-
-    public List<NetworkCard> getNetworkCards() {
-        return networks;
-    }
-
-    public List<PaymentNetwork> getPaymentNetworks() {
-        List<PaymentNetwork> list = new ArrayList<>();
-        for (NetworkCard card : networks) {
-            list.addAll(card.getPaymentNetworks());
-        }
-        return list;
+    public List<PaymentSection> getPaymentSections() {
+        return paymentSections;
     }
 
     public Validator getValidator() {
@@ -88,35 +66,23 @@ public final class PaymentSession {
     }
 
     public boolean isEmpty() {
-        return !hasPresetCard() && (getNetworkCardSize() == 0) && (getAccountCardSize() == 0);
+        return paymentSections.size() == 0;
     }
 
-    public boolean hasPresetCard() {
-        return presetCard != null;
-    }
-
-    public int getNetworkCardSize() {
-        return networks != null ? networks.size() : 0;
-    }
-
-    public int getAccountCardSize() {
-        return accounts != null ? accounts.size() : 0;
-    }
-
-    public boolean containsLink(String name, URL url) {
-        if (presetCard != null && presetCard.containsLink(name, url)) {
-            return true;
-        }
-        for (AccountCard card : accounts) {
-            if (card.containsLink(name, url)) {
-                return true;
-            }
-        }
-        for (NetworkCard card : networks) {
-            if (card.containsLink(name, url)) {
+    public boolean containsOperationLink(URL url) {
+        for (PaymentSection section : paymentSections) {
+            if (section.containsLink("operation", url)) {
                 return true;
             }
         }
         return false;
+    }
+
+    public Map<String, URL> getLanguageLinks() {
+        Map<String, URL> links = new HashMap<>();
+        for (PaymentSection section : paymentSections) {
+            section.putLanguageLinks(links);
+        }
+        return links;
     }
 }

@@ -10,6 +10,7 @@ package com.payoneer.checkout.ui.model;
 
 import java.net.URL;
 import java.util.List;
+import java.util.Map;
 
 import com.payoneer.checkout.model.InputElement;
 
@@ -26,6 +27,14 @@ public interface PaymentCard {
      * @return true when this PaymentCard contains the URL, false otherwise
      */
     boolean containsLink(String name, URL url);
+
+    /**
+     * Put all language links stored in the payment card into the links map.
+     * The key is the name of the network the URL belongs to.
+     *
+     * @param links map into which the links should be stored
+     */
+    void putLanguageLinks(Map<String, URL> links);
 
     /**
      * Get the operation link, this link can be used to make i.e. a charge request
@@ -54,6 +63,13 @@ public interface PaymentCard {
      * @return code of this PaymentCard
      */
     String getCode();
+
+    /**
+     * Is this card preselected
+     *
+     * @return true when preselected, false otherwise
+     */
+    boolean isPreselected();
 
     /**
      * Get the label of this PaymentCard

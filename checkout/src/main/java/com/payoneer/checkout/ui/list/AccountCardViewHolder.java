@@ -8,6 +8,9 @@
 
 package com.payoneer.checkout.ui.list;
 
+import static com.payoneer.checkout.model.NetworkOperationType.UPDATE;
+
+import com.google.android.material.card.MaterialCardView;
 import com.payoneer.checkout.R;
 import com.payoneer.checkout.model.AccountMask;
 import com.payoneer.checkout.ui.model.AccountCard;
@@ -17,6 +20,7 @@ import com.payoneer.checkout.util.PaymentUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 import androidx.recyclerview.widget.RecyclerView.ViewHolder;
 
@@ -27,11 +31,17 @@ public final class AccountCardViewHolder extends PaymentCardViewHolder {
 
     private final TextView title;
     private final TextView subtitle;
+    private final ImageView icon;
+    private final MaterialCardView card;
+    private boolean update;
 
     private AccountCardViewHolder(ListAdapter adapter, View parent, AccountCard accountCard) {
         super(adapter, parent);
         this.title = parent.findViewById(R.id.text_title);
         this.subtitle = parent.findViewById(R.id.text_subtitle);
+        this.icon = parent.findViewById(R.id.image_icon);
+        card = parent.findViewById(R.id.card_account);
+        card.setCheckable(true);
 
         addElementWidgets(accountCard);
         addButtonWidget();
@@ -62,5 +72,12 @@ public final class AccountCardViewHolder extends PaymentCardViewHolder {
             title.setText(card.getLabel());
         }
         bindCardLogo(card.getCode(), card.getLink("logo"));
+        update = UPDATE.equals(paymentCard.getOperationType());
+        icon.setVisibility(update ? View.VISIBLE : View.GONE);
+    }
+
+    void expand(boolean expand) {
+        super.expand(expand);
+        card.setChecked(expand ? update : false);
     }
 }

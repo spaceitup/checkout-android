@@ -8,7 +8,9 @@
 
 package com.payoneer.checkout.ui.model;
 
+import static com.payoneer.checkout.localization.LocalizationKey.BUTTON_UPDATE_ACCOUNT;
 import static com.payoneer.checkout.localization.LocalizationKey.NETWORK_LABEL;
+import static com.payoneer.checkout.model.NetworkOperationType.UPDATE;
 
 import java.net.URL;
 import java.util.Collections;
@@ -38,6 +40,17 @@ public final class AccountCard implements PaymentCard {
     @Override
     public boolean containsLink(String name, URL url) {
         return PaymentUtils.equalsAsString(getLink(name), url);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void putLanguageLinks(Map<String, URL> links) {
+        URL url = getLink("lang");
+        if (url != null) {
+            links.put(getCode(), url);
+        }
     }
 
     /**
@@ -107,6 +120,7 @@ public final class AccountCard implements PaymentCard {
     /**
      * {@inheritDoc}
      */
+    @Override
     public boolean isPreselected() {
         return PaymentUtils.isTrue(account.getSelected());
     }
@@ -116,7 +130,8 @@ public final class AccountCard implements PaymentCard {
      */
     @Override
     public String getButton() {
-        return LocalizationKey.operationButtonKey(getOperationType());
+        String operationType = getOperationType();
+        return UPDATE.equals(operationType) ? BUTTON_UPDATE_ACCOUNT : LocalizationKey.operationButtonKey(getOperationType());
     }
 
     /**

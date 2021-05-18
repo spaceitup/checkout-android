@@ -181,7 +181,7 @@ public abstract class PaymentCardViewHolder extends RecyclerView.ViewHolder {
         view.setLayoutParams(params);
         rowLayout.addView(view);
     }
-    
+
     /**
      * Check if two widgets can be placed next to eachother in a row
      *
@@ -197,14 +197,13 @@ public abstract class PaymentCardViewHolder extends RecyclerView.ViewHolder {
             }
             if (name.equals(name1)) {
                 nextName = name2;
-            }
-            else if (name.equals(name2)) {
+            } else if (name.equals(name2)) {
                 nextName = name1;
             }
         }
         return false;
     }
-    
+
     boolean requestFocusNextWidget(FormWidget currentWidget) {
         boolean requestFocus = false;
         for (Map.Entry<String, FormWidget> entry : widgets.entrySet()) {
