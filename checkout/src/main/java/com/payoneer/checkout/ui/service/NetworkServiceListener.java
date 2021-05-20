@@ -15,7 +15,7 @@ import com.payoneer.checkout.ui.PaymentResult;
 /**
  * Presenter to be called by the NetworkService to inform about payment updates and to show i.e. a progress view or progress dialog.
  */
-public interface NetworkServicePresenter {
+public interface NetworkServiceListener {
 
     /**
      * Notify the presenter that the service is in progress and requires a progress indicator

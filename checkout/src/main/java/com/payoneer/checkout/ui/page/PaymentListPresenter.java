@@ -42,7 +42,7 @@ import com.payoneer.checkout.ui.service.LocalizationLoaderListener;
 import com.payoneer.checkout.ui.service.LocalizationLoaderService;
 import com.payoneer.checkout.ui.service.NetworkService;
 import com.payoneer.checkout.ui.service.NetworkServiceLookup;
-import com.payoneer.checkout.ui.service.NetworkServicePresenter;
+import com.payoneer.checkout.ui.service.NetworkServiceListener;
 import com.payoneer.checkout.ui.service.PaymentSessionListener;
 import com.payoneer.checkout.ui.service.PaymentSessionService;
 import com.payoneer.checkout.ui.widget.FormWidget;
@@ -55,7 +55,7 @@ import android.text.TextUtils;
 /**
  * The PaymentListPresenter implementing the presenter part of the MVP
  */
-final class PaymentListPresenter implements PaymentSessionListener, LocalizationLoaderListener, NetworkServicePresenter {
+final class PaymentListPresenter implements PaymentSessionListener, LocalizationLoaderListener, NetworkServiceListener {
 
     private final static int PROCESSPAYMENT_REQUEST_CODE = 1;
     private final static int CHARGEPAYMENT_REQUEST_CODE = 2;

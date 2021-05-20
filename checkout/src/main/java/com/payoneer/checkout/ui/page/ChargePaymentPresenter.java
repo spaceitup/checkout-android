@@ -33,7 +33,7 @@ import com.payoneer.checkout.ui.service.LocalizationLoaderListener;
 import com.payoneer.checkout.ui.service.LocalizationLoaderService;
 import com.payoneer.checkout.ui.service.NetworkService;
 import com.payoneer.checkout.ui.service.NetworkServiceLookup;
-import com.payoneer.checkout.ui.service.NetworkServicePresenter;
+import com.payoneer.checkout.ui.service.NetworkServiceListener;
 import com.payoneer.checkout.ui.service.PaymentSessionListener;
 import com.payoneer.checkout.ui.service.PaymentSessionService;
 import com.payoneer.checkout.util.PaymentResultHelper;
@@ -44,7 +44,7 @@ import android.content.Context;
  * The ChargePaymentPresenter takes care of posting the operation to the Payment API.
  * First this presenter will load the list, checks if the operation is present in the list and then post the operation to the Payment API.
  */
-final class ChargePaymentPresenter implements PaymentSessionListener, NetworkServicePresenter, LocalizationLoaderListener {
+final class ChargePaymentPresenter implements PaymentSessionListener, NetworkServiceListener, LocalizationLoaderListener {
 
     private final static int CHARGE_REQUEST_CODE = 1;
     private final PaymentView view;

@@ -19,7 +19,7 @@ import android.app.Activity;
  */
 public abstract class NetworkService {
 
-    protected NetworkServicePresenter presenter;
+    protected NetworkServiceListener presenter;
 
     /**
      * Stop this NetworkService
@@ -32,7 +32,7 @@ public abstract class NetworkService {
      *
      * @param presenter the presenter to be set
      */
-    public void setPresenter(NetworkServicePresenter presenter) {
+    public void setPresenter(NetworkServiceListener presenter) {
         this.presenter = presenter;
     }
 
