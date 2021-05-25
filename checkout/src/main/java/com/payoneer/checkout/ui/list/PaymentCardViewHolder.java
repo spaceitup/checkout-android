@@ -58,7 +58,7 @@ public abstract class PaymentCardViewHolder extends RecyclerView.ViewHolder {
     final ImageView cardLogoView;
     final IconView iconView;
     final PaymentCard paymentCard;
-    
+
     PaymentCardViewHolder(ListAdapter adapter, View parent, PaymentCard paymentCard) {
         super(parent);
 
@@ -69,7 +69,7 @@ public abstract class PaymentCardViewHolder extends RecyclerView.ViewHolder {
         this.widgets = new LinkedHashMap<>();
         this.cardLogoView = parent.findViewById(R.id.image_logo);
         this.iconView = new IconView(parent);
-        
+
         View view = parent.findViewById(R.id.layout_header);
         view.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -118,7 +118,7 @@ public abstract class PaymentCardViewHolder extends RecyclerView.ViewHolder {
     void handleCardClicked() {
         adapter.onItemClicked(getAdapterPosition());
     }
-    
+
     void addElementWidgets(PaymentCard card) {
         String code = card.getCode();
         List<InputElement> elements = card.getInputElements();

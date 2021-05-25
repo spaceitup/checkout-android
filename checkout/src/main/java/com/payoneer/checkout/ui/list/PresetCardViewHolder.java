@@ -11,7 +11,6 @@ package com.payoneer.checkout.ui.list;
 import com.google.android.material.card.MaterialCardView;
 import com.payoneer.checkout.R;
 import com.payoneer.checkout.model.AccountMask;
-import com.payoneer.checkout.ui.model.PaymentCard;
 import com.payoneer.checkout.ui.model.PresetCard;
 import com.payoneer.checkout.util.PaymentUtils;
 
@@ -30,7 +29,7 @@ final class PresetCardViewHolder extends PaymentCardViewHolder {
     private final TextView subtitle;
     private final MaterialCardView card;
     private final PresetCard presetCard;
-    
+
     private PresetCardViewHolder(ListAdapter adapter, View parent, PresetCard presetCard) {
         super(adapter, parent, presetCard);
         this.presetCard = presetCard;

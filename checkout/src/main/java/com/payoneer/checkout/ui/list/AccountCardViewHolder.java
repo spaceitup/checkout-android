@@ -14,21 +14,12 @@ import com.google.android.material.card.MaterialCardView;
 import com.payoneer.checkout.R;
 import com.payoneer.checkout.model.AccountMask;
 import com.payoneer.checkout.ui.model.AccountCard;
-import com.payoneer.checkout.ui.model.PaymentCard;
 import com.payoneer.checkout.util.PaymentUtils;
 
-import android.content.Context;
-import android.content.res.TypedArray;
-import android.util.Log;
-import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageSwitcher;
-import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.ViewSwitcher;
-import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView.ViewHolder;
 
 /**
@@ -40,7 +31,7 @@ public final class AccountCardViewHolder extends PaymentCardViewHolder {
     private final TextView subtitle;
     private final MaterialCardView card;
     private final IconView iconView;
-    
+
     private AccountCardViewHolder(ListAdapter adapter, View parent, AccountCard accountCard) {
         super(adapter, parent, accountCard);
         this.title = parent.findViewById(R.id.text_title);
@@ -48,12 +39,12 @@ public final class AccountCardViewHolder extends PaymentCardViewHolder {
 
         iconView = new IconView(parent);
         iconView.setListener(new IconView.IconClickListener() {
-                public void onIconClick(int index) {
-                    handleIconClicked(index);
-                }
+            public void onIconClick(int index) {
+                handleIconClicked(index);
+            }
 
-            });
-        
+        });
+
         card = parent.findViewById(R.id.card_account);
         card.setCheckable(true);
 

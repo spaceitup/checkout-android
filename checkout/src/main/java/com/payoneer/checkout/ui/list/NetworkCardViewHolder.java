@@ -14,7 +14,6 @@ import static com.payoneer.checkout.core.PaymentInputType.AUTO_REGISTRATION;
 
 import com.payoneer.checkout.R;
 import com.payoneer.checkout.ui.model.NetworkCard;
-import com.payoneer.checkout.ui.model.PaymentCard;
 import com.payoneer.checkout.ui.model.PaymentNetwork;
 import com.payoneer.checkout.ui.model.SmartSwitch;
 import com.payoneer.checkout.ui.widget.RegisterWidget;
