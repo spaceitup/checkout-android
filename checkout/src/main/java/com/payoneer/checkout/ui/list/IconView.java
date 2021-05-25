@@ -8,21 +8,9 @@
 
 package com.payoneer.checkout.ui.list;
 
-import java.net.URL;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
 import com.payoneer.checkout.R;
-import com.payoneer.checkout.ui.model.PaymentNetwork;
-import com.payoneer.checkout.util.NetworkLogoLoader;
 
-import android.content.res.Resources;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.widget.ImageView;
-import android.widget.LinearLayout;
-import android.widget.LinearLayout.LayoutParams;
 import android.widget.ViewSwitcher;
 
 /**
@@ -48,11 +36,11 @@ class IconView {
             }
         });
     }
-    
+
     void hide() {
         switcher.setVisibility(View.GONE);
     }
-    
+
     void showIcon(int index) {
         switcher.setVisibility(View.VISIBLE);
         switcher.setDisplayedChild(index);
