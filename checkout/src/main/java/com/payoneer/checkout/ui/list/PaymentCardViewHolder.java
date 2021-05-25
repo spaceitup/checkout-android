@@ -56,20 +56,25 @@ public abstract class PaymentCardViewHolder extends RecyclerView.ViewHolder {
     final WidgetPresenter presenter;
     final Map<String, FormWidget> widgets;
     final ImageView cardLogoView;
-
-    PaymentCardViewHolder(ListAdapter adapter, View parent) {
+    final IconView iconView;
+    final PaymentCard paymentCard;
+    
+    PaymentCardViewHolder(ListAdapter adapter, View parent, PaymentCard paymentCard) {
         super(parent);
+
+        this.paymentCard = paymentCard;
         this.adapter = adapter;
         this.presenter = new CardWidgetPresenter(this, adapter);
         this.formLayout = parent.findViewById(R.id.layout_form);
         this.widgets = new LinkedHashMap<>();
         this.cardLogoView = parent.findViewById(R.id.image_logo);
-
+        this.iconView = new IconView(parent);
+        
         View view = parent.findViewById(R.id.layout_header);
         view.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                adapter.onItemClicked(getAdapterPosition());
+                handleCardClicked();
             }
         });
     }
@@ -110,6 +115,10 @@ public abstract class PaymentCardViewHolder extends RecyclerView.ViewHolder {
         }
     }
 
+    void handleCardClicked() {
+        adapter.onItemClicked(getAdapterPosition());
+    }
+    
     void addElementWidgets(PaymentCard card) {
         String code = card.getCode();
         List<InputElement> elements = card.getInputElements();
@@ -231,7 +240,7 @@ public abstract class PaymentCardViewHolder extends RecyclerView.ViewHolder {
         }
     }
 
-    void onBind(PaymentCard paymentCard) {
+    void onBind() {
         for (Map.Entry<String, FormWidget> entry : widgets.entrySet()) {
             FormWidget widget = entry.getValue();
 

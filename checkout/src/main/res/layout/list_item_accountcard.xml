@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
 
     <com.google.android.material.card.MaterialCardView
         android:id="@+id/card_account"
@@ -15,6 +15,7 @@
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:animateLayoutChanges="true"
             android:padding="@dimen/pmborder_medium">
 
             <LinearLayout
@@ -29,8 +30,7 @@
                 android:gravity="center_vertical"
                 android:orientation="horizontal">
 
-                <include layout="@layout/view_logo" />
-
+                <include layout="@layout/view_logo" />                
                 <LinearLayout
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
@@ -53,16 +53,13 @@
                         android:layout_height="wrap_content" />
                 </LinearLayout>
 
-                <ImageView 
-                    android:id="@+id/image_icon"
+                <FrameLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:tint="@color/pm_gray_light"
-                    android:layout_marginEnd="@dimen/pmborder_small"
-                    android:src="@drawable/ic_edit"
-                    android:visibility="gone"
-                    android:contentDescription="@string/pmpage_contentdescription" />
-
+                    android:layout_marginEnd="@dimen/pmborder_small">
+                    <include layout="@layout/view_icon_update" />
+                    <include layout="@layout/view_icon_update" />                    
+                </FrameLayout>
             </LinearLayout>
 
             <LinearLayout

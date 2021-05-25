@@ -17,11 +17,18 @@ import com.payoneer.checkout.ui.model.AccountCard;
 import com.payoneer.checkout.ui.model.PaymentCard;
 import com.payoneer.checkout.util.PaymentUtils;
 
+import android.content.Context;
+import android.content.res.TypedArray;
+import android.util.Log;
+import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageSwitcher;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.ViewSwitcher;
+import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView.ViewHolder;
 
 /**
@@ -31,22 +38,28 @@ public final class AccountCardViewHolder extends PaymentCardViewHolder {
 
     private final TextView title;
     private final TextView subtitle;
-    private final ImageView icon;
     private final MaterialCardView card;
-    private boolean update;
-
+    private final IconView iconView;
+    
     private AccountCardViewHolder(ListAdapter adapter, View parent, AccountCard accountCard) {
-        super(adapter, parent);
+        super(adapter, parent, accountCard);
         this.title = parent.findViewById(R.id.text_title);
         this.subtitle = parent.findViewById(R.id.text_subtitle);
-        this.icon = parent.findViewById(R.id.image_icon);
+
+        iconView = new IconView(parent);
+        iconView.setListener(new IconView.IconClickListener() {
+                public void onIconClick(int index) {
+                    handleIconClicked(index);
+                }
+
+            });
+        
         card = parent.findViewById(R.id.card_account);
         card.setCheckable(true);
 
         addElementWidgets(accountCard);
         addButtonWidget();
         layoutWidgets();
-
         setLastImeOptions();
     }
 
@@ -56,28 +69,44 @@ public final class AccountCardViewHolder extends PaymentCardViewHolder {
         return new AccountCardViewHolder(adapter, view, accountCard);
     }
 
-    void onBind(PaymentCard paymentCard) {
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    void onBind() {
+        super.onBind();
 
-        if (!(paymentCard instanceof AccountCard)) {
-            throw new IllegalArgumentException("Expected AccountCard in onBind");
-        }
-        super.onBind(paymentCard);
         PaymentUtils.setTestId(itemView, "card", "savedaccount");
         AccountCard card = (AccountCard) paymentCard;
         AccountMask mask = card.getMaskedAccount();
         subtitle.setVisibility(View.GONE);
+
         if (mask != null) {
             bindAccountMask(title, subtitle, mask, card.getPaymentMethod());
         } else {
             title.setText(card.getLabel());
         }
         bindCardLogo(card.getCode(), card.getLink("logo"));
-        update = UPDATE.equals(paymentCard.getOperationType());
-        icon.setVisibility(update ? View.VISIBLE : View.GONE);
     }
 
+    /**
+     * {@inheritDoc}
+     */
+    @Override
     void expand(boolean expand) {
         super.expand(expand);
-        card.setChecked(expand ? update : false);
+        boolean update = UPDATE.equals(paymentCard.getOperationType());
+
+        if (update) {
+            iconView.showIcon(expand ? 1 : 0);
+        }
+    }
+
+    private void handleIconClicked(int index) {
+        if (index == 1) {
+            // Here we delete the card
+        } else {
+            handleCardClicked();
+        }
     }
 }

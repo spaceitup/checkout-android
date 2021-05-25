@@ -67,7 +67,7 @@ final class ListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
         if (item.hasPaymentCard()) {
             PaymentCardViewHolder ph = (PaymentCardViewHolder) holder;
-            ph.onBind(item.getPaymentCard());
+            ph.onBind();
             ph.expand(list.getSelected() == position);
         } else {
             ((HeaderViewHolder) holder).onBind((HeaderItem) item);

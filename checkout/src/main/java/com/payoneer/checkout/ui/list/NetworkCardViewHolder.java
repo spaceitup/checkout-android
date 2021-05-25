@@ -34,8 +34,9 @@ final class NetworkCardViewHolder extends PaymentCardViewHolder {
     private final TextView title;
     private NetworkLogosView networkLogosView;
 
+
     public NetworkCardViewHolder(ListAdapter adapter, View parent, NetworkCard networkCard) {
-        super(adapter, parent);
+        super(adapter, parent, networkCard);
         this.title = parent.findViewById(R.id.text_title);
 
         addElementWidgets(networkCard);
@@ -43,7 +44,9 @@ final class NetworkCardViewHolder extends PaymentCardViewHolder {
         addButtonWidget();
         layoutWidgets();
 
-        addNetworkLogos(parent, networkCard);
+        if (networkCard.getPaymentNetworkCount() > 1) {
+            networkLogosView = new NetworkLogosView(parent, networkCard.getPaymentNetworks());
+        }
         setLastImeOptions();
     }
 
@@ -53,11 +56,9 @@ final class NetworkCardViewHolder extends PaymentCardViewHolder {
         return new NetworkCardViewHolder(adapter, view, networkCard);
     }
 
-    void onBind(PaymentCard paymentCard) {
-        if (!(paymentCard instanceof NetworkCard)) {
-            throw new IllegalArgumentException("Expected Networkcard in onBind");
-        }
-        super.onBind(paymentCard);
+    void onBind() {
+        super.onBind();
+
         NetworkCard networkCard = (NetworkCard) paymentCard;
         PaymentNetwork network = networkCard.getVisibleNetwork();
         title.setText(networkCard.getLabel());
@@ -85,13 +86,6 @@ final class NetworkCardViewHolder extends PaymentCardViewHolder {
             return;
         }
         networkLogosView.setSelected(null);
-    }
-
-    private void addNetworkLogos(View parent, NetworkCard networkCard) {
-        if (networkCard.getPaymentNetworkCount() <= 1) {
-            return;
-        }
-        networkLogosView = new NetworkLogosView(parent, networkCard.getPaymentNetworks());
     }
 
     private void setTestId(String testId) {
