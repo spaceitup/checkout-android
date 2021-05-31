@@ -129,7 +129,7 @@ abstract class BasePaymentActivity extends AppCompatActivity implements PaymentV
             showPaymentDialog(dialog);
         }
     }
-    
+
     /**
      * {@inheritDoc}
      */

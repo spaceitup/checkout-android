@@ -18,24 +18,24 @@ import com.payoneer.checkout.ui.widget.FormWidget;
  */
 public interface PaymentListListener {
 
-    /** 
+    /**
      * Notify that the user clicked the action button in the payment card.
-     * 
+     *
      * @param paymentCard in which the action was clicked
      * @param widgets map of widgets inside this PaymentCard
      */
     void onActionClicked(PaymentCard paymentCard, Map<String, FormWidget> widgets);
 
-    /** 
+    /**
      * Notify that the user clicked the delete button in the payment card.
-     * 
+     *
      * @param paymentCard that should be deleted
      */
     void onDeleteClicked(PaymentCard paymentCard);
 
-    /** 
+    /**
      * Notify that the user clicked the hint button in the payment card.
-     * 
+     *
      * @param code the code of the input field
      * @param type of the input field
      */

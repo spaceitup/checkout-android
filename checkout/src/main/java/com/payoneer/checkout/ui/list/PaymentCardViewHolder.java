@@ -57,14 +57,13 @@ public abstract class PaymentCardViewHolder extends RecyclerView.ViewHolder {
     final PaymentCard paymentCard;
     final CardEventHandler cardHandler;
     final ListAdapter adapter;
-    
+
     PaymentCardViewHolder(ListAdapter adapter, View parent, PaymentCard paymentCard) {
         super(parent);
 
         this.adapter = adapter;
         this.paymentCard = paymentCard;
-        this.cardHandler = new CardEventHandler(this, adapter, adapter.getCardListener());
-
+        this.cardHandler = new CardEventHandler(this, adapter);
         this.formLayout = parent.findViewById(R.id.layout_form);
         this.widgets = new LinkedHashMap<>();
         this.cardLogoView = parent.findViewById(R.id.image_logo);
@@ -82,7 +81,7 @@ public abstract class PaymentCardViewHolder extends RecyclerView.ViewHolder {
     PaymentCard getPaymentCard() {
         return paymentCard;
     }
-    
+
     FormWidget getFormWidget(String name) {
         return widgets.get(name);
     }
@@ -94,7 +93,7 @@ public abstract class PaymentCardViewHolder extends RecyclerView.ViewHolder {
     boolean hasValidPosition() {
         return adapter.validPosition(getAdapterPosition());
     }
-    
+
     void addButtonWidget() {
         if (!widgets.containsKey(BUTTON_WIDGET)) {
             addWidget(new ButtonWidget(BUTTON_WIDGET));

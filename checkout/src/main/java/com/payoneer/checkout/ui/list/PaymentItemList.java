@@ -38,7 +38,7 @@ final class PaymentItemList {
     ListItem getItem(int index) {
         return index >= 0 && index < items.size() ? items.get(index) : null;
     }
-    
+
     void clear() {
         selectedIndex = -1;
         items.clear();
@@ -47,7 +47,7 @@ final class PaymentItemList {
     boolean validIndex(int index) {
         return index >= 0 && index < items.size();
     }
-    
+
     ListItem getItemWithViewType(int viewType) {
         for (ListItem item : items) {
             if (item.viewType == viewType) {

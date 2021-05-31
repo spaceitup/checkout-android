@@ -24,12 +24,10 @@ class CardEventHandler implements WidgetPresenter {
 
     private final PaymentCardViewHolder holder;
     private final ListAdapter adapter;
-    private final PaymentCardListener listener;
-    
-    CardEventHandler(PaymentCardViewHolder holder, ListAdapter adapter, PaymentCardListener listener) {
+
+    CardEventHandler(PaymentCardViewHolder holder, ListAdapter adapter) {
         this.holder = holder;
         this.adapter = adapter;
-        this.listener = listener;
     }
 
     @Override
@@ -39,20 +37,21 @@ class CardEventHandler implements WidgetPresenter {
         }
         return false;
     }
-    
+
     @Override
     public void onActionClicked() {
-        if (holder.hasValidPosition()) {
-            boolean error = false;
-            for (FormWidget widget : holder.getFormWidgets().values()) {
-                if (!widget.validate()) {
-                    error = true;
-                }
-                widget.clearFocus();
+        if (!holder.hasValidPosition()) {
+            return;
+        }
+        boolean error = false;
+        for (FormWidget widget : holder.getFormWidgets().values()) {
+            if (!widget.validate()) {
+                error = true;
             }
-            if (!error) {
-                listener.onActionClicked(holder.getPaymentCard(), holder.getFormWidgets());
-            }
+            widget.clearFocus();
+        }
+        if (!error) {
+            getCardListener().onActionClicked(holder.getPaymentCard(), holder.getFormWidgets());
         }
     }
 
@@ -60,21 +59,21 @@ class CardEventHandler implements WidgetPresenter {
     public void onHintClicked(String type) {
         if (holder.hasValidPosition()) {
             PaymentCard card = holder.getPaymentCard();
-            listener.onHintClicked(card.getCode(), type);
+            getCardListener().onHintClicked(card.getCode(), type);
         }
     }
 
     @Override
     public void hideKeyboard() {
         if (holder.hasValidPosition()) {
-            listener.hideKeyboard();
+            getCardListener().hideKeyboard();
         }
     }
 
     @Override
     public void showKeyboard(View view) {
         if (holder.hasValidPosition()) {
-            listener.showKeyboard(view);
+            getCardListener().showKeyboard(view);
         }
     }
 
@@ -116,21 +115,25 @@ class CardEventHandler implements WidgetPresenter {
 
     void onDeleteClicked() {
         if (holder.hasValidPosition()) {
-            listener.onDeleteClicked(holder.getPaymentCard());
+            getCardListener().onDeleteClicked(holder.getPaymentCard());
         }
     }
-    
+
     void onCardClicked() {
         if (holder.hasValidPosition()) {
-            listener.onCardClicked(holder.getAdapterPosition());
+            getCardListener().onCardClicked(holder.getAdapterPosition());
         }
     }
-    
+
     boolean isInputTypeHidden(String code, String type) {
         if (holder.hasValidPosition()) {
             Validator validator = Validator.getInstance();
             return validator.isHidden(code, type);
         }
         return false;
+    }
+
+    private PaymentCardListener getCardListener() {
+        return adapter.getCardListener();
     }
 }

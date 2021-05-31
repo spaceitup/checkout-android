@@ -57,7 +57,7 @@ import android.text.TextUtils;
  * The PaymentListPresenter implementing the presenter part of the MVP
  */
 final class PaymentListPresenter implements PaymentSessionListener, LocalizationLoaderListener,
-                                            NetworkServiceListener, PaymentListListener {
+    NetworkServiceListener, PaymentListListener {
 
     private final static int PROCESSPAYMENT_REQUEST_CODE = 1;
     private final static int CHARGEPAYMENT_REQUEST_CODE = 2;

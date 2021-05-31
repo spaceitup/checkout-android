@@ -41,7 +41,7 @@ public class Validator {
 
     private final Map<String, ValidationGroup> validations;
     private static Validator instance;
-    
+
     /**
      * Construct a new Validator with the provided validations
      *
@@ -71,7 +71,7 @@ public class Validator {
     public static void setInstance(Validator newInstance) {
         instance = newInstance;
     }
-    
+
     /**
      * Get the validation for the given method, code and type.
      *

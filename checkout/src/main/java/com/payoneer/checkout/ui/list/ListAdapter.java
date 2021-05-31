@@ -22,11 +22,11 @@ import androidx.recyclerview.widget.RecyclerView.ViewHolder;
  * The ListAdapter handling the items in this RecyclerView list
  */
 final class ListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
-    private final PaymentCardListener listener;
+    private final PaymentCardListener cardListener;
     private final PaymentItemList itemList;
 
-    ListAdapter(PaymentCardListener listener, PaymentItemList itemList) {
-        this.listener = listener;
+    ListAdapter(PaymentCardListener cardListener, PaymentItemList itemList) {
+        this.cardListener = cardListener;
         this.itemList = itemList;
     }
 
@@ -71,9 +71,9 @@ final class ListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     }
 
     PaymentCardListener getCardListener() {
-        return listener;
+        return cardListener;
     }
-    
+
     boolean validPosition(int position) {
         return itemList.validIndex(position);
     }

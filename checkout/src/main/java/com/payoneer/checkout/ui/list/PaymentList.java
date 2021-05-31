@@ -13,7 +13,6 @@ import java.util.Map;
 import com.payoneer.checkout.ui.model.PaymentCard;
 import com.payoneer.checkout.ui.model.PaymentSection;
 import com.payoneer.checkout.ui.model.PaymentSession;
-import com.payoneer.checkout.ui.page.PaymentListActivity;
 import com.payoneer.checkout.ui.widget.FormWidget;
 
 import android.app.Activity;
@@ -38,18 +37,19 @@ public final class PaymentList implements PaymentCardListener {
 
     private PaymentSession session;
     private int nextViewType;
-    
-    /** 
+
+    /**
      * Construct a new PaymentList handling the RecyclerView
-     * 
-     * @param activity that contains this PaymentList 
+     *
+     * @param activity that contains this PaymentList
+     * @param listener notified about events from this PaymentList
      * @param recyclerView for showing the list of payment options
      */
     public PaymentList(Activity activity, PaymentListListener listener, RecyclerView recyclerView) {
         this.activity = activity;
         this.listener = listener;
         this.recyclerView = recyclerView;
-        
+
         this.itemList = new PaymentItemList();
         this.adapter = new ListAdapter(this, itemList);
 
@@ -119,7 +119,7 @@ public final class PaymentList implements PaymentCardListener {
         listener.onHintClicked(networkCode, type);
     }
 
-    @Override    
+    @Override
     public void onActionClicked(PaymentCard paymentCard, Map<String, FormWidget> widgets) {
         hideKeyboard();
         listener.onActionClicked(paymentCard, widgets);
@@ -129,7 +129,7 @@ public final class PaymentList implements PaymentCardListener {
     public void onCardClicked(int position) {
         hideKeyboard();
         int curIndex = itemList.getSelectedIndex();
-        
+
         if (position == curIndex) {
             itemList.setSelectedIndex(-1);
             adapter.notifyItemChanged(position);
@@ -140,7 +140,7 @@ public final class PaymentList implements PaymentCardListener {
             smoothScrollToPosition(position);
         }
     }
-    
+
     private void smoothScrollToPosition(int position) {
         RecyclerView.SmoothScroller smoothScroller = new LinearSmoothScroller(activity) {
             @Override
@@ -155,7 +155,7 @@ public final class PaymentList implements PaymentCardListener {
             manager.startSmoothScroll(smoothScroller);
         }
     }
-    
+
     private void setPaymentSessionItems(PaymentSession paymentSession) {
         itemList.clear();
         for (PaymentSection section : session.getPaymentSections()) {
@@ -170,7 +170,7 @@ public final class PaymentList implements PaymentCardListener {
             itemList.addItem(item, card.isPreselected());
         }
     }
-    
+
     private int nextViewType() {
         return nextViewType++;
     }
