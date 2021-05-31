@@ -62,7 +62,7 @@ public final class TextInputWidget extends InputLayoutWidget {
      * @param element to be set in this widget
      */
     public void onBind(String code, InputElement element) {
-        int maxLength = presenter.getMaxLength(code, name);
+        int maxLength = presenter.getMaxInputLength(code, name);
         setTextInputMode(EditTextInputModeFactory.createMode(maxLength, element));
         setValidation();
         setLabel(Localization.translateAccountLabel(code, name));

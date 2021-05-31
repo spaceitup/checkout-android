@@ -50,6 +50,15 @@ interface PaymentView {
     void showWarningMessage(String message);
 
     /**
+     * Show Hint dialog
+     *
+     * @param networkCode Code if the network
+     * @param type type if input field
+     * @param listener listening to events of this Hint Dialog.
+     */
+    void showHintDialog(String code, String type, PaymentDialogListener listener);
+    
+    /**
      * Set the current activity payment result, this is either PaymentUI.RESULT_CODE_OK,
      * PaymentUI.RESULT_CODE_ERROR
      *

@@ -32,8 +32,8 @@ public final class AccountCardViewHolder extends PaymentCardViewHolder {
     private final MaterialCardView card;
     private final IconView iconView;
 
-    private AccountCardViewHolder(ListAdapter adapter, View parent, AccountCard accountCard) {
-        super(adapter, parent, accountCard);
+    private AccountCardViewHolder(ListAdapter listAdapter, View parent, AccountCard accountCard) {
+        super(listAdapter, parent, accountCard);
         this.title = parent.findViewById(R.id.text_title);
         this.subtitle = parent.findViewById(R.id.text_subtitle);
 
@@ -44,7 +44,6 @@ public final class AccountCardViewHolder extends PaymentCardViewHolder {
             }
 
         });
-
         card = parent.findViewById(R.id.card_account);
         card.setCheckable(true);
 
@@ -54,10 +53,10 @@ public final class AccountCardViewHolder extends PaymentCardViewHolder {
         setLastImeOptions();
     }
 
-    static ViewHolder createInstance(ListAdapter adapter, AccountCard accountCard, ViewGroup parent) {
+    static ViewHolder createInstance(ListAdapter listAdapter, AccountCard accountCard, ViewGroup parent) {
         LayoutInflater inflater = LayoutInflater.from(parent.getContext());
         View view = inflater.inflate(R.layout.list_item_accountcard, parent, false);
-        return new AccountCardViewHolder(adapter, view, accountCard);
+        return new AccountCardViewHolder(listAdapter, view, accountCard);
     }
 
     /**
@@ -94,10 +93,10 @@ public final class AccountCardViewHolder extends PaymentCardViewHolder {
     }
 
     private void handleIconClicked(int index) {
-        if (index == 1) {
-            // Here we delete the card
+        if (index == 0) {
+            cardHandler.onCardClicked();
         } else {
-            handleCardClicked();
+            cardHandler.onDeleteClicked();
         }
     }
 }

@@ -74,10 +74,10 @@ public final class PaymentListActivity extends BasePaymentActivity implements Pa
         }
         setContentView(R.layout.activity_paymentlist);
         progressView = new ProgressView(findViewById(R.id.layout_progress));
+        this.presenter = new PaymentListPresenter(this);
 
         initPaymentList();
         initToolbar();
-        this.presenter = new PaymentListPresenter(this);
     }
 
     /**
@@ -110,7 +110,7 @@ public final class PaymentListActivity extends BasePaymentActivity implements Pa
     @Override
     public void onPause() {
         super.onPause();
-        paymentList.onStop();
+        paymentList.close();
         presenter.onStop();
     }
 
@@ -198,12 +198,16 @@ public final class PaymentListActivity extends BasePaymentActivity implements Pa
         setCloseIdleState();
     }
 
-    public void onActionClicked(PaymentCard item, Map<String, FormWidget> widgets) {
-        presenter.onActionClicked(item, widgets);
+    public void onActionClicked(PaymentCard paymentCard, Map<String, FormWidget> widgets) {
+        presenter.onActionClicked(paymentCard, widgets);
+    }
+
+    public void onDeleteClicked(PaymentCard paymentCard) {
+        presenter.onDeleteClicked(paymentCard);
     }
 
     private void initPaymentList() {
-        this.paymentList = new PaymentList(this, findViewById(R.id.recyclerview_paymentlist));
+        this.paymentList = new PaymentList(this, presenter, findViewById(R.id.recyclerview_paymentlist));
     }
 
     /**

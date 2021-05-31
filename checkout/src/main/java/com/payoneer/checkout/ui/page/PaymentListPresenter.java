@@ -35,6 +35,7 @@ import com.payoneer.checkout.ui.PaymentActivityResult;
 import com.payoneer.checkout.ui.PaymentResult;
 import com.payoneer.checkout.ui.PaymentUI;
 import com.payoneer.checkout.ui.dialog.PaymentDialogFragment.PaymentDialogListener;
+import com.payoneer.checkout.ui.list.PaymentListListener;
 import com.payoneer.checkout.ui.model.PaymentCard;
 import com.payoneer.checkout.ui.model.PaymentSession;
 import com.payoneer.checkout.ui.model.PresetCard;
@@ -55,7 +56,8 @@ import android.text.TextUtils;
 /**
  * The PaymentListPresenter implementing the presenter part of the MVP
  */
-final class PaymentListPresenter implements PaymentSessionListener, LocalizationLoaderListener, NetworkServiceListener {
+final class PaymentListPresenter implements PaymentSessionListener, LocalizationLoaderListener,
+                                            NetworkServiceListener, PaymentListListener {
 
     private final static int PROCESSPAYMENT_REQUEST_CODE = 1;
     private final static int CHARGEPAYMENT_REQUEST_CODE = 2;
@@ -124,30 +126,20 @@ final class PaymentListPresenter implements PaymentSessionListener, Localization
         this.paymentActivityResult = paymentActivityResult;
     }
 
-    /**
-     * Notify this presenter that the user has clicked the action button in a PaymentCard.
-     * The presenter will validate the widgets and if valid, post the operation to the Payment API
-     * using one of the network services.
-     *
-     * @param card the PaymentCard containing the operation URL
-     * @param widgets containing the user input data
-     */
-    void onActionClicked(PaymentCard card, Map<String, FormWidget> widgets) {
+    @Override
+    public void onActionClicked(PaymentCard paymentCard, Map<String, FormWidget> widgets) {
 
         if (operation != null) {
             return;
         }
-        if (card instanceof PresetCard) {
-            onPresetCardSelected((PresetCard) card);
-            return;
-        }
-        if (!validateWidgets(widgets)) {
+        if (paymentCard instanceof PresetCard) {
+            onPresetCardSelected((PresetCard) paymentCard);
             return;
         }
         try {
-            operation = createOperation(card, widgets);
-            String code = card.getCode();
-            String method = card.getPaymentMethod();
+            operation = createOperation(paymentCard, widgets);
+            String code = paymentCard.getCode();
+            String method = paymentCard.getPaymentMethod();
             networkService = NetworkServiceLookup.createService(view.getActivity(), code, method);
             networkService.setPresenter(this);
 
@@ -161,17 +153,20 @@ final class PaymentListPresenter implements PaymentSessionListener, Localization
         }
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    @Override
+    public void onDeleteClicked(PaymentCard paymentCard) {
+    }
+
+    @Override
+    public void onHintClicked(String networkCode, String type) {
+        view.showHintDialog(networkCode, type, null);
+    }
+
     @Override
     public void onPaymentSessionError(Throwable cause) {
         handleLoadingError(cause);
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     public void onPaymentSessionSuccess(PaymentSession session) {
         ListResult listResult = session.getListResult();
@@ -383,17 +378,6 @@ final class PaymentListPresenter implements PaymentSessionListener, Localization
             default:
                 view.passOnActivityResult(paymentActivityResult);
         }
-    }
-
-    private boolean validateWidgets(Map<String, FormWidget> widgets) {
-        boolean error = false;
-        for (FormWidget widget : widgets.values()) {
-            if (!widget.validate()) {
-                error = true;
-            }
-            widget.clearFocus();
-        }
-        return !error;
     }
 
     private Operation createOperation(PaymentCard card, Map<String, FormWidget> widgets) throws PaymentException {

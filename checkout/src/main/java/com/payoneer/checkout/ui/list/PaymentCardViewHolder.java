@@ -33,7 +33,6 @@ import com.payoneer.checkout.ui.widget.FormWidget;
 import com.payoneer.checkout.ui.widget.SelectWidget;
 import com.payoneer.checkout.ui.widget.TextInputWidget;
 import com.payoneer.checkout.ui.widget.VerificationCodeWidget;
-import com.payoneer.checkout.ui.widget.WidgetPresenter;
 import com.payoneer.checkout.util.NetworkLogoLoader;
 import com.payoneer.checkout.util.PaymentUtils;
 
@@ -52,19 +51,20 @@ public abstract class PaymentCardViewHolder extends RecyclerView.ViewHolder {
 
     final static String BUTTON_WIDGET = "buttonWidget";
     final ViewGroup formLayout;
-    final ListAdapter adapter;
-    final WidgetPresenter presenter;
     final Map<String, FormWidget> widgets;
     final ImageView cardLogoView;
     final IconView iconView;
     final PaymentCard paymentCard;
-
+    final CardEventHandler cardHandler;
+    final ListAdapter adapter;
+    
     PaymentCardViewHolder(ListAdapter adapter, View parent, PaymentCard paymentCard) {
         super(parent);
 
-        this.paymentCard = paymentCard;
         this.adapter = adapter;
-        this.presenter = new CardWidgetPresenter(this, adapter);
+        this.paymentCard = paymentCard;
+        this.cardHandler = new CardEventHandler(this, adapter, adapter.getCardListener());
+
         this.formLayout = parent.findViewById(R.id.layout_form);
         this.widgets = new LinkedHashMap<>();
         this.cardLogoView = parent.findViewById(R.id.image_logo);
@@ -74,21 +74,27 @@ public abstract class PaymentCardViewHolder extends RecyclerView.ViewHolder {
         view.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                handleCardClicked();
+                cardHandler.onCardClicked();
             }
         });
     }
 
-    /**
-     * Get the FormWidget given the name, i.e. cardNumber or holderName.
-     *
-     * @param name of the widget to be returned
-     * @return the widget or null if it could not be found
-     */
-    public FormWidget getFormWidget(String name) {
+    PaymentCard getPaymentCard() {
+        return paymentCard;
+    }
+    
+    FormWidget getFormWidget(String name) {
         return widgets.get(name);
     }
 
+    Map<String, FormWidget> getFormWidgets() {
+        return widgets;
+    }
+
+    boolean hasValidPosition() {
+        return adapter.validPosition(getAdapterPosition());
+    }
+    
     void addButtonWidget() {
         if (!widgets.containsKey(BUTTON_WIDGET)) {
             addWidget(new ButtonWidget(BUTTON_WIDGET));
@@ -110,13 +116,13 @@ public abstract class PaymentCardViewHolder extends RecyclerView.ViewHolder {
     void addWidget(FormWidget widget) {
         String name = widget.getName();
         if (!widgets.containsKey(name)) {
-            widget.setPresenter(presenter);
+            widget.setPresenter(cardHandler);
             widgets.put(name, widget);
         }
     }
 
     void handleCardClicked() {
-        adapter.onItemClicked(getAdapterPosition());
+        cardHandler.onCardClicked();
     }
 
     void addElementWidgets(PaymentCard card) {
@@ -126,7 +132,7 @@ public abstract class PaymentCardViewHolder extends RecyclerView.ViewHolder {
 
         for (InputElement element : elements) {
             String name = element.getName();
-            if (adapter.isHidden(code, name)) {
+            if (cardHandler.isInputTypeHidden(code, name)) {
                 continue;
             }
             switch (element.getName()) {

@@ -179,8 +179,8 @@ public final class PaymentSessionService {
         if (section != null) {
             sections.add(section);
         }
-        Validator validator = loadValidator(context);
-        return new PaymentSession(listResult, sections, validator);
+        loadValidator(context);
+        return new PaymentSession(listResult, sections);
     }
 
     private PaymentSection createPresetSection(ListResult listResult) {
@@ -294,7 +294,10 @@ public final class PaymentSessionService {
         return ResourceLoader.loadPaymentGroups(context.getResources(), R.raw.groups);
     }
 
-    private Validator loadValidator(Context context) throws PaymentException {
-        return new Validator(ResourceLoader.loadValidations(context.getResources(), R.raw.validations));
+    private void loadValidator(Context context) throws PaymentException {
+        if (Validator.getInstance() == null) {
+            Validator validator = new Validator(ResourceLoader.loadValidations(context.getResources(), R.raw.validations));
+            Validator.setInstance(validator);
+        }
     }
 }
