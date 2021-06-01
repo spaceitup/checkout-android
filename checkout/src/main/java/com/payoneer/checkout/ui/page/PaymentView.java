@@ -35,6 +35,13 @@ interface PaymentView {
     void showConnectionErrorDialog(PaymentDialogListener listener);
 
     /**
+     * Show the delete dialog to the user, notify the listener of events in this dialog.
+     *
+     * @param listener to be notified of dialog events
+     */
+    void showDeleteDialog(PaymentDialogListener listener);
+    
+    /**
      * Show the interaction text to the user, notify the listener of events in this dialog.
      * When there is no localization for the interaction then the default error will be shown to the user.
      *

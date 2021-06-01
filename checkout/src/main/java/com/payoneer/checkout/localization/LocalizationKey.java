@@ -22,6 +22,7 @@ public final class LocalizationKey {
 
     public final static String BUTTON_OK = "button.ok.label";
     public final static String BUTTON_CANCEL = "button.cancel.label";
+    public final static String BUTTON_DELETE = "button.delete.label";
     public final static String BUTTON_RETRY = "button.retry.label";
     public final static String BUTTON_UPDATE_ACCOUNT = "button.operation.UPDATE.account.label";
 
@@ -48,6 +49,9 @@ public final class LocalizationKey {
     public final static String ERROR_DEFAULT_TITLE = "messages.error.default.title";
     public final static String ERROR_DEFAULT_TEXT = "messages.error.default.text";
 
+    public final static String ACCOUNTS_DELETE_TITLE = "accounts.delete.title";
+    public final static String ACCOUNTS_DELETE_TEXT = "accounts.delete.text";
+    
     public final static String LABEL_TITLE = "title";
     public final static String LABEL_TEXT = "text";
 

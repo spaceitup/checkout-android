@@ -109,6 +109,18 @@ abstract class BasePaymentActivity extends AppCompatActivity implements PaymentV
      * {@inheritDoc}
      */
     @Override
+    public void showDeleteDialog(PaymentDialogListener listener) {
+        if (!active) {
+            return;
+        }
+        PaymentDialogFragment dialog = PaymentDialogHelper.createDeleteDialog(listener);
+        showPaymentDialog(dialog);
+    }
+    
+    /**
+     * {@inheritDoc}
+     */
+    @Override
     public void showInteractionDialog(Interaction interaction, PaymentDialogListener listener) {
         if (!active) {
             return;

@@ -8,7 +8,10 @@
 
 package com.payoneer.checkout.ui.dialog;
 
+import static com.payoneer.checkout.localization.LocalizationKey.ACCOUNTS_DELETE_TEXT;
+import static com.payoneer.checkout.localization.LocalizationKey.ACCOUNTS_DELETE_TITLE;
 import static com.payoneer.checkout.localization.LocalizationKey.BUTTON_CANCEL;
+import static com.payoneer.checkout.localization.LocalizationKey.BUTTON_DELETE;
 import static com.payoneer.checkout.localization.LocalizationKey.BUTTON_OK;
 import static com.payoneer.checkout.localization.LocalizationKey.BUTTON_RETRY;
 import static com.payoneer.checkout.localization.LocalizationKey.ERROR_CONNECTION_TEXT;
@@ -92,6 +95,18 @@ public class PaymentDialogHelper {
         return dialog;
     }
 
+    public static PaymentDialogFragment createDeleteDialog(PaymentDialogFragment.PaymentDialogListener listener) {
+        PaymentDialogFragment dialog = new PaymentDialogFragment();
+        dialog.setListener(listener);
+        dialog.setTitle(Localization.translate(ACCOUNTS_DELETE_TITLE));
+        dialog.setMessage(Localization.translate(ACCOUNTS_DELETE_TEXT));
+        dialog.setNegativeButton(Localization.translate(BUTTON_CANCEL));
+        dialog.setPositiveButton(Localization.translate(BUTTON_DELETE));
+        dialog.setTag("dialog_delete");
+        return dialog;
+    }
+
+    
     private static int getHintImageResId(String networkCode, String type) {
 
         if (!PaymentInputType.VERIFICATION_CODE.equals(type)) {

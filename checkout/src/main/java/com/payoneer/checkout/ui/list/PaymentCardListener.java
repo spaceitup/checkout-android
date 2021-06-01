@@ -43,7 +43,6 @@ interface PaymentCardListener {
 
     /**
      * @param paymentCard
-     * @param String
      * @param widgets
      */
     void onActionClicked(PaymentCard paymentCard, Map<String, FormWidget> widgets);

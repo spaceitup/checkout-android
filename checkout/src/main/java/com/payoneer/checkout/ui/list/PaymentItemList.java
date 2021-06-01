@@ -12,7 +12,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Class containing ListItems with a selected index
+ * Class containing ListItems
  */
 final class PaymentItemList {
 
@@ -21,10 +21,6 @@ final class PaymentItemList {
 
     PaymentItemList() {
         this.items = new ArrayList<>();
-    }
-
-    List<ListItem> getItems() {
-        return items;
     }
 
     int getSelectedIndex() {

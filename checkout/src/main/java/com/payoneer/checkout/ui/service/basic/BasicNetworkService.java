@@ -63,7 +63,7 @@ public final class BasicNetworkService extends NetworkService implements Operati
     @Override
     public void processPayment(Activity activity, int requestCode, Operation operation) {
         this.operation = operation;
-        presenter.showProgress(true);
+        listener.showProgress(true);
         service.postOperation(operation);
     }
 
@@ -75,7 +75,7 @@ public final class BasicNetworkService extends NetworkService implements Operati
         Interaction interaction = operationResult.getInteraction();
         int resultCode = PROCEED.equals(interaction.getCode()) ? RESULT_CODE_PROCEED : RESULT_CODE_ERROR;
         PaymentResult result = new PaymentResult(operationResult);
-        presenter.onProcessPaymentResult(resultCode, result);
+        listener.onProcessPaymentResult(resultCode, result);
     }
 
     /**
@@ -86,7 +86,7 @@ public final class BasicNetworkService extends NetworkService implements Operati
         String code = getErrorInteractionCode(operation);
         String message = "Missing OperationResult after client-side redirect";
         PaymentResult paymentResult = PaymentResultHelper.fromErrorMessage(code, message);
-        presenter.onProcessPaymentResult(RESULT_CODE_ERROR, paymentResult);
+        listener.onProcessPaymentResult(RESULT_CODE_ERROR, paymentResult);
     }
 
     /**
@@ -98,14 +98,14 @@ public final class BasicNetworkService extends NetworkService implements Operati
         PaymentResult result = new PaymentResult(operationResult);
 
         if (!PROCEED.equals(interaction.getCode())) {
-            presenter.onProcessPaymentResult(RESULT_CODE_ERROR, result);
+            listener.onProcessPaymentResult(RESULT_CODE_ERROR, result);
             return;
         }
         if (operationResult.getRedirect() != null) {
             handleRedirect(operationResult);
             return;
         }
-        presenter.onProcessPaymentResult(RESULT_CODE_PROCEED, result);
+        listener.onProcessPaymentResult(RESULT_CODE_PROCEED, result);
     }
 
     /**
@@ -123,21 +123,21 @@ public final class BasicNetworkService extends NetworkService implements Operati
             case RedirectType.HANDLER3DS2:
                 try {
                     RedirectRequest request = RedirectRequest.fromOperationResult(operationResult);
-                    presenter.redirect(request);
+                    listener.redirect(request);
                 } catch (PaymentException e) {
                     handleProcessPaymentError(e);
                 }
                 break;
             default:
                 PaymentResult result = new PaymentResult(operationResult);
-                presenter.onProcessPaymentResult(RESULT_CODE_PROCEED, result);
+                listener.onProcessPaymentResult(RESULT_CODE_PROCEED, result);
         }
     }
 
     private void handleProcessPaymentError(Throwable cause) {
         String code = getErrorInteractionCode(this.operation);
         PaymentResult paymentResult = PaymentResultHelper.fromThrowable(code, cause);
-        presenter.onProcessPaymentResult(RESULT_CODE_ERROR, paymentResult);
+        listener.onProcessPaymentResult(RESULT_CODE_ERROR, paymentResult);
     }
 
     private String getErrorInteractionCode(Operation operation) {

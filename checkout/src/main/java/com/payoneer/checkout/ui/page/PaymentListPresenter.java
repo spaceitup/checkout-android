@@ -141,7 +141,7 @@ final class PaymentListPresenter implements PaymentSessionListener, Localization
             String code = paymentCard.getCode();
             String method = paymentCard.getPaymentMethod();
             networkService = NetworkServiceLookup.createService(view.getActivity(), code, method);
-            networkService.setPresenter(this);
+            networkService.setListener(this);
 
             if (CHARGE.equals(operation.getOperationType())) {
                 view.showChargePaymentScreen(CHARGEPAYMENT_REQUEST_CODE, operation);
@@ -154,7 +154,20 @@ final class PaymentListPresenter implements PaymentSessionListener, Localization
     }
 
     @Override
-    public void onDeleteClicked(PaymentCard paymentCard) {
+    public void onDeleteClicked(final PaymentCard paymentCard) {
+        view.showDeleteDialog(new PaymentDialogListener() {
+            @Override
+            public void onPositiveButtonClicked() {
+            }
+
+            @Override
+            public void onNegativeButtonClicked() {
+            }
+
+            @Override
+            public void onDismissed() {
+            }
+        });
     }
 
     @Override

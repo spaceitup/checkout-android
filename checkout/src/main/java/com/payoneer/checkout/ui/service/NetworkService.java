@@ -19,7 +19,7 @@ import android.app.Activity;
  */
 public abstract class NetworkService {
 
-    protected NetworkServiceListener presenter;
+    protected NetworkServiceListener listener;
 
     /**
      * Stop this NetworkService
@@ -28,20 +28,20 @@ public abstract class NetworkService {
     }
 
     /**
-     * Set the presenter in this NetworkService
+     * Set the listener in this NetworkService
      *
-     * @param presenter the presenter to be set
+     * @param listener the listener to be set
      */
-    public void setPresenter(NetworkServiceListener presenter) {
-        this.presenter = presenter;
+    public void setListener(NetworkServiceListener listener) {
+        this.listener = listener;
     }
 
     /**
      * Process the payment through this NetworkService. The result is either returned through the onActivityResult call in the
-     * provided Activity or through the NetworkServicePresenter.
+     * provided Activity or through the NetworkServiceListener.
      *
      * @param activity handles the payment that should be processed
-     * @param requestCode should be returned to the presenter when the payment is processed
+     * @param requestCode should be returned to the listener when the payment is processed
      * @param operation that should be processed
      */
     public void processPayment(Activity activity, int requestCode, Operation operation) {
@@ -57,7 +57,7 @@ public abstract class NetworkService {
 
     /**
      * Notify the network service that the redirect has failed to receive an OperationResult.
-     * The network service should handle this situation and make sure the NetworkServicePresenter is notified with the
+     * The network service should handle this situation and make sure the NetworkServiceListener is notified with the
      * appropriate PaymentResult.
      */
     public void onRedirectError() {

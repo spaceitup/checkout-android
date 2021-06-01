@@ -155,7 +155,7 @@ final class ChargePaymentPresenter implements PaymentSessionListener, NetworkSer
             closeWithErrorCode("NetworkService lookup failed for: " + networkCode + ", " + paymentMethod);
             return;
         }
-        networkService.setPresenter(this);
+        networkService.setListener(this);
         processPayment();
     }
 
