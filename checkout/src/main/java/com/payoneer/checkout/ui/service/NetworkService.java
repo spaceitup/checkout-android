@@ -12,6 +12,7 @@ import com.payoneer.checkout.form.DeleteAccount;
 import com.payoneer.checkout.form.Operation;
 import com.payoneer.checkout.model.AccountRegistration;
 import com.payoneer.checkout.model.OperationResult;
+import com.payoneer.checkout.redirect.RedirectRequest;
 
 /**
  * Interface for network services, a NetworkService is responsible for activating and
@@ -55,8 +56,9 @@ public abstract class NetworkService {
     /**
      * Notify the network service that the payment has been redirected
      *
+     * @param request the original redirect request that triggered this result
      * @param result optional redirect result
      */
-    public void onRedirectResult(OperationResult result) {
+    public void onRedirectResult(RedirectRequest request, OperationResult result) {
     }
 }

@@ -61,6 +61,15 @@ public final class PaymentSession {
         return paymentSections.size() == 0;
     }
 
+    public boolean containsSelfLink(URL url) {
+        for (PaymentSection section : paymentSections) {
+            if (section.containsLink("self", url)) {
+                return true;
+            }
+        }
+        return false;
+    }
+    
     public boolean containsOperationLink(URL url) {
         for (PaymentSection section : paymentSections) {
             if (section.containsLink("operation", url)) {

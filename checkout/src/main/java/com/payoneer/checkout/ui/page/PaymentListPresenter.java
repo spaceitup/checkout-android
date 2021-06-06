@@ -66,11 +66,13 @@ final class PaymentListPresenter extends BasePaymentPresenter
 
     private Operation operation;
     private DeleteAccount deleteAccount;
+
     private PaymentSession session;
     private Interaction reloadInteraction;
     private PaymentActivityResult activityResult;
     private NetworkService networkService;
-
+    private RedirectRequest redirectRequest;
+    
     /**
      * Create a new PaymentListPresenter
      *
@@ -85,19 +87,20 @@ final class PaymentListPresenter extends BasePaymentPresenter
     }
 
     void onStart() {
-
-        if (checkState(REDIRECT)) {
-            handleRedirect();
-            return;
-        }
         setState(STARTED);
 
-        if (activityResult != null) {
+        if (redirectRequest != null) {
+            handleRedirectRequest(redirectRequest);
+            redirectRequest = null;
+        }
+        else if (activityResult != null) {
             handlePaymentActivityResult(activityResult);
             activityResult = null;
-        } else if (session == null) {
+        }
+        else if (session == null) {
             loadPaymentSession();
-        } else {
+        }
+        else {
             showPaymentSession();
         }
     }
@@ -111,11 +114,6 @@ final class PaymentListPresenter extends BasePaymentPresenter
         }
     }
 
-    /**
-     * Set the payment result received through the onActivityResult method
-     *
-     * @param activityResult result to be set and handled when the presenter is started.
-     */
     void setPaymentActivityResult(PaymentActivityResult activityResult) {
         this.activityResult = activityResult;
     }
@@ -194,10 +192,10 @@ final class PaymentListPresenter extends BasePaymentPresenter
         setState(STARTED);
         switch (resultCode) {
             case RESULT_CODE_PROCEED:
-                loadPaymentSession();
+                handleDeleteAccountSuccess(result);
                 break;
             case RESULT_CODE_ERROR:
-                loadPaymentSession();
+                handleDeleteAccountError(result);
                 break;
             default:
                 loadPaymentSession();
@@ -225,18 +223,15 @@ final class PaymentListPresenter extends BasePaymentPresenter
         if (!RedirectService.supports(context, redirectRequest)) {
             throw new PaymentException("The Redirect payment method is not supported by the Android-SDK");
         }
-        setState(REDIRECT);
+        this.redirectRequest = redirectRequest;
         view.showProgress(false);
         RedirectService.redirect(context, redirectRequest);
     }
 
-    private void handleRedirect() {
-        if (session == null) {
-            closeWithErrorCode("Missing cached session in PaymentListPresenter");
-            return;
-        }
+    private void handleRedirectRequest(RedirectRequest redirectRequest) {
+        setState(PROCESS);
         OperationResult result = RedirectService.getRedirectResult();
-        networkService.onRedirectResult(result);
+        networkService.onRedirectResult(redirectRequest, result);
     }
     
     private void handleLoadPaymentSessionProceed(PaymentSession session) {
@@ -282,6 +277,32 @@ final class PaymentListPresenter extends BasePaymentPresenter
         }
     }
 
+    private void handleDeleteAccountSuccess(PaymentResult result) {
+        reloadPaymentSession(null);
+    }
+    
+    private void handleDeleteAccountError(PaymentResult result) {
+        if (result.isNetworkFailure()) {
+            handleDeleteNetworkFailure(result);
+            return;
+        }
+        Interaction interaction = result.getInteraction();
+        switch (interaction.getCode()) {
+            case InteractionCode.RETRY:
+                showErrorAndPaymentSession(interaction);
+                break;
+            case InteractionCode.RELOAD:
+                reloadPaymentSession(null);
+                break;
+            case InteractionCode.TRY_OTHER_ACCOUNT:
+            case InteractionCode.TRY_OTHER_NETWORK:
+                reloadPaymentSession(interaction);
+                break;
+            default:
+                closeWithErrorCode(result);
+        }
+    }
+    
     private void handleProcessPaymentError(PaymentResult result) {
         if (result.isNetworkFailure()) {
             handleProcessNetworkFailure(result);
@@ -323,13 +344,34 @@ final class PaymentListPresenter extends BasePaymentPresenter
         });
     }
 
+    private void handleDeleteNetworkFailure(final PaymentResult result) {
+        view.showConnectionErrorDialog(new PaymentDialogListener() {
+            @Override
+            public void onPositiveButtonClicked() {
+                deleteAccount(deleteAccount);
+            }
+
+            @Override
+            public void onNegativeButtonClicked() {
+                showPaymentSession();
+            }
+
+            @Override
+            public void onDismissed() {
+                showPaymentSession();
+            }
+        });
+    }
+
     private void processPaymentCard(PaymentCard paymentCard, Map<String, FormWidget> widgets) {
         try {
             operation = createOperation(paymentCard, widgets);
             if (CHARGE.equals(operation.getOperationType())) {
                 listView.showChargePaymentScreen(CHARGEPAYMENT_REQUEST_CODE, operation);
             } else {
-                initNetworkService(paymentCard.getCode(), paymentCard.getPaymentMethod());
+                networkService = loadNetworkService(paymentCard.getCode(), paymentCard.getPaymentMethod());
+                networkService.setListener(this);
+
                 processPayment(operation);
             }
         } catch (PaymentException e) {
@@ -339,7 +381,9 @@ final class PaymentListPresenter extends BasePaymentPresenter
 
     private void deleteAccountCard(AccountCard card) {
         try {
-            initNetworkService(card.getCode(), card.getPaymentMethod());
+            networkService = loadNetworkService(card.getCode(), card.getPaymentMethod());
+            networkService.setListener(this);
+
             URL url = card.getLink("self");
             deleteAccount = new DeleteAccount(url);
             deleteAccount(deleteAccount);
@@ -418,14 +462,6 @@ final class PaymentListPresenter extends BasePaymentPresenter
         result.setInteraction(new Interaction(code, reason));
         result.setRedirect(redirect);
         closeWithProceedCode(new PaymentResult(result));
-    }
-
-    private void initNetworkService(String code, String method) throws PaymentException {
-        networkService = NetworkServiceLookup.createService(view.getActivity(), code, method);
-        if (networkService == null) {
-            throw new PaymentException("Missing NetworkService for network: " + code + ", " + method);
-        }
-        networkService.setListener(this);
     }
 
     private void loadPaymentSession() {

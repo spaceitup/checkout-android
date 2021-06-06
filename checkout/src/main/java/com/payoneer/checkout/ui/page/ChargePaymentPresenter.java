@@ -47,7 +47,8 @@ final class ChargePaymentPresenter extends BasePaymentPresenter implements Payme
     private PaymentSession session;
     private Operation operation;
     private NetworkService networkService;
-
+    private RedirectRequest redirectRequest;
+    
     /**
      * Create a new ChargePaymentPresenter
      *
@@ -61,19 +62,17 @@ final class ChargePaymentPresenter extends BasePaymentPresenter implements Payme
 
     void onStart(Operation operation) {
         this.operation = operation;
-
-        if (checkState(REDIRECT)) {
-            handleRedirect();
-            return;
-        }
         setState(STARTED);
+
+        if (redirectRequest != null) {
+            handleRedirectRequest(redirectRequest);
+            redirectRequest = null;
+        }
         loadPaymentSession();
     }
 
     void onStop() {
-        if (!checkState(REDIRECT)) {
-            setState(STOPPED);
-        }
+        setState(STOPPED);
         sessionService.stop();
         if (networkService != null) {
             networkService.stop();
@@ -124,10 +123,11 @@ final class ChargePaymentPresenter extends BasePaymentPresenter implements Payme
     @Override
     public void redirect(RedirectRequest redirectRequest) throws PaymentException {
         Context context = view.getActivity();
+
         if (!RedirectService.supports(context, redirectRequest)) {
             throw new PaymentException("The Redirect payment method is not supported by the Android-SDK");
         }
-        setState(REDIRECT);
+        this.redirectRequest = redirectRequest;
         view.showProgress(false);
         RedirectService.redirect(context, redirectRequest);
     }
@@ -142,12 +142,8 @@ final class ChargePaymentPresenter extends BasePaymentPresenter implements Payme
         return true;
     }
 
-    private void handleRedirect() {
-        if (session == null) {
-            closeWithErrorCode("Missing cached session in ChargePaymentPresenter");
-            return;
-        }
-        networkService.onRedirectResult(RedirectService.getRedirectResult());
+    private void handleRedirectRequest(RedirectRequest redirectRequest) {
+        networkService.onRedirectResult(redirectRequest, RedirectService.getRedirectResult());
     }
 
     private void handleLoadSessionProceed(PaymentSession session) {
@@ -155,17 +151,14 @@ final class ChargePaymentPresenter extends BasePaymentPresenter implements Payme
             closeWithErrorCode("operation not found in ListResult");
             return;
         }
-        this.session = session;
-        String networkCode = operation.getNetworkCode();
-        String paymentMethod = operation.getPaymentMethod();
-        networkService = NetworkServiceLookup.createService(view.getActivity(), networkCode, paymentMethod);
-
-        if (networkService == null) {
-            closeWithErrorCode("NetworkService lookup failed for: " + networkCode + ", " + paymentMethod);
-            return;
+        try {
+            this.session = session;
+            networkService = loadNetworkService(operation.getNetworkCode(), operation.getPaymentMethod());
+            networkService.setListener(this);
+            processPayment(operation);
+        } catch (PaymentException e) {
+            closeWithErrorCode(PaymentResultHelper.fromThrowable(e));
         }
-        networkService.setListener(this);
-        processPayment();
     }
 
     private void handleLoadingError(Throwable cause) {
@@ -218,7 +211,7 @@ final class ChargePaymentPresenter extends BasePaymentPresenter implements Payme
         view.showConnectionErrorDialog(new PaymentDialogListener() {
             @Override
             public void onPositiveButtonClicked() {
-                processPayment();
+                processPayment(operation);
             }
 
             @Override
@@ -233,7 +226,7 @@ final class ChargePaymentPresenter extends BasePaymentPresenter implements Payme
         });
     }
 
-    private void processPayment() {
+    private void processPayment(Operation operation) {
         setState(PROCESS);
         networkService.processPayment(operation);
     }

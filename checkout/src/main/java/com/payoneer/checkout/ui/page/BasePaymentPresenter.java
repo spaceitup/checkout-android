@@ -11,9 +11,12 @@ package com.payoneer.checkout.ui.page;
 import static com.payoneer.checkout.ui.PaymentActivityResult.RESULT_CODE_ERROR;
 import static com.payoneer.checkout.ui.PaymentActivityResult.RESULT_CODE_PROCEED;
 
+import com.payoneer.checkout.core.PaymentException;
 import com.payoneer.checkout.model.Interaction;
 import com.payoneer.checkout.ui.PaymentResult;
 import com.payoneer.checkout.ui.dialog.PaymentDialogFragment;
+import com.payoneer.checkout.ui.service.NetworkService;
+import com.payoneer.checkout.ui.service.NetworkServiceLookup;
 import com.payoneer.checkout.util.PaymentResultHelper;
 
 /**
@@ -24,7 +27,6 @@ abstract class BasePaymentPresenter {
     final static int STOPPED = 0;
     final static int STARTED = 1;
     final static int PROCESS = 2;
-    final static int REDIRECT = 3;
 
     final BasePaymentView view;
     final String listUrl;
@@ -85,4 +87,11 @@ abstract class BasePaymentPresenter {
         view.showInteractionDialog(interaction, listener);
     }
 
+    NetworkService loadNetworkService(String code, String paymentMethod) throws PaymentException {
+        NetworkService service = NetworkServiceLookup.createService(view.getActivity(), code, paymentMethod);
+        if (service == null) {
+            throw new PaymentException("Missing NetworkService for: " + code + ", " + paymentMethod);
+        }
+        return service;
+    }
 }

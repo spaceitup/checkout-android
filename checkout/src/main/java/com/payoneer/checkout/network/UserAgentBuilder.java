@@ -70,8 +70,8 @@ final class UserAgentBuilder {
             throw new IllegalArgumentException("Context cannot be null");
         }
         UserAgentBuilder builder = new UserAgentBuilder().
-            //setSdkVersionName(BuildConfig.VERSION_NAME).
-            //setSdkVersionCode(BuildConfig.VERSION_CODE).
+            setSdkVersionName(BuildConfig.VERSION_NAME).
+            setSdkVersionCode(BuildConfig.VERSION_CODE).
             setBuildManufacturer(android.os.Build.MANUFACTURER).
             setBuildModel(android.os.Build.MODEL).
             setBuildVersionSdkInt(android.os.Build.VERSION.SDK_INT).

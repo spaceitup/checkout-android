@@ -22,18 +22,30 @@ public final class RedirectRequest {
 
     private final Redirect redirect;
     private final URL link;
-
+    private final int requestType;
+    
     /**
      * Construct a new RedirectRequest
      *
+     * @param requestType the type of this request
      * @param redirect contains the Redirect information
      * @param link pointing to the redirect api endpoint
      */
-    public RedirectRequest(Redirect redirect, URL link) {
+    public RedirectRequest(int requestType, Redirect redirect, URL link) {
+        this.requestType = requestType;
         this.redirect = redirect;
         this.link = link;
     }
 
+    /** 
+     * Get the type of this request
+     * 
+     * @return the type of this request
+     */
+    public int getRequestType() {
+        return requestType;
+    }
+    
     /**
      * Get the redirect method
      *
@@ -64,11 +76,12 @@ public final class RedirectRequest {
     /**
      * Create a RedirectRequest from the provided OperationResult
      *
+     * @param requestType identifying the type of this redirect request
      * @param operationResult containing the redirect request information
      * @return newly created RedirectRequest
      * @throws PaymentException when the OperationResult does not contain the required information
      */
-    public static RedirectRequest fromOperationResult(OperationResult operationResult) throws PaymentException {
+    public static RedirectRequest fromOperationResult(int requestType, OperationResult operationResult) throws PaymentException {
         Redirect redirect = operationResult.getRedirect();
         if (redirect == null) {
             throw new PaymentException("OperationResult must contain a Redirect object");
@@ -77,6 +90,6 @@ public final class RedirectRequest {
         if (links == null || !links.containsKey("redirect")) {
             throw new PaymentException("OperationResult must contain a redirect link URL");
         }
-        return new RedirectRequest(redirect, links.get("redirect"));
+        return new RedirectRequest(requestType, redirect, links.get("redirect"));
     }
 }
