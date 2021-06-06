@@ -43,9 +43,7 @@ import android.content.Context;
  */
 final class ChargePaymentPresenter extends BasePaymentPresenter implements PaymentSessionListener, NetworkServiceListener {
 
-    private final PaymentView view;
     private final PaymentSessionService sessionService;
-
     private PaymentSession session;
     private Operation operation;
     private NetworkService networkService;
@@ -53,11 +51,10 @@ final class ChargePaymentPresenter extends BasePaymentPresenter implements Payme
     /**
      * Create a new ChargePaymentPresenter
      *
-     * @param view the PaymentView displaying payment information
+     * @param view the BasePaymentView displaying payment information
      */
-    ChargePaymentPresenter(PaymentView view) {
-        super(PaymentUI.getInstance().getListUrl());
-        this.view = view;
+    ChargePaymentPresenter(BasePaymentView view) {
+        super(PaymentUI.getInstance().getListUrl(), view);
         sessionService = new PaymentSessionService(view.getActivity());
         sessionService.setListener(this);
     }
@@ -70,7 +67,7 @@ final class ChargePaymentPresenter extends BasePaymentPresenter implements Payme
             return;
         }
         setState(STARTED);
-        loadPaymentSession(listUrl);
+        loadPaymentSession();
     }
 
     void onStop() {
@@ -83,9 +80,6 @@ final class ChargePaymentPresenter extends BasePaymentPresenter implements Payme
         }
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     public void onPaymentSessionSuccess(PaymentSession session) {
         ListResult listResult = session.getListResult();
@@ -100,12 +94,52 @@ final class ChargePaymentPresenter extends BasePaymentPresenter implements Payme
         }
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     public void onPaymentSessionError(Throwable cause) {
         handleLoadingError(cause);
+    }
+
+    @Override
+    public void showProgress(boolean visible) {
+        view.showProgress(visible);
+    }
+
+    @Override
+    public void onProcessPaymentResult(int resultCode, PaymentResult result) {
+        setState(STARTED);
+        switch (resultCode) {
+            case RESULT_CODE_PROCEED:
+                closeWithProceedCode(result);
+                break;
+            case RESULT_CODE_ERROR:
+                handleProcessPaymentError(result);
+                break;
+        }
+    }
+
+    @Override
+    public void onDeleteAccountResult(int resultCode, PaymentResult result) {
+    }
+
+    @Override
+    public void redirect(RedirectRequest redirectRequest) throws PaymentException {
+        Context context = view.getActivity();
+        if (!RedirectService.supports(context, redirectRequest)) {
+            throw new PaymentException("The Redirect payment method is not supported by the Android-SDK");
+        }
+        setState(REDIRECT);
+        view.showProgress(false);
+        RedirectService.redirect(context, redirectRequest);
+    }
+
+    /**
+     * Let this presenter handle the back pressed.
+     *
+     * @return true when this presenter handled the back press, false otherwise
+     */
+    boolean onBackPressed() {
+        view.showWarningMessage(Localization.translate(CHARGE_INTERRUPTED));
+        return true;
     }
 
     private void handleRedirect() {
@@ -113,12 +147,7 @@ final class ChargePaymentPresenter extends BasePaymentPresenter implements Payme
             closeWithErrorCode("Missing cached session in ChargePaymentPresenter");
             return;
         }
-        OperationResult result = RedirectService.getRedirectResult();
-        if (result != null) {
-            networkService.onRedirectSuccess(result);
-        } else {
-            networkService.onRedirectError();
-        }
+        networkService.onRedirectResult(RedirectService.getRedirectResult());
     }
 
     private void handleLoadSessionProceed(PaymentSession session) {
@@ -153,7 +182,7 @@ final class ChargePaymentPresenter extends BasePaymentPresenter implements Payme
         view.showConnectionErrorDialog(new PaymentDialogListener() {
             @Override
             public void onPositiveButtonClicked() {
-                loadPaymentSession(listUrl);
+                loadPaymentSession();
             }
 
             @Override
@@ -166,38 +195,6 @@ final class ChargePaymentPresenter extends BasePaymentPresenter implements Payme
                 closeWithErrorCode(result);
             }
         });
-    }
-
-    @Override
-    public void showProgress(boolean visible) {
-        view.showProgress(visible);
-    }
-
-    @Override
-    public void onProcessPaymentResult(int resultCode, PaymentResult result) {
-        switch (resultCode) {
-            case RESULT_CODE_PROCEED:
-                closeWithProceedCode(result);
-                break;
-            case RESULT_CODE_ERROR:
-                handleProcessPaymentError(result);
-                break;
-        }
-    }
-
-    @Override
-    public void onDeleteAccountResult(int resultCode, PaymentResult result) {
-    }
-
-    @Override
-    public void redirect(RedirectRequest redirectRequest) throws PaymentException {
-        Context context = view.getActivity();
-        if (!RedirectService.supports(context, redirectRequest)) {
-            throw new PaymentException("The Redirect payment method is not supported by the Android-SDK");
-        }
-        setState(REDIRECT);
-        view.showProgress(false);
-        RedirectService.redirect(context, redirectRequest);
     }
 
     private void handleProcessPaymentError(PaymentResult result) {
@@ -236,60 +233,14 @@ final class ChargePaymentPresenter extends BasePaymentPresenter implements Payme
         });
     }
 
-    /**
-     * Let this presenter handle the back pressed.
-     *
-     * @return true when this presenter handled the back press, false otherwise
-     */
-    boolean onBackPressed() {
-        view.showWarningMessage(Localization.translate(CHARGE_INTERRUPTED));
-        return true;
-    }
-
     private void processPayment() {
+        setState(PROCESS);
         networkService.processPayment(operation);
     }
 
-    private void loadPaymentSession(String listUrl) {
+    private void loadPaymentSession() {
         this.session = null;
         view.showProgress(true);
         sessionService.loadPaymentSession(listUrl, view.getActivity());
-    }
-
-    private void closeWithProceedCode(PaymentResult result) {
-        view.setPaymentResult(RESULT_CODE_PROCEED, result);
-        view.close();
-    }
-
-    private void closeWithErrorCode(String message) {
-        PaymentResult result = PaymentResultHelper.fromErrorMessage(message);
-        closeWithErrorCode(result);
-    }
-
-    private void closeWithErrorCode(PaymentResult result) {
-        view.setPaymentResult(RESULT_CODE_ERROR, result);
-        view.close();
-    }
-
-    private void showErrorAndCloseWithErrorCode(PaymentResult result) {
-        view.setPaymentResult(RESULT_CODE_ERROR, result);
-        Interaction interaction = result.getInteraction();
-        PaymentDialogListener listener = new PaymentDialogListener() {
-            @Override
-            public void onPositiveButtonClicked() {
-                view.close();
-            }
-
-            @Override
-            public void onNegativeButtonClicked() {
-                view.close();
-            }
-
-            @Override
-            public void onDismissed() {
-                view.close();
-            }
-        };
-        view.showInteractionDialog(interaction, listener);
     }
 }

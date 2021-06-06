@@ -155,7 +155,7 @@ public final class PaymentListActivity extends BasePaymentActivity implements Pa
      * {@inheritDoc}
      */
     @Override
-    public void clearList() {
+    public void clearPaymentList() {
         paymentList.clear();
     }
 

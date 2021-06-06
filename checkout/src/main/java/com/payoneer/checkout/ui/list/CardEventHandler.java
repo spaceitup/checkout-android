@@ -126,11 +126,8 @@ class CardEventHandler implements WidgetPresenter {
     }
 
     boolean isInputTypeHidden(String code, String type) {
-        if (holder.hasValidPosition()) {
-            Validator validator = Validator.getInstance();
-            return validator.isHidden(code, type);
-        }
-        return false;
+        Validator validator = Validator.getInstance();
+        return validator.isHidden(code, type);
     }
 
     private PaymentCardListener getCardListener() {

@@ -77,6 +77,36 @@ public final class OperationService {
      * @param account to be deleted
      */
     public void deleteAccount(final DeleteAccount account) {
+
+        if (isActive()) {
+            throw new IllegalStateException("Already posting operation, stop first");
+        }
+        task = WorkerTask.fromCallable(new Callable<OperationResult>() {
+            @Override
+            public OperationResult call() throws PaymentException {
+                return asyncDeleteAccount(account);
+            }
+        });
+        task.subscribe(new WorkerSubscriber<OperationResult>() {
+            @Override
+            public void onSuccess(OperationResult result) {
+                task = null;
+
+                if (listener != null) {
+                    listener.onDeleteAccountSuccess(result);
+                }
+            }
+
+            @Override
+            public void onError(Throwable cause) {
+                task = null;
+
+                if (listener != null) {
+                    listener.onDeleteAccountError(cause);
+                }
+            }
+        });
+        Workers.getInstance().forNetworkTasks().execute(task);
     }
 
     /**
@@ -120,5 +150,9 @@ public final class OperationService {
     private OperationResult asyncPostOperation(Operation operation) throws PaymentException {
         operation.setBrowserData(browserData);
         return paymentConnection.postOperation(operation);
+    }
+
+    private OperationResult asyncDeleteAccount(DeleteAccount account) throws PaymentException {
+        return paymentConnection.deleteAccount(account);
     }
 }

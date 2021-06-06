@@ -21,6 +21,7 @@ import java.util.Map;
 import java.util.Objects;
 
 import com.payoneer.checkout.core.PaymentException;
+import com.payoneer.checkout.form.DeleteAccount;
 import com.payoneer.checkout.form.Operation;
 import com.payoneer.checkout.model.AccountRegistration;
 import com.payoneer.checkout.model.ErrorInfo;
@@ -31,6 +32,7 @@ import com.payoneer.checkout.model.OperationResult;
 import com.payoneer.checkout.model.Parameter;
 import com.payoneer.checkout.model.Redirect;
 import com.payoneer.checkout.redirect.RedirectRequest;
+import com.payoneer.checkout.redirect.RedirectService;
 import com.payoneer.checkout.ui.PaymentActivityResult;
 import com.payoneer.checkout.ui.PaymentResult;
 import com.payoneer.checkout.ui.PaymentUI;
@@ -49,6 +51,7 @@ import com.payoneer.checkout.ui.widget.FormWidget;
 import com.payoneer.checkout.util.PaymentResultHelper;
 import com.payoneer.checkout.util.PaymentUtils;
 
+import android.content.Context;
 import android.text.TextUtils;
 
 /**
@@ -59,11 +62,12 @@ final class PaymentListPresenter extends BasePaymentPresenter
 
     private final static int CHARGEPAYMENT_REQUEST_CODE = 1;
     private final PaymentSessionService sessionService;
-    private final PaymentListView view;
+    private final PaymentListView listView;
 
+    private Operation operation;
+    private DeleteAccount deleteAccount;
     private PaymentSession session;
     private Interaction reloadInteraction;
-    private Operation operation;
     private PaymentActivityResult activityResult;
     private NetworkService networkService;
 
@@ -73,23 +77,28 @@ final class PaymentListPresenter extends BasePaymentPresenter
      * @param view The PaymentListView displaying the payment list
      */
     PaymentListPresenter(PaymentListView view) {
-        super(PaymentUI.getInstance().getListUrl());
-        this.view = view;
+        super(PaymentUI.getInstance().getListUrl(), view);
+        this.listView = view;
 
         sessionService = new PaymentSessionService(view.getActivity());
         sessionService.setListener(this);
     }
 
     void onStart() {
+
+        if (checkState(REDIRECT)) {
+            handleRedirect();
+            return;
+        }
         setState(STARTED);
 
         if (activityResult != null) {
             handlePaymentActivityResult(activityResult);
             activityResult = null;
-        } else if (session == null || !session.getListUrl().equals(listUrl)) {
-            loadPaymentSession(listUrl);
+        } else if (session == null) {
+            loadPaymentSession();
         } else {
-            view.showPaymentSession(this.session);
+            showPaymentSession();
         }
     }
 
@@ -120,18 +129,7 @@ final class PaymentListPresenter extends BasePaymentPresenter
             onPresetCardSelected((PresetCard) paymentCard);
             return;
         }
-        try {
-            operation = createOperation(paymentCard, widgets);
-            initNetworkService(paymentCard.getCode(), paymentCard.getPaymentMethod());
-
-            if (CHARGE.equals(operation.getOperationType())) {
-                view.showChargePaymentScreen(CHARGEPAYMENT_REQUEST_CODE, operation);
-            } else {
-                processPayment();
-            }
-        } catch (PaymentException e) {
-            closeWithErrorCode(PaymentResultHelper.fromThrowable(e));
-        }
+        processPaymentCard(paymentCard, widgets);
     }
 
     @Override
@@ -139,11 +137,13 @@ final class PaymentListPresenter extends BasePaymentPresenter
         if (!checkState(STARTED)) {
             return;
         }
-        AccountRegistration account = ((AccountCard) paymentCard).getAccountRegistration();
+        if (!(paymentCard instanceof AccountCard)) {
+            return;
+        }
         view.showDeleteDialog(new PaymentDialogListener() {
             @Override
             public void onPositiveButtonClicked() {
-                deleteAccountRegistration(account);
+                deleteAccountCard((AccountCard)paymentCard);
             }
 
             @Override
@@ -184,26 +184,79 @@ final class PaymentListPresenter extends BasePaymentPresenter
         }
     }
 
+    @Override
+    public void showProgress(boolean visible) {
+        view.showProgress(visible);
+    }
+
+    @Override
+    public void onDeleteAccountResult(int resultCode, PaymentResult result) {
+        setState(STARTED);
+        switch (resultCode) {
+            case RESULT_CODE_PROCEED:
+                loadPaymentSession();
+                break;
+            case RESULT_CODE_ERROR:
+                loadPaymentSession();
+                break;
+            default:
+                loadPaymentSession();
+        }
+    }
+
+    @Override
+    public void onProcessPaymentResult(int resultCode, PaymentResult result) {
+        setState(STARTED);
+        switch (resultCode) {
+            case RESULT_CODE_PROCEED:
+                closeWithProceedCode(result);
+                break;
+            case RESULT_CODE_ERROR:
+                handleProcessPaymentError(result);
+                break;
+            default:
+                showPaymentSession();
+        }
+    }
+
+    @Override
+    public void redirect(RedirectRequest redirectRequest) throws PaymentException {
+        Context context = view.getActivity();
+        if (!RedirectService.supports(context, redirectRequest)) {
+            throw new PaymentException("The Redirect payment method is not supported by the Android-SDK");
+        }
+        setState(REDIRECT);
+        view.showProgress(false);
+        RedirectService.redirect(context, redirectRequest);
+    }
+
+    private void handleRedirect() {
+        if (session == null) {
+            closeWithErrorCode("Missing cached session in PaymentListPresenter");
+            return;
+        }
+        OperationResult result = RedirectService.getRedirectResult();
+        networkService.onRedirectResult(result);
+    }
+    
     private void handleLoadPaymentSessionProceed(PaymentSession session) {
         if (session.isEmpty()) {
             closeWithErrorCode("There are no payment methods available");
             return;
         }
-        this.operation = null;
         this.session = session;
-
         if (reloadInteraction != null) {
             view.showInteractionDialog(reloadInteraction, null);
             reloadInteraction = null;
         }
-        view.showPaymentSession(this.session);
+        showPaymentSession();
     }
 
     private void handleLoadingNetworkFailure(final PaymentResult result) {
         view.showConnectionErrorDialog(new PaymentDialogListener() {
             @Override
             public void onPositiveButtonClicked() {
-                loadPaymentSession(listUrl);
+                loadPaymentSession();
             }
 
             @Override
@@ -218,14 +271,6 @@ final class PaymentListPresenter extends BasePaymentPresenter
         });
     }
 
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public void showProgress(boolean visible) {
-        view.showProgress(visible);
-    }
-
     private void handlePaymentActivityResult(PaymentActivityResult activityResult) {
         if (this.session == null) {
             closeWithErrorCode("Missing cached PaymentSession in PaymentListPresenter");
@@ -237,46 +282,11 @@ final class PaymentListPresenter extends BasePaymentPresenter
         }
     }
 
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public void onDeleteAccountResult(int resultCode, PaymentResult result) {
-        setState(STARTED);
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public void onProcessPaymentResult(int resultCode, PaymentResult result) {
-        setState(STARTED);
-        switch (resultCode) {
-            case RESULT_CODE_PROCEED:
-                closeWithProceedCode(result);
-                break;
-            case RESULT_CODE_ERROR:
-                handleProcessPaymentError(result);
-                break;
-            default:
-                view.showPaymentSession(session);
-        }
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public void redirect(RedirectRequest request) throws PaymentException {
-        throw new PaymentException("Redirects are not supported by this presenter");
-    }
-
     private void handleProcessPaymentError(PaymentResult result) {
         if (result.isNetworkFailure()) {
             handleProcessNetworkFailure(result);
             return;
         }
-        this.operation = null;
         Interaction interaction = result.getInteraction();
         switch (interaction.getCode()) {
             case InteractionCode.RELOAD:
@@ -298,7 +308,7 @@ final class PaymentListPresenter extends BasePaymentPresenter
         view.showConnectionErrorDialog(new PaymentDialogListener() {
             @Override
             public void onPositiveButtonClicked() {
-                processPayment();
+                processPayment(operation);
             }
 
             @Override
@@ -313,55 +323,39 @@ final class PaymentListPresenter extends BasePaymentPresenter
         });
     }
 
-    private void processPayment() {
-        setState(PROCESS);
-        networkService.processPayment(operation);
-    }
-
-    private void deleteAccountRegistration(AccountRegistration account) {
+    private void processPaymentCard(PaymentCard paymentCard, Map<String, FormWidget> widgets) {
         try {
-            setState(PROCESS);
-            initNetworkService(account.getCode(), account.getMethod());
-            networkService.deleteAccount(account);
+            operation = createOperation(paymentCard, widgets);
+            if (CHARGE.equals(operation.getOperationType())) {
+                listView.showChargePaymentScreen(CHARGEPAYMENT_REQUEST_CODE, operation);
+            } else {
+                initNetworkService(paymentCard.getCode(), paymentCard.getPaymentMethod());
+                processPayment(operation);
+            }
         } catch (PaymentException e) {
             closeWithErrorCode(PaymentResultHelper.fromThrowable(e));
         }
     }
 
-    /**
-     * The Charge result is received from the ChargePaymentActivity. Error messages are not displayed by this presenter since
-     * the ChargePaymentActivity has taken care of displaying error and warning messages.
-     *
-     * @param paymentActivityResult result received after a charge has been performed
-     */
-    private void handleChargeActivityResult(PaymentActivityResult paymentActivityResult) {
-        this.operation = null;
-        switch (paymentActivityResult.getResultCode()) {
-            case RESULT_CODE_ERROR:
-                handleChargeError(paymentActivityResult);
-                break;
-            case RESULT_CODE_PROCEED:
-                view.passOnActivityResult(paymentActivityResult);
-                break;
-            default:
-                view.showPaymentSession(this.session);
+    private void deleteAccountCard(AccountCard card) {
+        try {
+            initNetworkService(card.getCode(), card.getPaymentMethod());
+            URL url = card.getLink("self");
+            deleteAccount = new DeleteAccount(url);
+            deleteAccount(deleteAccount);
+        } catch (PaymentException e) {
+            closeWithErrorCode(PaymentResultHelper.fromThrowable(e));
         }
     }
 
-    private void handleChargeError(PaymentActivityResult paymentActivityResult) {
-        Interaction interaction = paymentActivityResult.getPaymentResult().getInteraction();
-        switch (interaction.getCode()) {
-            case InteractionCode.RELOAD:
-            case InteractionCode.TRY_OTHER_ACCOUNT:
-            case InteractionCode.TRY_OTHER_NETWORK:
-                reloadPaymentSession(null);
-                break;
-            case InteractionCode.RETRY:
-                view.showPaymentSession(this.session);
-                break;
-            default:
-                view.passOnActivityResult(paymentActivityResult);
-        }
+    private void processPayment(Operation operation) {
+        setState(PROCESS);
+        networkService.processPayment(operation);
+    }
+    
+    private void deleteAccount(DeleteAccount account) {
+        setState(PROCESS);
+        networkService.deleteAccount(account);
     }
 
     private Operation createOperation(PaymentCard card, Map<String, FormWidget> widgets) throws PaymentException {
@@ -374,6 +368,41 @@ final class PaymentListPresenter extends BasePaymentPresenter
         return operation;
     }
 
+    /**
+     * The Charge result is received from the ChargePaymentActivity. Error messages are not displayed by this presenter since
+     * the ChargePaymentActivity has taken care of displaying error and warning messages.
+     *
+     * @param paymentActivityResult result received after a charge has been performed
+     */
+    private void handleChargeActivityResult(PaymentActivityResult paymentActivityResult) {
+        switch (paymentActivityResult.getResultCode()) {
+            case RESULT_CODE_ERROR:
+                handleChargeError(paymentActivityResult);
+                break;
+            case RESULT_CODE_PROCEED:
+                view.passOnActivityResult(paymentActivityResult);
+                break;
+            default:
+                showPaymentSession();
+        }
+    }
+
+    private void handleChargeError(PaymentActivityResult paymentActivityResult) {
+        Interaction interaction = paymentActivityResult.getPaymentResult().getInteraction();
+        switch (interaction.getCode()) {
+            case InteractionCode.RELOAD:
+            case InteractionCode.TRY_OTHER_ACCOUNT:
+            case InteractionCode.TRY_OTHER_NETWORK:
+                reloadPaymentSession(null);
+                break;
+            case InteractionCode.RETRY:
+                showPaymentSession();
+                break;
+            default:
+                view.passOnActivityResult(paymentActivityResult);
+        }
+    }
+    
     private void onPresetCardSelected(PresetCard card) {
         Redirect redirect = card.getPresetAccount().getRedirect();
         List<Parameter> parameters = redirect.getParameters();
@@ -399,35 +428,25 @@ final class PaymentListPresenter extends BasePaymentPresenter
         networkService.setListener(this);
     }
 
-    private void loadPaymentSession(String listUrl) {
+    private void loadPaymentSession() {
         this.session = null;
-        view.clearList();
+        listView.clearPaymentList();
         view.showProgress(true);
         sessionService.loadPaymentSession(listUrl, view.getActivity());
     }
 
     private void reloadPaymentSession(Interaction interaction) {
         this.reloadInteraction = interaction;
-        loadPaymentSession(this.listUrl);
-    }
-
-    private void closeWithProceedCode(PaymentResult result) {
-        view.setPaymentResult(RESULT_CODE_PROCEED, result);
-        view.close();
-    }
-
-    private void closeWithErrorCode(String errorMessage) {
-        PaymentResult result = PaymentResultHelper.fromErrorMessage(errorMessage);
-        closeWithErrorCode(result);
-    }
-
-    private void closeWithErrorCode(PaymentResult result) {
-        view.setPaymentResult(RESULT_CODE_ERROR, result);
-        view.close();
+        loadPaymentSession();
     }
 
     private void showErrorAndPaymentSession(Interaction interaction) {
         view.showInteractionDialog(interaction, null);
-        view.showPaymentSession(this.session);
+        showPaymentSession();
+    }
+
+    private void showPaymentSession() {
+        listView.showPaymentSession(session);
     }
 }
+

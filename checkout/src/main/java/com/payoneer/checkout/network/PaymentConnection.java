@@ -15,6 +15,7 @@ import java.net.URL;
 
 import com.google.gson.JsonParseException;
 import com.payoneer.checkout.core.PaymentException;
+import com.payoneer.checkout.form.DeleteAccount;
 import com.payoneer.checkout.form.Operation;
 import com.payoneer.checkout.model.OperationResult;
 
@@ -40,12 +41,36 @@ public final class PaymentConnection extends BaseConnection {
     }
 
     /**
-     * Delete the AccountRegistration from the Payment API
+     * Delete the account from the Payment API
      *
-     * @param operation holding the request data
+     * @param account data to be deleted
      * @return the OperationResult object received from the Payment API
      */
-    public void deleteAccount(final URL url) throws PaymentException {
+    public OperationResult deleteAccount(final DeleteAccount account) throws PaymentException {
+        if (account == null) {
+            throw new IllegalArgumentException("account cannot be null");
+        }
+        HttpURLConnection conn = null;
+
+        try {
+            conn = createDeleteConnection(account.getURL());
+            conn.setRequestProperty(HEADER_CONTENT_TYPE, VALUE_APP_JSON);
+            conn.setRequestProperty(HEADER_ACCEPT, VALUE_APP_JSON);
+
+            writeToOutputStream(conn, account.toJson());
+            conn.connect();
+            final int rc = conn.getResponseCode();
+            if (rc == HttpURLConnection.HTTP_OK) {
+                return handlePostOperationOk(readFromInputStream(conn));
+            }
+            throw createPaymentException(rc, conn);
+        } catch (MalformedURLException | SecurityException e) {
+            throw createPaymentException(e, false);
+        } catch (IOException e) {
+            throw createPaymentException(e, true);
+        } finally {
+            close(conn);
+        }
     }
 
     /**

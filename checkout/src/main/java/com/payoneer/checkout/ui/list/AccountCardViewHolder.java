@@ -29,7 +29,6 @@ public final class AccountCardViewHolder extends PaymentCardViewHolder {
 
     private final TextView title;
     private final TextView subtitle;
-    private final MaterialCardView card;
     private final IconView iconView;
 
     private AccountCardViewHolder(ListAdapter listAdapter, View parent, AccountCard accountCard) {
@@ -44,7 +43,7 @@ public final class AccountCardViewHolder extends PaymentCardViewHolder {
             }
 
         });
-        card = parent.findViewById(R.id.card_account);
+        MaterialCardView card = parent.findViewById(R.id.card_account);
         card.setCheckable(true);
 
         addElementWidgets(accountCard);

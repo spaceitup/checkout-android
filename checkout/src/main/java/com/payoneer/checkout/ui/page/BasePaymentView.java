@@ -18,7 +18,7 @@ import android.app.Activity;
 /**
  * The view (MVP) interface for screens that handle payments
  */
-interface PaymentView {
+interface BasePaymentView {
 
     /**
      * Show the progress animation.
@@ -63,7 +63,7 @@ interface PaymentView {
      * @param type type if input field
      * @param listener listening to events of this Hint Dialog.
      */
-    void showHintDialog(String code, String type, PaymentDialogListener listener);
+    void showHintDialog(String networkCode, String type, PaymentDialogListener listener);
 
     /**
      * Set the current activity payment result, this is either PaymentUI.RESULT_CODE_OK,

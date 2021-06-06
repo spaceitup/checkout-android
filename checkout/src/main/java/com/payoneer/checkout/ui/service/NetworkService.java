@@ -8,6 +8,7 @@
 
 package com.payoneer.checkout.ui.service;
 
+import com.payoneer.checkout.form.DeleteAccount;
 import com.payoneer.checkout.form.Operation;
 import com.payoneer.checkout.model.AccountRegistration;
 import com.payoneer.checkout.model.OperationResult;
@@ -46,24 +47,16 @@ public abstract class NetworkService {
     /**
      * Delete the AccountRegistration through this NetworkService.
      *
-     * @param accountRegistration to be deleted from this network
+     * @param account to be deleted from this network
      */
-    public void deleteAccount(AccountRegistration accountRegistration) {
+    public void deleteAccount(DeleteAccount account) {
     }
 
     /**
-     * Notify the network service that the payment has been redirected and an OperationResult has been received.
+     * Notify the network service that the payment has been redirected
      *
-     * @param result containing the result of the operation
+     * @param result optional redirect result
      */
-    public void onRedirectSuccess(OperationResult result) {
-    }
-
-    /**
-     * Notify the network service that the redirect has failed to receive an OperationResult.
-     * The network service should handle this situation and make sure the NetworkServiceListener is notified with the
-     * appropriate PaymentResult.
-     */
-    public void onRedirectError() {
+    public void onRedirectResult(OperationResult result) {
     }
 }

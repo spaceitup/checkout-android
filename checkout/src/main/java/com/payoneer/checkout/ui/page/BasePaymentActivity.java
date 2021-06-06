@@ -34,7 +34,7 @@ import androidx.test.espresso.IdlingResource;
 /**
  * The base activity for payment activities.
  */
-abstract class BasePaymentActivity extends AppCompatActivity implements PaymentView {
+abstract class BasePaymentActivity extends AppCompatActivity implements BasePaymentView {
 
     ProgressView progressView;
 

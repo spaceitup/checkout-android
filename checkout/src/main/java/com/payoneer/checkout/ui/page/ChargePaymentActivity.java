@@ -28,7 +28,7 @@ import androidx.annotation.NonNull;
  * The ChargePaymentActivity is the view displaying the loading animation while posting the operation.
  * The presenter of this view will post the PresetAccount operation to the Payment API.
  */
-public final class ChargePaymentActivity extends BasePaymentActivity implements PaymentView {
+public final class ChargePaymentActivity extends BasePaymentActivity implements BasePaymentView {
 
     private final static String EXTRA_OPERATION = "operation";
     private ChargePaymentPresenter presenter;
