@@ -36,7 +36,6 @@ import androidx.test.espresso.IdlingResource;
  */
 abstract class BasePaymentActivity extends AppCompatActivity implements PaymentView {
 
-    boolean active;
     ProgressView progressView;
 
     /** For testing only */
@@ -57,19 +56,9 @@ abstract class BasePaymentActivity extends AppCompatActivity implements PaymentV
      * {@inheritDoc}
      */
     @Override
-    public void onPause() {
-        super.onPause();
-        active = false;
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
     public void onResume() {
         super.onResume();
         closed = false;
-        active = true;
     }
 
     /**
@@ -77,9 +66,7 @@ abstract class BasePaymentActivity extends AppCompatActivity implements PaymentV
      */
     @Override
     public void showProgress(boolean visible) {
-        if (active) {
-            progressView.setVisible(visible);
-        }
+        progressView.setVisible(visible);
     }
 
     /**
@@ -87,7 +74,7 @@ abstract class BasePaymentActivity extends AppCompatActivity implements PaymentV
      */
     @Override
     public void showWarningMessage(String message) {
-        if (active && !TextUtils.isEmpty(message)) {
+        if (!TextUtils.isEmpty(message)) {
             PaymentDialogHelper.createSnackbar(getRootView(), message).show();
         }
     }
@@ -97,9 +84,6 @@ abstract class BasePaymentActivity extends AppCompatActivity implements PaymentV
      */
     @Override
     public void showConnectionErrorDialog(PaymentDialogListener listener) {
-        if (!active) {
-            return;
-        }
         progressView.setVisible(false);
         PaymentDialogFragment dialog = PaymentDialogHelper.createConnectionErrorDialog(listener);
         showPaymentDialog(dialog);
@@ -110,21 +94,15 @@ abstract class BasePaymentActivity extends AppCompatActivity implements PaymentV
      */
     @Override
     public void showDeleteDialog(PaymentDialogListener listener) {
-        if (!active) {
-            return;
-        }
         PaymentDialogFragment dialog = PaymentDialogHelper.createDeleteDialog(listener);
         showPaymentDialog(dialog);
     }
-    
+
     /**
      * {@inheritDoc}
      */
     @Override
     public void showInteractionDialog(Interaction interaction, PaymentDialogListener listener) {
-        if (!active) {
-            return;
-        }
         progressView.setVisible(false);
         PaymentDialogFragment dialog;
         if (Localization.hasInteraction(interaction)) {
@@ -136,10 +114,8 @@ abstract class BasePaymentActivity extends AppCompatActivity implements PaymentV
     }
 
     public void showHintDialog(String networkCode, String type, PaymentDialogListener listener) {
-        if (active) {
-            PaymentDialogFragment dialog = PaymentDialogHelper.createHintDialog(networkCode, type, listener);
-            showPaymentDialog(dialog);
-        }
+        PaymentDialogFragment dialog = PaymentDialogHelper.createHintDialog(networkCode, type, listener);
+        showPaymentDialog(dialog);
     }
 
     /**
@@ -155,9 +131,6 @@ abstract class BasePaymentActivity extends AppCompatActivity implements PaymentV
      */
     @Override
     public void setPaymentResult(int resultCode, PaymentResult result) {
-        if (!active) {
-            return;
-        }
         setResultIntent(resultCode, result);
     }
 
@@ -166,9 +139,6 @@ abstract class BasePaymentActivity extends AppCompatActivity implements PaymentV
      */
     @Override
     public void passOnActivityResult(PaymentActivityResult paymentActivityResult) {
-        if (!active) {
-            return;
-        }
         setResultIntent(paymentActivityResult.getResultCode(), paymentActivityResult.getPaymentResult());
         supportFinishAfterTransition();
     }
@@ -178,9 +148,6 @@ abstract class BasePaymentActivity extends AppCompatActivity implements PaymentV
      */
     @Override
     public void close() {
-        if (!active) {
-            return;
-        }
         supportFinishAfterTransition();
         setOverridePendingTransition();
 

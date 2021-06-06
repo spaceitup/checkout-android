@@ -11,6 +11,7 @@ package com.payoneer.checkout.network;
 import java.io.IOException;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
+import java.net.URL;
 
 import com.google.gson.JsonParseException;
 import com.payoneer.checkout.core.PaymentException;
@@ -36,6 +37,15 @@ public final class PaymentConnection extends BaseConnection {
      */
     public PaymentConnection(Context context) {
         super(context);
+    }
+
+    /**
+     * Delete the AccountRegistration from the Payment API
+     *
+     * @param operation holding the request data
+     * @return the OperationResult object received from the Payment API
+     */
+    public void deleteAccount(final URL url) throws PaymentException {
     }
 
     /**

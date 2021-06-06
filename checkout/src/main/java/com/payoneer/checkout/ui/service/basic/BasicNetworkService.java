@@ -8,15 +8,19 @@
 
 package com.payoneer.checkout.ui.service.basic;
 
+import static com.payoneer.checkout.model.InteractionCode.ABORT;
 import static com.payoneer.checkout.model.InteractionCode.PROCEED;
+import static com.payoneer.checkout.model.InteractionCode.VERIFY;
+import static com.payoneer.checkout.model.NetworkOperationType.ACTIVATION;
+import static com.payoneer.checkout.model.NetworkOperationType.PRESET;
+import static com.payoneer.checkout.model.NetworkOperationType.UPDATE;
 import static com.payoneer.checkout.ui.PaymentActivityResult.RESULT_CODE_ERROR;
 import static com.payoneer.checkout.ui.PaymentActivityResult.RESULT_CODE_PROCEED;
 
 import com.payoneer.checkout.core.PaymentException;
 import com.payoneer.checkout.form.Operation;
+import com.payoneer.checkout.model.AccountRegistration;
 import com.payoneer.checkout.model.Interaction;
-import com.payoneer.checkout.model.InteractionCode;
-import com.payoneer.checkout.model.NetworkOperationType;
 import com.payoneer.checkout.model.OperationResult;
 import com.payoneer.checkout.model.Redirect;
 import com.payoneer.checkout.model.RedirectType;
@@ -27,7 +31,6 @@ import com.payoneer.checkout.ui.service.OperationListener;
 import com.payoneer.checkout.ui.service.OperationService;
 import com.payoneer.checkout.util.PaymentResultHelper;
 
-import android.app.Activity;
 import android.content.Context;
 
 /**
@@ -35,7 +38,8 @@ import android.content.Context;
  * This network service also supports redirect networks like Paypal.
  */
 public final class BasicNetworkService extends NetworkService implements OperationListener {
-    private final OperationService service;
+
+    private final OperationService operationService;
     private Operation operation;
 
     /**
@@ -45,8 +49,8 @@ public final class BasicNetworkService extends NetworkService implements Operati
      * @param context context in which this network service will operate
      */
     public BasicNetworkService(Context context) {
-        service = new OperationService(context);
-        service.setListener(this);
+        operationService = new OperationService(context);
+        operationService.setListener(this);
     }
 
     /**
@@ -54,17 +58,32 @@ public final class BasicNetworkService extends NetworkService implements Operati
      */
     @Override
     public void stop() {
-        service.stop();
+        operationService.stop();
     }
 
     /**
      * {@inheritDoc}
      */
     @Override
-    public void processPayment(Activity activity, int requestCode, Operation operation) {
+    public void processPayment(Operation operation) {
+        if (operationService.isActive()) {
+            throw new IllegalStateException("BasicNetworkService is active, stop first");
+        }
         this.operation = operation;
         listener.showProgress(true);
-        service.postOperation(operation);
+        operationService.postOperation(operation);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void deleteAccount(AccountRegistration account) {
+        if (operationService.isActive()) {
+            throw new IllegalStateException("BasicNetworkService is active, stop first");
+        }
+        listener.showProgress(true);
+        //operationService.deleteAccount(account);
     }
 
     /**
@@ -83,15 +102,49 @@ public final class BasicNetworkService extends NetworkService implements Operati
      */
     @Override
     public void onRedirectError() {
-        String code = getErrorInteractionCode(operation);
         String message = "Missing OperationResult after client-side redirect";
-        PaymentResult paymentResult = PaymentResultHelper.fromErrorMessage(code, message);
+        PaymentResult paymentResult = PaymentResultHelper.fromErrorMessage(VERIFY, message);
         listener.onProcessPaymentResult(RESULT_CODE_ERROR, paymentResult);
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    private void handleRedirect(OperationResult operationResult) {
+        Redirect redirect = operationResult.getRedirect();
+        switch (redirect.getType()) {
+            case RedirectType.PROVIDER:
+            case RedirectType.HANDLER3DS2:
+                try {
+                    RedirectRequest request = RedirectRequest.fromOperationResult(operationResult);
+                    listener.redirect(request);
+                } catch (PaymentException e) {
+                    onOperationError(e);
+                }
+                break;
+            default:
+                PaymentResult result = new PaymentResult(operationResult);
+                listener.onProcessPaymentResult(RESULT_CODE_PROCEED, result);
+        }
+    }
+
+    //@Override
+    public void handleDeleteAccountSuccess(OperationResult operationResult) {
+        Interaction interaction = operationResult.getInteraction();
+        PaymentResult result = new PaymentResult(operationResult);
+
+        if (!PROCEED.equals(interaction.getCode())) {
+            listener.onProcessPaymentResult(RESULT_CODE_ERROR, result);
+            return;
+        }
+        if (operationResult.getRedirect() != null) {
+            handleRedirect(operationResult);
+            return;
+        }
+        listener.onProcessPaymentResult(RESULT_CODE_PROCEED, result);
+    }
+
+    //@Override
+    public void handleDeleteAccountError(Throwable cause) {
+    }
+
     @Override
     public void onOperationSuccess(OperationResult operationResult) {
         Interaction interaction = operationResult.getInteraction();
@@ -108,33 +161,8 @@ public final class BasicNetworkService extends NetworkService implements Operati
         listener.onProcessPaymentResult(RESULT_CODE_PROCEED, result);
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     public void onOperationError(Throwable cause) {
-        handleProcessPaymentError(cause);
-    }
-
-    private void handleRedirect(OperationResult operationResult) {
-        Redirect redirect = operationResult.getRedirect();
-        switch (redirect.getType()) {
-            case RedirectType.PROVIDER:
-            case RedirectType.HANDLER3DS2:
-                try {
-                    RedirectRequest request = RedirectRequest.fromOperationResult(operationResult);
-                    listener.redirect(request);
-                } catch (PaymentException e) {
-                    handleProcessPaymentError(e);
-                }
-                break;
-            default:
-                PaymentResult result = new PaymentResult(operationResult);
-                listener.onProcessPaymentResult(RESULT_CODE_PROCEED, result);
-        }
-    }
-
-    private void handleProcessPaymentError(Throwable cause) {
         String code = getErrorInteractionCode(this.operation);
         PaymentResult paymentResult = PaymentResultHelper.fromThrowable(code, cause);
         listener.onProcessPaymentResult(RESULT_CODE_ERROR, paymentResult);
@@ -143,12 +171,12 @@ public final class BasicNetworkService extends NetworkService implements Operati
     private String getErrorInteractionCode(Operation operation) {
         if (operation != null) {
             switch (operation.getOperationType()) {
-                case NetworkOperationType.PRESET:
-                case NetworkOperationType.UPDATE:
-                case NetworkOperationType.ACTIVATION:
-                    return InteractionCode.ABORT;
+                case PRESET:
+                case UPDATE:
+                case ACTIVATION:
+                    return ABORT;
             }
         }
-        return InteractionCode.VERIFY;
+        return VERIFY;
     }
 }

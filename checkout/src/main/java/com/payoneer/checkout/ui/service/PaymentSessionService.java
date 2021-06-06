@@ -19,7 +19,9 @@ import static com.payoneer.checkout.model.NetworkOperationType.CHARGE;
 import static com.payoneer.checkout.model.NetworkOperationType.PRESET;
 import static com.payoneer.checkout.model.NetworkOperationType.UPDATE;
 
+import java.net.URL;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -30,12 +32,18 @@ import com.payoneer.checkout.core.PaymentException;
 import com.payoneer.checkout.core.WorkerSubscriber;
 import com.payoneer.checkout.core.WorkerTask;
 import com.payoneer.checkout.core.Workers;
+import com.payoneer.checkout.localization.LocalLocalizationHolder;
+import com.payoneer.checkout.localization.Localization;
+import com.payoneer.checkout.localization.LocalizationCache;
+import com.payoneer.checkout.localization.LocalizationHolder;
+import com.payoneer.checkout.localization.MultiLocalizationHolder;
 import com.payoneer.checkout.model.AccountRegistration;
 import com.payoneer.checkout.model.ApplicableNetwork;
 import com.payoneer.checkout.model.ListResult;
 import com.payoneer.checkout.model.Networks;
 import com.payoneer.checkout.model.PresetAccount;
 import com.payoneer.checkout.network.ListConnection;
+import com.payoneer.checkout.network.LocalizationConnection;
 import com.payoneer.checkout.resource.PaymentGroup;
 import com.payoneer.checkout.resource.ResourceLoader;
 import com.payoneer.checkout.ui.model.AccountCard;
@@ -55,9 +63,15 @@ import android.text.TextUtils;
  * This service makes callbacks in the listener to notify of request completions.
  */
 public final class PaymentSessionService {
+
     private final ListConnection listConnection;
+    private final LocalizationConnection locConnection;
+
     private PaymentSessionListener listener;
     private WorkerTask<PaymentSession> sessionTask;
+
+    /** Memory cache of localizations */
+    private static final LocalizationCache cache = new LocalizationCache();
 
     /**
      * Create a new PaymentSessionService, this service is used to load the PaymentSession.
@@ -66,6 +80,7 @@ public final class PaymentSessionService {
      */
     public PaymentSessionService(Context context) {
         this.listConnection = new ListConnection(context);
+        this.locConnection = new LocalizationConnection(context);
     }
 
     /**
@@ -179,7 +194,11 @@ public final class PaymentSessionService {
         if (section != null) {
             sections.add(section);
         }
+        PaymentSession session = new PaymentSession(listResult, sections);
+
         loadValidator(context);
+        loadLocalizations(context, session);
+
         return new PaymentSession(listResult, sections);
     }
 
@@ -299,5 +318,33 @@ public final class PaymentSessionService {
             Validator validator = new Validator(ResourceLoader.loadValidations(context.getResources(), R.raw.validations));
             Validator.setInstance(validator);
         }
+    }
+
+    private void loadLocalizations(Context context, PaymentSession session) throws PaymentException {
+        String listUrl = session.getListUrl();
+        if (!listUrl.equals(cache.getCacheId())) {
+            cache.clear();
+            cache.setCacheId(listUrl);
+        }
+        LocalizationHolder localHolder = new LocalLocalizationHolder(context);
+        LocalizationHolder sharedHolder = loadLocalizationHolder(session.getLink("lang"), localHolder);
+
+        Map<String, LocalizationHolder> holders = new HashMap<>();
+        Map<String, URL> links = session.getLanguageLinks();
+        for (Map.Entry<String, URL> entry : links.entrySet()) {
+            holders.put(entry.getKey(), loadLocalizationHolder(entry.getValue(), sharedHolder));
+        }
+        Localization.setInstance(new Localization(sharedHolder, holders));
+    }
+
+    private LocalizationHolder loadLocalizationHolder(URL url, LocalizationHolder fallback) throws PaymentException {
+        String langUrl = url.toString();
+        LocalizationHolder holder = cache.get(langUrl);
+
+        if (holder == null) {
+            holder = new MultiLocalizationHolder(locConnection.loadLocalization(url), fallback);
+            cache.put(langUrl, holder);
+        }
+        return holder;
     }
 }

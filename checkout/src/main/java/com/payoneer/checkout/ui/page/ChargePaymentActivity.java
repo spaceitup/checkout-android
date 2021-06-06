@@ -18,7 +18,6 @@ import com.payoneer.checkout.R;
 import com.payoneer.checkout.form.Operation;
 import com.payoneer.checkout.localization.Localization;
 import com.payoneer.checkout.model.PresetAccount;
-import com.payoneer.checkout.ui.PaymentActivityResult;
 
 import android.content.Context;
 import android.content.Intent;
@@ -139,21 +138,9 @@ public final class ChargePaymentActivity extends BasePaymentActivity implements 
      * {@inheritDoc}
      */
     @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        PaymentActivityResult result = PaymentActivityResult.fromActivityResult(requestCode, resultCode, data);
-        presenter.setPaymentActivityResult(result);
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
     public void showProgress(boolean visible) {
         super.showProgress(visible);
-        if (active) {
-            progressView.setLabels(Localization.translate(CHARGE_TITLE), Localization.translate(CHARGE_TEXT));
-        }
+        progressView.setLabels(Localization.translate(CHARGE_TITLE), Localization.translate(CHARGE_TEXT));
     }
 
     /**

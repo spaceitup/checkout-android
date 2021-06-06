@@ -9,9 +9,8 @@
 package com.payoneer.checkout.ui.service;
 
 import com.payoneer.checkout.form.Operation;
+import com.payoneer.checkout.model.AccountRegistration;
 import com.payoneer.checkout.model.OperationResult;
-
-import android.app.Activity;
 
 /**
  * Interface for network services, a NetworkService is responsible for activating and
@@ -37,14 +36,19 @@ public abstract class NetworkService {
     }
 
     /**
-     * Process the payment through this NetworkService. The result is either returned through the onActivityResult call in the
-     * provided Activity or through the NetworkServiceListener.
+     * Process the payment through this NetworkService.
      *
-     * @param activity handles the payment that should be processed
-     * @param requestCode should be returned to the listener when the payment is processed
      * @param operation that should be processed
      */
-    public void processPayment(Activity activity, int requestCode, Operation operation) {
+    public void processPayment(Operation operation) {
+    }
+
+    /**
+     * Delete the AccountRegistration through this NetworkService.
+     *
+     * @param accountRegistration to be deleted from this network
+     */
+    public void deleteAccount(AccountRegistration accountRegistration) {
     }
 
     /**

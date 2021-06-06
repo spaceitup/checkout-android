@@ -111,6 +111,7 @@ public final class PaymentList implements PaymentCardListener {
 
     @Override
     public void onDeleteClicked(PaymentCard paymentCard) {
+        hideKeyboard();
         listener.onDeleteClicked(paymentCard);
     }
 

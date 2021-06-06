@@ -32,11 +32,18 @@ public interface NetworkServiceListener {
     void redirect(RedirectRequest request) throws PaymentException;
 
     /**
-     * Called when the payment is processed. The NetworkService can either pass the result through the Activity.onActivityResult or
-     * directly through this callback method.
+     * Called when NetworkService is done processing the request.
      *
      * @param resultCode code describing the state of the paymentResult
      * @param paymentResult containing the information describing the result
      */
     void onProcessPaymentResult(int resultCode, PaymentResult paymentResult);
+
+    /**
+     * Called when NetworkService is done deleting the account.
+     *
+     * @param resultCode code describing the state of the paymentResult
+     * @param paymentResult containing the information describing the result
+     */
+    void onDeleteAccountResult(int resultCode, PaymentResult paymentResult);
 }

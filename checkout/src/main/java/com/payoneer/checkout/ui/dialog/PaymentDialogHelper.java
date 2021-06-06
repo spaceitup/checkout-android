@@ -106,7 +106,7 @@ public class PaymentDialogHelper {
         return dialog;
     }
 
-    
+
     private static int getHintImageResId(String networkCode, String type) {
 
         if (!PaymentInputType.VERIFICATION_CODE.equals(type)) {

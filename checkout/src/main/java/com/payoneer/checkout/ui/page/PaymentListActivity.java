@@ -10,17 +10,13 @@ package com.payoneer.checkout.ui.page;
 
 import static com.payoneer.checkout.localization.LocalizationKey.LIST_TITLE;
 
-import java.util.Map;
-
 import com.payoneer.checkout.R;
 import com.payoneer.checkout.form.Operation;
 import com.payoneer.checkout.localization.Localization;
 import com.payoneer.checkout.ui.PaymentActivityResult;
 import com.payoneer.checkout.ui.list.PaymentList;
-import com.payoneer.checkout.ui.model.PaymentCard;
 import com.payoneer.checkout.ui.model.PaymentSession;
 import com.payoneer.checkout.ui.page.idlingresource.SimpleIdlingResource;
-import com.payoneer.checkout.ui.widget.FormWidget;
 
 import android.content.Context;
 import android.content.Intent;
@@ -160,9 +156,6 @@ public final class PaymentListActivity extends BasePaymentActivity implements Pa
      */
     @Override
     public void clearList() {
-        if (!active) {
-            return;
-        }
         paymentList.clear();
     }
 
@@ -171,9 +164,6 @@ public final class PaymentListActivity extends BasePaymentActivity implements Pa
      */
     @Override
     public void showPaymentSession(PaymentSession session) {
-        if (!active) {
-            return;
-        }
         progressView.setVisible(false);
         setToolbar(Localization.translate(LIST_TITLE));
         paymentList.showPaymentSession(session);

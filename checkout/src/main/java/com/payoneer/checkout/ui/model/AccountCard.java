@@ -145,4 +145,8 @@ public final class AccountCard implements PaymentCard {
     public AccountMask getMaskedAccount() {
         return account.getMaskedAccount();
     }
+
+    public AccountRegistration getAccountRegistration() {
+        return account;
+    }
 }
