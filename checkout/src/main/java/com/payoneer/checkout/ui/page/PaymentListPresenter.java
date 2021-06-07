@@ -9,6 +9,10 @@
 package com.payoneer.checkout.ui.page;
 
 import static com.payoneer.checkout.model.InteractionCode.PROCEED;
+import static com.payoneer.checkout.model.InteractionCode.RELOAD;
+import static com.payoneer.checkout.model.InteractionCode.RETRY;
+import static com.payoneer.checkout.model.InteractionCode.TRY_OTHER_ACCOUNT;
+import static com.payoneer.checkout.model.InteractionCode.TRY_OTHER_NETWORK;
 import static com.payoneer.checkout.model.NetworkOperationType.CHARGE;
 import static com.payoneer.checkout.redirect.RedirectService.INTERACTION_CODE;
 import static com.payoneer.checkout.redirect.RedirectService.INTERACTION_REASON;
@@ -53,6 +57,7 @@ import com.payoneer.checkout.util.PaymentUtils;
 
 import android.content.Context;
 import android.text.TextUtils;
+import android.util.Log;
 
 /**
  * The PaymentListPresenter implementing the presenter part of the MVP
@@ -189,16 +194,27 @@ final class PaymentListPresenter extends BasePaymentPresenter
 
     @Override
     public void onDeleteAccountResult(int resultCode, PaymentResult result) {
+        if (result.isNetworkFailure()) {
+            handleDeleteNetworkFailure(result);
+            return;
+        }
+        Interaction interaction = result.getInteraction();
         setState(STARTED);
-        switch (resultCode) {
-            case RESULT_CODE_PROCEED:
-                handleDeleteAccountSuccess(result);
+
+        switch (interaction.getCode()) {
+            case PROCEED:
+            case RELOAD:
+                reloadPaymentSession(null);
                 break;
-            case RESULT_CODE_ERROR:
-                handleDeleteAccountError(result);
+            case RETRY:
+                showErrorAndPaymentSession(interaction);
+                break;
+            case TRY_OTHER_ACCOUNT:
+            case TRY_OTHER_NETWORK:
+                reloadPaymentSession(interaction);
                 break;
             default:
-                loadPaymentSession();
+                closeWithErrorCode(result);
         }
     }
 
@@ -277,32 +293,6 @@ final class PaymentListPresenter extends BasePaymentPresenter
         }
     }
 
-    private void handleDeleteAccountSuccess(PaymentResult result) {
-        reloadPaymentSession(null);
-    }
-    
-    private void handleDeleteAccountError(PaymentResult result) {
-        if (result.isNetworkFailure()) {
-            handleDeleteNetworkFailure(result);
-            return;
-        }
-        Interaction interaction = result.getInteraction();
-        switch (interaction.getCode()) {
-            case InteractionCode.RETRY:
-                showErrorAndPaymentSession(interaction);
-                break;
-            case InteractionCode.RELOAD:
-                reloadPaymentSession(null);
-                break;
-            case InteractionCode.TRY_OTHER_ACCOUNT:
-            case InteractionCode.TRY_OTHER_NETWORK:
-                reloadPaymentSession(interaction);
-                break;
-            default:
-                closeWithErrorCode(result);
-        }
-    }
-    
     private void handleProcessPaymentError(PaymentResult result) {
         if (result.isNetworkFailure()) {
             handleProcessNetworkFailure(result);
@@ -310,14 +300,14 @@ final class PaymentListPresenter extends BasePaymentPresenter
         }
         Interaction interaction = result.getInteraction();
         switch (interaction.getCode()) {
-            case InteractionCode.RELOAD:
+            case RELOAD:
                 reloadPaymentSession(null);
                 break;
-            case InteractionCode.TRY_OTHER_ACCOUNT:
-            case InteractionCode.TRY_OTHER_NETWORK:
+            case TRY_OTHER_ACCOUNT:
+            case TRY_OTHER_NETWORK:
                 reloadPaymentSession(interaction);
                 break;
-            case InteractionCode.RETRY:
+            case RETRY:
                 showErrorAndPaymentSession(interaction);
                 break;
             default:
@@ -434,12 +424,12 @@ final class PaymentListPresenter extends BasePaymentPresenter
     private void handleChargeError(PaymentActivityResult paymentActivityResult) {
         Interaction interaction = paymentActivityResult.getPaymentResult().getInteraction();
         switch (interaction.getCode()) {
-            case InteractionCode.RELOAD:
-            case InteractionCode.TRY_OTHER_ACCOUNT:
-            case InteractionCode.TRY_OTHER_NETWORK:
+            case RELOAD:
+            case TRY_OTHER_ACCOUNT:
+            case TRY_OTHER_NETWORK:
                 reloadPaymentSession(null);
                 break;
-            case InteractionCode.RETRY:
+            case RETRY:
                 showPaymentSession();
                 break;
             default:

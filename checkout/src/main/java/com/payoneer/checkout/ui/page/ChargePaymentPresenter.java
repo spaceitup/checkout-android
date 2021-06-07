@@ -39,7 +39,7 @@ import android.content.Context;
 
 /**
  * The ChargePaymentPresenter takes care of posting the operation to the Payment API.
- * First this presenter will load the list, checks if the operation is present in the list and then post the operation to the Payment API.
+ * First this presenter will load the list, checks if the operation is present and then post the operation to the Payment API.
  */
 final class ChargePaymentPresenter extends BasePaymentPresenter implements PaymentSessionListener, NetworkServiceListener {
 
