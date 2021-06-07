@@ -18,6 +18,7 @@ import com.payoneer.checkout.ui.widget.FormWidget;
 import android.app.Activity;
 import android.content.Context;
 import android.os.IBinder;
+import android.transition.TransitionManager;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -83,8 +84,7 @@ public final class PaymentList implements PaymentCardListener {
         setVisible(true);
         adapter.notifyDataSetChanged();
 
-        int index = itemList.getSelectedIndex();
-        recyclerView.scrollToPosition(index == 1 ? 0 : index);
+        recyclerView.scrollToPosition(itemList.getSelectedIndex());
     }
 
     public void setVisible(boolean visible) {
