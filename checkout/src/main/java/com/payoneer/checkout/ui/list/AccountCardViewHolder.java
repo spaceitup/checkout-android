@@ -30,7 +30,8 @@ public final class AccountCardViewHolder extends PaymentCardViewHolder {
     private final TextView title;
     private final TextView subtitle;
     private final IconView iconView;
-
+    private final MaterialCardView card;
+    
     private AccountCardViewHolder(ListAdapter listAdapter, View parent, AccountCard accountCard) {
         super(listAdapter, parent, accountCard);
         this.title = parent.findViewById(R.id.text_title);
@@ -43,7 +44,7 @@ public final class AccountCardViewHolder extends PaymentCardViewHolder {
             }
 
         });
-        MaterialCardView card = parent.findViewById(R.id.card_account);
+        card = parent.findViewById(R.id.card_account);
         card.setCheckable(true);
 
         addElementWidgets(accountCard);
@@ -84,6 +85,8 @@ public final class AccountCardViewHolder extends PaymentCardViewHolder {
     @Override
     void expand(boolean expand) {
         super.expand(expand);
+        card.setChecked(expand);
+        
         boolean update = UPDATE.equals(paymentCard.getOperationType());
 
         if (update) {

@@ -18,6 +18,7 @@ import com.payoneer.checkout.ui.widget.FormWidget;
 import android.app.Activity;
 import android.content.Context;
 import android.os.IBinder;
+import android.util.Log;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -128,6 +129,9 @@ public final class PaymentList {
         InputMethodManager imm = (InputMethodManager) activity.getSystemService(Context.INPUT_METHOD_SERVICE);
         if (imm != null) {
             View curFocus = activity.getCurrentFocus();
+            if (curFocus != null) {
+                curFocus.clearFocus();
+            }
             IBinder binder = curFocus != null ? curFocus.getWindowToken() : recyclerView.getWindowToken();
             imm.hideSoftInputFromWindow(binder, 0);
         }
@@ -155,12 +159,16 @@ public final class PaymentList {
     }
 
     private void handleCardClicked(int position) {
-        handleHideKeyboard();
         int curIndex = itemList.getSelectedIndex();
-
-        if (position == curIndex) {
+        if (curIndex == -1) {
+            itemList.setSelectedIndex(position);
+            adapter.notifyItemChanged(position);
+            smoothScrollToPosition(position);
+        }
+        else if (position == curIndex) {
             itemList.setSelectedIndex(-1);
             adapter.notifyItemChanged(position);
+            handleHideKeyboard();
         } else {
             itemList.setSelectedIndex(position);
             adapter.notifyItemChanged(curIndex);
@@ -171,11 +179,15 @@ public final class PaymentList {
 
     private void smoothScrollToPosition(int position) {
         RecyclerView.SmoothScroller smoothScroller = new LinearSmoothScroller(activity) {
-            @Override
-            protected int getVerticalSnapPreference() {
-                return LinearSmoothScroller.SNAP_TO_START;
-            }
-        };
+                @Override
+                protected int getVerticalSnapPreference() {
+                    return LinearSmoothScroller.SNAP_TO_START;
+                }
+                @Override
+                protected void onStop() {
+                    handleHideKeyboard();
+                }
+            };
         smoothScroller.setTargetPosition(position);
         RecyclerView.LayoutManager manager = recyclerView.getLayoutManager();
 
