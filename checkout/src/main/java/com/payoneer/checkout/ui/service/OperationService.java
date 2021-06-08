@@ -34,7 +34,7 @@ public final class OperationService {
     private WorkerTask<OperationResult> task;
 
     /**
-     * Create a new OperationService, this service is used to load the Operation.
+     * Create a new OperationService
      *
      * @param context context in which this service will run
      */
@@ -79,7 +79,7 @@ public final class OperationService {
     public void deleteAccount(final DeleteAccount account) {
 
         if (isActive()) {
-            throw new IllegalStateException("Already posting operation, stop first");
+            throw new IllegalStateException("OperationService is already active, stop first");
         }
         task = WorkerTask.fromCallable(new Callable<OperationResult>() {
             @Override
