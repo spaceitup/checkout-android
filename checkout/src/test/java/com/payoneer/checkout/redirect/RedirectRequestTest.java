@@ -51,7 +51,7 @@ public class RedirectRequestTest {
         operationResult.setRedirect(redirect);
         operationResult.setLinks(links);
         int requestType = 1;
-        
+
         RedirectRequest request = RedirectRequest.fromOperationResult(requestType, operationResult);
         assertNotNull(request);
         assertEquals(requestType, request.getRequestType());

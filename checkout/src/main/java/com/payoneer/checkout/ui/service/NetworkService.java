@@ -10,7 +10,6 @@ package com.payoneer.checkout.ui.service;
 
 import com.payoneer.checkout.form.DeleteAccount;
 import com.payoneer.checkout.form.Operation;
-import com.payoneer.checkout.model.AccountRegistration;
 import com.payoneer.checkout.model.OperationResult;
 import com.payoneer.checkout.redirect.RedirectRequest;
 

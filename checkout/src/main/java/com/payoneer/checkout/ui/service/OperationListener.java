@@ -28,7 +28,7 @@ public interface OperationListener {
      * @param cause describing the reason of failure
      */
     void onDeleteAccountError(Throwable cause);
-    
+
     /**
      * Called when the operation was successfully posted.
      *

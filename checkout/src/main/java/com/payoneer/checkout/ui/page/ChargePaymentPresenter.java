@@ -21,7 +21,6 @@ import com.payoneer.checkout.model.ErrorInfo;
 import com.payoneer.checkout.model.Interaction;
 import com.payoneer.checkout.model.InteractionCode;
 import com.payoneer.checkout.model.ListResult;
-import com.payoneer.checkout.model.OperationResult;
 import com.payoneer.checkout.redirect.RedirectRequest;
 import com.payoneer.checkout.redirect.RedirectService;
 import com.payoneer.checkout.ui.PaymentResult;
@@ -30,13 +29,11 @@ import com.payoneer.checkout.ui.dialog.PaymentDialogFragment.PaymentDialogListen
 import com.payoneer.checkout.ui.model.PaymentSession;
 import com.payoneer.checkout.ui.service.NetworkService;
 import com.payoneer.checkout.ui.service.NetworkServiceListener;
-import com.payoneer.checkout.ui.service.NetworkServiceLookup;
 import com.payoneer.checkout.ui.service.PaymentSessionListener;
 import com.payoneer.checkout.ui.service.PaymentSessionService;
 import com.payoneer.checkout.util.PaymentResultHelper;
 
 import android.content.Context;
-import android.util.Log;
 
 /**
  * The ChargePaymentPresenter takes care of posting the operation to the Payment API.
@@ -49,7 +46,7 @@ final class ChargePaymentPresenter extends BasePaymentPresenter implements Payme
     private Operation operation;
     private NetworkService networkService;
     private RedirectRequest redirectRequest;
-    
+
     /**
      * Create a new ChargePaymentPresenter
      *
@@ -68,8 +65,7 @@ final class ChargePaymentPresenter extends BasePaymentPresenter implements Payme
         if (redirectRequest != null) {
             handleRedirectRequest(redirectRequest);
             redirectRequest = null;
-        }
-        else {
+        } else {
             loadPaymentSession();
         }
     }

@@ -23,7 +23,7 @@ public final class RedirectRequest {
     private final Redirect redirect;
     private final URL link;
     private final int requestType;
-    
+
     /**
      * Construct a new RedirectRequest
      *
@@ -37,15 +37,15 @@ public final class RedirectRequest {
         this.link = link;
     }
 
-    /** 
+    /**
      * Get the type of this request
-     * 
+     *
      * @return the type of this request
      */
     public int getRequestType() {
         return requestType;
     }
-    
+
     /**
      * Get the redirect method
      *

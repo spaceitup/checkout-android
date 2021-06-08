@@ -11,10 +11,8 @@ package com.payoneer.checkout.ui.service.basic;
 import static com.payoneer.checkout.model.InteractionCode.ABORT;
 import static com.payoneer.checkout.model.InteractionCode.PROCEED;
 import static com.payoneer.checkout.model.InteractionCode.VERIFY;
-import static com.payoneer.checkout.model.NetworkOperationType.ACTIVATION;
 import static com.payoneer.checkout.model.NetworkOperationType.CHARGE;
 import static com.payoneer.checkout.model.NetworkOperationType.PAYOUT;
-import static com.payoneer.checkout.model.NetworkOperationType.PRESET;
 import static com.payoneer.checkout.model.NetworkOperationType.UPDATE;
 import static com.payoneer.checkout.model.RedirectType.HANDLER3DS2;
 import static com.payoneer.checkout.model.RedirectType.PROVIDER;
@@ -24,11 +22,9 @@ import static com.payoneer.checkout.ui.PaymentActivityResult.RESULT_CODE_PROCEED
 import com.payoneer.checkout.core.PaymentException;
 import com.payoneer.checkout.form.DeleteAccount;
 import com.payoneer.checkout.form.Operation;
-import com.payoneer.checkout.model.AccountRegistration;
 import com.payoneer.checkout.model.Interaction;
 import com.payoneer.checkout.model.OperationResult;
 import com.payoneer.checkout.model.Redirect;
-import com.payoneer.checkout.model.RedirectType;
 import com.payoneer.checkout.redirect.RedirectRequest;
 import com.payoneer.checkout.ui.PaymentResult;
 import com.payoneer.checkout.ui.service.NetworkService;
@@ -37,7 +33,6 @@ import com.payoneer.checkout.ui.service.OperationService;
 import com.payoneer.checkout.util.PaymentResultHelper;
 
 import android.content.Context;
-import android.util.Log;
 
 /**
  * BasicNetworkService implementing the handling of basic payment methods like Visa, Mastercard and Sepa.
@@ -45,12 +40,12 @@ import android.util.Log;
  */
 public final class BasicNetworkService extends NetworkService {
 
-    private final static int PROCESS_PAYMENT = 0;    
+    private final static int PROCESS_PAYMENT = 0;
     private final static int DELETE_ACCOUNT = 1;
-    
+
     private final OperationService operationService;
     private String operationType;
-    
+
     /**
      * Create a new BasicNetworkService, this service is a basic implementation
      * that sends an operation to the Payment API.
@@ -61,26 +56,26 @@ public final class BasicNetworkService extends NetworkService {
         operationService = new OperationService(context);
         operationService.setListener(new OperationListener() {
 
-                @Override
-                public void onDeleteAccountSuccess(OperationResult operationResult) {
-                    handleDeleteAccountSuccess(operationResult);
-                }
+            @Override
+            public void onDeleteAccountSuccess(OperationResult operationResult) {
+                handleDeleteAccountSuccess(operationResult);
+            }
 
-                @Override
-                public void onDeleteAccountError(Throwable cause) {
-                    handleDeleteAccountError(cause);
-                }
+            @Override
+            public void onDeleteAccountError(Throwable cause) {
+                handleDeleteAccountError(cause);
+            }
 
-                @Override
-                public void onOperationSuccess(OperationResult operationResult) {
-                    handleProcessPaymentSuccess(operationResult);
-                }
+            @Override
+            public void onOperationSuccess(OperationResult operationResult) {
+                handleProcessPaymentSuccess(operationResult);
+            }
 
-                @Override
-                public void onOperationError(Throwable cause) {
-                    handleProcessPaymentError(cause);
-                }
-            });
+            @Override
+            public void onOperationError(Throwable cause) {
+                handleProcessPaymentError(cause);
+            }
+        });
     }
 
     @Override
@@ -106,7 +101,7 @@ public final class BasicNetworkService extends NetworkService {
     public void onRedirectResult(RedirectRequest request, OperationResult operationResult) {
         int resultCode;
         PaymentResult paymentResult;
-        
+
         if (operationResult != null) {
             Interaction interaction = operationResult.getInteraction();
             resultCode = PROCEED.equals(interaction.getCode()) ? RESULT_CODE_PROCEED : RESULT_CODE_ERROR;
@@ -149,7 +144,7 @@ public final class BasicNetworkService extends NetworkService {
         PaymentResult paymentResult = PaymentResultHelper.fromThrowable(code, cause);
         listener.onProcessPaymentResult(RESULT_CODE_ERROR, paymentResult);
     }
-    
+
     private void handleDeleteAccountSuccess(OperationResult operationResult) {
         Interaction interaction = operationResult.getInteraction();
         PaymentResult result = new PaymentResult(operationResult);

@@ -139,7 +139,7 @@ abstract class BaseConnection {
         conn.setDoOutput(true);
         return conn;
     }
-    
+
     /**
      * Creates an HTTP POST connection with the given String url
      *

@@ -9,16 +9,13 @@
 package com.payoneer.checkout.form;
 
 import java.net.URL;
-import java.util.Objects;
 
 import com.google.gson.JsonSyntaxException;
-import com.payoneer.checkout.model.BrowserData;
 import com.payoneer.checkout.model.DeregistrationData;
 import com.payoneer.checkout.util.GsonHelper;
 
 import android.os.Parcel;
 import android.os.Parcelable;
-import android.text.TextUtils;
 import android.util.Log;
 
 /**

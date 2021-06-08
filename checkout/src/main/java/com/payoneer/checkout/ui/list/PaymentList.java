@@ -18,7 +18,6 @@ import com.payoneer.checkout.ui.widget.FormWidget;
 import android.app.Activity;
 import android.content.Context;
 import android.os.IBinder;
-import android.transition.TransitionManager;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -35,7 +34,7 @@ public final class PaymentList {
     private final RecyclerView recyclerView;
     private final ListAdapter adapter;
     private final PaymentItemList itemList;
-    
+
     private PaymentSession session;
     private int nextViewType;
 
@@ -124,7 +123,7 @@ public final class PaymentList {
             }
         };
     }
-    
+
     private void handleHideKeyboard() {
         InputMethodManager imm = (InputMethodManager) activity.getSystemService(Context.INPUT_METHOD_SERVICE);
         if (imm != null) {

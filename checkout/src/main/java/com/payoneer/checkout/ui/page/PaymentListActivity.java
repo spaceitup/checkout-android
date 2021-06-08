@@ -82,7 +82,7 @@ public final class PaymentListActivity extends BasePaymentActivity implements Pa
         PaymentActivityResult result = PaymentActivityResult.fromActivityResult(requestCode, resultCode, data);
         presenter.setPaymentActivityResult(result);
     }
-    
+
     /**
      * {@inheritDoc}
      */

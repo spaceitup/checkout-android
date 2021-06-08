@@ -69,7 +69,7 @@ public final class PaymentSession {
         }
         return false;
     }
-    
+
     public boolean containsOperationLink(URL url) {
         for (PaymentSection section : paymentSections) {
             if (section.containsLink("operation", url)) {

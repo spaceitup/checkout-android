@@ -11,7 +11,6 @@ package com.payoneer.checkout.network;
 import java.io.IOException;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
-import java.net.URL;
 
 import com.google.gson.JsonParseException;
 import com.payoneer.checkout.core.PaymentException;

@@ -27,10 +27,8 @@ import java.util.Objects;
 import com.payoneer.checkout.core.PaymentException;
 import com.payoneer.checkout.form.DeleteAccount;
 import com.payoneer.checkout.form.Operation;
-import com.payoneer.checkout.model.AccountRegistration;
 import com.payoneer.checkout.model.ErrorInfo;
 import com.payoneer.checkout.model.Interaction;
-import com.payoneer.checkout.model.InteractionCode;
 import com.payoneer.checkout.model.ListResult;
 import com.payoneer.checkout.model.OperationResult;
 import com.payoneer.checkout.model.Parameter;
@@ -48,7 +46,6 @@ import com.payoneer.checkout.ui.model.PaymentSession;
 import com.payoneer.checkout.ui.model.PresetCard;
 import com.payoneer.checkout.ui.service.NetworkService;
 import com.payoneer.checkout.ui.service.NetworkServiceListener;
-import com.payoneer.checkout.ui.service.NetworkServiceLookup;
 import com.payoneer.checkout.ui.service.PaymentSessionListener;
 import com.payoneer.checkout.ui.service.PaymentSessionService;
 import com.payoneer.checkout.ui.widget.FormWidget;
@@ -57,7 +54,6 @@ import com.payoneer.checkout.util.PaymentUtils;
 
 import android.content.Context;
 import android.text.TextUtils;
-import android.util.Log;
 
 /**
  * The PaymentListPresenter implementing the presenter part of the MVP
@@ -77,7 +73,7 @@ final class PaymentListPresenter extends BasePaymentPresenter
     private PaymentActivityResult activityResult;
     private NetworkService networkService;
     private RedirectRequest redirectRequest;
-    
+
     /**
      * Create a new PaymentListPresenter
      *
@@ -97,15 +93,12 @@ final class PaymentListPresenter extends BasePaymentPresenter
         if (redirectRequest != null) {
             handleRedirectRequest(redirectRequest);
             redirectRequest = null;
-        }
-        else if (activityResult != null) {
+        } else if (activityResult != null) {
             handlePaymentActivityResult(activityResult);
             activityResult = null;
-        }
-        else if (session == null) {
+        } else if (session == null) {
             loadPaymentSession();
-        }
-        else {
+        } else {
             showPaymentSession();
         }
     }
@@ -146,7 +139,7 @@ final class PaymentListPresenter extends BasePaymentPresenter
         view.showDeleteDialog(new PaymentDialogListener() {
             @Override
             public void onPositiveButtonClicked() {
-                deleteAccountCard((AccountCard)paymentCard);
+                deleteAccountCard((AccountCard) paymentCard);
             }
 
             @Override
@@ -249,7 +242,7 @@ final class PaymentListPresenter extends BasePaymentPresenter
         OperationResult result = RedirectService.getRedirectResult();
         networkService.onRedirectResult(redirectRequest, result);
     }
-    
+
     private void handleLoadPaymentSessionProceed(PaymentSession session) {
         if (session.isEmpty()) {
             closeWithErrorCode("There are no payment methods available");
@@ -386,7 +379,7 @@ final class PaymentListPresenter extends BasePaymentPresenter
         setState(PROCESS);
         networkService.processPayment(operation);
     }
-    
+
     private void deleteAccount(DeleteAccount account) {
         setState(PROCESS);
         networkService.deleteAccount(account);
@@ -436,7 +429,7 @@ final class PaymentListPresenter extends BasePaymentPresenter
                 view.passOnActivityResult(paymentActivityResult);
         }
     }
-    
+
     private void onPresetCardSelected(PresetCard card) {
         Redirect redirect = card.getPresetAccount().getRedirect();
         List<Parameter> parameters = redirect.getParameters();
