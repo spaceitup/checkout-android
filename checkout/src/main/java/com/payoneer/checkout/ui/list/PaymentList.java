@@ -29,13 +29,13 @@ import androidx.recyclerview.widget.SimpleItemAnimator;
 /**
  * The PaymentList showing available payment methods and accounts in a list
  */
-public final class PaymentList implements PaymentCardListener {
+public final class PaymentList {
     private final Activity activity;
     private final PaymentListListener listener;
     private final RecyclerView recyclerView;
     private final ListAdapter adapter;
     private final PaymentItemList itemList;
-
+    
     private PaymentSession session;
     private int nextViewType;
 
@@ -52,7 +52,7 @@ public final class PaymentList implements PaymentCardListener {
         this.recyclerView = recyclerView;
 
         this.itemList = new PaymentItemList();
-        this.adapter = new ListAdapter(this, itemList);
+        this.adapter = new ListAdapter(createCardListener(), itemList);
 
         this.recyclerView.setAdapter(adapter);
         this.recyclerView.setLayoutManager(new LinearLayoutManager(activity));
@@ -64,7 +64,7 @@ public final class PaymentList implements PaymentCardListener {
     }
 
     public void close() {
-        hideKeyboard();
+        handleHideKeyboard();
     }
 
     public void clear() {
@@ -91,8 +91,41 @@ public final class PaymentList implements PaymentCardListener {
         recyclerView.setVisibility(visible ? View.VISIBLE : View.INVISIBLE);
     }
 
-    @Override
-    public void hideKeyboard() {
+    private PaymentCardListener createCardListener() {
+        return new PaymentCardListener() {
+            @Override
+            public void hideKeyboard() {
+                handleHideKeyboard();
+            }
+
+            @Override
+            public void showKeyboard(View view) {
+                handleShowKeyboard(view);
+            }
+
+            @Override
+            public void onDeleteClicked(PaymentCard paymentCard) {
+                handleDeleteClicked(paymentCard);
+            }
+
+            @Override
+            public void onHintClicked(String networkCode, String type) {
+                handleHintClicked(networkCode, type);
+            }
+
+            @Override
+            public void onActionClicked(PaymentCard paymentCard, Map<String, FormWidget> widgets) {
+                handleActionClicked(paymentCard, widgets);
+            }
+
+            @Override
+            public void onCardClicked(int position) {
+                handleCardClicked(position);
+            }
+        };
+    }
+    
+    private void handleHideKeyboard() {
         InputMethodManager imm = (InputMethodManager) activity.getSystemService(Context.INPUT_METHOD_SERVICE);
         if (imm != null) {
             View curFocus = activity.getCurrentFocus();
@@ -101,34 +134,29 @@ public final class PaymentList implements PaymentCardListener {
         }
     }
 
-    @Override
-    public void showKeyboard(View view) {
+    private void handleShowKeyboard(View view) {
         InputMethodManager imm = (InputMethodManager) activity.getSystemService(Context.INPUT_METHOD_SERVICE);
         if (imm != null) {
             imm.showSoftInput(view, 0);
         }
     }
 
-    @Override
-    public void onDeleteClicked(PaymentCard paymentCard) {
-        hideKeyboard();
+    private void handleDeleteClicked(PaymentCard paymentCard) {
+        handleHideKeyboard();
         listener.onDeleteClicked(paymentCard);
     }
 
-    @Override
-    public void onHintClicked(String networkCode, String type) {
+    private void handleHintClicked(String networkCode, String type) {
         listener.onHintClicked(networkCode, type);
     }
 
-    @Override
-    public void onActionClicked(PaymentCard paymentCard, Map<String, FormWidget> widgets) {
-        hideKeyboard();
+    private void handleActionClicked(PaymentCard paymentCard, Map<String, FormWidget> widgets) {
+        handleHideKeyboard();
         listener.onActionClicked(paymentCard, widgets);
     }
 
-    @Override
-    public void onCardClicked(int position) {
-        hideKeyboard();
+    private void handleCardClicked(int position) {
+        handleHideKeyboard();
         int curIndex = itemList.getSelectedIndex();
 
         if (position == curIndex) {

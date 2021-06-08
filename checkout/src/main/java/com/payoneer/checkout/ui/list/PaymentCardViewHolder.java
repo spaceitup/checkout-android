@@ -78,12 +78,12 @@ public abstract class PaymentCardViewHolder extends RecyclerView.ViewHolder {
         });
     }
 
-    PaymentCard getPaymentCard() {
-        return paymentCard;
+    public FormWidget getFormWidget(String name) {
+        return widgets.get(name);
     }
 
-    FormWidget getFormWidget(String name) {
-        return widgets.get(name);
+    PaymentCard getPaymentCard() {
+        return paymentCard;
     }
 
     Map<String, FormWidget> getFormWidgets() {

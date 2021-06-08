@@ -61,7 +61,7 @@ public final class PaymentConnection extends BaseConnection {
             conn.connect();
             final int rc = conn.getResponseCode();
             if (rc == HttpURLConnection.HTTP_OK) {
-                return handlePostOperationOk(readFromInputStream(conn));
+                return handleOperationResult(readFromInputStream(conn));
             }
             throw createPaymentException(rc, conn);
         } catch (MalformedURLException | SecurityException e) {
@@ -94,7 +94,7 @@ public final class PaymentConnection extends BaseConnection {
             conn.connect();
             final int rc = conn.getResponseCode();
             if (rc == HttpURLConnection.HTTP_OK) {
-                return handlePostOperationOk(readFromInputStream(conn));
+                return handleOperationResult(readFromInputStream(conn));
             }
             throw createPaymentException(rc, conn);
         } catch (MalformedURLException | SecurityException e) {
@@ -107,12 +107,12 @@ public final class PaymentConnection extends BaseConnection {
     }
 
     /**
-     * Handle the post Operation OK state
+     * Handle the Operation Result
      *
      * @param data the response data received from the API
      * @return the network response containing the OperationResult
      */
-    private OperationResult handlePostOperationOk(final String data) throws JsonParseException {
+    private OperationResult handleOperationResult(final String data) throws JsonParseException {
         return gson.fromJson(data, OperationResult.class);
     }
 }

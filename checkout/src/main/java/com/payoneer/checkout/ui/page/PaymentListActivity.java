@@ -58,9 +58,6 @@ public final class PaymentListActivity extends BasePaymentActivity implements Pa
         return R.anim.no_animation;
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -77,29 +74,15 @@ public final class PaymentListActivity extends BasePaymentActivity implements Pa
     }
 
     /**
-     * Initialize the toolbar in this PaymentList
+     * {@inheritDoc}
      */
-    private void initToolbar() {
-        Toolbar toolbar = findViewById(R.id.toolbar);
-        toolbar.setTitle("");
-        setSupportActionBar(toolbar);
-
-        ActionBar actionBar = getSupportActionBar();
-        actionBar.setHomeButtonEnabled(true);
-        actionBar.setDisplayHomeAsUpEnabled(true);
-        actionBar.setDisplayShowHomeEnabled(true);
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        PaymentActivityResult result = PaymentActivityResult.fromActivityResult(requestCode, resultCode, data);
+        presenter.setPaymentActivityResult(result);
     }
-
-    /**
-     * Set the action bar with a title and optional back arrow.
-     *
-     * @param title of the action bar
-     */
-    private void setToolbar(String title) {
-        Toolbar toolbar = findViewById(R.id.toolbar);
-        toolbar.setTitle(title);
-    }
-
+    
     /**
      * {@inheritDoc}
      */
@@ -139,16 +122,6 @@ public final class PaymentListActivity extends BasePaymentActivity implements Pa
     public void onBackPressed() {
         super.onBackPressed();
         overridePendingTransition(R.anim.no_animation, R.anim.no_animation);
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        PaymentActivityResult result = PaymentActivityResult.fromActivityResult(requestCode, resultCode, data);
-        presenter.setPaymentActivityResult(result);
     }
 
     /**
@@ -202,5 +175,29 @@ public final class PaymentListActivity extends BasePaymentActivity implements Pa
             loadIdlingResource.reset();
         }
         return loadIdlingResource;
+    }
+
+    /**
+     * Initialize the toolbar in this PaymentList
+     */
+    private void initToolbar() {
+        Toolbar toolbar = findViewById(R.id.toolbar);
+        toolbar.setTitle("");
+        setSupportActionBar(toolbar);
+
+        ActionBar actionBar = getSupportActionBar();
+        actionBar.setHomeButtonEnabled(true);
+        actionBar.setDisplayHomeAsUpEnabled(true);
+        actionBar.setDisplayShowHomeEnabled(true);
+    }
+
+    /**
+     * Set the action bar with a title and optional back arrow.
+     *
+     * @param title of the action bar
+     */
+    private void setToolbar(String title) {
+        Toolbar toolbar = findViewById(R.id.toolbar);
+        toolbar.setTitle(title);
     }
 }

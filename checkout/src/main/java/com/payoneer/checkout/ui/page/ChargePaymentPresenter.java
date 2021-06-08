@@ -36,6 +36,7 @@ import com.payoneer.checkout.ui.service.PaymentSessionService;
 import com.payoneer.checkout.util.PaymentResultHelper;
 
 import android.content.Context;
+import android.util.Log;
 
 /**
  * The ChargePaymentPresenter takes care of posting the operation to the Payment API.
@@ -68,7 +69,9 @@ final class ChargePaymentPresenter extends BasePaymentPresenter implements Payme
             handleRedirectRequest(redirectRequest);
             redirectRequest = null;
         }
-        loadPaymentSession();
+        else {
+            loadPaymentSession();
+        }
     }
 
     void onStop() {
