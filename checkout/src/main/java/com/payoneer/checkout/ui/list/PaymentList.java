@@ -64,7 +64,7 @@ public final class PaymentList {
     }
 
     public void close() {
-        handleHideKeyboard();
+        hideKeyboard();
     }
 
     public void clear() {
@@ -94,13 +94,13 @@ public final class PaymentList {
     private PaymentCardListener createCardListener() {
         return new PaymentCardListener() {
             @Override
-            public void hideKeyboard() {
-                handleHideKeyboard();
+            public void onHideKeyboard() {
+                hideKeyboard();
             }
 
             @Override
-            public void showKeyboard(View view) {
-                handleShowKeyboard(view);
+            public void onShowKeyboard(View view) {
+                showKeyboard(view);
             }
 
             @Override
@@ -125,7 +125,7 @@ public final class PaymentList {
         };
     }
 
-    private void handleHideKeyboard() {
+    private void hideKeyboard() {
         InputMethodManager imm = (InputMethodManager) activity.getSystemService(Context.INPUT_METHOD_SERVICE);
         if (imm != null) {
             View curFocus = activity.getCurrentFocus();
@@ -137,7 +137,7 @@ public final class PaymentList {
         }
     }
 
-    private void handleShowKeyboard(View view) {
+    private void showKeyboard(View view) {
         InputMethodManager imm = (InputMethodManager) activity.getSystemService(Context.INPUT_METHOD_SERVICE);
         if (imm != null) {
             imm.showSoftInput(view, 0);
@@ -145,7 +145,7 @@ public final class PaymentList {
     }
 
     private void handleDeleteClicked(PaymentCard paymentCard) {
-        handleHideKeyboard();
+        hideKeyboard();
         listener.onDeleteClicked(paymentCard);
     }
 
@@ -154,30 +154,25 @@ public final class PaymentList {
     }
 
     private void handleActionClicked(PaymentCard paymentCard, Map<String, FormWidget> widgets) {
-        handleHideKeyboard();
+        hideKeyboard();
         listener.onActionClicked(paymentCard, widgets);
     }
 
     private void handleCardClicked(int position) {
         int curIndex = itemList.getSelectedIndex();
-        if (curIndex == -1) {
-            itemList.setSelectedIndex(position);
-            adapter.notifyItemChanged(position);
-            smoothScrollToPosition(position);
-        }
-        else if (position == curIndex) {
+        if (position == curIndex) {
             itemList.setSelectedIndex(-1);
             adapter.notifyItemChanged(position);
-            handleHideKeyboard();
+            hideKeyboard();
         } else {
             itemList.setSelectedIndex(position);
             adapter.notifyItemChanged(curIndex);
             adapter.notifyItemChanged(position);
-            smoothScrollToPosition(position);
+            scrollAndCloseKeyboard(position);
         }
     }
 
-    private void smoothScrollToPosition(int position) {
+    private void scrollAndCloseKeyboard(int position) {
         RecyclerView.SmoothScroller smoothScroller = new LinearSmoothScroller(activity) {
                 @Override
                 protected int getVerticalSnapPreference() {
@@ -185,7 +180,7 @@ public final class PaymentList {
                 }
                 @Override
                 protected void onStop() {
-                    handleHideKeyboard();
+                    hideKeyboard();
                 }
             };
         smoothScroller.setTargetPosition(position);

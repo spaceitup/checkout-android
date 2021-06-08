@@ -66,14 +66,14 @@ class CardEventHandler implements WidgetPresenter {
     @Override
     public void hideKeyboard() {
         if (holder.hasValidPosition()) {
-            getCardListener().hideKeyboard();
+            getCardListener().onHideKeyboard();
         }
     }
 
     @Override
     public void showKeyboard(View view) {
         if (holder.hasValidPosition()) {
-            getCardListener().showKeyboard(view);
+            getCardListener().onShowKeyboard(view);
         }
     }
 

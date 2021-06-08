@@ -21,34 +21,44 @@ import android.view.View;
 interface PaymentCardListener {
 
     /**
+     * Notify the listener that the keyboard should be hidden
+     */
+    void onHideKeyboard();
+
+    /**
+     * Notify the listener that the keyboard should be shown for the given view 
      *
+     * @param view that needs the keyboard
      */
-    void hideKeyboard();
+    void onShowKeyboard(View view);
 
     /**
-     * @param view
-     */
-    void showKeyboard(View view);
-
-    /**
-     * @param paymentCard
+     * Notify this listener that the payment card should be deleted
+     *
+     * @param paymentCard that should be deleted
      */
     void onDeleteClicked(PaymentCard paymentCard);
 
     /**
-     * @param networkCode
-     * @param type
+     * Notify this listener that the hint icon is clicked for the given networkCoce and type
+     *
+     * @param networkCode code of the hint
+     * @param type of the hint
      */
     void onHintClicked(String networkCode, String type);
 
     /**
-     * @param paymentCard
-     * @param widgets
+     * Notify that an action is required for the paymentCard
+     *
+     * @param paymentCard that initiated the action
+     * @param widgets containing values that should be send
      */
     void onActionClicked(PaymentCard paymentCard, Map<String, FormWidget> widgets);
 
     /**
-     * @param position
+     * The card at the given position has been clicked.
+     *
+     * @param position of the card in the adapter
      */
     void onCardClicked(int position);
 }

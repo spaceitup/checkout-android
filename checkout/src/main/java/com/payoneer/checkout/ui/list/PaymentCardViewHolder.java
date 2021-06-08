@@ -235,16 +235,8 @@ public abstract class PaymentCardViewHolder extends RecyclerView.ViewHolder {
 
     void expand(boolean expand) {
         formLayout.setVisibility(expand ? View.VISIBLE : View.GONE);
-        boolean focusRequested = false;
-
-        for (FormWidget widget : widgets.values()) {
-            widget.setValidation();
-            if (expand && !focusRequested) {
-                focusRequested = widget.requestFocus();
-            }
-        }
     }
-
+    
     void onBind() {
         for (Map.Entry<String, FormWidget> entry : widgets.entrySet()) {
             FormWidget widget = entry.getValue();
