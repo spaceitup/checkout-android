@@ -129,9 +129,6 @@ public final class PaymentList {
         InputMethodManager imm = (InputMethodManager) activity.getSystemService(Context.INPUT_METHOD_SERVICE);
         if (imm != null) {
             View curFocus = activity.getCurrentFocus();
-            if (curFocus != null) {
-                curFocus.clearFocus();
-            }
             IBinder binder = curFocus != null ? curFocus.getWindowToken() : recyclerView.getWindowToken();
             imm.hideSoftInputFromWindow(binder, 0);
         }
