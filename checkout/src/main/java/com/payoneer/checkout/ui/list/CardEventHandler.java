@@ -93,10 +93,9 @@ class CardEventHandler implements WidgetPresenter {
             Validator validator = Validator.getInstance();
             ValidationResult result = validator.validate(card.getPaymentMethod(), card.getCode(), type, value1, value2);
 
-            if (!result.isError()) {
-                return result;
+            if (result.isError()) {
+                result.setMessage(Localization.translateError(card.getCode(), result.getError()));
             }
-            result.setMessage(Localization.translateError(card.getCode(), result.getError()));
             return result;
         }
         return null;

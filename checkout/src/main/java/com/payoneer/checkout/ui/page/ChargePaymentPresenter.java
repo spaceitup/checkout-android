@@ -131,11 +131,6 @@ final class ChargePaymentPresenter extends BasePaymentPresenter implements Payme
         RedirectService.redirect(context, redirectRequest);
     }
 
-    /**
-     * Let this presenter handle the back pressed.
-     *
-     * @return true when this presenter handled the back press, false otherwise
-     */
     boolean onBackPressed() {
         view.showWarningMessage(Localization.translate(CHARGE_INTERRUPTED));
         return true;

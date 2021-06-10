@@ -18,7 +18,6 @@ import com.payoneer.checkout.ui.widget.FormWidget;
 import android.app.Activity;
 import android.content.Context;
 import android.os.IBinder;
-import android.util.Log;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -171,15 +170,16 @@ public final class PaymentList {
 
     private void scrollAndCloseKeyboard(int position) {
         RecyclerView.SmoothScroller smoothScroller = new LinearSmoothScroller(activity) {
-                @Override
-                protected int getVerticalSnapPreference() {
-                    return LinearSmoothScroller.SNAP_TO_START;
-                }
-                @Override
-                protected void onStop() {
-                    hideKeyboard();
-                }
-            };
+            @Override
+            protected int getVerticalSnapPreference() {
+                return LinearSmoothScroller.SNAP_TO_START;
+            }
+
+            @Override
+            protected void onStop() {
+                hideKeyboard();
+            }
+        };
         smoothScroller.setTargetPosition(position);
         RecyclerView.LayoutManager manager = recyclerView.getLayoutManager();
 

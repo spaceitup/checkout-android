@@ -31,7 +31,7 @@ public final class AccountCardViewHolder extends PaymentCardViewHolder {
     private final TextView subtitle;
     private final IconView iconView;
     private final MaterialCardView card;
-    
+
     private AccountCardViewHolder(ListAdapter listAdapter, View parent, AccountCard accountCard) {
         super(listAdapter, parent, accountCard);
         this.title = parent.findViewById(R.id.text_title);
@@ -39,10 +39,10 @@ public final class AccountCardViewHolder extends PaymentCardViewHolder {
 
         iconView = new IconView(parent);
         iconView.setListener(new IconView.IconClickListener() {
+
             public void onIconClick(int index) {
                 handleIconClicked(index);
             }
-
         });
         card = parent.findViewById(R.id.card_account);
         card.setCheckable(true);
@@ -59,9 +59,6 @@ public final class AccountCardViewHolder extends PaymentCardViewHolder {
         return new AccountCardViewHolder(listAdapter, view, accountCard);
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     void onBind() {
         super.onBind();
@@ -79,16 +76,12 @@ public final class AccountCardViewHolder extends PaymentCardViewHolder {
         bindCardLogo(card.getCode(), card.getLink("logo"));
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     void expand(boolean expand) {
         super.expand(expand);
         card.setChecked(expand);
-        
-        boolean update = UPDATE.equals(paymentCard.getOperationType());
 
+        boolean update = UPDATE.equals(paymentCard.getOperationType());
         if (update) {
             iconView.showIcon(expand ? 1 : 0);
         }

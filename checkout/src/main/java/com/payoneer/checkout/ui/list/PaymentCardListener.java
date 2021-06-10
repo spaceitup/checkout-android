@@ -26,7 +26,7 @@ interface PaymentCardListener {
     void onHideKeyboard();
 
     /**
-     * Notify the listener that the keyboard should be shown for the given view 
+     * Notify the listener that the keyboard should be shown for the given view
      *
      * @param view that needs the keyboard
      */

@@ -56,17 +56,11 @@ public class DeleteAccount implements Parcelable {
         }
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     public int describeContents() {
         return 0;
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     public void writeToParcel(Parcel out, int flags) {
         out.writeSerializable(url);
