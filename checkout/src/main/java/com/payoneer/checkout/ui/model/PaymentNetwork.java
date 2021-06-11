@@ -46,7 +46,7 @@ public class PaymentNetwork {
             links.put(getCode(), url);
         }
     }
-    
+
     public String getOperationType() {
         return network.getOperationType();
     }

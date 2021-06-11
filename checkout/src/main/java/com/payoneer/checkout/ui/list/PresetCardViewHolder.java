@@ -11,7 +11,6 @@ package com.payoneer.checkout.ui.list;
 import com.google.android.material.card.MaterialCardView;
 import com.payoneer.checkout.R;
 import com.payoneer.checkout.model.AccountMask;
-import com.payoneer.checkout.ui.model.PaymentCard;
 import com.payoneer.checkout.ui.model.PresetCard;
 import com.payoneer.checkout.util.PaymentUtils;
 
@@ -31,8 +30,7 @@ final class PresetCardViewHolder extends PaymentCardViewHolder {
     private final MaterialCardView card;
 
     private PresetCardViewHolder(ListAdapter adapter, View parent, PresetCard presetCard) {
-        super(adapter, parent);
-
+        super(adapter, parent, presetCard);
         title = parent.findViewById(R.id.text_title);
         subtitle = parent.findViewById(R.id.text_subtitle);
         card = parent.findViewById(R.id.card_preset);
@@ -48,16 +46,14 @@ final class PresetCardViewHolder extends PaymentCardViewHolder {
         return new PresetCardViewHolder(adapter, view, presetCard);
     }
 
-    void onBind(PaymentCard paymentCard) {
+    void onBind() {
+        super.onBind();
 
-        if (!(paymentCard instanceof PresetCard)) {
-            throw new IllegalArgumentException("Expected PresetCard in onBind");
-        }
-        super.onBind(paymentCard);
         PaymentUtils.setTestId(itemView, "card", "preset");
         PresetCard card = (PresetCard) paymentCard;
         AccountMask mask = card.getMaskedAccount();
         subtitle.setVisibility(View.GONE);
+
         if (mask != null) {
             bindAccountMask(title, subtitle, mask, card.getPaymentMethod());
         } else {

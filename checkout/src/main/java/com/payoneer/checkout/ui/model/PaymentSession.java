@@ -14,7 +14,6 @@ import java.util.List;
 import java.util.Map;
 
 import com.payoneer.checkout.model.ListResult;
-import com.payoneer.checkout.validation.Validator;
 
 /**
  * Class for storing the ListResult and the payment sections. The following sections
@@ -23,19 +22,16 @@ import com.payoneer.checkout.validation.Validator;
 public final class PaymentSession {
     private final ListResult listResult;
     private final List<PaymentSection> paymentSections;
-    private final Validator validator;
 
     /**
      * Construct a new PaymentSession object
      *
      * @param listResult Object holding the current list session data
      * @param paymentSections the list of sections containing PaymentCards
-     * @param validator used to validate input values for this payment session
      */
-    public PaymentSession(ListResult listResult, List<PaymentSection> paymentSections, Validator validator) {
+    public PaymentSession(ListResult listResult, List<PaymentSection> paymentSections) {
         this.listResult = listResult;
         this.paymentSections = paymentSections;
-        this.validator = validator;
     }
 
     public ListResult getListResult() {
@@ -44,10 +40,6 @@ public final class PaymentSession {
 
     public List<PaymentSection> getPaymentSections() {
         return paymentSections;
-    }
-
-    public Validator getValidator() {
-        return validator;
     }
 
     public URL getLink(String name) {
@@ -67,6 +59,15 @@ public final class PaymentSession {
 
     public boolean isEmpty() {
         return paymentSections.size() == 0;
+    }
+
+    public boolean containsSelfLink(URL url) {
+        for (PaymentSection section : paymentSections) {
+            if (section.containsLink("self", url)) {
+                return true;
+            }
+        }
+        return false;
     }
 
     public boolean containsOperationLink(URL url) {

@@ -14,13 +14,11 @@ import com.google.android.material.card.MaterialCardView;
 import com.payoneer.checkout.R;
 import com.payoneer.checkout.model.AccountMask;
 import com.payoneer.checkout.ui.model.AccountCard;
-import com.payoneer.checkout.ui.model.PaymentCard;
 import com.payoneer.checkout.util.PaymentUtils;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.TextView;
 import androidx.recyclerview.widget.RecyclerView.ViewHolder;
 
@@ -31,53 +29,69 @@ public final class AccountCardViewHolder extends PaymentCardViewHolder {
 
     private final TextView title;
     private final TextView subtitle;
-    private final ImageView icon;
+    private final IconView iconView;
     private final MaterialCardView card;
-    private boolean update;
 
-    private AccountCardViewHolder(ListAdapter adapter, View parent, AccountCard accountCard) {
-        super(adapter, parent);
+    private AccountCardViewHolder(ListAdapter listAdapter, View parent, AccountCard accountCard) {
+        super(listAdapter, parent, accountCard);
         this.title = parent.findViewById(R.id.text_title);
         this.subtitle = parent.findViewById(R.id.text_subtitle);
-        this.icon = parent.findViewById(R.id.image_icon);
+
+        iconView = new IconView(parent);
+        iconView.setListener(new IconView.IconClickListener() {
+
+            public void onIconClick(int index) {
+                handleIconClicked(index);
+            }
+        });
         card = parent.findViewById(R.id.card_account);
         card.setCheckable(true);
 
         addElementWidgets(accountCard);
         addButtonWidget();
         layoutWidgets();
-
         setLastImeOptions();
     }
 
-    static ViewHolder createInstance(ListAdapter adapter, AccountCard accountCard, ViewGroup parent) {
+    static ViewHolder createInstance(ListAdapter listAdapter, AccountCard accountCard, ViewGroup parent) {
         LayoutInflater inflater = LayoutInflater.from(parent.getContext());
         View view = inflater.inflate(R.layout.list_item_accountcard, parent, false);
-        return new AccountCardViewHolder(adapter, view, accountCard);
+        return new AccountCardViewHolder(listAdapter, view, accountCard);
     }
 
-    void onBind(PaymentCard paymentCard) {
+    @Override
+    void onBind() {
+        super.onBind();
 
-        if (!(paymentCard instanceof AccountCard)) {
-            throw new IllegalArgumentException("Expected AccountCard in onBind");
-        }
-        super.onBind(paymentCard);
         PaymentUtils.setTestId(itemView, "card", "savedaccount");
         AccountCard card = (AccountCard) paymentCard;
         AccountMask mask = card.getMaskedAccount();
         subtitle.setVisibility(View.GONE);
+
         if (mask != null) {
             bindAccountMask(title, subtitle, mask, card.getPaymentMethod());
         } else {
             title.setText(card.getLabel());
         }
         bindCardLogo(card.getCode(), card.getLink("logo"));
-        update = UPDATE.equals(paymentCard.getOperationType());
-        icon.setVisibility(update ? View.VISIBLE : View.GONE);
     }
 
+    @Override
     void expand(boolean expand) {
         super.expand(expand);
-        card.setChecked(expand ? update : false);
+        card.setChecked(expand);
+
+        boolean update = UPDATE.equals(paymentCard.getOperationType());
+        if (update) {
+            iconView.showIcon(expand ? 1 : 0);
+        }
+    }
+
+    private void handleIconClicked(int index) {
+        if (index == 0) {
+            cardHandler.onCardClicked();
+        } else {
+            cardHandler.onDeleteClicked();
+        }
     }
 }

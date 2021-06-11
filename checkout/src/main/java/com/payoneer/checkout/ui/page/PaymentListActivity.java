@@ -10,17 +10,13 @@ package com.payoneer.checkout.ui.page;
 
 import static com.payoneer.checkout.localization.LocalizationKey.LIST_TITLE;
 
-import java.util.Map;
-
 import com.payoneer.checkout.R;
 import com.payoneer.checkout.form.Operation;
 import com.payoneer.checkout.localization.Localization;
 import com.payoneer.checkout.ui.PaymentActivityResult;
 import com.payoneer.checkout.ui.list.PaymentList;
-import com.payoneer.checkout.ui.model.PaymentCard;
 import com.payoneer.checkout.ui.model.PaymentSession;
 import com.payoneer.checkout.ui.page.idlingresource.SimpleIdlingResource;
-import com.payoneer.checkout.ui.widget.FormWidget;
 
 import android.content.Context;
 import android.content.Intent;
@@ -62,9 +58,6 @@ public final class PaymentListActivity extends BasePaymentActivity implements Pa
         return R.anim.no_animation;
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -74,34 +67,20 @@ public final class PaymentListActivity extends BasePaymentActivity implements Pa
         }
         setContentView(R.layout.activity_paymentlist);
         progressView = new ProgressView(findViewById(R.id.layout_progress));
+        presenter = new PaymentListPresenter(this);
+        paymentList = new PaymentList(this, presenter, findViewById(R.id.recyclerview_paymentlist));
 
-        initPaymentList();
         initToolbar();
-        this.presenter = new PaymentListPresenter(this);
     }
 
     /**
-     * Initialize the toolbar in this PaymentList
+     * {@inheritDoc}
      */
-    private void initToolbar() {
-        Toolbar toolbar = findViewById(R.id.toolbar);
-        toolbar.setTitle("");
-        setSupportActionBar(toolbar);
-
-        ActionBar actionBar = getSupportActionBar();
-        actionBar.setHomeButtonEnabled(true);
-        actionBar.setDisplayHomeAsUpEnabled(true);
-        actionBar.setDisplayShowHomeEnabled(true);
-    }
-
-    /**
-     * Set the action bar with a title and optional back arrow.
-     *
-     * @param title of the action bar
-     */
-    private void setToolbar(String title) {
-        Toolbar toolbar = findViewById(R.id.toolbar);
-        toolbar.setTitle(title);
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        PaymentActivityResult result = PaymentActivityResult.fromActivityResult(requestCode, resultCode, data);
+        presenter.setPaymentActivityResult(result);
     }
 
     /**
@@ -110,7 +89,7 @@ public final class PaymentListActivity extends BasePaymentActivity implements Pa
     @Override
     public void onPause() {
         super.onPause();
-        paymentList.onStop();
+        paymentList.close();
         presenter.onStop();
     }
 
@@ -149,20 +128,7 @@ public final class PaymentListActivity extends BasePaymentActivity implements Pa
      * {@inheritDoc}
      */
     @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        PaymentActivityResult result = PaymentActivityResult.fromActivityResult(requestCode, resultCode, data);
-        presenter.setPaymentActivityResult(result);
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public void clearList() {
-        if (!active) {
-            return;
-        }
+    public void clearPaymentList() {
         paymentList.clear();
     }
 
@@ -171,9 +137,6 @@ public final class PaymentListActivity extends BasePaymentActivity implements Pa
      */
     @Override
     public void showPaymentSession(PaymentSession session) {
-        if (!active) {
-            return;
-        }
         progressView.setVisible(false);
         setToolbar(Localization.translate(LIST_TITLE));
         paymentList.showPaymentSession(session);
@@ -198,14 +161,6 @@ public final class PaymentListActivity extends BasePaymentActivity implements Pa
         setCloseIdleState();
     }
 
-    public void onActionClicked(PaymentCard item, Map<String, FormWidget> widgets) {
-        presenter.onActionClicked(item, widgets);
-    }
-
-    private void initPaymentList() {
-        this.paymentList = new PaymentList(this, findViewById(R.id.recyclerview_paymentlist));
-    }
-
     /**
      * Only called from test, creates and returns a new IdlingResource
      */
@@ -220,5 +175,29 @@ public final class PaymentListActivity extends BasePaymentActivity implements Pa
             loadIdlingResource.reset();
         }
         return loadIdlingResource;
+    }
+
+    /**
+     * Initialize the toolbar in this PaymentList
+     */
+    private void initToolbar() {
+        Toolbar toolbar = findViewById(R.id.toolbar);
+        toolbar.setTitle("");
+        setSupportActionBar(toolbar);
+
+        ActionBar actionBar = getSupportActionBar();
+        actionBar.setHomeButtonEnabled(true);
+        actionBar.setDisplayHomeAsUpEnabled(true);
+        actionBar.setDisplayShowHomeEnabled(true);
+    }
+
+    /**
+     * Set the action bar with a title and optional back arrow.
+     *
+     * @param title of the action bar
+     */
+    private void setToolbar(String title) {
+        Toolbar toolbar = findViewById(R.id.toolbar);
+        toolbar.setTitle(title);
     }
 }

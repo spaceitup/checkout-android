@@ -47,7 +47,7 @@ ext {
     packagecloudWagonVersion = "0.0.6"
     lombokVersion = "1.18.18"
 
-    gsonVersion = "2.8.6"
+    gsonVersion = "2.8.7"
     bumptechGlideVersion = "4.12.0"
 
     androidMaterialVersion = "1.3.0"

@@ -70,7 +70,6 @@ public class Operation implements Parcelable {
         } catch (JsonSyntaxException e) {
             // this should never happen since we use the same GsonHelper
             // to produce these Json strings
-            Log.w("Checkout", e);
             throw new RuntimeException(e);
         }
     }
@@ -199,9 +198,8 @@ public class Operation implements Parcelable {
 
     /**
      * Get the type of this operation, this will either be PRESET, CHARGE, UPDATE, ACTIVATION or PAYOUT.
-     * If the type cannot be determined from the URl then null will be returned.
      *
-     * @return the type of the operation or null if it cannot be determined.
+     * @return the type of the operation.
      */
     public String getOperationType() {
         return operationType;

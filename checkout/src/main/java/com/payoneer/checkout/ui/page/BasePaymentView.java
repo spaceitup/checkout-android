@@ -18,7 +18,7 @@ import android.app.Activity;
 /**
  * The view (MVP) interface for screens that handle payments
  */
-interface PaymentView {
+interface BasePaymentView {
 
     /**
      * Show the progress animation.
@@ -35,6 +35,13 @@ interface PaymentView {
     void showConnectionErrorDialog(PaymentDialogListener listener);
 
     /**
+     * Show the delete dialog to the user, notify the listener of events in this dialog.
+     *
+     * @param listener to be notified of dialog events
+     */
+    void showDeleteDialog(PaymentDialogListener listener);
+
+    /**
      * Show the interaction text to the user, notify the listener of events in this dialog.
      * When there is no localization for the interaction then the default error will be shown to the user.
      *
@@ -48,6 +55,15 @@ interface PaymentView {
      * @param message The message to be shown
      */
     void showWarningMessage(String message);
+
+    /**
+     * Show Hint dialog
+     *
+     * @param networkCode Code if the network
+     * @param type type if input field
+     * @param listener listening to events of this Hint Dialog.
+     */
+    void showHintDialog(String networkCode, String type, PaymentDialogListener listener);
 
     /**
      * Set the current activity payment result, this is either PaymentUI.RESULT_CODE_OK,
