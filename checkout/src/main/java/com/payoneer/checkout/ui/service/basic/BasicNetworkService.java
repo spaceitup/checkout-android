@@ -40,8 +40,8 @@ import android.content.Context;
  */
 public final class BasicNetworkService extends NetworkService {
 
-    private final static int PROCESS_PAYMENT = 0;
-    private final static int DELETE_ACCOUNT = 1;
+    private final static int PROCESSPAYMENT_REQUEST_CODE = 0;
+    private final static int DELETEACCOUNT_REQUEST_CODE = 1;
 
     private final OperationService operationService;
     private String operationType;
@@ -112,7 +112,7 @@ public final class BasicNetworkService extends NetworkService {
             resultCode = RESULT_CODE_ERROR;
             paymentResult = PaymentResultHelper.fromErrorMessage(interactionCode, message);
         }
-        if (request.getRequestType() == PROCESS_PAYMENT) {
+        if (request.getRequestCode() == PROCESSPAYMENT_REQUEST_CODE) {
             listener.onProcessPaymentResult(resultCode, paymentResult);
         } else {
             listener.onDeleteAccountResult(resultCode, paymentResult);
@@ -129,7 +129,7 @@ public final class BasicNetworkService extends NetworkService {
         }
         if (requiresRedirect(operationResult)) {
             try {
-                RedirectRequest request = RedirectRequest.fromOperationResult(PROCESS_PAYMENT, operationResult);
+                RedirectRequest request = RedirectRequest.fromOperationResult(PROCESSPAYMENT_REQUEST_CODE, operationResult);
                 listener.redirect(request);
             } catch (PaymentException e) {
                 handleProcessPaymentError(e);
@@ -155,7 +155,7 @@ public final class BasicNetworkService extends NetworkService {
         }
         if (requiresRedirect(operationResult)) {
             try {
-                RedirectRequest request = RedirectRequest.fromOperationResult(DELETE_ACCOUNT, operationResult);
+                RedirectRequest request = RedirectRequest.fromOperationResult(DELETEACCOUNT_REQUEST_CODE, operationResult);
                 listener.redirect(request);
             } catch (PaymentException e) {
                 handleDeleteAccountError(e);
