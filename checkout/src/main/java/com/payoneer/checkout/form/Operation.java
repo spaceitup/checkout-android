@@ -70,7 +70,6 @@ public class Operation implements Parcelable {
         } catch (JsonSyntaxException e) {
             // this should never happen since we use the same GsonHelper
             // to produce these Json strings
-            Log.w("Checkout", e);
             throw new RuntimeException(e);
         }
     }
