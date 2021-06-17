@@ -2,4 +2,5 @@ With Payoneer’s Checkout SDK for Android-based devices you can accept payments
 
 For information about integrating the Checkout SDK into your native application, visit [optile.io](https://www.optile.io/sdks)
 
-<img src="docs/payment_methods.png" width="33%"/> <img src="docs/card.png" width="33%"/> <img src="docs/sepa.png" width="33%"/> 
+<img src="docs/payment_methods.png" width="33%"/> <img src="docs/card.png" width="33%"/> <img src="docs/sepa.png" width="33%"/>
+Modify repo
